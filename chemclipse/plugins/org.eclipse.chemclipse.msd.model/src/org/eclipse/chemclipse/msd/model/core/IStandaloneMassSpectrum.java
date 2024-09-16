@@ -34,7 +34,6 @@ public interface IStandaloneMassSpectrum extends IRegularMassSpectrum {
 
 	/**
 	 * Set the file of the mass spectrum, e.g. if it is a MALDI-MS record.
-	 * If it's a GC/MS run, file is not needed cause the chromatogram holds the scans.
 	 * 
 	 * @param file
 	 */
