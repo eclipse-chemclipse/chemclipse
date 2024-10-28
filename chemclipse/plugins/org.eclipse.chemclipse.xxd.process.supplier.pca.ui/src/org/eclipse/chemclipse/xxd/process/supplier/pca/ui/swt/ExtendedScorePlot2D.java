@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.chemclipse.xxd.process.supplier.pca.ui.help.HelpContext;
+import org.eclipse.chemclipse.model.statistics.ISample;
 import org.eclipse.chemclipse.model.statistics.IVariable;
 import org.eclipse.chemclipse.numeric.core.IPoint;
 import org.eclipse.chemclipse.numeric.core.Point;
@@ -26,12 +27,15 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.DataUpdateSupport;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.IDataUpdateListener;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.IExtendedPartUI;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ISettingsHandler;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.EvaluationPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IAnalysisSettings;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultsPCA;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.Activator;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.chart2d.ScorePlot;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.preferences.PreferencePage;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.preferences.PreferencePageScorePlot;
@@ -64,11 +68,50 @@ public class ExtendedScorePlot2D extends Composite implements IExtendedPartUI {
 	private EvaluationPCA evaluationPCA = null;
 	//
 	private UserSelection userSelection = new UserSelection();
+	//
+	private Composite control;
 
 	public ExtendedScorePlot2D(Composite parent, int style) {
 
 		super(parent, style);
 		createControl();
+		DataUpdateSupport dataUpdateSupport = new DataUpdateSupport(Activator.getDefault().getEventBroker());
+		dataUpdateSupport.subscribe(IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT, IChemClipseEvents.EVENT_BROKER_DATA);
+		dataUpdateSupport.add(new IDataUpdateListener() {
+
+			@Override
+			public void update(String topic, List<Object> objects) {
+
+				if(evaluationPCA != null) {
+					if(DataUpdateSupport.isVisible(control)) {
+						if(IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT.equals(topic)) {
+							if(objects.size() == 1) {
+								Object object = objects.get(0);
+								ArrayList<ISample> samples = new ArrayList<>();
+								if(object instanceof Object[] values) {
+									for(int i = 0; i < values.length; i++) {
+										if(values[i] instanceof ISample) {
+											samples.add((ISample)values[i]);
+										}
+									}
+								}
+								for(IResultPCA result : evaluationPCA.getResults().getPcaResultList()) {
+									if(result.isSelected()) {
+										result.toggleSelected();
+									}
+									for(ISample sample : samples) {
+										if(result.getSample().equals(sample)) {
+											result.toggleSelected();
+										}
+									}
+								}
+								setInput(evaluationPCA);
+							}
+						}
+					}
+				}
+			}
+		});
 	}
 
 	public void setInput(EvaluationPCA evaluationPCA) {
@@ -90,6 +133,7 @@ public class ExtendedScorePlot2D extends Composite implements IExtendedPartUI {
 		createToolbarMain(this);
 		createScorePlot(this);
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(this, HelpContext.SCORE_PLOT);
+		control = this;
 	}
 
 	private void createToolbarMain(Composite parent) {
@@ -224,7 +268,7 @@ public class ExtendedScorePlot2D extends Composite implements IExtendedPartUI {
 					int pcX = principalComponentUI.getPCX();
 					int pcY = principalComponentUI.getPCY();
 					IResultsPCA<? extends IResultPCA, ? extends IVariable> resultsPCA = evaluationPCA.getResults();
-					List<IResultPCA> sampleSelected = new ArrayList<>();
+					List<ISample> sampleSelected = new ArrayList<>();
 					List<? extends IResultPCA> resultList = resultsPCA.getPcaResultList();
 					/*
 					 * get samples within selection
@@ -233,7 +277,7 @@ public class ExtendedScorePlot2D extends Composite implements IExtendedPartUI {
 						IResultPCA pcaResult = resultList.get(i);
 						IPoint pointResult = getPoint(pcaResult, pcX, pcY, i);
 						if(pointResult.getX() > pXStart && pointResult.getX() < pXStop && pointResult.getY() < pYStart && pointResult.getY() > pYStop) {
-							sampleSelected.add(resultList.get(i));
+							sampleSelected.add(resultList.get(i).getSample());
 						}
 					}
 					/*

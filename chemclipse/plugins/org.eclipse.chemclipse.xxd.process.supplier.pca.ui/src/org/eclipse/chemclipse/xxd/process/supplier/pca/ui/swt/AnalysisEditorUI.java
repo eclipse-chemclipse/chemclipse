@@ -46,7 +46,7 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.EvaluationPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IAnalysisSettings;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.ISamplesPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.LabelOptionPCA;
-import org.eclipse.chemclipse.xxd.process.supplier.pca.model.ResultPCA;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Sample;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.Activator;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.internal.runnable.CalculationExecutor;
@@ -124,8 +124,8 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 								ArrayList<ISample> samples = new ArrayList<>();
 								if(object instanceof Object[] values) {
 									for(int i = 0; i < values.length; i++) {
-										if(values[i] instanceof ResultPCA result) {
-											samples.add(result.getSample());
+										if(values[i] instanceof ISample) {
+											samples.add((ISample)values[i]);
 										}
 									}
 									if(samples.size() > 0) {
@@ -587,6 +587,19 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 		SamplesListUI sampleListUI = new SamplesListUI(composite, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION);
 		Table table = sampleListUI.getTable();
 		table.setLayoutData(new GridData(GridData.FILL_BOTH));
+		table.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				int[] selectedIndices = table.getSelectionIndices();
+				ArrayList<Object> selectedElements = new ArrayList<>();
+				for(int index : selectedIndices) {
+					selectedElements.add(sampleListUI.getElementAt(index));
+				}
+				handleRowSelection(selectedElements);
+			}
+		});
 		sampleListUI.setUpdateListener(new IUpdateListener() {
 
 			@Override
@@ -597,6 +610,21 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 		});
 		//
 		sampleListControl.set(sampleListUI);
+	}
+
+	private void handleRowSelection(List<Object> selectedElements) {
+
+		if(selectedElements.isEmpty()) {
+			UpdateNotifierUI.update(getDisplay(), IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT, selectedElements.toArray());
+		} else if(Sample.class.isInstance(selectedElements.get(0))) {
+			ArrayList<Sample> samples = new ArrayList<>();
+			for(Object element : selectedElements) {
+				if(Sample.class.isInstance(element)) {
+					samples.add((Sample)element);
+				}
+			}
+			UpdateNotifierUI.update(getDisplay(), IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT, selectedElements.toArray());
+		}
 	}
 
 	private void createPreprocessingUI(TabFolder tabFolder) {
