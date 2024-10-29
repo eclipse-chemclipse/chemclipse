@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2023 Lablicate GmbH.
+ * Copyright (c) 2017, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,8 @@
  *
  * Contributors:
  * Jan Holy - initial API and implementation
- * Dr. Philip Wenig - getting rid of JavaFX
+ * Philip Wenig - getting rid of JavaFX
+ * Lorenz Gerber - fix sample selection
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.support;
 
@@ -161,11 +162,12 @@ public class SeriesConverter {
 			scatterSeriesSettings.setDescription(description);
 			scatterSeriesSettings.setSymbolType(PlotSymbolType.valueOf(preferenceStore.getString(PreferenceSupplier.P_SCORE_PLOT_2D_SYMBOL_TYPE)));
 			scatterSeriesSettings.setSymbolSize(preferenceStore.getInt(PreferenceSupplier.P_SCORE_PLOT_2D_SYMBOL_SIZE));
+			// If a sample is selected, use grey
 			Color color = Colors.getColor(pcaResult.getSample().getRGB());
-			if(pcaResult.getSample().isSelected()) {
-				scatterSeriesSettings.setSymbolColor(color);
-			} else {
+			if(pcaResult.isSelected()) {
 				scatterSeriesSettings.setSymbolColor(Colors.GRAY);
+			} else {
+				scatterSeriesSettings.setSymbolColor(color);
 			}
 			IScatterSeriesSettings scatterSeriesSettingsHighlight = (IScatterSeriesSettings)scatterSeriesSettings.getSeriesSettingsHighlight();
 			scatterSeriesSettingsHighlight.setSymbolColor(Colors.RED);
