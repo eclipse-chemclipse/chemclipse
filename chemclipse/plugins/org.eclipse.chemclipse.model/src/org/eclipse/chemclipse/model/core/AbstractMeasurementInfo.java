@@ -30,6 +30,10 @@ public abstract class AbstractMeasurementInfo implements IMeasurementInfo {
 	private static final long serialVersionUID = 4247159773898302231L;
 	private static final Logger logger = Logger.getLogger(AbstractMeasurementInfo.class);
 	/*
+	 * Generic Fields
+	 */
+	public static final String MODULATION_TIME = "Modulation Time";
+	/*
 	 * Harmonized Header Data
 	 */
 	private static final String INSTRUMENT = "Instrument";
