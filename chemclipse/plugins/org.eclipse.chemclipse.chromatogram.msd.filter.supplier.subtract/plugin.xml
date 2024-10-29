@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.chemclipse.chromatogram.msd.filter.chromatogramFilterSupplier">
       <ChromatogramFilterSupplier
-            description="This filter applies the Subtract filter to a chromatogram."
+            description="Subtract a given mass spectrum from the whole chromatogram."
             filter="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.core.ChromatogramFilter"
             filterName="Subtract"
             filterSettings="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.settings.ChromatogramFilterSettings"
@@ -14,7 +14,7 @@
    <extension
          point="org.eclipse.chemclipse.chromatogram.msd.filter.peakFilterSupplier">
       <PeakFilterSupplier
-            description="This filter applies the Subtract filter to a list of peaks."
+            description="Substract a given mass spectrum from selected peaks."
             filter="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.core.PeakFilter"
             filterName="Subtract"
             filterSettings="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.settings.PeakFilterSettings"

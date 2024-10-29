@@ -26,14 +26,14 @@
             id="org.eclipse.chemclipse.chromatogram.filter.scanTargetsToReferencesTransfer">
       </ChromatogramFilterSupplier>
       <ChromatogramFilterSupplier
-            description="This filter transforms the chromatogram."
+            description="Changes MSD to CSD and vice versa."
             filter="org.eclipse.chemclipse.chromatogram.filter.impl.ChromatogramFilterTransform"
             filterName="Transform"
             filterSettings="org.eclipse.chemclipse.chromatogram.filter.impl.settings.FilterSettingsTransform"
             id="org.eclipse.chemclipse.chromatogram.filter.transformChromatogramSelection">
       </ChromatogramFilterSupplier>
       <ChromatogramFilterSupplier
-            description="This filter reshapes the chromatogram."
+            description="Cuts a chromatogram into multiple referenced chromatograms."
             filter="org.eclipse.chemclipse.chromatogram.filter.impl.ChromatogramFilterReshape"
             filterName="Reshape"
             filterSettings="org.eclipse.chemclipse.chromatogram.filter.impl.settings.FilterSettingsReshape"
