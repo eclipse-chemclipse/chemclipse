@@ -20,7 +20,7 @@
       <ChromatogramFilterSupplier
             description="This filters removes empty scans."
             filter="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.scan.core.FilterCleaner"
-            filterName="Scan Cleaner (Remove Empty)"
+            filterName="Remove Empty Scans"
             filterSettings="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.scan.settings.FilterSettingsCleaner"
             id="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.removeemptyscans">
       </ChromatogramFilterSupplier> 
