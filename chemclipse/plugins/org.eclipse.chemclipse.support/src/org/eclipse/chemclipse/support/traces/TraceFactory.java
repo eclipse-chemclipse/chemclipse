@@ -54,7 +54,9 @@ public class TraceFactory {
 				if(isSupportGeneric(clazz)) {
 					if(line.contains(SEPARATOR_TRACE_RANGE)) {
 						/*
-						 * Special case: 55 - 120
+						 * Special cases:
+						 * 0 - 0
+						 * 55 - 120
 						 */
 						addTraceRange(line, elements, clazz);
 					} else {
@@ -77,7 +79,9 @@ public class TraceFactory {
 				for(String trace : traces) {
 					if(trace.contains(SEPARATOR_TRACE_RANGE)) {
 						/*
-						 * Special case: 55 - 120
+						 * Special case:
+						 * 0 - 0
+						 * 55 - 120
 						 */
 						if(isSupportGeneric(clazz)) {
 							addTraceRange(trace, elements, clazz);
@@ -456,18 +460,36 @@ public class TraceFactory {
 
 		String[] parts = trace.trim().split(SEPARATOR_TRACE_RANGE);
 		if(parts.length == 2) {
-			int start = parseInteger(parts[0]);
-			int stop = parseInteger(parts[1]);
-			if(start > 0 && start < stop) {
+			String part1 = parts[0].trim();
+			String part2 = parts[1].trim();
+			int start = parseInteger(part1);
+			int stop = parseInteger(part2);
+			if(start == stop) {
+				/*
+				 * 0 - 0 (valid)
+				 * 18 28 32 55 - 65 84 207 (invalid)
+				 */
+				if(!part1.contains(" ") && !part2.contains(" ")) {
+					addGenericTrace(elements, clazz, start);
+				}
+			} else if(start > 0 && start < stop) {
+				/*
+				 * 55 - 120
+				 */
 				for(int i = start; i <= stop; i++) {
-					try {
-						T genericTrace = clazz.getDeclaredConstructor().newInstance();
-						genericTrace.setValue(i);
-						elements.add(genericTrace);
-					} catch(Exception e) {
-					}
+					addGenericTrace(elements, clazz, i);
 				}
 			}
+		}
+	}
+
+	private static <T extends ITrace> void addGenericTrace(List<T> elements, Class<T> clazz, int trace) {
+
+		try {
+			T genericTrace = clazz.getDeclaredConstructor().newInstance();
+			genericTrace.setValue(trace);
+			elements.add(genericTrace);
+		} catch(Exception e) {
 		}
 	}
 
