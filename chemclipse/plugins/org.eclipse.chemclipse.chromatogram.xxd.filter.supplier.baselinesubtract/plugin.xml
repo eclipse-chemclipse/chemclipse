@@ -6,14 +6,14 @@
       <ChromatogramFilterSupplier
             description="This filters enables to remove the baseline from the chromatogram."
             filter="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.baselinesubtract.core.ChromatogramFilter"
-            filterName="Chromatogram Baseline Subtract Filter"
+            filterName="Baseline Subtract Filter"
             filterSettings="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.baselinesubtract.settings.ChromatogramFilterSettings"
             id="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.baselinesubtract">
       </ChromatogramFilterSupplier>
       <ChromatogramFilterSupplier
             description="Extracts the Baseline From the Chromatogram"
             filter="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.baselinesubtract.core.BaselineFilter"
-            filterName="Chromatogram Baseline Extractor"
+            filterName="Baseline Extractor"
             filterSettings="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.baselinesubtract.settings.BaselineFilterSettings"            
             id="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.baselineextract">
       </ChromatogramFilterSupplier>
