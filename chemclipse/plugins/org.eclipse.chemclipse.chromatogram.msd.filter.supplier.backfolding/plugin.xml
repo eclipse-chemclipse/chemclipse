@@ -6,7 +6,7 @@
       <ChromatogramFilterSupplier
             description="This filter applies the backfolding algorithm."
             filter="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.backfolding.core.ChromatogramFilter"
-            filterName="Backfolding Filter"
+            filterName="Backfolding"
             filterSettings="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.backfolding.settings.ChromatogramFilterSettings"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.backfolding">
       </ChromatogramFilterSupplier>

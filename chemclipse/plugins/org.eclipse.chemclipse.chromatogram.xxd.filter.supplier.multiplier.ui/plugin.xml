@@ -7,7 +7,7 @@
             category="org.eclipse.chemclipse.chromatogram.filter.ui.preferences.filterPreferencePage"
             class="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.multiplier.ui.preferences.PreferencePage"
             id="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.multiplier.ui.preferences.preferencePage"
-            name="Multiplier Filter">
+            name="Multiplier">
       </page>
    </extension>
 </plugin>

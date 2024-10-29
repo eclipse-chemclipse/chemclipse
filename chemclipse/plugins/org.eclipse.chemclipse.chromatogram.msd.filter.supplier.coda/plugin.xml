@@ -6,7 +6,7 @@
       <ChromatogramFilterSupplier
             description="This filter applies the CODA background remover algorithm."
             filter="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.coda.core.ChromatogramFilter"
-            filterName="CODA Filter"
+            filterName="CODA"
             filterSettings="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.coda.settings.FilterSettings"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.coda">
       </ChromatogramFilterSupplier>

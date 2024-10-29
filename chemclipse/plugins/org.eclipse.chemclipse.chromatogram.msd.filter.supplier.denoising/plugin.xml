@@ -6,7 +6,7 @@
       <ChromatogramFilterSupplier
             description="This filter tries to denoise a chromatogram selection."
             filter="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.denoising.core.ChromatogramFilter"
-            filterName="Denoising Filter"
+            filterName="Denoising"
             filterSettings="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.denoising.settings.FilterSettings"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.denoising">
       </ChromatogramFilterSupplier>
