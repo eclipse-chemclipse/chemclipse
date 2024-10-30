@@ -6,28 +6,28 @@
       <ChromatogramFilterSupplier
             description="This filter splits a chromatogram into its MS1, MS2, ... reference chromatograms."
             filter="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.splitter.core.ChromatogramFilterMSx"
-            filterName="Chromatogram Splitter (MS1, MS2, ...)"
+            filterName="Splitter (MS1, MS2, ...)"
             filterSettings="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.splitter.settings.FilterSettingsMSx"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.splitter.msx">
       </ChromatogramFilterSupplier>
       <ChromatogramFilterSupplier
             description="This filter splits a chromatogram into its SCAN, SIM reference chromatograms."
             filter="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.splitter.core.ChromatogramFilterSIM"
-            filterName="Chromatogram Splitter (SCAN, SIM)"
+            filterName="Splitter (SCAN, SIM)"
             filterSettings="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.splitter.settings.FilterSettingsSIM"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.splitter.sim">
       </ChromatogramFilterSupplier>
       <ChromatogramFilterSupplier
             description="This filter splits a chromatogram into its MS/MS reference chromatograms."
             filter="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.splitter.core.ChromatogramFilterTandemMS"
-            filterName="Chromatogram Splitter (MS/MS)"
+            filterName="Splitter (MS/MS)"
             filterSettings="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.splitter.settings.FilterSettingsTandemMS"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.splitter.tandemms">
       </ChromatogramFilterSupplier>
       <ChromatogramFilterSupplier
             description="This filter splits a chromatogram into its high resolution reference chromatograms."
             filter="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.splitter.core.ChromatogramFilterHighResMS"
-            filterName="Chromatogram Splitter (High Resolution)"
+            filterName="Splitter (High Resolution)"
             filterSettings="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.splitter.settings.FilterSettingsHighResMS"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.splitter.highresms">
       </ChromatogramFilterSupplier>              

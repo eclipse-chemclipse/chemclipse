@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2021 Lablicate GmbH.
+ * Copyright (c) 2011, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -215,7 +215,6 @@ public class BackfoldingShifter implements IBackfoldingShifter {
 		 * extractedIonSignalsShifted will only store absolute positive values.
 		 */
 		int retentionTime = 0;
-		float abundance = 0.0f;
 		/*
 		 * Select the start and stop scan.
 		 */
@@ -244,7 +243,7 @@ public class BackfoldingShifter implements IBackfoldingShifter {
 			 * Add the absolute signal and do not remove previous signals but
 			 * merge them.
 			 */
-			abundance = Math.abs(totalIonSignal.getTotalSignal());
+			float abundance = Math.abs(totalIonSignal.getTotalSignal());
 			extractedIonSignalsShifted.add(ion, abundance, retentionTime, false);
 		}
 	}

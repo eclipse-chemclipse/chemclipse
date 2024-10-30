@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2023 Lablicate GmbH.
+ * Copyright (c) 2021, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,12 +20,12 @@ import org.eclipse.chemclipse.processing.supplier.ProcessExecutionContext;
 
 public abstract class AbstractSystemProcessSupplier<S extends ISystemProcessSettings> extends AbstractProcessSupplier<S> implements IProcessExecutor, SystemExecutor {
 
-	public AbstractSystemProcessSupplier(String id, String name, String description, Class<S> settingsClass, IProcessTypeSupplier parent) {
+	protected AbstractSystemProcessSupplier(String id, String name, String description, Class<S> settingsClass, IProcessTypeSupplier parent) {
 
 		super(id, name, description, settingsClass, parent, DataCategory.chromatographyCategories());
 	}
 
-	public AbstractSystemProcessSupplier(String id, String name, String description, Class<S> settingsClass, IProcessTypeSupplier parent, DataCategory... dataTypes) {
+	protected AbstractSystemProcessSupplier(String id, String name, String description, Class<S> settingsClass, IProcessTypeSupplier parent, DataCategory... dataTypes) {
 
 		super(id, name, description, settingsClass, parent, dataTypes);
 	}

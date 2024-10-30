@@ -13,7 +13,7 @@
             category="org.eclipse.chemclipse.chromatogram.msd.filter.ui.preferences.filterPreferencePage"
             class="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.ui.preferences.PreferencePage"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.ui.preferences.preferencePage"
-            name="Subtract Filter">
+            name="Subtract">
       </page> 
    </extension>
    <extension

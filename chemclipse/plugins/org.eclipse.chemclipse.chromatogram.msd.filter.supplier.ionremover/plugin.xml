@@ -7,7 +7,7 @@
             config="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.ionremover.settings.MassSpectrumFilterSettings"
             description="This filter removes all specified ions from a mass spectrum."
             filter="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.ionremover.core.MassSpectrumFilter"
-            filterName="Ion Remover Filter"
+            filterName="Ion Remover"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.ionremover.massspectrum">
       </MassSpectrumFilterSupplier>
    </extension>

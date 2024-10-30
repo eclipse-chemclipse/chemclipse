@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2023 Lablicate GmbH.
+ * Copyright (c) 2011, 2024 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -59,7 +59,7 @@ public class RetentionTimeShifter extends AbstractRetentionTimeModifier {
 		int retentionTimeLeftBorder = getRetentionTimeLeftBorder(chromatogram, startScan);
 		int retentionTimeRightBorder = getRetentionTimeRightBorder(chromatogram, stopScan);
 		//
-		List<Integer> scansToRemove = new ArrayList<Integer>();
+		List<Integer> scansToRemove = new ArrayList<>();
 		/*
 		 * Adjust the retention times.
 		 */

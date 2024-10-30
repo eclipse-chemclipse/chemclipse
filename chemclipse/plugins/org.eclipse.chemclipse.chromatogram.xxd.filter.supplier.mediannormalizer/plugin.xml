@@ -6,7 +6,7 @@
       <ChromatogramFilterSupplier
             description="This filter median normalizes all signals of a chromatogram."
             filter="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.mediannormalizer.core.ChromatogramFilter"
-            filterName="Median Normalizing Filter"
+            filterName="Median Normalizing"
             filterSettings="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.mediannormalizer.settings.FilterSettings"
             id="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.mediannormalizer">
       </ChromatogramFilterSupplier>

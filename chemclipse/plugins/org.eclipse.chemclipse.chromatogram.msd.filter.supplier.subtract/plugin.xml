@@ -4,9 +4,9 @@
    <extension
          point="org.eclipse.chemclipse.chromatogram.msd.filter.chromatogramFilterSupplier">
       <ChromatogramFilterSupplier
-            description="This filter applies the Subtract filter to a chromatogram."
+            description="Subtract a given mass spectrum from the whole chromatogram."
             filter="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.core.ChromatogramFilter"
-            filterName="Subtract Filter"
+            filterName="Subtract"
             filterSettings="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.settings.ChromatogramFilterSettings"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.chromatogram">
       </ChromatogramFilterSupplier>
@@ -14,9 +14,9 @@
    <extension
          point="org.eclipse.chemclipse.chromatogram.msd.filter.peakFilterSupplier">
       <PeakFilterSupplier
-            description="This filter applies the Subtract filter to a list of peaks."
+            description="Substract a given mass spectrum from selected peaks."
             filter="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.core.PeakFilter"
-            filterName="Subtract Filter"
+            filterName="Subtract"
             filterSettings="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.settings.PeakFilterSettings"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.peak">
       </PeakFilterSupplier>
@@ -27,7 +27,7 @@
             config="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.settings.MassSpectrumFilterSettings"
             description="This filter applies the Subtract filter to a list of mass spectra."
             filter="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.core.MassSpectrumFilter"
-            filterName="Subtract Filter"
+            filterName="Subtract"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.massspectrum">
       </MassSpectrumFilterSupplier>
    </extension>  

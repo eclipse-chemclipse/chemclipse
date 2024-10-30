@@ -37,7 +37,7 @@ public abstract class AbstractProcessSupplier<SettingsClass> implements IProcess
 	private SettingsClassParser<SettingsClass> classParser;
 	private String category;
 
-	public AbstractProcessSupplier(String id, String name, String description, Class<SettingsClass> settingsClass, IProcessTypeSupplier parent, DataCategory... dataTypes) {
+	protected AbstractProcessSupplier(String id, String name, String description, Class<SettingsClass> settingsClass, IProcessTypeSupplier parent, DataCategory... dataTypes) {
 
 		this.id = id;
 		this.name = name;
