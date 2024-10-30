@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022 Lablicate GmbH.
+ * Copyright (c) 2022, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -30,12 +30,6 @@ public class DeleteQuantitationReferencesFilter extends AbstractPeakFilter<Delet
 	public String getName() {
 
 		return "Delete Quantitation References";
-	}
-
-	@Override
-	public String getDescription() {
-
-		return "Delete the peak quantitation references.";
 	}
 
 	@Override
