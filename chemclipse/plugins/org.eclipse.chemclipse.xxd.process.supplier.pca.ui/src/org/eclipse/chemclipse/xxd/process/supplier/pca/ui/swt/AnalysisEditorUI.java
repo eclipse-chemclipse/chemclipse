@@ -140,13 +140,6 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 		});
 	}
 
-	@Override
-	public boolean setFocus() {
-
-		fireUpdate(this.getDisplay(), evaluationPCA);
-		return super.setFocus();
-	}
-
 	public void setInput(ISamplesPCA<IVariable, ISample> samples) {
 
 		this.samples = samples;
@@ -623,8 +616,8 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 					samples.add((Sample)element);
 				}
 			}
-			UpdateNotifierUI.update(getDisplay(), IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT, selectedElements.toArray());
 		}
+		UpdateNotifierUI.update(getDisplay(), IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT, selectedElements.toArray());
 	}
 
 	private void createPreprocessingUI(TabFolder tabFolder) {
