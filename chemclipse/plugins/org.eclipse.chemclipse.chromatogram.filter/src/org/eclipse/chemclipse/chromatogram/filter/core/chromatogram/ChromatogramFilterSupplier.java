@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2023 Lablicate GmbH.
+ * Copyright (c) 2016, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -11,7 +11,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.filter.core.chromatogram;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.chemclipse.chromatogram.filter.settings.IChromatogramFilterSettings;
+import org.eclipse.chemclipse.support.literature.LiteratureReference;
 
 public class ChromatogramFilterSupplier implements IChromatogramFilterSupplier {
 
@@ -19,6 +23,7 @@ public class ChromatogramFilterSupplier implements IChromatogramFilterSupplier {
 	private String description = ""; //$NON-NLS-1$
 	private String filterName = ""; //$NON-NLS-1$
 	private Class<? extends IChromatogramFilterSettings> settingsClass;
+	private List<LiteratureReference> literatureReference = new ArrayList<>();
 
 	@Override
 	public String getDescription() {
@@ -84,6 +89,12 @@ public class ChromatogramFilterSupplier implements IChromatogramFilterSupplier {
 	protected void setSettingsClass(Class<? extends IChromatogramFilterSettings> settingsClass) {
 
 		this.settingsClass = settingsClass;
+	}
+
+	@Override
+	public List<LiteratureReference> getLiteratureReferences() {
+
+		return literatureReference;
 	}
 
 	@Override

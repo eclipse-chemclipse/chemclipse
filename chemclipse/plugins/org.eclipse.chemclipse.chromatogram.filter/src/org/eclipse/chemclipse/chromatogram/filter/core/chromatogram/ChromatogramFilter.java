@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2023 Lablicate GmbH.
+ * Copyright (c) 2016, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -124,6 +124,7 @@ public class ChromatogramFilter {
 			if(element.getAttribute(FILTER_SETTINGS) != null) {
 				try {
 					IChromatogramFilterSettings instance = (IChromatogramFilterSettings)element.createExecutableExtension(FILTER_SETTINGS);
+					supplier.getLiteratureReferences().addAll(instance.getLiteratureReferences());
 					supplier.setSettingsClass(instance.getClass());
 				} catch(CoreException e) {
 					logger.warn(e);

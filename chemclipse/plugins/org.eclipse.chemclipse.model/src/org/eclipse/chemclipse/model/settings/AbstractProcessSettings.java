@@ -11,12 +11,19 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.settings;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.io.FileSystem;
 import org.eclipse.chemclipse.model.core.IChromatogram;
+import org.eclipse.chemclipse.support.literature.LiteratureReference;
 
 public abstract class AbstractProcessSettings implements IProcessSettings {
 
+	private final List<LiteratureReference> literatureReference = new ArrayList<>();
+
 	@Override
+	@Deprecated
 	public void setSystemSettings() {
 
 	}
@@ -37,6 +44,12 @@ public abstract class AbstractProcessSettings implements IProcessSettings {
 		 * Remove OS specific file system control characters.
 		 */
 		return FileSystem.getCurrent().toLegalFileName(fileName, '-');
+	}
+
+	@Override
+	public List<LiteratureReference> getLiteratureReferences() {
+
+		return literatureReference;
 	}
 
 	/*
