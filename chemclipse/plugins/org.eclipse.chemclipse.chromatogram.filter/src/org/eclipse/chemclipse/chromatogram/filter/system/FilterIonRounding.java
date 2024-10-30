@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Component;
 public class FilterIonRounding extends AbstractSystemProcessSettings {
 
 	private static final String ID = "org.eclipse.chemclipse.chromatogram.filter.system.ionRounding"; //$NON-NLS-1$
-	private static final String FILE_LITERATURE_RIS = "9294.ris";
 
 	@Override
 	public Collection<IProcessSupplier<?>> getProcessorSuppliers() {
@@ -43,7 +42,7 @@ public class FilterIonRounding extends AbstractSystemProcessSettings {
 		public ProcessSupplier(IProcessTypeSupplier parent) {
 
 			super(ID, Messages.ionRoundMethod, Messages.ionRoundMethodDescription, SettingsIonRounding.class, parent);
-			getLiteratureReferences().add(getLiteratureReference());
+			getLiteratureReferences().add(createLiteratureReference());
 		}
 
 		@Override
@@ -55,11 +54,11 @@ public class FilterIonRounding extends AbstractSystemProcessSettings {
 		}
 	}
 
-	private static LiteratureReference getLiteratureReference() {
+	private static LiteratureReference createLiteratureReference() {
 
 		String content;
 		try {
-			content = new String(FilterIonRounding.class.getResourceAsStream(FILE_LITERATURE_RIS).readAllBytes());
+			content = new String(FilterIonRounding.class.getResourceAsStream("9294.ris").readAllBytes());
 		} catch(IOException e) {
 			content = "https://doi.org/10.1002/rcm.9294";
 		}

@@ -366,7 +366,7 @@ public class BackfoldingShifter implements IBackfoldingShifter {
 		int deltaDistance = 0;
 		int negativeMaximum = 0;
 		int positiveMaximum = 0;
-		List<Integer> peakDistances = new ArrayList<Integer>();
+		List<Integer> peakDistances = new ArrayList<>();
 		/*
 		 * Divide the result by 2.
 		 */
