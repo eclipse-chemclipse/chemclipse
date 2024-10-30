@@ -33,6 +33,12 @@ public class DeleteStandardsFilter extends AbstractPeakFilter<DeleteStandardsFil
 	}
 
 	@Override
+	public String getDescription() {
+
+		return "Remove internal standard information.";
+	}
+
+	@Override
 	public Class<DeleteStandardsFilterSettings> getConfigClass() {
 
 		return DeleteStandardsFilterSettings.class;
