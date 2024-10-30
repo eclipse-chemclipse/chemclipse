@@ -1,0 +1,28 @@
+
+TY  - JOUR
+T1  - Automated Extraction of Pure Mass Spectra from Gas Chromatographic/Mass Spectrometric Data†
+AU  - Pool, Wim G.
+AU  - de Leeuw, Jan W.
+AU  - van de Graaf, Bastiaan
+Y1  - 1997/04/01
+PY  - 1997
+DA  - 1997/04/01
+DO  - https://doi.org/10.1002/(SICI)1096-9888(199704)32:4<438::AID-JMS499>3.0.CO;2-N
+T2  - Journal of Mass Spectrometry
+JF  - Journal of Mass Spectrometry
+JO  - Journal of Mass Spectrometry
+JA  - J. Mass Spectrom.
+SP  - 438
+EP  - 443
+VL  - 32
+IS  - 4
+KW  - gas chromatography/mass spectrometry
+KW  - deconvolution
+KW  - spectrum clean-up
+KW  - backfolding
+PB  - John Wiley & Sons, Ltd
+SN  - 1076-5174
+UR  - https://doi.org/10.1002/(SICI)1096-9888(199704)32:4<438::AID-JMS499>3.0.CO;2-N
+Y2  - 2024/10/30
+N2  - Abstract An algorithm is described that extracts pure mass spectra from gas chromatographic/mass spectrometric (GC/MS) data. It is based on backfolding, a method described previously to enhance chromatographic resolution in GC/MS data. The ability to extract pure mass spectra was evaluated with both simulated and real GC/MS data and the algorithm was compared with two other methods described recently. It is shown that the algorithm presented gives good results, even when the chromatographic resolution is poor and the spectra are very similar. No a priori knowledge concerning the composition of the data is required. ? 1997 by John Wiley & Sons, Ltd.
+ER  - 
