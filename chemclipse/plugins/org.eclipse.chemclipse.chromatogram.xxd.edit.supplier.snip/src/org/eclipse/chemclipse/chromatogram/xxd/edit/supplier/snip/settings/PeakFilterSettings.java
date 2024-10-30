@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2018 Lablicate GmbH.
+ * Copyright (c) 2014, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
 public class PeakFilterSettings extends AbstractPeakFilterSettings {
 
-	@JsonProperty(value = "Iterations", defaultValue = "1")
+	@JsonProperty(value = "Iterations", defaultValue = "100")
 	@JsonPropertyDescription(value = "The number of iterations to run the filter.")
 	@IntSettingsProperty(minValue = PreferenceSupplier.MIN_ITERATIONS, maxValue = PreferenceSupplier.MAX_ITERATIONS)
 	private int iterations = 100;
