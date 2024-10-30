@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022 Lablicate GmbH.
+ * Copyright (c) 2022, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 public class DeleteQuantitationReferencesFilterSettings {
 
 	@JsonProperty(value = "Delete Quantitation References", defaultValue = "")
-	@JsonPropertyDescription(value = "If empty, all references are deleted. Otherwise the speficied reference if available.")
+	@JsonPropertyDescription(value = "If empty, all references are deleted. Otherwise the specified reference if available.")
 	private String quantitationReference = "";
 
 	public String getQuantitationReference() {
