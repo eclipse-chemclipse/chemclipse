@@ -39,6 +39,7 @@ public class SeriesConverter {
 
 		IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 		List<IScatterSeriesData> scatterSeriesDataList = new ArrayList<>();
+		List<IScatterSeriesData> scatterSeriesDataListSelected = new ArrayList<>();
 		List<? extends IVariable> variables = pcaResults.getExtractedVariables();
 		//
 		for(int i = 0; i < variables.size(); i++) {
@@ -55,14 +56,17 @@ public class SeriesConverter {
 			ISeriesData seriesData = new SeriesData(new double[]{x}, new double[]{y}, name);
 			IScatterSeriesData scatterSeriesData = new ScatterSeriesData(seriesData);
 			IScatterSeriesSettings scatterSeriesSettings = scatterSeriesData.getSettings();
-			scatterSeriesSettings.setSymbolColor(variable.isSelected() ? Colors.RED : Colors.GRAY);
+			scatterSeriesSettings.setSymbolColor(variable.isSelected() ? Colors.GRAY : Colors.RED);
 			scatterSeriesSettings.setSymbolType(PlotSymbolType.valueOf(preferenceStore.getString(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_TYPE)));
-			scatterSeriesSettings.setSymbolSize(preferenceStore.getInt(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_SIZE));
-			IScatterSeriesSettings scatterSeriesSettingsHighlight = (IScatterSeriesSettings)scatterSeriesSettings.getSeriesSettingsHighlight();
-			scatterSeriesSettingsHighlight.setSymbolColor(Colors.RED);
-			scatterSeriesSettingsHighlight.setSymbolSize(preferenceStore.getInt(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_SIZE) + 2);
-			scatterSeriesDataList.add(scatterSeriesData);
+			int baseSymbolSize = preferenceStore.getInt(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_SIZE);
+			scatterSeriesSettings.setSymbolSize(variable.isSelected() ? baseSymbolSize + 3 : baseSymbolSize);
+			if(variable.isSelected()) {
+				scatterSeriesDataListSelected.add(scatterSeriesData);
+			} else {
+				scatterSeriesDataList.add(scatterSeriesData);
+			}
 		}
+		scatterSeriesDataList.addAll(scatterSeriesDataListSelected);
 		return scatterSeriesDataList;
 	}
 
@@ -100,9 +104,6 @@ public class SeriesConverter {
 			}
 			scatterSeriesSettings.setSymbolType(PlotSymbolType.valueOf(preferenceStore.getString(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_TYPE)));
 			scatterSeriesSettings.setSymbolSize(preferenceStore.getInt(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_SIZE));
-			IScatterSeriesSettings scatterSeriesSettingsHighlight = (IScatterSeriesSettings)scatterSeriesSettings.getSeriesSettingsHighlight();
-			scatterSeriesSettingsHighlight.setSymbolColor(Colors.RED);
-			scatterSeriesSettingsHighlight.setSymbolSize(preferenceStore.getInt(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_SIZE) + 2);
 			scatterSeriesDataList.add(scatterSeriesData);
 		}
 		return scatterSeriesDataList;
@@ -164,13 +165,7 @@ public class SeriesConverter {
 			scatterSeriesSettings.setSymbolSize(preferenceStore.getInt(PreferenceSupplier.P_SCORE_PLOT_2D_SYMBOL_SIZE));
 			// If a sample is selected, use grey
 			Color color = Colors.getColor(pcaResult.getSample().getRGB());
-			if(pcaResult.isSelected()) {
-				scatterSeriesSettings.setSymbolColor(Colors.GRAY);
-			} else {
-				scatterSeriesSettings.setSymbolColor(color);
-			}
-			IScatterSeriesSettings scatterSeriesSettingsHighlight = (IScatterSeriesSettings)scatterSeriesSettings.getSeriesSettingsHighlight();
-			scatterSeriesSettingsHighlight.setSymbolColor(Colors.RED);
+			scatterSeriesSettings.setSymbolColor(pcaResult.isSelected() ? Colors.GRAY : color);
 			scatterSeriesDataList.add(scatterSeriesData);
 		}
 		return scatterSeriesDataList;
