@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018 Lablicate GmbH.
+ * Copyright (c) 2018, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -11,7 +11,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.wsd.filter.core.chromatogram;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.chemclipse.chromatogram.filter.settings.IChromatogramFilterSettings;
+import org.eclipse.chemclipse.support.literature.LiteratureReference;
 
 public class ChromatogramFilterSupplierWSD implements IChromatogramFilterSupplierWSD {
 
@@ -19,6 +23,7 @@ public class ChromatogramFilterSupplierWSD implements IChromatogramFilterSupplie
 	private String description = "";
 	private String filterName = "";
 	private Class<? extends IChromatogramFilterSettings> settingsClass;
+	private List<LiteratureReference> literatureReference = new ArrayList<>();
 
 	@Override
 	public String getDescription() {
@@ -84,6 +89,12 @@ public class ChromatogramFilterSupplierWSD implements IChromatogramFilterSupplie
 	protected void setFilterSettingsClass(Class<? extends IChromatogramFilterSettings> settingsClass) {
 
 		this.settingsClass = settingsClass;
+	}
+
+	@Override
+	public List<LiteratureReference> getLiteratureReferences() {
+
+		return literatureReference;
 	}
 
 	@Override

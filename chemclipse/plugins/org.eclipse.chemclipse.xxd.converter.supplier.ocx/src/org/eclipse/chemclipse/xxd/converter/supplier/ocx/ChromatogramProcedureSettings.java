@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2022 Lablicate GmbH.
+ * Copyright (c) 2019, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,7 +12,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.converter.supplier.ocx;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.chemclipse.model.settings.IProcessSettings;
+import org.eclipse.chemclipse.support.literature.LiteratureReference;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -53,5 +57,11 @@ public class ChromatogramProcedureSettings implements IProcessSettings {
 	public void setName(String name) {
 
 		this.name = name;
+	}
+
+	@Override
+	public List<LiteratureReference> getLiteratureReferences() {
+
+		return new ArrayList<>();
 	}
 }

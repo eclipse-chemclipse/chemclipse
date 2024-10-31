@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2023 Lablicate GmbH.
+ * Copyright (c) 2019, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,10 +13,14 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.calculator.settings;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.INoiseCalculator;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.NoiseCalculator;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.chromatogram.xxd.classifier.settings.IChromatogramClassifierSettings;
+import org.eclipse.chemclipse.support.literature.LiteratureReference;
 import org.eclipse.chemclipse.support.settings.ComboSettingsProperty;
 import org.eclipse.chemclipse.support.settings.IntSettingsProperty;
 import org.eclipse.chemclipse.support.settings.IntSettingsProperty.Validation;
@@ -71,5 +75,11 @@ public class NoiseChromatogramClassifierSettings implements IChromatogramClassif
 	public INoiseCalculator getNoiseCalculator() {
 
 		return NoiseCalculator.getNoiseCalculator(getNoiseCalculatorId());
+	}
+
+	@Override
+	public List<LiteratureReference> getLiteratureReferences() {
+
+		return new ArrayList<>();
 	}
 }

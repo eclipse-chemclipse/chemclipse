@@ -11,6 +11,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.settings;
 
+import java.util.List;
+
+import org.eclipse.chemclipse.support.literature.LiteratureReference;
+
 public interface IProcessSettings {
 
 	public static final String VARIABLE_CHROMATOGRAM_NAME = "{chromatogram_name}";
@@ -31,4 +35,6 @@ public interface IProcessSettings {
 
 		throw new UnsupportedOperationException();
 	}
+
+	List<LiteratureReference> getLiteratureReferences();
 }

@@ -65,6 +65,7 @@ public class ChromatogramFilterMSDProcessSupplier implements IProcessTypeSupplie
 
 			super("ChromatogramFilterMSD." + supplier.getId(), supplier.getFilterName(), supplier.getDescription(), (Class<IChromatogramFilterSettings>)supplier.getSettingsClass(), parent, DataType.MSD);
 			this.supplier = supplier;
+			getLiteratureReferences().addAll(supplier.getLiteratureReferences());
 		}
 
 		@Override

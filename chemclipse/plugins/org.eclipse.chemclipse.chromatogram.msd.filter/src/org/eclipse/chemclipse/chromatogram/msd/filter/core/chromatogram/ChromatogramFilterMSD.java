@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2023 Lablicate GmbH.
+ * Copyright (c) 2008, 2024 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -115,6 +115,7 @@ public class ChromatogramFilterMSD {
 				try {
 					IChromatogramFilterSettings instance = (IChromatogramFilterSettings)element.createExecutableExtension(FILTER_SETTINGS);
 					supplier.setSettingsClass(instance.getClass());
+					supplier.getLiteratureReferences().addAll(instance.getLiteratureReferences());
 				} catch(CoreException e) {
 					logger.error(e);
 					// settings class is optional, set null instead

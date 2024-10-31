@@ -1,0 +1,30 @@
+
+TY  - JOUR
+T1  - Automated processing of GC/MS data: quantification of the signals of individual components
+AU  - Pool, Wim G.
+AU  - Maas, Leo R. M.
+AU  - de Leeuw, Jan W.
+AU  - van de Graaf, Bastiaan
+Y1  - 1997/11/01
+PY  - 1997
+DA  - 1997/11/01
+DO  - https://doi.org/10.1002/(SICI)1096-9888(199711)32:11<1253::AID-JMS593>3.0.CO;2-T
+T2  - Journal of Mass Spectrometry
+JF  - Journal of Mass Spectrometry
+JO  - Journal of Mass Spectrometry
+JA  - J. Mass Spectrom.
+SP  - 1253
+EP  - 1257
+VL  - 32
+IS  - 11
+KW  - deconvolution
+KW  - GC/MS
+KW  - backfolding
+KW  - spectrum clean-up
+KW  - quantification
+PB  - John Wiley & Sons, Ltd
+SN  - 1076-5174
+UR  - https://doi.org/10.1002/(SICI)1096-9888(199711)32:11<1253::AID-JMS593>3.0.CO;2-T
+Y2  - 2024/10/30
+N2  - Abstract An algorithm is described to quantify the signals of components in GC/MS data. It is an extension of the backfolding algorithm described recently. [W. G. Pool, B. van de Graaf and J. W. de Leeuw, J. Mass. Spectrom. 31, 509 (1996); 32, 438 (1997)]. The method is evaluated on both simulated and real GC/MS data. The results indicate that the method performs quite well, even in cases of components with highly similar spectra and with severe coelution. ? 1997 John Wiley & Sons, Ltd.
+ER  - 

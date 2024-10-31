@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2018 Lablicate GmbH.
+ * Copyright (c) 2016, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -11,7 +11,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.filter.core.chromatogram;
 
+import java.util.List;
+
 import org.eclipse.chemclipse.chromatogram.filter.settings.IChromatogramFilterSettings;
+import org.eclipse.chemclipse.support.literature.LiteratureReference;
 
 public interface IChromatogramFilterSupplier {
 
@@ -43,4 +46,6 @@ public interface IChromatogramFilterSupplier {
 	 * @return
 	 */
 	Class<? extends IChromatogramFilterSettings> getSettingsClass();
+
+	List<LiteratureReference> getLiteratureReferences();
 }

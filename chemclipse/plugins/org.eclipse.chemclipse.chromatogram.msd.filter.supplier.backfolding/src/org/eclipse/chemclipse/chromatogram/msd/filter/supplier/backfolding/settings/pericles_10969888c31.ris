@@ -1,0 +1,29 @@
+
+TY  - JOUR
+T1  - Backfolding Applied to Differential Gas Chromatography/Mass Spectrometry as a Mathematical Enhancement of Chromatographic Resolution§
+AU  - Pool, Wim G.
+AU  - de Leeuw, Jan W.
+AU  - van de Graaf, Bastiaan
+Y1  - 1996/05/01
+PY  - 1996
+DA  - 1996/05/01
+DO  - https://doi.org/10.1002/(SICI)1096-9888(199605)31:5<509::AID-JMS323>3.0.CO;2-B
+T2  - Journal of Mass Spectrometry
+JF  - Journal of Mass Spectrometry
+JO  - Journal of Mass Spectrometry
+JA  - J. Mass Spectrom.
+SP  - 509
+EP  - 516
+VL  - 31
+IS  - 5
+KW  - differential gas chromatography/mass spectrometry
+KW  - overlapping components
+KW  - deconvolution
+KW  - resolution enhancement
+KW  - spectrum clean-up
+PB  - John Wiley & Sons, Ltd
+SN  - 1076-5174
+UR  - https://doi.org/10.1002/(SICI)1096-9888(199605)31:5<509::AID-JMS323>3.0.CO;2-B
+Y2  - 2024/10/29
+N2  - Abstract Differential gas chromatography/mass spectrometry (GC/MS) results in both positive and negative differential mass spectra. The method enhances the chromatographic resolution and cleans up spectra. Although the method is effective with respect to slowly changing signals, this is not true for statistical noise which is aggravated by subtracting spectra. To remedy this, the two sets of data are combined, after they have been shifted with respect to each other by the width of the chromatographic peaks at half-height. This process, called backfolding, has the advantage that a conventional GC trace is produced. By repeating the process of differentiation and subsequent backfolding a number of times, the chromatographic resolution can be further improved and the mass spectra resemble library spectra much closer. The method was evaluated using both simulated and real GC/MS data. The sensitivity of the method with respect to applied shift, chromatographic resolution, peak shape and concentration was investigated. Backfolding of differential GC/MS does not require sophisticated mathematics. It is easy to implement and it is not a burden in terms of CPU time. Application of this method allows for a significantly better identification of the components present in the sample to be analysed.
+ER  - 
