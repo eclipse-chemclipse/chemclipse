@@ -57,7 +57,7 @@ public abstract class XPassFilter {
 
 		List<IIon> ions = new ArrayList<>(massSpectrum.getIons());
 		Collections.sort(ions, new IonAbundanceComparator(sortOrder));
-		List<IIon> ionsToRemove = new ArrayList<IIon>();
+		List<IIon> ionsToRemove = new ArrayList<>();
 		int counter = 0;
 		for(IIon ion : ions) {
 			if(counter >= number) {

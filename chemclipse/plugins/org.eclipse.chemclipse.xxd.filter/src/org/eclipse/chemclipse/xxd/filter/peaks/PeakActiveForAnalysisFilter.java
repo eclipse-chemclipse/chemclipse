@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022 Lablicate GmbH.
+ * Copyright (c) 2022, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -33,6 +33,12 @@ public class PeakActiveForAnalysisFilter extends AbstractPeakFilter<PeakActiveFo
 	}
 
 	@Override
+	public String getDescription() {
+
+		return "Sets the active for analysis status for all peaks.";
+	}
+
+	@Override
 	public Class<PeakActiveForAnalysisSettings> getConfigClass() {
 
 		return PeakActiveForAnalysisSettings.class;
@@ -45,7 +51,6 @@ public class PeakActiveForAnalysisFilter extends AbstractPeakFilter<PeakActiveFo
 		if(configuration == null) {
 			configuration = createConfiguration(peaks);
 		}
-		//
 		SubMonitor subMonitor = SubMonitor.convert(context.getProgressMonitor(), peaks.size());
 		boolean activeForAnalysis = configuration.isActiveForAnalysis();
 		for(IPeak peak : peaks) {

@@ -35,6 +35,12 @@ public class DeletePeaksByModelFilter extends AbstractPeakFilter<DeletePeaksByMo
 	}
 
 	@Override
+	public String getDescription() {
+
+		return "Filter by internal peak model.";
+	}
+
+	@Override
 	public Class<DeletePeaksByModelFilterSettings> getConfigClass() {
 
 		return DeletePeaksByModelFilterSettings.class;
