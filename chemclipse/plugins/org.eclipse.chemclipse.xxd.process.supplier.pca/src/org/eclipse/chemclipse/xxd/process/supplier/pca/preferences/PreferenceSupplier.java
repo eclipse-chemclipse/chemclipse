@@ -46,7 +46,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static final String DEF_SCORE_PLOT_2D_SYMBOL_TYPE = "CIRCLE";
 	// Loading Plot general Settings
 	public static final String P_LOADING_PLOT_2D_SYMBOL_SIZE = "loadingPlot2dSymbolSize";
-	public static final int DEF_LOADING_PLOT_2D_SYMBOL_SIZE = 6;
+	public static final int DEF_LOADING_PLOT_2D_SYMBOL_SIZE = 3;
 	public static final int MIN_LOADING_PLOT_2D_SYMBOL_SIZE = 1;
 	public static final int MAX_LOADING_PLOT_2D_SYMBOL_SIZE = 100;
 	public static final String P_LOADING_PLOT_2D_SYMBOL_TYPE = "loadingPlot2dSymbolType";

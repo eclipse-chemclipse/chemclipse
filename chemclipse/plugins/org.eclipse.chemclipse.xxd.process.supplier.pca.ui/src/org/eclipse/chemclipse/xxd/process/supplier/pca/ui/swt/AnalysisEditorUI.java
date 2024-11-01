@@ -124,11 +124,11 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 								ArrayList<ISample> samples = new ArrayList<>();
 								if(object instanceof Object[] values) {
 									for(int i = 0; i < values.length; i++) {
-										if(values[i] instanceof ISample) {
-											samples.add((ISample)values[i]);
+										if(values[i] instanceof ISample sample) {
+											samples.add(sample);
 										}
 									}
-									if(samples.size() > 0) {
+									if(!samples.isEmpty()) {
 										sampleListControl.get().setSelection(new StructuredSelection(samples));
 									}
 								}

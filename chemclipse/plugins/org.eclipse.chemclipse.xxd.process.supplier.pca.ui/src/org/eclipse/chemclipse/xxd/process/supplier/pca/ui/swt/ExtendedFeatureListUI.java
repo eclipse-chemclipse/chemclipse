@@ -57,6 +57,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Table;
 
 public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI {
 
@@ -176,7 +177,8 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 	private void createList(Composite parent) {
 
 		FeatureListUI featureListUI = new FeatureListUI(parent, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION | SWT.VIRTUAL);
-		featureListUI.getTable().setLayoutData(new GridData(GridData.FILL_BOTH));
+		Table table = featureListUI.getTable();
+		table.setLayoutData(new GridData(GridData.FILL_BOTH));
 		//
 		ITableSettings tableSettings = featureListUI.getTableSettings();
 		tableSettings.addMenuEntry(new ITableMenuEntry() {
@@ -208,6 +210,20 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 		});
 		featureListUI.applySettings(tableSettings);
 		//
+		table.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				int[] selectedIndices = table.getSelectionIndices();
+				ArrayList<Object> selectedElements = new ArrayList<>();
+				for(int index : selectedIndices) {
+					selectedElements.add(featureListUI.getElementAt(index));
+				}
+				handleRowSelection(selectedElements);
+			}
+		});
+		//
 		featureListUI.setUpdateListener(new IUpdateListener() {
 
 			@Override
@@ -218,6 +234,21 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 		});
 		//
 		listControl.set(featureListUI);
+	}
+
+	private void handleRowSelection(List<Object> selectedElements) {
+
+		if(selectedElements.isEmpty()) {
+			UpdateNotifierUI.update(getDisplay(), IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT, selectedElements.toArray());
+		} else if(Feature.class.isInstance(selectedElements.get(0))) {
+			ArrayList<Feature> features = new ArrayList<>();
+			for(Object element : selectedElements) {
+				if(Feature.class.isInstance(element)) {
+					features.add((Feature)element);
+				}
+			}
+			UpdateNotifierUI.update(getDisplay(), IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT, selectedElements.toArray());
+		}
 	}
 
 	private void createToolbarInfo(Composite parent) {

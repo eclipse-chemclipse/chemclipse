@@ -24,6 +24,8 @@ import org.eclipse.chemclipse.numeric.core.Point;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.DataUpdateSupport;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.IDataUpdateListener;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.IExtendedPartUI;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ISettingsHandler;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.EvaluationPCA;
@@ -31,6 +33,7 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Feature;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IAnalysisSettings;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultsPCA;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.Activator;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.chart2d.LoadingsPlot;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.preferences.PreferencePage;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.preferences.PreferencePageLoadingPlot;
@@ -60,11 +63,52 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 	private EvaluationPCA evaluationPCA = null;
 	//
 	private UserSelection userSelection = new UserSelection();
+	//
+	private Composite control;
 
 	public ExtendedLoadingsPlot(Composite parent, int style) {
 
 		super(parent, style);
 		createControl();
+		DataUpdateSupport dataUpdateSupport = new DataUpdateSupport(Activator.getDefault().getEventBroker());
+		dataUpdateSupport.subscribe(IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT, IChemClipseEvents.EVENT_BROKER_DATA);
+		dataUpdateSupport.add(new IDataUpdateListener() {
+
+			@Override
+			public void update(String topic, List<Object> objects) {
+
+				if(evaluationPCA != null) {
+					if(DataUpdateSupport.isVisible(control)) {
+						if(IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT.equals(topic)) {
+							if(objects.size() == 1) {
+								Object object = objects.get(0);
+								ArrayList<IVariable> selectedVariables = new ArrayList<>();
+								if(object instanceof Object[] values) {
+									for(int i = 0; i < values.length; i++) {
+										if(values[i] instanceof Feature) {
+											Feature feature = (Feature)values[i];
+											selectedVariables.add(feature.getVariable());
+										}
+									}
+								}
+								for(IVariable variable : evaluationPCA.getResults().getExtractedVariables()) {
+									if(variable.isSelected()) {
+										variable.setSelected(false);
+										;
+									}
+									for(IVariable selectedVariable : selectedVariables) {
+										if(variable.equals(selectedVariable)) {
+											variable.setSelected(true);
+										}
+									}
+								}
+								setInput(evaluationPCA);
+							}
+						}
+					}
+				}
+			}
+		});
 	}
 
 	public void setInput(EvaluationPCA evaluationPCA) {
@@ -86,6 +130,7 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 		createToolbarMain(this);
 		createPlot(this);
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(this, HelpContext.LOADINGS_PLOT);
+		control = this;
 	}
 
 	private void createToolbarMain(Composite parent) {
