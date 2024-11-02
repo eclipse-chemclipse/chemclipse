@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2018 Lablicate GmbH.
+ * Copyright (c) 2008, 2024 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -12,7 +12,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.peak.detector.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.chemclipse.chromatogram.peak.detector.settings.IPeakDetectorSettings;
+import org.eclipse.chemclipse.support.literature.LiteratureReference;
 
 public abstract class AbstractPeakDetectorSupplier<S extends IPeakDetectorSettings> implements IPeakDetectorSupplier {
 
@@ -20,8 +24,10 @@ public abstract class AbstractPeakDetectorSupplier<S extends IPeakDetectorSettin
 	private String description = "";
 	private String peakDetectorName = "";
 	private Class<? extends S> settingsClass;
+	private List<LiteratureReference> literatureReference = new ArrayList<>();
 
 	public AbstractPeakDetectorSupplier(String id, String description, String peakDetectorName) {
+
 		setId(id);
 		setDescription(description);
 		setPeakDetectorName(peakDetectorName);
@@ -82,6 +88,7 @@ public abstract class AbstractPeakDetectorSupplier<S extends IPeakDetectorSettin
 		}
 	}
 
+	@Override
 	public Class<? extends S> getSettingsClass() {
 
 		return this.settingsClass;
@@ -90,6 +97,12 @@ public abstract class AbstractPeakDetectorSupplier<S extends IPeakDetectorSettin
 	public void setSettingsClass(Class<? extends S> settingsClass) {
 
 		this.settingsClass = settingsClass;
+	}
+
+	@Override
+	public List<LiteratureReference> getLiteratureReferences() {
+
+		return literatureReference;
 	}
 
 	@Override

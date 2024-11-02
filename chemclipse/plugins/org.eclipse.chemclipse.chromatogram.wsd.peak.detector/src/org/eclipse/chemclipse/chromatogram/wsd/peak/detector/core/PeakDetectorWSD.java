@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2023 Lablicate GmbH.
+ * Copyright (c) 2018, 2024 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -111,6 +111,7 @@ public class PeakDetectorWSD {
 				try {
 					IPeakDetectorSettingsWSD instance = (IPeakDetectorSettingsWSD)element.createExecutableExtension(PEAK_DETECTOR_SETTINGS);
 					supplier.setSettingsClass(instance.getClass());
+					supplier.getLiteratureReferences().addAll(instance.getLiteratureReferences());
 				} catch(CoreException e) {
 					logger.error(e);
 					// settings class is optional, set null instead
