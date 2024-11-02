@@ -1,0 +1,19 @@
+TY  - JOUR
+T1  - SNIP, a statistics-sensitive background treatment for the quantitative analysis of PIXE spectra in geoscience applications
+AU  - Ryan, C.G.
+AU  - Clayton, E.
+AU  - Griffin, W.L.
+AU  - Sie, S.H.
+AU  - Cousens, D.R.
+JO  - Nuclear Instruments and Methods in Physics Research Section B: Beam Interactions with Materials and Atoms
+VL  - 34
+IS  - 3
+SP  - 396
+EP  - 402
+PY  - 1988
+DA  - 1988/09/01/
+SN  - 0168-583X
+DO  - https://doi.org/10.1016/0168-583X(88)90063-8
+UR  - https://www.sciencedirect.com/science/article/pii/0168583X88900638
+AB  - Statistical fluctuations in X-ray spectra must be treated properly for reliable quantitative PIXE analysis. A background approximation that provides reliable treatment of fluctuations, the Statistics-sensitive Non-linear Iterative Peak-clipping (SNIP) algorithm, is described. Monte Carlo simulation demonstrates the stability of this background approximation, and hence the deduced trace element concentrations, over a wide range of counting statistics.
+ER  - 
