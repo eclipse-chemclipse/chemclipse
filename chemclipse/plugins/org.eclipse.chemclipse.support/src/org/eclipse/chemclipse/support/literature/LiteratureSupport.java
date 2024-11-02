@@ -19,10 +19,13 @@ import java.util.regex.Pattern;
 public class LiteratureSupport {
 
 	public static final String LINE_DELIMITER = "\n";
-	public static final String ENTTRY_DELIMITER = "  -";
+	public static final String ENTRY_DELIMITER = "  -";
 	//
 	private static final Map<String, String> RIS_IDENTIFIER_MAP = new HashMap<>();
 	private static final String RIS_IDENTIFIER = "TY  -";
+	private static final String RIS_PREFIX_T1 = "T1  -";
+	private static final String RIS_PREFIX_TI = "TI  -";
+	private static final String RIS_PREFIX_TITLE = "Title:";
 	private static final String RIS_END_RECORD = "ER";
 	private static final String RIS_UNKNOWN = "Unknown";
 	//
@@ -109,7 +112,6 @@ public class LiteratureSupport {
 		RIS_IDENTIFIER_MAP.put("ER", "End of Reference");
 	}
 	//
-	private static final Pattern PATTERN_TITLE = Pattern.compile("(TI\\s+-\\s+|T1\\s+-\\s+|Title: )(.*?)(\n|\r|\r\n|[A-Z][A-Z]|$)");
 	private static final Pattern PATTERN_DOI_ORG = Pattern.compile("(http)(s?)(://doi.org/)(.*?)(\\s+|$)");
 	private static final Pattern PATTERN_DOI_DX = Pattern.compile("(http)(s?)(://dx.doi.org/)(.*?)(\\s+|$)");
 	private static final Pattern PATTERN_URL = Pattern.compile("(http)(s?)(://)(.*?)(\\s+|$)");
@@ -140,7 +142,7 @@ public class LiteratureSupport {
 					 * Map e.g. "TI" to "Title"
 					 */
 					if(mapDescriptions) {
-						String[] entries = line.split(ENTTRY_DELIMITER);
+						String[] entries = line.split(ENTRY_DELIMITER);
 						if(entries.length == 2) {
 							String identifier = entries[0].trim();
 							if(!isEndOfReferenceRIS(identifier)) {
@@ -182,16 +184,32 @@ public class LiteratureSupport {
 	public static String getTitle(String content) {
 
 		String title = "";
-		if(content != null) {
-			if(!content.isEmpty()) {
-				Matcher matcher = PATTERN_TITLE.matcher(content);
-				if(matcher.find()) {
-					title = matcher.group(2).trim();
+		if(content == null || content.isEmpty() || content.isBlank()) {
+			return title;
+		}
+		String[] lines = content.split(LINE_DELIMITER);
+		if(lines.length < 2) {
+			lines = unflatten(content).split(LINE_DELIMITER);
+		}
+		for(String line : lines) {
+			if(line.startsWith(RIS_PREFIX_T1) || line.startsWith(RIS_PREFIX_TI)) {
+				String[] parts = line.split(ENTRY_DELIMITER, 2);
+				if(parts.length > 1) {
+					title = parts[1].trim();
+				}
+			} else if(line.startsWith(RIS_PREFIX_TITLE)) {
+				String[] parts = line.split(RIS_PREFIX_TITLE, 2);
+				if(parts.length > 1) {
+					title = parts[1].trim();
 				}
 			}
 		}
-		//
 		return title;
+	}
+
+	private static String unflatten(String ris) {
+
+		return ris.replaceAll("(?=\\w{2}  -)", "\n");
 	}
 
 	/**
