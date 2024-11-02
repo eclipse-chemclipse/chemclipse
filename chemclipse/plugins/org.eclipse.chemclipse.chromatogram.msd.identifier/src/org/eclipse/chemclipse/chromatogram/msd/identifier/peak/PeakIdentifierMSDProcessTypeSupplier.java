@@ -63,6 +63,7 @@ public class PeakIdentifierMSDProcessTypeSupplier implements IProcessTypeSupplie
 		public PeakIdentifierProcessorSupplier(IPeakIdentifierSupplierMSD supplier, IProcessTypeSupplier parent) {
 
 			super("PeakIdentifierMSD." + supplier.getId(), supplier.getIdentifierName(), supplier.getDescription(), (Class<IPeakIdentifierSettingsMSD>)supplier.getSettingsClass(), parent, DataType.MSD);
+			getLiteratureReferences().addAll(supplier.getLiteratureReferences());
 			this.supplier = supplier;
 		}
 

@@ -32,6 +32,7 @@ import org.eclipse.chemclipse.model.targets.TargetUnknownSettings;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
+import org.eclipse.chemclipse.support.literature.LiteratureReference;
 import org.eclipse.chemclipse.wsd.model.core.IPeakWSD;
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -88,5 +89,11 @@ public class PeakIdentifierUnknown implements IPeakIdentifierMSD<IPeakIdentifica
 		}
 		//
 		return processingInfo;
+	}
+
+	@Override
+	public List<LiteratureReference> getLiteratureReferences() {
+
+		return null;
 	}
 }

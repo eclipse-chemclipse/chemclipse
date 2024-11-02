@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023 Lablicate GmbH.
+ * Copyright (c) 2023, 2024 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -21,6 +21,7 @@ import org.eclipse.chemclipse.chromatogram.xxd.identifier.targets.ITargetIdentif
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
+import org.eclipse.chemclipse.support.literature.LiteratureReference;
 import org.eclipse.chemclipse.xxd.identifier.supplier.pubchem.rest.PowerUserGateway;
 
 public class PubChemExternalTargetIdentifier implements ITargetIdentifierSupplier {
@@ -69,5 +70,11 @@ public class PubChemExternalTargetIdentifier implements ITargetIdentifierSupplie
 			logger.warn(e);
 		}
 		return url;
+	}
+
+	@Override
+	public List<LiteratureReference> getLiteratureReferences() {
+
+		return null;
 	}
 }

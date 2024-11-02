@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2018 Lablicate GmbH.
+ * Copyright (c) 2008, 2024 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -12,11 +12,16 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.identifier.peak;
 
+import java.util.List;
+
 import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IPeakIdentifierSettingsMSD;
 import org.eclipse.chemclipse.model.identifier.core.ISupplier;
+import org.eclipse.chemclipse.support.literature.LiteratureReference;
 
 public interface IPeakIdentifierSupplierMSD extends ISupplier {
 
 	@Override
 	Class<? extends IPeakIdentifierSettingsMSD> getSettingsClass();
+
+	List<LiteratureReference> getLiteratureReferences();
 }
