@@ -10,7 +10,15 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.chemclipse.model;bundle-version="0.9.0",
  org.eclipse.chemclipse.logging;bundle-version="0.9.0",
  org.eclipse.chemclipse.support;bundle-version="0.9.0",
- org.eclipse.chemclipse.numeric;bundle-version="0.9.0"
+ org.eclipse.chemclipse.numeric;bundle-version="0.9.0",
+ com.fasterxml.jackson.core.jackson-core;bundle-version="2.13.5",
+ com.fasterxml.jackson.core.jackson-databind;bundle-version="2.13.5",
+ org.eclipse.core.databinding;bundle-version="1.13.300"
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.chemclipse.tsd.model.core
+Export-Package: org.eclipse.chemclipse.tsd.model.core,
+ org.eclipse.chemclipse.tsd.model.serializer,
+ org.eclipse.chemclipse.tsd.model.services,
+ org.eclipse.chemclipse.tsd.model.support,
+ org.eclipse.chemclipse.tsd.model.validators
+Service-Component: OSGI-INF/org.eclipse.chemclipse.tsd.model.services.TraceRangesSerializationService.xml

@@ -30,7 +30,7 @@ import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.tsd.converter.Activator;
 import org.eclipse.chemclipse.tsd.converter.chromatogram.model.ConverterAdapterServiceTSD;
 import org.eclipse.chemclipse.tsd.converter.core.IImportConverterTSD;
-import org.eclipse.chemclipse.tsd.converter.core.model.TraceRangeMatcher;
+import org.eclipse.chemclipse.tsd.converter.core.matcher.TraceRangeMatcher;
 import org.eclipse.chemclipse.tsd.converter.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.tsd.converter.service.IConverterServiceTSD;
 import org.eclipse.chemclipse.tsd.model.core.IChromatogramPeakTSD;

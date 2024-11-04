@@ -124,4 +124,5 @@ Service-Component: OSGI-INF/org.eclipse.chemclipse.ux.extension.xxd.ui.editors.E
  OSGI-INF/org.eclipse.chemclipse.ux.extension.xxd.ui.filter.ChromatogramFilterAdjust.xml,
  OSGI-INF/org.eclipse.chemclipse.ux.extension.xxd.ui.services.EditorServiceTSD.xml,
  OSGI-INF/org.eclipse.chemclipse.ux.extension.xxd.ui.services.TimeRangesAnnotationService.xml,
+ OSGI-INF/org.eclipse.chemclipse.ux.extension.xxd.ui.services.TraceRangesAnnotationService.xml,
  OSGI-INF/org.eclipse.chemclipse.ux.extension.xxd.ui.system.TargetsProcessSupplier.xml

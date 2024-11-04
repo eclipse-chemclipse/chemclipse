@@ -17,7 +17,7 @@ import java.io.InputStream;
 import org.eclipse.chemclipse.converter.chromatogram.IChromatogramImportConverter;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
-import org.eclipse.chemclipse.tsd.converter.core.model.TraceRangeMatcher;
+import org.eclipse.chemclipse.tsd.converter.core.matcher.TraceRangeMatcher;
 import org.eclipse.chemclipse.tsd.model.core.IChromatogramTSD;
 import org.eclipse.core.runtime.IProgressMonitor;
 
