@@ -86,6 +86,18 @@ public class TraceRangesEditor extends Composite implements IChangeListener, IEx
 		createControl();
 	}
 
+	public void setInput(TraceRanges traceRanges) {
+
+		this.traceRanges = (traceRanges == null) ? new TraceRanges() : traceRanges;
+		setInput();
+	}
+
+	public void clear() {
+
+		traceRanges.clear();
+		setInput();
+	}
+
 	@Override
 	public void addChangeListener(Listener listener) {
 
