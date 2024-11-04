@@ -64,6 +64,7 @@ public class PeakDetectorWSDProcessTypeSupplier implements IProcessTypeSupplier 
 		public PeakDetectorProcessorSupplier(IPeakDetectorSupplier supplier, IProcessTypeSupplier parent) {
 
 			super("PeakDetectorWSD." + supplier.getId(), supplier.getPeakDetectorName(), supplier.getDescription(), (Class<IPeakDetectorSettingsWSD>)supplier.getSettingsClass(), parent, DataType.WSD);
+			getLiteratureReferences().addAll(supplier.getLiteratureReferences());
 			this.supplier = supplier;
 		}
 
