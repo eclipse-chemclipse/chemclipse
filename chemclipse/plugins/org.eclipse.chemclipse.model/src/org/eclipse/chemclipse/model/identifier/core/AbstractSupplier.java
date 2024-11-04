@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2018 Lablicate GmbH.
+ * Copyright (c) 2008, 2024 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -12,7 +12,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.identifier.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
+import org.eclipse.chemclipse.support.literature.LiteratureReference;
 
 public abstract class AbstractSupplier<S extends IIdentifierSettings> implements ISupplierSetter {
 
@@ -20,6 +24,7 @@ public abstract class AbstractSupplier<S extends IIdentifierSettings> implements
 	private String id = "";
 	private String identifierName = "";
 	private Class<? extends S> identifierSettingsClass;
+	private List<LiteratureReference> literatureReference = new ArrayList<>();
 
 	@Override
 	public boolean equals(final Object otherObject) {
@@ -93,6 +98,12 @@ public abstract class AbstractSupplier<S extends IIdentifierSettings> implements
 	public void setIdentifierSettingsClass(Class<? extends S> identifierSettingsClass) {
 
 		this.identifierSettingsClass = identifierSettingsClass;
+	}
+
+	@Override
+	public List<LiteratureReference> getLiteratureReferences() {
+
+		return literatureReference;
 	}
 
 	@Override

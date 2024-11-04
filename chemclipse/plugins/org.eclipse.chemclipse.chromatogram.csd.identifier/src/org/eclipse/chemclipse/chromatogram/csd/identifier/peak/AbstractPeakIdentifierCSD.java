@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2019 Lablicate GmbH.
+ * Copyright (c) 2018, 2024 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -12,11 +12,17 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.csd.identifier.peak;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.chemclipse.chromatogram.csd.identifier.settings.IIdentifierSettingsCSD;
 import org.eclipse.chemclipse.csd.model.core.IPeakCSD;
 import org.eclipse.chemclipse.model.exceptions.ValueMustNotBeNullException;
+import org.eclipse.chemclipse.support.literature.LiteratureReference;
 
 public abstract class AbstractPeakIdentifierCSD<T> implements IPeakIdentifierCSD<T> {
+
+	private List<LiteratureReference> literatureReferences = new ArrayList<>();
 
 	/**
 	 * Validates that the peak is not null.<br/>
@@ -43,5 +49,11 @@ public abstract class AbstractPeakIdentifierCSD<T> implements IPeakIdentifierCSD
 		if(identifierSettings == null) {
 			throw new ValueMustNotBeNullException("The identifier settings must not be null.");
 		}
+	}
+
+	@Override
+	public List<LiteratureReference> getLiteratureReferences() {
+
+		return literatureReferences;
 	}
 }
