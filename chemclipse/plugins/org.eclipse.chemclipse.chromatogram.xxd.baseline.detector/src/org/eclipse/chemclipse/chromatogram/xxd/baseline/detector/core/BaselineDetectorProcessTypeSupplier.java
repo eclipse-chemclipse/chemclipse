@@ -60,6 +60,7 @@ public class BaselineDetectorProcessTypeSupplier implements IProcessTypeSupplier
 		public BaselineDetectorProcessorSupplier(IBaselineDetectorSupplier supplier, IProcessTypeSupplier parent) {
 
 			super(supplier.getId(), supplier.getDetectorName(), supplier.getDescription(), (Class<IBaselineDetectorSettings>)supplier.getSettingsClass(), parent, DataType.MSD, DataType.CSD, DataType.WSD, DataType.VSD);
+			getLiteratureReferences().addAll(supplier.getLiteratureReferences());
 		}
 
 		@Override

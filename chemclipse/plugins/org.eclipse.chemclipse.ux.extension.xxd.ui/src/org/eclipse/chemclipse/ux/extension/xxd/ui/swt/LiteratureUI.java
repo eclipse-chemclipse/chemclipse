@@ -91,7 +91,7 @@ public class LiteratureUI extends StyledText {
 		String[] lines = formattedRIS.split(LiteratureSupport.LINE_DELIMITER);
 		int offset = 0;
 		for(String line : lines) {
-			String[] entries = line.split(LiteratureSupport.ENTTRY_DELIMITER);
+			String[] entries = line.split(LiteratureSupport.ENTRY_DELIMITER);
 			if(entries.length == 2) {
 				String identifier = entries[0].trim();
 				if(!LiteratureSupport.isEndOfReferenceRIS(identifier)) {

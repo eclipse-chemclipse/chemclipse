@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2018 Lablicate GmbH.
+ * Copyright (c) 2008, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -11,7 +11,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.baseline.detector.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.chemclipse.chromatogram.xxd.baseline.detector.settings.IBaselineDetectorSettings;
+import org.eclipse.chemclipse.support.literature.LiteratureReference;
 
 public class BaselineDetectorSupplier implements IBaselineDetectorSupplier {
 
@@ -19,6 +23,7 @@ public class BaselineDetectorSupplier implements IBaselineDetectorSupplier {
 	private String description = "";
 	private String detectorName = "";
 	private Class<? extends IBaselineDetectorSettings> settingsClass;
+	private List<LiteratureReference> literatureReference = new ArrayList<>();
 
 	@Override
 	public String getId() {
@@ -84,6 +89,12 @@ public class BaselineDetectorSupplier implements IBaselineDetectorSupplier {
 	protected void setSettingsClass(Class<? extends IBaselineDetectorSettings> settingsClass) {
 
 		this.settingsClass = settingsClass;
+	}
+
+	@Override
+	public List<LiteratureReference> getLiteratureReferences() {
+
+		return literatureReference;
 	}
 
 	@Override
