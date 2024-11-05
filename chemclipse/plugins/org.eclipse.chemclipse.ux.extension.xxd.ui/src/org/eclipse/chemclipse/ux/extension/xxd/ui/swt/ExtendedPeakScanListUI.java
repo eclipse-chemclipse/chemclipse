@@ -265,7 +265,6 @@ public class ExtendedPeakScanListUI extends Composite implements IExtendedPartUI
 		createScanIdentifierUI(composite);
 		createButtonReset(composite);
 		createButtonSave(composite);
-		createButtonHelp(composite);
 		createButtonSettings(composite);
 		//
 		toolbarMain.set(composite);

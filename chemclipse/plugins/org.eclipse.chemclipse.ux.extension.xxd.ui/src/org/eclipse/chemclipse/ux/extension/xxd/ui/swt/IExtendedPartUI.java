@@ -37,7 +37,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swtchart.extensions.core.IChartSettings;
 import org.eclipse.swtchart.extensions.core.ScrollableChart;
-import org.eclipse.ui.PlatformUI;
 
 public interface IExtendedPartUI {
 
@@ -112,26 +111,6 @@ public interface IExtendedPartUI {
 						setButtonImage(button, image, PREFIX_SHOW, PREFIX_HIDE, tooltip, active);
 					}
 				}
-			}
-		});
-		//
-		return button;
-	}
-
-	default Button createButtonHelp(Composite parent) {
-
-		/*
-		 * Validated SWT.PUSH - no toggle
-		 */
-		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Show context sensitive help");
-		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_QUESTION, IApplicationImageProvider.SIZE_16x16));
-		button.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-				PlatformUI.getWorkbench().getHelpSystem().displayDynamicHelp();
 			}
 		});
 		//

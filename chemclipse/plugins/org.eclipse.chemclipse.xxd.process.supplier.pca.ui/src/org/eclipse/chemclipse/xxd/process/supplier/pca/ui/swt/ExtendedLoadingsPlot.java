@@ -143,7 +143,6 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 		//
 		createPrincipalComponentUI(composite);
 		createSettingsButton(composite);
-		createButtonHelp(composite);
 	}
 
 	private void createPlot(Composite parent) {

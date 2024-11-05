@@ -1341,7 +1341,6 @@ public class ExtendedChromatogramUI extends Composite implements ToolbarConfig, 
 		createButtonToggleChartGrid(composite);
 		createToggleChartSeriesLegendButton(composite);
 		createButtonReset(composite);
-		createButtonHelp(composite);
 		createButtonSettings(composite);
 		//
 		toolbarMainControl.set(composite);

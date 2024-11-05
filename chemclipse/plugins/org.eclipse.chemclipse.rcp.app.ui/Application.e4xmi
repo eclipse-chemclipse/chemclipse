@@ -104,8 +104,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_XqnQUF6nEe2sw_cXqaBWMw" elementId="org.eclipse.chemclipse.rcp.app.ui.toolbar.help">
         <children xsi:type="menu:ToolBarSeparator" xmi:id="_Y8yp4F6nEe2sw_cXqaBWMw" elementId="org.eclipse.chemclipse.rcp.app.ui.toolbarseparator.6"/>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_oQ91EDL0EeKMEOdllHiEaA" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.about" label="About" iconURI="platform:/plugin/org.eclipse.jface/icons/full/message_info.png" tooltip="About" command="_h0A1RDLzEeKMEOdllHiEaA"/>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_ULurUMDKEeOKxaD_PtepsA" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.help" visible="false" label="Help" iconURI="platform:/plugin/org.eclipse.help.ui/icons/etool16/help.png" enabled="false" command="_zeEzsCaJEeOrR5M2kqmSOQ"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_HNigYJriEe-tqr1p-O9rcQ" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.help" label="%Context" iconURI="platform:/plugin/org.eclipse.help.ui/icons/view16/help_view.png" enabled="false" command="_bDq6UBQKEe2TEsI5wKibaA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_dz9NIF6nEe2sw_cXqaBWMw" elementId="org.eclipse.chemclipse.rcp.app.ui.toolbar.plugins">
         <children xsi:type="menu:HandledToolItem" xmi:id="_G9eogOToEeK3p9M57zVYqQ" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.updates" visible="false" label="Updates" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/updates.gif" enabled="false" command="_LrC6QDiWEeKDEdWQrkwLnQ"/>
@@ -166,7 +165,7 @@
   <commands xmi:id="_mZc7gLgVEemNgNx3khJk0g" elementId="chemclipse.command.opentoolmenu" commandName="Open Tool Menu" description="Open the Tool menu"/>
   <commands xmi:id="_X4T0YKzhEeu9gOO-5hThuA" elementId="org.eclipse.chemclipse.rcp.app.ui.command.resetperspective" commandName="Reset Perspective"/>
   <commands xmi:id="_WfrxwBQKEe2TEsI5wKibaA" elementId="org.eclipse.chemclipse.rcp.app.ui.command.help.search" commandName="Search Help"/>
-  <commands xmi:id="_bDq6UBQKEe2TEsI5wKibaA" elementId="org.eclipse.chemclipse.rcp.app.ui.command.help.context" commandName="Help context" description="Context sensitive help"/>
+  <commands xmi:id="_bDq6UBQKEe2TEsI5wKibaA" elementId="org.eclipse.chemclipse.rcp.app.ui.command.help.context" commandName="Help Context" description="Context sensitive help"/>
   <commands xmi:id="_fIGhoEATEe2Qr_bc3qI_WQ" elementId="org.eclipse.chemclipse.rcp.app.ui.command.tutorials" commandName="Tutorials" description="Step by step instructions"/>
   <commands xmi:id="_VHTxUGTiEe2pDehzkyrxqQ" elementId="org.eclipse.chemclipse.rcp.app.ui.command.quickaccess" commandName="Quick Access"/>
   <addons xmi:id="_h0A1NDLzEeKMEOdllHiEaA" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>

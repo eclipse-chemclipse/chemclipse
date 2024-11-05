@@ -88,7 +88,6 @@ public class ExtendedChromatogramIndicesUI extends Composite implements IExtende
 		createButtonToggleToolbarSearch(composite);
 		createButtonToggleToolbarEdit(composite);
 		createButtonSave(composite);
-		createButtonHelp(composite);
 		createButtonSettings(composite);
 		//
 		return composite;
