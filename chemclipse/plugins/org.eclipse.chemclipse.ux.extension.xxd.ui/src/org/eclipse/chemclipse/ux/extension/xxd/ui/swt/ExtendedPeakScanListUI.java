@@ -153,7 +153,6 @@ public class ExtendedPeakScanListUI extends Composite implements IExtendedPartUI
 				updateChromatogramSelection(chromatogramSelection);
 			}
 		}
-		//
 		updateLabel();
 		return true;
 	}
