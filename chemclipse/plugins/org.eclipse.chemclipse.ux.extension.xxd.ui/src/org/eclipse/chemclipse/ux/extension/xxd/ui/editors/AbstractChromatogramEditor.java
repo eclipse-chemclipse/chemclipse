@@ -136,7 +136,7 @@ public abstract class AbstractChromatogramEditor extends AbstractUpdater<Extende
 	 * @param processSupplierContext
 	 * @param shell
 	 */
-	public AbstractChromatogramEditor(DataType dataType, Composite parent, MPart part, MDirtyable dirtyable, IProcessSupplierContext processSupplierContext, Shell shell) {
+	protected AbstractChromatogramEditor(DataType dataType, Composite parent, MPart part, MDirtyable dirtyable, IProcessSupplierContext processSupplierContext, Shell shell) {
 
 		super(TOPIC_CHROMATOGRAM);
 		//
@@ -160,8 +160,10 @@ public abstract class AbstractChromatogramEditor extends AbstractUpdater<Extende
 				@Override
 				public void run() {
 
-					extendedChromatogramUI.updateToolbar();
-					extendedChromatogramUI.updateCommands();
+					if(chromatogramFile != null) {
+						extendedChromatogramUI.updateToolbar();
+						extendedChromatogramUI.updateCommands();
+					}
 				}
 			});
 		}
@@ -177,6 +179,7 @@ public abstract class AbstractChromatogramEditor extends AbstractUpdater<Extende
 	@PreDestroy
 	private void preDestroy(ProcessMethodNotifications notifications, MeasurementResultNotification measurementNotification, PartSupport partSupport) {
 
+		chromatogramFile = null;
 		notifications.removeObjectChangedListener(updateMenuListener);
 		measurementNotification.removeObjectChangedListener(updateMeasurementResult);
 		//

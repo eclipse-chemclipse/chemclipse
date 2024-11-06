@@ -55,9 +55,9 @@ public class E4ProcessSupplierContext implements IProcessSupplierContext {
 			public void accept(IProcessSupplier<?> supplier) {
 
 				Object factorySupplier = ContextInjectionFactory.invoke(supplier, ProcessSupplierFactory.class, eclipseContext, null);
-				if(factorySupplier instanceof IProcessSupplier<?>) {
+				if(factorySupplier instanceof IProcessSupplier<?> processSupplier) {
 					ContextInjectionFactory.inject(factorySupplier, eclipseContext);
-					consumer.accept((IProcessSupplier<?>)factorySupplier);
+					consumer.accept(processSupplier);
 				} else {
 					consumer.accept(supplier);
 				}
