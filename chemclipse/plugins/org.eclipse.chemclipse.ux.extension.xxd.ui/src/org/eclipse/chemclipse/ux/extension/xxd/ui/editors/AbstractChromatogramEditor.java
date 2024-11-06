@@ -136,7 +136,7 @@ public abstract class AbstractChromatogramEditor extends AbstractUpdater<Extende
 	 * @param processSupplierContext
 	 * @param shell
 	 */
-	public AbstractChromatogramEditor(DataType dataType, Composite parent, MPart part, MDirtyable dirtyable, IProcessSupplierContext processSupplierContext, Shell shell) {
+	protected AbstractChromatogramEditor(DataType dataType, Composite parent, MPart part, MDirtyable dirtyable, IProcessSupplierContext processSupplierContext, Shell shell) {
 
 		super(TOPIC_CHROMATOGRAM);
 		//
