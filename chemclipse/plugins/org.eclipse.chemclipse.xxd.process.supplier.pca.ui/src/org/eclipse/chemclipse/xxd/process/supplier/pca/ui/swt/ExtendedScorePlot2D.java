@@ -95,17 +95,7 @@ public class ExtendedScorePlot2D extends Composite implements IExtendedPartUI {
 										}
 									}
 								}
-								for(IResultPCA result : evaluationPCA.getResults().getPcaResultList()) {
-									if(result.isSelected()) {
-										result.toggleSelected();
-									}
-									for(ISample sample : samples) {
-										if(result.getSample().equals(sample)) {
-											result.toggleSelected();
-										}
-									}
-								}
-								setInput(evaluationPCA);
+								// todo: update highlighting
 							}
 						}
 					}
