@@ -160,8 +160,10 @@ public abstract class AbstractChromatogramEditor extends AbstractUpdater<Extende
 				@Override
 				public void run() {
 
-					extendedChromatogramUI.updateToolbar();
-					extendedChromatogramUI.updateCommands();
+					if(chromatogramFile != null) {
+						extendedChromatogramUI.updateToolbar();
+						extendedChromatogramUI.updateCommands();
+					}
 				}
 			});
 		}
@@ -177,6 +179,7 @@ public abstract class AbstractChromatogramEditor extends AbstractUpdater<Extende
 	@PreDestroy
 	private void preDestroy(ProcessMethodNotifications notifications, MeasurementResultNotification measurementNotification, PartSupport partSupport) {
 
+		chromatogramFile = null;
 		notifications.removeObjectChangedListener(updateMenuListener);
 		measurementNotification.removeObjectChangedListener(updateMeasurementResult);
 		//
