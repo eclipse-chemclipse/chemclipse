@@ -39,7 +39,6 @@ public class SeriesConverter {
 
 		IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 		List<IScatterSeriesData> scatterSeriesDataList = new ArrayList<>();
-		List<IScatterSeriesData> scatterSeriesDataListSelected = new ArrayList<>();
 		List<? extends IVariable> variables = pcaResults.getExtractedVariables();
 		//
 		for(int i = 0; i < variables.size(); i++) {
