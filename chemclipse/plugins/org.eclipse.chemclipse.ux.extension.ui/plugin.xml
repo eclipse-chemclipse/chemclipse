@@ -222,17 +222,6 @@
       </page>
    </extension>
    <extension
-         point="org.eclipse.chemclipse.ux.extension.ui.welcometile">
-      <WelcomeTile
-            Description="Please write us an email if you need help."
-            Section="Help">
-      </WelcomeTile>
-      <WelcomeTile
-            Description="If your data can&apos;t be loaded, please contact us."
-            Section="Data Formats">
-      </WelcomeTile>
-   </extension>
-   <extension
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
       <category
             name="Basics"
