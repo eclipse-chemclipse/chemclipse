@@ -13,29 +13,42 @@
 package org.eclipse.chemclipse.model.types;
 
 import org.eclipse.chemclipse.processing.DataCategory;
+import org.eclipse.chemclipse.support.text.ILabel;
 
-public enum DataType {
+public enum DataType implements ILabel {
 
-	NONE, // Used e.g. as an initial value for the Scan Table
-	AUTO_DETECT, // Auto-Detect
-	MSD_NOMINAL, // Quadrupole, Ion Trap
-	MSD_TANDEM, // MS/MS
-	MSD_HIGHRES, // Orbitrap, TOF
-	MSD, // mass selective data
-	CSD, // current selective data
-	WSD, // wavelength selective data
-	VSD, // vibrational spectroscopy data (FT-IR, Raman)
-	SCAN_VSD, // vibrational spectroscopy (FT-IR, Raman) - single scan
-	SCAN_WSD, // wavelength selective single scan (UV/Vis)
-	TSD, // time selective data (IMS)
-	NMR, // Nuclear magnetic resonance
-	CAL, // Retention Index Calibration
-	PCR, // Polymerase Chain Reaction
-	SEQ, // Sequences
-	MTH, // Methods
-	QDB, // Quantitation Databases
-	MALDI, // MALDI-TOF MS
-	MSD_DATABASE; // Mass Spectral Databases (*.msl, ...)
+	NONE("--"), // Used e.g. as an initial value for the Scan Table
+	AUTO_DETECT("Auto-Detect"), //
+	MSD_NOMINAL("Quadrupole, Ion Trap"), //
+	MSD_TANDEM("MS/MS"), //
+	MSD_HIGHRES("Orbitrap, TOF-MS"), //
+	MSD("Mass Selective Data (MSD)"), //
+	CSD("Current Selective Cata (CSD)"), //
+	WSD("Wavelength Selective Data (WSD)"), //
+	VSD("Vibrational Spectroscopy Data (VSD)"), //
+	SCAN_VSD("Vibrational Spectroscopy Scan (FT-IR, Raman)"), //
+	SCAN_WSD("Wavelength Selective Scan (UV/Vis)"), //
+	TSD("Time Selective Data (GC-IMS, GCxGC, ..)"), //
+	NMR("Nuclear Magnetic Resonance"), //
+	CAL("Retention Index Calibration"), //
+	PCR("Polymerase Chain Reaction"), //
+	SEQ("Sequences"), //
+	MTH("Methods"), //
+	QDB("Quantitation Databases"), //
+	MALDI("MALDI-TOF MS"), //
+	MSD_DATABASE("Mass Spectral Databases"); //
+
+	private String label = "";
+
+	private DataType(String label) {
+
+		this.label = label;
+	}
+
+	public String label() {
+
+		return label;
+	}
 
 	public static DataType fromDataCategory(DataCategory category) {
 
