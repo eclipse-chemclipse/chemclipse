@@ -91,18 +91,7 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 										}
 									}
 								}
-								for(IVariable variable : evaluationPCA.getResults().getExtractedVariables()) {
-									if(variable.isSelected()) {
-										variable.setSelected(false);
-										;
-									}
-									for(IVariable selectedVariable : selectedVariables) {
-										if(variable.equals(selectedVariable)) {
-											variable.setSelected(true);
-										}
-									}
-								}
-								setInput(evaluationPCA);
+								// todo: update highlighting
 							}
 						}
 					}
