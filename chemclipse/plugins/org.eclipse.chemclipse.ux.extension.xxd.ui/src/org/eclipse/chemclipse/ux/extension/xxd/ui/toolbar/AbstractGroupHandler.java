@@ -228,6 +228,9 @@ public abstract class AbstractGroupHandler implements IGroupHandler {
 
 	private void updateMenuItems(MMenu menu, EModelService modelService) {
 
+		if(menu == null) {
+			return;
+		}
 		List<MenuContribution> menuContributions = new ArrayList<>();
 		//
 		List<IPartHandler> partHandlersMandatory = getPartHandlerMandatory();
@@ -439,6 +442,9 @@ public abstract class AbstractGroupHandler implements IGroupHandler {
 
 	private MMenu getSubMenu(MMenu menu, String parent) throws NotDefinedException {
 
+		if(menu == null) {
+			return null;
+		}
 		Optional<MMenuElement> element = menu.getChildren().stream().filter(c -> c.getElementId().equals(parent)).findFirst();
 		if(element.isPresent() && element.get() instanceof MMenu foundMenu) {
 			return foundMenu;
