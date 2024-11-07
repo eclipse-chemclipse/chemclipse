@@ -244,6 +244,16 @@ public class ExtendedScorePlot2D extends Composite implements IExtendedPartUI {
 					int startY = userSelection.getStartY();
 					int stopX = userSelection.getStopX();
 					int stopY = userSelection.getStopY();
+					if(startX > stopX) {
+						int flip = startX;
+						startX = stopX;
+						stopX = flip;
+					}
+					if(startY > stopY) {
+						int flip = startY;
+						startY = stopY;
+						stopY = flip;
+					}
 					/*
 					 * Calculate selected points.
 					 */
