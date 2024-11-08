@@ -13,6 +13,10 @@ package org.eclipse.chemclipse.support.ui.richtext;
 
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JEditorPane;
 import javax.swing.text.EditorKit;
@@ -65,10 +69,40 @@ public class RichTextConverter {
 					} catch(Exception e) {
 					}
 				}
+				/*
+				 * Collect and replace the items.
+				 */
+				Map<String, String> replacements = new HashMap<>();
+				replacements.putAll(getFontSizeReplacements(body));
+				for(Map.Entry<String, String> entry : replacements.entrySet()) {
+					body = body.replaceAll(entry.getKey(), entry.getValue());
+				}
 			}
 		}
 		//
 		return body;
+	}
+
+	private static Map<String, String> getFontSizeReplacements(String body) {
+
+		Map<String, String> replacements = new HashMap<>();
+		/*
+		 * font-size: 8pt -> font-size: 11px
+		 */
+		float factor = 1.333333333f;
+		Pattern pattern = Pattern.compile("(font-size:\\s?+)(8)(pt)");
+		Matcher matcher = pattern.matcher(body);
+		while(matcher.find()) {
+			try {
+				String term = matcher.group();
+				int sizePx = Math.round(Float.parseFloat(matcher.group(2).trim()) * factor);
+				String replacement = "font-size: " + sizePx + "px";
+				replacements.put(term, replacement);
+			} catch(NumberFormatException e) {
+			}
+		}
+		//
+		return replacements;
 	}
 
 	private static String convert(String value) throws Exception {
