@@ -77,6 +77,7 @@ public class ExtendedScorePlot2D extends Composite implements IExtendedPartUI {
 		createControl();
 		DataUpdateSupport dataUpdateSupport = new DataUpdateSupport(Activator.getDefault().getEventBroker());
 		dataUpdateSupport.subscribe(IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT, IChemClipseEvents.EVENT_BROKER_DATA);
+		dataUpdateSupport.subscribe(IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_SAMPLE, IChemClipseEvents.EVENT_BROKER_DATA);
 		dataUpdateSupport.add(new IDataUpdateListener() {
 
 			@Override
@@ -84,7 +85,7 @@ public class ExtendedScorePlot2D extends Composite implements IExtendedPartUI {
 
 				if(evaluationPCA != null) {
 					if(DataUpdateSupport.isVisible(control)) {
-						if(IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT.equals(topic)) {
+						if(IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_SAMPLE.equals(topic)) {
 							if(objects.size() == 1) {
 								Object object = objects.get(0);
 								ArrayList<ISample> samples = new ArrayList<>();
@@ -95,7 +96,8 @@ public class ExtendedScorePlot2D extends Composite implements IExtendedPartUI {
 										}
 									}
 								}
-								// todo: update highlighting
+								evaluationPCA.setHighlightedSamples(samples);
+								setInput(evaluationPCA);
 							}
 						}
 					}
@@ -285,6 +287,7 @@ public class ExtendedScorePlot2D extends Composite implements IExtendedPartUI {
 					 */
 					if(!sampleSelected.isEmpty()) {
 						UpdateNotifierUI.update(event.display, IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT, sampleSelected.toArray());
+						UpdateNotifierUI.update(event.display, IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_SAMPLE, sampleSelected.toArray());
 					}
 					/*
 					 * Finish User Selection Process

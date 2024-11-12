@@ -43,14 +43,18 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static final int MIN_SCORE_PLOT_2D_SYMBOL_SIZE = 1;
 	public static final int MAX_SCORE_PLOT_2D_SYMBOL_SIZE = 100;
 	public static final String P_SCORE_PLOT_2D_SYMBOL_TYPE = "scorePlot2dSymbolType";
-	public static final String DEF_SCORE_PLOT_2D_SYMBOL_TYPE = "CIRCLE";
+	public static final String DEF_SCORE_PLOT_2D_SYMBOL_TYPE = "CROSS";
+	public static final String P_SCORE_PLOT_2D_HIGHLIGHT_SYMBOL_TYPE = "scorePlot2dHightlightSymbolType";
+	public static final String DEF_SCORE_PLOT_2D_HIGHLIGHT_SYMBOL_TYPE = "CIRCLE";
 	// Loading Plot general Settings
 	public static final String P_LOADING_PLOT_2D_SYMBOL_SIZE = "loadingPlot2dSymbolSize";
 	public static final int DEF_LOADING_PLOT_2D_SYMBOL_SIZE = 3;
 	public static final int MIN_LOADING_PLOT_2D_SYMBOL_SIZE = 1;
 	public static final int MAX_LOADING_PLOT_2D_SYMBOL_SIZE = 100;
 	public static final String P_LOADING_PLOT_2D_SYMBOL_TYPE = "loadingPlot2dSymbolType";
-	public static final String DEF_LOADING_PLOT_2D_SYMBOL_TYPE = "CIRCLE";
+	public static final String DEF_LOADING_PLOT_2D_SYMBOL_TYPE = "CROSS";
+	public static final String P_LOADING_PLOT_2D_HIGHLIGHT_SYMBOL_TYPE = "loadingPlot2dHighlightSymbolType";
+	public static final String DEF_LOADING_PLOT_2D_HIGHLIGHT_SYMBOL_TYPE = "CIRCLE";
 	//
 	public static final String P_COLOR_SCHEME = "colorScheme";
 	public static final String DEF_COLOR_SCHEME = "Print";
@@ -81,8 +85,10 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 		putDefault(P_RETENTION_TIME_WINDOW_PEAKS, Double.toString(DEF_RETENTION_TIME_WINDOW_PEAKS));
 		putDefault(P_SCORE_PLOT_2D_SYMBOL_SIZE, Integer.toString(DEF_SCORE_PLOT_2D_SYMBOL_SIZE));
 		putDefault(P_SCORE_PLOT_2D_SYMBOL_TYPE, DEF_SCORE_PLOT_2D_SYMBOL_TYPE);
+		putDefault(P_SCORE_PLOT_2D_HIGHLIGHT_SYMBOL_TYPE, DEF_SCORE_PLOT_2D_HIGHLIGHT_SYMBOL_TYPE);
 		putDefault(P_LOADING_PLOT_2D_SYMBOL_SIZE, Integer.toString(DEF_LOADING_PLOT_2D_SYMBOL_SIZE));
 		putDefault(P_LOADING_PLOT_2D_SYMBOL_TYPE, DEF_LOADING_PLOT_2D_SYMBOL_TYPE);
+		putDefault(P_LOADING_PLOT_2D_HIGHLIGHT_SYMBOL_TYPE, DEF_LOADING_PLOT_2D_HIGHLIGHT_SYMBOL_TYPE);
 		putDefault(P_COLOR_SCHEME, DEF_COLOR_SCHEME);
 		putDefault(P_PATH_IMPORT_FILE, DEF_PATH_IMPORT_FILE);
 		putDefault(P_PATH_EXPORT_FILE, DEF_PATH_EXPORT_FILE);

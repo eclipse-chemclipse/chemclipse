@@ -36,6 +36,8 @@ public abstract class AbstractPartPCA<T extends Composite> extends AbstractPart<
 		subscribeAdditionalTopic(IChemClipseEvents.TOPIC_PCA_UPDATE_LABELS, IChemClipseEvents.EVENT_BROKER_DATA);
 		subscribeAdditionalTopic(IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT, IChemClipseEvents.EVENT_BROKER_DATA);
 		subscribeAdditionalTopic(IChemClipseEvents.TOPIC_EDITOR_PCA_CLOSE, IChemClipseEvents.EVENT_BROKER_DATA);
+		subscribeAdditionalTopic(IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_SAMPLE, IChemClipseEvents.EVENT_BROKER_DATA);
+		subscribeAdditionalTopic(IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_VARIABLE, IChemClipseEvents.EVENT_BROKER_DATA);
 	}
 
 	@Override

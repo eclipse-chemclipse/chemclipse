@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2022 Lablicate GmbH.
+ * Copyright (c) 2018, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -7,7 +7,8 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
+ * Lorenz Gerber - add highlight option
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.preferences;
 
@@ -39,6 +40,7 @@ public class PreferencePageScorePlot extends FieldEditorPreferencePage implement
 	protected void createFieldEditors() {
 
 		addField(new ComboFieldEditor(PreferenceSupplier.P_SCORE_PLOT_2D_SYMBOL_TYPE, "Symbol type:", PreferenceSupport.SYMBOL_TYPES, getFieldEditorParent()));
+		addField(new ComboFieldEditor(PreferenceSupplier.P_SCORE_PLOT_2D_HIGHLIGHT_SYMBOL_TYPE, "Highlight Symbol type:", PreferenceSupport.SYMBOL_TYPES, getFieldEditorParent()));
 		addField(new ExtendedIntegerFieldEditor(PreferenceSupplier.P_SCORE_PLOT_2D_SYMBOL_SIZE, "Symbol size", PreferenceSupplier.MIN_SCORE_PLOT_2D_SYMBOL_SIZE, PreferenceSupplier.MAX_SCORE_PLOT_2D_SYMBOL_SIZE, getFieldEditorParent()));
 	}
 }

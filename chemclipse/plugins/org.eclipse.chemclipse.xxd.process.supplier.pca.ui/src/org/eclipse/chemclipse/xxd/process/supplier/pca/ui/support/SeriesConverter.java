@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.chemclipse.model.statistics.ISample;
 import org.eclipse.chemclipse.model.statistics.IVariable;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultPCA;
@@ -35,7 +36,7 @@ import org.eclipse.swtchart.extensions.scattercharts.ScatterSeriesData;
 
 public class SeriesConverter {
 
-	public static List<IScatterSeriesData> basisVectorsToSeries(IResultsPCA<? extends IResultPCA, ? extends IVariable> pcaResults, int pcX, int pcY) {
+	public static List<IScatterSeriesData> basisVectorsToSeries(IResultsPCA<? extends IResultPCA, ? extends IVariable> pcaResults, List<IVariable> highlighted, int pcX, int pcY) {
 
 		IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 		List<IScatterSeriesData> scatterSeriesDataList = new ArrayList<>();
@@ -57,6 +58,9 @@ public class SeriesConverter {
 			IScatterSeriesSettings scatterSeriesSettings = scatterSeriesData.getSettings();
 			scatterSeriesSettings.setSymbolColor(variable.isSelected() ? Colors.RED : Colors.GRAY);
 			scatterSeriesSettings.setSymbolType(PlotSymbolType.valueOf(preferenceStore.getString(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_TYPE)));
+			if(highlighted.contains(variable)) {
+				scatterSeriesSettings.setSymbolType(PlotSymbolType.valueOf(preferenceStore.getString(PreferenceSupplier.P_LOADING_PLOT_2D_HIGHLIGHT_SYMBOL_TYPE)));
+			}
 			scatterSeriesSettings.setSymbolSize(preferenceStore.getInt(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_SIZE));
 			IScatterSeriesSettings scatterSeriesSettingsHighlight = (IScatterSeriesSettings)scatterSeriesSettings.getSeriesSettingsHighlight();
 			scatterSeriesSettingsHighlight.setSymbolColor(Colors.RED);
@@ -108,7 +112,7 @@ public class SeriesConverter {
 		return scatterSeriesDataList;
 	}
 
-	public static List<IScatterSeriesData> sampleToSeries(IResultsPCA<? extends IResultPCA, ?> resultsPCA, int pcX, int pcY, Map<String, IResultPCA> extractedPcaResults) {
+	public static List<IScatterSeriesData> sampleToSeries(IResultsPCA<? extends IResultPCA, ?> resultsPCA, List<ISample> highlighted, int pcX, int pcY, Map<String, IResultPCA> extractedPcaResults) {
 
 		IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 		List<IScatterSeriesData> scatterSeriesDataList = new ArrayList<>();
@@ -161,6 +165,9 @@ public class SeriesConverter {
 			IScatterSeriesSettings scatterSeriesSettings = scatterSeriesData.getSettings();
 			scatterSeriesSettings.setDescription(description);
 			scatterSeriesSettings.setSymbolType(PlotSymbolType.valueOf(preferenceStore.getString(PreferenceSupplier.P_SCORE_PLOT_2D_SYMBOL_TYPE)));
+			if(highlighted.contains(pcaResult.getSample())) {
+				scatterSeriesSettings.setSymbolType(PlotSymbolType.valueOf(preferenceStore.getString(PreferenceSupplier.P_SCORE_PLOT_2D_HIGHLIGHT_SYMBOL_TYPE)));
+			}
 			scatterSeriesSettings.setSymbolSize(preferenceStore.getInt(PreferenceSupplier.P_SCORE_PLOT_2D_SYMBOL_SIZE));
 			Color color = Colors.getColor(pcaResult.getSample().getRGB());
 			if(pcaResult.isSelected()) {

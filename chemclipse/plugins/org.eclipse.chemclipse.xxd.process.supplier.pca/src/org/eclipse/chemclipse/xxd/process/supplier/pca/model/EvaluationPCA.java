@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2022 Lablicate GmbH.
+ * Copyright (c) 2020, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,8 +8,12 @@
  * 
  * Contributors:
  * Philip Wenig - initial API and implementation
+ * Lorenz Gerber - add highlight data
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.model;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.chemclipse.model.statistics.ISample;
 import org.eclipse.chemclipse.model.statistics.IVariable;
@@ -22,6 +26,8 @@ public class EvaluationPCA {
 	 * The feature data matrix can be calculated after samples and results are set.
 	 */
 	private FeatureDataMatrix featureDataMatrix = null;
+	private List<ISample> highlightedSamples = new ArrayList<ISample>();
+	private List<IVariable> highlightedVariables = new ArrayList<IVariable>();
 
 	public EvaluationPCA(ISamplesPCA<? extends IVariable, ? extends ISample> samples, IResultsPCA<? extends IResultPCA, ? extends IVariable> results) {
 
@@ -47,5 +53,25 @@ public class EvaluationPCA {
 	public void setFeatureDataMatrix(FeatureDataMatrix featureDataMatrix) {
 
 		this.featureDataMatrix = featureDataMatrix;
+	}
+
+	public void setHighlightedSamples(List<ISample> samples) {
+
+		this.highlightedSamples = samples;
+	}
+
+	public List<ISample> getHighlightedSamples() {
+
+		return this.highlightedSamples;
+	}
+
+	public void setHighlightedVariables(List<IVariable> variables) {
+
+		this.highlightedVariables = variables;
+	}
+
+	public List<IVariable> getHighlightedVariables() {
+
+		return this.highlightedVariables;
 	}
 }

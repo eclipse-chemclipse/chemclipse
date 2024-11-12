@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2023 Lablicate GmbH.
+ * Copyright (c) 2017, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,12 +9,15 @@
  * Contributors:
  * Jan Holy - initial API and implementation
  * Philip Wenig - getting rid of JavaFX
+ * Lorenz Gerber - add sample highlighting
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.chart2d;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.eclipse.chemclipse.model.statistics.ISample;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.EvaluationPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultsPCA;
@@ -35,7 +38,8 @@ public class ScorePlot extends AbtractPlotPCA {
 		deleteSeries();
 		if(evaluationPCA != null) {
 			IResultsPCA<? extends IResultPCA, ?> resultsPCA = evaluationPCA.getResults();
-			addSeriesData(SeriesConverter.sampleToSeries(resultsPCA, pcX, pcY, extractedResults));
+			List<ISample> highlightedSamples = evaluationPCA.getHighlightedSamples();
+			addSeriesData(SeriesConverter.sampleToSeries(resultsPCA, highlightedSamples, pcX, pcY, extractedResults));
 			update(pcX, pcY, resultsPCA.getExplainedVariances());
 		}
 		redraw();
