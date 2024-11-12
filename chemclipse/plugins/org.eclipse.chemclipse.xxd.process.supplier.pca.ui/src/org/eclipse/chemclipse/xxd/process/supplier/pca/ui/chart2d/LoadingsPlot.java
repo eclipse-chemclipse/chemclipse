@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2022 Lablicate GmbH.
+ * Copyright (c) 2017, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,6 +9,7 @@
  * Contributors:
  * Jan Holy - initial API and implementation
  * Philip Wenig - getting rid of JavaFX
+ * Lorenz Gerber - add highlight option
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.chart2d;
 
@@ -53,7 +54,7 @@ public class LoadingsPlot extends AbtractPlotPCA {
 			IResultsPCA<? extends IResultPCA, ? extends IVariable> resultsPCA = evaluationPCA.getResults();
 			List<IScatterSeriesData> series;
 			if(labelType == LABEL_RETENTION_TIME_MINUTES) {
-				series = SeriesConverter.basisVectorsToSeries(resultsPCA, pcX, pcY);
+				series = SeriesConverter.basisVectorsToSeries(resultsPCA, evaluationPCA.getHighlightedVariables(), pcX, pcY);
 			} else {
 				series = SeriesConverter.basisVectorsToSeriesDescription(resultsPCA, pcX, pcY);
 			}

@@ -79,6 +79,7 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 		//
 		DataUpdateSupport dataUpdateSupport = new DataUpdateSupport(Activator.getDefault().getEventBroker());
 		dataUpdateSupport.subscribe(IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT, IChemClipseEvents.EVENT_BROKER_DATA);
+		dataUpdateSupport.subscribe(IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_VARIABLE, IChemClipseEvents.EVENT_BROKER_DATA);
 		dataUpdateSupport.add(new IDataUpdateListener() {
 
 			@Override
@@ -86,7 +87,7 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 
 				if(evaluationPCA != null) {
 					if(DataUpdateSupport.isVisible(control)) {
-						if(IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT.equals(topic)) {
+						if(IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_VARIABLE.equals(topic)) {
 							if(objects.size() == 1) {
 								Object object = objects.get(0);
 								ArrayList<Feature> features = new ArrayList<>();
@@ -239,7 +240,7 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 	private void handleRowSelection(List<Object> selectedElements) {
 
 		if(selectedElements.isEmpty()) {
-			UpdateNotifierUI.update(getDisplay(), IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT, selectedElements.toArray());
+			UpdateNotifierUI.update(getDisplay(), IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_VARIABLE, selectedElements.toArray());
 		} else if(Feature.class.isInstance(selectedElements.get(0))) {
 			ArrayList<Feature> features = new ArrayList<>();
 			for(Object element : selectedElements) {
@@ -247,7 +248,7 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 					features.add((Feature)element);
 				}
 			}
-			UpdateNotifierUI.update(getDisplay(), IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT, selectedElements.toArray());
+			UpdateNotifierUI.update(getDisplay(), IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_VARIABLE, selectedElements.toArray());
 		}
 	}
 

@@ -72,6 +72,7 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 		createControl();
 		DataUpdateSupport dataUpdateSupport = new DataUpdateSupport(Activator.getDefault().getEventBroker());
 		dataUpdateSupport.subscribe(IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT, IChemClipseEvents.EVENT_BROKER_DATA);
+		dataUpdateSupport.subscribe(IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_VARIABLE, IChemClipseEvents.EVENT_BROKER_DATA);
 		dataUpdateSupport.add(new IDataUpdateListener() {
 
 			@Override
@@ -79,7 +80,7 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 
 				if(evaluationPCA != null) {
 					if(DataUpdateSupport.isVisible(control)) {
-						if(IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT.equals(topic)) {
+						if(IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_VARIABLE.equals(topic)) {
 							if(objects.size() == 1) {
 								Object object = objects.get(0);
 								ArrayList<IVariable> selectedVariables = new ArrayList<>();
@@ -91,7 +92,8 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 										}
 									}
 								}
-								// todo: update highlighting
+								evaluationPCA.setHighlightedVariables(selectedVariables);
+								setInput(evaluationPCA);
 							}
 						}
 					}
@@ -278,7 +280,7 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 					 * Get the closest result.
 					 */
 					if(!featureSelected.isEmpty()) {
-						UpdateNotifierUI.update(event.display, IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT, featureSelected.toArray());
+						UpdateNotifierUI.update(event.display, IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_VARIABLE, featureSelected.toArray());
 					}
 					/*
 					 * Finish User Selection Process
