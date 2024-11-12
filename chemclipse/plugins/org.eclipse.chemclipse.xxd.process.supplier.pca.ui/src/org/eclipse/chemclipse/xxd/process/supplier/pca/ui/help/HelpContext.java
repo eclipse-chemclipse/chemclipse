@@ -9,7 +9,7 @@
  * Contributors:
  * Lorenz Gerber - initial API and implementation
  *******************************************************************************/
-package org.chemclipse.xxd.process.supplier.pca.ui.help;
+package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.help;
 
 public class HelpContext {
 

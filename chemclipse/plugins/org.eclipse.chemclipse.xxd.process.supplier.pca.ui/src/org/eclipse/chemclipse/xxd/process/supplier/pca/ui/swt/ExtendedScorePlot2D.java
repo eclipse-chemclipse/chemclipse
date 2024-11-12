@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.chemclipse.xxd.process.supplier.pca.ui.help.HelpContext;
 import org.eclipse.chemclipse.model.statistics.ISample;
 import org.eclipse.chemclipse.model.statistics.IVariable;
 import org.eclipse.chemclipse.numeric.core.IPoint;
@@ -37,6 +36,7 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultsPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.Activator;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.chart2d.ScorePlot;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.help.HelpContext;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.preferences.PreferencePage;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.preferences.PreferencePageScorePlot;
 import org.eclipse.swt.SWT;
