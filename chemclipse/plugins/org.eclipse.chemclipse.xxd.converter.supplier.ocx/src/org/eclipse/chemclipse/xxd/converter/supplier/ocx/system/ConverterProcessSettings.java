@@ -23,9 +23,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
 public class ConverterProcessSettings implements ISystemProcessSettings {
 
-	@JsonProperty(value = "Version Chromatogram (*.ocb)", defaultValue = "V_1501")
+	@JsonProperty(value = "Version Chromatogram (*.ocb)", defaultValue = "V_1502")
 	@JsonPropertyDescription(value = "Defines the version to store the chromatogram data.")
-	private ChromatogramVersion chromatogramVersion = ChromatogramVersion.V_1501;
+	private ChromatogramVersion chromatogramVersion = ChromatogramVersion.V_1502;
 	@JsonProperty(value = "Compression Level Chromatogram (*.ocb)", defaultValue = "0")
 	@JsonPropertyDescription(value = "Compression level for the chromatogram, 0 = off, 9 = best.")
 	@IntSettingsProperty(minValue = PreferenceSupplier.MIN_COMPRESSION_LEVEL, maxValue = PreferenceSupplier.MAX_COMPRESSION_LEVEL)
