@@ -100,6 +100,7 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 									}
 									if(features.size() > 0) {
 										listControl.get().setSelection(new StructuredSelection(features));
+										listControl.get().reveal(features.get(0));
 									}
 								}
 							}
