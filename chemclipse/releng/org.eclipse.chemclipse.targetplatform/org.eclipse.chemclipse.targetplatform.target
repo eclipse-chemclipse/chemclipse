@@ -5,7 +5,6 @@
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 	<unit id="org.eclipse.equinox.sdk.feature.group" version="0.0.0"/>
 	<unit id="org.eclipse.sdk.feature.group" version="0.0.0"/>
-	<unit id="javax.activation" version="0.0.0"/>
 	<unit id="ch.qos.logback.classic" version="0.0.0"/>
 	<unit id="ch.qos.logback.core" version="0.0.0"/>
 	<unit id="com.fasterxml.jackson.core.jackson-annotations" version="0.0.0"/>
