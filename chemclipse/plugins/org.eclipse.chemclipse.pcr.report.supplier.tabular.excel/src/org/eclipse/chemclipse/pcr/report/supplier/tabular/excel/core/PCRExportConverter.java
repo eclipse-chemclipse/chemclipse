@@ -49,11 +49,12 @@ import org.eclipse.chemclipse.pcr.report.supplier.tabular.model.ChannelMappings;
 import org.eclipse.chemclipse.pcr.report.supplier.tabular.model.WellComparator;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
-import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public class PCRExportConverter extends AbstractPlateExportConverter implements IPlateExportConverter {
 
+	public static final String TOPIC_PROCESSING_FILE_CREATED = "processing/file/created/pcr/excel"; // $NON-NLS-1$
+	//
 	private static final Logger logger = Logger.getLogger(PCRExportConverter.class);
 	private static final String DESCRIPTION = "PCR Excel Export";
 
@@ -108,7 +109,9 @@ public class PCRExportConverter extends AbstractPlateExportConverter implements 
 			processingInfo.addErrorMessage(DESCRIPTION, "Input/Output problem.");
 			logger.warn(e);
 		}
-		UpdateNotifier.update(IChemClipseEvents.TOPIC_PROCESSING_FILE_CREATED, file);
+		if(PreferenceSupplier.isOpenReport()) {
+			UpdateNotifier.update(TOPIC_PROCESSING_FILE_CREATED, file);
+		}
 		return processingInfo;
 	}
 

@@ -29,6 +29,8 @@ import org.eclipse.chemclipse.support.text.ValueFormat;
 
 public class CalibrationFileWriter {
 
+	public static final String TOPIC_PROCESSING_FILE_CREATED = "processing/file/created/amdis/cal"; // $NON-NLS-1$
+	//
 	private static final Logger logger = Logger.getLogger(CalibrationFileWriter.class);
 	private DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0.000");
 
