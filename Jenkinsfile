@@ -1,7 +1,7 @@
 pipeline {
 	agent {
 		kubernetes {
-			label 'ubuntu-latest'
+			inheritFrom 'ubuntu-latest'
 		}
 	}
 	triggers {
