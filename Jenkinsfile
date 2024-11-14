@@ -1,7 +1,7 @@
 pipeline {
 	agent {
 		kubernetes {
-			label 'centos-latest'
+			label 'ubuntu-latest'
 		}
 	}
 	triggers {
