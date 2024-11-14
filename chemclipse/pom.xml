@@ -232,6 +232,7 @@
 								<rootFolders>
 									<macosx>ChemClipse.app</macosx>
 								</rootFolders>
+								<archiveFileName>chemclipse</archiveFileName>
 							</product>
 						</products>
 					</configuration>
