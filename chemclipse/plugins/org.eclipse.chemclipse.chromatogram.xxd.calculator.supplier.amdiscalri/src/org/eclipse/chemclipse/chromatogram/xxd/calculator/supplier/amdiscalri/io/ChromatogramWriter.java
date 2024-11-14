@@ -16,12 +16,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.impl.RetentionIndexExtractor;
+import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.settings.IndexExportSettings;
 import org.eclipse.chemclipse.converter.exceptions.FileIsNotWriteableException;
 import org.eclipse.chemclipse.model.columns.ISeparationColumnIndices;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.notifier.UpdateNotifier;
-import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public class ChromatogramWriter {
@@ -40,6 +40,8 @@ public class ChromatogramWriter {
 		ISeparationColumnIndices separationColumnIndices = retentionIndexExtractor.extract(chromatogram, deriveMissingIndices, useCuratedNames);
 		CalibrationFileWriter calibrationFileWriter = new CalibrationFileWriter();
 		calibrationFileWriter.write(file, separationColumnIndices);
-		UpdateNotifier.update(IChemClipseEvents.TOPIC_PROCESSING_FILE_CREATED, file);
+		if(PreferenceSupplier.isOpenReportAfterProcessing()) {
+			UpdateNotifier.update(CalibrationFileWriter.TOPIC_PROCESSING_FILE_CREATED, file);
+		}
 	}
 }

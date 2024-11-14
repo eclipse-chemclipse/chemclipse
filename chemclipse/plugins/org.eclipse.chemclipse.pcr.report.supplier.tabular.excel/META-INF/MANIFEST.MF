@@ -21,4 +21,5 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.chemclipse.pcr.report.supplier.tabular
-Export-Package: org.eclipse.chemclipse.pcr.report.supplier.tabular.excel.preferences
+Export-Package: org.eclipse.chemclipse.pcr.report.supplier.tabular.excel.core,
+ org.eclipse.chemclipse.pcr.report.supplier.tabular.excel.preferences

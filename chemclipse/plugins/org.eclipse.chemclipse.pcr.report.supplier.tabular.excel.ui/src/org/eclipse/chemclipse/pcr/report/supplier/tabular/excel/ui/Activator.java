@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.chemclipse.logging.core.Logger;
+import org.eclipse.chemclipse.pcr.report.supplier.tabular.excel.core.PCRExportConverter;
 import org.eclipse.chemclipse.pcr.report.supplier.tabular.excel.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.support.ui.activator.AbstractActivatorUI;
@@ -77,7 +78,7 @@ public class Activator extends AbstractActivatorUI {
 
 		IEventBroker eventBroker = getEventBroker(bundleContext);
 		if(eventBroker != null) {
-			registeredEventHandler.add(registerEventHandler(eventBroker, IChemClipseEvents.EVENT_BROKER_DATA, IChemClipseEvents.TOPIC_PROCESSING_FILE_CREATED));
+			registeredEventHandler.add(registerEventHandler(eventBroker, IChemClipseEvents.EVENT_BROKER_DATA, PCRExportConverter.TOPIC_PROCESSING_FILE_CREATED));
 		}
 	}
 
@@ -91,10 +92,8 @@ public class Activator extends AbstractActivatorUI {
 				try {
 					Object object = event.getProperty(property);
 					if(object instanceof File file) {
-						if(IChemClipseEvents.TOPIC_PROCESSING_FILE_CREATED.equals(topic)) {
-							if(PreferenceSupplier.isOpenReport()) {
-								SystemEditor.open(file);
-							}
+						if(PCRExportConverter.TOPIC_PROCESSING_FILE_CREATED.equals(topic)) {
+							SystemEditor.open(file);
 						}
 					}
 				} catch(Exception e) {

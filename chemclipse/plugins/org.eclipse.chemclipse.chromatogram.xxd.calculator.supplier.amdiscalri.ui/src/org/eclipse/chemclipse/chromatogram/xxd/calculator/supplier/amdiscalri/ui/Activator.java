@@ -15,6 +15,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.io.CalibrationFileWriter;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
@@ -82,7 +83,7 @@ public class Activator extends AbstractActivatorUI {
 		if(eventBroker != null) {
 			registeredEventHandler.add(registerEventHandler(eventBroker, IChemClipseEvents.EVENT_BROKER_DATA, IChemClipseEvents.TOPIC_RI_LIBRARY_ADD_ADD_TO_PROCESS));
 			registeredEventHandler.add(registerEventHandler(eventBroker, IChemClipseEvents.EVENT_BROKER_DATA, IChemClipseEvents.TOPIC_RI_LIBRARY_REMOVE_FROM_PROCESS));
-			registeredEventHandler.add(registerEventHandler(eventBroker, IChemClipseEvents.EVENT_BROKER_DATA, IChemClipseEvents.TOPIC_PROCESSING_FILE_CREATED));
+			registeredEventHandler.add(registerEventHandler(eventBroker, IChemClipseEvents.EVENT_BROKER_DATA, CalibrationFileWriter.TOPIC_PROCESSING_FILE_CREATED));
 		}
 	}
 
@@ -110,10 +111,8 @@ public class Activator extends AbstractActivatorUI {
 								if(libraries.contains(library)) {
 									libraries.remove(library); // REMOVE
 								}
-							} else if(IChemClipseEvents.TOPIC_PROCESSING_FILE_CREATED.equals(topic)) {
-								if(PreferenceSupplier.isOpenReportAfterProcessing()) {
-									SystemEditor.open(file);
-								}
+							} else if(CalibrationFileWriter.TOPIC_PROCESSING_FILE_CREATED.equals(topic)) {
+								SystemEditor.open(file);
 							}
 							PreferenceSupplier.setRetentionIndexFiles(libraries);
 						}
