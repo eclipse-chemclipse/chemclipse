@@ -8,6 +8,14 @@
 	<unit id="javax.activation" version="0.0.0"/>
 	<unit id="ch.qos.logback.classic" version="0.0.0"/>
 	<unit id="ch.qos.logback.core" version="0.0.0"/>
+	<unit id="com.fasterxml.jackson.core.jackson-annotations" version="0.0.0"/>
+	<unit id="com.fasterxml.jackson.core.jackson-core" version="0.0.0"/>
+	<unit id="com.fasterxml.jackson.core.jackson-databind" version="0.0.0"/>
+	<unit id="com.google.guava" version="0.0.0"/>
+	<unit id="com.google.guava.failureaccess" version="0.0.0"/>
+	<unit id="org.glassfish.hk2.osgi-resource-locator" version="0.0.0"/>
+	<unit id="com.sun.xml.bind.jaxb-osgi" version="0.0.0"/>
+	<unit id="jakarta.xml.bind-api" version="0.0.0"/>
 	<repository location="https://download.eclipse.org/releases/2024-09/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
@@ -155,32 +163,6 @@
 			</dependency>
 		</dependencies>
 	</location>
-	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
-		<dependencies>
-			<dependency>
-				<groupId>org.glassfish.hk2</groupId>
-				<artifactId>osgi-resource-locator</artifactId>
-				<version>1.0.3</version>
-				<type>jar</type>
-			</dependency>
-		</dependencies>
-	</location>
-	<location includeDependencyDepth="direct" includeDependencyScopes="compile,runtime" includeSource="true" label="xml.bind" missingManifest="generate" type="Maven">
-		<dependencies>
-			<dependency>
-				<groupId>com.sun.xml.bind</groupId>
-				<artifactId>jaxb-impl</artifactId>
-				<version>4.0.3</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>jakarta.xml.bind</groupId>
-				<artifactId>jakarta.xml.bind-api</artifactId>
-				<version>4.0.0</version>
-				<type>jar</type>
-			</dependency>
-		</dependencies>
-	</location>
 	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" label="org.apache.jena" missingManifest="generate" type="Maven">
 		<dependencies>
 			<dependency>
@@ -265,44 +247,6 @@
 				<groupId>org.apache.httpcomponents</groupId>
 				<artifactId>httpcore</artifactId>
 				<version>4.4.16</version>
-				<type>jar</type>
-			</dependency>
-		</dependencies>
-	</location>
-	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" label="com.google.guava" missingManifest="generate" type="Maven">
-		<dependencies>
-			<dependency>
-				<groupId>com.google.guava</groupId>
-				<artifactId>failureaccess</artifactId>
-				<version>1.0.1</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.google.guava</groupId>
-				<artifactId>guava</artifactId>
-				<version>31.1-jre</version>
-				<type>jar</type>
-			</dependency>
-		</dependencies>
-	</location>
-	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" label="com.fasterxml.jackson.core" missingManifest="generate" type="Maven">
-		<dependencies>
-			<dependency>
-				<groupId>com.fasterxml.jackson.core</groupId>
-				<artifactId>jackson-annotations</artifactId>
-				<version>2.13.5</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.fasterxml.jackson.core</groupId>
-				<artifactId>jackson-core</artifactId>
-				<version>2.13.5</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>com.fasterxml.jackson.core</groupId>
-				<artifactId>jackson-databind</artifactId>
-				<version>2.13.5</version>
 				<type>jar</type>
 			</dependency>
 		</dependencies>
