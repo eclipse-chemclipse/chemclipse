@@ -30,6 +30,7 @@
               <children xsi:type="advanced:Placeholder" xmi:id="_2Aqc0CskEeakPPc3RJFSAg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.dataexplorer" ref="_qtur4Cf2EeafjOXnfHSw0Q"/>
               <children xsi:type="advanced:Placeholder" xmi:id="_lrDDgCyIEeakko_bfjza1A" elementId="org.eclipse.ui.navigator.ProjectExplorer" ref="_SUu-YK2iEeuuJ_UXBFJQCQ"/>
               <children xsi:type="advanced:Placeholder" xmi:id="_-51qwI8wEeiO3oL5WUkZBQ" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.sequenceexplorer" ref="_pWhTQI8wEeiO3oL5WUkZBQ"/>
+              <children xsi:type="advanced:Placeholder" xmi:id="_TEAWcKKVEe-Jq4Ox9k12rA" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.peakScanListPartDescriptor" ref="_dXp1AC5uEeiL24_JU7_FGA"/>
             </children>
             <children xsi:type="basic:PartStack" xmi:id="_T6wpUCs2Eea9JYQkIDiHKQ" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.partstack.left.center" visible="false" containerData="3500"/>
           </children>

@@ -59,7 +59,6 @@ public class GroupHandlerScans extends AbstractGroupHandler {
 		partHandler.add(new PartHandler("Flavor Marker", PartSupport.PARTDESCRIPTOR_FLAVOR_MARKER, PreferenceSupplier.P_STACK_POSITION_FLAVOR_MARKER));
 		partHandler.add(new PartHandler("Literature", PartSupport.PARTDESCRIPTOR_LITERATURE, PreferenceSupplier.P_STACK_POSITION_LITERATURE));
 		partHandler.add(new PartHandler("CAS Numbers", PartSupport.PARTDESCRIPTOR_CAS_NUMBERS, PreferenceSupplier.P_STACK_POSITION_CAS_NUMBERS));
-		partHandler.add(new PartHandler("Scan List", PartSupport.PARTDESCRIPTOR_PEAK_SCAN_LIST, PreferenceSupplier.P_STACK_POSITION_PEAK_SCAN_LIST));
 		partHandler.add(new PartHandler("Scan Subtract", PartSupport.PARTDESCRIPTOR_SUBTRACT_SCAN, PreferenceSupplier.P_STACK_POSITION_SUBTRACT_SCAN_PART));
 		partHandler.add(new PartHandler("Scan Combined", PartSupport.PARTDESCRIPTOR_COMBINED_SCAN, PreferenceSupplier.P_STACK_POSITION_COMBINED_SCAN_PART));
 		partHandler.add(new PartHandler("Scan Comparison", PartSupport.PARTDESCRIPTOR_COMPARISON_SCAN, PreferenceSupplier.P_STACK_POSITION_COMPARISON_SCAN_CHART));

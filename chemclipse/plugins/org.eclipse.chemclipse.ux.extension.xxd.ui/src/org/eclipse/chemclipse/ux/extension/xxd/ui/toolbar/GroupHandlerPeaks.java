@@ -43,7 +43,6 @@ public class GroupHandlerPeaks extends AbstractGroupHandler {
 		partHandler.add(new PartHandler("Peak Chart", PartSupport.PARTDESCRIPTOR_PEAK_CHART, PreferenceSupplier.P_STACK_POSITION_PEAK_CHART));
 		partHandler.add(new PartHandler("Peak Details", PartSupport.PARTDESCRIPTOR_PEAK_DETAILS, PreferenceSupplier.P_STACK_POSITION_PEAK_DETAILS));
 		partHandler.add(new PartHandler("Peak Detector", PartSupport.PARTDESCRIPTOR_PEAK_DETECTOR, PreferenceSupplier.P_STACK_POSITION_PEAK_DETECTOR));
-		partHandler.add(new PartHandler("Peak List", PartSupport.PARTDESCRIPTOR_PEAK_SCAN_LIST, PreferenceSupplier.P_STACK_POSITION_PEAK_SCAN_LIST));
 		partHandler.add(new PartHandler("Peak Traces", PartSupport.PARTDESCRIPTOR_PEAK_TRACES, PreferenceSupplier.P_STACK_POSITION_PEAK_TRACES));
 		partHandler.add(new PartHandler("Peak Scan Comparison", PartSupport.PARTDESCRIPTOR_COMPARISON_SCAN, PreferenceSupplier.P_STACK_POSITION_COMPARISON_SCAN_CHART));
 		partHandler.add(new PartHandler("Molecule", PartSupport.PARTDESCRIPTOR_MOLECULE, PreferenceSupplier.P_STACK_POSITION_MOLECULE));
