@@ -321,17 +321,15 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 					 * Determine the x|y coordinates.
 					 */
 					Rectangle rectangle = baseChart.getPlotArea().getBounds();
-					int x = event.x;
-					int y = event.y;
-					int width = rectangle.width;
-					int height = rectangle.height;
+					double x = event.x;
+					double y = event.y;
+					double width = rectangle.width;
+					double height = rectangle.height;
 					/*
 					 * Calculate the selected point.
 					 */
 					Range rangeX = baseChart.getAxisSet().getXAxis(BaseChart.ID_PRIMARY_X_AXIS).getRange();
 					Range rangeY = baseChart.getAxisSet().getYAxis(BaseChart.ID_PRIMARY_Y_AXIS).getRange();
-					double pX = rangeX.lower + (rangeX.upper - rangeX.lower) * ((1.0d / width) * x);
-					double pY = rangeY.lower + (rangeY.upper - rangeY.lower) * ((1.0d / height) * y);
 					/*
 					 * Map the result deltas.
 					 */
@@ -346,15 +344,27 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 					for(int i = 0; i < resultsPCA.getExtractedVariables().size(); i++) {
 						double[] variableLoading = getVariableLoading(resultsPCA, i);
 						IPoint pointResult = getPoint(variableLoading, pcX, pcY, i);
-						double deltaX = Math.abs(pointResult.getX() - pX);
-						double deltaY = Math.abs(pointResult.getY() + pY);
-						featureDeltas.add(new FeatureDelta(evaluationPCA.getFeatureDataMatrix().getFeatures().get(i), deltaX, deltaY));
+						if(pointResult.getX() > rangeX.lower && pointResult.getX() < rangeX.upper && pointResult.getY() > rangeY.lower && pointResult.getY() < rangeY.upper) {
+							double deltaX = 0;
+							double deltaY = 0;
+							if(rangeX.upper < 0 || rangeX.lower > 0) {
+								deltaX = Math.abs(1.00 / Math.abs((Math.abs(rangeX.upper) - Math.abs(rangeX.lower))) * (pointResult.getX() - rangeX.lower) * width - x);
+							} else {
+								deltaX = Math.abs(1.00 / (rangeX.upper - rangeX.lower) * (pointResult.getX() - rangeX.lower) * width - x);
+							}
+							if(rangeY.upper < 0 || rangeY.lower > 0) {
+								deltaY = Math.abs(1.00 / Math.abs((Math.abs(rangeY.upper) - Math.abs(rangeY.lower))) * (pointResult.getY() - rangeY.lower) * height - (height - y));
+							} else {
+								deltaY = Math.abs(1.00 / (rangeY.upper - rangeY.lower) * (pointResult.getY() - rangeY.lower) * height - (height - y));
+							}
+							featureDeltas.add(new FeatureDelta(evaluationPCA.getFeatureDataMatrix().getFeatures().get(i), deltaX, deltaY));
+						}
 					}
 					/*
 					 * Get the closest result.
 					 */
 					if(!featureDeltas.isEmpty()) {
-						Collections.sort(featureDeltas, Comparator.comparing(FeatureDelta::getDeltaX).thenComparing(FeatureDelta::getDeltaY));
+						Collections.sort(featureDeltas, Comparator.comparing(FeatureDelta::getDistance));
 						FeatureDelta featureDelta = featureDeltas.get(0);
 						List<Feature> featureList = new ArrayList<>();
 						featureList.add(featureDelta.getFeature());
