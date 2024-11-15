@@ -457,7 +457,11 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 		PrincipalComponentUI principalComponentUI = principalComponentControl.get();
 		int pcX = principalComponentUI.getPCX();
 		int pcY = principalComponentUI.getPCY();
+		BaseChart baseChart = plotControl.get().getBaseChart();
+		Range rangeX = baseChart.getAxisSet().getXAxis(BaseChart.ID_PRIMARY_X_AXIS).getRange();
+		Range rangeY = baseChart.getAxisSet().getYAxis(BaseChart.ID_PRIMARY_Y_AXIS).getRange();
 		updatePlot(pcX, pcY);
+		plotControl.get().updateRange(rangeX, rangeY);
 	}
 
 	private void updateWidgets() {
