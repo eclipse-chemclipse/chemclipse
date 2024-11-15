@@ -18,12 +18,14 @@ public class FeatureDelta {
 	private Feature feature = null;
 	private double deltaX = 0;
 	private double deltaY = 0;
+	private double distance = 0;
 
 	public FeatureDelta(Feature feature, double deltaX, double deltaY) {
 
 		this.feature = feature;
-		this.deltaX = deltaX;
-		this.deltaY = deltaY;
+		this.deltaX = Math.abs(deltaX);
+		this.deltaY = Math.abs(deltaY);
+		this.distance = Math.sqrt(Math.pow(this.deltaX, 2) + Math.pow(this.deltaY, 2));
 	}
 
 	public Feature getFeature() {
@@ -39,6 +41,11 @@ public class FeatureDelta {
 	public double getDeltaY() {
 
 		return deltaY;
+	}
+
+	public double getDistance() {
+
+		return distance;
 	}
 
 	@Override
@@ -63,6 +70,6 @@ public class FeatureDelta {
 	@Override
 	public String toString() {
 
-		return "FeatureDelta [featurePCA=" + feature + ", deltaX=" + deltaX + ", deltaY=" + deltaY + "]";
+		return "FeatureDelta [featurePCA=" + feature + ", deltaX=" + deltaX + ", deltaY=" + deltaY + ", distance=" + distance + "]";
 	}
 }
