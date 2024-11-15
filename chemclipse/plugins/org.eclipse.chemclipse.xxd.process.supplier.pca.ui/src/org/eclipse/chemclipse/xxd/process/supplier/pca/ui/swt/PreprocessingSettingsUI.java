@@ -54,6 +54,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
 public class PreprocessingSettingsUI extends Composite {
@@ -331,6 +332,7 @@ public class PreprocessingSettingsUI extends Composite {
 		Canvas canvas = new Canvas(parent, SWT.BORDER);
 		canvas.setToolTipText("Formula");
 		canvas.setData(KEY_IMAGE, null);
+		canvas.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_LIST_BACKGROUND));
 		//
 		GridData gridData = new GridData(GridData.FILL_BOTH);
 		gridData.horizontalSpan = 3;
@@ -350,7 +352,6 @@ public class PreprocessingSettingsUI extends Composite {
 					int x = (int)(dest.width / 2.0f - src.width / 2.0f);
 					int y = (int)(dest.height / 2.0f - src.height / 2.0f);
 					e.gc.drawImage(image, x, y);
-					canvas.setBackground(parent.getBackground());
 				}
 			}
 		});
