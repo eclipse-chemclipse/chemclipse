@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2023 Lablicate GmbH.
+ * Copyright (c) 2017, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,6 +9,7 @@
  * Contributors:
  * Jan Holy - initial API and implementation
  * Philip Wenig - improvements
+ * Lorenz Gerber - implement IRangeSupport
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.chart2d;
 
@@ -21,23 +22,33 @@ import java.util.Set;
 import org.eclipse.chemclipse.support.text.ValueFormat;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.chemclipse.support.ui.workbench.PreferencesSupport;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.custom.IRangeSupport;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swtchart.IAxis;
 import org.eclipse.swtchart.IAxis.Position;
+import org.eclipse.swtchart.IAxisSet;
+import org.eclipse.swtchart.Range;
 import org.eclipse.swtchart.extensions.axisconverter.PassThroughConverter;
+import org.eclipse.swtchart.extensions.core.BaseChart;
 import org.eclipse.swtchart.extensions.core.IChartSettings;
+import org.eclipse.swtchart.extensions.core.IExtendedChart;
 import org.eclipse.swtchart.extensions.core.IPrimaryAxisSettings;
 import org.eclipse.swtchart.extensions.core.ISecondaryAxisSettings;
 import org.eclipse.swtchart.extensions.core.RangeRestriction;
 import org.eclipse.swtchart.extensions.core.SecondaryAxisSettings;
 import org.eclipse.swtchart.extensions.scattercharts.ScatterChart;
 
-public abstract class AbtractPlotPCA extends ScatterChart {
+public abstract class AbtractPlotPCA extends ScatterChart implements IRangeSupport {
 
 	private DecimalFormat decimalFormat = new DecimalFormat(("0.00E0"), new DecimalFormatSymbols(Locale.ENGLISH));
 	private String title = "";
+	//
+	//
+	private Range selectedRangeX = null;
+	private Range selectedRangeY = null;
 
 	public AbtractPlotPCA(Composite parent, int style, String title) {
 
@@ -201,5 +212,66 @@ public abstract class AbtractPlotPCA extends ScatterChart {
 		builder.append(")");
 		//
 		return builder.toString();
+	}
+
+	@Override
+	public void clearSelectedRange() {
+
+		selectedRangeX = null;
+		selectedRangeY = null;
+	}
+
+	@Override
+	public void assignCurrentRangeSelection() {
+
+		BaseChart baseChart = getBaseChart();
+		selectedRangeX = baseChart.getAxisSet().getXAxis(BaseChart.ID_PRIMARY_X_AXIS).getRange();
+		selectedRangeY = baseChart.getAxisSet().getYAxis(BaseChart.ID_PRIMARY_Y_AXIS).getRange();
+	}
+
+	@Override
+	public Range getCurrentRangeX() {
+
+		BaseChart baseChart = getBaseChart();
+		IAxisSet axisSet = baseChart.getAxisSet();
+		IAxis xAxis = axisSet.getXAxis(BaseChart.ID_PRIMARY_X_AXIS);
+		return new Range(xAxis.getRange().lower, xAxis.getRange().upper);
+	}
+
+	@Override
+	public void updateRangeX(Range selectedRangeX) {
+
+		updateRange(selectedRangeX, selectedRangeY);
+	}
+
+	@Override
+	public Range getCurrentRangeY() {
+
+		BaseChart baseChart = getBaseChart();
+		IAxisSet axisSet = baseChart.getAxisSet();
+		IAxis yAxis = axisSet.getYAxis(BaseChart.ID_PRIMARY_Y_AXIS);
+		return new Range(yAxis.getRange().lower, yAxis.getRange().upper);
+	}
+
+	@Override
+	public void updateRangeY(Range selectedRangeY) {
+
+		updateRange(selectedRangeX, selectedRangeY);
+	}
+
+	@Override
+	public void updateRange(Range selectedRangeX, Range selectedRangeY) {
+
+		this.selectedRangeX = selectedRangeX;
+		this.selectedRangeY = selectedRangeY;
+		adjustChartRange();
+	}
+
+	@Override
+	public void adjustChartRange() {
+
+		setRange(IExtendedChart.X_AXIS, selectedRangeX);
+		setRange(IExtendedChart.Y_AXIS, selectedRangeY);
+		redraw();
 	}
 }
