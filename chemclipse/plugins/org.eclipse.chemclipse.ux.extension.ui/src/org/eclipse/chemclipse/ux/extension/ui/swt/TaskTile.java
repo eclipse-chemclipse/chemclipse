@@ -80,12 +80,6 @@ public class TaskTile extends Composite {
 		updateFromDefinition();
 	}
 
-	@Override
-	public void dispose() {
-
-		super.dispose();
-	}
-
 	public TileDefinition getDefinition() {
 
 		return definition;
@@ -254,16 +248,16 @@ public class TaskTile extends Composite {
 			textSection.setEnabled(false);
 			textDesciption.setEnabled(false);
 		}
-		//
-		int fontSize;
-		//
+		updateFont(textSection, style);
+	}
+
+	private void updateFont(Label label, int style) {
+
+		int fontSize = 18;
 		if((style & LARGE_TITLE) != 0) {
 			fontSize = 40;
-		} else {
-			fontSize = 18;
 		}
-		//
-		textSection.setFont(Fonts.getCachedFont(getDisplay(), "Arial", fontSize, SWT.BOLD)); //$NON-NLS-1$
+		textSection.setFont(Fonts.getCachedFont(getDisplay(), label.getFont().getFontData()[0].getName(), fontSize, SWT.BOLD));
 	}
 
 	public void updateFromDefinition() {
