@@ -21,9 +21,11 @@ import java.util.List;
 
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
+import org.eclipse.chemclipse.model.statistics.IPeakNumber;
 import org.eclipse.chemclipse.model.statistics.IRetentionIndex;
 import org.eclipse.chemclipse.model.statistics.IRetentionTime;
 import org.eclipse.chemclipse.model.statistics.IVariable;
+import org.eclipse.chemclipse.model.statistics.PeakNumber;
 import org.eclipse.chemclipse.model.statistics.RetentionIndex;
 import org.eclipse.chemclipse.model.statistics.RetentionTime;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.PeakSampleData;
@@ -146,6 +148,9 @@ public class PcaExtractionFileBinary implements IExtractionData {
 					} else if(type.equals(IRetentionIndex.TYPE)) {
 						int retentionIndex = (int)Math.round(Double.parseDouble(value));
 						variable = new RetentionIndex(retentionIndex);
+					} else if(type.equals(IPeakNumber.TYPE)) {
+						int peakNumber = (int)Math.round(Double.parseDouble(value));
+						variable = new PeakNumber(peakNumber);
 					}
 					//
 					if(variable != null) {
