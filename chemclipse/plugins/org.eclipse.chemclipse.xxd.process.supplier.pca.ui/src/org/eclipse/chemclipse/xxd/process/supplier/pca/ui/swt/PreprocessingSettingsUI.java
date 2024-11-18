@@ -352,6 +352,7 @@ public class PreprocessingSettingsUI extends Composite {
 					int x = (int)(dest.width / 2.0f - src.width / 2.0f);
 					int y = (int)(dest.height / 2.0f - src.height / 2.0f);
 					e.gc.drawImage(image, x, y);
+					canvas.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_LIST_BACKGROUND));
 				}
 			}
 		});
