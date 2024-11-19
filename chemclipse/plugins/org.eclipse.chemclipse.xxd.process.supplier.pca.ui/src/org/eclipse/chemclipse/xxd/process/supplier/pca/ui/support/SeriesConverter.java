@@ -112,7 +112,7 @@ public class SeriesConverter {
 		return scatterSeriesDataList;
 	}
 
-	public static List<IScatterSeriesData> sampleToSeries(IResultsPCA<? extends IResultPCA, ?> resultsPCA, List<ISample> highlighted, int pcX, int pcY, Map<String, IResultPCA> extractedPcaResults) {
+	public static List<IScatterSeriesData> sampleToSeries(IResultsPCA<? extends IResultPCA, ?> resultsPCA, List<ISample> highlighted, int pcX, int pcY, Map<ISample, IResultPCA> extractedPcaResults) {
 
 		IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 		List<IScatterSeriesData> scatterSeriesDataList = new ArrayList<>();
@@ -145,7 +145,7 @@ public class SeriesConverter {
 					break;
 			}
 			//
-			extractedPcaResults.put(sampleName, pcaResult);
+			extractedPcaResults.put(pcaResult.getSample(), pcaResult);
 			if(!pcaResult.isDisplayed()) {
 				continue;
 			}
@@ -157,7 +157,8 @@ public class SeriesConverter {
 				x = i;
 			}
 			double y = eigenSpace[pcY - 1]; // e.g. 1 = PC2
-			ISeriesData seriesData = new SeriesData(new double[]{x}, new double[]{y}, sampleName);
+			String sampleInstanceId = pcaResult.getSample().getClass().getName() + "@" + Integer.toHexString(System.identityHashCode(pcaResult.getSample()));
+			ISeriesData seriesData = new SeriesData(new double[]{x}, new double[]{y}, sampleInstanceId);
 			/*
 			 * Set the color.
 			 */
