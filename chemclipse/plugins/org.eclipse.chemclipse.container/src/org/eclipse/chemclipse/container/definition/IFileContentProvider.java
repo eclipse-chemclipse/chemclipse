@@ -15,6 +15,8 @@ import java.io.File;
 
 public interface IFileContentProvider {
 
+	public boolean hasContainerContents(File container);
+
 	public long getContentSize(File container);
 
 	public File[] getContents(File container);

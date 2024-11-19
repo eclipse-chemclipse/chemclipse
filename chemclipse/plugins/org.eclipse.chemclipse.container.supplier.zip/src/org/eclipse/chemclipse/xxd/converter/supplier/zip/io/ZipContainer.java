@@ -102,4 +102,17 @@ public class ZipContainer implements IFileContentProvider {
 		}
 		return file;
 	}
+
+	@Override
+	public boolean hasContainerContents(File file) {
+
+		try (ZipFile zipFile = new ZipFile(file)) {
+			return zipFile.entries().hasMoreElements();
+		} catch(ZipException e) {
+			logger.warn(e);
+		} catch(IOException e) {
+			logger.warn(e);
+		}
+		return false;
+	}
 }
