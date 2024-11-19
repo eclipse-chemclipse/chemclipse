@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2022 Lablicate GmbH.
+ * Copyright (c) 2019, 2024 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -189,7 +189,7 @@ public class LazyFileExplorerContentProvider implements ILazyTreeContentProvider
 	private boolean hasContainerContents(File file) {
 
 		IFileContentProvider fileContentProvider = FileContainerSupport.getCache().getFileContentProvider(file);
-		return fileContentProvider != null && fileContentProvider.getContentSize(file) > 0;
+		return fileContentProvider != null && fileContentProvider.hasContainerContents(file);
 	}
 
 	private File[] getContainerContents(File file) {
