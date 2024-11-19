@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Composite;
 
 public class ScorePlot extends AbtractPlotPCA {
 
-	private final Map<String, IResultPCA> extractedResults = new HashMap<>();
+	private final Map<ISample, IResultPCA> extractedResults = new HashMap<>();
 
 	public ScorePlot(Composite parent, int style) {
 

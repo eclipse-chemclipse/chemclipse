@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2023 Lablicate GmbH.
+ * Copyright (c) 2018, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,6 +9,7 @@
  * Contributors:
  * Jan Holy - initial API and implementation
  * Philip Wenig - improvements
+ * Lorenz Gerber - allow duplicate sample names
  *******************************************************************************/
 package org.eclipse.chemclipse.model.statistics;
 
@@ -115,28 +116,5 @@ public abstract class AbstractSample<D extends ISampleData<?>> implements ISampl
 	public int hashCode() {
 
 		return Objects.hash(sampleName);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-
-		if(this == obj) {
-			return true;
-		}
-		if(obj == null) {
-			return false;
-		}
-		if(getClass() != obj.getClass()) {
-			return false;
-		}
-		@SuppressWarnings("rawtypes")
-		AbstractSample other = (AbstractSample)obj;
-		return Objects.equals(sampleName, other.sampleName);
-	}
-
-	@Override
-	public String toString() {
-
-		return "AbstractSample [sampleName=" + sampleName + "]";
 	}
 }
