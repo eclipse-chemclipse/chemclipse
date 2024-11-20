@@ -68,6 +68,8 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 	private UserSelection userSelection = new UserSelection();
 	//
 	private Composite control;
+	//
+	private boolean dblClicked = false;
 
 	public ExtendedLoadingsPlot(Composite parent, int style) {
 
@@ -369,6 +371,7 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 						List<Feature> featureList = new ArrayList<>();
 						featureList.add(featureDelta.getFeature());
 						UpdateNotifierUI.update(event.display, IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_VARIABLE, featureList.toArray());
+						dblClicked = true;
 					}
 				}
 			}
@@ -461,7 +464,12 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 		Range rangeX = baseChart.getAxisSet().getXAxis(BaseChart.ID_PRIMARY_X_AXIS).getRange();
 		Range rangeY = baseChart.getAxisSet().getYAxis(BaseChart.ID_PRIMARY_Y_AXIS).getRange();
 		updatePlot(pcX, pcY);
-		plotControl.get().updateRange(rangeX, rangeY);
+		/*
+		 * Prevent Zoom reset on DblClick
+		 */
+		if(dblClicked){
+			plotControl.get().updateRange(rangeX, rangeY);	
+		} 
 	}
 
 	private void updateWidgets() {
