@@ -86,6 +86,11 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 
 	private static final Logger logger = Logger.getLogger(AnalysisEditorUI.class);
 	//
+	public static final int DEFAULT_WIDTH = 500;
+	public static final int DEFAULT_HEIGHT = 600;
+	//
+	private static final String OPLS_GROUP_TARGET_NONE = "--";
+	//
 	private AtomicReference<Button> buttonToolbarSearchControl = new AtomicReference<>();
 	private AtomicReference<SearchSupportUI> toolbarSearch = new AtomicReference<>();
 	private AtomicReference<Spinner> spinnerControlPC = new AtomicReference<>();
@@ -97,12 +102,9 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 	//
 	private ISamplesPCA<IVariable, ISample> samples = null;
 	private EvaluationPCA evaluationPCA = null;
+	private ArrayList<String> oplsGroupTargets = new ArrayList<>();
 	//
 	private Composite control;
-	private ArrayList<String> oplsGroupTargets;
-	//
-	public static final int DEFAULT_WIDTH = 500;
-	public static final int DEFAULT_HEIGHT = 600;
 
 	public AnalysisEditorUI(Composite parent, int style) {
 
@@ -163,6 +165,10 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 	private void initialize() {
 
 		enableToolbar(toolbarSearch, buttonToolbarSearchControl.get(), IMAGE_SEARCH, TOOLTIP_EDIT, false);
+		//
+		oplsGroupTargets.add(OPLS_GROUP_TARGET_NONE);
+		comboViewerOplsTarget.get().setInput(oplsGroupTargets);
+		comboViewerOplsTarget.get().setSelection(new StructuredSelection(OPLS_GROUP_TARGET_NONE));
 	}
 
 	private void createToolbarMain(Composite parent) {
@@ -424,8 +430,8 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 			@Override
 			public String getText(Object element) {
 
-				if(element instanceof String) {
-					return (String)element.toString();
+				if(element instanceof String value) {
+					return value;
 				} else {
 					return "";
 				}
@@ -445,7 +451,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 					IAnalysisSettings analysisSettings = samples.getAnalysisSettings();
 					if(analysisSettings != null) {
 						analysisSettings.setOplsTargetGroupName(comboViewer.getStructuredSelection().getFirstElement().toString());
-						if(comboViewer.getStructuredSelection().getFirstElement().toString().equals("--")) {
+						if(comboViewer.getStructuredSelection().getFirstElement().toString().equals(OPLS_GROUP_TARGET_NONE)) {
 							combo.setToolTipText("Using Classification Column for OPLS");
 						} else {
 							combo.setToolTipText("Using selected Group against the rest for OPLS");
@@ -455,15 +461,6 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 			}
 		});
 		//
-		if(samples == null) {
-			oplsGroupTargets = new ArrayList<>();
-			oplsGroupTargets.add("--");
-			comboViewer.setInput(oplsGroupTargets);
-		} else {
-			updateOplsGroupTargets();
-		}
-		comboViewer.setInput(oplsGroupTargets);
-		comboViewer.setSelection(new StructuredSelection(oplsGroupTargets.get(0)));
 		comboViewerOplsTarget.set(comboViewer);
 	}
 
@@ -678,16 +675,27 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 			preprocessingSettingsControl.get().setInput(analysisSettings.getPreprocessingSettings());
 			spinnerControlPC.get().setSelection(analysisSettings.getNumberOfPrincipalComponents());
 			comboViewerAlgorithmControl.get().setSelection(new StructuredSelection(analysisSettings.getAlgorithm()));
-			comboViewerOplsTarget.get().setInput(oplsGroupTargets);
-			int selectedIndex = oplsGroupTargets.indexOf(analysisSettings.getOplsTargetGroupName());
-			if(selectedIndex != -1) {
-				comboViewerOplsTarget.get().setSelection(new StructuredSelection(oplsGroupTargets.get(selectedIndex)));
-			} else {
-				comboViewerOplsTarget.get().setSelection(new StructuredSelection(oplsGroupTargets.get(0)));
-			}
 		} else {
 			preprocessingSettingsControl.get().setInput(null);
 		}
+		/*
+		 * OPLS Target
+		 */
+		updateComboViewerOPLS(analysisSettings);
+	}
+
+	private void updateComboViewerOPLS(IAnalysisSettings analysisSettings) {
+
+		comboViewerOplsTarget.get().setInput(oplsGroupTargets);
+		String selection = OPLS_GROUP_TARGET_NONE;
+		if(analysisSettings != null) {
+			String groupName = analysisSettings.getOplsTargetGroupName();
+			if(oplsGroupTargets.contains(groupName)) {
+				selection = groupName;
+			}
+		}
+		//
+		comboViewerOplsTarget.get().setSelection(new StructuredSelection(selection));
 	}
 
 	private void fireUpdate(Display display, EvaluationPCA evaluationPCA) {
@@ -702,7 +710,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 			updateWidgets(analysisSettings);
 			if(analysisSettings != null) {
 				labelOptionControl.get().setSelection(new StructuredSelection(analysisSettings.getLabelOptionPCA()));
-				if(analysisSettings.getAlgorithm() == Algorithm.OPLS) {
+				if(Algorithm.OPLS.equals(analysisSettings.getAlgorithm())) {
 					comboViewerOplsTarget.get().getControl().setEnabled(true);
 				} else {
 					comboViewerOplsTarget.get().getControl().setEnabled(false);
@@ -758,24 +766,32 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 		SamplesListUI sampleListUI = sampleListControl.get();
 		if(samples != null) {
 			sampleListUI.updateInput(samples.getSamples());
-			updateOplsGroupTargets();
-			updateWidgets(samples.getAnalysisSettings());
 		} else {
 			sampleListUI.updateInput(null);
 		}
+		//
+		updateOplsGroupTargets();
+		updateWidgets(samples.getAnalysisSettings());
 	}
 
 	private void updateOplsGroupTargets() {
 
+		oplsGroupTargets.clear();
+		oplsGroupTargets.add(OPLS_GROUP_TARGET_NONE);
+		//
 		if(samples != null) {
-			List<String> fromSamples = new ArrayList<>();
-			fromSamples.add("--");
-			fromSamples.addAll(samples.getSamples().stream().map(x -> x.getGroupName()).distinct().toList());
-			if(!oplsGroupTargets.toString().equals(fromSamples.toString())) {
-				oplsGroupTargets.clear();
-				oplsGroupTargets.add("--");
-				oplsGroupTargets.addAll(samples.getSamples().stream().map(x -> x.getGroupName()).distinct().toList());
+			/*
+			 * Group Name must not be null!
+			 */
+			for(ISample sample : samples.getSamples()) {
+				if(sample.getGroupName() == null) {
+					sample.setGroupName("");
+				}
 			}
+			/*
+			 * Map Group Names
+			 */
+			oplsGroupTargets.addAll(samples.getSamples().stream().map(x -> x.getGroupName()).distinct().toList());
 		}
 	}
 }
