@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2023 Lablicate GmbH.
+ * Copyright (c) 2022, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -105,7 +105,7 @@ public class SampleTemplateIO {
 						if(sample != null) {
 							sample.setSelected(valueParserSupport.parseBoolean(values, 1));
 							sample.setRGB(valueParserSupport.parseString(values, 2));
-							sample.setGroupName(valueParserSupport.parseString(values, 3));
+							sample.setGroupName(valueParserSupport.parseString(values, 3, ""));
 							sample.setClassification(valueParserSupport.parseString(values, 4));
 							sample.setDescription(valueParserSupport.parseString(values, 5));
 						}

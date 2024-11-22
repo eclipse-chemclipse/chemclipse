@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2023 Lablicate GmbH.
+ * Copyright (c) 2017, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -44,8 +44,8 @@ public class InputFilesTable {
 		String[] titles = {"Name", "Group", "Filename", "Path"};
 		int[] bounds = {100, 100, 100, 100};
 		// first column is for the first name
-		TableViewerColumn col = createTableViewerColumn(titles[0], bounds[0], 0);
-		col.setLabelProvider(new ColumnLabelProvider() {
+		TableViewerColumn tableViewerColumn = createTableViewerColumn(titles[0], bounds[0], 0);
+		tableViewerColumn.setLabelProvider(new ColumnLabelProvider() {
 
 			@Override
 			public String getText(Object element) {
@@ -54,8 +54,8 @@ public class InputFilesTable {
 				return inputData.getSampleName();
 			}
 		});
-		col = createTableViewerColumn(titles[1], bounds[1], 1);
-		col.setLabelProvider(new CellLabelProvider() {
+		tableViewerColumn = createTableViewerColumn(titles[1], bounds[1], 1);
+		tableViewerColumn.setLabelProvider(new CellLabelProvider() {
 
 			@Override
 			public void update(ViewerCell cell) {
@@ -65,7 +65,7 @@ public class InputFilesTable {
 				cell.setText(text);
 			}
 		});
-		col.setEditingSupport(new EditingSupport(tableViewer) {
+		tableViewerColumn.setEditingSupport(new EditingSupport(tableViewer) {
 
 			private TextCellEditor editor = new TextCellEditor(tableViewer.getTable());
 
@@ -98,17 +98,12 @@ public class InputFilesTable {
 
 				IDataInputEntry inputData = (IDataInputEntry)element;
 				String groupName = (String)value;
-				groupName = groupName.trim();
-				if(!groupName.isEmpty()) {
-					inputData.setGroupName(groupName);
-				} else {
-					inputData.setGroupName(null);
-				}
+				inputData.setGroupName(groupName.trim());
 				update();
 			}
 		});
-		col = createTableViewerColumn(titles[2], bounds[2], 2);
-		col.setLabelProvider(new ColumnLabelProvider() {
+		tableViewerColumn = createTableViewerColumn(titles[2], bounds[2], 2);
+		tableViewerColumn.setLabelProvider(new ColumnLabelProvider() {
 
 			@Override
 			public String getText(Object element) {
@@ -117,8 +112,8 @@ public class InputFilesTable {
 				return inputData.getFileName();
 			}
 		});
-		col = createTableViewerColumn(titles[3], bounds[3], 3);
-		col.setLabelProvider(new ColumnLabelProvider() {
+		tableViewerColumn = createTableViewerColumn(titles[3], bounds[3], 3);
+		tableViewerColumn.setLabelProvider(new ColumnLabelProvider() {
 
 			@Override
 			public String getText(Object element) {

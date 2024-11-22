@@ -18,15 +18,12 @@ public class Sample extends AbstractSample<PeakSampleData> {
 
 	public Sample(String sampleName, String groupName) {
 
-		super(sampleName);
-		setGroupName(groupName);
+		this(sampleName, groupName, "", "");
 	}
 
 	public Sample(String sampleName, String groupName, String description) {
 
-		super(sampleName);
-		setGroupName(groupName);
-		setDescription(description);
+		this(sampleName, groupName, "", description);
 	}
 
 	public Sample(String sampleName, String groupName, String classification, String description) {

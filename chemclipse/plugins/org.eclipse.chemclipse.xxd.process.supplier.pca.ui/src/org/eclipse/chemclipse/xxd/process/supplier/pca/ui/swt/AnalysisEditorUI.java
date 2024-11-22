@@ -780,11 +780,9 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 		oplsGroupTargets.add(OPLS_GROUP_TARGET_NONE);
 		//
 		if(samples != null) {
-			/*
-			 * Group Name must not be null!
-			 */
 			for(ISample sample : samples.getSamples()) {
 				if(sample.getGroupName() == null) {
+					logger.warn("Fix GroupName (must not be null): " + sample);
 					sample.setGroupName("");
 				}
 			}
