@@ -337,8 +337,6 @@ public class ExtendedScorePlot2D extends Composite implements IExtendedPartUI {
 					 */
 					Range rangeX = baseChart.getAxisSet().getXAxis(BaseChart.ID_PRIMARY_X_AXIS).getRange();
 					Range rangeY = baseChart.getAxisSet().getYAxis(BaseChart.ID_PRIMARY_Y_AXIS).getRange();
-					double pX = rangeX.lower + (rangeX.upper - rangeX.lower) * ((1.0d / width) * x);
-					double pY = rangeY.lower + (rangeY.upper - rangeY.lower) * ((1.0d / height) * y);
 					/*
 					 * Map the result deltas.
 					 */
