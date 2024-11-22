@@ -340,9 +340,9 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 					int pcY = principalComponentUI.getPCY();
 					IResultsPCA<? extends IResultPCA, ? extends IVariable> resultsPCA = evaluationPCA.getResults();
 					List<FeatureDelta> featureDeltas = new ArrayList<>();
-					//
-					// Here need to prepare a result object with loading vectors per variable
-					//
+					/*
+					 * Prepare a result object with loading vectors per variable
+					 */
 					for(int i = 0; i < resultsPCA.getExtractedVariables().size(); i++) {
 						double[] variableLoading = getVariableLoading(resultsPCA, i);
 						IPoint pointResult = getPoint(variableLoading, pcX, pcY, i);
@@ -467,9 +467,9 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 		/*
 		 * Prevent Zoom reset on DblClick
 		 */
-		if(dblClicked){
-			plotControl.get().updateRange(rangeX, rangeY);	
-		} 
+		if(dblClicked) {
+			plotControl.get().updateRange(rangeX, rangeY);
+		}
 	}
 
 	private void updateWidgets() {

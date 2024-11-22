@@ -328,10 +328,10 @@ public class ExtendedScorePlot2D extends Composite implements IExtendedPartUI {
 					 * Determine the x|y coordinates.
 					 */
 					Rectangle rectangle = baseChart.getPlotArea().getBounds();
-					int x = event.x;
-					int y = event.y;
-					int width = rectangle.width;
-					int height = rectangle.height;
+					double x = event.x;
+					double y = event.y;
+					double width = rectangle.width;
+					double height = rectangle.height;
 					/*
 					 * Calculate the selected point.
 					 */
@@ -348,19 +348,32 @@ public class ExtendedScorePlot2D extends Composite implements IExtendedPartUI {
 					IResultsPCA<? extends IResultPCA, ? extends IVariable> resultsPCA = evaluationPCA.getResults();
 					List<? extends IResultPCA> resultList = resultsPCA.getPcaResultList();
 					List<ResultDelta> resultDeltas = new ArrayList<>();
-					//
-					for(int i = 0; i < resultList.size(); i++) {
-						IResultPCA pcaResult = resultList.get(i);
-						IPoint pointResult = getPoint(pcaResult, pcX, pcY, i);
-						double deltaX = Math.abs(pointResult.getX() - pX);
-						double deltaY = Math.abs(pointResult.getY() - pY);
-						resultDeltas.add(new ResultDelta(pcaResult, deltaX, deltaY));
+					/*
+					 * prepare result object with score vectors per variable
+					 */
+					for(int i = 0; i < resultsPCA.getPcaResultList().size(); i++) {
+						IPoint pointResult = getPoint(resultList.get(i), pcX, pcY, i);
+						if(pointResult.getX() > rangeX.lower && pointResult.getX() < rangeX.upper && pointResult.getY() > rangeY.lower && pointResult.getY() < rangeY.upper) {
+							double deltaX = 0;
+							double deltaY = 0;
+							if(rangeX.upper < 0 || rangeX.lower > 0) {
+								deltaX = Math.abs(1.00 / Math.abs((Math.abs(rangeX.upper) - Math.abs(rangeX.lower))) * (pointResult.getX() - rangeX.lower) * width - x);
+							} else {
+								deltaX = Math.abs(1.00 / (rangeX.upper - rangeX.lower) * (pointResult.getX() - rangeX.lower) * width - x);
+							}
+							if(rangeY.upper < 0 || rangeY.lower > 0) {
+								deltaY = Math.abs(1.00 / Math.abs((Math.abs(rangeY.upper) - Math.abs(rangeY.lower))) * (pointResult.getY() - rangeY.lower) * height - (height - y));
+							} else {
+								deltaY = Math.abs(1.00 / (rangeY.upper - rangeY.lower) * (pointResult.getY() - rangeY.lower) * height - (height - y));
+							}
+							resultDeltas.add(new ResultDelta(resultList.get(i), deltaX, deltaY));
+						}
 					}
 					/*
 					 * Get the closest result.
 					 */
 					if(!resultDeltas.isEmpty()) {
-						Collections.sort(resultDeltas, Comparator.comparing(ResultDelta::getDeltaX).thenComparing(ResultDelta::getDeltaY));
+						Collections.sort(resultDeltas, Comparator.comparing(ResultDelta::getDistance));
 						ResultDelta resultDelta = resultDeltas.get(0);
 						List<ISample> highlightedSamples = new ArrayList<>();
 						highlightedSamples.add(resultDelta.getResultPCA().getSample());
