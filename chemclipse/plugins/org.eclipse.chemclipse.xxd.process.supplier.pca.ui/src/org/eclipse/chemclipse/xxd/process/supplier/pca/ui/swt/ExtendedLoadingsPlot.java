@@ -69,7 +69,7 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 	//
 	private Composite control;
 	//
-	private boolean dblClicked = false;
+	private boolean doubleClicked = false;
 
 	public ExtendedLoadingsPlot(Composite parent, int style) {
 
@@ -340,9 +340,9 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 					int pcY = principalComponentUI.getPCY();
 					IResultsPCA<? extends IResultPCA, ? extends IVariable> resultsPCA = evaluationPCA.getResults();
 					List<FeatureDelta> featureDeltas = new ArrayList<>();
-					//
-					// Here need to prepare a result object with loading vectors per variable
-					//
+					/*
+					 * Prepare a result object with loading vectors per variable
+					 */
 					for(int i = 0; i < resultsPCA.getExtractedVariables().size(); i++) {
 						double[] variableLoading = getVariableLoading(resultsPCA, i);
 						IPoint pointResult = getPoint(variableLoading, pcX, pcY, i);
@@ -371,7 +371,7 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 						List<Feature> featureList = new ArrayList<>();
 						featureList.add(featureDelta.getFeature());
 						UpdateNotifierUI.update(event.display, IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_VARIABLE, featureList.toArray());
-						dblClicked = true;
+						doubleClicked = true;
 					}
 				}
 			}
@@ -465,11 +465,11 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 		Range rangeY = baseChart.getAxisSet().getYAxis(BaseChart.ID_PRIMARY_Y_AXIS).getRange();
 		updatePlot(pcX, pcY);
 		/*
-		 * Prevent Zoom reset on DblClick
+		 * Prevent Zoom reset on Double Click
 		 */
-		if(dblClicked){
-			plotControl.get().updateRange(rangeX, rangeY);	
-		} 
+		if(doubleClicked) {
+			plotControl.get().updateRange(rangeX, rangeY);
+		}
 	}
 
 	private void updateWidgets() {

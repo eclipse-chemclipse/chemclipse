@@ -8,6 +8,7 @@
  * 
  * Contributors:
  * Philip Wenig - initial API and implementation
+ * Lorenz Gerber - add distance
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.model;
 
@@ -18,12 +19,14 @@ public class ResultDelta {
 	private IResultPCA resultPCA = null;
 	private double deltaX = 0;
 	private double deltaY = 0;
+	private double distance = 0;
 
 	public ResultDelta(IResultPCA resultPCA, double deltaX, double deltaY) {
 
 		this.resultPCA = resultPCA;
 		this.deltaX = deltaX;
 		this.deltaY = deltaY;
+		this.distance = Math.sqrt(Math.pow(this.deltaX, 2) + Math.pow(this.deltaY, 2));
 	}
 
 	public IResultPCA getResultPCA() {
@@ -39,6 +42,11 @@ public class ResultDelta {
 	public double getDeltaY() {
 
 		return deltaY;
+	}
+
+	public double getDistance() {
+
+		return distance;
 	}
 
 	@Override
@@ -63,6 +71,6 @@ public class ResultDelta {
 	@Override
 	public String toString() {
 
-		return "ResultDelta [resultPCA=" + resultPCA + ", deltaX=" + deltaX + ", deltaY=" + deltaY + "]";
+		return "ResultDelta [resultPCA=" + resultPCA + ", deltaX=" + deltaX + ", deltaY=" + deltaY + ", distance=" + distance + "]";
 	}
 }
