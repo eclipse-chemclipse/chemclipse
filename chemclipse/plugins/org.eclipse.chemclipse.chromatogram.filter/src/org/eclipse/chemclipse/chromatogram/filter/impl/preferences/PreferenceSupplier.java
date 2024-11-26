@@ -12,6 +12,7 @@
 package org.eclipse.chemclipse.chromatogram.filter.impl.preferences;
 
 import org.eclipse.chemclipse.chromatogram.filter.Activator;
+import org.eclipse.chemclipse.chromatogram.filter.impl.settings.FilterSettingsHeaderInput;
 import org.eclipse.chemclipse.chromatogram.filter.impl.settings.FilterSettingsHeaderTransfer;
 import org.eclipse.chemclipse.chromatogram.filter.impl.settings.FilterSettingsReset;
 import org.eclipse.chemclipse.chromatogram.filter.impl.settings.FilterSettingsReshape;
@@ -143,6 +144,11 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static FilterSettingsHeaderTransfer getFilterSettingsHeaderTransfer() {
 
 		return new FilterSettingsHeaderTransfer();
+	}
+
+	public static FilterSettingsHeaderInput getFilterSettingsHeaderInput() {
+
+		return new FilterSettingsHeaderInput();
 	}
 
 	public static SettingsIonRounding getFilterSettingsIonRounding() {

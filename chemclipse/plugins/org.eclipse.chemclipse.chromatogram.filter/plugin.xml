@@ -45,6 +45,13 @@
             filterName="Header Transfer"
             filterSettings="org.eclipse.chemclipse.chromatogram.filter.impl.settings.FilterSettingsHeaderTransfer"
             id="org.eclipse.chemclipse.chromatogram.filter.chromatogramHeaderTransfer">
-      </ChromatogramFilterSupplier>                          
+      </ChromatogramFilterSupplier>
+      <ChromatogramFilterSupplier
+            description="This filter enables to modify the chromatogram header data."
+            filter="org.eclipse.chemclipse.chromatogram.filter.impl.ChromatogramFilterHeaderInput"
+            filterName="Header Input"
+            filterSettings="org.eclipse.chemclipse.chromatogram.filter.impl.settings.FilterSettingsHeaderInput"
+            id="org.eclipse.chemclipse.chromatogram.filter.chromatogramHeaderInput">
+      </ChromatogramFilterSupplier>                                
    </extension>
 </plugin>
