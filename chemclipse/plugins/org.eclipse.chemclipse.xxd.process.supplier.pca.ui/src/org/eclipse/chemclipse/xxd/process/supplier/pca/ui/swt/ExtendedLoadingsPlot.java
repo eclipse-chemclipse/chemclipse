@@ -77,7 +77,8 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 		createControl();
 		DataUpdateSupport dataUpdateSupport = new DataUpdateSupport(Activator.getDefault().getEventBroker());
 		dataUpdateSupport.subscribe(IChemClipseEvents.TOPIC_PCA_UPDATE_RESULT, IChemClipseEvents.EVENT_BROKER_DATA);
-		dataUpdateSupport.subscribe(IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_VARIABLE, IChemClipseEvents.EVENT_BROKER_DATA);
+		dataUpdateSupport.subscribe(IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_LIST_VARIABLE, IChemClipseEvents.EVENT_BROKER_DATA);
+		dataUpdateSupport.subscribe(IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_PLOT_VARIABLE, IChemClipseEvents.EVENT_BROKER_DATA);
 		dataUpdateSupport.add(new IDataUpdateListener() {
 
 			@Override
@@ -85,7 +86,7 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 
 				if(evaluationPCA != null) {
 					if(DataUpdateSupport.isVisible(control)) {
-						if(IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_VARIABLE.equals(topic)) {
+						if(IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_LIST_VARIABLE.equals(topic) || IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_PLOT_VARIABLE.equals(topic)) {
 							if(objects.size() == 1) {
 								Object object = objects.get(0);
 								ArrayList<IVariable> selectedVariables = new ArrayList<>();
@@ -285,7 +286,7 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 					 * Get the closest result.
 					 */
 					if(!featureSelected.isEmpty()) {
-						UpdateNotifierUI.update(event.display, IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_VARIABLE, featureSelected.toArray());
+						UpdateNotifierUI.update(event.display, IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_PLOT_VARIABLE, featureSelected.toArray());
 					}
 					/*
 					 * Finish User Selection Process
@@ -370,7 +371,7 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 						FeatureDelta featureDelta = featureDeltas.get(0);
 						List<Feature> featureList = new ArrayList<>();
 						featureList.add(featureDelta.getFeature());
-						UpdateNotifierUI.update(event.display, IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_VARIABLE, featureList.toArray());
+						UpdateNotifierUI.update(event.display, IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_PLOT_VARIABLE, featureList.toArray());
 						doubleClicked = true;
 					}
 				}
