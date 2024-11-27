@@ -31,6 +31,7 @@ import org.eclipse.chemclipse.processing.core.IProcessingMessage;
 import org.eclipse.chemclipse.processing.core.MessageType;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingMessage;
+import org.eclipse.chemclipse.support.literature.LiteratureReference;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
@@ -127,7 +128,10 @@ public class PeakIdentifierMSD {
 				try {
 					IPeakIdentifierSettingsMSD instance = (IPeakIdentifierSettingsMSD)element.createExecutableExtension(Identifier.IDENTIFIER_SETTINGS);
 					supplier.setIdentifierSettingsClass(instance.getClass());
-					supplier.getLiteratureReferences().addAll(instance.getLiteratureReferences());
+					List<LiteratureReference> literatureReferences = instance.getLiteratureReferences();
+					if(literatureReferences != null) {
+						supplier.getLiteratureReferences().addAll(literatureReferences);
+					}
 				} catch(CoreException e) {
 					logger.warn(e);
 					// settings class is optional, set null instead
