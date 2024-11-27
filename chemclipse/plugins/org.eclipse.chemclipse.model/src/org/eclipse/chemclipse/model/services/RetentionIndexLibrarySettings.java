@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023 Lablicate GmbH.
+ * Copyright (c) 2023, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,10 +13,10 @@ package org.eclipse.chemclipse.model.services;
 
 public class RetentionIndexLibrarySettings {
 
-	private String searchColumn = "";
+	private String searchColumn = "DB5";
 	private boolean caseSensitive = false;
 	private boolean removeWhiteSpace = false;
-	private float retentionIndexDelta = 10.0f;
+	private int retentionIndexDelta = 10;
 
 	public String getSearchColumn() {
 
@@ -48,17 +48,12 @@ public class RetentionIndexLibrarySettings {
 		this.removeWhiteSpace = removeWhiteSpace;
 	}
 
-	public float getRetentionIndexDelta() {
+	public int getRetentionIndexDelta() {
 
 		return retentionIndexDelta;
 	}
 
-	/**
-	 * The allowed delta depends on the underlying database.
-	 * 
-	 * @param retentionIndexDelta
-	 */
-	public void setRetentionIndexDelta(float retentionIndexDelta) {
+	public void setRetentionIndexDelta(int retentionIndexDelta) {
 
 		this.retentionIndexDelta = retentionIndexDelta;
 	}
