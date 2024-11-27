@@ -489,4 +489,5 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_CRITERIUM = "criterium.png";
 	String IMAGE_PARAMETER = "parameter.png";
 	String IMAGE_CHROM_2D_STACK_1D = "chrom2dstack1d.gif";
+	String IMAGE_VERSION = "version.gif";
 }
