@@ -11,17 +11,12 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.mzdata.model;
 
-import org.eclipse.chemclipse.msd.model.core.AbstractScanMSD;
+import org.eclipse.chemclipse.msd.model.core.AbstractRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 
-public class VendorScan extends AbstractScanMSD implements IVendorScan {
+public class VendorScan extends AbstractRegularMassSpectrum implements IVendorScan {
 
 	private static final long serialVersionUID = -3291852423110935802L;
-
-	public VendorScan() {
-
-		super();
-	}
 
 	@Override
 	public IVendorScan makeDeepCopy() throws CloneNotSupportedException {

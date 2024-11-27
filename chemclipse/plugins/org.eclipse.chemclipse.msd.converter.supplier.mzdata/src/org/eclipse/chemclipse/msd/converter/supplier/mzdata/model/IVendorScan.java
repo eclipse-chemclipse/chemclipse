@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.mzdata.model;
 
-import org.eclipse.chemclipse.msd.model.core.IScanMSD;
+import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 
-public interface IVendorScan extends IScanMSD {
+public interface IVendorScan extends IRegularMassSpectrum {
 }

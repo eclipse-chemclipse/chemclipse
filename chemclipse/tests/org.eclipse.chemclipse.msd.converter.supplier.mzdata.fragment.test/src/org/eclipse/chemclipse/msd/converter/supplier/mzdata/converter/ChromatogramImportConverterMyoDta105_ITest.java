@@ -15,16 +15,18 @@ import java.io.File;
 
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.TestPathHelper;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.model.IVendorChromatogram;
+import org.eclipse.chemclipse.msd.converter.supplier.mzdata.model.IVendorScan;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.model.VendorChromatogram;
+import org.eclipse.chemclipse.msd.converter.supplier.mzdata.model.VendorScan;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
-import org.eclipse.chemclipse.msd.model.core.IScanMSD;
+import org.eclipse.chemclipse.msd.model.core.Polarity;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Test;
 
 import junit.framework.TestCase;
 
-public class ChromatogramImportConverterMyoDta104_ITest extends TestCase {
+public class ChromatogramImportConverterMyoDta105_ITest extends TestCase {
 
 	private IVendorChromatogram chromatogram;
 
@@ -32,7 +34,7 @@ public class ChromatogramImportConverterMyoDta104_ITest extends TestCase {
 	protected void setUp() throws Exception {
 
 		super.setUp();
-		File importFile = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_MYO_DTA_104));
+		File importFile = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_MYO_DTA_105));
 		ChromatogramImportConverter converter = new ChromatogramImportConverter();
 		IProcessingInfo<IChromatogramMSD> processingInfo = converter.convert(importFile, new NullProgressMonitor());
 		chromatogram = (VendorChromatogram)processingInfo.getProcessingResult();
@@ -41,13 +43,13 @@ public class ChromatogramImportConverterMyoDta104_ITest extends TestCase {
 	@Test
 	public void testSample() {
 
-		assertEquals("Horse Myoglobin", chromatogram.getSampleName());
+		assertEquals("myo 7/22 1/50", chromatogram.getSampleName());
 	}
 
 	@Test
 	public void testOperator() {
 
-		assertEquals("Randy Julian, Eli Lilly, rkj@lilly.com", chromatogram.getOperator());
+		assertEquals("Investigator, HUPO, http://psidev.sf.net", chromatogram.getOperator());
 	}
 
 	@Test
@@ -59,10 +61,10 @@ public class ChromatogramImportConverterMyoDta104_ITest extends TestCase {
 	@Test
 	public void testEditHistory() {
 
-		assertEquals("deisotoped", chromatogram.getEditHistory().get(0).getDescription());
-		assertEquals("chargeDeconvolved", chromatogram.getEditHistory().get(1).getDescription());
-		assertEquals("peakProcessing", chromatogram.getEditHistory().get(2).getDescription());
-		assertEquals("PSI-MS XCalibur RAW converter 1.04", chromatogram.getEditHistory().get(2).getEditor());
+		assertEquals("Deisotoping", chromatogram.getEditHistory().get(0).getDescription());
+		assertEquals("ChargeDeconvolution", chromatogram.getEditHistory().get(1).getDescription());
+		assertEquals("PeakProcessing", chromatogram.getEditHistory().get(2).getDescription());
+		assertEquals("PSI-MS XCalibur RAW converter 1.05", chromatogram.getEditHistory().get(2).getEditor());
 	}
 
 	@Test
@@ -86,7 +88,10 @@ public class ChromatogramImportConverterMyoDta104_ITest extends TestCase {
 	@Test
 	public void testFirstScan() {
 
-		IScanMSD massSpectrum = (IScanMSD)chromatogram.getScan(1);
+		IVendorScan massSpectrum = (VendorScan)chromatogram.getScan(1);
 		assertEquals("Ions", 331, massSpectrum.getNumberOfIons());
+		assertEquals(Polarity.POSITIVE, massSpectrum.getPolarity());
+		assertEquals(661.65d, massSpectrum.getPrecursorIon());
+		assertEquals(28d, massSpectrum.getIons().get(0).getIonTransition().getCollisionEnergy());
 	}
 }

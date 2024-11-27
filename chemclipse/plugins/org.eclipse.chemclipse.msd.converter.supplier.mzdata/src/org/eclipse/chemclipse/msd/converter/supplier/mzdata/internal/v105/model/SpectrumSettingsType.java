@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2018 Lablicate GmbH.
+ * Copyright (c) 2015, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,6 +13,7 @@ package org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model
 
 import java.util.ArrayList;
 import java.util.List;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
@@ -63,7 +64,7 @@ public class SpectrumSettingsType {
 		public List<SpectrumSettingsType.AcqSpecification.Acquisition> getAcquisition() {
 
 			if(acquisition == null) {
-				acquisition = new ArrayList<SpectrumSettingsType.AcqSpecification.Acquisition>();
+				acquisition = new ArrayList<>();
 			}
 			return this.acquisition;
 		}
