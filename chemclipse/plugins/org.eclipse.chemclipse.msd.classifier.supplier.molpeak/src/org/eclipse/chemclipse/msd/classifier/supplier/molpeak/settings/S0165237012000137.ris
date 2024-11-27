@@ -1,0 +1,24 @@
+TY  - JOUR
+T1  - Multivariate curve resolution provides a high-throughput data processing pipeline for pyrolysis-gas chromatography/mass spectrometry
+AU  - Gerber, Lorenz
+AU  - Eliasson, Mattias
+AU  - Trygg, Johan
+AU  - Moritz, Thomas
+AU  - Sundberg, Björn
+JO  - Journal of Analytical and Applied Pyrolysis
+VL  - 95
+SP  - 95
+EP  - 100
+PY  - 2012
+DA  - 2012/05/01/
+SN  - 0165-2370
+DO  - https://doi.org/10.1016/j.jaap.2012.01.011
+UR  - https://www.sciencedirect.com/science/article/pii/S0165237012000137
+KW  - Py-GC/MS
+KW  - High-throughput
+KW  - Multivariate analysis
+KW  - Data processing
+KW  - Lignocellulose
+KW  - Wood
+AB  - We present a data processing pipeline for Pyrolysis-Gas Chromatography/Mass Spectrometry (Py-GC/MS) data that is suitable for high-throughput analysis of lignocellulosic samples. The aproach applies multivariate curve resolution by alternate regression (MCR-AR) and automated peak assignment. MCR-AR employs parallel processing of multiple chromatograms, as opposed to sequential processing used in prevailing applications. Parallel processing provides a global peak list that is consistent for all chromatograms, and therefore does not require tedious manual curation. We evaluated this approach on wood samples from aspen and Norway spruce, and found that parallel processing results in an overall higher precision of peak area from integrated peaks. To further increase the speed of data processing we evaluated automated peak assignment solely based on basepeak mass. This approach gave estimates of the proportion of lignin (as syringyl-, guaiacyl and p-hydroxyphenyl-type lignin) and carbohydrate polymers in the wood samples that were in high agreement with those where peak assignments were based on full spectra. This method establishes Py-GC/MS as a sensitive, robust and versatile high-throughput screening platform well suited to a non-specialist operator.
+ER  - 

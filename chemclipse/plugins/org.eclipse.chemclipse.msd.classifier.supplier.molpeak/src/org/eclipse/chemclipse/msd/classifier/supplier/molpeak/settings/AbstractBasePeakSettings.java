@@ -16,9 +16,11 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
 import org.eclipse.chemclipse.model.settings.IProcessSettings;
 import org.eclipse.chemclipse.msd.classifier.supplier.molpeak.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.support.literature.LiteratureReference;
 import org.eclipse.chemclipse.support.settings.FloatSettingsProperty;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -61,4 +63,21 @@ public abstract class AbstractBasePeakSettings implements IBasePeakSettings, IPr
 		this.matchQuality = matchQuality;
 	}
 
+	@Override
+	public List<LiteratureReference> getLiteratureReferences() {
+
+		return Collections.singletonList(createLiteratureReference("S0165237012000137.ris", "10.1016/j.jaap.2012.01.011"));
+	}
+
+	private static LiteratureReference createLiteratureReference(String file, String doi) {
+
+		String content;
+		try {
+			content = new String(MassSpectrumIdentifierSettings.class.getResourceAsStream(file).readAllBytes());
+		} catch(IOException | NullPointerException e) {
+			content = doi;
+			logger.warn(e);
+		}
+		return new LiteratureReference(content);
+	}
 }
