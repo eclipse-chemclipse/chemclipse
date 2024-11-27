@@ -271,7 +271,8 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 					int pcX = principalComponentUI.getPCX();
 					int pcY = principalComponentUI.getPCY();
 					IResultsPCA<? extends IResultPCA, ? extends IVariable> resultsPCA = evaluationPCA.getResults();
-					List<Feature> featureSelected = new ArrayList<>();
+					List<Feature> featureHighlighted = new ArrayList<>();
+					List<Feature> featuresSelected = evaluationPCA.getFeatureDataMatrix().getFeatures().stream().filter(x -> x.getVariable().isSelected()).toList();
 					/*
 					 * Prepare a result object with loading vectors per variable
 					 */
@@ -279,14 +280,14 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 						double[] variableLoading = getVariableLoading(resultsPCA, i);
 						IPoint pointResult = getPoint(variableLoading, pcX, pcY, i);
 						if(pointResult.getX() > pXStart && pointResult.getX() < pXStop && pointResult.getY() < pYStart && pointResult.getY() > pYStop) {
-							featureSelected.add(evaluationPCA.getFeatureDataMatrix().getFeatures().get(i));
+							featureHighlighted.add(featuresSelected.get(i));
 						}
 					}
 					/*
 					 * Get the closest result.
 					 */
-					if(!featureSelected.isEmpty()) {
-						UpdateNotifierUI.update(event.display, IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_PLOT_VARIABLE, featureSelected.toArray());
+					if(!featureHighlighted.isEmpty()) {
+						UpdateNotifierUI.update(event.display, IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_PLOT_VARIABLE, featureHighlighted.toArray());
 					}
 					/*
 					 * Finish User Selection Process
@@ -342,6 +343,7 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 					int pcY = principalComponentUI.getPCY();
 					IResultsPCA<? extends IResultPCA, ? extends IVariable> resultsPCA = evaluationPCA.getResults();
 					List<FeatureDelta> featureDeltas = new ArrayList<>();
+					List<Feature> selectedFeatures = evaluationPCA.getFeatureDataMatrix().getFeatures().stream().filter(f -> f.getVariable().isSelected()).toList();
 					/*
 					 * Prepare a result object with loading vectors per variable
 					 */
@@ -361,7 +363,7 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 							} else {
 								deltaY = Math.abs(1.00 / (rangeY.upper - rangeY.lower) * (pointResult.getY() - rangeY.lower) * height - (height - y));
 							}
-							featureDeltas.add(new FeatureDelta(evaluationPCA.getFeatureDataMatrix().getFeatures().get(i), deltaX, deltaY));
+							featureDeltas.add(new FeatureDelta(selectedFeatures.get(i), deltaX, deltaY));
 						}
 					}
 					/*
