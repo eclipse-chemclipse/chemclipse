@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2022 Lablicate GmbH.
+ * Copyright (c) 2016, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -25,15 +25,15 @@ public class PenaltyCalculationSupport {
 	 * @param unknown
 	 * @param reference
 	 * @param comparisonResult
-	 * @param identifierSettings
+	 * @param penaltyCalculationSettings
 	 */
-	public static void applyPenalty(IScan unknown, IScan reference, IComparisonResult comparisonResult, IIdentifierSettings identifierSettings) {
+	public static void applyPenalty(IScan unknown, IScan reference, IComparisonResult comparisonResult, IPenaltyCalculationSettings penaltyCalculationSettings) {
 
 		int retentionTimeUnknown = unknown.getRetentionTime();
 		float retentionIndexUnknown = unknown.getRetentionIndex();
 		int retentionTimeReference = reference.getRetentionTime();
 		float retentionIndexReference = reference.getRetentionIndex();
-		applyPenalty(retentionTimeUnknown, retentionIndexUnknown, retentionTimeReference, retentionIndexReference, comparisonResult, identifierSettings);
+		applyPenalty(retentionTimeUnknown, retentionIndexUnknown, retentionTimeReference, retentionIndexReference, comparisonResult, penaltyCalculationSettings);
 	}
 
 	/**
@@ -44,20 +44,20 @@ public class PenaltyCalculationSupport {
 	 * @param retentionTimeReference
 	 * @param retentionIndexReference
 	 * @param comparisonResult
-	 * @param identifierSettings
+	 * @param penaltyCalculationSettings
 	 */
-	public static void applyPenalty(int retentionTimeUnknown, float retentionIndexUnknown, int retentionTimeReference, float retentionIndexReference, IComparisonResult comparisonResult, IIdentifierSettings identifierSettings) {
+	public static void applyPenalty(int retentionTimeUnknown, float retentionIndexUnknown, int retentionTimeReference, float retentionIndexReference, IComparisonResult comparisonResult, IPenaltyCalculationSettings penaltyCalculationSettings) {
 
 		final float penalty;
-		switch(identifierSettings.getPenaltyCalculation()) {
+		switch(penaltyCalculationSettings.getPenaltyCalculation()) {
 			case RETENTION_TIME_MS:
-				penalty = (float)calculatePenalty(retentionTimeUnknown, retentionTimeReference, identifierSettings.getPenaltyWindow(), identifierSettings.getPenaltyLevelFactor(), identifierSettings.getMaxPenalty());
+				penalty = (float)calculatePenalty(retentionTimeUnknown, retentionTimeReference, penaltyCalculationSettings.getPenaltyWindow(), penaltyCalculationSettings.getPenaltyLevelFactor(), penaltyCalculationSettings.getMaxPenalty());
 				break;
 			case RETENTION_TIME_MIN:
-				penalty = (float)calculatePenalty(retentionTimeUnknown / IChromatogram.MINUTE_CORRELATION_FACTOR, retentionTimeReference / IChromatogram.MINUTE_CORRELATION_FACTOR, identifierSettings.getPenaltyWindow(), identifierSettings.getPenaltyLevelFactor(), identifierSettings.getMaxPenalty());
+				penalty = (float)calculatePenalty(retentionTimeUnknown / IChromatogram.MINUTE_CORRELATION_FACTOR, retentionTimeReference / IChromatogram.MINUTE_CORRELATION_FACTOR, penaltyCalculationSettings.getPenaltyWindow(), penaltyCalculationSettings.getPenaltyLevelFactor(), penaltyCalculationSettings.getMaxPenalty());
 				break;
 			case RETENTION_INDEX:
-				penalty = (float)calculatePenalty(retentionIndexUnknown, retentionIndexReference, identifierSettings.getPenaltyWindow(), identifierSettings.getPenaltyLevelFactor(), identifierSettings.getMaxPenalty());
+				penalty = (float)calculatePenalty(retentionIndexUnknown, retentionIndexReference, penaltyCalculationSettings.getPenaltyWindow(), penaltyCalculationSettings.getPenaltyLevelFactor(), penaltyCalculationSettings.getMaxPenalty());
 				break;
 			default:
 				penalty = 0.0f;
@@ -102,7 +102,7 @@ public class PenaltyCalculationSupport {
 			return NO_PENALTY;
 		}
 		//
-		if(Double.isNaN(maxPenalty) || maxPenalty <= IIdentifierSettings.MIN_PENALTY_MATCH_FACTOR || maxPenalty > IIdentifierSettings.MAX_PENALTY_MATCH_FACTOR) {
+		if(Double.isNaN(maxPenalty) || maxPenalty <= IPenaltyCalculationSettings.MIN_PENALTY_MATCH_FACTOR || maxPenalty > IPenaltyCalculationSettings.MAX_PENALTY_MATCH_FACTOR) {
 			return NO_PENALTY;
 		}
 		/*

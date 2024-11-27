@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020 Lablicate GmbH.
+ * Copyright (c) 2020, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,9 +11,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.identifier.supplier.nist.settings;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.MassSpectrumIdentifierAdapterSettings;
+import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.AbstractMassSpectrumIdentifierSettings;
 
-public abstract class AbstractScanSearchSettings extends MassSpectrumIdentifierAdapterSettings implements ISearchSettings {
+public abstract class AbstractScanSearchSettings extends AbstractMassSpectrumIdentifierSettings implements ISearchSettings {
 
 	@Override
 	public int getNumberOfTargets() {

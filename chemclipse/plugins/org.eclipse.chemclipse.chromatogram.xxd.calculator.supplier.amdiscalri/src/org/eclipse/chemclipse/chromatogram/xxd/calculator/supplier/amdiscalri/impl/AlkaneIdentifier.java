@@ -16,7 +16,7 @@ package org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.i
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IIdentifierSettingsMSD;
+import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IMassSpectrumComparatorSettings;
 import org.eclipse.chemclipse.chromatogram.msd.identifier.support.DatabasesCache;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.PathResolver;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.settings.MassSpectrumIdentifierAlkaneSettings;
@@ -26,10 +26,8 @@ import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.core.Pea
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.IFileIdentifierSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.MassSpectrumIdentifierSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.PeakIdentifierSettings;
-import org.eclipse.chemclipse.model.identifier.DeltaCalculation;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.IPeakIdentificationResults;
-import org.eclipse.chemclipse.model.identifier.PenaltyCalculation;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
@@ -117,16 +115,10 @@ public class AlkaneIdentifier {
 		return false;
 	}
 
-	private void initializeSettings(IIdentifierSettingsMSD identifierSettings) {
+	private void initializeSettings(IMassSpectrumComparatorSettings identifierSettings) {
 
-		identifierSettings.setMassSpectrumComparatorId(IIdentifierSettingsMSD.DEFAULT_COMPARATOR_ID);
+		identifierSettings.setMassSpectrumComparatorId(IMassSpectrumComparatorSettings.DEFAULT_COMPARATOR_ID);
 		identifierSettings.setLimitMatchFactor(100.0f);
-		identifierSettings.setDeltaCalculation(DeltaCalculation.NONE);
-		identifierSettings.setDeltaWindow(0.0f);
-		identifierSettings.setPenaltyCalculation(PenaltyCalculation.NONE);
-		identifierSettings.setPenaltyWindow(0.0f);
-		identifierSettings.setPenaltyLevelFactor(0.0f);
-		identifierSettings.setMaxPenalty(0.0f);
 	}
 
 	private void transferAlkaneSettings(IFileIdentifierSettings fileIdentifierSettings, PeakIdentifierAlkaneSettings alkaneSettings) {

@@ -14,10 +14,12 @@ package org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.prefere
 
 import java.util.List;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IIdentifierSettingsMSD;
+import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IMassSpectrumComparatorSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.Activator;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.ILibraryIdentifierSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.IUnknownSettings;
+import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.IUnknownSettingsMSD;
+import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.IUnknownSettingsWSD;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.IdentifierSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.MassSpectrumIdentifierSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.MassSpectrumUnknownSettings;
@@ -27,7 +29,7 @@ import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.PeakUnknownSettingsWSD;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.WaveSpectrumUnknownSettings;
 import org.eclipse.chemclipse.model.identifier.DeltaCalculation;
-import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
+import org.eclipse.chemclipse.model.identifier.IPenaltyCalculationSettings;
 import org.eclipse.chemclipse.model.identifier.PenaltyCalculation;
 import org.eclipse.chemclipse.model.support.CalculationType;
 import org.eclipse.chemclipse.support.preferences.AbstractPreferenceSupplier;
@@ -52,7 +54,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static final String P_MASS_SPECTRA_FILES = "massSpectraFiles";
 	public static final String DEF_MASS_SPECTRA_FILES = "";
 	public static final String P_MASS_SPECTRUM_COMPARATOR_ID = "massSpectrumComparatorId";
-	public static final String DEF_MASS_SPECTRUM_COMPARATOR_ID = IIdentifierSettingsMSD.DEFAULT_COMPARATOR_ID;
+	public static final String DEF_MASS_SPECTRUM_COMPARATOR_ID = IMassSpectrumComparatorSettings.DEFAULT_COMPARATOR_ID;
 	//
 	public static final String P_USE_PRE_OPTIMIZATION = "usePreOptimization";
 	public static final Boolean DEF_USE_PRE_OPTIMIZATION = true;
@@ -109,9 +111,9 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static final String P_PENALTY_WINDOW = "penaltyWindow";
 	public static final float DEF_PENALTY_WINDOW = 0.0f;
 	public static final String P_PENALTY_LEVEL_FACTOR = "penaltyLevelFactor";
-	public static final float DEF_PENALTY_LEVEL_FACTOR = IIdentifierSettings.DEF_PENALTY_LEVEL_FACTOR;
+	public static final float DEF_PENALTY_LEVEL_FACTOR = IPenaltyCalculationSettings.DEF_PENALTY_LEVEL_FACTOR;
 	public static final String P_MAX_PENALTY = "maxPenalty";
-	public static final float DEF_MAX_PENALTY = IIdentifierSettings.DEF_PENALTY_MATCH_FACTOR;
+	public static final float DEF_MAX_PENALTY = IPenaltyCalculationSettings.DEF_PENALTY_MATCH_FACTOR;
 	//
 	public static final String P_FILTER_PATH_IDENTIFIER_FILES = "filterPathIdentifierFiles";
 	public static final String DEF_FILTER_PATH_IDENTIFIER_FILES = "";
@@ -214,7 +216,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 
 		String postfix = POSTFIX_MSD;
 		PeakUnknownSettingsMSD settings = new PeakUnknownSettingsMSD();
-		settings.setMassSpectrumComparatorId("");
 		initalizeUnknownSettings(settings, postfix);
 		settings.setNumberOfMZ(INSTANCE().getInteger(P_NUMBER_OF_MZ_UNKNOWN + postfix, DEF_NUMBER_OF_MZ_UNKNOWN));
 		//
@@ -265,7 +266,11 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 		settings.setLimitMatchFactor(INSTANCE().getFloat(P_LIMIT_MATCH_FACTOR_UNKNOWN + postfix, DEF_LIMIT_MATCH_FACTOR_UNKOWN));
 		settings.setTargetName(INSTANCE().get(P_TARGET_NAME_UNKNOWN + postfix, DEF_TARGET_NAME_UNKNOWN));
 		settings.setMatchQuality(INSTANCE().getFloat(P_MATCH_QUALITY_UNKNOWN + postfix, DEF_MATCH_QUALITY_UNKNOWN));
-		settings.setIncludeIntensityPercent(INSTANCE().getBoolean(P_INCLUDE_INTENSITY_PERCENT_UNKNOWN + postfix, DEF_INCLUDE_INTENSITY_PERCENT_UNKNOWN));
+		if(settings instanceof IUnknownSettingsMSD unknownSettingsMSD) {
+			unknownSettingsMSD.setIncludeIntensityPercent(INSTANCE().getBoolean(P_INCLUDE_INTENSITY_PERCENT_UNKNOWN + postfix, DEF_INCLUDE_INTENSITY_PERCENT_UNKNOWN));
+		} else if(settings instanceof IUnknownSettingsWSD unknownSettingsWSD) {
+			unknownSettingsWSD.setIncludeIntensityPercent(INSTANCE().getBoolean(P_INCLUDE_INTENSITY_PERCENT_UNKNOWN + postfix, DEF_INCLUDE_INTENSITY_PERCENT_UNKNOWN));
+		}
 		settings.setMarkerStart(INSTANCE().get(P_MARKER_START_UNKNOWN + postfix, DEF_MARKER_START_UNKNOWN));
 		settings.setMarkerStop(INSTANCE().get(P_MARKER_STOP_UNKNOWN + postfix, DEF_MARKER_STOP_UNKNOWN));
 		settings.setIncludeRetentionTime(INSTANCE().getBoolean(P_INCLUDE_RETENTION_TIME_UNKNOWN + postfix, DEF_INCLUDE_RETENTION_TIME_UNKNOWN));

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2022 Lablicate GmbH.
+ * Copyright (c) 2021, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,6 +12,7 @@
 package org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.model;
 
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.IUnknownSettings;
+import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.IUnknownSettingsMSD;
 import org.eclipse.chemclipse.model.targets.TargetUnknownSettings;
 
 public class UnknownSettingsSupport {
@@ -22,8 +23,10 @@ public class UnknownSettingsSupport {
 		//
 		targetUnknownSettings.setTargetName(unknownSettings.getTargetName());
 		targetUnknownSettings.setMatchQuality(unknownSettings.getMatchQuality());
-		targetUnknownSettings.setNumberTraces(unknownSettings.getNumberOfTraces());
-		targetUnknownSettings.setIncludeIntensityPercent(unknownSettings.isIncludeIntensityPercent());
+		if(unknownSettings instanceof IUnknownSettingsMSD unknownSettingsMSD) {
+			targetUnknownSettings.setNumberTraces(unknownSettingsMSD.getNumberOfTraces());
+			targetUnknownSettings.setIncludeIntensityPercent(unknownSettingsMSD.isIncludeIntensityPercent());
+		}
 		targetUnknownSettings.setMarkerStart(unknownSettings.getMarkerStart());
 		targetUnknownSettings.setMarkerStop(unknownSettings.getMarkerStop());
 		targetUnknownSettings.setIncludeRetentionTime(unknownSettings.isIncludeRetentionTime());

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2022 Lablicate GmbH.
+ * Copyright (c) 2018, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -17,7 +17,7 @@ import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.IMassSpec
 import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.MassSpectrumComparator;
 import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.MassSpectrumComparatorDynamicSettingProperty;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
-import org.eclipse.chemclipse.model.identifier.AbstractIdentifierSettings;
+import org.eclipse.chemclipse.model.identifier.AbstractIdentifierDeltaPenaltyCalculationSettings;
 import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
 import org.eclipse.chemclipse.support.settings.ComboSettingsProperty;
@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
-public class AbstractIdentifierSettingsMSD extends AbstractIdentifierSettings implements IIdentifierSettingsMSD {
+public class AbstractIdentifierSettingsMSD extends AbstractIdentifierDeltaPenaltyCalculationSettings implements IMassSpectrumComparatorSettings, IExcludedIonsSettings {
 
 	@JsonProperty(value = "Mass Spectrum Comparator", defaultValue = DEFAULT_COMPARATOR_ID)
 	@JsonPropertyDescription(value = "Select the algorithm used for mass spectrum comparison calculation.")

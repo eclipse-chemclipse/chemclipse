@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2020 Lablicate GmbH.
+ * Copyright (c) 2008, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -8,14 +8,19 @@
  * 
  * Contributors:
  * Dr. Philip Wenig - initial API and implementation
+ * Alexander Kerner - implementation
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.identifier.settings;
 
-/**
- * Default settings class, which sets all identifier settings values
- * to their defaults. Additionally, no JsonAnnotations are declared, so
- * that each identifier settings class, which don't need the underlying
- * settings, can re-use this default class.
- */
-public abstract class ChromatogramIdentifierAdapterSettings extends IdentifierAdapterSettingsMSD implements IChromatogramIdentifierSettings {
+import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
+import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
+
+public interface IExcludedIonsSettings extends IIdentifierSettings {
+
+	/**
+	 * Returns the excludedIons instance.
+	 * 
+	 * @return {@link IMarkedIons}
+	 */
+	IMarkedIons getExcludedIons();
 }

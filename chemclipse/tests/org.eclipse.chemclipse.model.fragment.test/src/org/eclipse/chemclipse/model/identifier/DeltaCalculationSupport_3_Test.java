@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022 Lablicate GmbH.
+ * Copyright (c) 2022, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,7 +20,7 @@ public class DeltaCalculationSupport_3_Test extends TestCase {
 
 	private IScan unknown;
 	private IScan reference;
-	private IIdentifierSettings identifierSettings;
+	private IDeltaCalculationSettings identifierSettings;
 
 	@Override
 	protected void setUp() throws Exception {
@@ -28,7 +28,7 @@ public class DeltaCalculationSupport_3_Test extends TestCase {
 		super.setUp();
 		unknown = new Scan(1000.0f);
 		reference = new Scan(1000.0f);
-		identifierSettings = new AbstractIdentifierSettings();
+		identifierSettings = new AbstractIdentifierDeltaPenaltyCalculationSettings();
 		identifierSettings.setDeltaCalculation(DeltaCalculation.RETENTION_TIME_MS);
 		identifierSettings.setDeltaWindow(1000.0f);
 	}

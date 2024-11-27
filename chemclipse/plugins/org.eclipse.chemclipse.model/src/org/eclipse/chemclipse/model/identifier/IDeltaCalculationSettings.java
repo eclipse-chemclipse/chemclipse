@@ -14,23 +14,19 @@ package org.eclipse.chemclipse.model.identifier;
 
 import org.eclipse.chemclipse.model.settings.IProcessSettings;
 
-public interface IIdentifierSettings extends IProcessSettings {
+public interface IDeltaCalculationSettings extends IProcessSettings {
 
-	float DEF_LIMIT_MATCH_FACTOR = 100.0f;
-	float MIN_LIMIT_MATCH_FACTOR = 0.0f;
-	float MAX_LIMIT_MATCH_FACTOR = 100.0f;
-
-	/**
-	 * Limit Match Factor
-	 * 
-	 * @return float
-	 */
-	float getLimitMatchFactor();
+	float MIN_DELTA_WINDOW = 0.0f;
+	float MAX_DELTA_WINDOW = Float.MAX_VALUE;
 
 	/**
-	 * Only identify the peak if no target is available with a match factor >= the limit.
-	 * 
-	 * @param limitMatchFactor
+	 * Retention Time / Index Delta Calculation
 	 */
-	void setLimitMatchFactor(float limitMatchFactor);
+	DeltaCalculation getDeltaCalculation();
+
+	void setDeltaCalculation(DeltaCalculation deltaCalculation);
+
+	float getDeltaWindow();
+
+	void setDeltaWindow(float deltaWindow);
 }

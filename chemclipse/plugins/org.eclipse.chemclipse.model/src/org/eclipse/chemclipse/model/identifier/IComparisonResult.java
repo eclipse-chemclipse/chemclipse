@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2023 Lablicate GmbH.
+ * Copyright (c) 2010, 2024 Lablicate GmbH.
  * 
  * All rights reserved. This
  * program and the accompanying materials are made available under the terms of
@@ -30,9 +30,9 @@ public interface IComparisonResult extends Serializable, Comparable<IComparisonR
 	float MAX_MATCH_FACTOR = FACTOR_BEST_MATCH;
 	float MAX_REVERSE_MATCH_FACTOR = FACTOR_BEST_MATCH;
 	//
-	float DEF_MAX_PENALTY = IIdentifierSettings.DEF_PENALTY_MATCH_FACTOR;
-	float MIN_ALLOWED_PENALTY = IIdentifierSettings.MIN_PENALTY_MATCH_FACTOR;
-	float MAX_ALLOWED_PENALTY = IIdentifierSettings.MAX_PENALTY_MATCH_FACTOR;
+	float DEF_MAX_PENALTY = IPenaltyCalculationSettings.DEF_PENALTY_MATCH_FACTOR;
+	float MIN_ALLOWED_PENALTY = IPenaltyCalculationSettings.MIN_PENALTY_MATCH_FACTOR;
+	float MAX_ALLOWED_PENALTY = IPenaltyCalculationSettings.MAX_PENALTY_MATCH_FACTOR;
 	//
 	float MIN_ALLOWED_PROBABILITY = 0.0f;
 	float MAX_ALLOWED_PROBABILITY = 100.0f;

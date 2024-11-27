@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2023 Lablicate GmbH.
+ * Copyright (c) 2022, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
 
-import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
+import org.eclipse.chemclipse.model.identifier.IPenaltyCalculationSettings;
 import org.eclipse.chemclipse.model.identifier.PenaltyCalculation;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
@@ -213,17 +213,17 @@ public class PenaltyCalculationUI extends Composite {
 
 	private Spinner createSpinnerPenaltyLevelFactor(Composite parent) {
 
-		int min = (int)IIdentifierSettings.MIN_PENALTY_LEVEL_FACTOR;
-		int max = (int)IIdentifierSettings.MAX_PENALTY_LEVEL_FACTOR;
-		int selection = (int)IIdentifierSettings.DEF_PENALTY_LEVEL_FACTOR;
+		int min = (int)IPenaltyCalculationSettings.MIN_PENALTY_LEVEL_FACTOR;
+		int max = (int)IPenaltyCalculationSettings.MAX_PENALTY_LEVEL_FACTOR;
+		int selection = (int)IPenaltyCalculationSettings.DEF_PENALTY_LEVEL_FACTOR;
 		return createSpinner(this, "Penalty Level Factor", min, max, selection);
 	}
 
 	private Spinner createSpinnerMaxPenalty(Composite parent) {
 
-		int min = (int)IIdentifierSettings.MIN_PENALTY_MATCH_FACTOR;
-		int max = (int)IIdentifierSettings.MAX_PENALTY_MATCH_FACTOR;
-		int selection = (int)IIdentifierSettings.DEF_PENALTY_MATCH_FACTOR;
+		int min = (int)IPenaltyCalculationSettings.MIN_PENALTY_MATCH_FACTOR;
+		int max = (int)IPenaltyCalculationSettings.MAX_PENALTY_MATCH_FACTOR;
+		int selection = (int)IPenaltyCalculationSettings.DEF_PENALTY_MATCH_FACTOR;
 		return createSpinner(this, "Max Penalty", min, max, selection);
 	}
 

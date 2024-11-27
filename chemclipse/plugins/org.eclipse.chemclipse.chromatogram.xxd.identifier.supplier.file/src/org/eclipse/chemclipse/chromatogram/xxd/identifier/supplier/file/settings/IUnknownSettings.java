@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021 Lablicate GmbH.
+ * Copyright (c) 2021, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,11 +11,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings;
 
-public interface IUnknownSettings {
+import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
 
-	float getLimitMatchFactor();
-
-	void setLimitMatchFactor(float limitMatchFactor);
+public interface IUnknownSettings extends IIdentifierSettings {
 
 	String getTargetName();
 
@@ -24,12 +22,6 @@ public interface IUnknownSettings {
 	float getMatchQuality();
 
 	void setMatchQuality(float matchQuality);
-
-	int getNumberOfTraces();
-
-	boolean isIncludeIntensityPercent();
-
-	void setIncludeIntensityPercent(boolean includeIntensityPercent);
 
 	String getMarkerStart();
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2022 Lablicate GmbH.
+ * Copyright (c) 2008, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -13,9 +13,8 @@
 package org.eclipse.chemclipse.chromatogram.msd.identifier.settings;
 
 import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 
-public interface IIdentifierSettingsMSD extends IIdentifierSettings {
+public interface IMassSpectrumComparatorSettings extends IIdentifierSettings {
 
 	String DEFAULT_COMPARATOR_ID = "org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.distance.cosine";
 
@@ -35,11 +34,4 @@ public interface IIdentifierSettingsMSD extends IIdentifierSettings {
 	 * @param massSpectrumComparatorId
 	 */
 	void setMassSpectrumComparatorId(String massSpectrumComparatorId);
-
-	/**
-	 * Returns the excludedIons instance.
-	 * 
-	 * @return {@link IMarkedIons}
-	 */
-	IMarkedIons getExcludedIons();
 }
