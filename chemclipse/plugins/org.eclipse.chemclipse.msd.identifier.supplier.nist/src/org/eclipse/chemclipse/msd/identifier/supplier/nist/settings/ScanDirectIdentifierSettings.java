@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2023 Lablicate GmbH.
+ * Copyright (c) 2010, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -23,9 +23,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
 public class ScanDirectIdentifierSettings extends AbstractScanSearchSettings {
 
-	@JsonProperty(value = "NIST Folder (MSSEARCH)", defaultValue = "", required = true)
+	@JsonProperty(value = "NIST Folder (MSSEARCH)", defaultValue = "")
 	@JsonPropertyDescription("Select the NIST-DB folder, called MSSEARCH.")
-	@FileSettingProperty(dialogType = DialogType.OPEN_DIALOG, onlyDirectory = true)
+	@FileSettingProperty(dialogType = DialogType.OPEN_DIALOG, onlyDirectory = true, allowEmpty = false)
 	private File nistFolder = null;
 	@JsonProperty(value = "Use Optimized Mass Spectrum", defaultValue = "true")
 	@JsonPropertyDescription(value = "If true, the optimized spectrum will be used if available.")

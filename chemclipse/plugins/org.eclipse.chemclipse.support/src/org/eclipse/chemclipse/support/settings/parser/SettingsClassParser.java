@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2023 Lablicate GmbH.
+ * Copyright (c) 2019, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -34,7 +34,6 @@ import org.eclipse.chemclipse.support.settings.StringSettingsProperty;
 import org.eclipse.chemclipse.support.settings.SystemSettings;
 import org.eclipse.chemclipse.support.settings.SystemSettingsStrategy;
 import org.eclipse.chemclipse.support.settings.ValidatorSettingsProperty;
-import org.eclipse.chemclipse.support.settings.validation.EmptyStringValidator;
 import org.eclipse.chemclipse.support.settings.validation.EvenOddValidatorByte;
 import org.eclipse.chemclipse.support.settings.validation.EvenOddValidatorInteger;
 import org.eclipse.chemclipse.support.settings.validation.EvenOddValidatorLong;
@@ -45,7 +44,6 @@ import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.e4.core.services.translation.TranslationService;
 import org.osgi.framework.FrameworkUtil;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.BeanDescription;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
@@ -126,11 +124,6 @@ public class SettingsClassParser<SettingType> implements SettingsParser<SettingT
 						 */
 						Iterable<Annotation> annotations = annotatedField.getAllAnnotations().annotations();
 						for(Annotation annotation : annotations) {
-							if(annotation instanceof JsonProperty jsonProperty) {
-								if(jsonProperty.required()) {
-									inputValue.addValidator(new EmptyStringValidator());
-								}
-							}
 							if(annotation instanceof LabelProperty labelProperty) {
 								inputValue.setLabel(labelProperty.value());
 								inputValue.setTooltip(labelProperty.tooltip());

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2023 Lablicate GmbH.
+ * Copyright (c) 2022, 2024 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -50,9 +50,9 @@ public class IdentifierSettings extends ChromatogramIdentifierAdapterSettings im
 	@JsonPropertyDescription(value = "Run an identification if no target exists with a Match Factor >= the given limit.")
 	@FloatSettingsProperty(minValue = IIdentifierSettings.MIN_LIMIT_MATCH_FACTOR, maxValue = IIdentifierSettings.MAX_LIMIT_MATCH_FACTOR)
 	private float limitMatchFactor = IIdentifierSettings.DEF_LIMIT_MATCH_FACTOR;
-	@JsonProperty(value = "Library File", defaultValue = "", required = true)
+	@JsonProperty(value = "Library File", defaultValue = "")
 	@JsonPropertyDescription("Select the library file.")
-	@FileSettingProperty(dialogType = DialogType.OPEN_DIALOG, extensionNames = {"AMDIS (*.msl)"}, validExtensions = {"*.msl;*.MSL"}, onlyDirectory = false)
+	@FileSettingProperty(dialogType = DialogType.OPEN_DIALOG, extensionNames = {"AMDIS (*.msl)"}, validExtensions = {"*.msl;*.MSL"}, onlyDirectory = false, allowEmpty = false)
 	private File libraryFile;
 	@JsonProperty(value = "Mass Spectrum Comparator", defaultValue = DEFAULT_COMPARATOR_ID)
 	@JsonPropertyDescription(value = "Select the algorithm used for mass spectrum comparison calculation.")
