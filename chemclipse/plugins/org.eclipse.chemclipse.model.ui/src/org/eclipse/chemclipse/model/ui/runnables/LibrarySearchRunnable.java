@@ -23,7 +23,6 @@ import org.eclipse.chemclipse.model.services.IRetentionIndexLibraryService;
 import org.eclipse.chemclipse.model.services.RetentionIndexLibrarySettings;
 import org.eclipse.chemclipse.model.support.ColumnIndexSupport;
 import org.eclipse.chemclipse.model.support.LibraryInformationSupport;
-import org.eclipse.chemclipse.model.ui.Activator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 
@@ -31,8 +30,8 @@ public class LibrarySearchRunnable implements IRunnableWithProgress {
 
 	private static final int MAX_RESULTS = 100;
 	//
-	private int retentionIndex;
-	private RetentionIndexLibrarySettings retentionIndexLibrarySettings;
+	private int retentionIndex = 0;
+	private RetentionIndexLibrarySettings retentionIndexLibrarySettings = new RetentionIndexLibrarySettings();
 	private List<IIdentificationTarget> identificationTargets = new ArrayList<>();
 
 	public LibrarySearchRunnable(int retentionIndex, RetentionIndexLibrarySettings retentionIndexLibrarySettings) {
@@ -49,32 +48,27 @@ public class LibrarySearchRunnable implements IRunnableWithProgress {
 	@Override
 	public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 
-		Object[] retentionIndexLibraryServices = Activator.getDefault().getRetentionIndexLibraryServices();
-		if(retentionIndexLibraryServices != null) {
-			List<ILibraryInformation> libraryInformations = new ArrayList<>();
-			for(Object service : retentionIndexLibraryServices) {
-				if(service instanceof IRetentionIndexLibraryService retentionIndexLibraryService) {
-					libraryInformations.addAll(retentionIndexLibraryService.getLibraryInformation(retentionIndex, retentionIndexLibrarySettings, monitor));
-				}
-			}
-			/*
-			 * Map the library entries to identification targets.
-			 */
-			String searchColumn = retentionIndexLibrarySettings.getSearchColumn();
-			boolean caseSensitive = retentionIndexLibrarySettings.isCaseSensitive();
-			boolean removeWhiteSpace = retentionIndexLibrarySettings.isRemoveWhiteSpace();
-			//
-			for(ILibraryInformation libraryInformation : libraryInformations) {
-				float retentionIndexColumn = ColumnIndexSupport.getRetentionIndex(retentionIndex, libraryInformation.getColumnIndexMarkers(), searchColumn, caseSensitive, removeWhiteSpace);
-				libraryInformation.setRetentionIndex(retentionIndexColumn);
-			}
-			/*
-			 * Filter Entries
-			 */
-			libraryInformations = LibraryInformationSupport.filterByRetentionIndexDelta(libraryInformations, retentionIndex, MAX_RESULTS);
-			for(ILibraryInformation libraryInformation : libraryInformations) {
-				identificationTargets.add(new IdentificationTarget(libraryInformation, ComparisonResult.COMPARISON_RESULT_BEST_MATCH));
-			}
+		List<ILibraryInformation> libraryInformations = new ArrayList<>();
+		for(IRetentionIndexLibraryService retentionIndexLibraryService : retentionIndexLibrarySettings.getRetentionIndexLibraryServices()) {
+			libraryInformations.addAll(retentionIndexLibraryService.getLibraryInformation(retentionIndex, retentionIndexLibrarySettings, monitor));
+		}
+		/*
+		 * Map the library entries to identification targets.
+		 */
+		String searchColumn = retentionIndexLibrarySettings.getSearchColumn();
+		boolean caseSensitive = retentionIndexLibrarySettings.isCaseSensitive();
+		boolean removeWhiteSpace = retentionIndexLibrarySettings.isRemoveWhiteSpace();
+		//
+		for(ILibraryInformation libraryInformation : libraryInformations) {
+			float retentionIndexColumn = ColumnIndexSupport.getRetentionIndex(retentionIndex, libraryInformation.getColumnIndexMarkers(), searchColumn, caseSensitive, removeWhiteSpace);
+			libraryInformation.setRetentionIndex(retentionIndexColumn);
+		}
+		/*
+		 * Filter Entries
+		 */
+		libraryInformations = LibraryInformationSupport.filterByRetentionIndexDelta(libraryInformations, retentionIndex, MAX_RESULTS);
+		for(ILibraryInformation libraryInformation : libraryInformations) {
+			identificationTargets.add(new IdentificationTarget(libraryInformation, ComparisonResult.COMPARISON_RESULT_BEST_MATCH));
 		}
 	}
 }

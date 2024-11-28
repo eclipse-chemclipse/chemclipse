@@ -11,11 +11,20 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.ui.dialogs;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.eclipse.chemclipse.model.services.IRetentionIndexLibraryService;
 import org.eclipse.chemclipse.model.services.RetentionIndexLibrarySettings;
 import org.eclipse.chemclipse.model.support.ColumnIndexSupport;
+import org.eclipse.chemclipse.model.ui.runnables.LibrarySearchSupport;
+import org.eclipse.chemclipse.support.ui.provider.AbstractLabelProvider;
+import org.eclipse.chemclipse.support.ui.provider.ListContentProvider;
+import org.eclipse.chemclipse.support.ui.swt.EnhancedComboViewer;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -24,6 +33,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -38,14 +48,18 @@ public class RetentionIndexLibrarySettingsDialog extends TitleAreaDialog {
 	public static final String ERROR_RETENTION_INDEX = "Please select a component with a retention index > 0.";
 	public static final String ERROR_SELECT_COMPONENT = "Please select at least one component.";
 	//
+	private static final String USE_ALL_SERVICES = "All Available";
+	//
 	private static final int MIN_RETENTION_INDEX_DELTA = 1;
 	private static final int MAX_RETENTION_INDEX_DELTA = 50;
 	//
+	private AtomicReference<ComboViewer> comboViewerServicesControl = new AtomicReference<>();
 	private AtomicReference<Text> textSearchColumnControl = new AtomicReference<>();
 	private AtomicReference<Button> buttonCaseSensitiveControl = new AtomicReference<>();
 	private AtomicReference<Button> buttonRemoveWhitespaceControl = new AtomicReference<>();
 	private AtomicReference<Spinner> spinnerRetentionIndexDeltaControl = new AtomicReference<>();
 	//
+	private List<IRetentionIndexLibraryService> retentionIndexLibraryServices = LibrarySearchSupport.getRetentionIndexLibraryServices();
 	private RetentionIndexLibrarySettings retentionIndexLibrarySettings = new RetentionIndexLibrarySettings();
 
 	public RetentionIndexLibrarySettingsDialog(Shell parentShell) {
@@ -76,22 +90,77 @@ public class RetentionIndexLibrarySettingsDialog extends TitleAreaDialog {
 		GridLayout layout = new GridLayout(2, false);
 		composite.setLayout(layout);
 		//
+		createComboViewerServices(composite);
 		createSectionSearchColumn(composite);
 		createSectionCaseSensitive(composite);
 		createSectionRemoveWhiteSpace(composite);
 		createSectionRetentionIndexDelta(composite);
 		//
 		initialize();
-		//
 		return container;
 	}
 
 	private void initialize() {
 
+		/*
+		 * Services
+		 */
+		List<Object> services = new ArrayList<>();
+		services.add(USE_ALL_SERVICES);
+		services.addAll(retentionIndexLibraryServices);
+		comboViewerServicesControl.get().setInput(services);
+		comboViewerServicesControl.get().setSelection(new StructuredSelection(USE_ALL_SERVICES));
+		retentionIndexLibrarySettings.getRetentionIndexLibraryServices().addAll(retentionIndexLibraryServices);
+		/*
+		 * Settings
+		 */
 		textSearchColumnControl.get().setText(retentionIndexLibrarySettings.getSearchColumn());
 		buttonCaseSensitiveControl.get().setSelection(retentionIndexLibrarySettings.isCaseSensitive());
 		buttonRemoveWhitespaceControl.get().setSelection(retentionIndexLibrarySettings.isRemoveWhiteSpace());
 		spinnerRetentionIndexDeltaControl.get().setSelection(retentionIndexLibrarySettings.getRetentionIndexDelta());
+	}
+
+	private void createComboViewerServices(Composite parent) {
+
+		createLabel(parent, "Use Service(s):");
+		//
+		ComboViewer comboViewer = new EnhancedComboViewer(parent, SWT.READ_ONLY);
+		Combo combo = comboViewer.getCombo();
+		comboViewer.setContentProvider(ListContentProvider.getInstance());
+		comboViewer.setLabelProvider(new AbstractLabelProvider() {
+
+			@Override
+			public String getText(Object element) {
+
+				if(element instanceof IRetentionIndexLibraryService service) {
+					return service.getName();
+				} else if(element instanceof String value) {
+					return value;
+				}
+				return null;
+			}
+		});
+		//
+		combo.setToolTipText("Select all or a specific retention index library service.");
+		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+		gridData.widthHint = 150;
+		combo.setLayoutData(gridData);
+		combo.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				retentionIndexLibrarySettings.getRetentionIndexLibraryServices().clear();
+				Object object = comboViewer.getStructuredSelection().getFirstElement();
+				if(object instanceof IRetentionIndexLibraryService service) {
+					retentionIndexLibrarySettings.getRetentionIndexLibraryServices().add(service);
+				} else if(object instanceof String) {
+					retentionIndexLibrarySettings.getRetentionIndexLibraryServices().addAll(retentionIndexLibraryServices);
+				}
+			}
+		});
+		//
+		comboViewerServicesControl.set(comboViewer);
 	}
 
 	private void createSectionSearchColumn(Composite parent) {

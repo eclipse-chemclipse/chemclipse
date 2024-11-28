@@ -11,12 +11,16 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RetentionIndexLibrarySettings {
 
 	private String searchColumn = "DB5";
 	private boolean caseSensitive = false;
 	private boolean removeWhiteSpace = false;
 	private int retentionIndexDelta = 10;
+	private List<IRetentionIndexLibraryService> retentionIndexLibraryServices = new ArrayList<>();
 
 	public String getSearchColumn() {
 
@@ -56,5 +60,10 @@ public class RetentionIndexLibrarySettings {
 	public void setRetentionIndexDelta(int retentionIndexDelta) {
 
 		this.retentionIndexDelta = retentionIndexDelta;
+	}
+
+	public List<IRetentionIndexLibraryService> getRetentionIndexLibraryServices() {
+
+		return retentionIndexLibraryServices;
 	}
 }
