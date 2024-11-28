@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2023 Lablicate GmbH.
+ * Copyright (c) 2018, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -63,9 +63,15 @@ public class InputValidator implements IValidator<Object> {
 				}
 			} else if(rawType == File.class) {
 				FileSettingProperty property = inputValue.getFileSettingProperty();
-				if(property != null && property.dialogType() != DialogType.SAVE_DIALOG) {
-					if(value != null && !value.isEmpty() && !new File(value).exists()) {
-						return "Location does not exits, please choose a valid location";
+				if(property != null) {
+					if(value == null || value.isEmpty() || value.isBlank()) {
+						if(!property.allowEmpty()) {
+							return "Please choose a location.";
+						}
+					} else if(property.dialogType() == DialogType.OPEN_DIALOG) {
+						if(!new File(value).exists()) {
+							return "Location does not exist.";
+						}
 					}
 				}
 			}

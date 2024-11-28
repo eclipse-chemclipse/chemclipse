@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2023 Lablicate GmbH.
+ * Copyright (c) 2010, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -27,9 +27,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
 public class ScanIdentifierSettings extends AbstractScanSearchSettings {
 
-	@JsonProperty(value = "NIST Folder (MSSEARCH)", defaultValue = "", required = true)
+	@JsonProperty(value = "NIST Folder (MSSEARCH)", defaultValue = "")
 	@JsonPropertyDescription("Select the NIST-DB folder, called MSSEARCH.")
-	@FileSettingProperty(dialogType = DialogType.OPEN_DIALOG, onlyDirectory = true)
+	@FileSettingProperty(dialogType = DialogType.OPEN_DIALOG, onlyDirectory = true, allowEmpty = false)
 	private File nistFolder = null;
 	@JsonProperty(value = "Limit Match Factor", defaultValue = "80.0")
 	@JsonPropertyDescription(value = "Run an identification if no target exists with a Match Factor >= the given limit.")

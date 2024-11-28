@@ -23,8 +23,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
 public abstract class AbstractChromatogramReportSettings extends AbstractProcessSettings implements IChromatogramReportSettings {
 
-	@JsonProperty(value = "Export Folder", defaultValue = "", required = true)
-	@FileSettingProperty(onlyDirectory = true, dialogType = DialogType.SAVE_DIALOG)
+	@JsonProperty(value = "Export Folder", defaultValue = "")
+	@FileSettingProperty(onlyDirectory = true, dialogType = DialogType.SAVE_DIALOG, allowEmpty = false)
 	@JsonPropertyDescription("Set a specific folder or use the placeholder.\n" + //
 			"Variables:\n" + //
 			VARIABLE_CURRENT_DIRECTORY //
