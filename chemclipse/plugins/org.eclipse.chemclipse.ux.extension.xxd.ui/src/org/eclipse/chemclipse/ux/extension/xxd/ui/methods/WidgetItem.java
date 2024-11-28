@@ -88,6 +88,12 @@ public class WidgetItem {
 			} else {
 				setSelection(combo, enumValue.toString());
 			}
+		} else if(control instanceof Composite composite) {
+			for(Control child : composite.getChildren()) {
+				if(child instanceof Text text) {
+					text.setText((String)inputValue.getDefaultValue());
+				}
+			}
 		}
 	}
 
