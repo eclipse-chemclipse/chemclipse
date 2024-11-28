@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2023 Lablicate GmbH.
+ * Copyright (c) 2018, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -12,10 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.swt.ui.support;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
+import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
@@ -23,11 +20,12 @@ import org.eclipse.swt.graphics.Point;
 
 public class Fonts {
 
-	private static Map<String, Font> fonts = new HashMap<>();
+	private static FontRegistry fontRegistry = new FontRegistry();
 
 	/**
-	 * Don't dispose the font as a cached version is used.
+	 * Returns a cached font from the font registry.
 	 * In case of an error, the system font is returned.
+	 * Fonts are disposed when the display is disposed.
 	 * 
 	 * @param display
 	 * @param name
@@ -37,17 +35,17 @@ public class Fonts {
 	 */
 	public static Font getCachedFont(Device display, String name, int height, int style) {
 
-		String fontId = name + height + style;
-		if(!fonts.containsKey(fontId)) {
-			Font font = new Font(display, name, height, style);
-			fonts.put(fontId, font);
+		String fontId = name + "-" + height + "-" + style;
+		if(!fontRegistry.hasValueFor(fontId)) {
+			fontRegistry.put(fontId, new FontData[]{new FontData(name, height, style)});
 		}
-		//
-		return fonts.containsKey(fontId) ? fonts.get(fontId) : DisplayUtils.getDisplay().getSystemFont();
+		Font font = fontRegistry.get(fontId);
+		return font != null ? font : display.getSystemFont();
 	}
 
 	/**
-	 * Creates a font so it looks the same size on different DPIs for the given device, please not that the caller is responsible for disposing the font
+	 * Creates a font so it looks the same size on different DPIs for the given device.
+	 * Please note that the caller is responsible for disposing the font.
 	 * 
 	 * @param device
 	 * @param fontData
