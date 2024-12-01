@@ -227,6 +227,7 @@
 							<linux>tar.gz</linux>
 							<macosx>tar.gz</macosx>
 						</formats>
+						<storeCreationTime>false</storeCreationTime>
 						<products>
 							<product>
 								<rootFolders>
