@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2021 Lablicate GmbH.
+ * Copyright (c) 2015, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,16 +13,15 @@
 package org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings;
 
 import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.IMassSpectrumComparator;
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IIdentifierSettingsMSD;
+import org.eclipse.chemclipse.model.identifier.IDeltaCalculationSettings;
+import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
+import org.eclipse.chemclipse.model.identifier.IPenaltyCalculationSettings;
 
-public interface IFileIdentifierSettings extends IIdentifierSettingsMSD {
+public interface IFileIdentifierSettings extends IIdentifierSettings, IPenaltyCalculationSettings, IDeltaCalculationSettings {
 
 	String getMassSpectraFiles();
 
 	void setMassSpectraFiles(String massSpectraFiles);
-
-	@Override
-	String getMassSpectrumComparatorId();
 
 	boolean isUsePreOptimization();
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2022 Lablicate GmbH.
+ * Copyright (c) 2019, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.MassSpectrumIdentifierAdapterSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
 import org.eclipse.chemclipse.support.settings.FloatSettingsProperty;
@@ -20,7 +19,7 @@ import org.eclipse.chemclipse.support.settings.IntSettingsProperty;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
-public class MassSpectrumUnknownSettings extends MassSpectrumIdentifierAdapterSettings implements IUnknownSettings {
+public class MassSpectrumUnknownSettings extends MassSpectrumIdentifierSettings implements IUnknownSettingsMSD {
 
 	@JsonProperty(value = "Limit Match Factor", defaultValue = "80.0")
 	@JsonPropertyDescription(value = "Run an identification if no target exists with a Match Factor >= the given limit.")

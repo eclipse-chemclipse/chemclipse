@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2024 Lablicate GmbH.
+ * Copyright (c) 2021, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,14 +9,13 @@
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
-package org.eclipse.chemclipse.chromatogram.msd.identifier.settings;
+package org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings;
 
-import junit.framework.TestCase;
+public interface IUnknownSettingsMSD extends IUnknownSettings {
 
-public class IdentifierSettingsMSD_1_Test extends TestCase {
+	boolean isIncludeIntensityPercent();
 
-	public void test1() {
+	void setIncludeIntensityPercent(boolean includeIntensityPercent);
 
-		assertEquals("org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.distance.cosine", IMassSpectrumComparatorSettings.DEFAULT_COMPARATOR_ID);
-	}
+	int getNumberOfTraces();
 }

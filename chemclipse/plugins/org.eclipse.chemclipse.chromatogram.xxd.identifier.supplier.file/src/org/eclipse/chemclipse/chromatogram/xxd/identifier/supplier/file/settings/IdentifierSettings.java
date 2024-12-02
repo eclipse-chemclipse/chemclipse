@@ -17,7 +17,8 @@ import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.IMassSpec
 import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.IMassSpectrumComparisonSupplier;
 import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.MassSpectrumComparator;
 import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.MassSpectrumComparatorDynamicSettingProperty;
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.ChromatogramIdentifierAdapterSettings;
+import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.AbstractIdentifierSettingsMSD;
+import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IChromatogramIdentifierSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
 import org.eclipse.chemclipse.model.support.CalculationType;
@@ -32,7 +33,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
-public class IdentifierSettings extends ChromatogramIdentifierAdapterSettings implements ILibraryIdentifierSettings {
+public class IdentifierSettings extends AbstractIdentifierSettingsMSD implements IChromatogramIdentifierSettings, ILibraryIdentifierSettings {
 
 	@JsonProperty(value = "Use Normalized Scan", defaultValue = "true")
 	@JsonPropertyDescription(value = "When merging scan, normalize the intensities.")

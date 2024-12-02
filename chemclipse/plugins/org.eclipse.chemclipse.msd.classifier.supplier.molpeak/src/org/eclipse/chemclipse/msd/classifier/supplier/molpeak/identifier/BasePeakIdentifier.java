@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IIdentifierSettingsMSD;
+import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IMassSpectrumComparatorSettings;
 import org.eclipse.chemclipse.chromatogram.msd.identifier.support.TargetBuilderMSD;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.core.MassSpectrumIdentifierFile;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.core.PeakIdentifierFile;
@@ -27,11 +27,9 @@ import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.MassSpectrumIdentifierSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.PeakIdentifierSettings;
 import org.eclipse.chemclipse.model.identifier.ComparisonResult;
-import org.eclipse.chemclipse.model.identifier.DeltaCalculation;
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
-import org.eclipse.chemclipse.model.identifier.PenaltyCalculation;
 import org.eclipse.chemclipse.model.support.LimitSupport;
 import org.eclipse.chemclipse.msd.classifier.supplier.molpeak.PathResolver;
 import org.eclipse.chemclipse.msd.classifier.supplier.molpeak.settings.IBasePeakSettings;
@@ -322,16 +320,10 @@ public class BasePeakIdentifier {
 		return new ComparisonResult(matchQuality, matchQuality, matchQuality, matchQuality);
 	}
 
-	private void setIdentifierSettings(IIdentifierSettingsMSD identifierSettings) {
+	private void setIdentifierSettings(IMassSpectrumComparatorSettings identifierSettings) {
 
-		identifierSettings.setMassSpectrumComparatorId(IIdentifierSettingsMSD.DEFAULT_COMPARATOR_ID);
+		identifierSettings.setMassSpectrumComparatorId(IMassSpectrumComparatorSettings.DEFAULT_COMPARATOR_ID);
 		identifierSettings.setLimitMatchFactor(100.0f);
-		identifierSettings.setDeltaCalculation(DeltaCalculation.NONE);
-		identifierSettings.setDeltaWindow(0.0f);
-		identifierSettings.setPenaltyCalculation(PenaltyCalculation.NONE);
-		identifierSettings.setPenaltyWindow(0.0f);
-		identifierSettings.setPenaltyLevelFactor(0.0f);
-		identifierSettings.setMaxPenalty(0.0f);
 	}
 
 	private void setFileIdentifierSettings(IFileIdentifierSettings fileIdentifierSettings) {

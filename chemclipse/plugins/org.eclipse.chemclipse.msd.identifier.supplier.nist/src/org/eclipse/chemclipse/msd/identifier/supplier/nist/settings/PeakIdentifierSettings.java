@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2023 Lablicate GmbH.
+ * Copyright (c) 2008, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -13,10 +13,12 @@
 package org.eclipse.chemclipse.msd.identifier.supplier.nist.settings;
 
 import java.io.File;
+import java.util.List;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.PeakIdentifierAdapterSettingsMSD;
+import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IPeakIdentifierSettingsMSD;
 import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
 import org.eclipse.chemclipse.msd.identifier.supplier.nist.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.support.literature.LiteratureReference;
 import org.eclipse.chemclipse.support.settings.ByteSettingsProperty;
 import org.eclipse.chemclipse.support.settings.FileSettingProperty;
 import org.eclipse.chemclipse.support.settings.FileSettingProperty.DialogType;
@@ -26,7 +28,7 @@ import org.eclipse.chemclipse.support.settings.IntSettingsProperty;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
-public class PeakIdentifierSettings extends PeakIdentifierAdapterSettingsMSD implements ISearchSettings {
+public class PeakIdentifierSettings implements ISearchSettings, IPeakIdentifierSettingsMSD {
 
 	@JsonProperty(value = "NIST Folder (MSSEARCH)", defaultValue = "")
 	@JsonPropertyDescription("Select the NIST-DB folder, called MSSEARCH.")
@@ -144,5 +146,11 @@ public class PeakIdentifierSettings extends PeakIdentifierAdapterSettingsMSD imp
 	public int getWaitInSeconds() {
 
 		return 3; // Only used if batch modus == false
+	}
+
+	@Override
+	public List<LiteratureReference> getLiteratureReferences() {
+
+		return null;
 	}
 }

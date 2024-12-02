@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2023 Lablicate GmbH.
+ * Copyright (c) 2014, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,7 +16,8 @@ import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.preferen
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.ui.Activator;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.ui.editors.IdentifierTableEditor;
 import org.eclipse.chemclipse.model.identifier.DeltaCalculation;
-import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
+import org.eclipse.chemclipse.model.identifier.IDeltaCalculationSettings;
+import org.eclipse.chemclipse.model.identifier.IPenaltyCalculationSettings;
 import org.eclipse.chemclipse.model.identifier.PenaltyCalculation;
 import org.eclipse.chemclipse.model.support.CalculationType;
 import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.DoubleFieldEditor;
@@ -69,13 +70,13 @@ public class PreferencePageFile extends FieldEditorPreferencePage implements IWo
 		//
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
 		addField(new ComboFieldEditor(PreferenceSupplier.P_DELTA_CALCULATION, "Delta Calculation", DeltaCalculation.getOptions(), getFieldEditorParent()));
-		addField(new FloatFieldEditor(PreferenceSupplier.P_DELTA_WINDOW, "Delta Window", IIdentifierSettings.MIN_DELTA_WINDOW, IIdentifierSettings.MAX_DELTA_WINDOW, getFieldEditorParent()));
+		addField(new FloatFieldEditor(PreferenceSupplier.P_DELTA_WINDOW, "Delta Window", IDeltaCalculationSettings.MIN_DELTA_WINDOW, IDeltaCalculationSettings.MAX_DELTA_WINDOW, getFieldEditorParent()));
 		//
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
 		addField(new ComboFieldEditor(PreferenceSupplier.P_PENALTY_CALCULATION, "Penalty Calculation", PenaltyCalculation.getOptions(), getFieldEditorParent()));
-		addField(new FloatFieldEditor(PreferenceSupplier.P_PENALTY_WINDOW, "Penalty Window", IIdentifierSettings.MIN_PENALTY_WINDOW, IIdentifierSettings.MAX_PENALTY_WINDOW, getFieldEditorParent()));
-		addField(new FloatFieldEditor(PreferenceSupplier.P_PENALTY_LEVEL_FACTOR, "Penalty Level Factor", IIdentifierSettings.MIN_PENALTY_LEVEL_FACTOR, IIdentifierSettings.MAX_PENALTY_LEVEL_FACTOR, getFieldEditorParent()));
-		addField(new FloatFieldEditor(PreferenceSupplier.P_MAX_PENALTY, "Max Penalty", IIdentifierSettings.MIN_PENALTY_MATCH_FACTOR, IIdentifierSettings.MAX_PENALTY_MATCH_FACTOR, getFieldEditorParent()));
+		addField(new FloatFieldEditor(PreferenceSupplier.P_PENALTY_WINDOW, "Penalty Window", IPenaltyCalculationSettings.MIN_PENALTY_WINDOW, IPenaltyCalculationSettings.MAX_PENALTY_WINDOW, getFieldEditorParent()));
+		addField(new FloatFieldEditor(PreferenceSupplier.P_PENALTY_LEVEL_FACTOR, "Penalty Level Factor", IPenaltyCalculationSettings.MIN_PENALTY_LEVEL_FACTOR, IPenaltyCalculationSettings.MAX_PENALTY_LEVEL_FACTOR, getFieldEditorParent()));
+		addField(new FloatFieldEditor(PreferenceSupplier.P_MAX_PENALTY, "Max Penalty", IPenaltyCalculationSettings.MIN_PENALTY_MATCH_FACTOR, IPenaltyCalculationSettings.MAX_PENALTY_MATCH_FACTOR, getFieldEditorParent()));
 		//
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_USE_NORMALIZED_SCAN, "Use normalized scan", getFieldEditorParent()));

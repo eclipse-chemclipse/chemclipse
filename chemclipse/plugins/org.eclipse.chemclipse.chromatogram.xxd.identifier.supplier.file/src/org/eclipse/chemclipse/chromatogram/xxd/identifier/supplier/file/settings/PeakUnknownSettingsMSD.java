@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2022 Lablicate GmbH.
+ * Copyright (c) 2019, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,10 +11,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.PeakIdentifierAdapterSettingsMSD;
+import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IPeakIdentifierSettingsMSD;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.model.identifier.AbstractIdentifierSettings;
 import org.eclipse.chemclipse.model.identifier.GeneratedIdentifierSettings;
-import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
 import org.eclipse.chemclipse.support.settings.FloatSettingsProperty;
 import org.eclipse.chemclipse.support.settings.IntSettingsProperty;
 
@@ -22,12 +22,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
 @GeneratedIdentifierSettings
-public class PeakUnknownSettingsMSD extends PeakIdentifierAdapterSettingsMSD implements IUnknownSettings {
+public class PeakUnknownSettingsMSD extends AbstractIdentifierSettings implements IPeakIdentifierSettingsMSD, IUnknownSettingsMSD {
 
-	@JsonProperty(value = "Limit Match Factor", defaultValue = "80.0")
-	@JsonPropertyDescription(value = "Run an identification if no target exists with a Match Factor >= the given limit.")
-	@FloatSettingsProperty(minValue = IIdentifierSettings.MIN_LIMIT_MATCH_FACTOR, maxValue = IIdentifierSettings.MAX_LIMIT_MATCH_FACTOR)
-	private float limitMatchFactor = 80.0f;
 	@JsonProperty(value = "Target Name", defaultValue = "Unknown")
 	private String targetName = "Unknown";
 	@JsonProperty(value = "Match Quality", defaultValue = "80.0")
@@ -48,18 +44,6 @@ public class PeakUnknownSettingsMSD extends PeakIdentifierAdapterSettingsMSD imp
 	private boolean includeRetentionTime = false;
 	@JsonProperty(value = "Include Retention Index", defaultValue = "false")
 	private boolean includeRetentionIndex = false;
-
-	@Override
-	public float getLimitMatchFactor() {
-
-		return limitMatchFactor;
-	}
-
-	@Override
-	public void setLimitMatchFactor(float limitMatchFactor) {
-
-		this.limitMatchFactor = limitMatchFactor;
-	}
 
 	@Override
 	public String getTargetName() {
@@ -90,6 +74,7 @@ public class PeakUnknownSettingsMSD extends PeakIdentifierAdapterSettingsMSD imp
 		return numberOfMZ;
 	}
 
+	@Override
 	public int getNumberOfTraces() {
 
 		return getNumberOfMZ();

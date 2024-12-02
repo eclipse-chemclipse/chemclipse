@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020 Lablicate GmbH.
+ * Copyright (c) 2020, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,11 +11,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.settings;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.MassSpectrumIdentifierAdapterSettings;
+import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.MassSpectrumIdentifierSettings;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class MassSpectrumIdentifierAlkaneSettings extends MassSpectrumIdentifierAdapterSettings {
+public class MassSpectrumIdentifierAlkaneSettings extends MassSpectrumIdentifierSettings {
 
 	@JsonProperty(value = "Number of Targets", defaultValue = "15")
 	private int numberOfTargets = 15;
@@ -24,31 +24,37 @@ public class MassSpectrumIdentifierAlkaneSettings extends MassSpectrumIdentifier
 	@JsonProperty(value = "Min Reverse Match Factor", defaultValue = "80.0")
 	private float minReverseMatchFactor = 80.0f;
 
+	@Override
 	public int getNumberOfTargets() {
 
 		return numberOfTargets;
 	}
 
+	@Override
 	public void setNumberOfTargets(int numberOfTargets) {
 
 		this.numberOfTargets = numberOfTargets;
 	}
 
+	@Override
 	public float getMinMatchFactor() {
 
 		return minMatchFactor;
 	}
 
+	@Override
 	public void setMinMatchFactor(float minMatchFactor) {
 
 		this.minMatchFactor = minMatchFactor;
 	}
 
+	@Override
 	public float getMinReverseMatchFactor() {
 
 		return minReverseMatchFactor;
 	}
 
+	@Override
 	public void setMinReverseMatchFactor(float minReverseMatchFactor) {
 
 		this.minReverseMatchFactor = minReverseMatchFactor;

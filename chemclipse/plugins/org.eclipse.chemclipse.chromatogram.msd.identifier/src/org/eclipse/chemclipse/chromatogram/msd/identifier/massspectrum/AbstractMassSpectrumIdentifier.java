@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2018 Lablicate GmbH.
+ * Copyright (c) 2010, 2024 Lablicate GmbH.
  * 
  * All rights reserved. This
  * program and the accompanying materials are made available under the terms of
@@ -11,8 +11,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.identifier.massspectrum;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IIdentifierSettingsMSD;
 import org.eclipse.chemclipse.model.exceptions.ValueMustNotBeNullException;
+import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 
 public abstract class AbstractMassSpectrumIdentifier implements IMassSpectrumIdentifier {
@@ -37,7 +37,7 @@ public abstract class AbstractMassSpectrumIdentifier implements IMassSpectrumIde
 	 * @param identifierSettings
 	 * @throws ValueMustNotBeNullException
 	 */
-	public void validateSettings(IIdentifierSettingsMSD identifierSettings) throws ValueMustNotBeNullException {
+	public void validateSettings(IIdentifierSettings identifierSettings) throws ValueMustNotBeNullException {
 
 		if(identifierSettings == null) {
 			throw new ValueMustNotBeNullException("The identifier settings must not be null.");
