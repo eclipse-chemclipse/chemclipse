@@ -24,7 +24,7 @@ import org.eclipse.chemclipse.chromatogram.msd.identifier.support.TargetBuilderM
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.core.MassSpectrumIdentifierFile;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.core.PeakIdentifierFile;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.IFileIdentifierSettings;
-import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.MassSpectrumIdentifierSettings;
+import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.MassSpectrumLibraryIdentifierSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.PeakIdentifierSettings;
 import org.eclipse.chemclipse.model.identifier.ComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
@@ -189,7 +189,7 @@ public class BasePeakIdentifier {
 		/*
 		 * Post identify NOTFOUND peaks.
 		 */
-		MassSpectrumIdentifierSettings massSpectrumIdentifierSettings = new MassSpectrumIdentifierSettings();
+		MassSpectrumLibraryIdentifierSettings massSpectrumIdentifierSettings = new MassSpectrumLibraryIdentifierSettings();
 		setIdentifierSettings(massSpectrumIdentifierSettings);
 		setFileIdentifierSettings(massSpectrumIdentifierSettings);
 		MassSpectrumIdentifierFile massSpectrumIdentifier = new MassSpectrumIdentifierFile();

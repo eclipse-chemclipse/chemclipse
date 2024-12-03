@@ -45,7 +45,7 @@
             id="org.eclipse.chemclipse.chromatogram.msd.identifier.supplier.file.massSpectrum"
             identifier="org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.core.MassSpectrumIdentifierFile"
             identifierName="Library File (MS)"
-            identifierSettings="org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.MassSpectrumIdentifierSettings">
+            identifierSettings="org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.MassSpectrumLibraryIdentifierSettings">
       </MassSpectrumIdentificationSupplier>
       <MassSpectrumIdentificationSupplier
             description="This plugin sets a mass spectrum identification using the highest intensity m/z values."

@@ -9,7 +9,7 @@
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Alexander Kerner - Generics
- * Christoph Läubrich - add method to check if target is valid, ad generics
+ * Christoph Läubrich - add method to check if target is valid, add generics
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.impl;
 
@@ -24,7 +24,7 @@ import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.se
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.core.MassSpectrumIdentifierFile;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.core.PeakIdentifierFile;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.IFileIdentifierSettings;
-import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.MassSpectrumIdentifierSettings;
+import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.MassSpectrumLibraryIdentifierSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.PeakIdentifierSettings;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.IPeakIdentificationResults;
@@ -75,7 +75,7 @@ public class AlkaneIdentifier {
 		/*
 		 * Create the file identifier settings.
 		 */
-		MassSpectrumIdentifierSettings fileIdentifierSettings = new MassSpectrumIdentifierSettings();
+		MassSpectrumLibraryIdentifierSettings fileIdentifierSettings = new MassSpectrumLibraryIdentifierSettings();
 		initializeSettings(fileIdentifierSettings);
 		transferAlkaneSettings(fileIdentifierSettings, alkaneSettings);
 		/*

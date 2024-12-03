@@ -21,7 +21,7 @@ import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.IUnknownSettingsMSD;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.IUnknownSettingsWSD;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.IdentifierSettings;
-import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.MassSpectrumIdentifierSettings;
+import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.MassSpectrumLibraryIdentifierSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.MassSpectrumUnknownSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.PeakIdentifierSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.PeakUnknownSettingsCSD;
@@ -182,9 +182,9 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 		putDefault(P_INCLUDE_RETENTION_INDEX_UNKNOWN + postfix, Boolean.toString(DEF_INCLUDE_RETENTION_INDEX_UNKNOWN));
 	}
 
-	public static MassSpectrumIdentifierSettings getMassSpectrumIdentifierSettings() {
+	public static MassSpectrumLibraryIdentifierSettings getMassSpectrumIdentifierSettings() {
 
-		MassSpectrumIdentifierSettings settings = new MassSpectrumIdentifierSettings();
+		MassSpectrumLibraryIdentifierSettings settings = new MassSpectrumLibraryIdentifierSettings();
 		initialize(settings);
 		//
 		return settings;
@@ -244,7 +244,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 
 		String postfix = POSTFIX_MSD;
 		MassSpectrumUnknownSettings settings = new MassSpectrumUnknownSettings();
-		settings.setMassSpectrumComparatorId("");
 		initalizeUnknownSettings(settings, postfix);
 		settings.setNumberOfMZ(INSTANCE().getInteger(P_NUMBER_OF_MZ_UNKNOWN + postfix, DEF_NUMBER_OF_MZ_UNKNOWN));
 		//
