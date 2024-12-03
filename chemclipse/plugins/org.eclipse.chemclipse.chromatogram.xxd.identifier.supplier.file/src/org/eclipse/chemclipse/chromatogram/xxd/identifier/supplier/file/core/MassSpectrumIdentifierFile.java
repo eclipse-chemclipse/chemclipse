@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2023 Lablicate GmbH.
+ * Copyright (c) 2014, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,7 +19,7 @@ import org.eclipse.chemclipse.chromatogram.msd.identifier.massspectrum.AbstractM
 import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IMassSpectrumIdentifierSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.internal.identifier.FileIdentifier;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.preferences.PreferenceSupplier;
-import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.MassSpectrumIdentifierSettings;
+import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.MassSpectrumLibraryIdentifierSettings;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
@@ -34,8 +34,8 @@ public class MassSpectrumIdentifierFile extends AbstractMassSpectrumIdentifier {
 		IProcessingInfo<IMassSpectra> processingInfo = new ProcessingInfo<>();
 		//
 		try {
-			MassSpectrumIdentifierSettings massSpectrumIdentifierSettings;
-			if(identifierSettings instanceof MassSpectrumIdentifierSettings settings) {
+			MassSpectrumLibraryIdentifierSettings massSpectrumIdentifierSettings;
+			if(identifierSettings instanceof MassSpectrumLibraryIdentifierSettings settings) {
 				massSpectrumIdentifierSettings = settings;
 			} else {
 				massSpectrumIdentifierSettings = PreferenceSupplier.getMassSpectrumIdentifierSettings();
