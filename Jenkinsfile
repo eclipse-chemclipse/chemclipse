@@ -4,9 +4,6 @@ pipeline {
 			label 'ubuntu-latest'
 		}
 	}
-	triggers {
-		pollSCM('H/5 * * * *')
-	}
 	parameters {
 		booleanParam(name: 'CLEAN_INTEGRATION', defaultValue: false, description: 'Attention: Cleans the integration folder with all branches completely.')
 		booleanParam(name: 'CODESIGN', defaultValue: false, description: 'Sign the artifacts.')
