@@ -7,7 +7,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
  * Christoph Läubrich - support file selection, refactor for new settings model, use validators, support for longs
  * Matthias Mailänder - add labeled combo boxes
  *******************************************************************************/
@@ -405,6 +405,10 @@ public class WidgetItem {
 
 				boolean filechooser;
 				int style;
+				/*
+				 * Determine whether to use a File or Directory Dialog
+				 * in open or save modus.
+				 */
 				if(fileSettingProperty != null) {
 					filechooser = !fileSettingProperty.onlyDirectory();
 					if(fileSettingProperty.dialogType() == DialogType.OPEN_DIALOG) {
@@ -416,37 +420,75 @@ public class WidgetItem {
 					filechooser = true;
 					style = SWT.OPEN;
 				}
+				/*
+				 * 
+				 */
 				if(filechooser) {
+					/*
+					 * Navigate to the currently selected directory if available.
+					 */
 					FileDialog dialog = new FileDialog(button.getShell(), style);
+					if(currentSelection != null) {
+						File file = new File(currentSelection.toString());
+						if(file.exists()) {
+							String filterPath;
+							if(file.isFile()) {
+								filterPath = file.getParentFile().getAbsolutePath();
+							} else {
+								filterPath = file.getAbsolutePath();
+							}
+							dialog.setFilterPath(filterPath);
+						}
+					}
+					/*
+					 * Show Extensions
+					 */
 					if(fileSettingProperty != null) {
 						String[] extensions = fileSettingProperty.validExtensions();
 						String[] extensionNames = fileSettingProperty.extensionNames();
-						if(extensions.length > 0) {
+						if(extensions.length > 0 && extensionNames.length == extensions.length) {
 							dialog.setFilterExtensions(extensions);
-						}
-						if(extensionNames.length > 0) {
 							dialog.setFilterNames(extensionNames);
 						}
 					}
+					/*
+					 * Open File Dialog
+					 */
 					String open = dialog.open();
 					if(open != null) {
 						text.setText(open);
 						currentSelection = new File(open);
 					}
 				} else {
+					/*
+					 * Navigate to the currently selected directory if available.
+					 */
 					DirectoryDialog dialog = new DirectoryDialog(button.getShell(), style);
+					if(currentSelection != null) {
+						File file = new File(currentSelection.toString());
+						if(file.exists()) {
+							dialog.setFilterPath(file.getAbsolutePath());
+						}
+					}
+					/*
+					 * Open Directory Dialog
+					 */
 					String open = dialog.open();
 					if(open != null) {
 						text.setText(open);
 						currentSelection = new File(open);
 					}
 				}
+				/*
+				 * Handle the events.
+				 */
 				Listener[] listeners = composite.getListeners(SWT.Selection);
 				for(Listener listener : listeners) {
 					listener.handleEvent(new Event());
 				}
 			}
 		});
+		//
 		return composite;
 	}
 
