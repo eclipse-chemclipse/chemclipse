@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.chemclipse.wsd.converter.chromatogramSupplier">
+      <ChromatogramSupplier
+            description="Reads Staden Trace Files."
+            fileExtension=".scf"
+            filterName="Standard Chromatogram Format (*.scf)"
+            id="org.eclipse.chemclipse.wsd.converter.supplier.scf"
+            importConverter="org.eclipse.chemclipse.wsd.converter.supplier.scf.core.ChromatogramImportConverter"
+            importMagicNumberMatcher="org.eclipse.chemclipse.wsd.converter.supplier.scf.core.MagicNumberMatcher"
+            isExportable="false"
+            isImportable="true">
+      </ChromatogramSupplier>
+   </extension>
+</plugin>
