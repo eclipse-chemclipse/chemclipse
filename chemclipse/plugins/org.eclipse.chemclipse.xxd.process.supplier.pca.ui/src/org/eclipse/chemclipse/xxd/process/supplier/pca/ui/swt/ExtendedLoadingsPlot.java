@@ -231,7 +231,7 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 			@Override
 			public void handleEvent(BaseChart baseChart, Event event) {
 
-				if(evaluationPCA != null) {
+				if(evaluationPCA != null && isBoxSelection()) {
 					/*
 					 * Prepare Data viewport
 					 */
@@ -271,8 +271,16 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 					int pcX = principalComponentUI.getPCX();
 					int pcY = principalComponentUI.getPCY();
 					IResultsPCA<? extends IResultPCA, ? extends IVariable> resultsPCA = evaluationPCA.getResults();
-					List<Feature> featureHighlighted = new ArrayList<>();
 					List<Feature> featuresSelected = evaluationPCA.getFeatureDataMatrix().getFeatures().stream().filter(x -> x.getVariable().isSelected()).toList();
+					/*
+					 * Get all currently selected features
+					 */
+					List<Feature> selected = new ArrayList<>();
+					for(Feature feature : evaluationPCA.getFeatureDataMatrix().getFeatures()) {
+						if(evaluationPCA.getHighlightedVariables().contains(feature.getVariable())) {
+							selected.add(feature);
+						}
+					}
 					/*
 					 * Prepare a result object with loading vectors per variable
 					 */
@@ -280,14 +288,19 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 						double[] variableLoading = getVariableLoading(resultsPCA, i);
 						IPoint pointResult = getPoint(variableLoading, pcX, pcY, i);
 						if(pointResult.getX() > pXStart && pointResult.getX() < pXStop && pointResult.getY() < pYStart && pointResult.getY() > pYStop) {
-							featureHighlighted.add(featuresSelected.get(i));
+							if(selected.contains(featuresSelected.get(i))) {
+								int index = selected.indexOf(featuresSelected.get(i));
+								selected.remove(index);
+							} else {
+								selected.add(featuresSelected.get(i));
+							}
 						}
 					}
 					/*
 					 * Get the closest result.
 					 */
-					if(!featureHighlighted.isEmpty()) {
-						UpdateNotifierUI.update(event.display, IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_PLOT_VARIABLE, featureHighlighted.toArray());
+					if(!selected.isEmpty()) {
+						UpdateNotifierUI.update(event.display, IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_PLOT_VARIABLE, selected.toArray());
 					}
 					/*
 					 * Finish User Selection Process
@@ -377,6 +390,102 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 						UpdateNotifierUI.update(event.display, IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_PLOT_VARIABLE, featureList.toArray());
 						highlightClick = true;
 					}
+				}
+			}
+		});
+		chartSettings.addHandledEventProcessor(new IHandledEventProcessor() {
+
+			@Override
+			public int getEvent() {
+
+				return IMouseSupport.EVENT_MOUSE_DOUBLE_CLICK;
+			}
+
+			@Override
+			public int getButton() {
+
+				return IMouseSupport.MOUSE_BUTTON_LEFT;
+			}
+
+			@Override
+			public int getStateMask() {
+
+				return SWT.MOD1;
+			}
+
+			@Override
+			public void handleEvent(BaseChart baseChart, Event event) {
+
+				if(evaluationPCA != null) {
+					/*
+					 * Determine the x|y coordinates.
+					 */
+					Rectangle rectangle = baseChart.getPlotArea().getBounds();
+					double x = event.x;
+					double y = event.y;
+					double width = rectangle.width;
+					double height = rectangle.height;
+					/*
+					 * Calculate the selected point.
+					 */
+					Range rangeX = baseChart.getAxisSet().getXAxis(BaseChart.ID_PRIMARY_X_AXIS).getRange();
+					Range rangeY = baseChart.getAxisSet().getYAxis(BaseChart.ID_PRIMARY_Y_AXIS).getRange();
+					/*
+					 * Map the result deltas.
+					 */
+					PrincipalComponentUI principalComponentUI = principalComponentControl.get();
+					int pcX = principalComponentUI.getPCX();
+					int pcY = principalComponentUI.getPCY();
+					IResultsPCA<? extends IResultPCA, ? extends IVariable> resultsPCA = evaluationPCA.getResults();
+					List<FeatureDelta> featureDeltas = new ArrayList<>();
+					List<Feature> selectedFeatures = evaluationPCA.getFeatureDataMatrix().getFeatures().stream().filter(f -> f.getVariable().isSelected()).toList();
+					/*
+					 * Prepare a result object with loading vectors per variable
+					 */
+					for(int i = 0; i < resultsPCA.getExtractedVariables().size(); i++) {
+						double[] variableLoading = getVariableLoading(resultsPCA, i);
+						IPoint pointResult = getPoint(variableLoading, pcX, pcY, i);
+						if(pointResult.getX() > rangeX.lower && pointResult.getX() < rangeX.upper && pointResult.getY() > rangeY.lower && pointResult.getY() < rangeY.upper) {
+							double deltaX = 0;
+							double deltaY = 0;
+							if(rangeX.upper < 0 || rangeX.lower > 0) {
+								deltaX = Math.abs(1.00 / Math.abs((Math.abs(rangeX.upper) - Math.abs(rangeX.lower))) * (pointResult.getX() - rangeX.lower) * width - x);
+							} else {
+								deltaX = Math.abs(1.00 / (rangeX.upper - rangeX.lower) * (pointResult.getX() - rangeX.lower) * width - x);
+							}
+							if(rangeY.upper < 0 || rangeY.lower > 0) {
+								deltaY = Math.abs(1.00 / Math.abs((Math.abs(rangeY.upper) - Math.abs(rangeY.lower))) * (pointResult.getY() - rangeY.lower) * height - (height - y));
+							} else {
+								deltaY = Math.abs(1.00 / (rangeY.upper - rangeY.lower) * (pointResult.getY() - rangeY.lower) * height - (height - y));
+							}
+							featureDeltas.add(new FeatureDelta(selectedFeatures.get(i), deltaX, deltaY));
+						}
+					}
+					/*
+					 * Get all currently selected features
+					 */
+					List<Feature> selected = new ArrayList<>();
+					for(Feature feature : evaluationPCA.getFeatureDataMatrix().getFeatures()) {
+						if(evaluationPCA.getHighlightedVariables().contains(feature.getVariable())) {
+							selected.add(feature);
+						}
+					}
+					/*
+					 * Get the closest result.
+					 */
+					if(!featureDeltas.isEmpty()) {
+						Collections.sort(featureDeltas, Comparator.comparing(FeatureDelta::getDistance));
+						FeatureDelta featureDelta = featureDeltas.get(0);
+						if(selected.contains(featureDelta.getFeature())) {
+							int index = selected.indexOf(featureDelta.getFeature());
+							selected.remove(index);
+						} else {
+							selected.add(featureDelta.getFeature());
+						}
+						UpdateNotifierUI.update(event.display, IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_PLOT_VARIABLE, selected.toArray());
+						highlightClick = true;
+					}
+					userSelection.reset();
 				}
 			}
 		});
@@ -497,5 +606,13 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 		} else {
 			plot.setInput(null, pcX, pcY);
 		}
+	}
+
+	private boolean isBoxSelection() {
+
+		if(userSelection.getStartX() != 0 && userSelection.getStartY() != 0 && userSelection.getStopX() != 0 && userSelection.getStopY() != 0) {
+			return true;
+		}
+		return false;
 	}
 }
