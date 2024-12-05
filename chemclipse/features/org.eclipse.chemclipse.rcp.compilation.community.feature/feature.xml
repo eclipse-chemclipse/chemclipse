@@ -181,14 +181,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="wrapped.org.apache.httpcomponents.httpclient"
-         version="0.0.0"/>
-
-   <plugin
-         id="wrapped.org.apache.httpcomponents.httpcore"
-         version="0.0.0"/>
-
-   <plugin
          id="org.apache.commons.commons-io"
          version="0.0.0"/>
 
@@ -222,10 +214,6 @@
 
    <plugin
          id="org.apache.commons.commons-collections4"
-         version="0.0.0"/>
-
-   <plugin
-         id="wrapped.org.apache.httpcomponents.httpclient-cache"
          version="0.0.0"/>
 
    <plugin
@@ -382,6 +370,14 @@
 
    <plugin
          id="com.sun.xml.bind.jaxb-osgi"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.httpcomponents.httpclient"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.httpcomponents.httpcore"
          version="0.0.0"/>
 
 </feature>
