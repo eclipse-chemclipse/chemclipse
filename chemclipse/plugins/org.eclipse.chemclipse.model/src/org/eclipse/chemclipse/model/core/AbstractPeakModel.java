@@ -215,7 +215,7 @@ public abstract class AbstractPeakModel extends AbstractPeakModelStrict implemen
 		if(strictModel) {
 			return calucalteTailingByInflectionPoints(percentageHeightBaseline);
 		} else {
-			return calucalteTailingByIntensityValues();
+			return calculateTailingByIntensityValues();
 		}
 	}
 
@@ -357,7 +357,7 @@ public abstract class AbstractPeakModel extends AbstractPeakModelStrict implemen
 		validateStrictModel();
 	}
 
-	private float calucalteTailingByIntensityValues() {
+	private float calculateTailingByIntensityValues() {
 
 		float tailing = 0.0f;
 		List<Integer> retentionTimes = peakIntensityValues.getRetentionTimes();

@@ -20,7 +20,7 @@ public abstract class AbstractPeakModelCSD extends PeakModel implements IPeakMod
 
 	private static final long serialVersionUID = 1580595192753292038L;
 
-	public AbstractPeakModelCSD(IScan peakMaximum, IPeakIntensityValues peakIntensityValues, float startBackgroundAbundance, float stopBackgroundAbundance) throws IllegalArgumentException, PeakException {
+	protected AbstractPeakModelCSD(IScan peakMaximum, IPeakIntensityValues peakIntensityValues, float startBackgroundAbundance, float stopBackgroundAbundance) throws IllegalArgumentException, PeakException {
 
 		super(peakMaximum, peakIntensityValues, startBackgroundAbundance, stopBackgroundAbundance);
 	}
