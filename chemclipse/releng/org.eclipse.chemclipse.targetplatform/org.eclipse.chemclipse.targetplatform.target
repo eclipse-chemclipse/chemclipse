@@ -3,46 +3,46 @@
 <target name="Eclipse ChemClipse" sequenceNumber="528">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-	<unit id="org.eclipse.equinox.sdk.feature.group" version="0.0.0"/>
-	<unit id="org.eclipse.sdk.feature.group" version="0.0.0"/>
-	<unit id="ch.qos.logback.classic" version="0.0.0"/>
-	<unit id="ch.qos.logback.core" version="0.0.0"/>
-	<unit id="com.fasterxml.jackson.core.jackson-annotations" version="0.0.0"/>
-	<unit id="com.fasterxml.jackson.core.jackson-core" version="0.0.0"/>
-	<unit id="com.fasterxml.jackson.core.jackson-databind" version="0.0.0"/>
-	<unit id="com.google.guava" version="0.0.0"/>
-	<unit id="com.google.guava.failureaccess" version="0.0.0"/>
-	<unit id="org.glassfish.hk2.osgi-resource-locator" version="0.0.0"/>
-	<unit id="com.sun.xml.bind.jaxb-osgi" version="0.0.0"/>
-	<unit id="jakarta.xml.bind-api" version="0.0.0"/>
-	<unit id="org.apache.commons.codec" version="0.0.0"/>
-	<unit id="org.apache.commons.commons-collections4" version="0.0.0"/>
-	<unit id="org.apache.commons.commons-compress" version="0.0.0"/>
-	<unit id="org.apache.commons.lang3" version="0.0.0"/>
-	<unit id="org.apache.httpcomponents.httpclient" version="0.0.0"/>
-	<unit id="org.apache.httpcomponents.httpcore" version="0.0.0"/>
-	<repository location="https://download.eclipse.org/releases/2024-09/"/>
+	<unit id="org.eclipse.equinox.sdk.feature.group"/>
+	<unit id="org.eclipse.sdk.feature.group"/>
+	<unit id="ch.qos.logback.classic"/>
+	<unit id="ch.qos.logback.core"/>
+	<unit id="com.fasterxml.jackson.core.jackson-annotations"/>
+	<unit id="com.fasterxml.jackson.core.jackson-core"/>
+	<unit id="com.fasterxml.jackson.core.jackson-databind"/>
+	<unit id="com.google.guava"/>
+	<unit id="com.google.guava.failureaccess"/>
+	<unit id="org.glassfish.hk2.osgi-resource-locator"/>
+	<unit id="com.sun.xml.bind.jaxb-osgi"/>
+	<unit id="jakarta.xml.bind-api"/>
+	<unit id="org.apache.commons.codec"/>
+	<unit id="org.apache.commons.commons-collections4"/>
+	<unit id="org.apache.commons.commons-compress"/>
+	<unit id="org.apache.commons.lang3"/>
+	<unit id="org.apache.httpcomponents.httpclient"/>
+	<unit id="org.apache.httpcomponents.httpcore"/>
+	<repository location="https://download.eclipse.org/releases/2024-12/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-	<unit id="org.slf4j.api" version="0.0.0"/>
+	<unit id="org.slf4j.api"/>
 	<repository location="https://download.eclipse.org/releases/2022-12/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 	<repository location="https://download.eclipse.org/cbi/updates/license/1.0.0.v20131003-1638/"/>
-	<unit id="org.eclipse.license.feature.group" version="0.0.0"/>
+	<unit id="org.eclipse.license.feature.group"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-	<unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="0.0.0"/>
+	<unit id="org.eclipse.babel.nls_eclipse_de.feature.group"/>
 	<repository location="https://download.eclipse.org/technology/babel/update-site/R0.20.0/2022-12/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-	<unit id="org.eclipse.swtchart.feature.feature.group" version="0.0.0"/>
+	<unit id="org.eclipse.swtchart.feature.feature.group"/>
 	<repository location="https://download.eclipse.org/swtchart/integration/develop/repository"/>
 </location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="https://download.eclipse.org/nebula/releases/3.1.1/"/>
-		<unit id="org.eclipse.nebula.feature.feature.group" version="0.0.0"/>
-		<unit id="org.eclipse.nebula.widgets.richtext.feature.feature.group" version="0.0.0"/>
+		<unit id="org.eclipse.nebula.feature.feature.group"/>
+		<unit id="org.eclipse.nebula.widgets.richtext.feature.feature.group"/>
 	</location>
 	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" label="org.apache.commons" missingManifest="generate" type="Maven">
 		<dependencies>
