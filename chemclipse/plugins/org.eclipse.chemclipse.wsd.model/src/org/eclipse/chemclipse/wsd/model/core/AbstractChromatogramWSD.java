@@ -18,13 +18,13 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.INoiseCalculator;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.NoiseCalculator;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.model.baseline.BaselineModel;
 import org.eclipse.chemclipse.model.baseline.IBaselineModel;
 import org.eclipse.chemclipse.model.core.AbstractChromatogram;
 import org.eclipse.chemclipse.model.core.IMeasurementResult;
+import org.eclipse.chemclipse.model.core.INoiseCalculator;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.results.ChromatogramSegmentation;
 import org.eclipse.chemclipse.model.results.NoiseSegmentMeasurementResult;
@@ -35,19 +35,24 @@ public abstract class AbstractChromatogramWSD extends AbstractChromatogram<IChro
 
 	private static final long serialVersionUID = -7048942996283330150L;
 	//
-	private INoiseCalculator noiseCalculator = null;
 	private final Map<Double, IBaselineModel> baselineModels;
 
 	public AbstractChromatogramWSD() {
 
 		baselineModels = new HashMap<>();
-		updateNoiseCalculator();
+		updateNoiseFactor();
 	}
 
 	@Override
-	public INoiseCalculator getNoiseCalculator() {
+	public void updateNoiseFactor() {
 
-		return noiseCalculator;
+		String noiseCalculatorId = getNoiseCalculatorId();
+		INoiseCalculator noiseCalculator = NoiseCalculator.getNoiseCalculator(noiseCalculatorId);
+		if(noiseCalculator != null) {
+			noiseCalculator.reset();
+		}
+		//
+		setNoiseCalculator(noiseCalculator);
 	}
 
 	@Override
@@ -58,21 +63,6 @@ public abstract class AbstractChromatogramWSD extends AbstractChromatogram<IChro
 			getSupplierScan(i).getScanSignals().forEach(signal -> wavelengths.add(signal.getWavelength()));
 		}
 		return wavelengths;
-	}
-
-	@Override
-	public void recalculateTheNoiseFactor() {
-
-		updateNoiseCalculator();
-	}
-
-	@Override
-	public float getSignalToNoiseRatio(float abundance) {
-
-		if(noiseCalculator != null) {
-			return noiseCalculator.getSignalToNoiseRatio(this, abundance);
-		}
-		return 0;
 	}
 
 	@Override
@@ -153,15 +143,13 @@ public abstract class AbstractChromatogramWSD extends AbstractChromatogram<IChro
 		}
 	}
 
-	private void updateNoiseCalculator() {
+	private String getNoiseCalculatorId() {
 
-		String noiseCalculatorId;
-		NoiseSegmentMeasurementResult noiseResult = getMeasurementResult(NoiseSegmentMeasurementResult.class);
-		if(noiseResult != null) {
-			noiseCalculatorId = noiseResult.getNoiseCalculatorId();
+		NoiseSegmentMeasurementResult noiseSegmentMeasurementResult = getMeasurementResult(NoiseSegmentMeasurementResult.class);
+		if(noiseSegmentMeasurementResult != null) {
+			return noiseSegmentMeasurementResult.getNoiseCalculatorId();
 		} else {
-			noiseCalculatorId = PreferenceSupplier.getSelectedNoiseCalculatorId();
+			return PreferenceSupplier.getSelectedNoiseCalculatorId();
 		}
-		noiseCalculator = NoiseCalculator.getNoiseCalculator(noiseCalculatorId);
 	}
 }

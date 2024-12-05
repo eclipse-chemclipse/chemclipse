@@ -12,12 +12,12 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.csd.model.core;
 
-import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.INoiseCalculator;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.NoiseCalculator;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.csd.model.core.selection.ChromatogramSelectionCSD;
 import org.eclipse.chemclipse.model.core.AbstractChromatogram;
 import org.eclipse.chemclipse.model.core.IMeasurementResult;
+import org.eclipse.chemclipse.model.core.INoiseCalculator;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.results.ChromatogramSegmentation;
 import org.eclipse.chemclipse.model.results.NoiseSegmentMeasurementResult;
@@ -26,45 +26,22 @@ import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 public abstract class AbstractChromatogramCSD extends AbstractChromatogram<IChromatogramPeakCSD> implements IChromatogramCSD {
 
 	private static final long serialVersionUID = -1514838958855146167L;
-	//
-	private INoiseCalculator noiseCalculator = null;
 
 	public AbstractChromatogramCSD() {
 
-		updateNoiseCalculator();
+		updateNoiseFactor();
 	}
 
 	@Override
-	public INoiseCalculator getNoiseCalculator() {
+	public void updateNoiseFactor() {
 
-		return noiseCalculator;
-	}
-
-	private void updateNoiseCalculator() {
-
-		String noiseCalculatorId;
-		NoiseSegmentMeasurementResult noiseResult = getMeasurementResult(NoiseSegmentMeasurementResult.class);
-		if(noiseResult != null) {
-			noiseCalculatorId = noiseResult.getNoiseCalculatorId();
-		} else {
-			noiseCalculatorId = PreferenceSupplier.getSelectedNoiseCalculatorId();
-		}
-		noiseCalculator = NoiseCalculator.getNoiseCalculator(noiseCalculatorId);
-	}
-
-	@Override
-	public void recalculateTheNoiseFactor() {
-
-		updateNoiseCalculator();
-	}
-
-	@Override
-	public float getSignalToNoiseRatio(float abundance) {
-
+		String noiseCalculatorId = getNoiseCalculatorId();
+		INoiseCalculator noiseCalculator = NoiseCalculator.getNoiseCalculator(noiseCalculatorId);
 		if(noiseCalculator != null) {
-			return noiseCalculator.getSignalToNoiseRatio(this, abundance);
+			noiseCalculator.reset();
 		}
-		return 0;
+		//
+		setNoiseCalculator(noiseCalculator);
 	}
 
 	@Override
@@ -117,6 +94,16 @@ public abstract class AbstractChromatogramCSD extends AbstractChromatogram<IChro
 		super.addMeasurementResult(chromatogramResult);
 		if(chromatogramResult instanceof NoiseSegmentMeasurementResult) {
 			recalculateTheNoiseFactor();
+		}
+	}
+
+	private String getNoiseCalculatorId() {
+
+		NoiseSegmentMeasurementResult noiseSegmentMeasurementResult = getMeasurementResult(NoiseSegmentMeasurementResult.class);
+		if(noiseSegmentMeasurementResult != null) {
+			return noiseSegmentMeasurementResult.getNoiseCalculatorId();
+		} else {
+			return PreferenceSupplier.getSelectedNoiseCalculatorId();
 		}
 	}
 }

@@ -16,10 +16,10 @@ package org.eclipse.chemclipse.chromatogram.xxd.calculator.settings;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.INoiseCalculator;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.NoiseCalculator;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.chromatogram.xxd.classifier.settings.IChromatogramClassifierSettings;
+import org.eclipse.chemclipse.model.core.INoiseCalculator;
 import org.eclipse.chemclipse.support.literature.LiteratureReference;
 import org.eclipse.chemclipse.support.settings.ComboSettingsProperty;
 import org.eclipse.chemclipse.support.settings.IntSettingsProperty;
@@ -40,16 +40,10 @@ public class NoiseChromatogramClassifierSettings implements IChromatogramClassif
 	@JsonPropertyDescription(value = "Segment Width: 5, 7, 9, ..., 19")
 	@JsonDeserialize(using = SegmentWidthDeserializier.class)
 	@IntSettingsProperty(minValue = PreferenceSupplier.MIN_SEGMENT_SIZE, maxValue = PreferenceSupplier.MAX_SEGMENT_SIZE, validation = Validation.ODD_NUMBER)
-	private int segmentWidth;
+	private int segmentWidth = PreferenceSupplier.getSelectedSegmentWidth();
 	@JsonProperty(value = "Noise Calculator")
 	@ComboSettingsProperty(NoiseCalculatorComboSupplier.class)
-	private String noiseCalculatorId;
-
-	public NoiseChromatogramClassifierSettings() {
-
-		segmentWidth = PreferenceSupplier.getSelectedSegmentWidth();
-		noiseCalculatorId = PreferenceSupplier.getSelectedNoiseCalculatorId();
-	}
+	private String noiseCalculatorId = PreferenceSupplier.getSelectedNoiseCalculatorId();
 
 	public int getSegmentWidth() {
 

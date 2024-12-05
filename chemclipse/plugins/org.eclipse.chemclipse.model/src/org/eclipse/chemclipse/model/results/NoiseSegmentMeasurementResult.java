@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2023 Lablicate GmbH.
+ * Copyright (c) 2019, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,19 +14,20 @@ package org.eclipse.chemclipse.model.results;
 
 import java.util.List;
 
-import org.eclipse.chemclipse.model.support.NoiseSegment;
+import org.eclipse.chemclipse.model.support.INoiseSegment;
 
-public class NoiseSegmentMeasurementResult extends AnalysisSegmentMeasurementResult<NoiseSegment> {
+public class NoiseSegmentMeasurementResult extends AnalysisSegmentMeasurementResult<INoiseSegment> {
 
 	private static final long serialVersionUID = -5989247294723381518L;
-	private final ChromatogramSegmentation segmentation;
+	//
+	private final ChromatogramSegmentation chromatogramSegmentation;
 	private final String noiseCalculatorId;
-	private final List<NoiseSegment> segments;
+	private final List<INoiseSegment> noiseSegments;
 
-	public NoiseSegmentMeasurementResult(List<NoiseSegment> segments, ChromatogramSegmentation segmentation, String noiseCalculatorId) {
+	public NoiseSegmentMeasurementResult(List<INoiseSegment> noiseSegments, ChromatogramSegmentation chromatogramSegmentation, String noiseCalculatorId) {
 
-		this.segments = segments;
-		this.segmentation = segmentation;
+		this.noiseSegments = noiseSegments;
+		this.chromatogramSegmentation = chromatogramSegmentation;
 		this.noiseCalculatorId = noiseCalculatorId;
 	}
 
@@ -37,14 +38,14 @@ public class NoiseSegmentMeasurementResult extends AnalysisSegmentMeasurementRes
 	}
 
 	@Override
-	public List<NoiseSegment> getResult() {
+	public List<INoiseSegment> getResult() {
 
-		return segments;
+		return noiseSegments;
 	}
 
-	public ChromatogramSegmentation getSegmentation() {
+	public ChromatogramSegmentation getChromatogramSegmentation() {
 
-		return segmentation;
+		return chromatogramSegmentation;
 	}
 
 	public String getNoiseCalculatorId() {
@@ -53,8 +54,8 @@ public class NoiseSegmentMeasurementResult extends AnalysisSegmentMeasurementRes
 	}
 
 	@Override
-	public Class<NoiseSegment> getType() {
+	public Class<INoiseSegment> getType() {
 
-		return NoiseSegment.class;
+		return INoiseSegment.class;
 	}
 }

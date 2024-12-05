@@ -10,5 +10,4 @@
             noiseCalculator="org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.noise.dyson.core.NoiseCalculator">
       </NoiseCalculationSupplier>
    </extension>
-
 </plugin>

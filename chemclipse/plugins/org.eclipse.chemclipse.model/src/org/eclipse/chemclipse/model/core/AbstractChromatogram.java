@@ -108,6 +108,10 @@ public abstract class AbstractChromatogram<T extends IPeak> extends AbstractMeas
 	private final Set<IIdentificationTarget> identificationTargets = new HashSet<>();
 	private int modCount;
 	/*
+	 * Noise Calculator
+	 */
+	private INoiseCalculator noiseCalculator = null;
+	/*
 	 * Transient
 	 */
 	private Map<String, Object> processDataMap = new HashMap<>();
@@ -131,14 +135,41 @@ public abstract class AbstractChromatogram<T extends IPeak> extends AbstractMeas
 		return processDataMap;
 	}
 
+	public abstract void updateNoiseFactor();
+
 	@Override
 	public void recalculateTheNoiseFactor() {
 
+		/*
+		 * This effectively resets the calculator
+		 */
+		updateNoiseFactor();
+		for(IPeak peak : getPeaks()) {
+			if(peak instanceof IChromatogramPeak chromatogramPeak) {
+				chromatogramPeak.resetSignalToNoiseRatio();
+			}
+		}
+	}
+
+	@Override
+	public INoiseCalculator getNoiseCalculator() {
+
+		return noiseCalculator;
+	}
+
+	@Override
+	public void setNoiseCalculator(INoiseCalculator noiseCalculator) {
+
+		this.noiseCalculator = noiseCalculator;
 	}
 
 	@Override
 	public float getSignalToNoiseRatio(float abundance) {
 
+		if(noiseCalculator != null) {
+			return noiseCalculator.getSignalToNoiseRatio(this, abundance);
+		}
+		//
 		return 0;
 	}
 

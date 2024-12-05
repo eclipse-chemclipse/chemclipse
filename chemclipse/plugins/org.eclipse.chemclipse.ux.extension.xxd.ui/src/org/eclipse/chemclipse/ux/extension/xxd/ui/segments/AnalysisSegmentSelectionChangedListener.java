@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2023 Lablicate GmbH.
+ * Copyright (c) 2019, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -45,10 +45,14 @@ public class AnalysisSegmentSelectionChangedListener<X> implements ISelectionCha
 			if(element instanceof TreeNode treeNode) {
 				element = treeNode.getValue();
 			}
+			/*
+			 * 
+			 */
 			IScan scan = Adapters.adapt(element, IScan.class);
 			if(scan != null) {
 				UpdateNotifierUI.update(Display.getDefault(), scan);
 			}
+			//
 			if(type.isInstance(element)) {
 				selectionConsumer.accept(type.cast(element));
 				return;

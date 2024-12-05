@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2023 Lablicate GmbH.
+ * Copyright (c) 2010, 2024 Lablicate GmbH.
  * 
  * All rights reserved. This
  * program and the accompanying materials are made available under the terms of
@@ -17,7 +17,7 @@ import org.eclipse.chemclipse.model.support.CalculationType;
 import org.eclipse.chemclipse.model.support.IAnalysisSegment;
 import org.eclipse.chemclipse.model.support.IScanRange;
 import org.eclipse.chemclipse.model.support.ScanRange;
-import org.eclipse.chemclipse.model.support.SegmentValidator;
+import org.eclipse.chemclipse.model.support.SegmentValidatorClassic;
 import org.eclipse.chemclipse.msd.model.core.ICombinedMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.chemclipse.msd.model.exceptions.FilterException;
@@ -31,11 +31,11 @@ public class CalculatorSupport {
 
 	private static final Logger logger = Logger.getLogger(CalculatorSupport.class);
 	private static final float NORMALIZATION_FACTOR = 1000.0f;
-	private final SegmentValidator segmentValidator;
+	private final SegmentValidatorClassic segmentValidator;
 
 	public CalculatorSupport() {
 
-		segmentValidator = new SegmentValidator();
+		segmentValidator = new SegmentValidatorClassic();
 	}
 
 	/**

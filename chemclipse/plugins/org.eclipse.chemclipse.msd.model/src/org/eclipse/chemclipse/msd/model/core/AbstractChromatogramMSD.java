@@ -13,12 +13,12 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core;
 
-import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.INoiseCalculator;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.NoiseCalculator;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.model.core.AbstractChromatogram;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.core.IMeasurementResult;
+import org.eclipse.chemclipse.model.core.INoiseCalculator;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.results.ChromatogramSegmentation;
 import org.eclipse.chemclipse.model.results.NoiseSegmentMeasurementResult;
@@ -60,50 +60,48 @@ public abstract class AbstractChromatogramMSD extends AbstractChromatogram<IChro
 	private static final long serialVersionUID = 6481555040060687481L;
 	//
 	public static final int DEFAULT_SEGMENT_WIDTH = 10;
+	//
 	private final IIonTransitionSettings ionTransitionSettings;
-	private INoiseCalculator noiseCalculator = null;
 	private ImmutableZeroIon immutableZeroIon;
 	private IScanMSD combinedMassSpectrum;
-
-	@Override
-	public INoiseCalculator getNoiseCalculator() {
-
-		return noiseCalculator;
-	}
 
 	protected AbstractChromatogramMSD() {
 
 		ionTransitionSettings = new IonTransitionSettings();
 		immutableZeroIon = new ImmutableZeroIon();
-		loadNoiseCalculator();
-	}
-
-	private void loadNoiseCalculator() {
-
-		String noiseCalculatorId;
-		NoiseSegmentMeasurementResult noiseResult = getMeasurementResult(NoiseSegmentMeasurementResult.class);
-		if(noiseResult != null) {
-			noiseCalculatorId = noiseResult.getNoiseCalculatorId();
-		} else {
-			noiseCalculatorId = PreferenceSupplier.getSelectedNoiseCalculatorId();
-		}
-		noiseCalculator = NoiseCalculator.getNoiseCalculator(noiseCalculatorId);
+		updateNoiseFactor();
 	}
 
 	@Override
-	public void recalculateTheNoiseFactor() {
+	public void updateNoiseFactor() {
 
-		// this effectively resets the calculator
-		loadNoiseCalculator();
-	}
-
-	@Override
-	public float getSignalToNoiseRatio(float abundance) {
-
+		String noiseCalculatorId = getNoiseCalculatorId();
+		INoiseCalculator noiseCalculator = NoiseCalculator.getNoiseCalculator(noiseCalculatorId);
 		if(noiseCalculator != null) {
-			return noiseCalculator.getSignalToNoiseRatio(this, abundance);
+			noiseCalculator.reset();
 		}
-		return 0;
+		//
+		setNoiseCalculator(noiseCalculator);
+	}
+
+	@Override
+	public <ResultType extends IMeasurementResult<?>> ResultType getMeasurementResult(Class<ResultType> type) {
+
+		ResultType result = super.getMeasurementResult(type);
+		if(result == null && type == ChromatogramSegmentation.class) {
+			return type.cast(new ChromatogramSegmentation(this, PreferenceSupplier.getSelectedSegmentWidth()));
+		}
+		//
+		return result;
+	}
+
+	@Override
+	public void addMeasurementResult(IMeasurementResult<?> chromatogramResult) {
+
+		super.addMeasurementResult(chromatogramResult);
+		if(chromatogramResult instanceof NoiseSegmentMeasurementResult) {
+			recalculateTheNoiseFactor();
+		}
 	}
 
 	@Override
@@ -139,8 +137,6 @@ public abstract class AbstractChromatogramMSD extends AbstractChromatogram<IChro
 		}
 	}
 
-	// -----------------------------------------------------------add / remove
-	// scans
 	@Override
 	public IScanMSD getScan(int scan, IMarkedIons excludedIons) {
 
@@ -164,8 +160,6 @@ public abstract class AbstractChromatogramMSD extends AbstractChromatogram<IChro
 		return null;
 	}
 
-	// -----------------------------------------------------------add / remove
-	// scans
 	@Override
 	public float getMinIonAbundance() {
 
@@ -295,22 +289,13 @@ public abstract class AbstractChromatogramMSD extends AbstractChromatogram<IChro
 		}
 	}
 
-	@Override
-	public <ResultType extends IMeasurementResult<?>> ResultType getMeasurementResult(Class<ResultType> type) {
+	private String getNoiseCalculatorId() {
 
-		ResultType result = super.getMeasurementResult(type);
-		if(result == null && type == ChromatogramSegmentation.class) {
-			return type.cast(new ChromatogramSegmentation(this, PreferenceSupplier.getSelectedSegmentWidth()));
-		}
-		return result;
-	}
-
-	@Override
-	public void addMeasurementResult(IMeasurementResult<?> chromatogramResult) {
-
-		super.addMeasurementResult(chromatogramResult);
-		if(chromatogramResult instanceof NoiseSegmentMeasurementResult) {
-			recalculateTheNoiseFactor();
+		NoiseSegmentMeasurementResult noiseSegmentMeasurementResult = getMeasurementResult(NoiseSegmentMeasurementResult.class);
+		if(noiseSegmentMeasurementResult != null) {
+			return noiseSegmentMeasurementResult.getNoiseCalculatorId();
+		} else {
+			return PreferenceSupplier.getSelectedNoiseCalculatorId();
 		}
 	}
 }

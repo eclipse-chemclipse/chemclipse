@@ -28,7 +28,7 @@ import org.eclipse.chemclipse.chromatogram.wsd.peak.detector.settings.IPeakDetec
 import org.eclipse.chemclipse.chromatogram.wsd.peak.detector.supplier.firstderivative.Activator;
 import org.eclipse.chemclipse.chromatogram.wsd.peak.detector.supplier.firstderivative.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.chromatogram.wsd.peak.detector.supplier.firstderivative.settings.PeakDetectorSettingsWSD;
-import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.NoiseChromatogramClassifier;
+import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.NoiseChromatogramSupport;
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.core.BasePeakDetector;
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.model.DetectorType;
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.support.FirstDerivativeDetectorSlope;
@@ -44,8 +44,8 @@ import org.eclipse.chemclipse.model.exceptions.PeakException;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignalsModifier;
+import org.eclipse.chemclipse.model.support.INoiseSegment;
 import org.eclipse.chemclipse.model.support.IScanRange;
-import org.eclipse.chemclipse.model.support.NoiseSegment;
 import org.eclipse.chemclipse.model.support.ScanRange;
 import org.eclipse.chemclipse.numeric.core.IPoint;
 import org.eclipse.chemclipse.numeric.core.Point;
@@ -86,10 +86,10 @@ public class PeakDetectorWSD<P extends IPeak, C extends IChromatogram<P>, R> ext
 				/*
 				 * Extract the noise segments.
 				 */
-				List<NoiseSegment> noiseSegments = null;
+				List<INoiseSegment> noiseSegments = null;
 				IChromatogramWSD chromatogram = chromatogramSelection.getChromatogram();
 				if(peakDetectorSettings.isUseNoiseSegments()) {
-					noiseSegments = NoiseChromatogramClassifier.getNoiseSegments(chromatogram, chromatogramSelection, false, subMonitor.split(10));
+					noiseSegments = NoiseChromatogramSupport.getNoiseSegments(chromatogram, chromatogramSelection, false, subMonitor.split(10));
 				}
 				List<IChromatogramPeakWSD> peaks = detectPeaks(chromatogramSelection, peakDetectorSettings, noiseSegments, subMonitor.split(90));
 				for(IChromatogramPeakWSD peak : peaks) {
@@ -123,7 +123,7 @@ public class PeakDetectorWSD<P extends IPeak, C extends IChromatogram<P>, R> ext
 	 * @param chromatogramSelection
 	 * @throws ValueMustNotBeNullException
 	 */
-	public List<IChromatogramPeakWSD> detectPeaks(IChromatogramSelectionWSD chromatogramSelection, PeakDetectorSettingsWSD peakDetectorSettings, List<NoiseSegment> noiseSegments, IProgressMonitor monitor) {
+	public List<IChromatogramPeakWSD> detectPeaks(IChromatogramSelectionWSD chromatogramSelection, PeakDetectorSettingsWSD peakDetectorSettings, List<INoiseSegment> noiseSegments, IProgressMonitor monitor) {
 
 		List<IChromatogramPeakWSD> extractPeaks = new ArrayList<>();
 		Collection<IMarkedWavelengths> filterWavelengths = peakDetectorSettings.getFilterWavelengths();
@@ -139,10 +139,10 @@ public class PeakDetectorWSD<P extends IPeak, C extends IChromatogram<P>, R> ext
 				 * noise segments.
 				 * | --- [S] --- [N] --- [E] --- |
 				 */
-				Iterator<NoiseSegment> iterator = noiseSegments.iterator();
+				Iterator<INoiseSegment> iterator = noiseSegments.iterator();
 				int startRetentionTime = chromatogramSelection.getStartRetentionTime();
 				int stopRetentionTime = chromatogramSelection.getStopRetentionTime();
-				NoiseSegment noiseSegment = iterator.hasNext() ? iterator.next() : null;
+				INoiseSegment noiseSegment = iterator.hasNext() ? iterator.next() : null;
 				/*
 				 * Range from the start of the chromatogram selection to the first noise segment
 				 * | --- [S]

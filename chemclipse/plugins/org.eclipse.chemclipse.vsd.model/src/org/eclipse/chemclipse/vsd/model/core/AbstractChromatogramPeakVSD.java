@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023 Lablicate GmbH.
+ * Copyright (c) 2023, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,8 +15,9 @@ import org.eclipse.chemclipse.model.exceptions.PeakException;
 
 public class AbstractChromatogramPeakVSD extends AbstractPeakVSD implements IChromatogramPeakVSD {
 
-	private IChromatogramVSD chromatogram;
 	private static final float INITIAL_SN_VALUE = -1.0f;
+	//
+	private IChromatogramVSD chromatogram;
 	private float signalToNoiseRatio = INITIAL_SN_VALUE;
 
 	public AbstractChromatogramPeakVSD(IPeakModelVSD peakModel, IChromatogramVSD chromatogram) throws IllegalArgumentException, PeakException {
@@ -41,6 +42,12 @@ public class AbstractChromatogramPeakVSD extends AbstractPeakVSD implements IChr
 	public IChromatogramVSD getChromatogram() {
 
 		return chromatogram;
+	}
+
+	@Override
+	public void resetSignalToNoiseRatio() {
+
+		signalToNoiseRatio = INITIAL_SN_VALUE;
 	}
 
 	@Override

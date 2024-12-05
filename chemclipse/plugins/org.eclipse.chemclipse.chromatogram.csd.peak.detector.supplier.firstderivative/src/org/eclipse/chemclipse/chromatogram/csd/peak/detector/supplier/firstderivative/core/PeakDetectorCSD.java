@@ -25,7 +25,7 @@ import org.eclipse.chemclipse.chromatogram.csd.peak.detector.supplier.firstderiv
 import org.eclipse.chemclipse.chromatogram.peak.detector.exceptions.ValueMustNotBeNullException;
 import org.eclipse.chemclipse.chromatogram.peak.detector.model.Threshold;
 import org.eclipse.chemclipse.chromatogram.peak.detector.support.IRawPeak;
-import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.NoiseChromatogramClassifier;
+import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.NoiseChromatogramSupport;
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.core.BasePeakDetector;
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.model.DetectorType;
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.support.FirstDerivativeDetectorSlope;
@@ -46,7 +46,7 @@ import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignalsModifier;
-import org.eclipse.chemclipse.model.support.NoiseSegment;
+import org.eclipse.chemclipse.model.support.INoiseSegment;
 import org.eclipse.chemclipse.model.support.ScanRange;
 import org.eclipse.chemclipse.numeric.core.IPoint;
 import org.eclipse.chemclipse.numeric.core.Point;
@@ -78,9 +78,9 @@ public class PeakDetectorCSD<P extends IPeak, C extends IChromatogram<P>, R> ext
 				/*
 				 * Extract the noise segments.
 				 */
-				List<NoiseSegment> noiseSegments = null;
+				List<INoiseSegment> noiseSegments = null;
 				if(peakDetectorSettings.isUseNoiseSegments()) {
-					noiseSegments = NoiseChromatogramClassifier.getNoiseSegments(chromatogram, chromatogramSelection, false, subMonitor.split(10));
+					noiseSegments = NoiseChromatogramSupport.getNoiseSegments(chromatogram, chromatogramSelection, false, subMonitor.split(10));
 				}
 				/*
 				 * Detect and add the peaks.
@@ -126,7 +126,7 @@ public class PeakDetectorCSD<P extends IPeak, C extends IChromatogram<P>, R> ext
 	/**
 	 * Additionally, noise segments are used if not null.
 	 */
-	public List<IChromatogramPeakCSD> detectPeaks(IChromatogramSelectionCSD chromatogramSelection, PeakDetectorSettingsCSD peakDetectorSettings, List<NoiseSegment> noiseSegments, IProgressMonitor monitor) {
+	public List<IChromatogramPeakCSD> detectPeaks(IChromatogramSelectionCSD chromatogramSelection, PeakDetectorSettingsCSD peakDetectorSettings, List<INoiseSegment> noiseSegments, IProgressMonitor monitor) {
 
 		Threshold threshold = peakDetectorSettings.getThreshold();
 		int windowSize = peakDetectorSettings.getMovingAverageWindowSize();
@@ -138,10 +138,10 @@ public class PeakDetectorCSD<P extends IPeak, C extends IChromatogram<P>, R> ext
 			 * noise segments.
 			 * | --- [S] --- [N] --- [E] --- |
 			 */
-			Iterator<NoiseSegment> iterator = noiseSegments.iterator();
+			Iterator<INoiseSegment> iterator = noiseSegments.iterator();
 			int startRetentionTime = chromatogramSelection.getStartRetentionTime();
 			int stopRetentionTime = chromatogramSelection.getStopRetentionTime();
-			NoiseSegment noiseSegment = iterator.hasNext() ? iterator.next() : null;
+			INoiseSegment noiseSegment = iterator.hasNext() ? iterator.next() : null;
 			/*
 			 * Range from the start of the chromatogram selection to the first noise segment
 			 * | --- [S]

@@ -8,13 +8,25 @@
  * 
  * Contributors:
  * Christoph Läubrich - initial API and implementation
- * Philip Wenig - refactoring
+ * Philip Wenig - corrected the name scheme
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
 
-import org.eclipse.chemclipse.model.core.IChromatogram;
+import java.io.Serializable;
 
-public interface ChromatogramSegment extends IAnalysisSegment {
+public interface INoiseSegment extends IAnalysisSegment, Serializable {
 
-	IChromatogram<?> getChromatogram();
+	double getNoiseFactor();
+
+	void setNoiseFactor(double noiseFactor);
+
+	String getTraces();
+
+	boolean isUse();
+
+	void setUse(boolean use);
+
+	boolean isUserSelection();
+
+	void setUserSelection(boolean userSelection);
 }

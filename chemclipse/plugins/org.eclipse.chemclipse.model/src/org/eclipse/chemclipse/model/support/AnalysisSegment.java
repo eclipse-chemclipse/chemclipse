@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2018 Lablicate GmbH.
+ * Copyright (c) 2008, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -7,17 +7,13 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
 
 /**
- * A analysis segment represents a segment of a chromatogram which should be
- * analyzed.<br/>
- * The segment gives information about the start and stop scan number and the
- * segment area.
- * 
- * @author eselmeister
+ * A analysis segment represents a segment of a chromatogram which should be analyzed.
+ * The segment gives information about the start and stop scan number and the segment area.
  */
 public abstract class AnalysisSegment implements IAnalysisSegment {
 
@@ -25,6 +21,7 @@ public abstract class AnalysisSegment implements IAnalysisSegment {
 	private int stopScan = 0;
 
 	public AnalysisSegment(int startScan, int segmentWidth) {
+
 		if(startScan > 0 && segmentWidth > 0) {
 			this.startScan = startScan;
 			this.stopScan = startScan + segmentWidth - 1;

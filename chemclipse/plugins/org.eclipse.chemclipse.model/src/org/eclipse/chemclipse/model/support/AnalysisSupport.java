@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2023 Lablicate GmbH.
+ * Copyright (c) 2008, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -7,7 +7,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
  * Christoph Läubrich - add static method, generalize function calls
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
@@ -23,8 +23,6 @@ import org.eclipse.chemclipse.model.exceptions.AnalysisSupportException;
 /**
  * The analysis support helps you to divide a chromatogram into different
  * analysis segments of a given segment width.
- * 
- * @author eselmeister
  */
 public class AnalysisSupport implements IAnalysisSupport {
 
@@ -82,7 +80,6 @@ public class AnalysisSupport implements IAnalysisSupport {
 		}
 	}
 
-	// ----------------------------------------IAnalysisSupport
 	@Override
 	public int getNumberOfAnalysisSegments() {
 
@@ -95,8 +92,6 @@ public class AnalysisSupport implements IAnalysisSupport {
 		return analysisSegments;
 	}
 
-	// ----------------------------------------IAnalysisSupport
-	// ----------------------------------------private methods
 	private static <X extends IAnalysisSegment> List<X> initializeAnalysisSegments(int numberOfScans, int startScan, int segmentWidth, BiFunction<Integer, Integer, X> constructor) {
 
 		assert numberOfScans > 0 : "The number of scans must be > 0";
@@ -130,7 +125,6 @@ public class AnalysisSupport implements IAnalysisSupport {
 		return analysisSegments;
 	}
 
-	// ----------------------------------------private methods
 	public static List<ChromatogramSegment> getChromatogramSegments(IChromatogram<?> chromatogram, int segmentWidth) {
 
 		return initializeAnalysisSegments(chromatogram.getNumberOfScans(), 1, segmentWidth, (startScan, segmentWidth1) -> new ChromatogramAnalysisSegment(chromatogram, startScan, segmentWidth1));

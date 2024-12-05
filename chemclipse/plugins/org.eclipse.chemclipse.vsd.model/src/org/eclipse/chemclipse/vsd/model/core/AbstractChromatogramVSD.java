@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023 Lablicate GmbH.
+ * Copyright (c) 2023, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,6 +18,12 @@ import org.eclipse.chemclipse.vsd.model.core.selection.ChromatogramSelectionVSD;
 public abstract class AbstractChromatogramVSD extends AbstractChromatogram<IChromatogramPeakVSD> implements IChromatogramVSD {
 
 	private static final long serialVersionUID = -2463054178850833466L;
+
+	@Override
+	public void updateNoiseFactor() {
+
+		// TODO - Noise Calculation
+	}
 
 	@Override
 	public double getPeakIntegratedArea() {

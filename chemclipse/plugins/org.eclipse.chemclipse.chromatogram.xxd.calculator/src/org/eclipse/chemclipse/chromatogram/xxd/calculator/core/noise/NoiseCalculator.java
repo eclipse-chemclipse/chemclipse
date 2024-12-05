@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2020 Lablicate GmbH.
+ * Copyright (c) 2014, 2024 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
  * Christoph Läubrich - adjust to changed API, add null check
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise;
@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.exceptions.NoNoiseCalculatorAvailableException;
 import org.eclipse.chemclipse.logging.core.Logger;
+import org.eclipse.chemclipse.model.core.INoiseCalculator;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
@@ -105,6 +106,7 @@ public class NoiseCalculator {
 			supplier.setDetectorName(element.getAttribute(CALCULATOR_NAME));
 			noiseCalculatorSupport.add(supplier);
 		}
+		//
 		return noiseCalculatorSupport;
 	}
 
@@ -117,8 +119,7 @@ public class NoiseCalculator {
 	 */
 	public static INoiseCalculator getNoiseCalculator(final String calculatorId) {
 
-		IConfigurationElement element;
-		element = getConfigurationElement(calculatorId);
+		IConfigurationElement element = getConfigurationElement(calculatorId);
 		INoiseCalculator instance = null;
 		if(element != null) {
 			try {
@@ -127,6 +128,7 @@ public class NoiseCalculator {
 				logger.warn(e);
 			}
 		}
+		//
 		return instance;
 	}
 
@@ -141,6 +143,7 @@ public class NoiseCalculator {
 		if("".equals(detectorId)) {
 			return null;
 		}
+		//
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
 		if(registry != null) {
 			IConfigurationElement[] elements = registry.getConfigurationElementsFor(EXTENSION_POINT);
@@ -150,6 +153,7 @@ public class NoiseCalculator {
 				}
 			}
 		}
+		//
 		return null;
 	}
 }

@@ -143,6 +143,20 @@ public interface IChromatogram<T extends IPeak> extends SegmentedMeasurement, IM
 	void replaceAllScans(List<IScan> scans);
 
 	/**
+	 * Returns the currently used noise calculator.
+	 * 
+	 * @return {@link INoiseCalculator}
+	 */
+	INoiseCalculator getNoiseCalculator();
+
+	/**
+	 * Sets the currently used noise calculator.
+	 * 
+	 * @param noiseCalculator
+	 */
+	void setNoiseCalculator(INoiseCalculator noiseCalculator);
+
+	/**
 	 * Recalculates the noise factor.
 	 */
 	void recalculateTheNoiseFactor();

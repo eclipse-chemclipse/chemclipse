@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2021 Lablicate GmbH.
+ * Copyright (c) 2008, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -7,7 +7,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
  * Christoph Läubrich - add method for float values
  *******************************************************************************/
 package org.eclipse.chemclipse.numeric.statistics;
@@ -258,6 +258,22 @@ public class Calculations {
 		return sum / size;
 	}
 
+	public static double getMean(List<Double> values) {
+
+		double mean = 0.0d;
+		if(values != null) {
+			double[] data = new double[values.size()];
+			for(int i = 0; i < values.size(); i++) {
+				if(values.get(i) != null) {
+					data[i] = values.get(i);
+				}
+			}
+			mean = getMean(data);
+		}
+		//
+		return mean;
+	}
+
 	/**
 	 * Returns the median of the given value list.<br/>
 	 * The values will not be changed in order.
@@ -277,6 +293,7 @@ public class Calculations {
 			}
 			median = getMedian(data);
 		}
+		//
 		return median;
 	}
 

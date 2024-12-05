@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2021 Lablicate GmbH.
+ * Copyright (c) 2014, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -7,7 +7,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
  * Matthias Mailänder - removed enums
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.calculator.ui.preferences;
@@ -41,7 +41,7 @@ public class NoiseCalculatorPreferencePage extends FieldEditorPreferencePage imp
 
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
 		addField(new ComboFieldEditor(PreferenceSupplier.P_NOISE_CALCULATOR_ID, "Calculator Method", NoiseCalculator.getAvailableCalculatorIds(), getFieldEditorParent()));
-		addField(new SegmentSizeFieldEditor(PreferenceSupplier.P_SEGMENT_WIDTH, "Segment width to determine noise", getFieldEditorParent()));
+		addField(new SegmentSizeFieldEditor(PreferenceSupplier.P_SEGMENT_WIDTH, "Segment Width", getFieldEditorParent()));
 	}
 
 	/*

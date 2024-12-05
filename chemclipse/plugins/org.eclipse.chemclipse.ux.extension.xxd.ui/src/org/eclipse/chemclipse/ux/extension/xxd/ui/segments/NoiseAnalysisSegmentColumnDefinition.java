@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2023 Lablicate GmbH.
+ * Copyright (c) 2019, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,13 +8,16 @@
  * 
  * Contributors:
  * Christoph Läubrich - initial API and implementation
+ * Philip Wenig - refactoring noise handling
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.segments;
 
 import java.util.List;
 
+import org.eclipse.chemclipse.model.support.INoiseSegment;
 import org.eclipse.chemclipse.msd.model.core.IIon;
-import org.eclipse.chemclipse.msd.model.noise.IonNoiseSegment;
+import org.eclipse.chemclipse.support.traces.TraceFactory;
+import org.eclipse.chemclipse.support.traces.TraceGeneric;
 import org.eclipse.chemclipse.support.ui.swt.columns.ColumnDefinition;
 import org.eclipse.chemclipse.support.ui.swt.columns.SimpleColumnDefinition;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -39,12 +42,17 @@ public class NoiseAnalysisSegmentColumnDefinition extends AnalysisSegmentColumnD
 				if(element instanceof TreeNode treeNode) {
 					element = treeNode.getValue();
 				}
-				if(element instanceof IonNoiseSegment ionNoiseSegment) {
-					double ion = ionNoiseSegment.getIon();
-					if(ion == IIon.TIC_ION) {
-						return "TIC";
+				//
+				if(element instanceof INoiseSegment noiseSegment) {
+					List<TraceGeneric> traces = TraceFactory.parseTraces(noiseSegment.getTraces(), TraceGeneric.class);
+					if(!traces.isEmpty()) {
+						double value = traces.get(0).getValue();
+						if(value == IIon.TIC_ION) {
+							return "TIC";
+						}
+						//
+						return String.valueOf((int)value);
 					}
-					return String.valueOf((int)ion);
 				}
 				return "-";
 			}

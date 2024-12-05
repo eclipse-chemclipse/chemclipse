@@ -13,42 +13,49 @@
 package org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.noise.stein.core;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IScan;
+import org.eclipse.chemclipse.model.core.INoiseCalculator;
 import org.eclipse.chemclipse.model.results.ChromatogramSegmentation;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignals;
 import org.eclipse.chemclipse.model.support.ChromatogramSegment;
 import org.eclipse.chemclipse.model.support.IAnalysisSegment;
+import org.eclipse.chemclipse.model.support.INoiseSegment;
+import org.eclipse.chemclipse.model.support.ISegmentValidator;
 import org.eclipse.chemclipse.model.support.NoiseSegment;
-import org.eclipse.chemclipse.model.support.SegmentValidator;
+import org.eclipse.chemclipse.model.support.SegmentValidatorClassic;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
-import org.eclipse.chemclipse.msd.model.implementation.Ion;
-import org.eclipse.chemclipse.msd.model.implementation.ScanMSD;
-import org.eclipse.chemclipse.msd.model.noise.CalculatorSupport;
-import org.eclipse.chemclipse.msd.model.noise.IonNoiseCalculator;
-import org.eclipse.chemclipse.msd.model.noise.IonNoiseSegment;
 import org.eclipse.chemclipse.msd.model.xic.ExtractedIonSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignals;
 import org.eclipse.chemclipse.numeric.statistics.Calculations;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 
 /*
  * S/N = Math.sqrt(intensity) * noiseFactor
  */
-public class NoiseCalculator implements IonNoiseCalculator {
+public class NoiseCalculator implements INoiseCalculator {
 
 	private IChromatogram<?> chromatogram = null;
 	private float noiseFactor = Float.NaN;
+
+	@Override
+	public void reset() {
+
+		this.chromatogram = null;
+	}
+
+	@Override
+	public String getName() {
+
+		return "Stein (experimental)";
+	}
 
 	@Override
 	public float getNoiseFactor() {
@@ -70,6 +77,35 @@ public class NoiseCalculator implements IonNoiseCalculator {
 		}
 	}
 
+	@Override
+	public List<INoiseSegment> getNoiseSegments(IChromatogram<?> chromatogram, IProgressMonitor monitor) {
+
+		if(chromatogram instanceof IChromatogramMSD) {
+			return getNoiseSegments(chromatogram, IIon.TIC_ION, monitor);
+		}
+		//
+		if(chromatogram != null) {
+			ChromatogramSegmentation segmentation = chromatogram.getMeasurementResult(ChromatogramSegmentation.class);
+			if(segmentation != null) {
+				ISegmentValidator segmentValidator = new SegmentValidatorClassic();
+				ITotalScanSignals signals = new TotalScanSignals(chromatogram);
+				List<ChromatogramSegment> segments = segmentation.getResult();
+				SubMonitor subMonitor = SubMonitor.convert(monitor, segments.size());
+				List<INoiseSegment> result = new ArrayList<>();
+				for(IAnalysisSegment segment : segments) {
+					Double factor = calculateNoiseFactor(segmentValidator, signals.getValues(segment));
+					if(factor != null) {
+						INoiseSegment noiseSegment = new NoiseSegment(segment, factor);
+						result.add(noiseSegment);
+					}
+					subMonitor.worked(1);
+				}
+				return result;
+			}
+		}
+		return Collections.emptyList();
+	}
+
 	/**
 	 * See S.E. Stein:
 	 * "An Integrated Method for Spectrum Extraction and Compound Identification from Gas Chromatography/Mass Spectrometry Data"
@@ -80,16 +116,16 @@ public class NoiseCalculator implements IonNoiseCalculator {
 
 		if(chromatogram != null) {
 			List<Double> noiseFactors = new ArrayList<>();
-			Consumer<NoiseSegment> consumer = segment -> noiseFactors.add(segment.getNoiseFactor());
+			Consumer<INoiseSegment> consumer = segment -> noiseFactors.add(segment.getNoiseFactor());
 			getNoiseSegments(chromatogram, null).forEach(consumer);
 			if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
-				SegmentValidator segmentValidator = new SegmentValidator();
+				ISegmentValidator segmentValidator = new SegmentValidatorClassic();
 				IExtractedIonSignalExtractor extractedIonSignalExtractor = new ExtractedIonSignalExtractor(chromatogramMSD);
 				IExtractedIonSignals extractedSignals = extractedIonSignalExtractor.getExtractedIonSignals();
 				int startIon = extractedSignals.getStartIon();
 				int stopIon = extractedSignals.getStopIon();
 				for(int ion = startIon; ion <= stopIon; ion++) {
-					List<NoiseSegment> ionNoiseSegments = getNoiseSegments(ion, chromatogram.getMeasurementResult(ChromatogramSegmentation.class), segmentValidator, extractedSignals);
+					List<INoiseSegment> ionNoiseSegments = getNoiseSegments(ion, chromatogram.getMeasurementResult(ChromatogramSegmentation.class), segmentValidator, extractedSignals);
 					ionNoiseSegments.forEach(consumer);
 				}
 			}
@@ -115,7 +151,7 @@ public class NoiseCalculator implements IonNoiseCalculator {
 	 * @param values
 	 * @return
 	 */
-	private static Double calculateNoiseFactor(SegmentValidator segmentValidator, float[] values) {
+	private static Double calculateNoiseFactor(ISegmentValidator segmentValidator, float[] values) {
 
 		double mean = Calculations.getMean(values);
 		if(!segmentValidator.acceptSegment(values, mean)) {
@@ -129,41 +165,12 @@ public class NoiseCalculator implements IonNoiseCalculator {
 		}
 	}
 
-	@Override
-	public List<NoiseSegment> getNoiseSegments(IChromatogram<?> chromatogram, IProgressMonitor monitor) {
-
-		if(chromatogram instanceof IChromatogramMSD) {
-			return getNoiseSegments(chromatogram, IIon.TIC_ION, monitor);
-		}
-		if(chromatogram != null) {
-			ChromatogramSegmentation segmentation = chromatogram.getMeasurementResult(ChromatogramSegmentation.class);
-			if(segmentation != null) {
-				SegmentValidator segmentValidator = new SegmentValidator();
-				ITotalScanSignals signals = new TotalScanSignals(chromatogram);
-				List<ChromatogramSegment> segments = segmentation.getResult();
-				SubMonitor subMonitor = SubMonitor.convert(monitor, segments.size());
-				List<NoiseSegment> result = new ArrayList<>();
-				for(IAnalysisSegment segment : segments) {
-					Double factor = calculateNoiseFactor(segmentValidator, signals.getValues(segment));
-					if(factor != null) {
-						NoiseSegment noiseSegment = new SteinNoiseSegment(segment, factor);
-						result.add(noiseSegment);
-					}
-					subMonitor.worked(1);
-				}
-				return result;
-			}
-		}
-		return Collections.emptyList();
-	}
-
-	@Override
-	public List<NoiseSegment> getNoiseSegments(IChromatogram<?> chromatogram, double ion, IProgressMonitor monitor) {
+	private List<INoiseSegment> getNoiseSegments(IChromatogram<?> chromatogram, double ion, IProgressMonitor monitor) {
 
 		if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
 			ChromatogramSegmentation segmentation = chromatogram.getMeasurementResult(ChromatogramSegmentation.class);
 			if(segmentation != null) {
-				SegmentValidator segmentValidator = new SegmentValidator();
+				ISegmentValidator segmentValidator = new SegmentValidatorClassic();
 				IExtractedIonSignalExtractor extractedIonSignalExtractor = new ExtractedIonSignalExtractor(chromatogramMSD);
 				IExtractedIonSignals signals = extractedIonSignalExtractor.getExtractedIonSignals();
 				return getNoiseSegments(ion, segmentation, segmentValidator, signals);
@@ -172,102 +179,24 @@ public class NoiseCalculator implements IonNoiseCalculator {
 		return Collections.emptyList();
 	}
 
-	private List<NoiseSegment> getNoiseSegments(double ion, ChromatogramSegmentation segmentation, SegmentValidator segmentValidator, IExtractedIonSignals signals) {
+	private List<INoiseSegment> getNoiseSegments(double ion, ChromatogramSegmentation segmentation, ISegmentValidator segmentValidator, IExtractedIonSignals signals) {
 
-		List<NoiseSegment> result = new ArrayList<>();
+		List<INoiseSegment> result = new ArrayList<>();
 		if(segmentation != null) {
 			List<ChromatogramSegment> segments = segmentation.getResult();
 			for(IAnalysisSegment segment : segments) {
 				Double factor = calculateNoiseFactor(segmentValidator, signals.getValues(segment, (int)ion));
 				if(factor != null) {
-					IScan scan;
-					if(ion == IIon.TIC_ION) {
-						scan = CalculatorSupport.getCombinedMassSpectrum(signals, segment).normalize();
-					} else {
-						scan = new ScanMSD(Collections.singleton(new Ion(ion))).normalize();
-					}
-					result.add(new SteinIonNoiseSegment(segment, factor, ion, scan));
+					// IScan scan;
+					// if(ion == IIon.TIC_ION) {
+					// scan = CalculatorSupport.getCombinedMassSpectrum(signals, segment).normalize();
+					// } else {
+					// scan = new ScanMSD(Collections.singleton(new Ion(ion))).normalize();
+					// }
+					result.add(new NoiseSegment(segment, factor));
 				}
 			}
 		}
 		return result;
-	}
-
-	private static class SteinNoiseSegment implements NoiseSegment {
-
-		private static final long serialVersionUID = 6666299719479935503L;
-		private final IAnalysisSegment baseSegment;
-		private final double noiseFactor;
-
-		public SteinNoiseSegment(IAnalysisSegment baseSegment, double noiseFactor) {
-
-			this.baseSegment = baseSegment;
-			this.noiseFactor = noiseFactor;
-		}
-
-		@Override
-		public int getStartScan() {
-
-			return baseSegment.getStartScan();
-		}
-
-		@Override
-		public int getStopScan() {
-
-			return baseSegment.getStopScan();
-		}
-
-		@Override
-		public Collection<IAnalysisSegment> getChildSegments() {
-
-			return Collections.singleton(baseSegment);
-		}
-
-		@Override
-		public double getNoiseFactor() {
-
-			return noiseFactor;
-		}
-
-		@Override
-		public int getStartRetentionTime() {
-
-			return baseSegment.getStartRetentionTime();
-		}
-
-		@Override
-		public int getStopRetentionTime() {
-
-			return baseSegment.getStopRetentionTime();
-		}
-	}
-
-	private static class SteinIonNoiseSegment extends SteinNoiseSegment implements IonNoiseSegment, IAdaptable {
-
-		private static final long serialVersionUID = 1277953700111903075L;
-		private final double ion;
-		private final IScan combinedMassSpectrum;
-
-		public SteinIonNoiseSegment(IAnalysisSegment baseSegment, double noiseFactor, double ion, IScan combinedMassSpectrum) {
-
-			super(baseSegment, noiseFactor);
-			this.ion = ion;
-			this.combinedMassSpectrum = combinedMassSpectrum;
-		}
-
-		@Override
-		public double getIon() {
-
-			return ion;
-		}
-
-		@Override
-		public <T> T getAdapter(Class<T> adapter) {
-
-			if(adapter.isInstance(combinedMassSpectrum)) {
-				return adapter.cast(combinedMassSpectrum);
-			}
-			return null;
-		}
 	}
 }

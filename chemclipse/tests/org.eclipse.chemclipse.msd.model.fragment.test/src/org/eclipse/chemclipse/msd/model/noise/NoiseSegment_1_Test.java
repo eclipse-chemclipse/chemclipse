@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2021 Lablicate GmbH.
+ * Copyright (c) 2010, 2024 Lablicate GmbH.
  * 
  * All rights reserved. This
  * program and the accompanying materials are made available under the terms of
@@ -7,7 +7,7 @@
  * available at http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.noise;
 
@@ -20,7 +20,7 @@ import junit.framework.TestCase;
 
 public class NoiseSegment_1_Test extends TestCase {
 
-	private INoiseSegment noiseSegment;
+	private INoiseSegmentMSD noiseSegment;
 	private IAnalysisSegment analysisSegment;
 	private ICombinedMassSpectrum noiseMassSpectrum;
 
@@ -43,7 +43,7 @@ public class NoiseSegment_1_Test extends TestCase {
 			}
 		};
 		noiseMassSpectrum = new CombinedMassSpectrum();
-		noiseSegment = new NoiseSegment(analysisSegment, noiseMassSpectrum);
+		noiseSegment = new NoiseSegmentMSD(analysisSegment, noiseMassSpectrum);
 	}
 
 	@Override

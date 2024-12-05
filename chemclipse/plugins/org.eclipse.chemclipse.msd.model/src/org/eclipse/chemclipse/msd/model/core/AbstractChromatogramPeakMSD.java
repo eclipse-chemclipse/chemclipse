@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2023 Lablicate GmbH.
+ * Copyright (c) 2008, 2024 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -7,7 +7,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
  * Christoph Läubrich - remove hashcode and equals
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core;
@@ -24,8 +24,9 @@ import org.eclipse.chemclipse.model.exceptions.PeakException;
  */
 public abstract class AbstractChromatogramPeakMSD extends AbstractPeakMSD implements IChromatogramPeakMSD {
 
-	private IChromatogramMSD chromatogram;
 	private static final float INITIAL_SN_VALUE = -1.0f;
+	//
+	private IChromatogramMSD chromatogram;
 	private float signalToNoiseRatio = INITIAL_SN_VALUE;
 
 	/**
@@ -91,6 +92,12 @@ public abstract class AbstractChromatogramPeakMSD extends AbstractPeakMSD implem
 		return chromatogram.getScanNumber(retentionTime);
 	}
 
+	@Override
+	public void resetSignalToNoiseRatio() {
+
+		signalToNoiseRatio = INITIAL_SN_VALUE;
+	}
+
 	// TODO JUnit
 	@Override
 	public float getSignalToNoiseRatio() {
@@ -102,6 +109,7 @@ public abstract class AbstractChromatogramPeakMSD extends AbstractPeakMSD implem
 			float totalSignal = getPeakModel().getPeakAbundance();
 			signalToNoiseRatio = chromatogram.getSignalToNoiseRatio(totalSignal);
 		}
+		//
 		return signalToNoiseRatio;
 	}
 

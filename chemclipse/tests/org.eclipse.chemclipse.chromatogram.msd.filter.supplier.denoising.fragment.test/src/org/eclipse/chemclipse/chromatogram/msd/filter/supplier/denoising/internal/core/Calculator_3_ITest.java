@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2022 Lablicate GmbH.
+ * Copyright (c) 2010, 2024 Lablicate GmbH.
  * 
  * All rights reserved. This
  * program and the accompanying materials are made available under the terms of
@@ -7,7 +7,7 @@
  * available at http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.denoising.internal.core;
 
@@ -19,7 +19,7 @@ import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.chemclipse.msd.model.core.support.MarkedIon;
 import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
 import org.eclipse.chemclipse.msd.model.noise.Calculator;
-import org.eclipse.chemclipse.msd.model.noise.INoiseSegment;
+import org.eclipse.chemclipse.msd.model.noise.INoiseSegmentMSD;
 import org.eclipse.chemclipse.msd.model.xic.ExtractedIonSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignals;
@@ -30,7 +30,7 @@ public class Calculator_3_ITest extends ChromatogramImporterTestCase {
 	private Calculator calculator;
 	private IExtractedIonSignals extractedIonSignals;
 	private IMarkedIons ionsToPreserve;
-	private List<INoiseSegment> noiseSegments;
+	private List<INoiseSegmentMSD> noiseSegments;
 	private IExtractedIonSignalExtractor extractedIonSignalExtractor;
 
 	@Override

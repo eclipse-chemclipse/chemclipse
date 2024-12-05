@@ -12,32 +12,60 @@
 package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.INoiseCalculator;
-import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
+import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.INoiseCalculatorSupplier;
+import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.NoiseCalculator;
+import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.NoiseChromatogramSupport;
+import org.eclipse.chemclipse.chromatogram.xxd.calculator.settings.NoiseChromatogramClassifierSettings;
+import org.eclipse.chemclipse.model.core.ChromatogramAnalysisSegment;
 import org.eclipse.chemclipse.model.core.IChromatogram;
+import org.eclipse.chemclipse.model.core.IChromatogramOverview;
+import org.eclipse.chemclipse.model.core.INoiseCalculator;
+import org.eclipse.chemclipse.model.results.ChromatogramSegmentation;
+import org.eclipse.chemclipse.model.results.NoiseSegmentMeasurementResult;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
-import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
+import org.eclipse.chemclipse.model.support.IAnalysisSegment;
+import org.eclipse.chemclipse.model.support.INoiseSegment;
+import org.eclipse.chemclipse.model.support.IScanRange;
+import org.eclipse.chemclipse.model.support.NoiseSegment;
+import org.eclipse.chemclipse.model.support.ScanRange;
+import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
+import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
+import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.support.text.ValueFormat;
+import org.eclipse.chemclipse.support.ui.provider.AbstractLabelProvider;
+import org.eclipse.chemclipse.support.ui.provider.ListContentProvider;
+import org.eclipse.chemclipse.support.ui.swt.EnhancedComboViewer;
+import org.eclipse.chemclipse.support.updates.IUpdateListener;
 import org.eclipse.chemclipse.swt.ui.components.InformationUI;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ChromatogramDataSupport;
-import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swtchart.extensions.preferences.PreferencePage;
 
 public class ChromatogramSignalNoiseUI extends Composite implements IExtendedPartUI {
 
 	private AtomicReference<Button> buttonToolbarInfo = new AtomicReference<>();
-	private AtomicReference<InformationUI> toolbarInfo = new AtomicReference<>();
-	private AtomicReference<Text> textDetails = new AtomicReference<>();
+	private AtomicReference<InformationUI> toolbarInfoTop = new AtomicReference<>();
+	private AtomicReference<InformationUI> toolbarInfoBottom = new AtomicReference<>();
+	private AtomicReference<ComboViewer> comboViewerNoiseCalculatorControl = new AtomicReference<>();
+	private AtomicReference<NoiseSegmentListUI> noiseSegmentListControl = new AtomicReference<>();
 	//
 	private IChromatogramSelection<?, ?> chromatogramSelection = null;
 	private DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0.0000");
@@ -59,26 +87,31 @@ public class ChromatogramSignalNoiseUI extends Composite implements IExtendedPar
 		setLayout(new GridLayout(1, true));
 		//
 		createToolbarMain(this);
-		createToolbarInfo(this);
-		createInspectorUI(this);
+		createToolbarInfoTop(this);
+		createDataSection(this);
+		createToolbarInfoBottom(this);
 		//
 		initialize();
 	}
 
 	private void initialize() {
 
-		enableToolbar(toolbarInfo, buttonToolbarInfo.get(), IMAGE_INFO, TOOLTIP_INFO, true);
+		enableToolbar(toolbarInfoTop, buttonToolbarInfo.get(), IMAGE_INFO, TOOLTIP_INFO, true);
+		enableToolbar(toolbarInfoBottom, buttonToolbarInfo.get(), IMAGE_INFO, TOOLTIP_INFO, true);
+		comboViewerNoiseCalculatorControl.get().setInput(null);
 	}
 
 	private Composite createToolbarMain(Composite parent) {
 
 		Composite composite = new Composite(parent, SWT.NONE);
-		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
-		gridData.horizontalAlignment = SWT.END;
-		composite.setLayoutData(gridData);
-		composite.setLayout(new GridLayout(2, false));
+		composite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		composite.setLayout(new GridLayout(6, false));
 		//
 		createButtonToggleToolbar(composite);
+		createComboViewerNoiseCalculator(composite);
+		createButtonAdd(composite);
+		createButtonDelete(composite);
+		createButtonReset(composite);
 		createSettingsButton(composite);
 		//
 		return composite;
@@ -86,23 +119,237 @@ public class ChromatogramSignalNoiseUI extends Composite implements IExtendedPar
 
 	private void createButtonToggleToolbar(Composite parent) {
 
-		buttonToolbarInfo.set(createButtonToggleToolbar(parent, toolbarInfo, IMAGE_INFO, TOOLTIP_INFO));
+		buttonToolbarInfo.set(createButtonToggleToolbar(parent, Arrays.asList(toolbarInfoTop, toolbarInfoBottom), IMAGE_INFO, TOOLTIP_INFO));
 	}
 
-	private void createToolbarInfo(Composite parent) {
+	private void createToolbarInfoTop(Composite parent) {
+
+		toolbarInfoTop.set(createToolbarInfo(parent));
+	}
+
+	private void createToolbarInfoBottom(Composite parent) {
+
+		toolbarInfoBottom.set(createToolbarInfo(parent));
+	}
+
+	private InformationUI createToolbarInfo(Composite parent) {
 
 		InformationUI informationUI = new InformationUI(parent, SWT.NONE);
 		informationUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		//
-		toolbarInfo.set(informationUI);
+		return informationUI;
 	}
 
-	private void createInspectorUI(Composite parent) {
+	private void createDataSection(Composite parent) {
 
-		Text text = new Text(parent, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
-		text.setLayoutData(new GridData(GridData.FILL_BOTH));
+		createNoiseSegmentList(parent);
+	}
+
+	private void createNoiseSegmentList(Composite parent) {
+
+		NoiseSegmentListUI noiseSegmentListUI = new NoiseSegmentListUI(parent, SWT.BORDER | SWT.MULTI | SWT.FULL_SELECTION | SWT.V_SCROLL | SWT.H_SCROLL);
+		noiseSegmentListUI.getTable().setLayoutData(new GridData(GridData.FILL_BOTH));
 		//
-		textDetails.set(text);
+		noiseSegmentListUI.setUpdateListener(new IUpdateListener() {
+
+			@Override
+			public void update() {
+
+				if(chromatogramSelection != null) {
+					IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+					if(chromatogram != null) {
+						chromatogram.recalculateTheNoiseFactor();
+						chromatogram.setDirty(true);
+						updateInput();
+					}
+				}
+			}
+		});
+		//
+		noiseSegmentListControl.set(noiseSegmentListUI);
+	}
+
+	private void createComboViewerNoiseCalculator(Composite parent) {
+
+		ComboViewer comboViewer = new EnhancedComboViewer(parent, SWT.READ_ONLY);
+		Combo combo = comboViewer.getCombo();
+		comboViewer.setContentProvider(ListContentProvider.getInstance());
+		comboViewer.setLabelProvider(new AbstractLabelProvider() {
+
+			@Override
+			public String getText(Object element) {
+
+				if(element instanceof INoiseCalculatorSupplier noiseCalculatorSupplier) {
+					return noiseCalculatorSupplier.getCalculatorName();
+				}
+				return null;
+			}
+		});
+		//
+		combo.setToolTipText("Select a noise calculator.");
+		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+		gridData.widthHint = 150;
+		combo.setLayoutData(gridData);
+		combo.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				Object object = comboViewer.getStructuredSelection().getFirstElement();
+				if(object instanceof INoiseCalculatorSupplier noiseCalculatorSupplier) {
+					if(chromatogramSelection != null) {
+						IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+						if(chromatogram != null) {
+							NoiseChromatogramClassifierSettings settings = new NoiseChromatogramClassifierSettings();
+							settings.setNoiseCalculatorId(noiseCalculatorSupplier.getId());
+							NoiseChromatogramSupport.applyNoiseSettings(chromatogram, settings, new NullProgressMonitor());
+							chromatogram.setDirty(true);
+							updateInput();
+						}
+					}
+				}
+			}
+		});
+		//
+		comboViewerNoiseCalculatorControl.set(comboViewer);
+	}
+
+	private void createButtonAdd(Composite parent) {
+
+		Button button = new Button(parent, SWT.PUSH);
+		button.setText("");
+		button.setToolTipText("Add a specific noise segment.");
+		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ADD, IApplicationImageProvider.SIZE_16x16));
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				if(chromatogramSelection != null) {
+					IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+					if(chromatogram != null) {
+						INoiseCalculator noiseCalculator = chromatogram.getNoiseCalculator();
+						if(noiseCalculator != null) {
+							/*
+							 * Scan Range
+							 */
+							int startScan = chromatogram.getScanNumber(chromatogramSelection.getStartRetentionTime());
+							int stopScan = chromatogram.getScanNumber(chromatogramSelection.getStopRetentionTime());
+							IScanRange scanRange = new ScanRange(startScan, stopScan);
+							if(scanRange.getWidth() % 2 == 0) {
+								scanRange = new ScanRange(startScan, stopScan - 1);
+							}
+							//
+							if(scanRange.getWidth() >= 5) {
+								/*
+								 * Validity Check
+								 */
+								IAnalysisSegment analysisSegment = new ChromatogramAnalysisSegment(scanRange, chromatogram, null);
+								INoiseSegment noiseSegment = new NoiseSegment(analysisSegment, 0.0d);
+								noiseSegment.setUse(true);
+								noiseSegment.setUserSelection(true);
+								NoiseSegmentMeasurementResult noiseSegmentMeasurementResult = chromatogram.getMeasurementResult(NoiseSegmentMeasurementResult.class);
+								if(noiseSegmentMeasurementResult == null) {
+									INoiseCalculatorSupplier noiseCalculatorSupplier = getNoiseCalculatorSupplier();
+									if(noiseCalculatorSupplier != null) {
+										ChromatogramSegmentation chromatogramSegmentation = new ChromatogramSegmentation(chromatogram, noiseSegment.getWidth());
+										String noiseCalculatorId = noiseCalculatorSupplier.getId();
+										noiseSegmentMeasurementResult = new NoiseSegmentMeasurementResult(Arrays.asList(noiseSegment), chromatogramSegmentation, noiseCalculatorId);
+										chromatogram.addMeasurementResult(noiseSegmentMeasurementResult);
+									}
+								} else {
+									noiseSegmentMeasurementResult.getResult().add(noiseSegment);
+									chromatogram.recalculateTheNoiseFactor();
+								}
+								//
+								chromatogram.setDirty(true);
+								updateInput();
+							} else {
+								MessageDialog.openInformation(e.display.getActiveShell(), "Noise Segment", "Select a range of odd width having at least 5 scans.");
+							}
+						}
+					}
+				}
+			}
+		});
+	}
+
+	private INoiseCalculatorSupplier getNoiseCalculatorSupplier() {
+
+		if(comboViewerNoiseCalculatorControl.get().getStructuredSelection().getFirstElement() instanceof INoiseCalculatorSupplier noiseCalculatorSupplier) {
+			return noiseCalculatorSupplier;
+		} else {
+			return null;
+		}
+	}
+
+	private void createButtonDelete(Composite parent) {
+
+		Button button = new Button(parent, SWT.PUSH);
+		button.setText("");
+		button.setToolTipText("Delete the selected noise segments.");
+		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DELETE, IApplicationImageProvider.SIZE_16x16));
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				if(chromatogramSelection != null) {
+					IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+					if(chromatogram != null) {
+						NoiseSegmentMeasurementResult noiseSegmentMeasurementResult = chromatogram.getMeasurementResult(NoiseSegmentMeasurementResult.class);
+						if(noiseSegmentMeasurementResult != null) {
+							List<INoiseSegment> noiseSegments = getNoiseSegmentSelection();
+							noiseSegmentMeasurementResult.getResult().removeAll(noiseSegments);
+						}
+						chromatogram.recalculateTheNoiseFactor();
+						chromatogram.setDirty(true);
+						updateInput();
+					}
+				}
+			}
+		});
+	}
+
+	private List<INoiseSegment> getNoiseSegmentSelection() {
+
+		List<INoiseSegment> noiseSegments = new ArrayList<>();
+		for(Object object : noiseSegmentListControl.get().getStructuredSelection().toArray()) {
+			if(object instanceof INoiseSegment noiseSegment) {
+				noiseSegments.add(noiseSegment);
+			}
+		}
+		//
+		return noiseSegments;
+	}
+
+	private void createButtonReset(Composite parent) {
+
+		Button button = new Button(parent, SWT.PUSH);
+		button.setText("");
+		button.setToolTipText("Reset the noise factor calculation.");
+		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_RESET, IApplicationImageProvider.SIZE_16x16));
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				if(chromatogramSelection != null) {
+					IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+					if(chromatogram != null) {
+						if(MessageDialog.openQuestion(e.display.getActiveShell(), "Noise Factor", "Would you like to reset the noise segments?")) {
+							NoiseSegmentMeasurementResult noiseSegmentMeasurementResult = chromatogram.getMeasurementResult(NoiseSegmentMeasurementResult.class);
+							if(noiseSegmentMeasurementResult != null) {
+								noiseSegmentMeasurementResult.getResult().clear();
+							}
+							chromatogram.recalculateTheNoiseFactor();
+							chromatogram.setDirty(true);
+							updateInput();
+						}
+					}
+				}
+			}
+		});
 	}
 
 	private void createSettingsButton(Composite parent) {
@@ -124,50 +371,106 @@ public class ChromatogramSignalNoiseUI extends Composite implements IExtendedPar
 
 	private void updateInput() {
 
-		toolbarInfo.get().setText("");
-		textDetails.get().setText("");
+		toolbarInfoTop.get().setText("");
+		comboViewerNoiseCalculatorControl.get().setInput(null);
+		noiseSegmentListControl.get().clear();
+		toolbarInfoBottom.get().setText("");
 		//
 		if(chromatogramSelection != null) {
 			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
 			if(chromatogram != null) {
-				toolbarInfo.get().setText(ChromatogramDataSupport.getChromatogramLabel(chromatogram));
-				INoiseCalculator noiseCalculator = getNoiseCalculator(chromatogram);
-				if(noiseCalculator != null) {
-					int intensity = 10000;
-					float signalToNoiseRatio = chromatogram.getSignalToNoiseRatio(intensity);
-					StringBuilder builder = new StringBuilder();
-					/*
-					 * Noise Factor
-					 */
-					builder.append("Noise Factor: ");
-					builder.append(decimalFormat.format(noiseCalculator.getNoiseFactor()));
-					builder.append("\n");
-					/*
-					 * S/N Example
-					 */
-					builder.append("S/N (");
-					builder.append(Integer.toString(intensity));
-					builder.append("): ");
-					builder.append(decimalFormat.format(signalToNoiseRatio));
-					//
-					textDetails.get().setText(builder.toString());
-				} else {
-					textDetails.get().setText("The chromatogram offers no noise calculation yet.");
+				/*
+				 * Trigger the NoiseCalculator setup if not done already.
+				 */
+				getSignalToNoiseRatio(chromatogram, 1000);
+				/*
+				 * Update the details.
+				 */
+				toolbarInfoTop.get().setText(getScanRangeInfo(chromatogramSelection));
+				updateComboViewerNoiseCalculator(chromatogram);
+				updateNoiseSegmentList(chromatogram);
+				toolbarInfoBottom.get().setText(getNoiseFactorInfo(chromatogram));
+			}
+		}
+	}
+
+	private void updateComboViewerNoiseCalculator(IChromatogram<?> chromatogram) {
+
+		Collection<INoiseCalculatorSupplier> noiseCalculatorSuppliers = NoiseCalculator.getNoiseCalculatorSupport().getCalculatorSupplier();
+		comboViewerNoiseCalculatorControl.get().setInput(noiseCalculatorSuppliers);
+		//
+		INoiseCalculator noiseCalculator = chromatogram.getNoiseCalculator();
+		if(noiseCalculator != null) {
+			exitloop:
+			for(INoiseCalculatorSupplier noiseCalculatorSupplier : noiseCalculatorSuppliers) {
+				INoiseCalculator reference = NoiseCalculator.getNoiseCalculator(noiseCalculatorSupplier.getId());
+				if(noiseCalculator.getClass().equals(reference.getClass())) {
+					comboViewerNoiseCalculatorControl.get().setSelection(new StructuredSelection(noiseCalculatorSupplier));
+					break exitloop;
 				}
 			}
 		}
 	}
 
-	private INoiseCalculator getNoiseCalculator(IChromatogram<?> chromatogram) {
+	private void updateNoiseSegmentList(IChromatogram<?> chromatogram) {
 
-		if(chromatogram instanceof IChromatogramCSD chromatogramCSD) {
-			return chromatogramCSD.getNoiseCalculator();
-		} else if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
-			return chromatogramMSD.getNoiseCalculator();
-		} else if(chromatogram instanceof IChromatogramWSD chromatogramWSD) {
-			return chromatogramWSD.getNoiseCalculator();
-		} else {
-			return null;
+		NoiseSegmentMeasurementResult noiseSegmentMeasurementResult = chromatogram.getMeasurementResult(NoiseSegmentMeasurementResult.class);
+		if(noiseSegmentMeasurementResult != null) {
+			noiseSegmentListControl.get().setInput(noiseSegmentMeasurementResult.getResult());
 		}
+	}
+
+	private String getScanRangeInfo(IChromatogramSelection<?, ?> chromatogramSelection) {
+
+		StringBuilder builder = new StringBuilder();
+		if(chromatogramSelection != null) {
+			int startRetentionTime = chromatogramSelection.getStartRetentionTime();
+			int stopRetentionTime = chromatogramSelection.getStopRetentionTime();
+			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			builder.append(ChromatogramDataSupport.getChromatogramLabel(chromatogram));
+			builder.append(" | Scan range: ");
+			builder.append(chromatogram.getScanNumber(startRetentionTime));
+			builder.append("–");
+			builder.append(chromatogram.getScanNumber(stopRetentionTime));
+			builder.append(" | RT range: ");
+			builder.append(decimalFormat.format(startRetentionTime / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
+			builder.append("–");
+			builder.append(decimalFormat.format(stopRetentionTime / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
+		} else {
+			builder.append("No chromatogram selected.");
+		}
+		//
+		return builder.toString();
+	}
+
+	private String getNoiseFactorInfo(IChromatogram<?> chromatogram) {
+
+		INoiseCalculator noiseCalculator = chromatogram.getNoiseCalculator();
+		if(noiseCalculator != null) {
+			int intensity = 10000;
+			float signalToNoiseRatio = getSignalToNoiseRatio(chromatogram, intensity);
+			StringBuilder builder = new StringBuilder();
+			/*
+			 * Details
+			 */
+			builder.append("Name: ");
+			builder.append(noiseCalculator.getName());
+			builder.append(" | ");
+			builder.append("Noise Factor: ");
+			builder.append(decimalFormat.format(noiseCalculator.getNoiseFactor()));
+			builder.append(" | ");
+			builder.append("S/N (");
+			builder.append(Integer.toString(intensity));
+			builder.append("): ");
+			builder.append(decimalFormat.format(signalToNoiseRatio));
+			return builder.toString();
+		} else {
+			return "The chromatogram offers no noise calculation yet.";
+		}
+	}
+
+	private float getSignalToNoiseRatio(IChromatogram<?> chromatogram, float intensity) {
+
+		return chromatogram.getSignalToNoiseRatio(intensity);
 	}
 }

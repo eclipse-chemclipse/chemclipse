@@ -13,19 +13,23 @@
 package org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.noise.dyson.core;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.INoiseCalculator;
 import org.eclipse.chemclipse.model.core.IChromatogram;
+import org.eclipse.chemclipse.model.core.INoiseCalculator;
 import org.eclipse.chemclipse.model.results.ChromatogramSegmentation;
+import org.eclipse.chemclipse.model.results.NoiseSegmentMeasurementResult;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignals;
 import org.eclipse.chemclipse.model.support.IAnalysisSegment;
+import org.eclipse.chemclipse.model.support.INoiseSegment;
+import org.eclipse.chemclipse.model.support.ISegmentValidator;
 import org.eclipse.chemclipse.model.support.NoiseSegment;
-import org.eclipse.chemclipse.model.support.SegmentValidator;
+import org.eclipse.chemclipse.model.support.SegmentValidatorClassic;
+import org.eclipse.chemclipse.model.support.SegmentValidatorUserSelection;
 import org.eclipse.chemclipse.numeric.statistics.Calculations;
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -34,8 +38,22 @@ import org.eclipse.core.runtime.IProgressMonitor;
  */
 public class NoiseCalculator implements INoiseCalculator {
 
+	private static final String CALCULATOR_ID = "org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.noise.dyson";
+	//
 	private IChromatogram<?> chromatogram = null;
 	private float noiseFactor = Float.NaN;
+
+	@Override
+	public void reset() {
+
+		this.chromatogram = null;
+	}
+
+	@Override
+	public String getName() {
+
+		return "Dyson";
+	}
 
 	@Override
 	public float getNoiseFactor() {
@@ -47,7 +65,7 @@ public class NoiseCalculator implements INoiseCalculator {
 	public float getSignalToNoiseRatio(IChromatogram<?> chromatogram, float intensity) {
 
 		if(chromatogram != this.chromatogram) {
-			noiseFactor = calculateNoiseFactorByDyson(chromatogram);
+			noiseFactor = calculateNoiseFactor(chromatogram);
 			this.chromatogram = chromatogram;
 		}
 		//
@@ -64,32 +82,82 @@ public class NoiseCalculator implements INoiseCalculator {
 	 * 
 	 * @param IChromatogram
 	 */
-	private float calculateNoiseFactorByDyson(IChromatogram<?> chromatogram) {
+	private float calculateNoiseFactor(IChromatogram<?> chromatogram) {
 
 		if(chromatogram != null) {
-			List<NoiseSegment> noiseSegments = getNoiseSegments(chromatogram, null);
-			List<Double> deltaNoiseHeights = new ArrayList<Double>();
-			for(NoiseSegment noiseSegment : noiseSegments) {
-				deltaNoiseHeights.add(noiseSegment.getNoiseFactor());
-			}
 			/*
 			 * Calculate the mean value of the standard deviations.
 			 */
-			double medianNoiseHeight = Calculations.getMedian(deltaNoiseHeights);
-			if(medianNoiseHeight > 0) {
-				return (float)medianNoiseHeight;
+			List<INoiseSegment> noiseSegments = null;
+			NoiseSegmentMeasurementResult noiseSegmentMeasurementResult = chromatogram.getMeasurementResult(NoiseSegmentMeasurementResult.class);
+			if(noiseSegmentMeasurementResult != null) {
+				noiseSegments = noiseSegmentMeasurementResult.getResult();
+				ISegmentValidator segmentValidatorClassic = new SegmentValidatorClassic();
+				ISegmentValidator segmentValidatorUserSelection = new SegmentValidatorUserSelection();
+				ITotalScanSignals signals = new TotalScanSignals(chromatogram);
+				for(INoiseSegment noiseSegment : noiseSegments) {
+					if(noiseSegment.getNoiseFactor() == 0) {
+						ISegmentValidator segmentValidator = noiseSegment.isUserSelection() ? segmentValidatorUserSelection : segmentValidatorClassic;
+						Double segmentNoiseFactor = calculateNoiseFactor(noiseSegment, segmentValidator, signals);
+						if(segmentNoiseFactor != null) {
+							noiseSegment.setNoiseFactor(segmentNoiseFactor);
+						}
+					}
+				}
+			}
+			/*
+			 * Empty, then reload.
+			 */
+			if(noiseSegments == null || noiseSegments.isEmpty()) {
+				noiseSegments = getNoiseSegments(chromatogram, null);
+			}
+			/*
+			 * Active Available (User Selection)
+			 */
+			List<Double> segmentNoiseFactors = new ArrayList<>();
+			for(INoiseSegment noiseSegment : noiseSegments) {
+				if(noiseSegment.isUse()) {
+					segmentNoiseFactors.add(noiseSegment.getNoiseFactor());
+				}
+			}
+			/*
+			 * Default Selection
+			 */
+			double noiseFactor = 0;
+			if(segmentNoiseFactors.isEmpty()) {
+				/*
+				 * Median value
+				 */
+				noiseSegments.forEach(n -> n.setUse(false));
+				segmentNoiseFactors = noiseSegments.stream().map(s -> s.getNoiseFactor()).collect(Collectors.toList());
+				noiseFactor = Calculations.getMedian(segmentNoiseFactors);
+			} else {
+				/*
+				 * Mean Value
+				 */
+				noiseFactor = Calculations.getMean(segmentNoiseFactors);
+			}
+			/*
+			 * Final Check
+			 */
+			if(noiseFactor > 0) {
+				return (float)noiseFactor;
 			} else {
 				/*
 				 * If there is no noise segment at all, take the min signal.
 				 * It's not the best solution, but 0 is no option.
 				 */
-				return chromatogram.getMinSignal();
+				noiseFactor = chromatogram.getMinSignal();
+				if(noiseFactor > 0) {
+					return (float)noiseFactor;
+				}
 			}
 		}
+		//
 		return Float.NaN;
 	}
 
-	private static Double getDeltaNoiseHeight(IAnalysisSegment segment, SegmentValidator segmentValidator, ITotalScanSignals signals) {
+	private Double calculateNoiseFactor(IAnalysisSegment segment, ISegmentValidator segmentValidator, ITotalScanSignals signals) {
 
 		/*
 		 * Check that there is at least a width of 1.
@@ -132,75 +200,39 @@ public class NoiseCalculator implements INoiseCalculator {
 	}
 
 	@Override
-	public List<NoiseSegment> getNoiseSegments(IChromatogram<?> chromatogram, IProgressMonitor monitor) {
+	public List<INoiseSegment> getNoiseSegments(IChromatogram<?> chromatogram, IProgressMonitor monitor) {
 
 		if(chromatogram != null) {
 			ChromatogramSegmentation segmentation = chromatogram.getMeasurementResult(ChromatogramSegmentation.class);
 			if(segmentation != null) {
-				SegmentValidator validator = new SegmentValidator();
+				ISegmentValidator segmentValidator = new SegmentValidatorClassic();
 				ITotalScanSignals signals = new TotalScanSignals(chromatogram);
-				List<NoiseSegment> result = new ArrayList<>();
-				for(IAnalysisSegment segment : segmentation.getResult()) {
+				List<INoiseSegment> noiseSegments = new ArrayList<>();
+				List<Integer> widths = new ArrayList<>();
+				//
+				for(IAnalysisSegment analysisSegment : segmentation.getResult()) {
 					/*
-					 * TIC (use only the tic signal)
+					 * TIC (use only the total signal)
 					 */
-					Double deltaNoiseHeight = getDeltaNoiseHeight(segment, validator, signals);
-					if(deltaNoiseHeight != null) {
-						result.add(new NormanDysonNoiseSegment(segment, deltaNoiseHeight));
+					widths.add(analysisSegment.getWidth());
+					Double segmentNoiseFactor = calculateNoiseFactor(analysisSegment, segmentValidator, signals);
+					if(segmentNoiseFactor != null) {
+						noiseSegments.add(new NoiseSegment(analysisSegment, segmentNoiseFactor));
 					}
 				}
-				return result;
+				/*
+				 * Chromatogram Measurement Results
+				 */
+				int width = (int)Math.round(widths.stream().mapToDouble(Integer::doubleValue).average().orElse(0));
+				ChromatogramSegmentation chromatogramSegmentation = new ChromatogramSegmentation(chromatogram, width);
+				chromatogram.addMeasurementResult(chromatogramSegmentation);
+				NoiseSegmentMeasurementResult noiseSegmentMeasurementResult = new NoiseSegmentMeasurementResult(noiseSegments, chromatogramSegmentation, CALCULATOR_ID);
+				chromatogram.addMeasurementResult(noiseSegmentMeasurementResult);
+				//
+				return noiseSegments;
 			}
 		}
+		//
 		return Collections.emptyList();
-	}
-
-	private static final class NormanDysonNoiseSegment implements NoiseSegment {
-
-		private static final long serialVersionUID = -6527546513887481806L;
-		private final IAnalysisSegment baseSegment;
-		private final double noiseFactor;
-
-		public NormanDysonNoiseSegment(IAnalysisSegment baseSegment, double noiseFactor) {
-
-			this.baseSegment = baseSegment;
-			this.noiseFactor = noiseFactor;
-		}
-
-		@Override
-		public int getStartScan() {
-
-			return baseSegment.getStartScan();
-		}
-
-		@Override
-		public int getStopScan() {
-
-			return baseSegment.getStopScan();
-		}
-
-		@Override
-		public double getNoiseFactor() {
-
-			return noiseFactor;
-		}
-
-		@Override
-		public Collection<? extends IAnalysisSegment> getChildSegments() {
-
-			return Collections.singleton(baseSegment);
-		}
-
-		@Override
-		public int getStartRetentionTime() {
-
-			return baseSegment.getStartRetentionTime();
-		}
-
-		@Override
-		public int getStopRetentionTime() {
-
-			return baseSegment.getStopRetentionTime();
-		}
 	}
 }

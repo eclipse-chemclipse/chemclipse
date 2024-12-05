@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2023 Lablicate GmbH.
+ * Copyright (c) 2019, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,6 +9,7 @@
  * Contributors:
  * Christoph Läubrich - initial API and implementation
  * Matthias Mailänder - remove enums
+ * Philip Wenig - refactoring S/N calculation
  *******************************************************************************/
 package org.eclipse.chemclipse.model.results;
 
@@ -22,13 +23,14 @@ import org.eclipse.chemclipse.model.support.ChromatogramSegment;
 public class ChromatogramSegmentation extends AnalysisSegmentMeasurementResult<ChromatogramSegment> {
 
 	private static final long serialVersionUID = 7162215390880261702L;
-	private final List<ChromatogramSegment> segments;
-	private final int width;
+	//
+	private final List<ChromatogramSegment> chromatogramSegments;
+	private final int segmentWidth;
 
-	public ChromatogramSegmentation(IChromatogram<?> chromatogram, int width) {
+	public ChromatogramSegmentation(IChromatogram<?> chromatogram, int segmentWidth) {
 
-		this.width = width;
-		segments = Collections.unmodifiableList(AnalysisSupport.getChromatogramSegments(chromatogram, width));
+		this.segmentWidth = segmentWidth;
+		chromatogramSegments = Collections.unmodifiableList(AnalysisSupport.getChromatogramSegments(chromatogram, segmentWidth));
 	}
 
 	@Override
@@ -40,12 +42,12 @@ public class ChromatogramSegmentation extends AnalysisSegmentMeasurementResult<C
 	@Override
 	public List<ChromatogramSegment> getResult() {
 
-		return segments;
+		return chromatogramSegments;
 	}
 
-	public int getWidth() {
+	public int getSegmentWidth() {
 
-		return width;
+		return segmentWidth;
 	}
 
 	@Override

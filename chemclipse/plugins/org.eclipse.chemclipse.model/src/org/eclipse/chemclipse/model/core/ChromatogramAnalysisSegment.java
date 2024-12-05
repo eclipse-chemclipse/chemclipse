@@ -19,24 +19,25 @@ import org.eclipse.chemclipse.model.support.IScanRange;
 
 public class ChromatogramAnalysisSegment implements IAnalysisSegment {
 
-	private final IScanRange range;
+	private final IScanRange scanRange;
 	private final IChromatogram<?> chromatogram;
-	private final Collection<? extends IAnalysisSegment> childs;
+	private final Collection<? extends IAnalysisSegment> children;
 
-	public ChromatogramAnalysisSegment(IScanRange range, IChromatogram<?> chromatogram, Collection<? extends IAnalysisSegment> childs) {
+	public ChromatogramAnalysisSegment(IScanRange scanRange, IChromatogram<?> chromatogram, Collection<? extends IAnalysisSegment> children) {
 
-		this.range = range;
+		this.scanRange = scanRange;
 		this.chromatogram = chromatogram;
-		this.childs = childs;
+		this.children = children;
 	}
 
 	@Override
 	public Collection<? extends IAnalysisSegment> getChildSegments() {
 
-		if(childs == null) {
+		if(children == null) {
 			return Collections.emptyList();
 		}
-		return childs;
+		//
+		return children;
 	}
 
 	public IChromatogram<?> getChromatogram() {
@@ -47,20 +48,22 @@ public class ChromatogramAnalysisSegment implements IAnalysisSegment {
 	@Override
 	public int getStartScan() {
 
-		int startScan = range.getStartScan();
+		int startScan = scanRange.getStartScan();
 		if(startScan < 1) {
 			return 1;
 		}
+		//
 		return startScan;
 	}
 
 	@Override
 	public int getStopScan() {
 
-		int stopScan = range.getStopScan();
+		int stopScan = scanRange.getStopScan();
 		if(stopScan < getStartScan()) {
 			return chromatogram.getNumberOfScans();
 		}
+		//
 		return stopScan;
 	}
 

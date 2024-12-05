@@ -13,12 +13,9 @@ package org.eclipse.chemclipse.wsd.model.core;
 
 import java.util.Set;
 
-import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.INoiseCalculator;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 
 public interface IChromatogramWSD extends IChromatogram<IChromatogramPeakWSD>, IChromatogramWSDBaseline {
-
-	INoiseCalculator getNoiseCalculator();
 
 	/**
 	 * Returns a supplier scan or null, if no supplier

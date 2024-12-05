@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2023 Lablicate GmbH.
+ * Copyright (c) 2010, 2024 Lablicate GmbH.
  * 
  * All rights reserved. This
  * program and the accompanying materials are made available under the terms of
@@ -7,7 +7,7 @@
  * available at http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
  * Chrsitoph Läubrich - don't use exceptions as return values
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.noise;
@@ -74,7 +74,7 @@ public class Calculator {
 	 * 
 	 * @param IChromatogram
 	 */
-	public List<INoiseSegment> getNoiseSegments(IExtractedIonSignals extractedIonSignals, IMarkedIons ionsToPreserve, int segmentWidth, IProgressMonitor monitor) throws FilterException {
+	public List<INoiseSegmentMSD> getNoiseSegments(IExtractedIonSignals extractedIonSignals, IMarkedIons ionsToPreserve, int segmentWidth, IProgressMonitor monitor) throws FilterException {
 
 		/*
 		 * Check the scan range.
@@ -85,7 +85,7 @@ public class Calculator {
 		/*
 		 * Try to calculate an appropriate set of segments.
 		 */
-		List<INoiseSegment> noiseSegments = null;
+		List<INoiseSegmentMSD> noiseSegments = null;
 		try {
 			AnalysisSupport analysisSupport = new AnalysisSupport(scanRange, width);
 			List<IAnalysisSegment> analysisSegments = analysisSupport.getAnalysisSegments();
@@ -105,14 +105,14 @@ public class Calculator {
 	 * @param segments
 	 * @return float
 	 */
-	private List<INoiseSegment> calculateNoiseSegments(List<IAnalysisSegment> analysisSegments, IExtractedIonSignals extractedIonSignals, IMarkedIons ionsToPreserve, IProgressMonitor monitor) {
+	private List<INoiseSegmentMSD> calculateNoiseSegments(List<IAnalysisSegment> analysisSegments, IExtractedIonSignals extractedIonSignals, IMarkedIons ionsToPreserve, IProgressMonitor monitor) {
 
 		@SuppressWarnings("unused")
 		int rejected = 0;
 		@SuppressWarnings("unused")
 		int accepted = 0;
 		//
-		List<INoiseSegment> noiseSegments = new ArrayList<INoiseSegment>();
+		List<INoiseSegmentMSD> noiseSegments = new ArrayList<INoiseSegmentMSD>();
 		for(IAnalysisSegment analysisSegment : analysisSegments) {
 			/*
 			 * TIC
@@ -128,7 +128,7 @@ public class Calculator {
 				 */
 				CombinedMassSpectrumCalculator combinedMassSpectrumCalculator = calculatorSupport.getCombinedMassSpectrumCalculator(analysisSegment, extractedIonSignals);
 				ICombinedMassSpectrum noiseMassSpectrum = calculatorSupport.getNoiseMassSpectrum(combinedMassSpectrumCalculator, ionsToPreserve, monitor);
-				INoiseSegment noiseSegment = new NoiseSegment(analysisSegment, noiseMassSpectrum);
+				INoiseSegmentMSD noiseSegment = new NoiseSegmentMSD(analysisSegment, noiseMassSpectrum);
 				noiseSegments.add(noiseSegment);
 			} else {
 				rejected++;

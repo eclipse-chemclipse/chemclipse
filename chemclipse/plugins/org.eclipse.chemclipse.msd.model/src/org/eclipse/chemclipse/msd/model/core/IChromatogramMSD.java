@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core;
 
-import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.INoiseCalculator;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
@@ -22,8 +21,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * See the description in ({@link AbstractChromatogramMSD}).
  */
 public interface IChromatogramMSD extends IChromatogram<IChromatogramPeakMSD> {
-
-	INoiseCalculator getNoiseCalculator();
 
 	/**
 	 * Returns a new mass spectrum from the scan with the given scan number from

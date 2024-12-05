@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2022 Lablicate GmbH.
+ * Copyright (c) 2010, 2024 Lablicate GmbH.
  * 
  * All rights reserved. This
  * program and the accompanying materials are made available under the terms of
@@ -7,7 +7,7 @@
  * available at http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.denoising.internal.core.support;
 
@@ -25,7 +25,7 @@ import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.chemclipse.msd.model.exceptions.FilterException;
 import org.eclipse.chemclipse.msd.model.exceptions.NoExtractedIonSignalStoredException;
 import org.eclipse.chemclipse.msd.model.noise.Calculator;
-import org.eclipse.chemclipse.msd.model.noise.INoiseSegment;
+import org.eclipse.chemclipse.msd.model.noise.INoiseSegmentMSD;
 import org.eclipse.chemclipse.msd.model.xic.ExtractedIonSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.ExtractedIonSignalsModifier;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
@@ -109,7 +109,7 @@ public class Denoising {
 			 * C -> Calculate the noise segments and remove the noise sequentially.
 			 */
 			Calculator calculator = new Calculator();
-			List<INoiseSegment> noiseSegments = calculator.getNoiseSegments(extractedIonSignals, ionsToPreserve, segmentWidth, monitor);
+			List<INoiseSegmentMSD> noiseSegments = calculator.getNoiseSegments(extractedIonSignals, ionsToPreserve, segmentWidth, monitor);
 			subMonitor.worked(1);
 			/*
 			 * D -> Iterate through all noise segments and remove the noise between
@@ -309,7 +309,7 @@ public class Denoising {
 	 * 
 	 * @return
 	 */
-	private static List<ICombinedMassSpectrum> subtractNoiseMassSpectraFromSegments(IExtractedIonSignals extractedIonSignals, List<INoiseSegment> noiseSegments, IMarkedIons ionsToPreserve, int numberOfUsedIonsForCoefficient, IProgressMonitor monitor) {
+	private static List<ICombinedMassSpectrum> subtractNoiseMassSpectraFromSegments(IExtractedIonSignals extractedIonSignals, List<INoiseSegmentMSD> noiseSegments, IMarkedIons ionsToPreserve, int numberOfUsedIonsForCoefficient, IProgressMonitor monitor) {
 
 		List<ICombinedMassSpectrum> noiseMassSpectra = new ArrayList<ICombinedMassSpectrum>();
 		Calculator calculator = new Calculator();
@@ -317,8 +317,8 @@ public class Denoising {
 		int startScan;
 		int stopScan;
 		List<ICombinedMassSpectrum> segmentNoiseMassSpectra;
-		INoiseSegment currentNoiseSegment;
-		INoiseSegment followingNoiseSegment;
+		INoiseSegmentMSD currentNoiseSegment;
+		INoiseSegmentMSD followingNoiseSegment;
 		boolean firstRun = true;
 		for(int segment = 0; segment < segments; segment++) {
 			/*
@@ -394,7 +394,7 @@ public class Denoising {
 	 * @param noiseSegment
 	 * @return int
 	 */
-	private static int calculateLeadingScans(INoiseSegment noiseSegment) {
+	private static int calculateLeadingScans(INoiseSegmentMSD noiseSegment) {
 
 		int width = noiseSegment.getAnalysisSegment().getWidth();
 		int result = 0;
@@ -411,7 +411,7 @@ public class Denoising {
 	 * @param noiseSegment
 	 * @return int
 	 */
-	private static int calculateTailingScans(INoiseSegment noiseSegment) {
+	private static int calculateTailingScans(INoiseSegmentMSD noiseSegment) {
 
 		int width = noiseSegment.getAnalysisSegment().getWidth();
 		int result = 0;

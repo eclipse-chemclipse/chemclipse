@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2020 Lablicate GmbH.
+ * Copyright (c) 2019, 2024 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,11 +9,13 @@
  * Contributors:
  * Alexander Kerner - initial API and implementation
  * Christoph Läubrich - add getter for chromatogram
- *
+ * Philip Wenig - refactoring noise calculation
  *******************************************************************************/
 package org.eclipse.chemclipse.model.core;
 
 public interface IChromatogramPeak extends IPeak {
+
+	void resetSignalToNoiseRatio();
 
 	/**
 	 * Returns the signal to noise ratio of the peak.
