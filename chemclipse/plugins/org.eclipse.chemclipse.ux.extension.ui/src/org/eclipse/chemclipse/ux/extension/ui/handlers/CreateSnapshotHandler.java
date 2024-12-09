@@ -71,6 +71,7 @@ public class CreateSnapshotHandler {
 				clipboard.dispose();
 				openMessageBox("The selected view/editor has been copied to clipboard.");
 			}
+			image.dispose();
 		}
 	}
 
