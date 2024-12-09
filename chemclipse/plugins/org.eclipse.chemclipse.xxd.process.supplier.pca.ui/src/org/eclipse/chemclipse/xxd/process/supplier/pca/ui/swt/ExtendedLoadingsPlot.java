@@ -275,10 +275,10 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 					/*
 					 * Get all currently selected features
 					 */
-					List<Feature> selected = new ArrayList<>();
+					List<Feature> highlighted = new ArrayList<>();
 					for(Feature feature : evaluationPCA.getFeatureDataMatrix().getFeatures()) {
 						if(evaluationPCA.getHighlightedVariables().contains(feature.getVariable())) {
-							selected.add(feature);
+							highlighted.add(feature);
 						}
 					}
 					/*
@@ -288,19 +288,19 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 						double[] variableLoading = getVariableLoading(resultsPCA, i);
 						IPoint pointResult = getPoint(variableLoading, pcX, pcY, i);
 						if(pointResult.getX() > pXStart && pointResult.getX() < pXStop && pointResult.getY() < pYStart && pointResult.getY() > pYStop) {
-							if(selected.contains(featuresSelected.get(i))) {
-								int index = selected.indexOf(featuresSelected.get(i));
-								selected.remove(index);
+							if(highlighted.contains(featuresSelected.get(i))) {
+								int index = highlighted.indexOf(featuresSelected.get(i));
+								highlighted.remove(index);
 							} else {
-								selected.add(featuresSelected.get(i));
+								highlighted.add(featuresSelected.get(i));
 							}
 						}
 					}
 					/*
 					 * Get the closest result.
 					 */
-					if(!selected.isEmpty()) {
-						UpdateNotifierUI.update(event.display, IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_PLOT_VARIABLE, selected.toArray());
+					if(!highlighted.isEmpty()) {
+						UpdateNotifierUI.update(event.display, IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_PLOT_VARIABLE, highlighted.toArray());
 					}
 					/*
 					 * Finish User Selection Process
@@ -464,10 +464,10 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 					/*
 					 * Get all currently selected features
 					 */
-					List<Feature> selected = new ArrayList<>();
+					List<Feature> highlighted = new ArrayList<>();
 					for(Feature feature : evaluationPCA.getFeatureDataMatrix().getFeatures()) {
 						if(evaluationPCA.getHighlightedVariables().contains(feature.getVariable())) {
-							selected.add(feature);
+							highlighted.add(feature);
 						}
 					}
 					/*
@@ -476,13 +476,13 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 					if(!featureDeltas.isEmpty()) {
 						Collections.sort(featureDeltas, Comparator.comparing(FeatureDelta::getDistance));
 						FeatureDelta featureDelta = featureDeltas.get(0);
-						if(selected.contains(featureDelta.getFeature())) {
-							int index = selected.indexOf(featureDelta.getFeature());
-							selected.remove(index);
+						if(highlighted.contains(featureDelta.getFeature())) {
+							int index = highlighted.indexOf(featureDelta.getFeature());
+							highlighted.remove(index);
 						} else {
-							selected.add(featureDelta.getFeature());
+							highlighted.add(featureDelta.getFeature());
 						}
-						UpdateNotifierUI.update(event.display, IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_PLOT_VARIABLE, selected.toArray());
+						UpdateNotifierUI.update(event.display, IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_PLOT_VARIABLE, highlighted.toArray());
 						highlightClick = true;
 					}
 					userSelection.reset();
