@@ -23,7 +23,6 @@ import org.eclipse.chemclipse.processing.converter.ISupplierFileIdentifier;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
-import org.eclipse.chemclipse.support.settings.OperatingSystemUtils;
 import org.eclipse.chemclipse.ux.extension.ui.editors.EditorDescriptor;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IdentifierCacheSupport;
 import org.eclipse.core.runtime.Adapters;
@@ -31,16 +30,17 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
-import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.navigator.IDescriptionProvider;
 
-public class DataExplorerLabelProvider extends LabelProvider implements ILabelProvider, IDescriptionProvider {
+public class DataExplorerLabelProvider extends ColumnLabelProvider implements ILabelProvider, IDescriptionProvider {
 
 	private final Function<File, Map<ISupplierFileIdentifier, Collection<ISupplier>>> supplierFunction;
 	private ResourceManager resourceManager = new LocalResourceManager(JFaceResources.getResources());
-	private boolean isInitial = true;
 
 	public DataExplorerLabelProvider(Collection<? extends ISupplierFileIdentifier> supplierFileIdentifierList) {
 
@@ -74,15 +74,22 @@ public class DataExplorerLabelProvider extends LabelProvider implements ILabelPr
 	}
 
 	@Override
-	public Image getImage(Object element) {
+	public void update(ViewerCell cell) {
 
-		/*
-		 * Workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=573090
-		 */
-		if(isInitial && OperatingSystemUtils.isLinux()) {
-			isInitial = false;
-			return null;
-		}
+		Object element = cell.getElement();
+		cell.setText(getText(element));
+		Image image = getIcon(element);
+		// https://github.com/eclipse-platform/eclipse.platform.swt/issues/678
+		Display.getCurrent().asyncExec(() -> {
+			cell.setImage(image);
+		});
+		cell.setBackground(getBackground(element));
+		cell.setForeground(getForeground(element));
+		cell.setFont(getFont(element));
+	}
+
+	public Image getIcon(Object element) {
+
 		if(element instanceof File file) {
 			ImageDescriptor descriptor = null;
 			//
