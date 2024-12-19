@@ -57,9 +57,9 @@ public class SeriesConverter {
 			IScatterSeriesData scatterSeriesData = new ScatterSeriesData(seriesData);
 			IScatterSeriesSettings scatterSeriesSettings = scatterSeriesData.getSettings();
 			scatterSeriesSettings.setSymbolColor(variable.isSelected() ? Colors.RED : Colors.GRAY);
-			scatterSeriesSettings.setSymbolType(PlotSymbolType.valueOf(preferenceStore.getString(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_TYPE)));
+			scatterSeriesSettings.setSymbolType(createFromSettings(preferenceStore, PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_TYPE));
 			if(highlighted.contains(variable)) {
-				scatterSeriesSettings.setSymbolType(PlotSymbolType.valueOf(preferenceStore.getString(PreferenceSupplier.P_LOADING_PLOT_2D_HIGHLIGHT_SYMBOL_TYPE)));
+				scatterSeriesSettings.setSymbolType(createFromSettings(preferenceStore, PreferenceSupplier.P_LOADING_PLOT_2D_HIGHLIGHT_SYMBOL_TYPE));
 			}
 			scatterSeriesSettings.setSymbolSize(preferenceStore.getInt(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_SIZE));
 			IScatterSeriesSettings scatterSeriesSettingsHighlight = (IScatterSeriesSettings)scatterSeriesSettings.getSeriesSettingsHighlight();
@@ -102,7 +102,7 @@ public class SeriesConverter {
 			} else {
 				scatterSeriesSettings.setSymbolColor(Colors.GRAY);
 			}
-			scatterSeriesSettings.setSymbolType(PlotSymbolType.valueOf(preferenceStore.getString(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_TYPE)));
+			scatterSeriesSettings.setSymbolType(createFromSettings(preferenceStore, PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_TYPE));
 			scatterSeriesSettings.setSymbolSize(preferenceStore.getInt(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_SIZE));
 			IScatterSeriesSettings scatterSeriesSettingsHighlight = (IScatterSeriesSettings)scatterSeriesSettings.getSeriesSettingsHighlight();
 			scatterSeriesSettingsHighlight.setSymbolColor(Colors.RED);
@@ -165,9 +165,9 @@ public class SeriesConverter {
 			IScatterSeriesData scatterSeriesData = new ScatterSeriesData(seriesData);
 			IScatterSeriesSettings scatterSeriesSettings = scatterSeriesData.getSettings();
 			scatterSeriesSettings.setDescription(description);
-			scatterSeriesSettings.setSymbolType(PlotSymbolType.valueOf(preferenceStore.getString(PreferenceSupplier.P_SCORE_PLOT_2D_SYMBOL_TYPE)));
+			scatterSeriesSettings.setSymbolType(createFromSettings(preferenceStore, PreferenceSupplier.P_SCORE_PLOT_2D_SYMBOL_TYPE));
 			if(highlighted.contains(pcaResult.getSample())) {
-				scatterSeriesSettings.setSymbolType(PlotSymbolType.valueOf(preferenceStore.getString(PreferenceSupplier.P_SCORE_PLOT_2D_HIGHLIGHT_SYMBOL_TYPE)));
+				scatterSeriesSettings.setSymbolType(createFromSettings(preferenceStore, PreferenceSupplier.P_SCORE_PLOT_2D_HIGHLIGHT_SYMBOL_TYPE));
 			}
 			scatterSeriesSettings.setSymbolSize(preferenceStore.getInt(PreferenceSupplier.P_SCORE_PLOT_2D_SYMBOL_SIZE));
 			Color color = Colors.getColor(pcaResult.getSample().getRGB());
@@ -180,6 +180,16 @@ public class SeriesConverter {
 			scatterSeriesSettingsHighlight.setSymbolColor(Colors.RED);
 			scatterSeriesDataList.add(scatterSeriesData);
 		}
+		//
 		return scatterSeriesDataList;
+	}
+
+	private static PlotSymbolType createFromSettings(IPreferenceStore preferenceStore, String name) {
+
+		try {
+			return PlotSymbolType.valueOf(preferenceStore.getString(name));
+		} catch(Exception e) {
+			return PlotSymbolType.CIRCLE;
+		}
 	}
 }
