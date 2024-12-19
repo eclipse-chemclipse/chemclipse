@@ -12,5 +12,12 @@
             description="Sets the Noise calculation settings for this Chromatogram used in S/N and peak-detection algorithms"
             id="org.eclipse.chemclipse.chromatogram.xxd.calculator.noise.ChromatogramClassifierSupplier">
       </ChromatogramClassifierSupplier>
+      <ChromatogramClassifierSupplier
+            classifier="org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.NoiseSegmentSetter"
+            classifierName="Noise Segment Setter (Chromatogram)"
+            classifierSettings="org.eclipse.chemclipse.chromatogram.xxd.calculator.settings.NoiseSegmentSetterSettings"
+            description="Add the chromatogram selection as a noise segment."
+            id="org.eclipse.chemclipse.chromatogram.xxd.calculator.noise.noiseSegmentSetter">
+      </ChromatogramClassifierSupplier>      
    </extension>
 </plugin>

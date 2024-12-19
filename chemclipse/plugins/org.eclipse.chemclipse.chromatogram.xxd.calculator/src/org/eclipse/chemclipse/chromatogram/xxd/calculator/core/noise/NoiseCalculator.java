@@ -117,7 +117,7 @@ public class NoiseCalculator {
 	 * @param calculatorId
 	 * @return {@link INoiseCalculator}
 	 */
-	public static INoiseCalculator getNoiseCalculator(final String calculatorId) {
+	public static INoiseCalculator getNoiseCalculator(String calculatorId) {
 
 		IConfigurationElement element = getConfigurationElement(calculatorId);
 		INoiseCalculator instance = null;

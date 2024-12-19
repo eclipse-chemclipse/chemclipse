@@ -22,18 +22,12 @@ import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.INoiseCalcu
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.NoiseCalculator;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.NoiseChromatogramSupport;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.settings.NoiseChromatogramClassifierSettings;
-import org.eclipse.chemclipse.model.core.ChromatogramAnalysisSegment;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.core.INoiseCalculator;
-import org.eclipse.chemclipse.model.results.ChromatogramSegmentation;
 import org.eclipse.chemclipse.model.results.NoiseSegmentMeasurementResult;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
-import org.eclipse.chemclipse.model.support.IAnalysisSegment;
 import org.eclipse.chemclipse.model.support.INoiseSegment;
-import org.eclipse.chemclipse.model.support.IScanRange;
-import org.eclipse.chemclipse.model.support.NoiseSegment;
-import org.eclipse.chemclipse.model.support.ScanRange;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
@@ -43,6 +37,7 @@ import org.eclipse.chemclipse.support.ui.provider.ListContentProvider;
 import org.eclipse.chemclipse.support.ui.swt.EnhancedComboViewer;
 import org.eclipse.chemclipse.support.updates.IUpdateListener;
 import org.eclipse.chemclipse.swt.ui.components.InformationUI;
+import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ChromatogramDataSupport;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -225,62 +220,15 @@ public class ChromatogramSignalNoiseUI extends Composite implements IExtendedPar
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
-				if(chromatogramSelection != null) {
-					IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
-					if(chromatogram != null) {
-						INoiseCalculator noiseCalculator = chromatogram.getNoiseCalculator();
-						if(noiseCalculator != null) {
-							/*
-							 * Scan Range
-							 */
-							int startScan = chromatogram.getScanNumber(chromatogramSelection.getStartRetentionTime());
-							int stopScan = chromatogram.getScanNumber(chromatogramSelection.getStopRetentionTime());
-							IScanRange scanRange = new ScanRange(startScan, stopScan);
-							if(scanRange.getWidth() % 2 == 0) {
-								scanRange = new ScanRange(startScan, stopScan - 1);
-							}
-							//
-							if(scanRange.getWidth() >= 5) {
-								/*
-								 * Validity Check
-								 */
-								IAnalysisSegment analysisSegment = new ChromatogramAnalysisSegment(scanRange, chromatogram, null);
-								INoiseSegment noiseSegment = new NoiseSegment(analysisSegment, 0.0d);
-								noiseSegment.setUse(true);
-								noiseSegment.setUserSelection(true);
-								NoiseSegmentMeasurementResult noiseSegmentMeasurementResult = chromatogram.getMeasurementResult(NoiseSegmentMeasurementResult.class);
-								if(noiseSegmentMeasurementResult == null) {
-									INoiseCalculatorSupplier noiseCalculatorSupplier = getNoiseCalculatorSupplier();
-									if(noiseCalculatorSupplier != null) {
-										ChromatogramSegmentation chromatogramSegmentation = new ChromatogramSegmentation(chromatogram, noiseSegment.getWidth());
-										String noiseCalculatorId = noiseCalculatorSupplier.getId();
-										noiseSegmentMeasurementResult = new NoiseSegmentMeasurementResult(Arrays.asList(noiseSegment), chromatogramSegmentation, noiseCalculatorId);
-										chromatogram.addMeasurementResult(noiseSegmentMeasurementResult);
-									}
-								} else {
-									noiseSegmentMeasurementResult.getResult().add(noiseSegment);
-									chromatogram.recalculateTheNoiseFactor();
-								}
-								//
-								chromatogram.setDirty(true);
-								updateInput();
-							} else {
-								MessageDialog.openInformation(e.display.getActiveShell(), "Noise Segment", "Select a range of odd width having at least 5 scans.");
-							}
-						}
-					}
+				String message = NoiseChromatogramSupport.addNoiseSegment(chromatogramSelection, false);
+				if(message != null) {
+					MessageDialog.openInformation(e.display.getActiveShell(), "Noise Segment", message);
+				} else {
+					updateInput();
+					UpdateNotifierUI.update(e.display, chromatogramSelection);
 				}
 			}
 		});
-	}
-
-	private INoiseCalculatorSupplier getNoiseCalculatorSupplier() {
-
-		if(comboViewerNoiseCalculatorControl.get().getStructuredSelection().getFirstElement() instanceof INoiseCalculatorSupplier noiseCalculatorSupplier) {
-			return noiseCalculatorSupplier;
-		} else {
-			return null;
-		}
 	}
 
 	private void createButtonDelete(Composite parent) {

@@ -66,10 +66,7 @@ public class NoiseCalculator implements INoiseCalculator {
 	@Override
 	public float getSignalToNoiseRatio(IChromatogram<?> chromatogram, float intensity) {
 
-		if(this.chromatogram != chromatogram) {
-			noiseFactor = calculateNoiseFactorByStein(chromatogram);
-			this.chromatogram = chromatogram;
-		}
+		setNoiseFactor(chromatogram);
 		if(Float.isFinite(noiseFactor) && noiseFactor > 0) {
 			return (float)(Math.sqrt(intensity) * noiseFactor);
 		} else {
@@ -106,13 +103,21 @@ public class NoiseCalculator implements INoiseCalculator {
 		return Collections.emptyList();
 	}
 
+	private void setNoiseFactor(IChromatogram<?> chromatogram) {
+
+		if(this.chromatogram != chromatogram) {
+			noiseFactor = calculateNoiseFactor(chromatogram);
+			this.chromatogram = chromatogram;
+		}
+	}
+
 	/**
 	 * See S.E. Stein:
 	 * "An Integrated Method for Spectrum Extraction and Compound Identification from Gas Chromatography/Mass Spectrometry Data"
 	 * 
 	 * @param IChromatogram
 	 */
-	private float calculateNoiseFactorByStein(IChromatogram<?> chromatogram) {
+	private float calculateNoiseFactor(IChromatogram<?> chromatogram) {
 
 		if(chromatogram != null) {
 			List<Double> noiseFactors = new ArrayList<>();

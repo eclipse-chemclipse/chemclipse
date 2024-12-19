@@ -64,15 +64,19 @@ public class NoiseCalculator implements INoiseCalculator {
 	@Override
 	public float getSignalToNoiseRatio(IChromatogram<?> chromatogram, float intensity) {
 
-		if(chromatogram != this.chromatogram) {
-			noiseFactor = calculateNoiseFactor(chromatogram);
-			this.chromatogram = chromatogram;
-		}
-		//
+		setNoiseFactor(chromatogram);
 		if(Float.isFinite(noiseFactor) && noiseFactor > 0) {
 			return intensity / noiseFactor;
 		} else {
 			return Float.NaN;
+		}
+	}
+
+	private void setNoiseFactor(IChromatogram<?> chromatogram) {
+
+		if(this.chromatogram != chromatogram) {
+			noiseFactor = calculateNoiseFactor(chromatogram);
+			this.chromatogram = chromatogram;
 		}
 	}
 
