@@ -133,6 +133,7 @@ public class PreprocessingSettingsUI extends Composite {
 		 * This combo always comes with a default
 		 */
 		updateFormulaDescription(comboViewerReplacer);
+		updateWidgets();
 	}
 
 	private Label createLabelFormula(Composite parent) {
@@ -368,6 +369,9 @@ public class PreprocessingSettingsUI extends Composite {
 	private void updateWidgets() {
 
 		if(preprocessingSettings != null) {
+			/*
+			 * Select Defaults
+			 */
 			selectComboItem(comboViewerNormalize, normalizeInput, preprocessingSettings.getNormalization());
 			selectComboItem(comboViewerReplacer, replacerInput, preprocessingSettings.getReplacer());
 			selectComboItem(comboViewerTransformation, transformationInput, preprocessingSettings.getTransformation());

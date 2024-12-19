@@ -19,6 +19,8 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.core.preprocessing.ICente
 import org.eclipse.chemclipse.xxd.process.supplier.pca.core.preprocessing.INormalization;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.core.preprocessing.IReplacer;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.core.preprocessing.ITransformation;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.core.preprocessing.Normalization1Norm;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.core.preprocessing.ScalingAuto;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.core.preprocessing.SmallValuesReplacer;
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -28,8 +30,8 @@ public class PreprocessingSettings implements IPreprocessingSettings {
 	 * Replace must be set.
 	 * By default, the small values replace is the most robust choice.
 	 */
-	private ICentering centering = null;
-	private INormalization normalization = null;
+	private ICentering centering = new ScalingAuto(ICentering.MEAN);
+	private INormalization normalization = new Normalization1Norm();
 	private ITransformation transformation = null;
 	private IReplacer replacer = new SmallValuesReplacer();
 
