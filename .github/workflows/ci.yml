@@ -31,14 +31,13 @@ jobs:
       id: temurin
       with:
         candidate: java
-        version: 17.0.11-tem
+        version: 17.0.13-tem
 
     - uses: sdkman/sdkman-action@main
       name: Setup Maven
       id: maven
       with:
         candidate: maven
-        version: 3.9.6
 
     - name: Build with Maven
       run: |
