@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2024 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -251,10 +251,6 @@ public class DatabaseFileSupport {
 		} catch(InterruptedException e) {
 			logger.warn(e);
 			Thread.currentThread().interrupt();
-		}
-		File data = runnable.getData();
-		if(data == null) {
-			MessageDialog.openInformation(shell, "Save Database / Mass Spectra", "There is not suitable database / mass spectra converter available.");
 		}
 	}
 
