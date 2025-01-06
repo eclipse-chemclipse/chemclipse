@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2023 Lablicate GmbH.
+ * Copyright (c) 2013, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -19,6 +19,7 @@ import org.eclipse.chemclipse.msd.converter.database.DatabaseConverter;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
+import org.eclipse.chemclipse.processing.ui.support.ProcessingInfoPartSupport;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 
@@ -37,7 +38,7 @@ public class DatabaseExportRunnable implements IRunnableWithProgress {
 	}
 
 	/**
-	 * Returns the written chromatogram file or null.
+	 * Returns the written database file or null.
 	 */
 	public File getData() {
 
@@ -50,6 +51,7 @@ public class DatabaseExportRunnable implements IRunnableWithProgress {
 		try {
 			monitor.beginTask("Export Mass Spectra", IProgressMonitor.UNKNOWN);
 			IProcessingInfo<File> processingInfo = DatabaseConverter.convert(file, massSpectra, false, supplier.getId(), monitor);
+			ProcessingInfoPartSupport.getInstance().update(processingInfo);
 			data = processingInfo.getProcessingResult();
 		} finally {
 			monitor.done();
