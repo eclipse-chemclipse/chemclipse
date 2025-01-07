@@ -9,7 +9,7 @@
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
-package org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v32.model;
+package org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v22.model;
 
 import java.io.Serializable;
 
@@ -21,10 +21,10 @@ import jakarta.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {"msRun"})
-@XmlRootElement(name = "mzXML", namespace = "http://sashimi.sourceforge.net/schema_revision/mzXML_3.2")
+@XmlRootElement(name = "mzXML", namespace = "http://sashimi.sourceforge.net/schema_revision/mzXML_2.2")
 public class MzXML implements Serializable {
 
-	private static final long serialVersionUID = 320L;
+	private static final long serialVersionUID = 220L;
 	@XmlElement(required = true)
 	private MsRun msRun;
 

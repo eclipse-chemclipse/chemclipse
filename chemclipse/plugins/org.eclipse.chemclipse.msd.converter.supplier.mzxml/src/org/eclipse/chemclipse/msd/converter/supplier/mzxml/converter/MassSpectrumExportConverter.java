@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2023 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -23,13 +23,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 public class MassSpectrumExportConverter extends AbstractMassSpectrumExportConverter {
 
-	private static final String DESCRIPTION = "mzXML Mass Spectra Export Converter";
-
 	@Override
 	public IProcessingInfo<File> convert(File file, IScanMSD massSpectrum, boolean append, IProgressMonitor monitor) {
 
 		IProcessingInfo<File> processingInfo = new ProcessingInfo<>();
-		processingInfo.addErrorMessage(DESCRIPTION, "It's not possible to export mass spectrum data as mzXML yet.");
 		return processingInfo;
 	}
 
@@ -37,7 +34,6 @@ public class MassSpectrumExportConverter extends AbstractMassSpectrumExportConve
 	public IProcessingInfo<File> convert(File file, IMassSpectra massSpectra, boolean append, IProgressMonitor monitor) {
 
 		IProcessingInfo<File> processingInfo = new ProcessingInfo<>();
-		processingInfo.addErrorMessage(DESCRIPTION, "It's not possible to export mass spectrum data as mzXML yet.");
 		return processingInfo;
 	}
 }
