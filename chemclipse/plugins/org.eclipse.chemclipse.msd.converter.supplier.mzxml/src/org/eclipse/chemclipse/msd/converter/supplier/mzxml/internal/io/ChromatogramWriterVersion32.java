@@ -58,6 +58,7 @@ public class ChromatogramWriterVersion32 extends AbstractChromatogramWriter impl
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(ObjectFactory.class);
 			Marshaller marshaller = jaxbContext.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "http://sashimi.sourceforge.net/schema_revision/mzXML_3.2");
 			MsRun msRun = new MsRun();
 			for(IScan sourceScan : chromatogram.getScans()) {
 				Scan exportScan = new Scan();

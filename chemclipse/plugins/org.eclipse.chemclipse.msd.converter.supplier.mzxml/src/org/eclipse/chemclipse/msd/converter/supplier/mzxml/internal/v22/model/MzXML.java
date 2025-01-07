@@ -21,7 +21,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {"msRun"})
-@XmlRootElement(name = "mzXML", namespace = "http://sashimi.sourceforge.net/schema_revision/mzXML_2.2")
+@XmlRootElement(name = "mzXML")
 public class MzXML implements Serializable {
 
 	private static final long serialVersionUID = 220L;

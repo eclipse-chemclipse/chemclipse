@@ -90,6 +90,7 @@ public class MassSpectrumWriterVersion22 implements IMassSpectraWriter {
 
 		JAXBContext jaxbContext = JAXBContext.newInstance(ObjectFactory.class);
 		Marshaller marshaller = jaxbContext.createMarshaller();
+		marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "http://sashimi.sourceforge.net/schema_revision/mzXML_3.2 http://sashimi.sourceforge.net/schema_revision/mzXML_3.2/mzXML_idx_3.2.xsd");
 		MzXML mzXML = new MzXML();
 		mzXML.setMsRun(createMsRun(file, scanMSD));
 		marshaller.marshal(mzXML, file);
