@@ -69,6 +69,7 @@ public class MassSpectrumReaderVersion105 extends AbstractMassSpectraReader impl
 			massSpectrum = new StandaloneMassSpectrum();
 			massSpectrum.setFile(file);
 			massSpectrum.setIdentifier(file.getName());
+			massSpectrum.setMassSpectrumType(MassSpectrumType.PROFILE);
 			readDescription(mzData, massSpectrum);
 			readIons(mzData, massSpectrum);
 		} catch(SAXException e) {
@@ -106,8 +107,6 @@ public class MassSpectrumReaderVersion105 extends AbstractMassSpectraReader impl
 				if(cvParamType.getName().equals("peakProcessing")) {
 					if(cvParamType.getValue().equals("centroided")) {
 						massSpectrum.setMassSpectrumType(MassSpectrumType.CENTROID);
-					} else {
-						massSpectrum.setMassSpectrumType(MassSpectrumType.PROFILE);
 					}
 				}
 			}
