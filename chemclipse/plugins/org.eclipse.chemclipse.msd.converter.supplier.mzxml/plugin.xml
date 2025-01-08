@@ -19,7 +19,7 @@
    <extension
          point="org.eclipse.chemclipse.msd.converter.massSpectrumSupplier">
       <MassSpectrumSupplier
-            description="Reads mzXML Mass Spectra"
+            description="Reads and writes mzXML Mass Spectra"
             exportConverter="org.eclipse.chemclipse.msd.converter.supplier.mzxml.converter.MassSpectrumExportConverter"
             fileExtension=".mzXML"
             filterName="mzXML Mass Spectra (*.mzXML)"
@@ -30,5 +30,20 @@
             isExportable="false"
             isImportable="true">
       </MassSpectrumSupplier>
+   </extension>
+   <extension
+         point="org.eclipse.chemclipse.msd.converter.databaseSupplier">
+      <DatabaseSupplier
+            description="Reads and writes mzXML Mass Spectra"
+            exportConverter="org.eclipse.chemclipse.msd.converter.supplier.mzxml.converter.DatabaseExportConverter"
+            fileExtension=".mzXML"
+            filterName="mzXML Mass Spectra (*.mzXML)"
+            id="org.eclipse.chemclipse.msd.converter.supplier.mzxml.library"
+            importConverter="org.eclipse.chemclipse.msd.converter.supplier.mzxml.converter.DatabaseImportConverter"
+            importMagicNumberMatcher="org.eclipse.chemclipse.msd.converter.supplier.mzxml.converter.MagicNumberMatcher"
+            importContentMatcher="org.eclipse.chemclipse.msd.converter.supplier.mzxml.converter.MassSpectrumFileContentMatcher"
+            isExportable="true"
+            isImportable="false">
+      </DatabaseSupplier>
    </extension>
 </plugin>

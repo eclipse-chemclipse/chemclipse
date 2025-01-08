@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2024 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -46,11 +46,11 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 
-public class ChromatogramWriter32 extends AbstractChromatogramWriter implements IChromatogramMSDWriter {
+public class ChromatogramWriterVersion32 extends AbstractChromatogramWriter implements IChromatogramMSDWriter {
 
 	public static final String VERSION = "mzXML_3.2";
 	//
-	private static final Logger logger = Logger.getLogger(ChromatogramWriter32.class);
+	private static final Logger logger = Logger.getLogger(ChromatogramWriterVersion32.class);
 
 	@Override
 	public void writeChromatogram(File file, IChromatogramMSD chromatogram, IProgressMonitor monitor) throws FileIsNotWriteableException, IOException {
@@ -58,6 +58,7 @@ public class ChromatogramWriter32 extends AbstractChromatogramWriter implements 
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(ObjectFactory.class);
 			Marshaller marshaller = jaxbContext.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "http://sashimi.sourceforge.net/schema_revision/mzXML_3.2");
 			MsRun msRun = new MsRun();
 			for(IScan sourceScan : chromatogram.getScans()) {
 				Scan exportScan = new Scan();

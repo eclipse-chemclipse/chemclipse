@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2024 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -29,11 +29,12 @@ import org.eclipse.chemclipse.converter.l10n.ConverterMessages;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.msd.converter.io.AbstractMassSpectraReader;
 import org.eclipse.chemclipse.msd.converter.io.IMassSpectraReader;
-import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v21.model.DataProcessing;
-import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v21.model.MsRun;
-import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v21.model.ObjectFactory;
-import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v21.model.Peaks;
-import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v21.model.Scan;
+import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v22.model.DataProcessing;
+import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v22.model.MsRun;
+import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v22.model.MzXML;
+import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v22.model.ObjectFactory;
+import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v22.model.Peaks;
+import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v22.model.Scan;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.IVendorMassSpectra;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.VendorIon;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.VendorMassSpectra;
@@ -64,25 +65,27 @@ public class MassSpectrumReaderVersion22 extends AbstractMassSpectraReader imple
 		//
 		try {
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+			documentBuilderFactory.setNamespaceAware(true);
 			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 			Document document = documentBuilder.parse(file);
-			NodeList nodeList = document.getElementsByTagName(AbstractChromatogramReaderVersion.NODE_MS_RUN);
+			NodeList nodeList = document.getElementsByTagName(AbstractChromatogramReaderVersion.NODE_MZXML);
 			//
 			JAXBContext jaxbContext = JAXBContext.newInstance(ObjectFactory.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-			MsRun msrun = (MsRun)unmarshaller.unmarshal(nodeList.item(0));
+			MzXML mzXML = (MzXML)unmarshaller.unmarshal(nodeList.item(0));
 			//
 			massSpectrum = new VendorMassSpectrum();
 			massSpectrum.setFile(file);
 			massSpectrum.setIdentifier(file.getName());
-			for(DataProcessing dataProcessing : msrun.getDataProcessing()) {
+			MsRun msRun = mzXML.getMsRun();
+			for(DataProcessing dataProcessing : msRun.getDataProcessing()) {
 				if(Boolean.TRUE.equals(dataProcessing.isCentroided())) {
 					massSpectrum.setMassSpectrumType(MassSpectrumType.CENTROID);
 				} else {
 					massSpectrum.setMassSpectrumType(MassSpectrumType.PROFILE);
 				}
 			}
-			List<Scan> scans = msrun.getScan();
+			List<Scan> scans = msRun.getScan();
 			monitor.beginTask(ConverterMessages.readScans, scans.size());
 			for(Scan scan : scans) {
 				/*

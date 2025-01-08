@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2024 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -33,6 +33,7 @@ import org.eclipse.chemclipse.msd.converter.io.IChromatogramMSDReader;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v32.model.DataProcessing;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v32.model.MsInstrument;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v32.model.MsRun;
+import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v32.model.MzXML;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v32.model.ObjectFactory;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v32.model.Peaks;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v32.model.PrecursorMz;
@@ -72,19 +73,21 @@ public class ChromatogramReaderVersion32 extends AbstractChromatogramReaderVersi
 		//
 		try {
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+			documentBuilderFactory.setNamespaceAware(true);
 			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 			Document document = documentBuilder.parse(file);
-			NodeList nodeList = document.getElementsByTagName(NODE_MS_RUN);
+			NodeList nodeList = document.getElementsByTagName(NODE_MZXML);
 			//
 			JAXBContext jaxbContext = JAXBContext.newInstance(ObjectFactory.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-			MsRun msrun = (MsRun)unmarshaller.unmarshal(nodeList.item(0));
+			MzXML mzXML = (MzXML)unmarshaller.unmarshal(nodeList.item(0));
 			//
 			chromatogram = new VendorChromatogram();
-			boolean isTandemMeasurement = isTandemMeasurement(msrun);
+			MsRun msRun = mzXML.getMsRun();
+			boolean isTandemMeasurement = isTandemMeasurement(msRun);
 			int cycleNumber = isTandemMeasurement ? 1 : 0;
 			//
-			for(MsInstrument instrument : msrun.getMsInstrument()) {
+			for(MsInstrument instrument : msRun.getMsInstrument()) {
 				chromatogram.setInstrument(instrument.getMsManufacturer().getTheValue() + " " + instrument.getMsModel().getTheValue());
 				chromatogram.setIonisation(instrument.getMsIonisation().getTheValue());
 				chromatogram.setMassAnalyzer(instrument.getMsMassAnalyzer().getTheValue());
@@ -94,11 +97,11 @@ public class ChromatogramReaderVersion32 extends AbstractChromatogramReaderVersi
 					chromatogram.setSoftware(software.getName() + " " + software.getVersion());
 				}
 			}
-			for(DataProcessing processing : msrun.getDataProcessing()) {
+			for(DataProcessing processing : msRun.getDataProcessing()) {
 				Software software = processing.getSoftware();
 				chromatogram.getEditHistory().add(new EditInformation(software.getType(), software.getName() + " " + software.getVersion()));
 			}
-			List<Scan> scans = msrun.getScan();
+			List<Scan> scans = msRun.getScan();
 			monitor.beginTask(ConverterMessages.readScans, scans.size());
 			for(Scan scan : scans) {
 				/*

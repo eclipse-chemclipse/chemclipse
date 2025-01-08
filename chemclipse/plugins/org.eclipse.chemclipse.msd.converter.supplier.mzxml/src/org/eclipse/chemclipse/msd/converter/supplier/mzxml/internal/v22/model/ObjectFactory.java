@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2024 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,10 +11,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v22.model;
 
+import javax.xml.namespace.QName;
+
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.annotation.XmlElementDecl;
 import jakarta.xml.bind.annotation.XmlRegistry;
-import javax.xml.namespace.QName;
 
 @XmlRegistry
 public class ObjectFactory {
@@ -22,6 +23,12 @@ public class ObjectFactory {
 	private static final QName _SeparationTechnique_QNAME = new QName("http://sashimi.sourceforge.net/schema_revision/mzXML_2.2", "separationTechnique");
 
 	public ObjectFactory() {
+
+	}
+
+	public MzXML createMzXML() {
+
+		return new MzXML();
 	}
 
 	public MsRun createMsRun() {

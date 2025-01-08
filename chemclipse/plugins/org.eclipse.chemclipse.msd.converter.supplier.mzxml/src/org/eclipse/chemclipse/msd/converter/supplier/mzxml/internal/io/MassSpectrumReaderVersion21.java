@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2024 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -29,11 +29,11 @@ import org.eclipse.chemclipse.converter.l10n.ConverterMessages;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.msd.converter.io.AbstractMassSpectraReader;
 import org.eclipse.chemclipse.msd.converter.io.IMassSpectraReader;
-import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v22.model.DataProcessing;
-import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v22.model.MsRun;
-import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v22.model.ObjectFactory;
-import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v22.model.Peaks;
-import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v22.model.Scan;
+import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v21.model.DataProcessing;
+import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v21.model.MsRun;
+import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v21.model.ObjectFactory;
+import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v21.model.Peaks;
+import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v21.model.Scan;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.IVendorMassSpectra;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.VendorIon;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.VendorMassSpectra;
