@@ -104,8 +104,9 @@ public class MassSpectrumReaderVersion105 extends AbstractMassSpectraReader impl
 		}
 		for(Object object : processingMethod.getCvParamOrUserParam()) {
 			if(object instanceof CvParamType cvParamType) {
-				if(cvParamType.getName().equals("peakProcessing")) {
-					if(cvParamType.getValue().equals("centroided")) {
+				// also support poorly standardized files
+				if(cvParamType.getName().toLowerCase().contains("peakprocessing")) {
+					if(cvParamType.getValue().toLowerCase().contains("centroid")) {
 						massSpectrum.setMassSpectrumType(MassSpectrumType.CENTROID);
 					}
 				}
