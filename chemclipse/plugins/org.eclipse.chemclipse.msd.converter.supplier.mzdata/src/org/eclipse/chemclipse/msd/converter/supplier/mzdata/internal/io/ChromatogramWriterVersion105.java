@@ -157,7 +157,9 @@ public class ChromatogramWriterVersion105 extends AbstractChromatogramWriter imp
 	private CvParamType createRetentionTime(IScan scan) {
 
 		CvParamType retentionTime = new CvParamType();
+		retentionTime.setCvLabel("psi");
 		retentionTime.setName("TimeInSeconds");
+		retentionTime.setAccession("PSI:1000039");
 		retentionTime.setValue(String.valueOf(scan.getRetentionTime() / 1000f));
 		return retentionTime;
 	}
