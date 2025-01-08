@@ -90,9 +90,9 @@ public class MassSpectrumReaderVersion105 extends AbstractMassSpectraReader impl
 		Description description = mzData.getDescription();
 		if(description != null) {
 			readAdmin(description, massSpectrum);
+			massSpectrum.setInstrument(description.getInstrument().getInstrumentName());
+			readProcessingMethod(description, massSpectrum);
 		}
-		massSpectrum.setInstrument(description.getInstrument().getInstrumentName());
-		readProcessingMethod(description, massSpectrum);
 	}
 
 	private void readProcessingMethod(Description description, IStandaloneMassSpectrum massSpectrum) {

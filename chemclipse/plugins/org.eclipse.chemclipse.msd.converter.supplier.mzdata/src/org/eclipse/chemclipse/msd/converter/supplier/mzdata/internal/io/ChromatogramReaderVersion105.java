@@ -24,6 +24,7 @@ import org.eclipse.chemclipse.msd.converter.io.IChromatogramMSDReader;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.AdminType;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.CvParamType;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.DataProcessingType;
+import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.Description;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.MzData;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.ObjectFactory;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.ParamType;
@@ -70,10 +71,13 @@ public class ChromatogramReaderVersion105 extends AbstractChromatogramReader imp
 			 * Metadata
 			 */
 			chromatogram = new VendorChromatogram();
-			AdminType admin = mzData.getDescription().getAdmin();
-			chromatogram.setSampleName(admin.getSampleName());
-			readOperator(admin, chromatogram);
-			chromatogram.setInstrument(mzData.getDescription().getInstrument().getInstrumentName());
+			Description description = mzData.getDescription();
+			if(description != null) {
+				AdminType admin = description.getAdmin();
+				chromatogram.setSampleName(admin.getSampleName());
+				readOperator(admin, chromatogram);
+				chromatogram.setInstrument(description.getInstrument().getInstrumentName());
+			}
 			readEditHistory(mzData, chromatogram);
 			/*
 			 * Mass Spectra
