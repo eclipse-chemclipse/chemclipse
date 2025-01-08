@@ -13,10 +13,6 @@ package org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.io;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.DoubleBuffer;
-import java.nio.FloatBuffer;
 
 import org.eclipse.chemclipse.converter.exceptions.FileIsNotWriteableException;
 import org.eclipse.chemclipse.converter.io.AbstractChromatogramWriter;
@@ -24,10 +20,8 @@ import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.msd.converter.io.IChromatogramMSDWriter;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.CvParamType;
-import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.Data;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.MzData;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.ObjectFactory;
-import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.PeakListBinaryType;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.Spectrum;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.SpectrumDescType;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.SpectrumInstrument;
@@ -54,62 +48,78 @@ public class ChromatogramWriterVersion105 extends AbstractChromatogramWriter imp
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(ObjectFactory.class);
 			Marshaller marshaller = jaxbContext.createMarshaller();
-			SpectrumList spectrumList = new SpectrumList();
-			for(IScan scan : chromatogram.getScans()) {
-				Spectrum spectrum = new Spectrum();
-				// Retention Time
-				CvParamType retentionTime = new CvParamType();
-				retentionTime.setName("TimeInSeconds");
-				retentionTime.setValue(String.valueOf(scan.getRetentionTime() / 1000f));
-				SpectrumInstrument spectrumInstrument = new SpectrumInstrument();
-				spectrumInstrument.getCvParamOrUserParam().add(retentionTime);
-				SpectrumSettingsType spectrumSettings = new SpectrumSettingsType();
-				spectrumSettings.setSpectrumInstrument(spectrumInstrument);
-				SpectrumDescType spectrumDesc = new SpectrumDescType();
-				spectrumDesc.setSpectrumSettings(spectrumSettings);
-				spectrum.setSpectrumDesc(spectrumDesc);
-				// Convert
-				IScanMSD scanMSD = (IScanMSD)scan;
-				double[] ions = new double[scanMSD.getNumberOfIons()];
-				float[] abundances = new float[scanMSD.getNumberOfIons()];
-				int i = 0;
-				for(IIon ion : scanMSD.getIons()) {
-					ions[i] = ion.getIon();
-					abundances[i] = ion.getAbundance();
-					i++;
-				}
-				// Ions
-				DoubleBuffer doubleBuffer = DoubleBuffer.wrap(ions);
-				ByteBuffer byteBuffer = ByteBuffer.allocate(doubleBuffer.capacity() * Double.BYTES);
-				byteBuffer.asDoubleBuffer().put(doubleBuffer);
-				spectrum.setMzArrayBinary(createBinaryType(byteBuffer, 64));
-				// Abundances
-				FloatBuffer floatBuffer = FloatBuffer.wrap(abundances);
-				byteBuffer = ByteBuffer.allocate(floatBuffer.capacity() * Float.BYTES);
-				byteBuffer.asFloatBuffer().put(floatBuffer);
-				spectrum.setIntenArrayBinary(createBinaryType(byteBuffer, 32));
-				//
-				spectrumList.getSpectrum().add(spectrum);
-			}
-			MzData mzData = new MzData();
-			mzData.setVersion(VERSION);
-			mzData.setSpectrumList(spectrumList);
-			marshaller.marshal(mzData, file);
+			marshaller.marshal(createMzData(chromatogram), file);
 		} catch(JAXBException e) {
 			logger.warn(e);
 		}
 	}
 
-	PeakListBinaryType createBinaryType(ByteBuffer byteBuffer, int precision) {
+	private MzData createMzData(IChromatogramMSD chromatogram) {
 
-		Data data = new Data();
-		data.setPrecision(precision);
-		byteBuffer.order(ByteOrder.BIG_ENDIAN);
-		data.setEndian("big");
-		data.setValue(byteBuffer.array());
-		data.setLength(byteBuffer.capacity());
-		PeakListBinaryType peakListBinaryType = new PeakListBinaryType();
-		peakListBinaryType.setData(data);
-		return peakListBinaryType;
+		MzData mzData = new MzData();
+		mzData.setVersion(VERSION);
+		mzData.setSpectrumList(createSpectrumList(chromatogram));
+		return mzData;
+	}
+
+	private SpectrumList createSpectrumList(IChromatogramMSD chromatogram) {
+
+		SpectrumList spectrumList = new SpectrumList();
+		for(IScan scan : chromatogram.getScans()) {
+			spectrumList.getSpectrum().add(createSpectrum(scan));
+		}
+		return spectrumList;
+	}
+
+	private Spectrum createSpectrum(IScan scan) {
+
+		Spectrum spectrum = new Spectrum();
+		spectrum.setSpectrumDesc(createSpectrumDesc(scan));
+		IScanMSD scanMSD = (IScanMSD)scan;
+		setBinaryArrays(spectrum, scanMSD);
+		return spectrum;
+	}
+
+	private void setBinaryArrays(Spectrum spectrum, IScanMSD scanMSD) {
+
+		double[] ions = new double[scanMSD.getNumberOfIons()];
+		float[] abundances = new float[scanMSD.getNumberOfIons()];
+		int i = 0;
+		for(IIon ion : scanMSD.getIons()) {
+			ions[i] = ion.getIon();
+			abundances[i] = ion.getAbundance();
+			i++;
+		}
+		spectrum.setMzArrayBinary(WriterVersion105.createFromDoubles(ions));
+		spectrum.setIntenArrayBinary(WriterVersion105.createFromFloats(abundances));
+	}
+
+	private SpectrumDescType createSpectrumDesc(IScan scan) {
+
+		SpectrumDescType spectrumDesc = new SpectrumDescType();
+		spectrumDesc.setSpectrumSettings(createSpectrumSettings(scan));
+		return spectrumDesc;
+	}
+
+	private SpectrumSettingsType createSpectrumSettings(IScan scan) {
+
+		SpectrumSettingsType spectrumSettings = new SpectrumSettingsType();
+		spectrumSettings.setSpectrumInstrument(createSpectrumInstrument(scan));
+		return spectrumSettings;
+	}
+
+	private SpectrumInstrument createSpectrumInstrument(IScan scan) {
+
+		SpectrumInstrument spectrumInstrument = new SpectrumInstrument();
+		spectrumInstrument.getCvParamOrUserParam().add(createRetentionTime(scan));
+		return spectrumInstrument;
+	}
+
+	private CvParamType createRetentionTime(IScan scan) {
+
+		CvParamType retentionTime = new CvParamType();
+		retentionTime.setName("TimeInSeconds");
+		retentionTime.setValue(String.valueOf(scan.getRetentionTime() / 1000f));
+		return retentionTime;
 	}
 }
