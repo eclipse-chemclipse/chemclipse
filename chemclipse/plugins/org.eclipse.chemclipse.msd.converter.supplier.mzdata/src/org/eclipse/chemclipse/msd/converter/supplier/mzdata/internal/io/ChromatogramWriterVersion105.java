@@ -48,23 +48,72 @@ public class ChromatogramWriterVersion105 extends AbstractChromatogramWriter imp
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(ObjectFactory.class);
 			Marshaller marshaller = jaxbContext.createMarshaller();
-			marshaller.marshal(createMzData(chromatogram), file);
+			marshaller.marshal(createMzData(file, chromatogram), file);
 		} catch(JAXBException e) {
 			logger.warn(e);
 		}
 	}
 
-	private MzData createMzData(IChromatogramMSD chromatogram) {
+	private MzData createMzData(File file, IChromatogramMSD chromatogram) {
 
 		MzData mzData = new MzData();
 		mzData.setVersion(VERSION);
 		mzData.setSpectrumList(createSpectrumList(chromatogram));
+		mzData.setDescription(createDescription(file, chromatogram));
 		return mzData;
+	}
+
+	private Description createDescription(File file, IChromatogramMSD chromatogram) {
+
+		Description description = new Description();
+		description.setAdmin(createAdmin(file, chromatogram));
+		description.setInstrument(createInstrumentDescription(chromatogram));
+		return description;
+	}
+
+	private AdminType createAdmin(File file, IChromatogramMSD chromatogram) {
+
+		AdminType admin = new AdminType();
+		admin.getContact().add(createPerson(chromatogram));
+		admin.setSampleDescription(createSampleDescription(chromatogram));
+		admin.setSampleName(chromatogram.getSampleName());
+		admin.setSourceFile(createSourceFile(file));
+		return admin;
+	}
+
+	private SourceFileType createSourceFile(File file) {
+
+		SourceFileType sourceFile = new SourceFileType();
+		sourceFile.setNameOfFile(file.getName());
+		sourceFile.setPathToFile(file.getAbsolutePath());
+		return sourceFile;
+	}
+
+	private DescriptionType createSampleDescription(IChromatogramMSD chromatogram) {
+
+		DescriptionType description = new DescriptionType();
+		description.setComment(chromatogram.getMiscInfo());
+		return description;
+	}
+
+	private PersonType createPerson(IChromatogramMSD chromatogram) {
+
+		PersonType person = new PersonType();
+		person.setName(chromatogram.getOperator());
+		return person;
+	}
+
+	private InstrumentDescriptionType createInstrumentDescription(IChromatogramMSD chromatogram) {
+
+		InstrumentDescriptionType instrumentDescription = new InstrumentDescriptionType();
+		instrumentDescription.setInstrumentName(chromatogram.getInstrument());
+		return instrumentDescription;
 	}
 
 	private SpectrumList createSpectrumList(IChromatogramMSD chromatogram) {
 
 		SpectrumList spectrumList = new SpectrumList();
+		spectrumList.setCount(chromatogram.getNumberOfScans());
 		for(IScan scan : chromatogram.getScans()) {
 			spectrumList.getSpectrum().add(createSpectrum(scan));
 		}
@@ -75,6 +124,7 @@ public class ChromatogramWriterVersion105 extends AbstractChromatogramWriter imp
 
 		Spectrum spectrum = new Spectrum();
 		spectrum.setSpectrumDesc(createSpectrumDesc(scan));
+		spectrum.setId(scan.getScanNumber());
 		IScanMSD scanMSD = (IScanMSD)scan;
 		setBinaryArrays(spectrum, scanMSD);
 		return spectrum;
