@@ -68,6 +68,14 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 		return INSTANCE().getBoolean(P_CHROMATOGRAM_SAVE_COMPRESSION, DEF_CHROMATOGRAM_SAVE_COMPRESSION);
 	}
 
+	public static String[][] getMassSpectrumVersions() {
+
+		String[][] elements = new String[1][2];
+		elements[0][0] = MassSpectrumWriterVersion22.VERSION.split("_")[1];
+		elements[0][1] = MassSpectrumWriterVersion22.VERSION;
+		return elements;
+	}
+
 	public static String getMassSpectrumVersionSave() {
 
 		return INSTANCE().get(P_MASS_SPECTRUM_VERSION_SAVE, DEF_MASS_SPECTRUM_VERSION_SAVE);

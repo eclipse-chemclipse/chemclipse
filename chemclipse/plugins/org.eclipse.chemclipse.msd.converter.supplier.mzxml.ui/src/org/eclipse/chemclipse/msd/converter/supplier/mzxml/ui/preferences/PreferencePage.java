@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -29,13 +29,16 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 		setDescription("mzXML Converter");
 	}
 
+	@Override
 	public void createFieldEditors() {
 
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
-		addField(new ComboFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_VERSION_SAVE, "Save (*.mzxml) as version:", PreferenceSupplier.getChromatogramVersions(), getFieldEditorParent()));
+		addField(new ComboFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_VERSION_SAVE, "Save (*.mzXML) chromatograms as version:", PreferenceSupplier.getChromatogramVersions(), getFieldEditorParent()));
+		addField(new ComboFieldEditor(PreferenceSupplier.P_MASS_SPECTRUM_VERSION_SAVE, "Save (*.mzXML) mass spectra as version:", PreferenceSupplier.getMassSpectrumVersions(), getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_SAVE_COMPRESSION, "Compress values", getFieldEditorParent()));
 	}
 
+	@Override
 	public void init(IWorkbench workbench) {
 
 	}
