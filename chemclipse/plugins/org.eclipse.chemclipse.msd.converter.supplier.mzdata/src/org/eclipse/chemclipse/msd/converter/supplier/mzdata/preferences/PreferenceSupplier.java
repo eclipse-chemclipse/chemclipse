@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2024 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,14 +13,14 @@
 package org.eclipse.chemclipse.msd.converter.supplier.mzdata.preferences;
 
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.Activator;
-import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.io.ChromatogramWriter105;
+import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.io.ChromatogramWriterVersion105;
 import org.eclipse.chemclipse.support.preferences.AbstractPreferenceSupplier;
 import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
 
 public class PreferenceSupplier extends AbstractPreferenceSupplier implements IPreferenceSupplier {
 
 	public static final String P_CHROMATOGRAM_VERSION_SAVE = "chromatogramVersionSave";
-	public static final String DEF_CHROMATOGRAM_VERSION_SAVE = ChromatogramWriter105.VERSION;
+	public static final String DEF_CHROMATOGRAM_VERSION_SAVE = ChromatogramWriterVersion105.VERSION;
 	public static final String P_CHROMATOGRAM_SAVE_COMPRESSION = "chromatogramSaveCompression";
 	public static final boolean DEF_CHROMATOGRAM_SAVE_COMPRESSION = true;
 
@@ -50,8 +50,8 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static String[][] getChromatogramVersions() {
 
 		String[][] elements = new String[1][2];
-		elements[0][0] = ChromatogramWriter105.VERSION;
-		elements[0][1] = ChromatogramWriter105.VERSION;
+		elements[0][0] = ChromatogramWriterVersion105.VERSION;
+		elements[0][1] = ChromatogramWriterVersion105.VERSION;
 		return elements;
 	}
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2023 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -42,11 +42,11 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 
-public class ChromatogramWriter105 extends AbstractChromatogramWriter implements IChromatogramMSDWriter {
+public class ChromatogramWriterVersion105 extends AbstractChromatogramWriter implements IChromatogramMSDWriter {
 
 	public static final String VERSION = "1.05";
 	//
-	private static final Logger logger = Logger.getLogger(ChromatogramWriter105.class);
+	private static final Logger logger = Logger.getLogger(ChromatogramWriterVersion105.class);
 
 	@Override
 	public void writeChromatogram(File file, IChromatogramMSD chromatogram, IProgressMonitor monitor) throws FileIsNotWriteableException, IOException {
