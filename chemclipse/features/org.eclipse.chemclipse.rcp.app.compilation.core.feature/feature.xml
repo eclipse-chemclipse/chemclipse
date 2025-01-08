@@ -237,10 +237,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.chemclipse.xxd.converter.supplier.zip.feature"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.chemclipse.xxd.converter.supplier.csv.feature"
          version="0.0.0"/>
 
