@@ -121,6 +121,9 @@ public class MassSpectrumReaderVersion105 extends AbstractMassSpectraReader impl
 			return;
 		}
 		massSpectrum.setSampleName(admin.getSampleName());
+		if(admin.getSampleDescription() != null) {
+			massSpectrum.setDescription(admin.getSampleDescription().getComment());
+		}
 		for(PersonType contact : admin.getContact()) {
 			String contactDetails = "";
 			if(contact.getContactInfo() != null) {
