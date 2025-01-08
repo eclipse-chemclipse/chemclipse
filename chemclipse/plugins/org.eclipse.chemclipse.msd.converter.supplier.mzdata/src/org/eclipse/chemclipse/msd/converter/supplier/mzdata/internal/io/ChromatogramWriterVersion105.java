@@ -19,16 +19,21 @@ import org.eclipse.chemclipse.converter.io.AbstractChromatogramWriter;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.msd.converter.io.IChromatogramMSDWriter;
+import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.AdminType;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.CvParamType;
+import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.Description;
+import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.DescriptionType;
+import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.InstrumentDescriptionType;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.MzData;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.ObjectFactory;
+import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.PersonType;
+import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.SourceFileType;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.Spectrum;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.SpectrumDescType;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.SpectrumInstrument;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.SpectrumList;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.SpectrumSettingsType;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
-import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -38,8 +43,6 @@ import jakarta.xml.bind.Marshaller;
 
 public class ChromatogramWriterVersion105 extends AbstractChromatogramWriter implements IChromatogramMSDWriter {
 
-	public static final String VERSION = "1.05";
-	//
 	private static final Logger logger = Logger.getLogger(ChromatogramWriterVersion105.class);
 
 	@Override
@@ -57,7 +60,7 @@ public class ChromatogramWriterVersion105 extends AbstractChromatogramWriter imp
 	private MzData createMzData(File file, IChromatogramMSD chromatogram) {
 
 		MzData mzData = new MzData();
-		mzData.setVersion(VERSION);
+		mzData.setVersion(WriterVersion105.VERSION);
 		mzData.setSpectrumList(createSpectrumList(chromatogram));
 		mzData.setDescription(createDescription(file, chromatogram));
 		return mzData;
@@ -126,22 +129,8 @@ public class ChromatogramWriterVersion105 extends AbstractChromatogramWriter imp
 		spectrum.setSpectrumDesc(createSpectrumDesc(scan));
 		spectrum.setId(scan.getScanNumber());
 		IScanMSD scanMSD = (IScanMSD)scan;
-		setBinaryArrays(spectrum, scanMSD);
+		WriterVersion105.setBinaryArrays(spectrum, scanMSD);
 		return spectrum;
-	}
-
-	private void setBinaryArrays(Spectrum spectrum, IScanMSD scanMSD) {
-
-		double[] ions = new double[scanMSD.getNumberOfIons()];
-		float[] abundances = new float[scanMSD.getNumberOfIons()];
-		int i = 0;
-		for(IIon ion : scanMSD.getIons()) {
-			ions[i] = ion.getIon();
-			abundances[i] = ion.getAbundance();
-			i++;
-		}
-		spectrum.setMzArrayBinary(WriterVersion105.createFromDoubles(ions));
-		spectrum.setIntenArrayBinary(WriterVersion105.createFromFloats(abundances));
 	}
 
 	private SpectrumDescType createSpectrumDesc(IScan scan) {
