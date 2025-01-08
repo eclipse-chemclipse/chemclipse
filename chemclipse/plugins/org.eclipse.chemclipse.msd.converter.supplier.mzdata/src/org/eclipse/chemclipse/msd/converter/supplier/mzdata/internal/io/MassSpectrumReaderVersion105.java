@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2024 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -23,10 +23,10 @@ import org.eclipse.chemclipse.msd.converter.io.AbstractMassSpectraReader;
 import org.eclipse.chemclipse.msd.converter.io.IMassSpectraReader;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.CvParamType;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.MzData;
-import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.MzData.SpectrumList.Spectrum;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.ObjectFactory;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.ParamType;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.PersonType;
+import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.Spectrum;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.model.IVendorMassSpectra;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.model.VendorIon;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.model.VendorMassSpectra;

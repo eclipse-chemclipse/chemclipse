@@ -11,25 +11,39 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "peakListBinaryType", propOrder = {"data"})
-public class PeakListBinaryType {
+@XmlType(name = "", propOrder = {"spectrum"})
+public class SpectrumList {
 
 	@XmlElement(required = true)
-	private Data data;
+	private List<Spectrum> spectrum;
+	@XmlAttribute(name = "count", required = true)
+	private int count;
 
-	public Data getData() {
+	public List<Spectrum> getSpectrum() {
 
-		return data;
+		if(spectrum == null) {
+			spectrum = new ArrayList<>();
+		}
+		return this.spectrum;
 	}
 
-	public void setData(Data value) {
+	public int getCount() {
 
-		this.data = value;
+		return count;
+	}
+
+	public void setCount(int value) {
+
+		this.count = value;
 	}
 }

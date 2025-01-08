@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2018 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -21,15 +21,15 @@ import jakarta.xml.bind.annotation.XmlType;
 public class DataProcessingType {
 
 	@XmlElement(required = true)
-	private DataProcessingType.Software software;
+	private Software software;
 	private ParamType processingMethod;
 
-	public DataProcessingType.Software getSoftware() {
+	public Software getSoftware() {
 
 		return software;
 	}
 
-	public void setSoftware(DataProcessingType.Software value) {
+	public void setSoftware(Software value) {
 
 		this.software = value;
 	}
@@ -42,10 +42,5 @@ public class DataProcessingType {
 	public void setProcessingMethod(ParamType value) {
 
 		this.processingMethod = value;
-	}
-
-	@XmlAccessorType(XmlAccessType.FIELD)
-	@XmlType(name = "")
-	public static class Software extends SoftwareType {
 	}
 }

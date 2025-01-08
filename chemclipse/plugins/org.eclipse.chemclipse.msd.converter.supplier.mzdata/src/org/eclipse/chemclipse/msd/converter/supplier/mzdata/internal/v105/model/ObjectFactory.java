@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2018 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,6 +17,7 @@ import jakarta.xml.bind.annotation.XmlRegistry;
 public class ObjectFactory {
 
 	public ObjectFactory() {
+
 	}
 
 	public MzData createMzData() {
@@ -39,9 +40,9 @@ public class ObjectFactory {
 		return new SpectrumSettingsType();
 	}
 
-	public SpectrumSettingsType.AcqSpecification createSpectrumSettingsTypeAcqSpecification() {
+	public AcqSpecification createAcqSpecification() {
 
-		return new SpectrumSettingsType.AcqSpecification();
+		return new AcqSpecification();
 	}
 
 	public SupDataBinaryType createSupDataBinaryType() {
@@ -54,9 +55,9 @@ public class ObjectFactory {
 		return new SpectrumDescType();
 	}
 
-	public MzData.SpectrumList createMzDataSpectrumList() {
+	public SpectrumList createMzDataSpectrumList() {
 
-		return new MzData.SpectrumList();
+		return new SpectrumList();
 	}
 
 	public CvLookupType createCvLookupType() {
@@ -64,9 +65,9 @@ public class ObjectFactory {
 		return new CvLookupType();
 	}
 
-	public MzData.Description createMzDataDescription() {
+	public Description createMzDataDescription() {
 
-		return new MzData.Description();
+		return new Description();
 	}
 
 	public CvParamType createCvParamType() {
@@ -134,38 +135,38 @@ public class ObjectFactory {
 		return new PersonType();
 	}
 
-	public DataProcessingType.Software createDataProcessingTypeSoftware() {
+	public Software createDataProcessingTypeSoftware() {
 
-		return new DataProcessingType.Software();
+		return new Software();
 	}
 
-	public InstrumentDescriptionType.AnalyzerList createInstrumentDescriptionTypeAnalyzerList() {
+	public AnalyzerList createAnalyzerList() {
 
-		return new InstrumentDescriptionType.AnalyzerList();
+		return new AnalyzerList();
 	}
 
-	public SpectrumSettingsType.SpectrumInstrument createSpectrumSettingsTypeSpectrumInstrument() {
+	public SpectrumInstrument createSpectrumInstrument() {
 
-		return new SpectrumSettingsType.SpectrumInstrument();
+		return new SpectrumInstrument();
 	}
 
-	public SpectrumSettingsType.AcqSpecification.Acquisition createSpectrumSettingsTypeAcqSpecificationAcquisition() {
+	public Acquisition createAcquisition() {
 
-		return new SpectrumSettingsType.AcqSpecification.Acquisition();
+		return new Acquisition();
 	}
 
-	public SupDataBinaryType.Data createSupDataBinaryTypeData() {
+	public Data createSupDataBinaryTypeData() {
 
-		return new SupDataBinaryType.Data();
+		return new Data();
 	}
 
-	public SpectrumDescType.PrecursorList createSpectrumDescTypePrecursorList() {
+	public PrecursorList createSpectrumDescTypePrecursorList() {
 
-		return new SpectrumDescType.PrecursorList();
+		return new PrecursorList();
 	}
 
-	public MzData.SpectrumList.Spectrum createMzDataSpectrumListSpectrum() {
+	public Spectrum createSpectrum() {
 
-		return new MzData.SpectrumList.Spectrum();
+		return new Spectrum();
 	}
 }

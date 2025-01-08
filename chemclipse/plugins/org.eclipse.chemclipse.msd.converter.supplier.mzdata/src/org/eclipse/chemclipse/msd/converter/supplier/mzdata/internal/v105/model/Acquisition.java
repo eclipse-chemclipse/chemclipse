@@ -13,23 +13,23 @@ package org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "peakListBinaryType", propOrder = {"data"})
-public class PeakListBinaryType {
+@XmlType(name = "")
+public class Acquisition extends ParamType {
 
-	@XmlElement(required = true)
-	private Data data;
+	@XmlAttribute(name = "acqNumber", required = true)
+	private int acqNumber;
 
-	public Data getData() {
+	public int getAcqNumber() {
 
-		return data;
+		return acqNumber;
 	}
 
-	public void setData(Data value) {
+	public void setAcqNumber(int value) {
 
-		this.data = value;
+		this.acqNumber = value;
 	}
 }

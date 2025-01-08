@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2024 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,9 +28,9 @@ public class MzData {
 
 	private List<CvLookupType> cvLookup;
 	@XmlElement(required = true)
-	private MzData.Description description;
+	private Description description;
 	@XmlElement(required = true)
-	private MzData.SpectrumList spectrumList;
+	private SpectrumList spectrumList;
 	@XmlAttribute(name = "version", required = true)
 	private String version;
 	@XmlAttribute(name = "accessionNumber", required = true)
@@ -44,22 +44,22 @@ public class MzData {
 		return this.cvLookup;
 	}
 
-	public MzData.Description getDescription() {
+	public Description getDescription() {
 
 		return description;
 	}
 
-	public void setDescription(MzData.Description value) {
+	public void setDescription(Description value) {
 
 		this.description = value;
 	}
 
-	public MzData.SpectrumList getSpectrumList() {
+	public SpectrumList getSpectrumList() {
 
 		return spectrumList;
 	}
 
-	public void setSpectrumList(MzData.SpectrumList value) {
+	public void setSpectrumList(SpectrumList value) {
 
 		this.spectrumList = value;
 	}
@@ -86,80 +86,5 @@ public class MzData {
 	public void setAccessionNumber(String value) {
 
 		this.accessionNumber = value;
-	}
-
-	@XmlAccessorType(XmlAccessType.FIELD)
-	@XmlType(name = "", propOrder = {"admin", "instrument", "dataProcessing"})
-	public static class Description {
-
-		@XmlElement(required = true)
-		private AdminType admin;
-		@XmlElement(required = true)
-		private InstrumentDescriptionType instrument;
-		@XmlElement(required = true)
-		private DataProcessingType dataProcessing;
-
-		public AdminType getAdmin() {
-
-			return admin;
-		}
-
-		public void setAdmin(AdminType value) {
-
-			this.admin = value;
-		}
-
-		public InstrumentDescriptionType getInstrument() {
-
-			return instrument;
-		}
-
-		public void setInstrument(InstrumentDescriptionType value) {
-
-			this.instrument = value;
-		}
-
-		public DataProcessingType getDataProcessing() {
-
-			return dataProcessing;
-		}
-
-		public void setDataProcessing(DataProcessingType value) {
-
-			this.dataProcessing = value;
-		}
-	}
-
-	@XmlAccessorType(XmlAccessType.FIELD)
-	@XmlType(name = "", propOrder = {"spectrum"})
-	public static class SpectrumList {
-
-		@XmlElement(required = true)
-		private List<MzData.SpectrumList.Spectrum> spectrum;
-		@XmlAttribute(name = "count", required = true)
-		private int count;
-
-		public List<MzData.SpectrumList.Spectrum> getSpectrum() {
-
-			if(spectrum == null) {
-				spectrum = new ArrayList<>();
-			}
-			return this.spectrum;
-		}
-
-		public int getCount() {
-
-			return count;
-		}
-
-		public void setCount(int value) {
-
-			this.count = value;
-		}
-
-		@XmlAccessorType(XmlAccessType.FIELD)
-		@XmlType(name = "")
-		public static class Spectrum extends SpectrumType {
-		}
 	}
 }
