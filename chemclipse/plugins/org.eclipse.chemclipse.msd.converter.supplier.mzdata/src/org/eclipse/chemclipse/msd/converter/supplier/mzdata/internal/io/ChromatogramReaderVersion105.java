@@ -223,6 +223,9 @@ public class ChromatogramReaderVersion105 extends AbstractChromatogramReader imp
 	private void readEditHistory(MzData mzData, IVendorChromatogram chromatogram) {
 
 		DataProcessingType dataProcessing = mzData.getDescription().getDataProcessing();
+		if(dataProcessing == null) {
+			return;
+		}
 		Software software = dataProcessing.getSoftware();
 		ParamType processingMethod = dataProcessing.getProcessingMethod();
 		if(processingMethod != null) {
