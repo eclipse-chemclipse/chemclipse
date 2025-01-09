@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -22,6 +22,7 @@ import java.nio.DoubleBuffer;
 import java.nio.FloatBuffer;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.zip.Deflater;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -30,17 +31,23 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.core.IScan;
+import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.BinaryDataArrayListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.BinaryDataArrayType;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.CVListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.CVParamType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.CVType;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.InstrumentConfigurationListType;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.InstrumentConfigurationType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ParamGroupType;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ProcessingMethodType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SoftwareListType;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SoftwareRefType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SoftwareType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SourceFileType;
 import org.eclipse.core.runtime.IProduct;
@@ -56,15 +63,24 @@ public class XmlWriter110 {
 	//
 	private static final Logger logger = Logger.getLogger(XmlWriter110.class);
 
-	public static ParamGroupType getOperator(IChromatogram<?> chromatogram) {
+	public static CVListType createCvList() {
 
-		if(!chromatogram.getOperator().isEmpty()) {
+		CVListType cvList = new CVListType();
+		cvList.setCount(BigInteger.valueOf(2));
+		cvList.getCv().add(MS);
+		cvList.getCv().add(UO);
+		return cvList;
+	}
+
+	public static ParamGroupType createOperator(String operator) {
+
+		if(!operator.isEmpty()) {
 			ParamGroupType paramGroupType = new ParamGroupType();
 			CVParamType cvParam = new CVParamType();
-			cvParam.setCvRef(XmlWriter110.MS);
+			cvParam.setCvRef(MS);
 			cvParam.setAccession("MS:1000586");
 			cvParam.setName("contact name");
-			cvParam.setValue(chromatogram.getOperator());
+			cvParam.setValue(operator);
 			paramGroupType.getCvParam().add(cvParam);
 			return paramGroupType;
 		}
@@ -84,7 +100,7 @@ public class XmlWriter110 {
 			software.setVersion(version.getMajor() + "." + version.getMinor() + "." + version.getMicro());
 			if(product.getName().equals("ChemClipse")) {
 				CVParamType cvParamSoftware = new CVParamType();
-				cvParamSoftware.setCvRef(XmlWriter110.MS);
+				cvParamSoftware.setCvRef(MS);
 				cvParamSoftware.setAccession("MS:1003376");
 				cvParamSoftware.setName("ChemClipse");
 				cvParamSoftware.setValue("");
@@ -92,7 +108,7 @@ public class XmlWriter110 {
 			}
 			if(product.getName().equals("OpenChrom")) {
 				CVParamType cvParamSoftware = new CVParamType();
-				cvParamSoftware.setCvRef(XmlWriter110.MS);
+				cvParamSoftware.setCvRef(MS);
 				cvParamSoftware.setAccession("MS:1003377");
 				cvParamSoftware.setName("OpenChrom");
 				cvParamSoftware.setValue("");
@@ -103,10 +119,23 @@ public class XmlWriter110 {
 		return softwareList;
 	}
 
+	public static InstrumentConfigurationListType createInstrumentConfigurationList(SoftwareType software) {
+
+		InstrumentConfigurationListType instrumentConfigurationList = new InstrumentConfigurationListType();
+		instrumentConfigurationList.setCount(BigInteger.valueOf(1));
+		InstrumentConfigurationType instrumentConfiguration = new InstrumentConfigurationType();
+		instrumentConfiguration.setId("unknown");
+		SoftwareRefType softwareRef = new SoftwareRefType();
+		softwareRef.setRef(software);
+		instrumentConfiguration.setSoftwareRef(softwareRef);
+		instrumentConfigurationList.getInstrumentConfiguration().add(instrumentConfiguration);
+		return instrumentConfigurationList;
+	}
+
 	public static CVParamType createSpectrumLevel(IRegularMassSpectrum massSpectrum) {
 
 		CVParamType cvParamLevel = new CVParamType();
-		cvParamLevel.setCvRef(XmlWriter110.MS);
+		cvParamLevel.setCvRef(MS);
 		cvParamLevel.setAccession("MS:1000511");
 		cvParamLevel.setName("ms level");
 		cvParamLevel.setValue(String.valueOf(massSpectrum.getMassSpectrometer()));
@@ -116,10 +145,10 @@ public class XmlWriter110 {
 	public static CVParamType createIntensityArrayType() {
 
 		CVParamType cvParamTotalSignals = new CVParamType();
-		cvParamTotalSignals.setCvRef(XmlWriter110.MS);
+		cvParamTotalSignals.setCvRef(MS);
 		cvParamTotalSignals.setAccession("MS:1000515");
 		cvParamTotalSignals.setName("intensity array");
-		cvParamTotalSignals.setUnitCvRef(XmlWriter110.MS);
+		cvParamTotalSignals.setUnitCvRef(MS);
 		cvParamTotalSignals.setUnitAccession("MS:1000131");
 		cvParamTotalSignals.setUnitName("number of counts");
 		return cvParamTotalSignals;
@@ -128,7 +157,7 @@ public class XmlWriter110 {
 	public static CVParamType createRetentionTimeType() {
 
 		CVParamType cvParamRetentionTime = new CVParamType();
-		cvParamRetentionTime.setCvRef(XmlWriter110.MS);
+		cvParamRetentionTime.setCvRef(MS);
 		cvParamRetentionTime.setAccession("MS:1000595");
 		cvParamRetentionTime.setName("time array");
 		cvParamRetentionTime.setUnitAccession("UO:0000010");
@@ -136,9 +165,8 @@ public class XmlWriter110 {
 		return cvParamRetentionTime;
 	}
 
-	public static XMLGregorianCalendar createDate(IChromatogram<?> chromatogram) throws DatatypeConfigurationException {
+	public static XMLGregorianCalendar createDate(Date date) throws DatatypeConfigurationException {
 
-		Date date = chromatogram.getDate();
 		if(date != null) {
 			GregorianCalendar calendar = new GregorianCalendar();
 			calendar.setTime(date);
@@ -161,7 +189,7 @@ public class XmlWriter110 {
 	public static CVParamType createFloatParamType() {
 
 		CVParamType cvParamData = new CVParamType();
-		cvParamData.setCvRef(XmlWriter110.MS);
+		cvParamData.setCvRef(MS);
 		cvParamData.setAccession("MS:1000521");
 		cvParamData.setName("32-bit float");
 		return cvParamData;
@@ -170,7 +198,7 @@ public class XmlWriter110 {
 	public static CVParamType createTotalIonCurrentType(IScan scan) {
 
 		CVParamType cvParamTotalIonCurrent = new CVParamType();
-		cvParamTotalIonCurrent.setCvRef(XmlWriter110.MS);
+		cvParamTotalIonCurrent.setCvRef(MS);
 		cvParamTotalIonCurrent.setAccession("MS:1000285");
 		cvParamTotalIonCurrent.setName("total ion current");
 		cvParamTotalIonCurrent.setValue(String.valueOf(scan.getTotalSignal()));
@@ -191,7 +219,7 @@ public class XmlWriter110 {
 	public static CVParamType createDoubleParamType() {
 
 		CVParamType cvParamData = new CVParamType();
-		cvParamData.setCvRef(XmlWriter110.MS);
+		cvParamData.setCvRef(MS);
 		cvParamData.setAccession("MS:1000523");
 		cvParamData.setName("64-bit float");
 		return cvParamData;
@@ -200,10 +228,10 @@ public class XmlWriter110 {
 	public static CVParamType createScanStartTimeType(IScan scan) {
 
 		CVParamType cvParamScanStartTime = new CVParamType();
-		cvParamScanStartTime.setCvRef(XmlWriter110.MS);
+		cvParamScanStartTime.setCvRef(MS);
 		cvParamScanStartTime.setAccession("MS:1000016");
 		cvParamScanStartTime.setName("scan start time");
-		cvParamScanStartTime.setUnitCvRef(XmlWriter110.UO);
+		cvParamScanStartTime.setUnitCvRef(UO);
 		cvParamScanStartTime.setUnitAccession("UO:0000031");
 		cvParamScanStartTime.setUnitName("minute");
 		cvParamScanStartTime.setValue(String.valueOf(scan.getRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
@@ -213,10 +241,10 @@ public class XmlWriter110 {
 	public static CVParamType createBasePeakIntensity(IScanMSD scanMSD) {
 
 		CVParamType cvParamBasePeakIntensity = new CVParamType();
-		cvParamBasePeakIntensity.setCvRef(XmlWriter110.MS);
+		cvParamBasePeakIntensity.setCvRef(MS);
 		cvParamBasePeakIntensity.setAccession("MS:1000505");
 		cvParamBasePeakIntensity.setName("base peak intensity");
-		cvParamBasePeakIntensity.setUnitCvRef(XmlWriter110.MS);
+		cvParamBasePeakIntensity.setUnitCvRef(MS);
 		cvParamBasePeakIntensity.setUnitAccession("MS:1000131");
 		cvParamBasePeakIntensity.setUnitName("number of detector counts");
 		cvParamBasePeakIntensity.setValue(String.valueOf(scanMSD.getBasePeakAbundance()));
@@ -226,20 +254,46 @@ public class XmlWriter110 {
 	public static CVParamType createBasePeakMassType(IScanMSD scanMSD) {
 
 		CVParamType cvParamBasePeak = new CVParamType();
-		cvParamBasePeak.setCvRef(XmlWriter110.MS);
+		cvParamBasePeak.setCvRef(MS);
 		cvParamBasePeak.setAccession("MS:1000504");
 		cvParamBasePeak.setName("base peak m/z");
-		cvParamBasePeak.setUnitCvRef(XmlWriter110.MS);
+		cvParamBasePeak.setUnitCvRef(MS);
 		cvParamBasePeak.setUnitAccession("MS:1000040");
 		cvParamBasePeak.setUnitName("m/z");
 		cvParamBasePeak.setValue(String.valueOf(scanMSD.getBasePeak()));
 		return cvParamBasePeak;
 	}
 
+	public static CVParamType createLowestObservedIon(IScanMSD scanMSD) {
+
+		CVParamType cvParamBasePeak = new CVParamType();
+		cvParamBasePeak.setCvRef(MS);
+		cvParamBasePeak.setAccession("MS:1000528");
+		cvParamBasePeak.setName("lowest observed m/z");
+		cvParamBasePeak.setUnitCvRef(MS);
+		cvParamBasePeak.setUnitAccession("MS:1000040");
+		cvParamBasePeak.setUnitName("m/z");
+		cvParamBasePeak.setValue(String.valueOf(scanMSD.getLowestIon().getIon()));
+		return cvParamBasePeak;
+	}
+
+	public static CVParamType createHighestObservedIon(IScanMSD scanMSD) {
+
+		CVParamType cvParamBasePeak = new CVParamType();
+		cvParamBasePeak.setCvRef(MS);
+		cvParamBasePeak.setAccession("MS:1000527");
+		cvParamBasePeak.setName("highest observed m/z");
+		cvParamBasePeak.setUnitCvRef(MS);
+		cvParamBasePeak.setUnitAccession("MS:1000040");
+		cvParamBasePeak.setUnitName("m/z");
+		cvParamBasePeak.setValue(String.valueOf(scanMSD.getHighestIon().getIon()));
+		return cvParamBasePeak;
+	}
+
 	public static CVParamType createCombinationType() {
 
 		CVParamType cvParamCombination = new CVParamType();
-		cvParamCombination.setCvRef(XmlWriter110.MS);
+		cvParamCombination.setCvRef(MS);
 		cvParamCombination.setAccession("MS:1000795");
 		cvParamCombination.setName("no combination");
 		return cvParamCombination;
@@ -248,7 +302,7 @@ public class XmlWriter110 {
 	public static CVParamType createTotalIonCurrrentType() {
 
 		CVParamType cvParam = new CVParamType();
-		cvParam.setCvRef(XmlWriter110.MS);
+		cvParam.setCvRef(MS);
 		cvParam.setAccession("MS:1000235");
 		cvParam.setName("total ion current chromatogram");
 		cvParam.setValue("");
@@ -258,10 +312,10 @@ public class XmlWriter110 {
 	public static CVParamType createIonType() {
 
 		CVParamType cvParamIons = new CVParamType();
-		cvParamIons.setCvRef(XmlWriter110.MS);
+		cvParamIons.setCvRef(MS);
 		cvParamIons.setAccession("MS:1000514");
 		cvParamIons.setName("m/z array");
-		cvParamIons.setUnitCvRef(XmlWriter110.MS);
+		cvParamIons.setUnitCvRef(MS);
 		cvParamIons.setUnitAccession("MS:1000040");
 		cvParamIons.setUnitName("m/z");
 		return cvParamIons;
@@ -271,11 +325,11 @@ public class XmlWriter110 {
 
 		CVParamType cvParamSpectrum = new CVParamType();
 		if(massSpectrum.getMassSpectrometer() == 1) {
-			cvParamSpectrum.setCvRef(XmlWriter110.MS);
+			cvParamSpectrum.setCvRef(MS);
 			cvParamSpectrum.setAccession("MS:1000579");
 			cvParamSpectrum.setName("MS1 spectrum");
 		} else {
-			cvParamSpectrum.setCvRef(XmlWriter110.MS);
+			cvParamSpectrum.setCvRef(MS);
 			cvParamSpectrum.setAccession("MS:1000580");
 			cvParamSpectrum.setName("MSn spectrum");
 		}
@@ -283,15 +337,24 @@ public class XmlWriter110 {
 		return cvParamSpectrum;
 	}
 
+	public static CVParamType createMassSpectrumType() {
+
+		CVParamType cvParamType = new CVParamType();
+		cvParamType.setCvRef(MS);
+		cvParamType.setAccession("MS:1000294");
+		cvParamType.setName("mass spectrum");
+		return cvParamType;
+	}
+
 	public static CVParamType createSpectrumType(IRegularMassSpectrum massSpectrum) {
 
 		CVParamType cvParamSpectrumType = new CVParamType();
 		if(massSpectrum.getMassSpectrumType() == MassSpectrumType.CENTROID) {
-			cvParamSpectrumType.setCvRef(XmlWriter110.MS);
+			cvParamSpectrumType.setCvRef(MS);
 			cvParamSpectrumType.setAccession("MS:1000127");
 			cvParamSpectrumType.setName("centroid spectrum");
 		} else if(massSpectrum.getMassSpectrumType() == MassSpectrumType.PROFILE) {
-			cvParamSpectrumType.setCvRef(XmlWriter110.MS);
+			cvParamSpectrumType.setCvRef(MS);
 			cvParamSpectrumType.setAccession("MS:1000128");
 			cvParamSpectrumType.setName("profile spectrum");
 		}
@@ -329,7 +392,7 @@ public class XmlWriter110 {
 	public static CVParamType createZlibCompressionParamType() {
 
 		CVParamType cvParamCompression = new CVParamType();
-		cvParamCompression.setCvRef(XmlWriter110.MS);
+		cvParamCompression.setCvRef(MS);
 		cvParamCompression.setAccession("MS:1000574");
 		cvParamCompression.setName("zlib compression");
 		return cvParamCompression;
@@ -355,16 +418,15 @@ public class XmlWriter110 {
 		return cvTypeUnit;
 	}
 
-	public static SourceFileType createSourceFile(IChromatogram<?> chromatogram) {
+	public static SourceFileType createSourceFile(File file) {
 
-		File file = chromatogram.getFile();
 		SourceFileType sourceFile = new SourceFileType();
 		sourceFile.setLocation(file.getAbsolutePath());
 		sourceFile.setId(file.getName());
 		sourceFile.setName(file.getName());
 		//
 		CVParamType cvParamSHA1 = new CVParamType();
-		cvParamSHA1.setCvRef(XmlWriter110.MS);
+		cvParamSHA1.setCvRef(MS);
 		cvParamSHA1.setAccession("MS:1000569");
 		cvParamSHA1.setName("SHA-1");
 		cvParamSHA1.setValue(calculateSHA1(file));
@@ -380,5 +442,56 @@ public class XmlWriter110 {
 			logger.warn(e);
 		}
 		return "";
+	}
+
+	public static ProcessingMethodType createExportProcessingMethod(SoftwareType software) {
+
+		ProcessingMethodType processingMethod = new ProcessingMethodType();
+		processingMethod.setSoftwareRef(software);
+		processingMethod.setOrder(BigInteger.valueOf(1));
+		processingMethod.getCvParam().add(createExportParam());
+		return processingMethod;
+	}
+
+	private static CVParamType createExportParam() {
+
+		CVParamType exportParam = new CVParamType();
+		exportParam.setCvRef(MS);
+		exportParam.setAccession("MS:1000544");
+		exportParam.setName("Conversion to mzML");
+		exportParam.setValue("");
+		return exportParam;
+	}
+
+	public static BinaryDataArrayListType createFullSpectrumBinaryDataArrayList(IScanMSD scanMSD, boolean compression) {
+
+		List<IIon> ionList = scanMSD.getIons();
+		double[] ions = new double[ionList.size()];
+		float[] abundances = new float[ionList.size()];
+		int i = 0;
+		for(IIon ion : ionList) {
+			ions[i] = ion.getIon();
+			abundances[i] = ion.getAbundance();
+			i++;
+		}
+		BinaryDataArrayListType binaryDataArrayList = new BinaryDataArrayListType();
+		binaryDataArrayList.setCount(BigInteger.valueOf(2));
+		binaryDataArrayList.getBinaryDataArray().add(createIonsBinaryDataArrayType(ions, compression));
+		binaryDataArrayList.getBinaryDataArray().add(createAbundancesBinaryDataArrayType(abundances, compression));
+		return binaryDataArrayList;
+	}
+
+	private static BinaryDataArrayType createAbundancesBinaryDataArrayType(float[] abundances, boolean compression) {
+
+		BinaryDataArrayType abundancesBinaryDataArrayType = XmlWriter110.createBinaryData(abundances, compression);
+		abundancesBinaryDataArrayType.getCvParam().add(XmlWriter110.createIntensityArrayType());
+		return abundancesBinaryDataArrayType;
+	}
+
+	private static BinaryDataArrayType createIonsBinaryDataArrayType(double[] ions, boolean compression) {
+
+		BinaryDataArrayType ionsBinaryDataArrayType = XmlWriter110.createBinaryData(ions, compression);
+		ionsBinaryDataArrayType.getCvParam().add(XmlWriter110.createIonType());
+		return ionsBinaryDataArrayType;
 	}
 }
