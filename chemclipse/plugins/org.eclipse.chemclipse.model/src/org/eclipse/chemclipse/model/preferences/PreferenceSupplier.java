@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2024 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,9 +12,9 @@
 package org.eclipse.chemclipse.model.preferences;
 
 import org.eclipse.chemclipse.model.Activator;
-import org.eclipse.chemclipse.model.core.support.HeaderField;
+import org.eclipse.chemclipse.model.core.support.ColumnField;
 import org.eclipse.chemclipse.model.math.IonRoundMethod;
-import org.eclipse.chemclipse.model.support.HeaderUtil;
+import org.eclipse.chemclipse.model.support.ColumnUtil;
 import org.eclipse.chemclipse.model.targets.LibraryField;
 import org.eclipse.chemclipse.support.preferences.AbstractPreferenceSupplier;
 import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
@@ -49,7 +49,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static final String P_PARSE_SEPARATION_COLUMN_FROM_HEADER = "parseSeparationColumnFromHeader";
 	public static final boolean DEF_PARSE_SEPARATION_COLUMN_FROM_HEADER = true;
 	public static final String P_SEPARATION_COLUMN_HEADER_FIELD = "separationColumnHeaderField";
-	public static final String DEF_SEPARATION_COLUMN_HEADER_FIELD = HeaderField.MISC_INFO.name();
+	public static final String DEF_SEPARATION_COLUMN_HEADER_FIELD = ColumnField.COLUMN_DETAILS.name();
 	public static final String P_SEPARATION_COLUMN_MAPPINGS = "separationColumnMappings";
 	public static final String DEF_SEPARATION_COLUMN_MAPPINGS = "";
 	/*
@@ -232,9 +232,9 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 		return INSTANCE().getBoolean(P_PARSE_SEPARATION_COLUMN_FROM_HEADER, DEF_PARSE_SEPARATION_COLUMN_FROM_HEADER);
 	}
 
-	public static HeaderField getSeparationColumnHeaderField() {
+	public static ColumnField getSeparationColumnField() {
 
-		return HeaderUtil.getHeaderField(INSTANCE().get(P_SEPARATION_COLUMN_HEADER_FIELD, DEF_SEPARATION_COLUMN_HEADER_FIELD));
+		return ColumnUtil.getColumnField(INSTANCE().get(P_SEPARATION_COLUMN_HEADER_FIELD, DEF_SEPARATION_COLUMN_HEADER_FIELD));
 	}
 
 	public static String getSeparationColumnMappings() {

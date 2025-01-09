@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -21,7 +21,7 @@ import java.util.Set;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.core.support.HeaderField;
-import org.eclipse.chemclipse.model.support.ChromatogramSupport;
+import org.eclipse.chemclipse.model.support.HeaderUtil;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
@@ -74,7 +74,7 @@ public class HighResolutionSupport {
 			if(scans != null) {
 				IChromatogramMSD chromatogramReferenceMSD = new ChromatogramMSD();
 				chromatogramReferenceMSD.setConverterId(chromatogramMSD.getConverterId());
-				ChromatogramSupport.assignIdentifier(chromatogramReferenceMSD, headerField, trace.toString());
+				HeaderUtil.setHeaderData(chromatogramReferenceMSD, headerField, trace.toString());
 				//
 				List<Integer> retentionTimes = new ArrayList<>(scans.keySet());
 				Collections.sort(retentionTimes);

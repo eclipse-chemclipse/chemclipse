@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -92,7 +92,7 @@ public class ChromatogramReferencesSupport {
 	private static File getFileReference(File file, IChromatogram<?> chromatogram, HeaderField headerField, String index, String type) {
 
 		String extension = VersionConstants.FILE_EXTENSION_CHROMATOGRAM;
-		String identifier = HeaderUtil.getChromatogramName(chromatogram, headerField, index);
+		String identifier = HeaderUtil.getHeaderData(chromatogram, headerField, index);
 		String directory = file.getParentFile().getAbsolutePath();
 		//
 		StringBuilder builder = new StringBuilder();

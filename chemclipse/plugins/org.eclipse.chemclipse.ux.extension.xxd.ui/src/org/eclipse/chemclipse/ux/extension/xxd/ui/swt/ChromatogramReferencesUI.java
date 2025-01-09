@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -459,29 +459,7 @@ public class ChromatogramReferencesUI extends Composite {
 		//
 		for(IChromatogramSelection<?, ?> chromatogramSelection : chromatogramSelections) {
 			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
-			String name = chromatogram.getName();
-			switch(headerField) {
-				case DATA_NAME:
-					chromatogram.setDataName(name);
-					break;
-				case SAMPLE_NAME:
-					chromatogram.setSampleName(name);
-					break;
-				case SAMPLE_GROUP:
-					chromatogram.setSampleGroup(name);
-					break;
-				case SHORT_INFO:
-					chromatogram.setShortInfo(name);
-					break;
-				case TAGS:
-					chromatogram.setTags(name);
-					break;
-				default:
-					/*
-					 * NAME and DEFAULT are not supported here as NAME can't be set.
-					 */
-					break;
-			}
+			HeaderUtil.setHeaderData(chromatogram, headerField, chromatogram.getName(), false);
 			//
 			masterSelection.getChromatogram().addReferencedChromatogram(chromatogram);
 			if(comboChromatograms != null) {

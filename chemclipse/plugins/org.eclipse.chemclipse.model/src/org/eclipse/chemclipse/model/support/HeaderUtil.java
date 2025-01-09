@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2024 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,46 +11,116 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
 
+import java.io.File;
+
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.support.HeaderField;
 
 public class HeaderUtil {
 
-	public static String getChromatogramName(IChromatogram<?> chromatogram, HeaderField headerField, String defaultName) {
+	public static String getHeaderData(IChromatogram<?> chromatogram, HeaderField headerField, String defaultData) {
 
-		String chromatogramName = null;
+		String headerData = null;
 		//
-		switch(headerField) {
-			case NAME:
-				chromatogramName = validate(chromatogram.getName());
-				break;
-			case SAMPLE_NAME:
-				chromatogramName = validate(chromatogram.getSampleName());
-				break;
-			case DATA_NAME:
-				chromatogramName = validate(chromatogram.getDataName());
-				break;
-			case SHORT_INFO:
-				chromatogramName = validate(chromatogram.getShortInfo());
-				break;
-			case SAMPLE_GROUP:
-				chromatogramName = validate(chromatogram.getSampleGroup());
-				break;
-			case MISC_INFO:
-				chromatogramName = validate(chromatogram.getMiscInfo());
-				break;
-			case TAGS:
-				chromatogramName = validate(chromatogram.getTags());
-				break;
-			default:
-				// Do nothing, see check default.
-				break;
+		if(chromatogram != null) {
+			if(headerField != null) {
+				switch(headerField) {
+					case NAME:
+						headerData = validate(chromatogram.getName());
+						break;
+					case SAMPLE_NAME:
+						headerData = validate(chromatogram.getSampleName());
+						break;
+					case DATA_NAME:
+						headerData = validate(chromatogram.getDataName());
+						break;
+					case SHORT_INFO:
+						headerData = validate(chromatogram.getShortInfo());
+						break;
+					case SAMPLE_GROUP:
+						headerData = validate(chromatogram.getSampleGroup());
+						break;
+					case MISC_INFO:
+						headerData = validate(chromatogram.getMiscInfo());
+						break;
+					case TAGS:
+						headerData = validate(chromatogram.getTags());
+						break;
+					default:
+						/*
+						 * Do nothing, see check default.
+						 */
+						break;
+				}
+			}
 		}
 		//
-		if(chromatogramName == null || chromatogramName.isEmpty()) {
-			return defaultName;
+		if(headerData == null || headerData.isEmpty()) {
+			return defaultData;
 		} else {
-			return chromatogramName;
+			return headerData;
+		}
+	}
+
+	public static void setHeaderData(IChromatogram<?> chromatogram, HeaderField headerField, File file) {
+
+		if(chromatogram != null) {
+			if(headerField != null) {
+				if(file != null) {
+					String name = file.getName();
+					setHeaderData(chromatogram, headerField, name, false);
+					switch(headerField) {
+						case NAME:
+							chromatogram.setFile(file);
+							break;
+						default:
+							chromatogram.setFile(file);
+							break;
+					}
+				}
+			}
+		}
+	}
+
+	public static void setHeaderData(IChromatogram<?> chromatogram, HeaderField headerField, String headerData) {
+
+		setHeaderData(chromatogram, headerField, headerData, true);
+	}
+
+	public static void setHeaderData(IChromatogram<?> chromatogram, HeaderField headerField, String headerData, boolean setFileByName) {
+
+		if(chromatogram != null) {
+			if(headerField != null) {
+				if(headerData != null) {
+					switch(headerField) {
+						case NAME:
+							if(setFileByName) {
+								chromatogram.setFile(new File(headerData));
+							}
+							break;
+						case DATA_NAME:
+							chromatogram.setDataName(headerData);
+							break;
+						case MISC_INFO:
+							chromatogram.setMiscInfo(headerData);
+							break;
+						case SAMPLE_GROUP:
+							chromatogram.setSampleGroup(headerData);
+							break;
+						case SAMPLE_NAME:
+							chromatogram.setSampleName(headerData);
+							break;
+						case SHORT_INFO:
+							chromatogram.setShortInfo(headerData);
+							break;
+						case TAGS:
+							chromatogram.setTags(headerData);
+							break;
+						default:
+							break;
+					}
+				}
+			}
 		}
 	}
 

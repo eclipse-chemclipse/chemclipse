@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -52,6 +52,7 @@ public abstract class AbstractMeasurementInfo implements IMeasurementInfo {
 	private static final String DATA_NAME = "Data Name";
 	private static final String FINDINGS = "Findings";
 	private static final String TAGS = "Tags";
+	private static final String COLUMN_DETAILS = "Column Details";
 	//
 	private Set<String> protectKeys = new HashSet<>();
 	private Map<String, String> headerMap = new HashMap<>();
@@ -76,6 +77,7 @@ public abstract class AbstractMeasurementInfo implements IMeasurementInfo {
 		headerMap.put(DATA_NAME, "");
 		headerMap.put(FINDINGS, "");
 		headerMap.put(TAGS, "");
+		headerMap.put(COLUMN_DETAILS, "");
 		//
 		protectKeys.addAll(headerMap.keySet());
 	}
@@ -395,5 +397,17 @@ public abstract class AbstractMeasurementInfo implements IMeasurementInfo {
 	public void setTags(String tags) {
 
 		putHeaderData(TAGS, tags != null ? tags : "");
+	}
+
+	@Override
+	public String getColumnDetails() {
+
+		return getHeaderData(COLUMN_DETAILS);
+	}
+
+	@Override
+	public void setColumnDetails(String columnDetails) {
+
+		putHeaderData(COLUMN_DETAILS, columnDetails != null ? columnDetails : "");
 	}
 }

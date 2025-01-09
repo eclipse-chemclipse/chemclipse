@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2024 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -50,6 +50,7 @@ public class FilteredMeasurement<FilteredType extends IMeasurement, ConfigType> 
 	private static final long serialVersionUID = 2L;
 	//
 	private final FilteredType measurement;
+	//
 	private String dataName;
 	private String detailedInfo;
 	private Double sampleWeight;
@@ -66,6 +67,7 @@ public class FilteredMeasurement<FilteredType extends IMeasurement, ConfigType> 
 	private String operator;
 	private String findings;
 	private String tags;
+	private String columnDetails;
 	//
 	private final Map<String, IMeasurementResult<?>> measurementResults = new HashMap<>(1);
 	private final Map<String, String> headerMap = new HashMap<>(1);
@@ -449,6 +451,21 @@ public class FilteredMeasurement<FilteredType extends IMeasurement, ConfigType> 
 	public void setTags(String tags) {
 
 		this.tags = tags;
+	}
+
+	@Override
+	public String getColumnDetails() {
+
+		if(columnDetails != null) {
+			return columnDetails;
+		}
+		return measurement.getTags();
+	}
+
+	@Override
+	public void setColumnDetails(String columnDetails) {
+
+		this.columnDetails = columnDetails;
 	}
 
 	private void writeObject(java.io.ObjectOutputStream out) throws IOException {

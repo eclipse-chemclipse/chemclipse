@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -34,6 +34,7 @@ import org.eclipse.chemclipse.model.core.support.HeaderField;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.model.supplier.IChromatogramSelectionProcessSupplier;
+import org.eclipse.chemclipse.model.support.HeaderUtil;
 import org.eclipse.chemclipse.model.types.DataType;
 import org.eclipse.chemclipse.msd.converter.chromatogram.ChromatogramConverterMSD;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
@@ -376,28 +377,7 @@ public abstract class AbstractChromatogramEditor extends AbstractUpdater<Extende
 						for(Map.Entry<?, ?> headerEntry : headerEntries) {
 							if(headerEntry.getKey() instanceof HeaderField headerField) {
 								String value = headerEntry.getValue().toString();
-								switch(headerField) {
-									case DATA_NAME:
-										chromatogram.setDataName(value);
-										break;
-									case SAMPLE_NAME:
-										chromatogram.setSampleName(value);
-										break;
-									case SAMPLE_GROUP:
-										chromatogram.setSampleGroup(value);
-										break;
-									case MISC_INFO:
-										chromatogram.setMiscInfo(value);
-										break;
-									case SHORT_INFO:
-										chromatogram.setShortInfo(value);
-										break;
-									case TAGS:
-										chromatogram.setTags(value);
-										break;
-									default:
-										break;
-								}
+								HeaderUtil.setHeaderData(chromatogram, headerField, value, false);
 							}
 						}
 					}

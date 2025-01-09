@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023 Lablicate GmbH.
+ * Copyright (c) 2023, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,7 +18,7 @@ import org.eclipse.chemclipse.model.columns.SeparationColumnFactory;
 import org.eclipse.chemclipse.model.columns.SeparationColumnMapping;
 import org.eclipse.chemclipse.model.columns.SeparationColumnType;
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.support.HeaderField;
+import org.eclipse.chemclipse.model.core.support.ColumnField;
 import org.eclipse.chemclipse.model.preferences.PreferenceSupplier;
 
 public class ChromatogramColumnSupport {
@@ -26,16 +26,24 @@ public class ChromatogramColumnSupport {
 	public static void parseSeparationColumn(IChromatogram<?> chromatogram) {
 
 		if(PreferenceSupplier.isParseSeparationColumnFromHeader()) {
-			HeaderField headerField = PreferenceSupplier.getSeparationColumnHeaderField();
-			String mappedField = HeaderUtil.getChromatogramName(chromatogram, headerField, "");
-			if(!mappedField.isEmpty()) {
-				SeparationColumnMapping separationColumnMapping = getSeparationColumnMapping();
-				if(!separationColumnMapping.isEmpty()) {
-					ISeparationColumn separationColumn = getSeparationColumn(separationColumnMapping, mappedField);
-					if(separationColumn != null) {
-						chromatogram.getSeparationColumnIndices().setSeparationColumn(separationColumn);
-					}
+			ColumnField columnField = PreferenceSupplier.getSeparationColumnField();
+			SeparationColumnMapping separationColumnMapping = getSeparationColumnMapping();
+			if(!separationColumnMapping.isEmpty()) {
+				mapSeparationColumn(chromatogram, columnField, separationColumnMapping);
+				for(IChromatogram<?> chromatogramReference : chromatogram.getReferencedChromatograms()) {
+					mapSeparationColumn(chromatogramReference, columnField, separationColumnMapping);
 				}
+			}
+		}
+	}
+
+	private static void mapSeparationColumn(IChromatogram<?> chromatogram, ColumnField columnField, SeparationColumnMapping separationColumnMapping) {
+
+		String mappedData = ColumnUtil.getColumnData(chromatogram, columnField, "");
+		if(!mappedData.isEmpty()) {
+			ISeparationColumn separationColumn = getSeparationColumn(separationColumnMapping, mappedData);
+			if(separationColumn != null) {
+				chromatogram.getSeparationColumnIndices().setSeparationColumn(separationColumn);
 			}
 		}
 	}

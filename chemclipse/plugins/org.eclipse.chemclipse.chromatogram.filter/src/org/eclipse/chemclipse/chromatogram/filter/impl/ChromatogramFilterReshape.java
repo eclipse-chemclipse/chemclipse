@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -32,7 +32,7 @@ import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.core.support.HeaderField;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
-import org.eclipse.chemclipse.model.support.ChromatogramSupport;
+import org.eclipse.chemclipse.model.support.HeaderUtil;
 import org.eclipse.chemclipse.model.targets.TargetSupport;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
@@ -178,14 +178,14 @@ public class ChromatogramFilterReshape extends AbstractChromatogramFilter implem
 					int scanInterval = chromatogram.getScanInterval();
 					chromatogram.removeAllPeaks();
 					chromatogram.replaceAllScans(stackedScans.get(0));
-					ChromatogramSupport.assignIdentifier(chromatogram, headerField, "Cut 1");
+					HeaderUtil.setHeaderData(chromatogram, headerField, "Cut 1");
 					calculateScanIntervalAndDelay(chromatogram, resetRetentionTimes, 0, scanInterval);
 					/*
 					 * References
 					 */
 					for(int i = 1; i < stackedScans.size(); i++) {
 						IChromatogram<?> chromatogramReference = createChromatogramReference(chromatogram);
-						ChromatogramSupport.assignIdentifier(chromatogramReference, headerField, "Cut " + (i + 1));
+						HeaderUtil.setHeaderData(chromatogramReference, headerField, "Cut " + (i + 1));
 						chromatogramReference.addScans(stackedScans.get(i));
 						calculateScanIntervalAndDelay(chromatogramReference, resetRetentionTimes, 0, scanInterval);
 						chromatogram.addReferencedChromatogram(chromatogramReference);

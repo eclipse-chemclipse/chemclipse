@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2024 Lablicate GmbH.
+ * Copyright (c) 2017, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.swt.ui.preferences;
 
-import org.eclipse.chemclipse.model.core.support.HeaderField;
+import org.eclipse.chemclipse.model.core.support.ColumnField;
 import org.eclipse.chemclipse.model.math.IonRoundMethod;
 import org.eclipse.chemclipse.model.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.model.targets.LibraryField;
@@ -66,7 +66,7 @@ public class PreferencePageSystem extends FieldEditorPreferencePage implements I
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
 		addField(new LabelFieldEditor("Assignment Separation Columns (Chromatogram Import)", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_PARSE_SEPARATION_COLUMN_FROM_HEADER, "Parse Separation Column", getFieldEditorParent()));
-		addField(new ComboFieldEditor(PreferenceSupplier.P_SEPARATION_COLUMN_HEADER_FIELD, "Header Field", HeaderField.getOptions(), getFieldEditorParent()));
+		addField(new ComboFieldEditor(PreferenceSupplier.P_SEPARATION_COLUMN_HEADER_FIELD, "Column Field", ColumnField.getOptions(), getFieldEditorParent()));
 		addField(new ColumnMappingFieldEditor(PreferenceSupplier.P_SEPARATION_COLUMN_MAPPINGS, "Mappings", getFieldEditorParent()));
 		/*
 		 * Clear the Ion Round Method Cache on change.

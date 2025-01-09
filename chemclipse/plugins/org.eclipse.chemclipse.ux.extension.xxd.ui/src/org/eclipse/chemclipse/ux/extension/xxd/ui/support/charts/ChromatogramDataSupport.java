@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2024 Lablicate GmbH.
+ * Copyright (c) 2017, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -60,13 +60,9 @@ public class ChromatogramDataSupport {
 		String label = "";
 		if(chromatogram != null) {
 			HeaderField headerField = PreferenceSupplier.getChromatogramEditorLabel();
-			String description = getHeaderField(chromatogram, headerField);
+			String description = HeaderUtil.getHeaderData(chromatogram, headerField, "");
 			StringBuilder builder = new StringBuilder();
-			if(description != null && !description.isBlank()) {
-				builder.append(description);
-			} else {
-				builder.append(chromatogram.getName());
-			}
+			builder.append(description.isEmpty() ? chromatogram.getName() : description);
 			builder.append(" ");
 			builder.append(getChromatogramType(chromatogram));
 			label = builder.toString();
@@ -352,15 +348,9 @@ public class ChromatogramDataSupport {
 		 * Get the information to display.
 		 */
 		String type = ChromatogramDataSupport.getChromatogramType(chromatogram);
-		String description = getHeaderField(chromatogram, headerField);
-		/*
-		 * Check default
-		 */
-		if(description != null && description.isBlank()) {
-			description = null;
-		}
+		String description = HeaderUtil.getHeaderData(chromatogram, headerField, "");
 		//
-		if(description == null) {
+		if(description.isEmpty()) {
 			if(index == -1) {
 				description = "Chromatogram";
 			} else if(index == 0) {
@@ -377,47 +367,6 @@ public class ChromatogramDataSupport {
 		} else {
 			return description;
 		}
-	}
-
-	/**
-	 * Might return null.
-	 * 
-	 * @param chromatogram
-	 * @param headerField
-	 * @return {@link String}
-	 */
-	private static String getHeaderField(IChromatogram<?> chromatogram, HeaderField headerField) {
-
-		String field = null;
-		//
-		switch(headerField) {
-			case NAME:
-				field = chromatogram.getName();
-				break;
-			case SAMPLE_NAME:
-				field = chromatogram.getSampleName();
-				break;
-			case DATA_NAME:
-				field = chromatogram.getDataName();
-				break;
-			case SHORT_INFO:
-				field = chromatogram.getShortInfo();
-				break;
-			case SAMPLE_GROUP:
-				field = chromatogram.getSampleGroup();
-				break;
-			case MISC_INFO:
-				field = chromatogram.getMiscInfo();
-				break;
-			case TAGS:
-				field = chromatogram.getTags();
-				break;
-			default:
-				// Do nothing, see check default.
-				break;
-		}
-		//
-		return field;
 	}
 
 	private static boolean scanIsInSelectedRange(IScan scan, int startRetentionTime, int stopRetentionTime) {

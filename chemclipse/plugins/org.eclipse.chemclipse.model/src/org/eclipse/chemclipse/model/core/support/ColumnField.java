@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2025 Lablicate GmbH.
+ * Copyright (c) 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,7 +13,7 @@ package org.eclipse.chemclipse.model.core.support;
 
 import org.eclipse.chemclipse.support.text.ILabel;
 
-public enum HeaderField implements ILabel {
+public enum ColumnField implements ILabel {
 
 	DEFAULT("Default"), //
 	NAME("Name"), //
@@ -22,11 +22,12 @@ public enum HeaderField implements ILabel {
 	SAMPLE_GROUP("Sample Group"), //
 	SHORT_INFO("Short Info"), //
 	MISC_INFO("Misc Info"), //
-	TAGS("Tags"); //
+	TAGS("Tags"), //
+	COLUMN_DETAILS("Column Details"); //
 
 	private String label = "";
 
-	private HeaderField(String label) {
+	private ColumnField(String label) {
 
 		this.label = label;
 	}
