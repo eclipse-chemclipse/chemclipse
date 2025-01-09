@@ -8,54 +8,65 @@
  * 
  * Contributors:
  * Dr. Philip Wenig - initial API and implementation
- * Matthias Mailänder - read precision as integer
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlValue;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "supDataBinaryType", propOrder = {"arrayName", "data"})
-public class SupDataBinaryType {
+@XmlType(name = "", propOrder = {"value"})
+public class Data {
 
-	@XmlElement(required = true)
-	private String arrayName;
-	@XmlElement(required = true)
-	private Data data;
-	@XmlAttribute(name = "id", required = true)
-	private int id;
+	@XmlValue
+	private byte[] value;
+	@XmlAttribute(name = "precision", required = true)
+	private int precision;
+	@XmlAttribute(name = "endian", required = true)
+	private String endian;
+	@XmlAttribute(name = "length", required = true)
+	private int length;
 
-	public String getArrayName() {
+	public byte[] getValue() {
 
-		return arrayName;
+		return value;
 	}
 
-	public void setArrayName(String value) {
+	public void setValue(byte[] value) {
 
-		this.arrayName = value;
+		this.value = value;
 	}
 
-	public Data getData() {
+	public int getPrecision() {
 
-		return data;
+		return precision;
 	}
 
-	public void setData(Data value) {
+	public void setPrecision(int value) {
 
-		this.data = value;
+		this.precision = value;
 	}
 
-	public int getId() {
+	public String getEndian() {
 
-		return id;
+		return endian;
 	}
 
-	public void setId(int value) {
+	public void setEndian(String value) {
 
-		this.id = value;
+		this.endian = value;
+	}
+
+	public int getLength() {
+
+		return length;
+	}
+
+	public void setLength(int value) {
+
+		this.length = value;
 	}
 }

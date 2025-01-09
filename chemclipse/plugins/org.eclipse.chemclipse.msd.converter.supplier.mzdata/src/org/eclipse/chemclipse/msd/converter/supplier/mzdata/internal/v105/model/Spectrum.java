@@ -13,23 +13,9 @@ package org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "peakListBinaryType", propOrder = {"data"})
-public class PeakListBinaryType {
-
-	@XmlElement(required = true)
-	private Data data;
-
-	public Data getData() {
-
-		return data;
-	}
-
-	public void setData(Data value) {
-
-		this.data = value;
-	}
+@XmlType(name = "")
+public class Spectrum extends SpectrumType {
 }

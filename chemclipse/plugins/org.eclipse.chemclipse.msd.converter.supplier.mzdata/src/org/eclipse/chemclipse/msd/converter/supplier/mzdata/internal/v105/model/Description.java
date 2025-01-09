@@ -17,19 +17,43 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "peakListBinaryType", propOrder = {"data"})
-public class PeakListBinaryType {
+@XmlType(name = "", propOrder = {"admin", "instrument", "dataProcessing"})
+public class Description {
 
 	@XmlElement(required = true)
-	private Data data;
+	private AdminType admin;
+	@XmlElement(required = true)
+	private InstrumentDescriptionType instrument;
+	@XmlElement(required = true)
+	private DataProcessingType dataProcessing;
 
-	public Data getData() {
+	public AdminType getAdmin() {
 
-		return data;
+		return admin;
 	}
 
-	public void setData(Data value) {
+	public void setAdmin(AdminType value) {
 
-		this.data = value;
+		this.admin = value;
+	}
+
+	public InstrumentDescriptionType getInstrument() {
+
+		return instrument;
+	}
+
+	public void setInstrument(InstrumentDescriptionType value) {
+
+		this.instrument = value;
+	}
+
+	public DataProcessingType getDataProcessing() {
+
+		return dataProcessing;
+	}
+
+	public void setDataProcessing(DataProcessingType value) {
+
+		this.dataProcessing = value;
 	}
 }

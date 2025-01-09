@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2024 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -24,16 +24,17 @@ import org.eclipse.chemclipse.msd.converter.io.IChromatogramMSDReader;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.AdminType;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.CvParamType;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.DataProcessingType;
-import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.DataProcessingType.Software;
+import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.Description;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.MzData;
-import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.MzData.SpectrumList.Spectrum;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.ObjectFactory;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.ParamType;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.PersonType;
+import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.PrecursorList;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.PrecursorType;
+import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.Software;
+import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.Spectrum;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.SpectrumDescType;
-import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.SpectrumDescType.PrecursorList;
-import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.SpectrumSettingsType.SpectrumInstrument;
+import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.SpectrumInstrument;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.io.AbstractChromatogramReader;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.model.IVendorChromatogram;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.model.IVendorScan;
@@ -70,10 +71,13 @@ public class ChromatogramReaderVersion105 extends AbstractChromatogramReader imp
 			 * Metadata
 			 */
 			chromatogram = new VendorChromatogram();
-			AdminType admin = mzData.getDescription().getAdmin();
-			chromatogram.setSampleName(admin.getSampleName());
-			readOperator(admin, chromatogram);
-			chromatogram.setInstrument(mzData.getDescription().getInstrument().getInstrumentName());
+			Description description = mzData.getDescription();
+			if(description != null) {
+				AdminType admin = description.getAdmin();
+				chromatogram.setSampleName(admin.getSampleName());
+				readOperator(admin, chromatogram);
+				chromatogram.setInstrument(description.getInstrument().getInstrumentName());
+			}
 			readEditHistory(mzData, chromatogram);
 			/*
 			 * Mass Spectra
@@ -219,6 +223,9 @@ public class ChromatogramReaderVersion105 extends AbstractChromatogramReader imp
 	private void readEditHistory(MzData mzData, IVendorChromatogram chromatogram) {
 
 		DataProcessingType dataProcessing = mzData.getDescription().getDataProcessing();
+		if(dataProcessing == null) {
+			return;
+		}
 		Software software = dataProcessing.getSoftware();
 		ParamType processingMethod = dataProcessing.getProcessingMethod();
 		if(processingMethod != null) {

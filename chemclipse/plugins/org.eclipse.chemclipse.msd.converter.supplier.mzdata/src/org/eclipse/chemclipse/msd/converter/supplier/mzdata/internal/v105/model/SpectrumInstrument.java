@@ -13,23 +13,47 @@ package org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "peakListBinaryType", propOrder = {"data"})
-public class PeakListBinaryType {
+@XmlType(name = "")
+public class SpectrumInstrument extends ParamType {
 
-	@XmlElement(required = true)
-	private Data data;
+	@XmlAttribute(name = "msLevel", required = true)
+	private int msLevel;
+	@XmlAttribute(name = "mzRangeStart")
+	private Float mzRangeStart;
+	@XmlAttribute(name = "mzRangeStop")
+	private Float mzRangeStop;
 
-	public Data getData() {
+	public int getMsLevel() {
 
-		return data;
+		return msLevel;
 	}
 
-	public void setData(Data value) {
+	public void setMsLevel(int value) {
 
-		this.data = value;
+		this.msLevel = value;
+	}
+
+	public Float getMzRangeStart() {
+
+		return mzRangeStart;
+	}
+
+	public void setMzRangeStart(Float value) {
+
+		this.mzRangeStart = value;
+	}
+
+	public Float getMzRangeStop() {
+
+		return mzRangeStop;
+	}
+
+	public void setMzRangeStop(Float value) {
+
+		this.mzRangeStop = value;
 	}
 }

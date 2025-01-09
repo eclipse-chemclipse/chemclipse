@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2023 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,7 +16,7 @@ import java.nio.ByteOrder;
 import java.nio.DoubleBuffer;
 import java.nio.FloatBuffer;
 
-import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.SupDataBinaryType.Data;
+import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.Data;
 
 public class ReaderVersion105 {
 

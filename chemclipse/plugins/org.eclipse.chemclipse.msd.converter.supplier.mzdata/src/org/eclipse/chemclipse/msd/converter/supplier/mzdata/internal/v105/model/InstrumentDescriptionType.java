@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2018 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,11 +11,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
 
@@ -28,7 +25,7 @@ public class InstrumentDescriptionType {
 	@XmlElement(required = true)
 	private ParamType source;
 	@XmlElement(required = true)
-	private InstrumentDescriptionType.AnalyzerList analyzerList;
+	private AnalyzerList analyzerList;
 	@XmlElement(required = true)
 	private ParamType detector;
 	private ParamType additional;
@@ -53,12 +50,12 @@ public class InstrumentDescriptionType {
 		this.source = value;
 	}
 
-	public InstrumentDescriptionType.AnalyzerList getAnalyzerList() {
+	public AnalyzerList getAnalyzerList() {
 
 		return analyzerList;
 	}
 
-	public void setAnalyzerList(InstrumentDescriptionType.AnalyzerList value) {
+	public void setAnalyzerList(AnalyzerList value) {
 
 		this.analyzerList = value;
 	}
@@ -81,33 +78,5 @@ public class InstrumentDescriptionType {
 	public void setAdditional(ParamType value) {
 
 		this.additional = value;
-	}
-
-	@XmlAccessorType(XmlAccessType.FIELD)
-	@XmlType(name = "", propOrder = {"analyzer"})
-	public static class AnalyzerList {
-
-		@XmlElement(required = true)
-		private List<ParamType> analyzer;
-		@XmlAttribute(name = "count", required = true)
-		private int count;
-
-		public List<ParamType> getAnalyzer() {
-
-			if(analyzer == null) {
-				analyzer = new ArrayList<ParamType>();
-			}
-			return this.analyzer;
-		}
-
-		public int getCount() {
-
-			return count;
-		}
-
-		public void setCount(int value) {
-
-			this.count = value;
-		}
 	}
 }
