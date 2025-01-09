@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2024 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -116,7 +116,7 @@ public class ChromatogramReaderVersion110 extends AbstractChromatogramReader imp
 				}
 			}
 		}
-		XmlMassSpectrumReader.addTotalSignals(intensities, retentionTimes, chromatogram);
+		XmlChromatogramReader.addTotalSignals(intensities, retentionTimes, chromatogram);
 	}
 
 	private void readSpectrum(MzMLType mzML, IVendorChromatogram chromatogram, IProgressMonitor monitor) {
