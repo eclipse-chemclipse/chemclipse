@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2024 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,7 +9,7 @@
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
-package org.eclipse.chemclipse.swt.ui.components;
+package org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -26,6 +26,11 @@ import org.eclipse.chemclipse.support.ui.events.IKeyEventProcessor;
 import org.eclipse.chemclipse.support.ui.menu.ITableMenuEntry;
 import org.eclipse.chemclipse.support.ui.swt.ExtendedTableViewer;
 import org.eclipse.chemclipse.support.ui.swt.ITableSettings;
+import org.eclipse.chemclipse.swt.ui.components.ISearchListener;
+import org.eclipse.chemclipse.swt.ui.components.SearchSupportUI;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.methods.IChangeListener;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ColumnMappingListUI;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.IExtendedPartUI;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
@@ -35,7 +40,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -47,7 +51,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 
-public class ColumnMappingListEditor extends Composite {
+public class ColumnMappingEditorUI extends Composite implements IChangeListener, IExtendedPartUI {
 
 	private static final String ADD_TOOLTIP = "Add a new column mapping";
 	private static final String REMOVE_TOOLTIP = "Remove the selected column mappings";
@@ -64,28 +68,41 @@ public class ColumnMappingListEditor extends Composite {
 	private static final String CATEGORY = "Column Mapping";
 	private static final String DELETE = "Delete";
 	//
-	private Listener listener;
 	private List<Button> buttons = new ArrayList<>();
-	private Button buttonAdd;
-	private Button buttonEdit;
-	private Button buttonRemove;
-	private Button buttonRemoveAll;
-	private Button buttonImport;
-	private Button buttonExport;
-	//
+	private AtomicReference<Button> buttonAdd = new AtomicReference<>();
+	private AtomicReference<Button> buttonRemove = new AtomicReference<>();
+	private AtomicReference<Button> buttonRemoveAll = new AtomicReference<>();
+	private AtomicReference<Button> buttonImport = new AtomicReference<>();
+	private AtomicReference<Button> buttonExport = new AtomicReference<>();
+	private AtomicReference<SearchSupportUI> toolbarSearch = new AtomicReference<>();
+	private AtomicReference<Button> buttonToolbarSearchControl = new AtomicReference<>();
 	private AtomicReference<ColumnMappingListUI> listControl = new AtomicReference<>();
+	//
 	private SeparationColumnMapping separationColumnMapping = new SeparationColumnMapping();
+	//
+	private Listener listener;
 
-	public ColumnMappingListEditor(Composite parent, int style) {
+	public ColumnMappingEditorUI(Composite parent, int style) {
 
 		super(parent, style);
 		createControl();
+	}
+
+	public void load(String entries) {
+
+		separationColumnMapping.load(entries);
+		updateInput();
 	}
 
 	public void setInput(SeparationColumnMapping separationColumnMapping) {
 
 		this.separationColumnMapping = separationColumnMapping;
 		updateInput();
+	}
+
+	public SeparationColumnMapping getSeparationColumnMapping() {
+
+		return separationColumnMapping;
 	}
 
 	@Override
@@ -97,6 +114,7 @@ public class ColumnMappingListEditor extends Composite {
 		listControl.get().getControl().setEnabled(enabled);
 	}
 
+	@Override
 	public void addChangeListener(Listener listener) {
 
 		this.listener = listener;
@@ -107,27 +125,31 @@ public class ColumnMappingListEditor extends Composite {
 		table.addListener(SWT.MouseUp, listener);
 		table.addListener(SWT.MouseDoubleClick, listener);
 		//
-		buttonAdd.addListener(SWT.KeyUp, listener);
-		buttonEdit.addListener(SWT.KeyUp, listener);
-		buttonRemove.addListener(SWT.KeyUp, listener);
-		buttonRemoveAll.addListener(SWT.KeyUp, listener);
-		buttonImport.addListener(SWT.KeyUp, listener);
-		buttonExport.addListener(SWT.KeyUp, listener);
+		buttonAdd.get().addListener(SWT.KeyUp, listener);
+		buttonRemove.get().addListener(SWT.KeyUp, listener);
+		buttonRemoveAll.get().addListener(SWT.KeyUp, listener);
+		buttonImport.get().addListener(SWT.KeyUp, listener);
+		buttonExport.get().addListener(SWT.KeyUp, listener);
 	}
 
 	private void createControl() {
 
-		setLayout(new FillLayout());
-		//
-		Composite composite = new Composite(this, SWT.NONE);
 		GridLayout gridLayout = new GridLayout(1, false);
 		gridLayout.marginWidth = 0;
 		gridLayout.marginHeight = 0;
-		composite.setLayout(gridLayout);
+		setLayout(gridLayout);
 		//
-		createToolbarMain(composite);
-		createSearchSection(composite);
-		createTableSection(composite);
+		createToolbarMain(this);
+		createSearchSection(this);
+		createTableSection(this);
+		//
+		initialize();
+	}
+
+	private void initialize() {
+
+		enableToolbar(toolbarSearch, buttonToolbarSearchControl.get(), IMAGE_SEARCH, TOOLTIP_SEARCH, false);
+		updateInput();
 	}
 
 	private void createToolbarMain(Composite parent) {
@@ -136,18 +158,26 @@ public class ColumnMappingListEditor extends Composite {
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.horizontalAlignment = SWT.END;
 		composite.setLayoutData(gridData);
-		composite.setLayout(new GridLayout(5, false));
+		composite.setLayout(new GridLayout(6, false));
 		//
-		add(buttonAdd = createButtonAdd(composite));
-		add(buttonRemove = createButtonRemove(composite));
-		add(buttonRemoveAll = createButtonRemoveAll(composite));
-		add(buttonImport = createButtonImport(composite));
-		add(buttonExport = createButtonExport(composite));
+		createButtonToggleSearch(composite);
+		createButtonAdd(composite);
+		createButtonRemove(composite);
+		createButtonRemoveAll(composite);
+		createButtonImport(composite);
+		createButtonExport(composite);
 	}
 
 	private void add(Button button) {
 
 		buttons.add(button);
+	}
+
+	private void createButtonToggleSearch(Composite parent) {
+
+		Button button = createButtonToggleToolbar(parent, toolbarSearch, IMAGE_SEARCH, TOOLTIP_SEARCH);
+		buttons.add(button);
+		buttonToolbarSearchControl.set(button);
 	}
 
 	private void createSearchSection(Composite parent) {
@@ -162,6 +192,8 @@ public class ColumnMappingListEditor extends Composite {
 				listControl.get().setSearchText(searchText, caseSensitive);
 			}
 		});
+		//
+		toolbarSearch.set(searchSupportUI);
 	}
 
 	private void createTableSection(Composite parent) {
@@ -169,8 +201,7 @@ public class ColumnMappingListEditor extends Composite {
 		ColumnMappingListUI columnMappingListUI = new ColumnMappingListUI(parent, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
 		Table table = columnMappingListUI.getTable();
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
-		gridData.widthHint = 450;
-		gridData.heightHint = 150;
+		gridData.widthHint = 350;
 		table.setLayoutData(gridData);
 		//
 		Shell shell = table.getShell();
@@ -182,7 +213,7 @@ public class ColumnMappingListEditor extends Composite {
 		listControl.set(columnMappingListUI);
 	}
 
-	private Button createButtonAdd(Composite parent) {
+	private void createButtonAdd(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setText("");
@@ -225,10 +256,11 @@ public class ColumnMappingListEditor extends Composite {
 			}
 		});
 		//
-		return button;
+		add(button);
+		buttonAdd.set(button);
 	}
 
-	private Button createButtonRemove(Composite parent) {
+	private void createButtonRemove(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setText("");
@@ -243,10 +275,11 @@ public class ColumnMappingListEditor extends Composite {
 			}
 		});
 		//
-		return button;
+		add(button);
+		buttonRemove.set(button);
 	}
 
-	private Button createButtonRemoveAll(Composite parent) {
+	private void createButtonRemoveAll(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setText("");
@@ -264,10 +297,11 @@ public class ColumnMappingListEditor extends Composite {
 			}
 		});
 		//
-		return button;
+		add(button);
+		buttonRemoveAll.set(button);
 	}
 
-	private Button createButtonImport(Composite parent) {
+	private void createButtonImport(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setText("");
@@ -293,10 +327,11 @@ public class ColumnMappingListEditor extends Composite {
 			}
 		});
 		//
-		return button;
+		add(button);
+		buttonImport.set(button);
 	}
 
-	private Button createButtonExport(Composite parent) {
+	private void createButtonExport(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setText("");
@@ -327,7 +362,8 @@ public class ColumnMappingListEditor extends Composite {
 			}
 		});
 		//
-		return button;
+		add(button);
+		buttonExport.set(button);
 	}
 
 	private void addDeleteMenuEntry(Shell shell, ITableSettings tableSettings) {
@@ -384,7 +420,6 @@ public class ColumnMappingListEditor extends Composite {
 	private void updateInput() {
 
 		listControl.get().setInput(separationColumnMapping);
-		//
 		if(listener != null) {
 			listener.handleEvent(new Event());
 		}

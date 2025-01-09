@@ -18,6 +18,13 @@
             classifierSettings="org.eclipse.chemclipse.chromatogram.xxd.calculator.settings.NoiseSegmentSetterSettings"
             description="Add the chromatogram selection as a noise segment."
             id="org.eclipse.chemclipse.chromatogram.xxd.calculator.noise.noiseSegmentSetter">
-      </ChromatogramClassifierSupplier>      
+      </ChromatogramClassifierSupplier>
+      <ChromatogramClassifierSupplier
+            classifier="org.eclipse.chemclipse.chromatogram.xxd.calculator.core.column.ChromatogramColumnParser"
+            classifierName="Column Parser (Chromatogram)"
+            classifierSettings="org.eclipse.chemclipse.chromatogram.xxd.calculator.settings.ChromatogramColumnParserSettings"
+            description="Extracts the column from a given header field of the chromatogram."
+            id="org.eclipse.chemclipse.chromatogram.xxd.calculator.column.chromatogramColumnParser">
+      </ChromatogramClassifierSupplier>            
    </extension>
 </plugin>

@@ -28,8 +28,16 @@ public class ChromatogramColumnSupport {
 		if(PreferenceSupplier.isParseSeparationColumnFromHeader()) {
 			ColumnField columnField = PreferenceSupplier.getSeparationColumnField();
 			SeparationColumnMapping separationColumnMapping = getSeparationColumnMapping();
-			if(!separationColumnMapping.isEmpty()) {
-				mapSeparationColumn(chromatogram, columnField, separationColumnMapping);
+			boolean parseReferences = PreferenceSupplier.isParseSeparationColumnReferencedChromatograms();
+			parseSeparationColumn(chromatogram, columnField, separationColumnMapping, parseReferences);
+		}
+	}
+
+	public static void parseSeparationColumn(IChromatogram<?> chromatogram, ColumnField columnField, SeparationColumnMapping separationColumnMapping, boolean parseReferences) {
+
+		if(!separationColumnMapping.isEmpty()) {
+			mapSeparationColumn(chromatogram, columnField, separationColumnMapping);
+			if(parseReferences) {
 				for(IChromatogram<?> chromatogramReference : chromatogram.getReferencedChromatograms()) {
 					mapSeparationColumn(chromatogramReference, columnField, separationColumnMapping);
 				}

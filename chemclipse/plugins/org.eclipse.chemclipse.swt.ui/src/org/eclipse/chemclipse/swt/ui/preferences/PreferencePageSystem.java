@@ -11,14 +11,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.swt.ui.preferences;
 
-import org.eclipse.chemclipse.model.core.support.ColumnField;
 import org.eclipse.chemclipse.model.math.IonRoundMethod;
 import org.eclipse.chemclipse.model.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.model.targets.LibraryField;
-import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.LabelFieldEditor;
 import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.SpacerFieldEditor;
 import org.eclipse.chemclipse.swt.ui.Activator;
-import org.eclipse.chemclipse.swt.ui.fieldeditors.ColumnMappingFieldEditor;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
@@ -62,12 +59,6 @@ public class PreferencePageSystem extends FieldEditorPreferencePage implements I
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_USE_RETENTION_INDEX_QC, "QC: Use Retention Index", getFieldEditorParent()));
 		addField(new ComboFieldEditor(PreferenceSupplier.P_BEST_TARGET_LIBRARY_FIELD, "Best Target", LibraryField.getOptions(), getFieldEditorParent()));
 		addField(new ComboFieldEditor(PreferenceSupplier.P_ION_ROUND_METHOD, "Ion Round Method", IonRoundMethod.getOptions(), getFieldEditorParent()));
-		//
-		addField(new SpacerFieldEditor(getFieldEditorParent()));
-		addField(new LabelFieldEditor("Assignment Separation Columns (Chromatogram Import)", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_PARSE_SEPARATION_COLUMN_FROM_HEADER, "Parse Separation Column", getFieldEditorParent()));
-		addField(new ComboFieldEditor(PreferenceSupplier.P_SEPARATION_COLUMN_HEADER_FIELD, "Column Field", ColumnField.getOptions(), getFieldEditorParent()));
-		addField(new ColumnMappingFieldEditor(PreferenceSupplier.P_SEPARATION_COLUMN_MAPPINGS, "Mappings", getFieldEditorParent()));
 		/*
 		 * Clear the Ion Round Method Cache on change.
 		 */

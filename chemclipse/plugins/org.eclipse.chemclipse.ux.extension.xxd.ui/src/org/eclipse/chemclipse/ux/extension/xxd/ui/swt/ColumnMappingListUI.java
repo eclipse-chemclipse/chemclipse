@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2023 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,18 +7,18 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
  *******************************************************************************/
-package org.eclipse.chemclipse.swt.ui.components;
+package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
 
 import java.util.List;
 
 import org.eclipse.chemclipse.support.ui.provider.ListContentProvider;
 import org.eclipse.chemclipse.support.ui.swt.ExtendedTableViewer;
-import org.eclipse.chemclipse.swt.ui.internal.provider.ColumMappingComparator;
-import org.eclipse.chemclipse.swt.ui.internal.provider.ColumMappingEditingSupport;
-import org.eclipse.chemclipse.swt.ui.internal.provider.ColumMappingFilter;
-import org.eclipse.chemclipse.swt.ui.internal.provider.ColumMappingLabelProvider;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.ColumMappingComparator;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.ColumMappingEditingSupport;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.ColumMappingFilter;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.ColumMappingLabelProvider;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.widgets.Composite;

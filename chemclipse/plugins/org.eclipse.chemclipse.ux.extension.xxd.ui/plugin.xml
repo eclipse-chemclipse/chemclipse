@@ -244,7 +244,13 @@
             class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageProcessorToolbarVSD"
             id="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageProcessorToolbarVSD"
             name="Processor Quick-Access (VSD)">
-      </page>                                                                                                               
+      </page>
+      <page
+            category="org.eclipse.chemclipse.rcp.app.ui.preferences.settingsPreferencePage"
+            class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageColumns"
+            id="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageColumns"
+            name="Columns">
+      </page>                                                                                                                     
    </extension> 
    <extension
          point="org.eclipse.core.runtime.adapters">

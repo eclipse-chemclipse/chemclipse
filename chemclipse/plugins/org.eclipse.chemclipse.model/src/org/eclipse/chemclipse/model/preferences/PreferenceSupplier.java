@@ -50,6 +50,8 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static final boolean DEF_PARSE_SEPARATION_COLUMN_FROM_HEADER = true;
 	public static final String P_SEPARATION_COLUMN_HEADER_FIELD = "separationColumnHeaderField";
 	public static final String DEF_SEPARATION_COLUMN_HEADER_FIELD = ColumnField.COLUMN_DETAILS.name();
+	public static final String P_PARSE_SEPARATION_COLUMN_REFERENCED_CHROMATOGRAMS = "parseSeparationColumnReferencedChromatograms";
+	public static final boolean DEF_PARSE_SEPARATION_COLUMN_REFERENCED_CHROMATOGRAMS = true;
 	public static final String P_SEPARATION_COLUMN_MAPPINGS = "separationColumnMappings";
 	public static final String DEF_SEPARATION_COLUMN_MAPPINGS = "";
 	/*
@@ -90,8 +92,9 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 		putDefault(P_USE_RETENTION_INDEX_QC, Boolean.toString(DEF_USE_RETENTION_INDEX_QC));
 		putDefault(P_BEST_TARGET_LIBRARY_FIELD, DEF_BEST_TARGET_LIBRARY_FIELD);
 		putDefault(P_ION_ROUND_METHOD, DEF_ION_ROUND_METHOD);
-		putDefault(P_PARSE_SEPARATION_COLUMN_FROM_HEADER, Boolean.toString(DEF_PARSE_SEPARATION_COLUMN_FROM_HEADER));
+		putDefault(P_PARSE_SEPARATION_COLUMN_FROM_HEADER, DEF_PARSE_SEPARATION_COLUMN_FROM_HEADER);
 		putDefault(P_SEPARATION_COLUMN_HEADER_FIELD, DEF_SEPARATION_COLUMN_HEADER_FIELD);
+		putDefault(P_PARSE_SEPARATION_COLUMN_REFERENCED_CHROMATOGRAMS, DEF_PARSE_SEPARATION_COLUMN_REFERENCED_CHROMATOGRAMS);
 		putDefault(P_SEPARATION_COLUMN_MAPPINGS, DEF_SEPARATION_COLUMN_MAPPINGS);
 		putDefault(P_LIST_PATH_IMPORT, DEF_LIST_PATH_IMPORT);
 		putDefault(P_LIST_PATH_EXPORT, DEF_LIST_PATH_EXPORT);
@@ -235,6 +238,11 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static ColumnField getSeparationColumnField() {
 
 		return ColumnUtil.getColumnField(INSTANCE().get(P_SEPARATION_COLUMN_HEADER_FIELD, DEF_SEPARATION_COLUMN_HEADER_FIELD));
+	}
+
+	public static boolean isParseSeparationColumnReferencedChromatograms() {
+
+		return INSTANCE().getBoolean(P_PARSE_SEPARATION_COLUMN_REFERENCED_CHROMATOGRAMS, DEF_PARSE_SEPARATION_COLUMN_REFERENCED_CHROMATOGRAMS);
 	}
 
 	public static String getSeparationColumnMappings() {
