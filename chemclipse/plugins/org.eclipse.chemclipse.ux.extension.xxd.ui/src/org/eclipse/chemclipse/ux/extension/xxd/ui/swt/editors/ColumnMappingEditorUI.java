@@ -200,7 +200,7 @@ public class ColumnMappingEditorUI extends Composite implements IChangeListener,
 
 		ColumnMappingListUI columnMappingListUI = new ColumnMappingListUI(parent, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
 		Table table = columnMappingListUI.getTable();
-		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+		GridData gridData = new GridData(GridData.FILL_BOTH);
 		gridData.widthHint = 350;
 		table.setLayoutData(gridData);
 		//
