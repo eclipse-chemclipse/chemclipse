@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2024 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -117,7 +117,7 @@ public class ChromatogramWriterVersion110 extends AbstractChromatogramWriter imp
 			chromatogramList.getChromatogram().add(defaultPDA);
 			run.setChromatogramList(chromatogramList);
 			//
-			XMLGregorianCalendar date = XmlWriter110.createDate(chromatogram);
+			XMLGregorianCalendar date = XmlWriter110.createDate(chromatogram.getDate());
 			if(date != null) {
 				run.setStartTimeStamp(date);
 			}
@@ -254,7 +254,7 @@ public class ChromatogramWriterVersion110 extends AbstractChromatogramWriter imp
 
 		SourceFileListType sourceFileListType = new SourceFileListType();
 		sourceFileListType.setCount(BigInteger.valueOf(1));
-		SourceFileType sourceFile = XmlWriter110.createSourceFile(chromatogram);
+		SourceFileType sourceFile = XmlWriter110.createSourceFile(chromatogram.getFile());
 		if(chromatogram.getConverterId().equals("org.eclipse.chemclipse.xxd.converter.supplier.chemclipse")) {
 			CVParamType cvParamFileFormat = new CVParamType();
 			cvParamFileFormat.setCvRef(XmlWriter110.MS);
@@ -275,7 +275,7 @@ public class ChromatogramWriterVersion110 extends AbstractChromatogramWriter imp
 		ParamGroupType fileContent = new ParamGroupType();
 		fileContent.getCvParam().add(createAbsorptionType());
 		fileDescriptionType.setFileContent(fileContent);
-		ParamGroupType paramGroupType = XmlWriter110.getOperator(chromatogram);
+		ParamGroupType paramGroupType = XmlWriter110.createOperator(chromatogram.getOperator());
 		if(paramGroupType != null) {
 			fileDescriptionType.getContact().add(paramGroupType);
 		}

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2024 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -14,7 +14,6 @@ package org.eclipse.chemclipse.msd.converter.supplier.mzml.io;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.util.List;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -29,14 +28,12 @@ import org.eclipse.chemclipse.msd.converter.io.IChromatogramMSDWriter;
 import org.eclipse.chemclipse.msd.converter.supplier.mzml.Activator;
 import org.eclipse.chemclipse.msd.converter.supplier.mzml.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
-import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.XmlReader110;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.XmlWriter110;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.BinaryDataArrayListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.BinaryDataArrayType;
-import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.CVListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.CVParamType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ChromatogramListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ChromatogramType;
@@ -44,16 +41,13 @@ import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.DataProcess
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.DataProcessingType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.FileDescriptionType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.InstrumentConfigurationListType;
-import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.InstrumentConfigurationType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.MzMLType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ObjectFactory;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ParamGroupType;
-import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ProcessingMethodType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.RunType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ScanListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ScanType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SoftwareListType;
-import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SoftwareRefType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SoftwareType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SourceFileListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SourceFileType;
@@ -91,12 +85,12 @@ public class ChromatogramWriterVersion110 extends AbstractChromatogramWriter imp
 		mzML.setFileDescription(createFileDescription(chromatogram, sourceFileList));
 		SoftwareListType softwareList = XmlWriter110.createSoftwareList();
 		mzML.setSoftwareList(softwareList);
-		InstrumentConfigurationListType instrumentConfigurationList = createInstrumentConfigurationList(softwareList.getSoftware().get(0));
+		InstrumentConfigurationListType instrumentConfigurationList = XmlWriter110.createInstrumentConfigurationList(softwareList.getSoftware().get(0));
 		mzML.setInstrumentConfigurationList(instrumentConfigurationList);
 		DataProcessingListType dataProcessingList = createDataProcessingList(softwareList.getSoftware().get(0));
 		mzML.setDataProcessingList(dataProcessingList);
 		mzML.setRun(createRun(chromatogram, dataProcessingList, sourceFileList, instrumentConfigurationList));
-		mzML.setCvList(createCvList());
+		mzML.setCvList(XmlWriter110.createCvList());
 		return mzML;
 	}
 
@@ -114,7 +108,7 @@ public class ChromatogramWriterVersion110 extends AbstractChromatogramWriter imp
 		writeScans(chromatogram, totalSignals, retentionTimes, spectrumList);
 		run.setChromatogramList(createChromatogramListType(dataProcessingList, totalSignals, retentionTimes));
 		try {
-			XMLGregorianCalendar date = XmlWriter110.createDate(chromatogram);
+			XMLGregorianCalendar date = XmlWriter110.createDate(chromatogram.getDate());
 			if(date != null) {
 				run.setStartTimeStamp(date);
 			}
@@ -122,15 +116,6 @@ public class ChromatogramWriterVersion110 extends AbstractChromatogramWriter imp
 			logger.warn(e);
 		}
 		return run;
-	}
-
-	private CVListType createCvList() {
-
-		CVListType cvList = new CVListType();
-		cvList.setCount(BigInteger.valueOf(2));
-		cvList.getCv().add(XmlWriter110.MS);
-		cvList.getCv().add(XmlWriter110.UO);
-		return cvList;
 	}
 
 	private ChromatogramListType createChromatogramListType(DataProcessingListType dataProcessingList, float[] totalSignals, float[] retentionTimes) {
@@ -203,7 +188,8 @@ public class ChromatogramWriterVersion110 extends AbstractChromatogramWriter imp
 				spectrum.getCvParam().add(XmlWriter110.createBasePeakIntensity(scanMSD));
 				// full spectra
 				spectrum.setScanList(createScanList(scanMSD));
-				spectrum.setBinaryDataArrayList(createFullSpectrumBinaryDataArrayList(scanMSD));
+				boolean compression = PreferenceSupplier.getChromatogramSaveCompression();
+				spectrum.setBinaryDataArrayList(XmlWriter110.createFullSpectrumBinaryDataArrayList(scanMSD, compression));
 				if(scanMSD instanceof IRegularMassSpectrum massSpectrum) {
 					spectrum.getCvParam().add(XmlWriter110.createSpectrumDimension(massSpectrum));
 					spectrum.getCvParam().add(XmlWriter110.createSpectrumLevel(massSpectrum));
@@ -214,40 +200,6 @@ public class ChromatogramWriterVersion110 extends AbstractChromatogramWriter imp
 			}
 			i++;
 		}
-	}
-
-	private BinaryDataArrayListType createFullSpectrumBinaryDataArrayList(IScanMSD scanMSD) {
-
-		List<IIon> ionList = scanMSD.getIons();
-		double[] ions = new double[ionList.size()];
-		float[] abundances = new float[ionList.size()];
-		int i = 0;
-		for(IIon ion : ionList) {
-			ions[i] = ion.getIon();
-			abundances[i] = ion.getAbundance();
-			i++;
-		}
-		BinaryDataArrayListType binaryDataArrayList = new BinaryDataArrayListType();
-		binaryDataArrayList.setCount(BigInteger.valueOf(2));
-		binaryDataArrayList.getBinaryDataArray().add(createIonsBinaryDataArrayType(ions));
-		binaryDataArrayList.getBinaryDataArray().add(createAbundancesBinaryDataArrayType(abundances));
-		return binaryDataArrayList;
-	}
-
-	private BinaryDataArrayType createAbundancesBinaryDataArrayType(float[] abundances) {
-
-		boolean compression = PreferenceSupplier.getChromatogramSaveCompression();
-		BinaryDataArrayType abundancesBinaryDataArrayType = XmlWriter110.createBinaryData(abundances, compression);
-		abundancesBinaryDataArrayType.getCvParam().add(XmlWriter110.createIntensityArrayType());
-		return abundancesBinaryDataArrayType;
-	}
-
-	private BinaryDataArrayType createIonsBinaryDataArrayType(double[] ions) {
-
-		boolean compression = PreferenceSupplier.getChromatogramSaveCompression();
-		BinaryDataArrayType ionsBinaryDataArrayType = XmlWriter110.createBinaryData(ions, compression);
-		ionsBinaryDataArrayType.getCvParam().add(XmlWriter110.createIonType());
-		return ionsBinaryDataArrayType;
 	}
 
 	private ScanListType createScanList(IScanMSD scanMSD) {
@@ -270,7 +222,7 @@ public class ChromatogramWriterVersion110 extends AbstractChromatogramWriter imp
 
 		SourceFileListType sourceFileListType = new SourceFileListType();
 		sourceFileListType.setCount(BigInteger.valueOf(1));
-		SourceFileType sourceFile = XmlWriter110.createSourceFile(chromatogram);
+		SourceFileType sourceFile = XmlWriter110.createSourceFile(chromatogram.getFile());
 		//
 		if(chromatogram.getConverterId().equals("org.eclipse.chemclipse.xxd.converter.supplier.chemclipse")) {
 			CVParamType cvParamFileFormat = new CVParamType();
@@ -394,7 +346,7 @@ public class ChromatogramWriterVersion110 extends AbstractChromatogramWriter imp
 		FileDescriptionType fileDescriptionType = new FileDescriptionType();
 		fileDescriptionType.setSourceFileList(sourceFiles);
 		fileDescriptionType.setFileContent(createFileContent(chromatogram));
-		ParamGroupType paramGroupType = XmlWriter110.getOperator(chromatogram);
+		ParamGroupType paramGroupType = XmlWriter110.createOperator(chromatogram.getOperator());
 		if(paramGroupType != null) {
 			fileDescriptionType.getContact().add(paramGroupType);
 		}
@@ -412,19 +364,6 @@ public class ChromatogramWriterVersion110 extends AbstractChromatogramWriter imp
 		return fileContent;
 	}
 
-	private InstrumentConfigurationListType createInstrumentConfigurationList(SoftwareType software) {
-
-		InstrumentConfigurationListType instrumentConfigurationList = new InstrumentConfigurationListType();
-		instrumentConfigurationList.setCount(BigInteger.valueOf(1));
-		InstrumentConfigurationType instrumentConfiguration = new InstrumentConfigurationType();
-		instrumentConfiguration.setId("unknown");
-		SoftwareRefType softwareRef = new SoftwareRefType();
-		softwareRef.setRef(software);
-		instrumentConfiguration.setSoftwareRef(softwareRef);
-		instrumentConfigurationList.getInstrumentConfiguration().add(instrumentConfiguration);
-		return instrumentConfigurationList;
-	}
-
 	private DataProcessingListType createDataProcessingList(SoftwareType software) {
 
 		DataProcessingListType dataProcessingList = new DataProcessingListType();
@@ -437,26 +376,7 @@ public class ChromatogramWriterVersion110 extends AbstractChromatogramWriter imp
 
 		DataProcessingType dataProcessing = new DataProcessingType();
 		dataProcessing.setId(Activator.getContext().getBundle().getSymbolicName());
-		dataProcessing.getProcessingMethod().add(createProcessingMethod(software));
+		dataProcessing.getProcessingMethod().add(XmlWriter110.createExportProcessingMethod(software));
 		return dataProcessing;
-	}
-
-	private ProcessingMethodType createProcessingMethod(SoftwareType software) {
-
-		ProcessingMethodType processingMethod = new ProcessingMethodType();
-		processingMethod.setSoftwareRef(software);
-		processingMethod.setOrder(BigInteger.valueOf(1));
-		processingMethod.getCvParam().add(createExportParam());
-		return processingMethod;
-	}
-
-	private CVParamType createExportParam() {
-
-		CVParamType exportParam = new CVParamType();
-		exportParam.setCvRef(XmlWriter110.MS);
-		exportParam.setAccession("MS:1000544");
-		exportParam.setName("Conversion to mzML");
-		exportParam.setValue("");
-		return exportParam;
 	}
 }
