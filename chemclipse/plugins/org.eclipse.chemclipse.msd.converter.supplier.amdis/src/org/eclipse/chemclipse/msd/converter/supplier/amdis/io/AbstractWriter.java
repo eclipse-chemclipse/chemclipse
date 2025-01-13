@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2024 Lablicate GmbH.
+ * Copyright (c) 2012, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,6 +20,7 @@ import java.util.Set;
 
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.columns.ISeparationColumn;
+import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.exceptions.ReferenceMustNotBeNullException;
 import org.eclipse.chemclipse.model.identifier.ComparisonResult;
@@ -384,7 +385,7 @@ public abstract class AbstractWriter {
 
 		String field = RT;
 		if(massSpectrum instanceof IRegularMassSpectrum regularMassSpectrum) {
-			field += decimalFormat.format(regularMassSpectrum.getRetentionTime() / (1000.0d * 60.0d)); // RT in minutes
+			field += decimalFormat.format(regularMassSpectrum.getRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
 		} else {
 			field += decimalFormat.format(0.0d);
 		}
@@ -402,7 +403,7 @@ public abstract class AbstractWriter {
 
 		String field = RRT;
 		if(massSpectrum instanceof IRegularMassSpectrum regularMassSpectrum) {
-			field += decimalFormat.format(regularMassSpectrum.getRelativeRetentionTime() / (1000.0d * 60.0d)); // RRT in minutes
+			field += decimalFormat.format(regularMassSpectrum.getRelativeRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
 		} else {
 			field += decimalFormat.format(0.0d);
 		}
