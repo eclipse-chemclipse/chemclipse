@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2024 Lablicate GmbH.
+ * Copyright (c) 2014, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -37,8 +37,6 @@ import org.eclipse.chemclipse.csd.model.core.IChromatogramPeakCSD;
 import org.eclipse.chemclipse.csd.model.core.selection.IChromatogramSelectionCSD;
 import org.eclipse.chemclipse.csd.model.core.support.PeakBuilderCSD;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.core.PeakType;
 import org.eclipse.chemclipse.model.exceptions.PeakException;
@@ -60,17 +58,17 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.e4.core.services.translation.TranslationService;
 
-public class PeakDetectorCSD<P extends IPeak, C extends IChromatogram<P>, R> extends BasePeakDetector<P, C, R> implements IPeakDetectorCSD<P, C, R> {
+public class PeakDetectorCSD extends BasePeakDetector implements IPeakDetectorCSD {
 
 	private static final Logger logger = Logger.getLogger(PeakDetectorCSD.class);
 
 	@Override
-	public IProcessingInfo<R> detect(IChromatogramSelectionCSD chromatogramSelection, IPeakDetectorSettingsCSD detectorSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<?> detect(IChromatogramSelectionCSD chromatogramSelection, IPeakDetectorSettingsCSD detectorSettings, IProgressMonitor monitor) {
 
 		/*
 		 * Check whether the chromatogram selection is null or not.
 		 */
-		IProcessingInfo<R> processingInfo = validate(chromatogramSelection, detectorSettings, monitor);
+		IProcessingInfo<?> processingInfo = validate(chromatogramSelection, detectorSettings, monitor);
 		if(!processingInfo.hasErrorMessages()) {
 			if(detectorSettings instanceof PeakDetectorSettingsCSD peakDetectorSettings) {
 				SubMonitor subMonitor = SubMonitor.convert(monitor, 100);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2024 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -75,7 +75,7 @@ public class PeakDetectorMSD {
 	public static IProcessingInfo<?> detect(IChromatogramSelectionMSD chromatogramSelection, IPeakDetectorSettingsMSD peakDetectorSettings, String peakDetectorId, IProgressMonitor monitor) {
 
 		IProcessingInfo<?> processingInfo;
-		IPeakDetectorMSD<?, ?, ?> peakDetector = getPeakDetector(peakDetectorId);
+		IPeakDetectorMSD peakDetector = getPeakDetector(peakDetectorId);
 		if(peakDetector != null) {
 			processingInfo = peakDetector.detect(chromatogramSelection, peakDetectorSettings, monitor);
 			chromatogramSelection.getChromatogram().setDirty(true);
@@ -100,7 +100,7 @@ public class PeakDetectorMSD {
 		return detect(chromatogramSelection, getPeakDetector(peakDetectorId), monitor);
 	}
 
-	public static IProcessingInfo<?> detect(IChromatogramSelectionMSD chromatogramSelection, IPeakDetectorMSD<?, ?, ?> peakDetector, IProgressMonitor monitor) {
+	public static IProcessingInfo<?> detect(IChromatogramSelectionMSD chromatogramSelection, IPeakDetectorMSD peakDetector, IProgressMonitor monitor) {
 
 		IProcessingInfo<?> processingInfo;
 		if(peakDetector != null) {
@@ -143,14 +143,14 @@ public class PeakDetectorMSD {
 		return peakDetectorSupport;
 	}
 
-	private static IPeakDetectorMSD<?, ?, ?> getPeakDetector(final String peakDetectorId) {
+	private static IPeakDetectorMSD getPeakDetector(final String peakDetectorId) {
 
 		IConfigurationElement element;
 		element = getConfigurationElement(peakDetectorId);
-		IPeakDetectorMSD<?, ?, ?> instance = null;
+		IPeakDetectorMSD instance = null;
 		if(element != null) {
 			try {
-				instance = (IPeakDetectorMSD<?, ?, ?>)element.createExecutableExtension(PEAK_DETECTOR);
+				instance = (IPeakDetectorMSD)element.createExecutableExtension(PEAK_DETECTOR);
 			} catch(CoreException e) {
 				logger.error(e);
 			}
