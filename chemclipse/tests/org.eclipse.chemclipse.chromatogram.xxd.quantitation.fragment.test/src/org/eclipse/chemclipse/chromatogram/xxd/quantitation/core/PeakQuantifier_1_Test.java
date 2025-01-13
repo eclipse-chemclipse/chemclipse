@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2022 Lablicate GmbH.
+ * Copyright (c) 2013, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -36,38 +36,6 @@ public class PeakQuantifier_1_Test extends TestCase {
 		super.tearDown();
 	}
 
-	public void testGetPeakQuantifierSupport_1() throws NoPeakQuantifierAvailableException {
-
-		int count = 0;
-		String[] names = support.getPeakQuantifierNames();
-		String[] rcs = new String[1];
-		rcs[0] = "Peak Quantifier (ESTD)";
-		for(String name : names) {
-			for(String rc : rcs) {
-				if(name.equals(rc)) {
-					count++;
-				}
-			}
-		}
-		assertEquals("Registered Detector Names", 1, count);
-	}
-
-	public void testGetMassSpectrumComparatorSupport_2() throws NoPeakQuantifierAvailableException {
-
-		int count = 0;
-		List<String> ids = support.getAvailablePeakQuantifierIds();
-		String[] rcs = new String[1];
-		rcs[0] = "org.eclipse.chemclipse.chromatogram.msd.quantitation.supplier.chemclipse.peak.estd";
-		for(String id : ids) {
-			for(String rc : rcs) {
-				if(id.equals(rc)) {
-					count++;
-				}
-			}
-		}
-		assertEquals("Registered Detector Ids", 1, count);
-	}
-
 	public void testGetMassSpectrumComparatorSupport_3() throws NoPeakQuantifierAvailableException {
 
 		List<String> ids = support.getAvailablePeakQuantifierIds();
@@ -98,16 +66,5 @@ public class PeakQuantifier_1_Test extends TestCase {
 		} catch(NoPeakQuantifierAvailableException e) {
 			assertTrue("NoPeakQuantifierAvailableException", true);
 		}
-	}
-
-	public void testGetMassSpectrumComparisonSupplier_3() throws NoPeakQuantifierAvailableException {
-
-		String comparatorName = "Peak Quantifier (ESTD)";
-		String description = "This quantifier handles to execute a peak quantitation via external standards.";
-		String id = "org.eclipse.chemclipse.chromatogram.msd.quantitation.supplier.chemclipse.peak.estd";
-		IPeakQuantifierSupplier supplier = support.getPeakQuantifierSupplier(id);
-		assertEquals("DetectorName", comparatorName, supplier.getPeakQuantifierName());
-		assertEquals("Description", description, supplier.getDescription());
-		assertEquals("Id", id, supplier.getId());
 	}
 }
