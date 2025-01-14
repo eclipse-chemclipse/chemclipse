@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2021 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -7,7 +7,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
  * Christoph Läubrich - enhance method definition, add readonly support
  *******************************************************************************/
 package org.eclipse.chemclipse.processing.methods;
@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.chemclipse.processing.DataCategory;
+import org.eclipse.chemclipse.support.model.SeparationColumnType;
 
 public interface IProcessMethod extends ProcessEntryContainer {
 
@@ -40,6 +41,13 @@ public interface IProcessMethod extends ProcessEntryContainer {
 	 * @return the category
 	 */
 	String getCategory();
+
+	/**
+	 * Returns the map to track the column type for specific profiles.
+	 * 
+	 * @return {@link Map}
+	 */
+	Map<String, SeparationColumnType> getProfileColumnsMap();
 
 	/**
 	 * The operator is the person who has created / currently manages this method

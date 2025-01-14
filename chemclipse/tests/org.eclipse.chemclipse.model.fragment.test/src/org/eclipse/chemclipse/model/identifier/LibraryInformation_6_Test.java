@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022 Lablicate GmbH.
+ * Copyright (c) 2022, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -13,7 +13,7 @@ package org.eclipse.chemclipse.model.identifier;
 
 import org.eclipse.chemclipse.model.columns.ISeparationColumn;
 import org.eclipse.chemclipse.model.columns.SeparationColumn;
-import org.eclipse.chemclipse.model.columns.SeparationColumnType;
+import org.eclipse.chemclipse.support.model.SeparationColumnType;
 
 import junit.framework.TestCase;
 

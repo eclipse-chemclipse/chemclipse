@@ -13,6 +13,8 @@ package org.eclipse.chemclipse.model.columns;
 
 import java.util.Objects;
 
+import org.eclipse.chemclipse.support.model.SeparationColumnType;
+
 public abstract class AbstractSeparationColumn implements ISeparationColumn {
 
 	private static final long serialVersionUID = -49804898484216859L;

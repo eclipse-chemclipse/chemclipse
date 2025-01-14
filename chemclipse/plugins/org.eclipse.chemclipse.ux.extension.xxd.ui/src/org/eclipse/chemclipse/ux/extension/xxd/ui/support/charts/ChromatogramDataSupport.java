@@ -47,9 +47,14 @@ public class ChromatogramDataSupport {
 
 	public static String getChromatogramEditorLabel(IChromatogramSelection<?, ?> chromatogramSelection) {
 
+		return getChromatogramEditorLabel(chromatogramSelection, true);
+	}
+
+	public static String getChromatogramEditorLabel(IChromatogramSelection<?, ?> chromatogramSelection, boolean appendColumnType) {
+
 		String label = "";
 		if(chromatogramSelection != null) {
-			label = getChromatogramEditorLabel(chromatogramSelection.getChromatogram());
+			label = getChromatogramEditorLabel(chromatogramSelection.getChromatogram(), appendColumnType);
 		}
 		//
 		return label;
@@ -57,18 +62,44 @@ public class ChromatogramDataSupport {
 
 	public static String getChromatogramEditorLabel(IChromatogram<?> chromatogram) {
 
+		return getChromatogramEditorLabel(chromatogram, true);
+	}
+
+	public static String getChromatogramEditorLabel(IChromatogram<?> chromatogram, boolean appendColumnType) {
+
 		String label = "";
 		if(chromatogram != null) {
+			/*
+			 * Header Field
+			 */
 			HeaderField headerField = PreferenceSupplier.getChromatogramEditorLabel();
 			String description = HeaderUtil.getHeaderData(chromatogram, headerField, "");
+			/*
+			 * Construct
+			 */
 			StringBuilder builder = new StringBuilder();
 			builder.append(description.isEmpty() ? chromatogram.getName() : description);
 			builder.append(" ");
 			builder.append(getChromatogramType(chromatogram));
+			if(appendColumnType) {
+				builder.append(" - ");
+				builder.append(getChromatogramColumnType(chromatogram));
+			}
+			//
 			label = builder.toString();
 		}
 		//
 		return label;
+	}
+
+	public static String getChromatogramColumnType(IChromatogram<?> chromatogram) {
+
+		String columnType = "";
+		if(chromatogram != null) {
+			columnType = chromatogram.getSeparationColumnIndices().getSeparationColumn().getSeparationColumnType().label();
+		}
+		//
+		return columnType;
 	}
 
 	public static String getChromatogramType(IChromatogramSelection<?, ?> chromatogramSelection) {

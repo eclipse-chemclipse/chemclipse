@@ -13,10 +13,10 @@ package org.eclipse.chemclipse.msd.converter.io;
 
 import org.eclipse.chemclipse.converter.io.AbstractFileHelper;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.columns.SeparationColumnType;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.support.LibraryInformationSupport;
 import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
+import org.eclipse.chemclipse.support.model.SeparationColumnType;
 
 public abstract class AbstractMassSpectraReader extends AbstractFileHelper implements IMassSpectraReader {
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2024 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.chemclipse.processing.methods.IProcessEntry;
 import org.eclipse.chemclipse.processing.methods.ProcessEntryContainer;
@@ -23,6 +24,7 @@ import org.eclipse.chemclipse.processing.methods.ProcessMethod;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
+import org.eclipse.chemclipse.support.model.SeparationColumnType;
 import org.eclipse.chemclipse.support.ui.provider.AbstractLabelProvider;
 import org.eclipse.chemclipse.support.ui.swt.EnhancedComboViewer;
 import org.eclipse.chemclipse.support.updates.IUpdateListener;
@@ -31,6 +33,7 @@ import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -43,9 +46,10 @@ import org.eclipse.swt.widgets.MessageBox;
 
 public class ProcessMethodProfiles extends Composite {
 
-	private ComboViewer comboViewerProfiles;
-	private Button buttonAdd;
-	private Button buttonDelete;
+	private AtomicReference<ComboViewer> comboViewerProfiles = new AtomicReference<>();
+	private AtomicReference<ComboViewer> comboViewerColumns = new AtomicReference<>();
+	private AtomicReference<Button> buttonAdd = new AtomicReference<>();
+	private AtomicReference<Button> buttonDelete = new AtomicReference<>();
 	//
 	private ProcessMethod processMethod;
 	private boolean enabledEdit = true;
@@ -60,13 +64,13 @@ public class ProcessMethodProfiles extends Composite {
 	public void setInput(ProcessMethod processMethod) {
 
 		this.processMethod = processMethod;
-		updateProfiles();
+		updateProfilesColum();
 	}
 
 	public void setEnabledEdit(boolean enabledEdit) {
 
 		this.enabledEdit = enabledEdit;
-		updateProfiles();
+		updateProfilesColum();
 	}
 
 	public void setUpdateListener(IUpdateListener updateListener) {
@@ -76,20 +80,21 @@ public class ProcessMethodProfiles extends Composite {
 
 	private void createControl() {
 
-		GridLayout gridLayout = new GridLayout(3, false);
+		GridLayout gridLayout = new GridLayout(4, false);
 		gridLayout.marginWidth = 0;
 		gridLayout.marginLeft = 0;
 		gridLayout.marginRight = 0;
 		setLayout(gridLayout);
 		//
-		comboViewerProfiles = createComboViewerProfiles(this);
-		buttonAdd = createButtonAdd(this);
-		buttonDelete = createButtonDelete(this);
+		createComboViewerProfiles(this);
+		createComboViewerColumns(this);
+		createButtonAdd(this);
+		createButtonDelete(this);
 		//
-		updateProfiles();
+		updateProfilesColum();
 	}
 
-	private ComboViewer createComboViewerProfiles(Composite composite) {
+	private void createComboViewerProfiles(Composite composite) {
 
 		ComboViewer comboViewer = new EnhancedComboViewer(composite, SWT.READ_ONLY);
 		Combo combo = comboViewer.getCombo();
@@ -121,16 +126,57 @@ public class ProcessMethodProfiles extends Composite {
 					 */
 					String activeProfile = getActiveProfile();
 					processMethod.setActiveProfile(activeProfile);
-					updateProfiles();
+					updateProfilesColum();
 					fireUpdate();
 				}
 			}
 		});
 		//
-		return comboViewer;
+		comboViewerProfiles.set(comboViewer);
 	}
 
-	private Button createButtonAdd(Composite composite) {
+	private void createComboViewerColumns(Composite composite) {
+
+		ComboViewer comboViewer = new EnhancedComboViewer(composite, SWT.READ_ONLY);
+		Combo combo = comboViewer.getCombo();
+		comboViewer.setContentProvider(ArrayContentProvider.getInstance());
+		comboViewer.setLabelProvider(new AbstractLabelProvider() {
+
+			@Override
+			public String getText(Object element) {
+
+				if(element instanceof SeparationColumnType separationColumnType) {
+					return separationColumnType.label();
+				}
+				return null;
+			}
+		});
+		/*
+		 * Select the item.
+		 */
+		combo.setToolTipText("Select a column.");
+		combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		combo.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				if(processMethod != null) {
+					/*
+					 * Set the active profile.
+					 */
+					String activeProfile = getActiveProfile();
+					SeparationColumnType separationColumnType = getSeparationColumnType();
+					processMethod.getProfileColumnsMap().put(activeProfile, separationColumnType);
+					fireUpdate();
+				}
+			}
+		});
+		//
+		comboViewerColumns.set(comboViewer);
+	}
+
+	private void createButtonAdd(Composite composite) {
 
 		Button button = new Button(composite, SWT.PUSH);
 		button.setText("");
@@ -175,17 +221,17 @@ public class ProcessMethodProfiles extends Composite {
 						for(IProcessEntry processEntry : processMethod.getEntries()) {
 							processEntry.copySettings(previousProfile);
 						}
-						updateProfiles();
+						updateProfilesColum();
 						fireUpdate();
 					}
 				}
 			}
 		});
 		//
-		return button;
+		buttonAdd.set(button);
 	}
 
-	private Button createButtonDelete(Composite composite) {
+	private void createButtonDelete(Composite composite) {
 
 		Button button = new Button(composite, SWT.PUSH);
 		button.setText("");
@@ -205,8 +251,9 @@ public class ProcessMethodProfiles extends Composite {
 						messageBox.setMessage("Do you really want to delete the selected profile?");
 						int decision = messageBox.open();
 						if(SWT.YES == decision) {
+							processMethod.getProfileColumnsMap().remove(activeProfile);
 							processMethod.deleteProfile(activeProfile);
-							updateProfiles();
+							updateProfilesColum();
 							fireUpdate();
 						}
 					}
@@ -214,17 +261,44 @@ public class ProcessMethodProfiles extends Composite {
 			}
 		});
 		//
-		return button;
+		buttonDelete.set(button);
 	}
 
 	private String getActiveProfile() {
 
-		Object object = comboViewerProfiles.getStructuredSelection().getFirstElement();
+		Object object = comboViewerProfiles.get().getStructuredSelection().getFirstElement();
 		if(object instanceof String text) {
 			return text;
 		}
 		//
 		return ProcessEntryContainer.DEFAULT_PROFILE;
+	}
+
+	private SeparationColumnType getSeparationColumnType() {
+
+		Object object = comboViewerColumns.get().getStructuredSelection().getFirstElement();
+		if(object instanceof SeparationColumnType separationColumnType) {
+			return separationColumnType;
+		}
+		//
+		return SeparationColumnType.DEFAULT;
+	}
+
+	private SeparationColumnType getSeparationColumnTypeMethod() {
+
+		SeparationColumnType separationColumnType = SeparationColumnType.DEFAULT;
+		if(processMethod != null) {
+			String activeProfile = processMethod.getActiveProfile();
+			separationColumnType = processMethod.getProfileColumnsMap().getOrDefault(activeProfile, SeparationColumnType.DEFAULT);
+		}
+		//
+		return separationColumnType;
+	}
+
+	private void updateProfilesColum() {
+
+		updateProfiles();
+		updateColumns();
 	}
 
 	private void updateProfiles() {
@@ -245,7 +319,7 @@ public class ProcessMethodProfiles extends Composite {
 			List<String> profiles = new ArrayList<>(profileSet);
 			Collections.sort(profiles);
 			profiles.add(0, defaultProfile);
-			comboViewerProfiles.setInput(profiles.toArray());
+			comboViewerProfiles.get().setInput(profiles.toArray());
 			/*
 			 * Get the selected profile.
 			 */
@@ -262,17 +336,24 @@ public class ProcessMethodProfiles extends Composite {
 			/*
 			 * Set the selected profile.
 			 */
-			comboViewerProfiles.getCombo().select(index);
+			comboViewerProfiles.get().getCombo().select(index);
 		} else {
-			comboViewerProfiles.setInput(new String[]{ProcessEntryContainer.DEFAULT_PROFILE});
-			comboViewerProfiles.getCombo().select(0);
+			comboViewerProfiles.get().setInput(new String[]{ProcessEntryContainer.DEFAULT_PROFILE});
+			comboViewerProfiles.get().getCombo().select(0);
 		}
 		/*
 		 * Enable/Disable the buttons.
 		 */
 		boolean isEditable = enabledEdit && isMethodEditable(processMethod);
-		buttonAdd.setEnabled(isEditable);
-		buttonDelete.setEnabled(isEditable && !ProcessEntryContainer.DEFAULT_PROFILE.equals(getActiveProfile()));
+		buttonAdd.get().setEnabled(isEditable);
+		buttonDelete.get().setEnabled(isEditable && !ProcessEntryContainer.DEFAULT_PROFILE.equals(getActiveProfile()));
+	}
+
+	private void updateColumns() {
+
+		comboViewerColumns.get().setInput(SeparationColumnType.values());
+		SeparationColumnType separationColumnType = getSeparationColumnTypeMethod();
+		comboViewerColumns.get().setSelection(new StructuredSelection(separationColumnType));
 	}
 
 	private boolean isMethodEditable(ProcessMethod processMethod) {

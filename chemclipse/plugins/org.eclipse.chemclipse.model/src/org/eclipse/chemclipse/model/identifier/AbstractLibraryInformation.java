@@ -23,7 +23,7 @@ import java.util.Set;
 
 import org.eclipse.chemclipse.model.columns.ISeparationColumn;
 import org.eclipse.chemclipse.model.columns.SeparationColumnFactory;
-import org.eclipse.chemclipse.model.columns.SeparationColumnType;
+import org.eclipse.chemclipse.support.model.SeparationColumnType;
 
 public abstract class AbstractLibraryInformation implements ILibraryInformation {
 

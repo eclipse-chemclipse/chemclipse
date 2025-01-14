@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2021 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
  * Christoph Läubrich - add stream support
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.converter.supplier.ocx.methods;
@@ -25,6 +25,7 @@ import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.methods.IMetho
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.methods.MethodReaderWriter_1003;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.methods.MethodReaderWriter_1004;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.methods.MethodReaderWriter_1401;
+import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.methods.MethodReaderWriter_1402;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.methods.MethodReader_1000;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.methods.MethodReader_1001;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -33,6 +34,7 @@ import org.eclipse.core.runtime.SubMonitor;
 public class MethodImportConverter extends AbstractImportConverter implements IMethodImportConverter {
 
 	private static final IMethodReader[] READER = new IMethodReader[]{ //
+			new MethodReaderWriter_1402(), //
 			new MethodReaderWriter_1401(), //
 			new MethodReaderWriter_1004(), //
 			new MethodReaderWriter_1003(), //

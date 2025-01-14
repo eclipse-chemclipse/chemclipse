@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2024 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,7 +20,8 @@ public enum MethodVersion implements IFormatVersion, ILabel {
 	// V_0002(IFormat.METHOD_VERSION_0002, "Lawrence v2"), //
 	// V_0003(IFormat.METHOD_VERSION_0003, "Lawrence v3"), //
 	V_1400(Format.METHOD_VERSION_1400, "Lawrence v4"), //
-	V_1401(Format.METHOD_VERSION_1401, "Lawrence v5");
+	V_1401(Format.METHOD_VERSION_1401, "Lawrence v5"), //
+	V_1402(Format.METHOD_VERSION_1402, "Lawrence v6"); //
 
 	private String version = "";
 	private String release = "";

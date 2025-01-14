@@ -17,8 +17,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.chemclipse.model.columns.SeparationColumnType;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
+import org.eclipse.chemclipse.support.model.SeparationColumnType;
 import org.eclipse.core.runtime.Platform;
 
 public abstract class AbstractScan extends AbstractSignal implements IScan {

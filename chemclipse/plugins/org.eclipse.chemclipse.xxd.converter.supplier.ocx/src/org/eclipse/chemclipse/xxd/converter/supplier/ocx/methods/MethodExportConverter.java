@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
  * Alexander Kerner - Generics
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.converter.supplier.ocx.methods;
@@ -24,6 +24,7 @@ import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.methods.IMetho
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.methods.MethodReaderWriter_1003;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.methods.MethodReaderWriter_1004;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.methods.MethodReaderWriter_1401;
+import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.methods.MethodReaderWriter_1402;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.methods.MethodWriter_1000;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.methods.MethodWriter_1001;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.Format;
@@ -58,8 +59,10 @@ public class MethodExportConverter extends AbstractExportConverter implements IM
 				return new MethodReaderWriter_1003();
 			case Format.METHOD_VERSION_1400:
 				return new MethodReaderWriter_1004();
-			default:
+			case Format.METHOD_VERSION_1401:
 				return new MethodReaderWriter_1401();
+			default:
+				return new MethodReaderWriter_1402();
 		}
 	}
 }

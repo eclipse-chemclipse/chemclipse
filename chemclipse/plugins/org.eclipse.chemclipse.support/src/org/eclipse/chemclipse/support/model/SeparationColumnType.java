@@ -10,7 +10,7 @@
  * Dr. Philip Wenig - initial API and implementation
  * Matthias Mailänder - added labels
  *******************************************************************************/
-package org.eclipse.chemclipse.model.columns;
+package org.eclipse.chemclipse.support.model;
 
 import org.eclipse.chemclipse.support.text.ILabel;
 

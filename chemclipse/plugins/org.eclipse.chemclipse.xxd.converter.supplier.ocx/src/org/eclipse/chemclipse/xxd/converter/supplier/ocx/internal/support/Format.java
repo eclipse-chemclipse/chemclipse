@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2024 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -67,7 +67,8 @@ public class Format {
 	public static final String METHOD_VERSION_0003 = "0.0.0.3";
 	public static final String METHOD_VERSION_1400 = "1.4.0.0";
 	public static final String METHOD_VERSION_1401 = "1.4.0.1";
-	public static final String METHOD_VERSION_LATEST = METHOD_VERSION_1401;
+	public static final String METHOD_VERSION_1402 = "1.4.0.2";
+	public static final String METHOD_VERSION_LATEST = METHOD_VERSION_1402;
 	/*
 	 * Quantitation DB (*.ocq)
 	 */

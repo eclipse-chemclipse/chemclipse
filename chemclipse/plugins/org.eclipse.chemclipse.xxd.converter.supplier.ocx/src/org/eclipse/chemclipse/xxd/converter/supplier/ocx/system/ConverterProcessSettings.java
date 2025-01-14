@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023, 2024 Lablicate GmbH.
+ * Copyright (c) 2023, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -37,9 +37,9 @@ public class ConverterProcessSettings implements ISystemProcessSettings {
 	@JsonPropertyDescription(value = "Use the data from the given header field to mark the exported references.")
 	private HeaderField headerFieldReferencesExport = HeaderField.DATA_NAME;
 	//
-	@JsonProperty(value = "Version Method (*.ocm)", defaultValue = "V_1401")
+	@JsonProperty(value = "Version Method (*.ocm)", defaultValue = "V_1402")
 	@JsonPropertyDescription(value = "Defines the version to store the method data.")
-	private MethodVersion methodVersion = MethodVersion.V_1401;
+	private MethodVersion methodVersion = MethodVersion.V_1402;
 	@JsonProperty(value = "Compression Level Method (*.ocm)", defaultValue = "0")
 	@JsonPropertyDescription(value = "Compression level for the method, 0 = off, 9 = best.")
 	@IntSettingsProperty(minValue = PreferenceSupplier.MIN_COMPRESSION_LEVEL, maxValue = PreferenceSupplier.MAX_COMPRESSION_LEVEL)

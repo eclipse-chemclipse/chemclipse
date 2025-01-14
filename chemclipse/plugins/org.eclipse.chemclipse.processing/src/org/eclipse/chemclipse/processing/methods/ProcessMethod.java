@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -14,6 +14,7 @@ package org.eclipse.chemclipse.processing.methods;
 
 import java.io.File;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -23,6 +24,7 @@ import java.util.Set;
 
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.processing.DataCategory;
+import org.eclipse.chemclipse.support.model.SeparationColumnType;
 
 public class ProcessMethod extends ListProcessEntryContainer implements IProcessMethod {
 
@@ -37,6 +39,7 @@ public class ProcessMethod extends ListProcessEntryContainer implements IProcess
 	private String uuid = "";
 	private String operator = "";
 	private String category = "";
+	private Map<String, SeparationColumnType> profileColumnsMap = new HashMap<>();
 	/*
 	 * Transient
 	 */
@@ -78,6 +81,7 @@ public class ProcessMethod extends ListProcessEntryContainer implements IProcess
 			}
 			metadata.putAll(other.getMetaData());
 			catgories = Collections.unmodifiableSet(new HashSet<>(other.getDataCategories()));
+			profileColumnsMap.putAll(other.getProfileColumnsMap());
 			/*
 			 * read-only must be set at the end!
 			 */
@@ -138,6 +142,12 @@ public class ProcessMethod extends ListProcessEntryContainer implements IProcess
 	public void setCategory(String category) throws IllegalStateException {
 
 		this.category = category;
+	}
+
+	@Override
+	public Map<String, SeparationColumnType> getProfileColumnsMap() {
+
+		return profileColumnsMap;
 	}
 
 	public void setSourceFile(File sourceFile) {
