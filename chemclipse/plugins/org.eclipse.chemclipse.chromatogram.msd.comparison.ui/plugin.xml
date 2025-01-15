@@ -2,15 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            category="org.eclipse.chemclipse.rcp.app.ui.preferences.preferencePage"
-            class="org.eclipse.chemclipse.chromatogram.msd.comparison.ui.preferences.PreferencePage"
-            id="org.eclipse.chemclipse.chromatogram.msd.comparison.ui.preferences.preferencePage"
-            name="MS Comparison">
-      </page>
-   </extension>
-   <extension
          point="org.eclipse.core.runtime.adapters">
       <factory
             adaptableType="org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.IMassSpectrumComparisonSupplier"
