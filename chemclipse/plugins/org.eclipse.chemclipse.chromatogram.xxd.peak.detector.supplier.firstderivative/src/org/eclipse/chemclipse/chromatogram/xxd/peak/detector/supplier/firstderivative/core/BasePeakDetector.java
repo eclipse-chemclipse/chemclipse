@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2024 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -28,7 +28,7 @@ import org.eclipse.chemclipse.numeric.miscellaneous.Evaluation;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 
-public class BasePeakDetector<P extends IPeak, C extends IChromatogram<P>, R> extends AbstractPeakDetector<P, C, R> {
+public class BasePeakDetector extends AbstractPeakDetector {
 
 	protected static final float NORMALIZATION_BASE = 100000.0f;
 	protected static final int CONSECUTIVE_SCAN_STEPS = 3;

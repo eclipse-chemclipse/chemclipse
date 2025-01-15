@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2024 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  *
  * Contributors:
  * Philip Wenig - initial API and implementation
- * Alexander Kerner - Generics, Logging
+ * Alexander Kerner - Logging
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.impl;
 
@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IPeakIdentifierSettingsMSD;
+import org.eclipse.chemclipse.chromatogram.msd.peak.detector.core.IPeakDetectorMSD;
 import org.eclipse.chemclipse.chromatogram.msd.peak.detector.supplier.firstderivative.core.PeakDetectorMSD;
 import org.eclipse.chemclipse.chromatogram.msd.peak.detector.supplier.firstderivative.settings.PeakDetectorSettingsMSD;
 import org.eclipse.chemclipse.chromatogram.peak.detector.model.Threshold;
@@ -66,7 +67,7 @@ public class AlkanePatternDetectorMSD {
 				 * Peak detector.
 				 */
 				chromatogramMSD.removeAllPeaks();
-				PeakDetectorMSD<?, ?, ?> peakDetectorMSD = new PeakDetectorMSD<>();
+				IPeakDetectorMSD peakDetectorMSD = new PeakDetectorMSD();
 				PeakDetectorSettingsMSD peakDetectorSettings = new PeakDetectorSettingsMSD();
 				peakDetectorSettings.setThreshold(Threshold.LOW);
 				peakDetectorSettings.setDetectorType(DetectorType.BB);

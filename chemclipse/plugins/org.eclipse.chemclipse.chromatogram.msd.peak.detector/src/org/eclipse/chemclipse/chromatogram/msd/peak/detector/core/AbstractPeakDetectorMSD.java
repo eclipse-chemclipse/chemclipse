@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2021 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -12,11 +12,9 @@
 package org.eclipse.chemclipse.chromatogram.msd.peak.detector.core;
 
 import org.eclipse.chemclipse.chromatogram.peak.detector.core.AbstractPeakDetector;
-import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IPeak;
 
 /**
  * Extend this class to implement a valid peak detector.r
  */
-public abstract class AbstractPeakDetectorMSD<P extends IPeak, C extends IChromatogram<P>, R> extends AbstractPeakDetector<P, C, R> implements IPeakDetectorMSD<P, C, R> {
+public abstract class AbstractPeakDetectorMSD extends AbstractPeakDetector implements IPeakDetectorMSD {
 }

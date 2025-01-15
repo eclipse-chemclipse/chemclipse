@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2024 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -14,6 +14,7 @@ package org.eclipse.chemclipse.chromatogram.msd.peak.detector.supplier.firstderi
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.eclipse.chemclipse.chromatogram.msd.peak.detector.core.IPeakDetectorMSD;
 import org.eclipse.chemclipse.chromatogram.peak.detector.support.IRawPeak;
 import org.eclipse.chemclipse.chromatogram.peak.detector.support.RawPeak;
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.core.BasePeakDetector;
@@ -26,7 +27,7 @@ import junit.framework.TestCase;
  */
 public class FirstDerivativePeakDetector_3_Test extends TestCase {
 
-	private PeakDetectorMSD<?, ?, ?> firstDerivativePeakDetector;
+	private IPeakDetectorMSD firstDerivativePeakDetector;
 	private Class<?> firstDerivativePeakDetectorClass;
 	private Method method;
 	private IRawPeak rawPeak;
@@ -35,7 +36,7 @@ public class FirstDerivativePeakDetector_3_Test extends TestCase {
 	protected void setUp() throws Exception {
 
 		super.setUp();
-		firstDerivativePeakDetector = new PeakDetectorMSD<>();
+		firstDerivativePeakDetector = new PeakDetectorMSD();
 		firstDerivativePeakDetectorClass = BasePeakDetector.class;
 	}
 

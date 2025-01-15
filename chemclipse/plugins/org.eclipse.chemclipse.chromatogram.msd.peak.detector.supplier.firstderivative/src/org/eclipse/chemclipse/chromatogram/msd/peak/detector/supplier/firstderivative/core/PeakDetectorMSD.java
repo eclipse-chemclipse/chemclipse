@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2024 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -38,8 +38,6 @@ import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderiv
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.support.IFirstDerivativeDetectorSlope;
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.support.IFirstDerivativeDetectorSlopes;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.model.core.PeakType;
@@ -70,14 +68,14 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.e4.core.services.translation.TranslationService;
 
-public class PeakDetectorMSD<P extends IPeak, C extends IChromatogram<P>, R> extends BasePeakDetector<P, C, R> implements IPeakDetectorMSD<P, C, R> {
+public class PeakDetectorMSD extends BasePeakDetector implements IPeakDetectorMSD {
 
 	private static final Logger logger = Logger.getLogger(PeakDetectorMSD.class);
 
 	@Override
-	public IProcessingInfo<R> detect(IChromatogramSelectionMSD chromatogramSelection, IPeakDetectorSettingsMSD detectorSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<?> detect(IChromatogramSelectionMSD chromatogramSelection, IPeakDetectorSettingsMSD detectorSettings, IProgressMonitor monitor) {
 
-		IProcessingInfo<R> processingInfo = validate(chromatogramSelection, detectorSettings, monitor);
+		IProcessingInfo<?> processingInfo = validate(chromatogramSelection, detectorSettings, monitor);
 		if(!processingInfo.hasErrorMessages()) {
 			if(detectorSettings instanceof PeakDetectorSettingsMSD peakDetectorSettings) {
 				SubMonitor subMonitor = SubMonitor.convert(monitor, 100);
@@ -115,7 +113,7 @@ public class PeakDetectorMSD<P extends IPeak, C extends IChromatogram<P>, R> ext
 	}
 
 	@Override
-	public IProcessingInfo<R> detect(IChromatogramSelectionMSD chromatogramSelection, IProgressMonitor monitor) {
+	public IProcessingInfo<?> detect(IChromatogramSelectionMSD chromatogramSelection, IProgressMonitor monitor) {
 
 		if(peakDetectorSettings == null) {
 			peakDetectorSettings = PreferenceSupplier.getPeakDetectorSettingsMSD();

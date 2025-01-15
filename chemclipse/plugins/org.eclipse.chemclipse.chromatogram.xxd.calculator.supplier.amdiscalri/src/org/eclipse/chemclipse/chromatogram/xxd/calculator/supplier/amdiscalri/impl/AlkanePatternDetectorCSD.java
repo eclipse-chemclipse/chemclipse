@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2024 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  *
  * Contributors:
  * Philip Wenig - initial API and implementation
- * Alexander Kerner - Generics, Loggging
+ * Alexander Kerner - Loggging
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.impl;
 
@@ -16,6 +16,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.chemclipse.chromatogram.csd.peak.detector.core.IPeakDetectorCSD;
 import org.eclipse.chemclipse.chromatogram.csd.peak.detector.supplier.firstderivative.core.PeakDetectorCSD;
 import org.eclipse.chemclipse.chromatogram.csd.peak.detector.supplier.firstderivative.settings.PeakDetectorSettingsCSD;
 import org.eclipse.chemclipse.chromatogram.peak.detector.model.Threshold;
@@ -56,7 +57,7 @@ public class AlkanePatternDetectorCSD {
 				/*
 				 * Peak detector.
 				 */
-				PeakDetectorCSD<?, ?, ?> peakDetectorCSD = new PeakDetectorCSD<>();
+				IPeakDetectorCSD peakDetectorCSD = new PeakDetectorCSD();
 				PeakDetectorSettingsCSD peakDetectorSettings = new PeakDetectorSettingsCSD();
 				peakDetectorSettings.setThreshold(Threshold.LOW);
 				peakDetectorSettings.setDetectorType(DetectorType.BB);

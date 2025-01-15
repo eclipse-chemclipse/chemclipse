@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2021 Lablicate GmbH.
+ * Copyright (c) 2014, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,12 +15,10 @@ import org.eclipse.chemclipse.chromatogram.csd.peak.detector.settings.IPeakDetec
 import org.eclipse.chemclipse.chromatogram.peak.detector.core.IPeakDetector;
 import org.eclipse.chemclipse.chromatogram.peak.detector.exceptions.ValueMustNotBeNullException;
 import org.eclipse.chemclipse.csd.model.core.selection.IChromatogramSelectionCSD;
-import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-public interface IPeakDetectorCSD<P extends IPeak, C extends IChromatogram<P>, R> extends IPeakDetector<P, C, R> {
+public interface IPeakDetectorCSD extends IPeakDetector {
 
 	/**
 	 * All peak detector plugins must implement this class.

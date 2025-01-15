@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -36,8 +36,6 @@ import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderiv
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.support.IFirstDerivativeDetectorSlope;
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.support.IFirstDerivativeDetectorSlopes;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.model.exceptions.PeakException;
@@ -67,19 +65,19 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.e4.core.services.translation.TranslationService;
 
-public class PeakDetectorWSD<P extends IPeak, C extends IChromatogram<P>, R> extends BasePeakDetector<P, C, R> implements IPeakDetectorWSD<P, C, R> {
+public class PeakDetectorWSD extends BasePeakDetector implements IPeakDetectorWSD {
 
 	private static final Logger logger = Logger.getLogger(PeakDetectorWSD.class);
 	//
 	private static final float NORMALIZATION_BASE = 100000.0f;
 
 	@Override
-	public IProcessingInfo<R> detect(IChromatogramSelectionWSD chromatogramSelection, IPeakDetectorSettingsWSD detectorSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<?> detect(IChromatogramSelectionWSD chromatogramSelection, IPeakDetectorSettingsWSD detectorSettings, IProgressMonitor monitor) {
 
 		/*
 		 * Check whether the chromatogram selection is null or not.
 		 */
-		IProcessingInfo<R> processingInfo = validate(chromatogramSelection, detectorSettings, monitor);
+		IProcessingInfo<?> processingInfo = validate(chromatogramSelection, detectorSettings, monitor);
 		if(!processingInfo.hasErrorMessages()) {
 			if(detectorSettings instanceof PeakDetectorSettingsWSD peakDetectorSettings) {
 				SubMonitor subMonitor = SubMonitor.convert(monitor, 100);
@@ -107,7 +105,7 @@ public class PeakDetectorWSD<P extends IPeak, C extends IChromatogram<P>, R> ext
 	}
 
 	@Override
-	public IProcessingInfo<R> detect(IChromatogramSelectionWSD chromatogramSelection, IProgressMonitor monitor) {
+	public IProcessingInfo<?> detect(IChromatogramSelectionWSD chromatogramSelection, IProgressMonitor monitor) {
 
 		PeakDetectorSettingsWSD peakDetectorSettings = PreferenceSupplier.getPeakDetectorSettingsWSD();
 		chromatogramSelection.getChromatogram().setDirty(true);
