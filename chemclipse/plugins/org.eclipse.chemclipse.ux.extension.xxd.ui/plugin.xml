@@ -22,7 +22,7 @@
             class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageTasks"
             id="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageTasks"
             name="Task Bar (Quick Access)">
-      </page>      
+      </page>
       <page
             category="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageTasks"
             class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageTaskOverview"
@@ -216,25 +216,31 @@
             name="Merge Peaks">
       </page>
       <page
-            category="org.eclipse.chemclipse.rcp.app.ui.preferences.settingsPreferencePage"
+            category="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePage"
+            class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageProcessorToolbar"
+            id="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageProcessorToolbar"
+            name="Processor Quick-Access">
+      </page>
+      <page
+            category="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageProcessorToolbar"
             class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageProcessorToolbarCSD"
             id="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageProcessorToolbarCSD"
             name="Processor Quick-Access (CSD)">
       </page>
       <page
-            category="org.eclipse.chemclipse.rcp.app.ui.preferences.settingsPreferencePage"
+            category="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageProcessorToolbar"
             class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageProcessorToolbarMSD"
             id="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageProcessorToolbarMSD"
             name="Processor Quick-Access (MSD)">
       </page>
       <page
-            category="org.eclipse.chemclipse.rcp.app.ui.preferences.settingsPreferencePage"
+            category="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageProcessorToolbar"
             class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageProcessorToolbarWSD"
             id="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageProcessorToolbarWSD"
             name="Processor Quick-Access (WSD)">
       </page>
       <page
-            category="org.eclipse.chemclipse.rcp.app.ui.preferences.settingsPreferencePage"
+            category="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageProcessorToolbar"
             class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageProcessorToolbarVSD"
             id="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageProcessorToolbarVSD"
             name="Processor Quick-Access (VSD)">
