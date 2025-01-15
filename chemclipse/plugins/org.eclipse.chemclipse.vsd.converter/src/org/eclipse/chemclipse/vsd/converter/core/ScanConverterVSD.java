@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -54,7 +54,7 @@ public class ScanConverterVSD {
 		 * Do not use a safe runnable here, because an object must
 		 * be returned or null.
 		 */
-		IScanImportConverter<ISpectrumVSD> importConverter = getScanImportConverter(converterId);
+		IScanImportConverter importConverter = getScanImportConverter(converterId);
 		if(importConverter != null) {
 			processingInfo = importConverter.convert(file, monitor);
 		} else {
@@ -87,7 +87,7 @@ public class ScanConverterVSD {
 				 * Do not use a safe runnable here, because an object must
 				 * be returned or null.
 				 */
-				IScanImportConverter<ISpectrumVSD> importConverter = getScanImportConverter(converterId);
+				IScanImportConverter importConverter = getScanImportConverter(converterId);
 				if(importConverter != null) {
 					processingInfo = importConverter.convert(file, monitor);
 					if(!processingInfo.hasErrorMessages()) {
@@ -117,15 +117,14 @@ public class ScanConverterVSD {
 		return processingInfo;
 	}
 
-	@SuppressWarnings("unchecked")
-	private static IScanImportConverter<ISpectrumVSD> getScanImportConverter(final String converterId) {
+	private static IScanImportConverter getScanImportConverter(final String converterId) {
 
 		IConfigurationElement element;
 		element = getConfigurationElement(converterId);
-		IScanImportConverter<ISpectrumVSD> instance = null;
+		IScanImportConverter instance = null;
 		if(element != null) {
 			try {
-				instance = (IScanImportConverter<ISpectrumVSD>)element.createExecutableExtension(Converter.IMPORT_CONVERTER);
+				instance = (IScanImportConverter)element.createExecutableExtension(Converter.IMPORT_CONVERTER);
 			} catch(CoreException e) {
 				logger.error(e);
 			}
