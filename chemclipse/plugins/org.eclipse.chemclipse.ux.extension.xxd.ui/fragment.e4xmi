@@ -207,9 +207,6 @@
       <children xsi:type="menu:DirectToolItem" xmi:id="__bTzQCZHEeu5Pepo04c08Q" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.directtoolitem.istd" label="ISTD (Internal Standards)" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/internalStandardsDefault.gif" tooltip="ISTD (Internal Standards)" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.xxd.ui/org.eclipse.chemclipse.ux.extension.xxd.ui.toolbar.GroupHandlerISTD">
         <menu xmi:id="_HlrzsCZIEeu5Pepo04c08Q" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.menu.1"/>
       </children>
-      <children xsi:type="menu:DirectToolItem" xmi:id="__xih8CZHEeu5Pepo04c08Q" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.directtoolitem.estd" label="ESTD (External Standards)" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/externalStandardsDefault.gif" tooltip="ESTD (External Standards)" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.xxd.ui/org.eclipse.chemclipse.ux.extension.xxd.ui.toolbar.GroupHandlerESTD">
-        <menu xmi:id="_IAoqUCZIEeu5Pepo04c08Q" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.menu.2"/>
-      </children>
       <children xsi:type="menu:DirectToolItem" xmi:id="_kVU9ECZKEeu5Pepo04c08Q" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.directtoolitem.miscellaneous" label="Miscellaneous" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/measurementResultsDefault.gif" tooltip="Miscellaneous" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.xxd.ui/org.eclipse.chemclipse.ux.extension.xxd.ui.toolbar.GroupHandlerMiscellaneous">
         <menu xmi:id="_n3omMCZKEeu5Pepo04c08Q" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.menu.4"/>
       </children>
@@ -233,7 +230,6 @@
     <elements xsi:type="menu:Menu" xmi:id="_ytQdMI4-Ee-oY-nH1TVkXQ" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.view.peaks" label="%Peaks" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/selectedPeak.gif"/>
     <elements xsi:type="menu:Menu" xmi:id="_iZbCUI4-Ee-oY-nH1TVkXQ" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.view.chromatogram" label="%Chromatogram" iconURI="platform:/plugin/org.eclipse.chemclipse.ux.extension.xxd.ui/icons/16x16/chromatogram.gif"/>
     <elements xsi:type="menu:Menu" xmi:id="_qvYnsI4-Ee-oY-nH1TVkXQ" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.view.istd" label="%ISTD" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/internalStandardsDefault.gif"/>
-    <elements xsi:type="menu:Menu" xmi:id="_o7r1cI4-Ee-oY-nH1TVkXQ" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.view.estd" label="%ESTD" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/externalStandardsDefault.gif"/>
     <elements xsi:type="menu:Menu" xmi:id="_s_C9MI4-Ee-oY-nH1TVkXQ" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.view.misc" label="%Miscellaneous" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/measurementResults.gif"/>
   </fragments>
 </fragment:ModelFragments>
