@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,6 +18,7 @@ import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.wsd.converter.supplier.spectroml.PathResolver;
 import org.eclipse.chemclipse.wsd.converter.supplier.spectroml.converter.ScanImportConverter;
 import org.eclipse.chemclipse.wsd.converter.supplier.spectroml.model.IVendorSpectrumWSD;
+import org.eclipse.chemclipse.wsd.model.core.ISpectrumWSD;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Test;
 
@@ -25,7 +26,7 @@ import junit.framework.TestCase;
 
 public class SpectroML_ITest extends TestCase {
 
-	private IVendorSpectrumWSD vendorSpectrum;
+	private ISpectrumWSD spectrumWSD;
 
 	@Override
 	protected void setUp() throws Exception {
@@ -33,40 +34,42 @@ public class SpectroML_ITest extends TestCase {
 		super.setUp();
 		File file = new File(PathResolver.getAbsolutePath(TestPathHelper.SAMPLE));
 		ScanImportConverter importConverter = new ScanImportConverter();
-		IProcessingInfo<IVendorSpectrumWSD> processingInfo = importConverter.convert(file, new NullProgressMonitor());
-		vendorSpectrum = processingInfo.getProcessingResult();
+		IProcessingInfo<ISpectrumWSD> processingInfo = importConverter.convert(file, new NullProgressMonitor());
+		spectrumWSD = processingInfo.getProcessingResult();
 	}
 
 	@Override
 	protected void tearDown() throws Exception {
 
-		vendorSpectrum = null;
+		spectrumWSD = null;
 		super.tearDown();
 	}
 
 	@Test
 	public void testLoading() {
 
-		assertNotNull(vendorSpectrum);
+		assertNotNull(spectrumWSD);
 	}
 
 	@Test
 	public void testMetadata() {
 
-		assertEquals("sample experiment", vendorSpectrum.getDataName());
-		assertEquals("simple measurement of drinking water", vendorSpectrum.getDetailedInfo());
-		assertEquals("HP 8453", vendorSpectrum.getInstrument());
-		assertEquals(2000, vendorSpectrum.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().getYear());
-		assertEquals("Paul DeRose", vendorSpectrum.getOperator());
-		assertEquals("1063546374", vendorSpectrum.getBarcode());
-		assertEquals("water", vendorSpectrum.getSampleName());
-		assertEquals("7732-18-5", vendorSpectrum.getCasNumber());
-		assertEquals("H2O", vendorSpectrum.getFormula());
+		assertEquals("sample experiment", spectrumWSD.getDataName());
+		assertEquals("simple measurement of drinking water", spectrumWSD.getDetailedInfo());
+		assertEquals("HP 8453", spectrumWSD.getInstrument());
+		assertEquals(2000, spectrumWSD.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().getYear());
+		assertEquals("Paul DeRose", spectrumWSD.getOperator());
+		assertEquals("1063546374", spectrumWSD.getBarcode());
+		assertEquals("water", spectrumWSD.getSampleName());
+		if(spectrumWSD instanceof IVendorSpectrumWSD vendorSpectrumWSD) {
+			assertEquals("7732-18-5", vendorSpectrumWSD.getCasNumber());
+			assertEquals("H2O", vendorSpectrumWSD.getFormula());
+		}
 	}
 
 	@Test
 	public void testSignals() {
 
-		assertEquals(3, vendorSpectrum.getSignals().size());
+		assertEquals(3, spectrumWSD.getSignals().size());
 	}
 }

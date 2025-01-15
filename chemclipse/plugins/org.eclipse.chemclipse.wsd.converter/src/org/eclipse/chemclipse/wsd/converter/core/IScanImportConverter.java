@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -15,9 +15,10 @@ import java.io.File;
 
 import org.eclipse.chemclipse.converter.core.IImportConverter;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
+import org.eclipse.chemclipse.wsd.model.core.ISpectrumWSD;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-public interface IScanImportConverter<T> extends IImportConverter {
+public interface IScanImportConverter extends IImportConverter {
 
-	IProcessingInfo<T> convert(File file, IProgressMonitor monitor);
+	IProcessingInfo<ISpectrumWSD> convert(File file, IProgressMonitor monitor);
 }
