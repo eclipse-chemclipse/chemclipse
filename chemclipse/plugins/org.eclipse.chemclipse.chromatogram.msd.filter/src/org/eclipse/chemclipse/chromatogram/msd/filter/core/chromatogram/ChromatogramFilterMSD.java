@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2024 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -62,7 +62,7 @@ public class ChromatogramFilterMSD {
 	public static IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelectionMSD chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, String filterId, IProgressMonitor monitor) {
 
 		IProcessingInfo<IChromatogramFilterResult> processingInfo;
-		IChromatogramFilterMSD<IChromatogramFilterResult> chromatogramFilter = getChromatogramFilter(filterId);
+		IChromatogramFilterMSD chromatogramFilter = getChromatogramFilter(filterId);
 		if(chromatogramFilter != null) {
 			processingInfo = chromatogramFilter.applyFilter(chromatogramSelection, chromatogramFilterSettings, monitor);
 			chromatogramSelection.getChromatogram().setDirty(true);
@@ -86,7 +86,7 @@ public class ChromatogramFilterMSD {
 	public static IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelectionMSD chromatogramSelection, String filterId, IProgressMonitor monitor) {
 
 		IProcessingInfo<IChromatogramFilterResult> processingInfo;
-		IChromatogramFilterMSD<IChromatogramFilterResult> chromatogramFilter = getChromatogramFilter(filterId);
+		IChromatogramFilterMSD chromatogramFilter = getChromatogramFilter(filterId);
 		if(chromatogramFilter != null) {
 			processingInfo = chromatogramFilter.applyFilter(chromatogramSelection, monitor);
 		} else {
@@ -131,12 +131,11 @@ public class ChromatogramFilterMSD {
 	 * Returns a {@link IChromatogramFilterMSD} instance given by the filterId or
 	 * null, if none is available.
 	 */
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	private static IChromatogramFilterMSD<IChromatogramFilterResult> getChromatogramFilter(final String filterId) {
+	private static IChromatogramFilterMSD getChromatogramFilter(final String filterId) {
 
 		IConfigurationElement element;
 		element = getConfigurationElement(filterId);
-		IChromatogramFilterMSD<IChromatogramFilterResult> instance = null;
+		IChromatogramFilterMSD instance = null;
 		if(element != null) {
 			try {
 				instance = (IChromatogramFilterMSD)element.createExecutableExtension(FILTER);
