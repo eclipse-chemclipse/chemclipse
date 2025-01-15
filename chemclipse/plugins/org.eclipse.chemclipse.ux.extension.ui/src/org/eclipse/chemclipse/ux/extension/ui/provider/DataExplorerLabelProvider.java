@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2024 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -81,7 +81,9 @@ public class DataExplorerLabelProvider extends ColumnLabelProvider implements IL
 		Image image = getIcon(element);
 		// https://github.com/eclipse-platform/eclipse.platform.swt/issues/678
 		Display.getCurrent().asyncExec(() -> {
-			cell.setImage(image);
+			if(!cell.getControl().isDisposed()) {
+				cell.setImage(image);
+			}
 		});
 		cell.setBackground(getBackground(element));
 		cell.setForeground(getForeground(element));
