@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2021 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -47,7 +47,7 @@ public class ReportConverter {
 	public static IProcessingInfo<?> convert(final File file, final String converterId, IProgressMonitor monitor) {
 
 		IProcessingInfo<?> processingInfo;
-		IReportImportConverter<?> importConverter = getReportImportConverter(converterId);
+		IReportImportConverter importConverter = getReportImportConverter(converterId);
 		if(importConverter != null) {
 			processingInfo = importConverter.convert(file, monitor);
 		} else {
@@ -56,14 +56,14 @@ public class ReportConverter {
 		return processingInfo;
 	}
 
-	private static IReportImportConverter<?> getReportImportConverter(final String converterId) {
+	private static IReportImportConverter getReportImportConverter(final String converterId) {
 
 		IConfigurationElement element;
 		element = getConfigurationElement(converterId);
-		IReportImportConverter<?> instance = null;
+		IReportImportConverter instance = null;
 		if(element != null) {
 			try {
-				instance = (IReportImportConverter<?>)element.createExecutableExtension(IMPORT_CONVERTER);
+				instance = (IReportImportConverter)element.createExecutableExtension(IMPORT_CONVERTER);
 			} catch(CoreException e) {
 				logger.warn(e);
 			}
