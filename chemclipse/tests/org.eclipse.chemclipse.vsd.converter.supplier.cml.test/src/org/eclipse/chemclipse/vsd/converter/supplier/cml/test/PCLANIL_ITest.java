@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,6 +18,7 @@ import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.vsd.converter.supplier.cml.PathResolver;
 import org.eclipse.chemclipse.vsd.converter.supplier.cml.converter.ScanImportConverter;
 import org.eclipse.chemclipse.vsd.converter.supplier.cml.model.IVendorSpectrumVSD;
+import org.eclipse.chemclipse.vsd.model.core.ISpectrumVSD;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Test;
 
@@ -25,7 +26,7 @@ import junit.framework.TestCase;
 
 public class PCLANIL_ITest extends TestCase {
 
-	private IVendorSpectrumVSD vendorSpectrum;
+	private ISpectrumVSD spectrumVSD;
 
 	@Override
 	protected void setUp() throws Exception {
@@ -33,31 +34,33 @@ public class PCLANIL_ITest extends TestCase {
 		super.setUp();
 		File file = new File(PathResolver.getAbsolutePath(TestPathHelper.PCLANIL));
 		ScanImportConverter importConverter = new ScanImportConverter();
-		IProcessingInfo<IVendorSpectrumVSD> processingInfo = importConverter.convert(file, new NullProgressMonitor());
-		vendorSpectrum = processingInfo.getProcessingResult();
+		IProcessingInfo<ISpectrumVSD> processingInfo = importConverter.convert(file, new NullProgressMonitor());
+		spectrumVSD = processingInfo.getProcessingResult();
 	}
 
 	@Override
 	protected void tearDown() throws Exception {
 
-		vendorSpectrum = null;
+		spectrumVSD = null;
 		super.tearDown();
 	}
 
 	@Test
 	public void testLoading() {
 
-		assertNotNull(vendorSpectrum);
-		assertEquals("para-chloroaniline", vendorSpectrum.getSampleName());
-		assertEquals("IR_para-chlor", vendorSpectrum.getDataName());
-		assertEquals("C6H6ClN", vendorSpectrum.getFormula());
-		assertEquals("106-47-8", vendorSpectrum.getCasNumber());
-		assertEquals("PERKIN-ELMER 1000 FT-IR", vendorSpectrum.getInstrument());
+		assertNotNull(spectrumVSD);
+		assertEquals("para-chloroaniline", spectrumVSD.getSampleName());
+		assertEquals("IR_para-chlor", spectrumVSD.getDataName());
+		assertEquals("PERKIN-ELMER 1000 FT-IR", spectrumVSD.getInstrument());
+		if(spectrumVSD instanceof IVendorSpectrumVSD vendorSpectrumVSD) {
+			assertEquals("C6H6ClN", vendorSpectrumVSD.getFormula());
+			assertEquals("106-47-8", vendorSpectrumVSD.getCasNumber());
+		}
 	}
 
 	@Test
 	public void testSignals() {
 
-		assertEquals(1801, vendorSpectrum.getScanVSD().getProcessedSignals().size());
+		assertEquals(1801, spectrumVSD.getScanVSD().getProcessedSignals().size());
 	}
 }
