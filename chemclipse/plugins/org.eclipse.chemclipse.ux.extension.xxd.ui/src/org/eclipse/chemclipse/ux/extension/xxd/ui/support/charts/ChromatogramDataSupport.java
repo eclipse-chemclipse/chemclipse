@@ -79,8 +79,6 @@ public class ChromatogramDataSupport {
 			 */
 			StringBuilder builder = new StringBuilder();
 			builder.append(description.isEmpty() ? chromatogram.getName() : description);
-			builder.append(" ");
-			builder.append(getChromatogramType(chromatogram));
 			if(appendColumnType) {
 				builder.append(" - ");
 				builder.append(getChromatogramColumnType(chromatogram));

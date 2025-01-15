@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2024 Lablicate GmbH.
+ * Copyright (c) 2017, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,11 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IMeasurement;
 import org.eclipse.chemclipse.model.core.support.HeaderField;
-import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
 import org.eclipse.chemclipse.processing.converter.ISupplierFileIdentifier;
@@ -31,9 +29,7 @@ import org.eclipse.chemclipse.support.ui.workbench.EditorSupport;
 import org.eclipse.chemclipse.ux.extension.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.ui.editors.IChromatogramEditor;
 import org.eclipse.chemclipse.ux.extension.ui.preferences.PreferenceSupplier;
-import org.eclipse.chemclipse.vsd.model.core.IChromatogramVSD;
 import org.eclipse.chemclipse.vsd.model.core.ISpectrumVSD;
-import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.basic.MBasicFactory;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
@@ -154,17 +150,7 @@ public interface ISupplierFileEditorSupport extends ISupplierFileIdentifier {
 					if(object != null) {
 						part.setObject(object);
 						if(object instanceof IChromatogram<?> chromatogram) {
-							String type = "";
-							if(object instanceof IChromatogramMSD) {
-								type = " [MSD]";
-							} else if(object instanceof IChromatogramCSD) {
-								type = " [CSD]";
-							} else if(object instanceof IChromatogramWSD) {
-								type = " [WSD]";
-							} else if(object instanceof IChromatogramVSD) {
-								type = " [VSD]";
-							}
-							part.setLabel(chromatogram.getName() + type);
+							part.setLabel(chromatogram.getName());
 						} else if(object instanceof IMassSpectra massSpectra) {
 							part.setLabel(massSpectra.getName());
 						} else if(object instanceof ISpectrumVSD) {
