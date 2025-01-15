@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2024 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -391,7 +391,7 @@ public class MSPReader extends AbstractMassSpectraReader implements IMassSpectra
 		double content = 0.0f;
 		try {
 			Matcher matcher = pattern.matcher(massSpectrumData);
-			if(matcher.find()) {
+			if(matcher.find() && matcher.groupCount() > 1 && !matcher.group(2).isBlank()) {
 				content = Double.parseDouble(matcher.group(2));
 			}
 		} catch(Exception e) {
