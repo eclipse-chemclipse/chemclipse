@@ -32,9 +32,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	//
 	public static final String P_USE_PROFILE_MASS_SPECTRUM_VIEW = "useProfileMassSpectrumView";
 	public static final boolean DEF_USE_PROFILE_MASS_SPECTRUM_VIEW = false;
-	//
-	public static final String P_PATH_OPEN_CHROMATOGRAMS = "pathOpenChromatograms";
-	public static final String DEF_PATH_OPEN_CHROMATOGRAMS = "";
 
 	public static IPreferenceSupplier INSTANCE() {
 
@@ -54,7 +51,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 		putDefault(P_OVERLAY_Y_OFFSET, DEF_OVERLAY_Y_OFFSET);
 		putDefault(PreferenceSupplier.P_MAGNIFICATION_FACTOR, PreferenceSupplier.DEF_MAGNIFICATION_FACTOR);
 		putDefault(PreferenceSupplier.P_USE_PROFILE_MASS_SPECTRUM_VIEW, PreferenceSupplier.DEF_USE_PROFILE_MASS_SPECTRUM_VIEW);
-		putDefault(PreferenceSupplier.P_PATH_OPEN_CHROMATOGRAMS, PreferenceSupplier.DEF_PATH_OPEN_CHROMATOGRAMS);
 	}
 
 	/**
@@ -80,15 +76,5 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static boolean useProfileMassSpectrumView() {
 
 		return INSTANCE().getBoolean(P_USE_PROFILE_MASS_SPECTRUM_VIEW);
-	}
-
-	public static String getPathOpenChromatograms() {
-
-		return INSTANCE().get(P_PATH_OPEN_CHROMATOGRAMS);
-	}
-
-	public static void setPathOpenChromatograms(String value) {
-
-		INSTANCE().set(P_PATH_OPEN_CHROMATOGRAMS, value);
 	}
 }
