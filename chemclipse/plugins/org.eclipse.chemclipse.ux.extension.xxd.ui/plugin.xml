@@ -18,7 +18,7 @@
             name="User Interface">
       </page>
       <page
-            category="org.eclipse.chemclipse.rcp.app.ui.preferences.settingsPreferencePage"
+            category="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePage"
             class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageTasks"
             id="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageTasks"
             name="Task Bar (Quick Access)">
