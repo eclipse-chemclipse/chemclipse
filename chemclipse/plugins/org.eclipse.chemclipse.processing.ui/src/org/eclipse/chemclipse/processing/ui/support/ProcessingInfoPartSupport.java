@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2022 Lablicate GmbH.
+ * Copyright (c) 2012, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -33,7 +33,7 @@ public class ProcessingInfoPartSupport {
 
 	private static final Logger logger = Logger.getLogger(ProcessingInfoPartSupport.class);
 	//
-	private static final String TITLE = "An error/some errors occured.";
+	private static final String TITLE = "Processing Error";
 	private static final String MESSAGE = "Please check the 'Feedback' part.";
 	//
 	private UISynchronize uiSynchronize = null;
@@ -74,7 +74,7 @@ public class ProcessingInfoPartSupport {
 		if(messageProvider.hasErrorMessages()) {
 			for(IProcessingMessage message : messageProvider.getMessages()) {
 				if(message.getMessageType() == MessageType.ERROR) {
-					logErrorMessage(message.getDescription(), message.getMessage(), message.getException());
+					logger.error(message.getDescription() + ": " + message.getMessage(), message.getException());
 				}
 			}
 		}
@@ -84,7 +84,7 @@ public class ProcessingInfoPartSupport {
 		try {
 			getProcessingInfoUpdateNotifier().update(messageProvider);
 		} catch(RuntimeException e) {
-			logErrorMessage(ProcessingInfoPartSupport.class.getName(), "Calling the info update notifier failed.", e);
+			logger.error("Calling the info update notifier failed.", e);
 		}
 		/*
 		 * Display a message if an error occurred.
@@ -98,7 +98,7 @@ public class ProcessingInfoPartSupport {
 
 						Shell shell = DisplayUtils.getShell();
 						if(shell != null) {
-							MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING);
+							MessageBox messageBox = new MessageBox(shell, SWT.ICON_ERROR);
 							messageBox.setText(TITLE);
 							messageBox.setMessage(MESSAGE);
 							messageBox.open();
@@ -179,12 +179,5 @@ public class ProcessingInfoPartSupport {
 		}
 		//
 		return processingInfoUpdateNotifier;
-	}
-
-	private static void logErrorMessage(String description, String message, Throwable e) {
-
-		logger.warn(description);
-		logger.warn(message);
-		logger.warn(e);
 	}
 }

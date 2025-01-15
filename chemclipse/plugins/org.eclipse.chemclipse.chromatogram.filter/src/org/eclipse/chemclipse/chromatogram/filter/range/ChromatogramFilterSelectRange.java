@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2024 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -25,6 +25,8 @@ import org.eclipse.chemclipse.processing.supplier.AbstractProcessSupplier;
 import org.eclipse.chemclipse.processing.supplier.IProcessSupplier;
 import org.eclipse.chemclipse.processing.supplier.IProcessTypeSupplier;
 import org.eclipse.chemclipse.processing.supplier.ProcessExecutionContext;
+import org.eclipse.chemclipse.support.text.ValueFormat;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swtchart.extensions.menu.IChartMenuCategories;
 import org.osgi.service.component.annotations.Component;
 
@@ -87,11 +89,13 @@ public class ChromatogramFilterSelectRange implements IProcessTypeSupplier {
 			 * Start Retention Time: 0 is allowed. It is implicit a start from the beginning of the chromatogram.
 			 */
 			if(startRetentionTime >= chromatogramSelection.getChromatogram().getStopRetentionTime()) {
-				context.addErrorMessage(Messages.selectRange, Messages.startRetentionTimeOutsideRange);
+				String startRT = ValueFormat.getDecimalFormatEnglish().format(startRetentionTime / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
+				context.addErrorMessage(Messages.selectRange, NLS.bind(Messages.startRetentionTimeOutsideRange, startRT));
 			}
 			//
 			if(stopRetentionTime <= chromatogramSelection.getChromatogram().getStartRetentionTime()) {
-				context.addWarnMessage(Messages.selectRange, Messages.stopRetentionTimeOutsideRange);
+				String stopRT = ValueFormat.getDecimalFormatEnglish().format(stopRetentionTime / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
+				context.addWarnMessage(Messages.selectRange, NLS.bind(Messages.stopRetentionTimeOutsideRange, stopRT));
 			}
 			//
 			float startAbundance = processSettings.getStartAbundance();
