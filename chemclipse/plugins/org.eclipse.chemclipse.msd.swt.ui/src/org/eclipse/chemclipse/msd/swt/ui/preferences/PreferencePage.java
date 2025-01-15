@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2020 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -31,12 +31,12 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 		setDescription("");
 	}
 
+	@Override
 	public void createFieldEditors() {
 
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
 		addField(new LabelFieldEditor("The underlying mass spectrum will be kept untouched.", getFieldEditorParent()));
 		addField(new LabelFieldEditor("It's only how many m/z values are display in the views and lists.", getFieldEditorParent()));
-		addField(new SpacerFieldEditor(getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_FILTER_MASS_SPECTRUM, "Filter Mass Spectrum View", getFieldEditorParent()));
 		IntegerFieldEditor filterLimitIonsEditor = new IntegerFieldEditor(PreferenceSupplier.P_FILTER_LIMIT_IONS, "Number of Ions in View <=", getFieldEditorParent());
 		filterLimitIonsEditor.setValidRange(PreferenceSupplier.MIN_FILTER_LIMIT_IONS, PreferenceSupplier.MAX_FILTER_LIMIT_IONS);
@@ -48,6 +48,10 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 		IntegerFieldEditor libraryMSDLimitSortingEditor = new IntegerFieldEditor(PreferenceSupplier.P_LIBRARY_MSD_LIMIT_SORTING, "Disable sorting above number of entries:", getFieldEditorParent());
 		libraryMSDLimitSortingEditor.setValidRange(PreferenceSupplier.MIN_LIBRARY_MSD_LIMIT_SORTING, PreferenceSupplier.MAX_LIBRARY_MSD_LIMIT_SORTING);
 		addField(libraryMSDLimitSortingEditor);
+		//
+		addField(new SpacerFieldEditor(getFieldEditorParent()));
+		//
+		addField(new BooleanFieldEditor(PreferenceSupplier.P_USE_PROFILE_MASS_SPECTRUM_VIEW, "Use profile mass spectrum view.", getFieldEditorParent()));
 	}
 
 	/*
@@ -55,6 +59,7 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 	 * @see
 	 * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
+	@Override
 	public void init(IWorkbench workbench) {
 
 	}

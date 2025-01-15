@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2024 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -34,6 +34,9 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static final int DEF_LIBRARY_MSD_LIMIT_SORTING = 10000;
 	public static final int MIN_LIBRARY_MSD_LIMIT_SORTING = 500;
 	public static final int MAX_LIBRARY_MSD_LIMIT_SORTING = 30000;
+	//
+	public static final String P_USE_PROFILE_MASS_SPECTRUM_VIEW = "useProfileMassSpectrumView";
+	public static final boolean DEF_USE_PROFILE_MASS_SPECTRUM_VIEW = false;
 
 	public static IPreferenceSupplier INSTANCE() {
 
@@ -53,6 +56,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 		putDefault(P_FILTER_LIMIT_IONS, Integer.toString(DEF_FILTER_LIMIT_IONS));
 		putDefault(P_PATH_MASS_SPECTRUM_LIBRARIES, DEF_PATH_MASS_SPECTRUM_LIBRARIES);
 		putDefault(P_LIBRARY_MSD_LIMIT_SORTING, Integer.toString(DEF_LIBRARY_MSD_LIMIT_SORTING));
+		putDefault(PreferenceSupplier.P_USE_PROFILE_MASS_SPECTRUM_VIEW, PreferenceSupplier.DEF_USE_PROFILE_MASS_SPECTRUM_VIEW);
 	}
 
 	public static String getPathMassSpectrumLibraries() {
@@ -68,5 +72,10 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static int getLibraryMSDLimitSorting() {
 
 		return INSTANCE().getInteger(P_LIBRARY_MSD_LIMIT_SORTING, DEF_LIBRARY_MSD_LIMIT_SORTING);
+	}
+
+	public static boolean useProfileMassSpectrumView() {
+
+		return INSTANCE().getBoolean(P_USE_PROFILE_MASS_SPECTRUM_VIEW);
 	}
 }

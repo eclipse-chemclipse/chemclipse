@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2024 Lablicate GmbH.
+ * Copyright (c) 2012, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,7 +13,6 @@ package org.eclipse.chemclipse.ux.extension.msd.ui;
 
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.support.ui.activator.AbstractActivatorUI;
-import org.eclipse.chemclipse.ux.extension.msd.ui.preferences.PreferenceSupplier;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
@@ -25,13 +24,14 @@ public class Activator extends AbstractActivatorUI {
 
 	private static Activator plugin;
 
+	@Override
 	public void start(BundleContext context) throws Exception {
 
 		super.start(context);
 		plugin = this;
-		initializePreferenceStore(PreferenceSupplier.INSTANCE());
 	}
 
+	@Override
 	public void stop(BundleContext context) throws Exception {
 
 		plugin = null;
@@ -54,6 +54,7 @@ public class Activator extends AbstractActivatorUI {
 		return location.getURL().getPath().toString();
 	}
 
+	@Override
 	public IEclipseContext getEclipseContext() {
 
 		BundleContext bundleContext = getBundle().getBundleContext();
@@ -62,6 +63,7 @@ public class Activator extends AbstractActivatorUI {
 		return eclipseContext;
 	}
 
+	@Override
 	public IEventBroker getEventBroker() {
 
 		IEclipseContext eclipseContext = getEclipseContext();
