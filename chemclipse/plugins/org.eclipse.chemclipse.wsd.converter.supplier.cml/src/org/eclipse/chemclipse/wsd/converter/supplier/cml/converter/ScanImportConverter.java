@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,17 +19,16 @@ import org.eclipse.chemclipse.processing.core.ProcessingInfo;
 import org.eclipse.chemclipse.wsd.converter.core.AbstractScanImportConverter;
 import org.eclipse.chemclipse.wsd.converter.core.IScanImportConverter;
 import org.eclipse.chemclipse.wsd.converter.supplier.cml.io.ScanReader;
-import org.eclipse.chemclipse.wsd.converter.supplier.cml.model.IVendorSpectrumWSD;
+import org.eclipse.chemclipse.wsd.model.core.ISpectrumWSD;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-@SuppressWarnings("rawtypes")
 public class ScanImportConverter extends AbstractScanImportConverter implements IScanImportConverter {
 
 	@Override
-	public IProcessingInfo<IVendorSpectrumWSD> convert(File file, IProgressMonitor monitor) {
+	public IProcessingInfo<ISpectrumWSD> convert(File file, IProgressMonitor monitor) {
 
-		IProcessingInfo<IVendorSpectrumWSD> processingInfo = new ProcessingInfo<>();
-		IVendorSpectrumWSD vendorScan = null;
+		IProcessingInfo<ISpectrumWSD> processingInfo = new ProcessingInfo<>();
+		ISpectrumWSD vendorScan = null;
 		ScanReader scanReader = new ScanReader();
 		vendorScan = scanReader.read(file, monitor);
 		processingInfo.setProcessingResult(vendorScan);

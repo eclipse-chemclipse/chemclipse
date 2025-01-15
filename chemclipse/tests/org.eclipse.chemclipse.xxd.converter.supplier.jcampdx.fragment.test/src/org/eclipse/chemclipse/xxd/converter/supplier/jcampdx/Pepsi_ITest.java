@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -15,7 +15,7 @@ import java.io.File;
 
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.wsd.converter.supplier.jcampdx.converter.ScanImportConverter;
-import org.eclipse.chemclipse.wsd.converter.supplier.jcampdx.model.IVendorSpectrumWSD;
+import org.eclipse.chemclipse.wsd.model.core.ISpectrumWSD;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Test;
 
@@ -23,7 +23,7 @@ import junit.framework.TestCase;
 
 public class Pepsi_ITest extends TestCase {
 
-	private IVendorSpectrumWSD vendorSpectrum;
+	private ISpectrumWSD spectrumWSD;
 
 	@Override
 	protected void setUp() throws Exception {
@@ -31,28 +31,28 @@ public class Pepsi_ITest extends TestCase {
 		super.setUp();
 		File file = new File(PathResolver.getAbsolutePath(TestPathHelper.PEPSI));
 		ScanImportConverter importConverter = new ScanImportConverter();
-		IProcessingInfo<IVendorSpectrumWSD> processingInfo = importConverter.convert(file, new NullProgressMonitor());
-		vendorSpectrum = processingInfo.getProcessingResult();
+		IProcessingInfo<ISpectrumWSD> processingInfo = importConverter.convert(file, new NullProgressMonitor());
+		spectrumWSD = processingInfo.getProcessingResult();
 	}
 
 	@Override
 	protected void tearDown() throws Exception {
 
-		vendorSpectrum = null;
+		spectrumWSD = null;
 		super.tearDown();
 	}
 
 	@Test
 	public void testLoading() {
 
-		assertNotNull(vendorSpectrum);
-		assertEquals("pepsi-cola (diluted)", vendorSpectrum.getDataName());
-		assertEquals("PERKIN-ELMER LAMBDA 19 UV/VIS/NIR UV", vendorSpectrum.getInstrument());
+		assertNotNull(spectrumWSD);
+		assertEquals("pepsi-cola (diluted)", spectrumWSD.getDataName());
+		assertEquals("PERKIN-ELMER LAMBDA 19 UV/VIS/NIR UV", spectrumWSD.getInstrument());
 	}
 
 	@Test
 	public void testSignals() {
 
-		assertEquals(101, vendorSpectrum.getSignals().size());
+		assertEquals(101, spectrumWSD.getSignals().size());
 	}
 }
