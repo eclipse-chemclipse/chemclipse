@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2024 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -14,7 +14,6 @@ package org.eclipse.chemclipse.ux.extension.msd.ui.preferences;
 import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.SpacerFieldEditor;
 import org.eclipse.chemclipse.ux.extension.msd.ui.Activator;
 import org.eclipse.jface.preference.BooleanFieldEditor;
-import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IntegerFieldEditor;
@@ -36,9 +35,9 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 	 * GUI blocks needed to manipulate various types of preferences. Each field
 	 * editor knows how to save and restore itself.
 	 */
+	@Override
 	public void createFieldEditors() {
 
-		addField(new ComboFieldEditor(PreferenceSupplier.P_SELECTED_ORGANIC_COMPOUND, "Organic Compound:", PreferenceSupplier.getOrganicCompoundPresets(), getFieldEditorParent()));
 		IntegerFieldEditor integerFieldEditor = new IntegerFieldEditor(PreferenceSupplier.P_MAGNIFICATION_FACTOR, "Magnification Factor", getFieldEditorParent());
 		integerFieldEditor.setValidRange(PreferenceSupplier.DEF_MAGNIFICATION_FACTOR_MIN, PreferenceSupplier.DEF_MAGNIFICATION_FACTOR_MAX);
 		addField(integerFieldEditor);
@@ -53,6 +52,7 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 	 * @see
 	 * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
 	 */
+	@Override
 	public void init(IWorkbench workbench) {
 
 	}
