@@ -17,11 +17,6 @@ import org.eclipse.chemclipse.ux.extension.msd.ui.Activator;
 
 public class PreferenceSupplier extends AbstractPreferenceSupplier implements IPreferenceSupplier {
 
-	public static final String P_MAGNIFICATION_FACTOR = "magnificationFactor";
-	public static final int DEF_MAGNIFICATION_FACTOR = 1;
-	public static final int DEF_MAGNIFICATION_FACTOR_MIN = 1;
-	public static final int DEF_MAGNIFICATION_FACTOR_MAX = 50;
-	//
 	public static final String P_USE_PROFILE_MASS_SPECTRUM_VIEW = "useProfileMassSpectrumView";
 	public static final boolean DEF_USE_PROFILE_MASS_SPECTRUM_VIEW = false;
 
@@ -39,7 +34,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	@Override
 	public void initializeDefaults() {
 
-		putDefault(PreferenceSupplier.P_MAGNIFICATION_FACTOR, PreferenceSupplier.DEF_MAGNIFICATION_FACTOR);
 		putDefault(PreferenceSupplier.P_USE_PROFILE_MASS_SPECTRUM_VIEW, PreferenceSupplier.DEF_USE_PROFILE_MASS_SPECTRUM_VIEW);
 	}
 

@@ -14,7 +14,6 @@ package org.eclipse.chemclipse.ux.extension.msd.ui.preferences;
 import org.eclipse.chemclipse.ux.extension.msd.ui.Activator;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
-import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
@@ -36,9 +35,6 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 	@Override
 	public void createFieldEditors() {
 
-		IntegerFieldEditor integerFieldEditor = new IntegerFieldEditor(PreferenceSupplier.P_MAGNIFICATION_FACTOR, "Magnification Factor", getFieldEditorParent());
-		integerFieldEditor.setValidRange(PreferenceSupplier.DEF_MAGNIFICATION_FACTOR_MIN, PreferenceSupplier.DEF_MAGNIFICATION_FACTOR_MAX);
-		addField(integerFieldEditor);
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_USE_PROFILE_MASS_SPECTRUM_VIEW, "Use profile mass spectrum view.", getFieldEditorParent()));
 	}
 
