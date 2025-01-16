@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2023 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,22 +7,29 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
  * Christoph Läubrich - improve data handling
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
+import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IMeasurementResult;
+import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
+import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
+import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
+import org.eclipse.chemclipse.support.settings.OperatingSystemUtils;
 import org.eclipse.chemclipse.support.ui.provider.AbstractLabelProvider;
 import org.eclipse.chemclipse.support.ui.swt.EnhancedComboViewer;
 import org.eclipse.chemclipse.swt.ui.components.InformationUI;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ChromatogramDataSupport;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -30,6 +37,11 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -40,12 +52,17 @@ public class ExtendedMeasurementResultUI extends Composite implements IExtendedP
 
 	private static final String NO_SELECTION = "--";
 	//
-	private Button buttonToolbarInfo;
+	private AtomicReference<Button> buttonToolbarInfo = new AtomicReference<>();
 	private AtomicReference<InformationUI> toolbarInfo = new AtomicReference<>();
-	private Button buttonToolbarResults;
+	private AtomicReference<Button> buttonToolbarResults = new AtomicReference<>();
 	private AtomicReference<InformationUI> toolbarResults = new AtomicReference<>();
-	private ComboViewer comboMeasurementResults;
-	private MeasurementResultUI measurementResultsUI;
+	private AtomicReference<ComboViewer> comboMeasurementResults = new AtomicReference<>();
+	private AtomicReference<Button> buttonDeleteSelected = new AtomicReference<>();
+	private AtomicReference<Button> buttonDeleteAll = new AtomicReference<>();
+	private AtomicReference<Button> buttonClipboard = new AtomicReference<>();
+	private AtomicReference<MeasurementResultUI> measurementResultsControl = new AtomicReference<>();
+	//
+	private IChromatogram<?> chromatogram = null;
 
 	public ExtendedMeasurementResultUI(Composite parent, int style) {
 
@@ -53,55 +70,15 @@ public class ExtendedMeasurementResultUI extends Composite implements IExtendedP
 		createControl();
 	}
 
-	/**
-	 * Update the UI with the given data
-	 * 
-	 * @param results
-	 *            the results to show, must not be <code>null</code>
-	 * @param infoLabel
-	 *            the infolabel to show must not be <code>null</code>
-	 */
-	public void setInput(Collection<IMeasurementResult<?>> results, String infoLabel) {
+	public void setInput(IChromatogram<?> chromatogram) {
 
-		toolbarInfo.get().setText(infoLabel);
-		/*
-		 * Update the combo viewer.
-		 */
-		List<Object> measurementResults = new ArrayList<>();
-		measurementResults.add(NO_SELECTION);
-		List<IMeasurementResult<?>> resultsSorted = new ArrayList<>(results.stream().filter(m -> m.isVisible()).collect(Collectors.toList()));
-		Collections.sort(resultsSorted, (r1, r2) -> r1.getName().compareTo(r2.getName()));
-		measurementResults.addAll(resultsSorted);
-		//
-		IStructuredSelection structuredSelection = comboMeasurementResults.getStructuredSelection();
-		Object object = structuredSelection.getFirstElement();
-		comboMeasurementResults.setSelection(StructuredSelection.EMPTY);
-		comboMeasurementResults.setInput(measurementResults);
-		/*
-		 * Get the selection
-		 */
-		IMeasurementResult<?> selection = null;
-		int index = 0;
-		if(object instanceof IMeasurementResult<?>) {
-			/*
-			 * Validation
-			 */
-			IMeasurementResult<?> result = (IMeasurementResult<?>)object;
-			exitloop:
-			for(int i = 0; i < resultsSorted.size(); i++) {
-				IMeasurementResult<?> measurementResult = resultsSorted.get(i);
-				if(measurementResult.getName().equals(result.getName())) {
-					selection = measurementResult;
-					index = i + 1;
-					break exitloop;
-				}
-			}
-		}
-		/*
-		 * Set the selection
-		 */
-		comboMeasurementResults.setSelection(selection == null ? StructuredSelection.EMPTY : new StructuredSelection(selection));
-		comboMeasurementResults.getCombo().select(index);
+		this.chromatogram = chromatogram;
+		updateInput();
+	}
+
+	public ComboViewer getComboMeasurementResults() {
+
+		return comboMeasurementResults.get();
 	}
 
 	private void createControl() {
@@ -118,8 +95,10 @@ public class ExtendedMeasurementResultUI extends Composite implements IExtendedP
 
 	private void initialize() {
 
-		enableToolbar(toolbarInfo, buttonToolbarInfo, IMAGE_INFO, TOOLTIP_INFO, true);
-		enableToolbar(toolbarResults, buttonToolbarResults, IMAGE_RESULTS, TOOLTIP_RESULTS, false);
+		enableToolbar(toolbarInfo, buttonToolbarInfo.get(), IMAGE_INFO, TOOLTIP_INFO, true);
+		enableToolbar(toolbarResults, buttonToolbarResults.get(), IMAGE_RESULTS, TOOLTIP_RESULTS, false);
+		//
+		updateInput();
 	}
 
 	private void createToolbarMain(Composite parent) {
@@ -127,16 +106,24 @@ public class ExtendedMeasurementResultUI extends Composite implements IExtendedP
 		Composite composite = new Composite(parent, SWT.NONE);
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		composite.setLayoutData(gridData);
-		composite.setLayout(new GridLayout(3, false));
+		composite.setLayout(new GridLayout(6, false));
 		//
-		buttonToolbarInfo = createButtonToggleToolbar(composite, toolbarInfo, IMAGE_INFO, TOOLTIP_INFO);
-		comboMeasurementResults = createResultCombo(composite);
-		buttonToolbarResults = createButtonToggleToolbar(composite, toolbarResults, IMAGE_RESULTS, TOOLTIP_RESULTS);
+		createButtonToggleToolbarInfo(composite);
+		createResultComboViewer(composite);
+		createButtonDeleteSelected(composite);
+		createButtonDeleteAll(composite);
+		createButtonClipboard(composite);
+		createButtonToggleToolbarResults(composite);
 	}
 
-	public ComboViewer getComboMeasurementResults() {
+	private void createButtonToggleToolbarInfo(Composite parent) {
 
-		return comboMeasurementResults;
+		buttonToolbarInfo.set(createButtonToggleToolbar(parent, toolbarInfo, IMAGE_INFO, TOOLTIP_INFO));
+	}
+
+	private void createButtonToggleToolbarResults(Composite parent) {
+
+		buttonToolbarResults.set(createButtonToggleToolbar(parent, toolbarResults, IMAGE_RESULTS, TOOLTIP_RESULTS));
 	}
 
 	private void createToolbarInfo(Composite parent) {
@@ -146,8 +133,10 @@ public class ExtendedMeasurementResultUI extends Composite implements IExtendedP
 
 	private void createTable(Composite parent) {
 
-		measurementResultsUI = new MeasurementResultUI(parent, SWT.VIRTUAL | SWT.BORDER | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
+		MeasurementResultUI measurementResultsUI = new MeasurementResultUI(parent, SWT.VIRTUAL | SWT.BORDER | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
 		measurementResultsUI.getTable().setLayoutData(new GridData(GridData.FILL_BOTH));
+		//
+		measurementResultsControl.set(measurementResultsUI);
 	}
 
 	private void createToolbarResults(Composite parent) {
@@ -163,7 +152,7 @@ public class ExtendedMeasurementResultUI extends Composite implements IExtendedP
 		return informationUI;
 	}
 
-	private ComboViewer createResultCombo(Composite parent) {
+	private void createResultComboViewer(Composite parent) {
 
 		ComboViewer comboViewer = new EnhancedComboViewer(parent, SWT.PUSH);
 		Combo combo = comboViewer.getCombo();
@@ -193,21 +182,205 @@ public class ExtendedMeasurementResultUI extends Composite implements IExtendedP
 			public void selectionChanged(SelectionChangedEvent event) {
 
 				Object object = comboViewer.getStructuredSelection().getFirstElement();
-				if(object instanceof IMeasurementResult<?>) {
-					update((IMeasurementResult<?>)object);
+				if(object instanceof IMeasurementResult<?> measurementResult) {
+					update(measurementResult);
 				} else {
 					update(null);
 				}
 			}
 		});
 		//
-		return comboViewer;
+		comboMeasurementResults.set(comboViewer);
+	}
+
+	private void createButtonDeleteSelected(Composite parent) {
+
+		Button button = new Button(parent, SWT.PUSH);
+		button.setText("");
+		button.setToolTipText("Delete the selected measurement result.");
+		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DELETE, IApplicationImageProvider.SIZE_16x16));
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				if(chromatogram != null) {
+					IMeasurementResult<?> measurementResult = getSelection();
+					if(measurementResult != null) {
+						if(MessageDialog.openQuestion(e.display.getActiveShell(), "Measurement Result", "Would you like to delete the selected result?")) {
+							chromatogram.deleteMeasurementResult(measurementResult.getIdentifier());
+							updateComboViewerInput();
+							update(null);
+						}
+					}
+				}
+			}
+		});
+		//
+		buttonDeleteSelected.set(button);
+	}
+
+	private void createButtonDeleteAll(Composite parent) {
+
+		Button button = new Button(parent, SWT.PUSH);
+		button.setText("");
+		button.setToolTipText("Delete all measurement result.");
+		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DELETE_ALL, IApplicationImageProvider.SIZE_16x16));
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				if(chromatogram != null) {
+					if(MessageDialog.openQuestion(e.display.getActiveShell(), "Measurement Result", "Would you like to delete all results?")) {
+						chromatogram.removeAllMeasurementResults();
+						updateComboViewerInput();
+						update(null);
+					}
+				}
+			}
+		});
+		//
+		buttonDeleteAll.set(button);
+	}
+
+	private void createButtonClipboard(Composite parent) {
+
+		Button button = new Button(parent, SWT.PUSH);
+		button.setText("");
+		button.setToolTipText("Copy the measurement result ids to clipboard.");
+		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_COPY_CLIPBOARD, IApplicationImageProvider.SIZE_16x16));
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				if(chromatogram != null) {
+					String lineDelimiter = OperatingSystemUtils.getLineDelimiter();
+					List<IMeasurementResult<?>> measurementResults = getMeasurementResults(chromatogram);
+					StringBuilder builder = new StringBuilder();
+					/*
+					 * Header
+					 */
+					builder.append("Name");
+					builder.append("\t");
+					builder.append("Identifier");
+					builder.append(lineDelimiter);
+					/*
+					 * Data
+					 */
+					Iterator<IMeasurementResult<?>> iterator = measurementResults.iterator();
+					while(iterator.hasNext()) {
+						IMeasurementResult<?> measurementResult = iterator.next();
+						builder.append(measurementResult.getName());
+						builder.append("\t");
+						builder.append(measurementResult.getIdentifier());
+						if(iterator.hasNext()) {
+							builder.append(lineDelimiter);
+						}
+					}
+					/*
+					 * Clipboard
+					 */
+					TextTransfer textTransfer = TextTransfer.getInstance();
+					Object[] data = new Object[]{builder.toString()};
+					Transfer[] dataTypes = new Transfer[]{textTransfer};
+					Clipboard clipboard = new Clipboard(e.display);
+					clipboard.setContents(data, dataTypes);
+					clipboard.dispose();
+				}
+			}
+		});
+		//
+		buttonClipboard.set(button);
+	}
+
+	private IMeasurementResult<?> getSelection() {
+
+		IMeasurementResult<?> measurementResult = null;
+		//
+		Object object = comboMeasurementResults.get().getStructuredSelection().getFirstElement();
+		if(object instanceof IMeasurementResult<?> result) {
+			measurementResult = result;
+		}
+		//
+		return measurementResult;
 	}
 
 	private void update(IMeasurementResult<?> measurementResult) {
 
 		updateLabel(measurementResult);
-		measurementResultsUI.update(measurementResult);
+		measurementResultsControl.get().update(measurementResult);
+		updateWidgets();
+	}
+
+	private void updateInput() {
+
+		toolbarInfo.get().setText(chromatogram != null ? ChromatogramDataSupport.getChromatogramLabel(chromatogram) : "");
+		updateComboViewerInput();
+		updateWidgets();
+	}
+
+	private void updateWidgets() {
+
+		boolean enabled = false;
+		if(chromatogram != null) {
+			enabled = !chromatogram.getMeasurementResults().isEmpty();
+		}
+		buttonDeleteAll.get().setEnabled(enabled);
+		buttonClipboard.get().setEnabled(enabled);
+		//
+		IMeasurementResult<?> measurementResult = getSelection();
+		buttonDeleteSelected.get().setEnabled(measurementResult != null);
+	}
+
+	private void updateComboViewerInput() {
+
+		List<IMeasurementResult<?>> results = getMeasurementResults(chromatogram);
+		List<Object> measurementResults = new ArrayList<>();
+		measurementResults.add(NO_SELECTION);
+		measurementResults.addAll(results);
+		//
+		IStructuredSelection structuredSelection = comboMeasurementResults.get().getStructuredSelection();
+		Object object = structuredSelection.getFirstElement();
+		comboMeasurementResults.get().setSelection(StructuredSelection.EMPTY);
+		comboMeasurementResults.get().setInput(measurementResults);
+		/*
+		 * Get the selection
+		 */
+		IMeasurementResult<?> selection = null;
+		int index = 0;
+		if(object instanceof IMeasurementResult<?> result) {
+			/*
+			 * Validation
+			 */
+			exitloop:
+			for(int i = 0; i < results.size(); i++) {
+				IMeasurementResult<?> measurementResult = results.get(i);
+				if(measurementResult.getName().equals(result.getName())) {
+					selection = measurementResult;
+					index = i + 1;
+					break exitloop;
+				}
+			}
+		}
+		/*
+		 * Set the selection
+		 */
+		comboMeasurementResults.get().setSelection(selection == null ? StructuredSelection.EMPTY : new StructuredSelection(selection));
+		comboMeasurementResults.get().getCombo().select(index);
+	}
+
+	private List<IMeasurementResult<?>> getMeasurementResults(IChromatogram<?> chromatogram) {
+
+		List<IMeasurementResult<?>> measurementResults = new ArrayList<>();
+		//
+		if(chromatogram != null) {
+			measurementResults.addAll(chromatogram.getMeasurementResults().stream().filter(m -> m.isVisible()).collect(Collectors.toList()));
+			Collections.sort(measurementResults, (r1, r2) -> r1.getName().compareTo(r2.getName()));
+		}
+		//
+		return measurementResults;
 	}
 
 	private void updateLabel(IMeasurementResult<?> measurementResult) {

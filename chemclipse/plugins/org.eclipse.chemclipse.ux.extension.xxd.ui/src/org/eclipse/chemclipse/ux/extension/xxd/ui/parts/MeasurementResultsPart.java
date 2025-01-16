@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,31 +7,26 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.parts;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-
-import jakarta.inject.Inject;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IMeasurementResult;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.MeasurementResultNotification;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ChromatogramDataSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedMeasurementResultUI;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+
+import jakarta.inject.Inject;
 
 public class MeasurementResultsPart extends AbstractPart<ExtendedMeasurementResultUI> {
 
@@ -56,17 +51,14 @@ public class MeasurementResultsPart extends AbstractPart<ExtendedMeasurementResu
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 
-				ISelection selection = event.getSelection();
-				if(selection instanceof IStructuredSelection structuredSelection) {
-					Object element = structuredSelection.getFirstElement();
-					if(element instanceof IMeasurementResult<?>) {
-						measurementResultNotification.select((IMeasurementResult<?>)element);
-					} else {
-						measurementResultNotification.select(null);
+				IMeasurementResult<?> measurementResult = null;
+				if(event.getSelection() instanceof IStructuredSelection structuredSelection) {
+					if(structuredSelection.getFirstElement() instanceof IMeasurementResult<?> measurementResultSelection) {
+						measurementResult = measurementResultSelection;
 					}
-				} else {
-					measurementResultNotification.select(null);
 				}
+				//
+				measurementResultNotification.select(measurementResult);
 			}
 		});
 		//
@@ -76,24 +68,22 @@ public class MeasurementResultsPart extends AbstractPart<ExtendedMeasurementResu
 	@Override
 	protected boolean updateData(List<Object> objects, String topic) {
 
-		Collection<IMeasurementResult<?>> results = Collections.emptyList();
-		String infoLabel = "";
-		//
 		if(objects.size() == 1) {
+			IChromatogram<?> chromatogram = null;
 			Object object = objects.get(0);
 			if(isUpdateEvent(topic)) {
 				if(object instanceof IChromatogramSelection<?, ?> selection) {
-					IChromatogram<?> chromatogram = selection.getChromatogram();
-					results = new ArrayList<>(chromatogram.getMeasurementResults());
-					infoLabel = ChromatogramDataSupport.getChromatogramLabel(chromatogram);
+					chromatogram = selection.getChromatogram();
 				}
 			}
+			//
+			measurementResultNotification.select(null);
+			getControl().setInput(chromatogram);
+			//
+			return true;
 		}
 		//
-		measurementResultNotification.select(null);
-		getControl().setInput(results, infoLabel);
-		//
-		return true;
+		return false;
 	}
 
 	@Override
