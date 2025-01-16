@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2024 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,6 +14,7 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui;
 
 import java.util.Map;
 
+import org.eclipse.chemclipse.processing.supplier.IProcessSupplierContext;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
 import org.eclipse.chemclipse.support.ui.activator.AbstractActivatorUI;
@@ -45,6 +46,7 @@ public class Activator extends AbstractActivatorUI {
 	private ServiceTracker<IAnnotationWidgetService, IAnnotationWidgetService> annotationWidgetServiceTracker = null;
 	private ServiceTracker<IScanIdentifierService, IScanIdentifierService> scanIdentifierServiceTracker = null;
 	private ServiceTracker<IEditorService, IEditorService> editorServiceTracker = null;
+	private static ServiceTracker<IProcessSupplierContext, IProcessSupplierContext> processSupplierServiceTracker;
 
 	/*
 	 * (non-Javadoc)
@@ -138,6 +140,15 @@ public class Activator extends AbstractActivatorUI {
 		return editorServiceTracker.getServices();
 	}
 
+	public static IProcessSupplierContext getProcessSupplierContext() {
+
+		if(processSupplierServiceTracker != null) {
+			return processSupplierServiceTracker.getService();
+		} else {
+			return null;
+		}
+	}
+
 	private void startServices(BundleContext context) {
 
 		moleculeImageServiceTracker = new ServiceTracker<>(context, IMoleculeImageService.class, null);
@@ -151,6 +162,9 @@ public class Activator extends AbstractActivatorUI {
 		//
 		editorServiceTracker = new ServiceTracker<>(context, IEditorService.class, null);
 		editorServiceTracker.open();
+		//
+		processSupplierServiceTracker = new ServiceTracker<>(context, IProcessSupplierContext.class, null);
+		processSupplierServiceTracker.open();
 	}
 
 	private void stopServices() {
@@ -159,6 +173,7 @@ public class Activator extends AbstractActivatorUI {
 		annotationWidgetServiceTracker.close();
 		scanIdentifierServiceTracker.close();
 		editorServiceTracker.close();
+		processSupplierServiceTracker.close();
 	}
 
 	private void initialize(DataUpdateSupport dataUpdateSupport) {

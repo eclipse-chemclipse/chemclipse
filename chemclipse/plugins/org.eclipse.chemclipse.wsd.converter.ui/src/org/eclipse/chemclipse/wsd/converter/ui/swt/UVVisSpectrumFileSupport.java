@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,16 +18,19 @@ import java.util.List;
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException;
 import org.eclipse.chemclipse.converter.scan.IScanConverterSupport;
+import org.eclipse.chemclipse.converter.ui.l10n.ConverterMessagesUI;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.exceptions.TypeCastException;
 import org.eclipse.chemclipse.wsd.converter.core.ScanConverterWSD;
+import org.eclipse.chemclipse.wsd.converter.ui.l10n.UltravioletVisibleSpectroscopy;
 import org.eclipse.chemclipse.wsd.model.core.ISpectrumWSD;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
@@ -68,7 +71,7 @@ public class UVVisSpectrumFileSupport {
 		 */
 		FileDialog dialog = new FileDialog(shell, SWT.SAVE);
 		dialog.setFileName(fileName);
-		dialog.setText("Save Spectrum As...");
+		dialog.setText(ConverterMessagesUI.saveSpectrumAs);
 		dialog.setOverwrite(true);
 		IScanConverterSupport converterSupport = ScanConverterWSD.getScanConverterSupport();
 		/*
@@ -99,7 +102,7 @@ public class UVVisSpectrumFileSupport {
 		boolean overwrite = dialog.getOverwrite();
 		ISupplier selectedSupplier = supplier.get(dialog.getFilterIndex());
 		if(selectedSupplier == null) {
-			MessageDialog.openInformation(shell, "Spectrum Converter", "The requested converter does not exists.");
+			MessageDialog.openInformation(shell, ConverterMessagesUI.spectrumConverter, ConverterMessagesUI.converterDoesNotExist);
 			return;
 		}
 		String filename = dialog.getFilterPath() + File.separator + dialog.getFileName();
@@ -111,9 +114,9 @@ public class UVVisSpectrumFileSupport {
 			 * The file name has been modified. Ask for override if it
 			 * still exists.
 			 */
-			File msFile = new File(filename);
-			if(msFile.exists()) {
-				if(MessageDialog.openQuestion(shell, "Overwrite", "Would you like to overwrite the mass spectra file " + msFile.toString() + "?")) {
+			File file = new File(filename);
+			if(file.exists()) {
+				if(MessageDialog.openQuestion(shell, ConverterMessagesUI.overwrite, NLS.bind(ConverterMessagesUI.overwriteFile, file.toString()))) {
 					overwrite = true;
 				} else {
 					overwrite = false;
@@ -141,7 +144,7 @@ public class UVVisSpectrumFileSupport {
 			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 
 				try {
-					monitor.beginTask("Save IR Spectrum", IProgressMonitor.UNKNOWN);
+					monitor.beginTask(UltravioletVisibleSpectroscopy.saveUVVis, IProgressMonitor.UNKNOWN);
 					IProcessingInfo<File> processingInfo = ScanConverterWSD.convert(file, spectrum, supplier.getId(), monitor);
 					processingInfo.getProcessingResult();
 				} catch(TypeCastException e) {

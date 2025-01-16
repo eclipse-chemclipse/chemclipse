@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -31,7 +31,7 @@ import org.eclipse.chemclipse.ux.extension.ui.editors.IScanEditorVSD;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.runnables.ScanVSDImportRunnable;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.l10n.ExtensionMessages;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedVSDScanUI;
-import org.eclipse.chemclipse.vsd.converter.ui.swt.InfraredSpectrumFileSupport;
+import org.eclipse.chemclipse.vsd.converter.ui.swt.VibrationalSpectroscopyFileSupport;
 import org.eclipse.chemclipse.vsd.model.core.ISpectrumVSD;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
@@ -125,7 +125,7 @@ public class ScanEditorVSD implements IScanEditorVSD {
 	public boolean saveAs() {
 
 		try {
-			InfraredSpectrumFileSupport.saveSpectrum(scanVSD);
+			VibrationalSpectroscopyFileSupport.saveSpectrum(scanVSD);
 		} catch(NoConverterAvailableException e) {
 			return false;
 		}
