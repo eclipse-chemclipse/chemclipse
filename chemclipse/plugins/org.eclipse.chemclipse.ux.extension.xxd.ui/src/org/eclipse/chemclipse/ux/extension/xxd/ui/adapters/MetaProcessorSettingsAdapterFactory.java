@@ -7,7 +7,7 @@
  * Christoph Läubrich - initial API and implementation
  * Philip Wenig - refactoring
  *******************************************************************************/
-package org.eclipse.chemclipse.converter.ui.adapters;
+package org.eclipse.chemclipse.ux.extension.xxd.ui.adapters;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -22,7 +22,6 @@ import java.util.function.BiFunction;
 
 import org.eclipse.chemclipse.converter.methods.MetaProcessorSettings;
 import org.eclipse.chemclipse.converter.methods.MethodConverter;
-import org.eclipse.chemclipse.converter.ui.Activator;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.handler.IModificationHandler;
 import org.eclipse.chemclipse.processing.DataCategory;
@@ -32,6 +31,7 @@ import org.eclipse.chemclipse.processing.methods.IProcessMethod;
 import org.eclipse.chemclipse.processing.supplier.IProcessSupplierContext;
 import org.eclipse.chemclipse.processing.supplier.IProcessorPreferences;
 import org.eclipse.chemclipse.rcp.app.ui.console.MessageConsoleAppender;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.methods.SettingsUIProvider;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedMethodUI;
 import org.eclipse.core.databinding.validation.ValidationStatus;
