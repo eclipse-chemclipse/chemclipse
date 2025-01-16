@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2024 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -248,8 +248,6 @@ public class ProcessorSupport {
 			imageFileName = IApplicationImage.IMAGE_QUANTIFY_ALL_PEAKS;
 			if(processSupplier.getName().contains("ISTD")) {
 				imageFileName = IApplicationImage.IMAGE_INTERNAL_STANDARDS_DEFAULT;
-			} else if(processSupplier.getName().contains("ESTD")) {
-				imageFileName = IApplicationImage.IMAGE_EXTERNAL_STANDARDS_DEFAULT;
 			}
 			if(processSupplier.getName().contains("Add Peaks to DB")) {
 				imageFileName = IApplicationImage.IMAGE_ADD_PEAKS_TO_QUANTITATION_TABLE;
