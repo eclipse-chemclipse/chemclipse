@@ -2,13 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         id="org.eclipse.chemclipse.chromatogram.xxd.quantitation.supplier.chemclipse.ui.modelContribution"
-         point="org.eclipse.e4.workbench.model">
-      <fragment
-            uri="fragment.e4xmi">
-      </fragment>
-   </extension>  
-   <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
             class="org.eclipse.chemclipse.chromatogram.xxd.quantitation.supplier.chemclipse.ui.icon.InternalStandardsMenuIcon"
