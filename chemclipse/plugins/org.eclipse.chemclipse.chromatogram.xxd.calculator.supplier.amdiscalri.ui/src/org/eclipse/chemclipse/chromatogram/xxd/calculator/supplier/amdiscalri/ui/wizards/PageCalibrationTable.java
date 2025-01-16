@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2023 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -69,7 +69,7 @@ public class PageCalibrationTable extends AbstractExtendedWizardPage {
 
 		super.setVisible(visible);
 		if(visible) {
-			IChromatogramSelection<?, ?> chromatogramSelection = wizardElements.getChromatogramSelection();
+			IChromatogramSelection<IPeak, IChromatogram<IPeak>> chromatogramSelection = wizardElements.getChromatogramSelection();
 			if(chromatogramSelection != null && chromatogramSelection.getChromatogram() != null) {
 				IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
 				updateChromatogramChart(chromatogramSelection);
@@ -131,7 +131,6 @@ public class PageCalibrationTable extends AbstractExtendedWizardPage {
 		RetentionIndexTableViewerUI retentionIndexTableViewerUI = extendedRetentionIndexTableViewerUI.getRetentionIndexTableViewerUI();
 		retentionIndexTableViewerUI.getTable().addSelectionListener(new SelectionAdapter() {
 
-			@SuppressWarnings({"rawtypes", "unchecked"})
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
@@ -141,7 +140,7 @@ public class PageCalibrationTable extends AbstractExtendedWizardPage {
 				Object object = tableItem.getData();
 				if(object instanceof IRetentionIndexEntry retentionIndexEntry) {
 					int retentionTime = retentionIndexEntry.getRetentionTime();
-					IChromatogramSelection chromatogramSelection = wizardElements.getChromatogramSelection();
+					IChromatogramSelection<IPeak, IChromatogram<IPeak>> chromatogramSelection = wizardElements.getChromatogramSelection();
 					if(chromatogramSelection != null && chromatogramSelection.getChromatogram() != null) {
 						IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
 						IPeak selectedPeak = getSelectedPeak(chromatogram, retentionTime);

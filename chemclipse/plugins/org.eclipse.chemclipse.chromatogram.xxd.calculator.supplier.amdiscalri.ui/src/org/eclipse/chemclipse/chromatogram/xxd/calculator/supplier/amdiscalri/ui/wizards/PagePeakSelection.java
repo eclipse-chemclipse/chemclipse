@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2023 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -184,13 +184,12 @@ public class PagePeakSelection extends AbstractExtendedWizardPage {
 		});
 	}
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
 	private void propagateChange(int option) {
 
 		Table table = peakTableViewerUI.getTable();
 		int index = table.getSelectionIndex();
 		Object object = peakTableViewerUI.getElementAt(index);
-		IChromatogramSelection chromatogramSelection = wizardElements.getChromatogramSelection();
+		IChromatogramSelection<IPeak, IChromatogram<IPeak>> chromatogramSelection = wizardElements.getChromatogramSelection();
 		if(chromatogramSelection != null && object instanceof IPeak selectedPeak) {
 			/*
 			 * Get the selected peak.
@@ -203,8 +202,8 @@ public class PagePeakSelection extends AbstractExtendedWizardPage {
 					}
 					break;
 				case PEAKS_DELETE:
-					List<? extends IPeak> peaksToDelete = getSelectionChromatogramPeakList();
-					IChromatogram chromatogram = chromatogramSelection.getChromatogram();
+					List<IPeak> peaksToDelete = getSelectionChromatogramPeakList();
+					IChromatogram<IPeak> chromatogram = chromatogramSelection.getChromatogram();
 					chromatogram.removePeaks(peaksToDelete);
 					chromatogramSelection.reset();
 					peakTableViewerUI.setInput(chromatogram.getPeaks());
