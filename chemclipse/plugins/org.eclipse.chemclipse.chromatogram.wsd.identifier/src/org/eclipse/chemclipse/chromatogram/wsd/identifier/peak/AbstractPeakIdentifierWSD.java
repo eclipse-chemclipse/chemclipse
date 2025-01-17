@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -20,7 +20,7 @@ import org.eclipse.chemclipse.model.exceptions.ValueMustNotBeNullException;
 import org.eclipse.chemclipse.support.literature.LiteratureReference;
 import org.eclipse.chemclipse.wsd.model.core.IPeakWSD;
 
-public abstract class AbstractPeakIdentifierWSD<T> implements IPeakIdentifierWSD<T> {
+public abstract class AbstractPeakIdentifierWSD implements IPeakIdentifierWSD {
 
 	private List<LiteratureReference> literatureReferences = new ArrayList<>();
 

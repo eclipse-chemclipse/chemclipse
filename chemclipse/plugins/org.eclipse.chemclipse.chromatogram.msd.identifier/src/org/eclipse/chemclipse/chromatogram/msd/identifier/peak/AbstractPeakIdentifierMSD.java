@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2024 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -13,11 +13,10 @@
 package org.eclipse.chemclipse.chromatogram.msd.identifier.peak;
 
 import org.eclipse.chemclipse.model.exceptions.ValueMustNotBeNullException;
-import org.eclipse.chemclipse.model.identifier.IIdentificationResults;
 import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
 
-public abstract class AbstractPeakIdentifierMSD<T extends IIdentificationResults> implements IPeakIdentifierMSD<T> {
+public abstract class AbstractPeakIdentifierMSD implements IPeakIdentifierMSD {
 
 	/**
 	 * Validates that the peak is not null.<br/>

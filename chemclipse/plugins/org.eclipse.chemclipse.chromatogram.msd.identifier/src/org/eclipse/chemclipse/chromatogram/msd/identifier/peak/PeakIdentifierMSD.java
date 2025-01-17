@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2024 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -21,7 +21,7 @@ import java.util.List;
 import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IPeakIdentifierSettingsMSD;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.exceptions.NoIdentifierAvailableException;
-import org.eclipse.chemclipse.model.identifier.IIdentificationResults;
+import org.eclipse.chemclipse.model.identifier.IPeakIdentificationResults;
 import org.eclipse.chemclipse.model.identifier.core.Identifier;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
@@ -88,15 +88,14 @@ public class PeakIdentifierMSD {
 	 * Returns a {@link IPeakIdentifierMSD} instance given by the identifierId or
 	 * null, if none is available.
 	 */
-	@SuppressWarnings("unchecked")
-	private static <T extends IIdentificationResults> IPeakIdentifierMSD<T> getPeakIdentifier(final String identifierId) {
+	private static IPeakIdentifierMSD getPeakIdentifier(final String identifierId) {
 
 		IConfigurationElement element;
 		element = getConfigurationElement(identifierId);
-		IPeakIdentifierMSD<T> instance = null;
+		IPeakIdentifierMSD instance = null;
 		if(element != null) {
 			try {
-				instance = (IPeakIdentifierMSD<T>)element.createExecutableExtension(Identifier.IDENTIFIER);
+				instance = (IPeakIdentifierMSD)element.createExecutableExtension(Identifier.IDENTIFIER);
 			} catch(CoreException e) {
 				logger.warn(e);
 			}
@@ -153,7 +152,7 @@ public class PeakIdentifierMSD {
 	 * @return {@link IProcessingInfo}
 	 * @throws NoIdentifierAvailableException
 	 */
-	public static <T extends IIdentificationResults> IProcessingInfo<T> identify(IChromatogramPeakMSD peak, IPeakIdentifierSettingsMSD identifierSettings, String identifierId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IPeakIdentificationResults> identify(IChromatogramPeakMSD peak, IPeakIdentifierSettingsMSD identifierSettings, String identifierId, IProgressMonitor monitor) {
 
 		List<IChromatogramPeakMSD> peaks = new ArrayList<>();
 		peaks.add(peak);
@@ -169,7 +168,7 @@ public class PeakIdentifierMSD {
 	 * @return {@link IProcessingInfo}
 	 * @throws NoIdentifierAvailableException
 	 */
-	public static <T extends IIdentificationResults> IProcessingInfo<T> identify(IPeakMSD peak, String identifierId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IPeakIdentificationResults> identify(IPeakMSD peak, String identifierId, IProgressMonitor monitor) {
 
 		return identify(Collections.singletonList(peak), identifierId, monitor);
 	}
@@ -184,9 +183,9 @@ public class PeakIdentifierMSD {
 	 * @return {@link IProcessingInfo}
 	 * @throws NoIdentifierAvailableException
 	 */
-	public static <T extends IIdentificationResults> IProcessingInfo<T> identify(List<? extends IPeakMSD> peaks, IPeakIdentifierSettingsMSD identifierSettings, String identifierId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IPeakIdentificationResults> identify(List<? extends IPeakMSD> peaks, IPeakIdentifierSettingsMSD identifierSettings, String identifierId, IProgressMonitor monitor) {
 
-		IPeakIdentifierMSD<T> peakIdentifier = getPeakIdentifier(identifierId);
+		IPeakIdentifierMSD peakIdentifier = getPeakIdentifier(identifierId);
 		if(peakIdentifier != null) {
 			return peakIdentifier.identify(peaks, identifierSettings, monitor);
 		} else {
@@ -203,18 +202,18 @@ public class PeakIdentifierMSD {
 	 * @return {@link IProcessingInfo}
 	 * @throws NoIdentifierAvailableException
 	 */
-	public static <T extends IIdentificationResults> IProcessingInfo<T> identify(List<? extends IPeakMSD> peaks, String identifierId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IPeakIdentificationResults> identify(List<? extends IPeakMSD> peaks, String identifierId, IProgressMonitor monitor) {
 
 		return identify(peaks, null, identifierId, monitor);
 	}
 
-	public static <T extends IIdentificationResults> IProcessingInfo<T> identify(IChromatogramSelectionMSD chromatogramSelectionMSD, String identifierId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IPeakIdentificationResults> identify(IChromatogramSelectionMSD chromatogramSelectionMSD, String identifierId, IProgressMonitor monitor) {
 
 		chromatogramSelectionMSD.getChromatogram().setDirty(true);
 		return identify(chromatogramSelectionMSD, null, identifierId, monitor);
 	}
 
-	public static <T extends IIdentificationResults> IProcessingInfo<T> identify(IChromatogramSelectionMSD chromatogramSelectionMSD, IPeakIdentifierSettingsMSD peakIdentifierSettingsMSD, String identifierId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IPeakIdentificationResults> identify(IChromatogramSelectionMSD chromatogramSelectionMSD, IPeakIdentifierSettingsMSD peakIdentifierSettingsMSD, String identifierId, IProgressMonitor monitor) {
 
 		chromatogramSelectionMSD.getChromatogram().setDirty(true);
 		return identify(chromatogramSelectionMSD.getChromatogram().getPeaks(chromatogramSelectionMSD), peakIdentifierSettingsMSD, identifierId, monitor);
