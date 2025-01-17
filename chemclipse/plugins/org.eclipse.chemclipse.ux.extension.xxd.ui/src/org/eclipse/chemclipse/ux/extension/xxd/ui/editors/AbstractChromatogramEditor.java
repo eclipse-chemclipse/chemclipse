@@ -281,7 +281,7 @@ public abstract class AbstractChromatogramEditor extends AbstractUpdater<Extende
 		setControl(extendedChromatogramUI);
 		//
 		if(chromatogramSelection != null) {
-			part.setLabel(ChromatogramDataSupport.getChromatogramEditorLabel(chromatogramSelection));
+			part.setLabel(ChromatogramDataSupport.getChromatogramEditorLabel(chromatogramSelection, false));
 			part.setTooltip(ChromatogramDataSupport.getReferenceLabel(chromatogramSelection.getChromatogram(), 0, false));
 			chromatogramSelection.update(true);
 		}

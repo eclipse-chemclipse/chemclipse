@@ -33,6 +33,7 @@ import org.eclipse.chemclipse.model.support.HeaderUtil;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.ChromatogramSelectionMSD;
 import org.eclipse.chemclipse.support.comparator.SortOrder;
+import org.eclipse.chemclipse.support.model.SeparationColumnType;
 import org.eclipse.chemclipse.support.text.ValueFormat;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
@@ -82,8 +83,11 @@ public class ChromatogramDataSupport {
 			builder.append(" ");
 			builder.append(getChromatogramType(chromatogram));
 			if(appendColumnType) {
-				builder.append(" - ");
-				builder.append(getChromatogramColumnType(chromatogram));
+				String columnType = getChromatogramColumnType(chromatogram);
+				if(!SeparationColumnType.DEFAULT.label().equals(columnType)) {
+					builder.append(" - ");
+					builder.append(columnType);
+				}
 			}
 			//
 			label = builder.toString();
