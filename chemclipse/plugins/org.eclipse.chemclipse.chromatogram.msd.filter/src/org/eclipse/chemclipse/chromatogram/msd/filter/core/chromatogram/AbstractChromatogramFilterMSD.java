@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2023 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -17,7 +17,7 @@ import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
 
-public abstract class AbstractChromatogramFilterMSD implements IChromatogramFilterMSD<IChromatogramFilterResult> {
+public abstract class AbstractChromatogramFilterMSD implements IChromatogramFilterMSD {
 
 	private static final String DESCRIPTION = "Chromatogram Filter";
 

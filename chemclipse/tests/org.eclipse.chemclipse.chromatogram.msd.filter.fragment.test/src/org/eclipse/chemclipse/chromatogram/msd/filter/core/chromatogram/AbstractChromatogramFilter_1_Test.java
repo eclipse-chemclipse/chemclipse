@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2023 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.core.chromatogram;
 
-import org.eclipse.chemclipse.chromatogram.filter.result.IChromatogramFilterResult;
 import org.eclipse.chemclipse.chromatogram.filter.settings.IChromatogramFilterSettings;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
@@ -27,7 +26,7 @@ import junit.framework.TestCase;
  */
 public class AbstractChromatogramFilter_1_Test extends TestCase {
 
-	private IChromatogramFilterMSD<IChromatogramFilterResult> filter;
+	private IChromatogramFilterMSD filter;
 	private IChromatogramSelectionMSD chromatogramSelection;
 	private IChromatogramMSD chromatogram;
 	private IChromatogramFilterSettings chromatogramFilterSettings;
