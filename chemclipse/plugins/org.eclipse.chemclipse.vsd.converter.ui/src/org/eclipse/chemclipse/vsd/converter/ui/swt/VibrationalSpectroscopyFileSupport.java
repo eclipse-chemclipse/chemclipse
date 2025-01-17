@@ -23,6 +23,7 @@ import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.exceptions.TypeCastException;
+import org.eclipse.chemclipse.processing.ui.support.ProcessingInfoPartSupport;
 import org.eclipse.chemclipse.vsd.converter.core.ScanConverterVSD;
 import org.eclipse.chemclipse.vsd.converter.ui.l10n.VibrationalSpectroscopyMessages;
 import org.eclipse.chemclipse.vsd.model.core.ISpectrumVSD;
@@ -151,6 +152,7 @@ public class VibrationalSpectroscopyFileSupport {
 						monitor.beginTask(VibrationalSpectroscopyMessages.saveRaman, IProgressMonitor.UNKNOWN);
 					}
 					IProcessingInfo<File> processingInfo = ScanConverterVSD.convert(file, spectrum, supplier.getId(), monitor);
+					ProcessingInfoPartSupport.getInstance().update(processingInfo);
 					processingInfo.getProcessingResult();
 				} catch(TypeCastException e) {
 					logger.warn(e);

@@ -48,7 +48,7 @@ public class ScanConverterWSD {
 
 	public static IProcessingInfo<ISpectrumWSD> convert(final File file, final String converterId, final IProgressMonitor monitor) {
 
-		IProcessingInfo<ISpectrumWSD> processingInfo;
+		IProcessingInfo<ISpectrumWSD> processingInfo = new ProcessingInfo<>();
 		/*
 		 * Do not use a safe runnable here, because an object must
 		 * be returned or null.
@@ -56,8 +56,6 @@ public class ScanConverterWSD {
 		IScanImportConverter importConverter = getScanImportConverter(converterId);
 		if(importConverter != null) {
 			processingInfo = importConverter.convert(file, monitor);
-		} else {
-			processingInfo = getImportProcessingError(file);
 		}
 		return processingInfo;
 	}
@@ -77,7 +75,7 @@ public class ScanConverterWSD {
 	 */
 	private static IProcessingInfo<ISpectrumWSD> getScan(final File file, IProgressMonitor monitor) {
 
-		IProcessingInfo<ISpectrumWSD> processingInfo;
+		IProcessingInfo<ISpectrumWSD> processingInfo = new ProcessingInfo<>();
 		IScanConverterSupport converterSupport = getScanConverterSupport();
 		try {
 			List<String> availableConverterIds = converterSupport.getAvailableConverterIds(file);
@@ -97,12 +95,12 @@ public class ScanConverterWSD {
 		} catch(NoConverterAvailableException e) {
 			logger.info(e);
 		}
-		return getImportProcessingError(file);
+		return processingInfo;
 	}
 
 	public static IProcessingInfo<File> convert(final File file, final ISpectrumWSD scan, final String converterId, final IProgressMonitor monitor) {
 
-		IProcessingInfo<File> processingInfo;
+		IProcessingInfo<File> processingInfo = new ProcessingInfo<>();
 		/*
 		 * Do not use a safe runnable here, because an object must
 		 * be returned or null.
@@ -110,8 +108,6 @@ public class ScanConverterWSD {
 		IScanExportConverter exportConverter = getScanExportConverter(converterId);
 		if(exportConverter != null) {
 			processingInfo = exportConverter.convert(file, scan, monitor);
-		} else {
-			processingInfo = getExportProcessingError(file);
 		}
 		return processingInfo;
 	}
@@ -217,19 +213,5 @@ public class ScanConverterWSD {
 			fileContentMatcher = new NoFileContentMatcher();
 		}
 		return fileContentMatcher;
-	}
-
-	private static IProcessingInfo<File> getExportProcessingError(File file) {
-
-		IProcessingInfo<File> processingInfo = new ProcessingInfo<>();
-		processingInfo.addErrorMessage("Scan Converter", "No suitable export converter was found for: " + file);
-		return processingInfo;
-	}
-
-	private static IProcessingInfo<ISpectrumWSD> getImportProcessingError(File file) {
-
-		IProcessingInfo<ISpectrumWSD> processingInfo = new ProcessingInfo<>();
-		processingInfo.addErrorMessage("Scan Converter", "No suitable import converter was found for: " + file);
-		return processingInfo;
 	}
 }

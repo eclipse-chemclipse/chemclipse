@@ -23,6 +23,7 @@ import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.exceptions.TypeCastException;
+import org.eclipse.chemclipse.processing.ui.support.ProcessingInfoPartSupport;
 import org.eclipse.chemclipse.wsd.converter.core.ScanConverterWSD;
 import org.eclipse.chemclipse.wsd.converter.ui.l10n.UltravioletVisibleSpectroscopy;
 import org.eclipse.chemclipse.wsd.model.core.ISpectrumWSD;
@@ -146,6 +147,7 @@ public class UVVisSpectrumFileSupport {
 				try {
 					monitor.beginTask(UltravioletVisibleSpectroscopy.saveUVVis, IProgressMonitor.UNKNOWN);
 					IProcessingInfo<File> processingInfo = ScanConverterWSD.convert(file, spectrum, supplier.getId(), monitor);
+					ProcessingInfoPartSupport.getInstance().update(processingInfo);
 					processingInfo.getProcessingResult();
 				} catch(TypeCastException e) {
 					logger.warn(e);
