@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -94,15 +94,21 @@ public class ProcessMethodEditor implements IModificationHandler, IChemClipseEdi
 	public void save() {
 
 		if(processMethodFile != null) {
-			IProcessMethod oldMethod = currentProcessMethod;
-			ProcessMethod newMethod = new ProcessMethod(extendedMethodUI.getProcessMethod());
-			IProcessingInfo<?> processingInfo = MethodConverter.convert(processMethodFile, newMethod, MethodConverter.DEFAULT_METHOD_CONVERTER_ID, new NullProgressMonitor());
+			/*
+			 * Update the changed method
+			 */
+			IProcessMethod methodOld = currentProcessMethod;
+			ProcessMethod methodNew = new ProcessMethod(extendedMethodUI.getProcessMethod());
+			/*
+			 * Save
+			 */
+			IProcessingInfo<?> processingInfo = MethodConverter.convert(processMethodFile, methodNew, MethodConverter.DEFAULT_METHOD_CONVERTER_ID, new NullProgressMonitor());
 			if(processingInfo.hasErrorMessages()) {
 				ProcessingInfoPartSupport.getInstance().update(processingInfo);
 			} else {
 				dirtyable.setDirty(false);
-				currentProcessMethod = newMethod;
-				notifications.updated(newMethod, oldMethod);
+				currentProcessMethod = methodNew;
+				notifications.updated(methodNew, methodOld);
 				UpdateNotifierUI.update(Display.getDefault(), IChemClipseEvents.TOPIC_METHOD_UPDATE, currentProcessMethod);
 			}
 		}

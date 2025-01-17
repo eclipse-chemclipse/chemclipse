@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2024 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -116,13 +116,17 @@ public class ResumeMethodDialog extends TitleAreaDialog {
 	private void updateComboViewerProfile() {
 
 		if(container != null) {
+			/*
+			 * Assign the selected profile.
+			 */
+			profile = container.getActiveProfile();
 			ComboViewer comboViewer = comboViewerProfileControl.get();
 			List<String> profiles = new ArrayList<>(container.getProfiles());
 			profiles.remove(ProcessEntryContainer.DEFAULT_PROFILE);
 			Collections.sort(profiles);
 			profiles.add(0, ProcessEntryContainer.DEFAULT_PROFILE);
 			comboViewer.setInput(profiles);
-			comboViewer.setSelection(new StructuredSelection(container.getActiveProfile()));
+			comboViewer.setSelection(new StructuredSelection(profile));
 		}
 	}
 
@@ -136,7 +140,9 @@ public class ResumeMethodDialog extends TitleAreaDialog {
 				processEntries.add(processEntry);
 			}
 		}
-		//
+		/*
+		 * Always select the complete method option.
+		 */
 		ComboViewer comboViewer = comboViewerResumeControl.get();
 		comboViewer.setInput(processEntries);
 		comboViewer.getCombo().select(0);

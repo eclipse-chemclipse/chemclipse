@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -153,14 +153,13 @@ public class MethodConverter {
 		for(ISupplier supplier : converterSupport.getSupplier()) {
 			if(supplier.isExportable() && supplier.getId().equals(converterId)) {
 				IProcessingInfo<Void> processingInfo = new ProcessingInfo<>();
-				IMethodExportConverter exportConverter = getMethodExportConverter(converterId);
 				try {
+					IMethodExportConverter exportConverter = getMethodExportConverter(converterId);
 					exportConverter.convert(file, processMethod, processingInfo, monitor);
 				} catch(IOException e) {
-					ProcessingInfo<Void> info = new ProcessingInfo<>();
-					info.addErrorMessage(NAME_EXPORT, "can't write file " + file, e);
-					return info;
+					processingInfo.addErrorMessage(NAME_EXPORT, "An error occurred writing the method file: " + file, e);
 				}
+				//
 				return processingInfo;
 			}
 		}
