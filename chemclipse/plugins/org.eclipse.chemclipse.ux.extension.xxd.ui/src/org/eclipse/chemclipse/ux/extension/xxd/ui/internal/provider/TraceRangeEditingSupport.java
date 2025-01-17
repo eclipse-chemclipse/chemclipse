@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,7 +11,6 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider;
 
-import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.tsd.model.core.TraceRange;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.TraceRangesListUI;
 import org.eclipse.jface.viewers.CellEditor;
@@ -41,7 +40,14 @@ public class TraceRangeEditingSupport extends EditingSupport {
 	@Override
 	protected boolean canEdit(Object element) {
 
-		return tableViewer.isEditEnabled();
+		boolean canEdit = false;
+		if(tableViewer.isEditEnabled()) {
+			canEdit = column.equals(TraceRangeLabelProvider.SCAN_INDICES_COLUMN2) || //
+					column.equals(TraceRangeLabelProvider.NAME) || //
+					column.equals(TraceRangeLabelProvider.TRACES); //
+		}
+		//
+		return canEdit;
 	}
 
 	@Override
@@ -49,14 +55,6 @@ public class TraceRangeEditingSupport extends EditingSupport {
 
 		if(element instanceof TraceRange stackRange) {
 			switch(column) {
-				case TraceRangeLabelProvider.RETENTION_TIME_COLUMN1_START:
-					return stackRange.getRetentionTimeColumn1Start() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR;
-				case TraceRangeLabelProvider.RETENTION_TIME_COLUMN1_STOP:
-					return stackRange.getRetentionTimeColumn1Stop() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR;
-				case TraceRangeLabelProvider.RETENTION_TIME_COLUMN2_START:
-					return stackRange.getRetentionTimeColumn2Start() / IChromatogramOverview.SECOND_CORRELATION_FACTOR;
-				case TraceRangeLabelProvider.RETENTION_TIME_COLUMN2_STOP:
-					return stackRange.getRetentionTimeColumn2Stop() / IChromatogramOverview.SECOND_CORRELATION_FACTOR;
 				case TraceRangeLabelProvider.SCAN_INDICES_COLUMN2:
 					return stackRange.getScanIndicesColumn2();
 				case TraceRangeLabelProvider.NAME:
@@ -73,18 +71,6 @@ public class TraceRangeEditingSupport extends EditingSupport {
 
 		if(element instanceof TraceRange stackRange) {
 			switch(column) {
-				case TraceRangeLabelProvider.RETENTION_TIME_COLUMN1_START:
-					stackRange.setRetentionTimeColumn1Start(getRetentionTime(value.toString()));
-					break;
-				case TraceRangeLabelProvider.RETENTION_TIME_COLUMN1_STOP:
-					stackRange.setRetentionTimeColumn1Stop(getRetentionTime(value.toString()));
-					break;
-				case TraceRangeLabelProvider.RETENTION_TIME_COLUMN2_START:
-					stackRange.setRetentionTimeColumn2Start(getRetentionTime(value.toString()));
-					break;
-				case TraceRangeLabelProvider.RETENTION_TIME_COLUMN2_STOP:
-					stackRange.setRetentionTimeColumn2Stop(getRetentionTime(value.toString()));
-					break;
 				case TraceRangeLabelProvider.SCAN_INDICES_COLUMN2:
 					stackRange.setScanIndicesColumn2(value.toString());
 					break;
@@ -98,15 +84,6 @@ public class TraceRangeEditingSupport extends EditingSupport {
 			//
 			tableViewer.refresh();
 			tableViewer.updateContent();
-		}
-	}
-
-	private int getRetentionTime(String value) {
-
-		try {
-			return (int)(Double.parseDouble(value) * IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
-		} catch(NumberFormatException e) {
-			return 0;
 		}
 	}
 }

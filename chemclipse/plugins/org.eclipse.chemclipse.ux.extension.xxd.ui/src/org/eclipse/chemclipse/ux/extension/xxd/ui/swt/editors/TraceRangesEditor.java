@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -72,6 +72,7 @@ public class TraceRangesEditor extends Composite implements IChangeListener, IEx
 	private AtomicReference<SearchSupportUI> toolbarSearch = new AtomicReference<>();
 	private AtomicReference<Button> buttonToolbarSearch = new AtomicReference<>();
 	private AtomicReference<Button> buttonAdd = new AtomicReference<>();
+	private AtomicReference<Button> buttonEdit = new AtomicReference<>();
 	private AtomicReference<Button> buttonRemove = new AtomicReference<>();
 	private AtomicReference<Button> buttonRemoveAll = new AtomicReference<>();
 	private AtomicReference<Button> buttonImport = new AtomicReference<>();
@@ -110,6 +111,7 @@ public class TraceRangesEditor extends Composite implements IChangeListener, IEx
 		table.addListener(SWT.MouseDoubleClick, listener);
 		//
 		buttonAdd.get().addListener(SWT.KeyUp, listener);
+		buttonEdit.get().addListener(SWT.KeyUp, listener);
 		buttonRemove.get().addListener(SWT.KeyUp, listener);
 		buttonRemoveAll.get().addListener(SWT.KeyUp, listener);
 		buttonImport.get().addListener(SWT.KeyUp, listener);
@@ -121,6 +123,7 @@ public class TraceRangesEditor extends Composite implements IChangeListener, IEx
 
 		toolbarSearch.get().setEnabled(enabled);
 		buttonAdd.get().setEnabled(enabled);
+		buttonEdit.get().setEnabled(enabled);
 		buttonRemove.get().setEnabled(enabled);
 		buttonRemoveAll.get().setEnabled(enabled);
 		buttonImport.get().setEnabled(enabled);
@@ -192,10 +195,11 @@ public class TraceRangesEditor extends Composite implements IChangeListener, IEx
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.horizontalAlignment = SWT.END;
 		composite.setLayoutData(gridData);
-		composite.setLayout(new GridLayout(6, false));
+		composite.setLayout(new GridLayout(7, false));
 		//
 		createButtonToggleToolbar(composite);
 		createButtonAdd(composite);
+		createButtonEdit(composite);
 		createButtonRemove(composite);
 		createButtonRemoveAll(composite);
 		createButtonImport(composite);
@@ -237,7 +241,7 @@ public class TraceRangesEditor extends Composite implements IChangeListener, IEx
 				InputDialog dialog = new InputDialog(button.getShell(), DIALOG_TITLE, MESSAGE_ADD, EXAMPLE_ENTRY, new TraceRangeInputValidator(traceRanges));
 				if(IDialogConstants.OK_ID == dialog.open()) {
 					String item = dialog.getValue();
-					TraceRange setting = traceRanges.extractRule(item);
+					TraceRange setting = traceRanges.extractTraceRange(item);
 					if(setting != null) {
 						traceRanges.add(setting);
 						setInput();
@@ -247,6 +251,36 @@ public class TraceRangesEditor extends Composite implements IChangeListener, IEx
 		});
 		//
 		buttonAdd.set(button);
+	}
+
+	private void createButtonEdit(Composite parent) {
+
+		Button button = new Button(parent, SWT.PUSH);
+		button.setText("");
+		button.setToolTipText(EDIT_TOOLTIP);
+		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EDIT, IApplicationImageProvider.SIZE_16x16));
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				TraceRange traceRange = getTraceRangeSelected();
+				if(traceRange != null) {
+					InputDialog dialog = new InputDialog(button.getShell(), DIALOG_TITLE, MESSAGE_ADD, traceRanges.extractTraceRange(traceRange), new TraceRangeInputValidator(traceRanges));
+					if(IDialogConstants.OK_ID == dialog.open()) {
+						String item = dialog.getValue();
+						TraceRange setting = traceRanges.extractTraceRange(item);
+						if(setting != null) {
+							traceRanges.remove(traceRange);
+							traceRanges.add(setting);
+							setInput();
+						}
+					}
+				}
+			}
+		});
+		//
+		buttonEdit.set(button);
 	}
 
 	private void createButtonRemove(Composite parent) {
@@ -351,6 +385,15 @@ public class TraceRangesEditor extends Composite implements IChangeListener, IEx
 		});
 		//
 		buttonExport.set(button);
+	}
+
+	private TraceRange getTraceRangeSelected() {
+
+		if(listControl.get().getStructuredSelection().getFirstElement() instanceof TraceRange traceRange) {
+			return traceRange;
+		}
+		//
+		return null;
 	}
 
 	private void setInput() {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -53,9 +53,14 @@ public class TraceRanges extends ArrayList<TraceRange> {
 		return extractRanges(SEPARATOR_TOKEN);
 	}
 
-	public TraceRange extractRule(String item) {
+	public TraceRange extractTraceRange(String item) {
 
 		return extract(item);
+	}
+
+	public String extractTraceRange(TraceRange traceRange) {
+
+		return getTraceRangeAsString(traceRange);
 	}
 
 	public void importRules(File file) {
@@ -96,26 +101,37 @@ public class TraceRanges extends ArrayList<TraceRange> {
 		Iterator<TraceRange> iterator = iterator();
 		//
 		while(iterator.hasNext()) {
-			TraceRange rule = iterator.next();
-			builder.append(TraceRangeSupport.DF_COLUMN_1_MINUTES.format(rule.getRetentionTimeColumn1Start() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
-			addSeparator(builder);
-			builder.append(TraceRangeSupport.DF_COLUMN_1_MINUTES.format(rule.getRetentionTimeColumn1Stop() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
-			addSeparator(builder);
-			builder.append(TraceRangeSupport.DF_COLUMN_2_SECONDS.format(rule.getRetentionTimeColumn2Start() / IChromatogramOverview.SECOND_CORRELATION_FACTOR));
-			addSeparator(builder);
-			builder.append(TraceRangeSupport.DF_COLUMN_2_SECONDS.format(rule.getRetentionTimeColumn2Stop() / IChromatogramOverview.SECOND_CORRELATION_FACTOR));
-			addSeparator(builder);
-			builder.append(rule.getScanIndicesColumn2());
-			addSeparator(builder);
-			builder.append(rule.getName());
-			addSeparator(builder);
-			builder.append(rule.getTraces());
+			TraceRange traceRange = iterator.next();
+			builder.append(getTraceRangeAsString(traceRange));
 			if(iterator.hasNext()) {
 				builder.append(rangeSeparator);
 			}
 		}
 		//
 		return builder.toString().trim();
+	}
+
+	private String getTraceRangeAsString(TraceRange traceRange) {
+
+		StringBuilder builder = new StringBuilder();
+		//
+		if(traceRange != null) {
+			builder.append(TraceRangeSupport.DF_COLUMN_1_MINUTES.format(traceRange.getRetentionTimeColumn1Start() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
+			addSeparator(builder);
+			builder.append(TraceRangeSupport.DF_COLUMN_1_MINUTES.format(traceRange.getRetentionTimeColumn1Stop() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
+			addSeparator(builder);
+			builder.append(TraceRangeSupport.DF_COLUMN_2_SECONDS.format(traceRange.getRetentionTimeColumn2Start() / IChromatogramOverview.SECOND_CORRELATION_FACTOR));
+			addSeparator(builder);
+			builder.append(TraceRangeSupport.DF_COLUMN_2_SECONDS.format(traceRange.getRetentionTimeColumn2Stop() / IChromatogramOverview.SECOND_CORRELATION_FACTOR));
+			addSeparator(builder);
+			builder.append(traceRange.getScanIndicesColumn2());
+			addSeparator(builder);
+			builder.append(traceRange.getName());
+			addSeparator(builder);
+			builder.append(traceRange.getTraces());
+		}
+		//
+		return builder.toString();
 	}
 
 	private TraceRange extract(String text) {
