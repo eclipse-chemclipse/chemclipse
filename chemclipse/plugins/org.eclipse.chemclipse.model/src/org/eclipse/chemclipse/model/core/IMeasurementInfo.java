@@ -112,8 +112,4 @@ public interface IMeasurementInfo extends Serializable {
 	String getTags();
 
 	void setTags(String tags);
-
-	String getColumnDetails();
-
-	void setColumnDetails(String columnDetails);
 }

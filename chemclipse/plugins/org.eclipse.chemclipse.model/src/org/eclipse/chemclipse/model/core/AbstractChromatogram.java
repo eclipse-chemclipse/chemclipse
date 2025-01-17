@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2024 Lablicate GmbH.
+ * Copyright (c) 2012, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -50,6 +50,8 @@ public abstract class AbstractChromatogram<T extends IPeak> extends AbstractMeas
 
 	private static final long serialVersionUID = -2540103992883061431L;
 	private static final Logger logger = Logger.getLogger(AbstractChromatogram.class);
+	//
+	private static final String COLUMN_DETAILS = "Column Details";
 	//
 	private boolean finalized = false;
 	private String converterId = "";
@@ -127,6 +129,19 @@ public abstract class AbstractChromatogram<T extends IPeak> extends AbstractMeas
 		baselineModelMap.put(DEFAULT_BASELINE_ID, new BaselineModel(this));
 		method = new TripleQuadMethod();
 		separationColumnIndices = SeparationColumnFactory.getSeparationColumnIndices(SeparationColumnType.DEFAULT);
+		putHeaderData(COLUMN_DETAILS, "");
+	}
+
+	@Override
+	public String getColumnDetails() {
+
+		return getHeaderData(COLUMN_DETAILS);
+	}
+
+	@Override
+	public void setColumnDetails(String columnDetails) {
+
+		putHeaderData(COLUMN_DETAILS, columnDetails != null ? columnDetails : "");
 	}
 
 	@Override
