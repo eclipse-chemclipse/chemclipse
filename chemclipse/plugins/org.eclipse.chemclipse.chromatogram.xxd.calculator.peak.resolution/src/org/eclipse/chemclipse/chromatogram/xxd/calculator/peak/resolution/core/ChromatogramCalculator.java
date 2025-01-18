@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023 Lablicate GmbH.
+ * Copyright (c) 2023, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -47,12 +47,11 @@ public class ChromatogramCalculator extends AbstractChromatogramCalculator {
 		return applyCalculator(chromatogramSelection);
 	}
 
-	@SuppressWarnings("unchecked")
 	IProcessingInfo<IPeakResolutionResult> applyCalculator(IChromatogramSelection<?, ?> chromatogramSelection) {
 
 		IProcessingInfo<IPeakResolutionResult> processingInfo = new ProcessingInfo<>();
 		PeakResolutionResult peakResolutionResult = new PeakResolutionResult(ResultStatus.OK, Messages.peakResolutionCalculated);
-		applyCalculator((List<IPeak>)chromatogramSelection.getChromatogram().getPeaks(), peakResolutionResult);
+		applyCalculator(chromatogramSelection.getChromatogram().getPeaks(), peakResolutionResult);
 		IMeasurementResult<?> measurementResult = new MeasurementResult(Messages.peakResolution, //
 				"org.eclipse.chemclipse.chromatogram.xxd.calculator.peak.resolution", // //$NON-NLS-1$
 				Messages.peakResolutionDescription, peakResolutionResult);
@@ -61,9 +60,9 @@ public class ChromatogramCalculator extends AbstractChromatogramCalculator {
 		return processingInfo;
 	}
 
-	void applyCalculator(List<IPeak> peaks, PeakResolutionResult peakResolutionResult) {
+	void applyCalculator(List<? extends IPeak> peaks, PeakResolutionResult peakResolutionResult) {
 
-		Iterator<IPeak> iterator = peaks.iterator();
+		Iterator<? extends IPeak> iterator = peaks.iterator();
 		IPeak current = iterator.next();
 		while(iterator.hasNext()) {
 			IPeak next = iterator.next();
