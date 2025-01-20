@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.peak.AbstractPeakIdentifierWSD;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.settings.IPeakIdentifierSettingsWSD;
+import org.eclipse.chemclipse.model.identifier.IPeakIdentificationResults;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramPeakWSD;
@@ -23,12 +24,12 @@ import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.wsd.model.core.IPeakWSD;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-public class PeakIdentifierRemoveUnidentified<T> extends AbstractPeakIdentifierWSD<T> {
+public class PeakIdentifierRemoveUnidentified extends AbstractPeakIdentifierWSD {
 
 	@Override
-	public IProcessingInfo<T> identify(List<? extends IPeakWSD> peaks, IPeakIdentifierSettingsWSD peakIdentifierSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<IPeakIdentificationResults> identify(List<? extends IPeakWSD> peaks, IPeakIdentifierSettingsWSD peakIdentifierSettings, IProgressMonitor monitor) {
 
-		IProcessingInfo<T> processingInfo = new ProcessingInfo<>();
+		IProcessingInfo<IPeakIdentificationResults> processingInfo = new ProcessingInfo<>();
 		/*
 		 * Remove all unidentified peaks.
 		 */
