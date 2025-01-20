@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2024 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -52,20 +52,14 @@ public class XmlReader10 {
 	public static int getTimeMultiplicator(CVParamType cvParam) {
 
 		int multiplicator = 1;
-		if(cvParam.getUnitAccession().equals("UO:0000028")) {
-			if(cvParam.getUnitName().equals("millisecond")) {
-				multiplicator = 1;
-			}
+		if(cvParam.getUnitAccession().equals("UO:0000028") && cvParam.getUnitName().equals("millisecond")) {
+			multiplicator = 1;
 		}
-		if(cvParam.getUnitAccession().equals("UO:0000010")) {
-			if(cvParam.getUnitName().equals("second")) {
-				multiplicator = 1000;
-			}
+		if(cvParam.getUnitAccession().equals("UO:0000010") && cvParam.getUnitName().equals("second")) {
+			multiplicator = 1000;
 		}
-		if(cvParam.getUnitAccession().equals("UO:0000031")) {
-			if(cvParam.getUnitName().equals("minute")) {
-				multiplicator = 60 * 1000;
-			}
+		if(cvParam.getUnitAccession().equals("UO:0000031") && cvParam.getUnitName().equals("minute")) {
+			multiplicator = 60 * 1000;
 		}
 		return multiplicator;
 	}
