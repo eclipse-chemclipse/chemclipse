@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -161,6 +161,12 @@ public class DataExplorerUI extends MultiDataExplorerTreeUI implements IExtended
 		 */
 		if(preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_DATA_SCAN_WSD)) {
 			editorSupportList.add(new SupplierEditorSupport(DataType.SCAN_WSD, () -> context));
+		}
+		/*
+		 * FSD
+		 */
+		if(preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_DATA_SCAN_FSD)) {
+			editorSupportList.add(new SupplierEditorSupport(DataType.SCAN_FSD, () -> context));
 		}
 		/*
 		 * NMR

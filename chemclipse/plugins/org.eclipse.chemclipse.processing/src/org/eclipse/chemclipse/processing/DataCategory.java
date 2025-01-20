@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2024 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,6 +22,7 @@ public enum DataCategory implements ILabel {
 	CSD(TranslationSupport.getTranslationService().translate("%DataCategory.CSD", Activator.getContributorURI())), //
 	WSD(TranslationSupport.getTranslationService().translate("%DataCategory.WSD", Activator.getContributorURI())), //
 	VSD(TranslationSupport.getTranslationService().translate("%DataCategory.VSD", Activator.getContributorURI())), //
+	FSD(TranslationSupport.getTranslationService().translate("%DataCategory.FSD", Activator.getContributorURI())), //
 	TSD(TranslationSupport.getTranslationService().translate("%DataCategory.TSD", Activator.getContributorURI())), //
 	NMR(TranslationSupport.getTranslationService().translate("%DataCategory.NMR", Activator.getContributorURI())), //
 	PCR(TranslationSupport.getTranslationService().translate("%DataCategory.PCR", Activator.getContributorURI())), //

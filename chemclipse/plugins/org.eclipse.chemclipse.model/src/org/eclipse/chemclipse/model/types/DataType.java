@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2024 Lablicate GmbH.
+ * Copyright (c) 2017, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,6 +28,7 @@ public enum DataType implements ILabel {
 	VSD("Vibrational Spectroscopy Data (VSD)"), //
 	SCAN_VSD("Vibrational Spectroscopy Scan (FT-IR, Raman)"), //
 	SCAN_WSD("Wavelength Selective Scan (UV/Vis)"), //
+	SCAN_FSD("Fluorescence Spectroscopy Scan (FS)"), //
 	TSD("Time Selective Data (GC-IMS, GCxGC, ..)"), //
 	NMR("Nuclear Magnetic Resonance"), //
 	CAL("Retention Index Calibration"), //
@@ -45,6 +46,7 @@ public enum DataType implements ILabel {
 		this.label = label;
 	}
 
+	@Override
 	public String label() {
 
 		return label;
