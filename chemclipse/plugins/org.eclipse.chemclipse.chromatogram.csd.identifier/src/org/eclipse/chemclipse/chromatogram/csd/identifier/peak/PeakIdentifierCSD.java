@@ -73,9 +73,9 @@ public class PeakIdentifierCSD {
 		return null;
 	}
 
-	private static <T> IProcessingInfo<T> getNoIdentifierAvailableProcessingInfo() {
+	private static IProcessingInfo<IPeakIdentificationResults> getNoIdentifierAvailableProcessingInfo() {
 
-		IProcessingInfo<T> processingInfo = new ProcessingInfo<>();
+		IProcessingInfo<IPeakIdentificationResults> processingInfo = new ProcessingInfo<>();
 		IProcessingMessage processingMessage = new ProcessingMessage(MessageType.ERROR, ICategories.PEAK_IDENTIFIER, Messages.noIdentifierAvailable);
 		processingInfo.addMessage(processingMessage);
 		return processingInfo;

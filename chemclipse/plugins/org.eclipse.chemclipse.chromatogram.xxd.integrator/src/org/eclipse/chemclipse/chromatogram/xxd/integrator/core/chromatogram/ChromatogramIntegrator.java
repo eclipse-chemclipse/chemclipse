@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2018 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -12,6 +12,7 @@
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.core.chromatogram;
 
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings.chromatogram.IChromatogramIntegrationSettings;
+import org.eclipse.chemclipse.chromatogram.xxd.integrator.result.IChromatogramIntegrationResults;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
@@ -60,6 +61,7 @@ public class ChromatogramIntegrator {
 	 * This class has only static methods.
 	 */
 	private ChromatogramIntegrator() {
+
 	}
 
 	/**
@@ -71,10 +73,10 @@ public class ChromatogramIntegrator {
 	 * @param monitor
 	 * @return {@link IProcessingInfo}
 	 */
-	public static <T> IProcessingInfo<T> integrate(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramIntegrationSettings chromatogramIntegrationSettings, String integratorId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IChromatogramIntegrationResults> integrate(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramIntegrationSettings chromatogramIntegrationSettings, String integratorId, IProgressMonitor monitor) {
 
-		IProcessingInfo<T> processingInfo;
-		IChromatogramIntegrator<T> integrator = getIntegrator(integratorId);
+		IProcessingInfo<IChromatogramIntegrationResults> processingInfo;
+		IChromatogramIntegrator integrator = getIntegrator(integratorId);
 		if(integrator != null) {
 			processingInfo = integrator.integrate(chromatogramSelection, chromatogramIntegrationSettings, monitor);
 		} else {
@@ -91,10 +93,10 @@ public class ChromatogramIntegrator {
 	 * @param monitor
 	 * @return {@link IProcessingInfo}
 	 */
-	public static <T> IProcessingInfo<T> integrate(IChromatogramSelection<?, ?> chromatogramSelection, String integratorId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IChromatogramIntegrationResults> integrate(IChromatogramSelection<?, ?> chromatogramSelection, String integratorId, IProgressMonitor monitor) {
 
-		IProcessingInfo<T> processingInfo;
-		IChromatogramIntegrator<T> integrator = getIntegrator(integratorId);
+		IProcessingInfo<IChromatogramIntegrationResults> processingInfo;
+		IChromatogramIntegrator integrator = getIntegrator(integratorId);
 		if(integrator != null) {
 			processingInfo = integrator.integrate(chromatogramSelection, monitor);
 		} else {
@@ -135,15 +137,14 @@ public class ChromatogramIntegrator {
 	}
 
 	// --------------------------------------------private methods
-	@SuppressWarnings("unchecked")
-	private static <T> IChromatogramIntegrator<T> getIntegrator(final String integratorId) {
+	private static IChromatogramIntegrator getIntegrator(final String integratorId) {
 
 		IConfigurationElement element;
 		element = getConfigurationElement(integratorId);
-		IChromatogramIntegrator<T> instance = null;
+		IChromatogramIntegrator instance = null;
 		if(element != null) {
 			try {
-				instance = (IChromatogramIntegrator<T>)element.createExecutableExtension(INTEGRATOR);
+				instance = (IChromatogramIntegrator)element.createExecutableExtension(INTEGRATOR);
 			} catch(CoreException e) {
 				logger.warn(e);
 			}
@@ -173,9 +174,9 @@ public class ChromatogramIntegrator {
 	}
 
 	// --------------------------------------------private methods
-	private static <T> IProcessingInfo<T> getNoIntegratorAvailableProcessingInfo() {
+	private static IProcessingInfo<IChromatogramIntegrationResults> getNoIntegratorAvailableProcessingInfo() {
 
-		IProcessingInfo<T> processingInfo = new ProcessingInfo<>();
+		IProcessingInfo<IChromatogramIntegrationResults> processingInfo = new ProcessingInfo<>();
 		IProcessingMessage processingMessage = new ProcessingMessage(MessageType.ERROR, "Chromatogram Integrator", NO_INTEGRATOR_AVAILABLE);
 		processingInfo.addMessage(processingMessage);
 		return processingInfo;

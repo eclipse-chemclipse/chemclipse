@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2023 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -78,10 +78,10 @@ public class QuantDBConverter {
 		return getNoImportConverterAvailableProcessingInfo(file);
 	}
 
-	public static <R> IProcessingInfo<R> convert(final File file, final String converterId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IQuantitationDatabase> convert(final File file, final String converterId, IProgressMonitor monitor) {
 
-		IProcessingInfo<R> processingInfo;
-		IQuantDBImportConverter<R> importConverter = getImportConverter(converterId);
+		IProcessingInfo<IQuantitationDatabase> processingInfo;
+		IQuantDBImportConverter importConverter = getImportConverter(converterId);
 		if(importConverter != null) {
 			processingInfo = importConverter.convert(file, monitor);
 		} else {
@@ -110,15 +110,14 @@ public class QuantDBConverter {
 		return processingInfo;
 	}
 
-	@SuppressWarnings("unchecked")
-	private static <R> IQuantDBImportConverter<R> getImportConverter(final String converterId) {
+	private static IQuantDBImportConverter getImportConverter(final String converterId) {
 
 		IConfigurationElement element;
 		element = getConfigurationElement(converterId);
-		IQuantDBImportConverter<R> instance = null;
+		IQuantDBImportConverter instance = null;
 		if(element != null) {
 			try {
-				instance = (IQuantDBImportConverter<R>)element.createExecutableExtension(IMPORT_CONVERTER);
+				instance = (IQuantDBImportConverter)element.createExecutableExtension(IMPORT_CONVERTER);
 			} catch(CoreException e) {
 				logger.error(e);
 			}

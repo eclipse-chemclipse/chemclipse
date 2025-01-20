@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2019 Lablicate GmbH.
+ * Copyright (c) 2014, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,6 +14,7 @@ package org.eclipse.chemclipse.chromatogram.msd.filter.core.massspectrum;
 
 import java.util.List;
 
+import org.eclipse.chemclipse.chromatogram.msd.filter.result.IMassSpectrumFilterResult;
 import org.eclipse.chemclipse.chromatogram.msd.filter.settings.IMassSpectrumFilterSettings;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
@@ -23,17 +24,17 @@ public abstract class AbstractMassSpectrumFilter implements IMassSpectrumFilter 
 
 	private static final String DESCRIPTION = "Mass Spectrum Filter";
 
-	public <T> IProcessingInfo<T> validate(IScanMSD massSpectrum, IMassSpectrumFilterSettings massSpectrumFilterSettings) {
+	public IProcessingInfo<IMassSpectrumFilterResult> validate(IScanMSD massSpectrum, IMassSpectrumFilterSettings massSpectrumFilterSettings) {
 
-		IProcessingInfo<T> processingInfo = new ProcessingInfo<>();
+		IProcessingInfo<IMassSpectrumFilterResult> processingInfo = new ProcessingInfo<>();
 		processingInfo.addMessages(validateMassSpectrum(massSpectrum));
 		processingInfo.addMessages(validateFilterSettings(massSpectrumFilterSettings));
 		return processingInfo;
 	}
 
-	public <T> IProcessingInfo<T> validate(List<IScanMSD> massSpectra, IMassSpectrumFilterSettings massSpectrumFilterSettings) {
+	public IProcessingInfo<IMassSpectrumFilterResult> validate(List<IScanMSD> massSpectra, IMassSpectrumFilterSettings massSpectrumFilterSettings) {
 
-		IProcessingInfo<T> processingInfo = new ProcessingInfo<>();
+		IProcessingInfo<IMassSpectrumFilterResult> processingInfo = new ProcessingInfo<>();
 		processingInfo.addMessages(validateMassSpectra(massSpectra));
 		processingInfo.addMessages(validateFilterSettings(massSpectrumFilterSettings));
 		return processingInfo;
@@ -45,9 +46,9 @@ public abstract class AbstractMassSpectrumFilter implements IMassSpectrumFilter 
 	 * @param massSpectrum
 	 * @return {@link IProcessingInfo}
 	 */
-	private <T> IProcessingInfo<T> validateMassSpectrum(IScanMSD massSpectrum) {
+	private IProcessingInfo<IMassSpectrumFilterResult> validateMassSpectrum(IScanMSD massSpectrum) {
 
-		IProcessingInfo<T> processingInfo = new ProcessingInfo<>();
+		IProcessingInfo<IMassSpectrumFilterResult> processingInfo = new ProcessingInfo<>();
 		if(massSpectrum == null) {
 			processingInfo.addErrorMessage(DESCRIPTION, "The mass spectrum is not valid.");
 		}
@@ -60,9 +61,9 @@ public abstract class AbstractMassSpectrumFilter implements IMassSpectrumFilter 
 	 * @param massSpectra
 	 * @return {@link IProcessingInfo}
 	 */
-	private <T> IProcessingInfo<T> validateMassSpectra(List<IScanMSD> massSpectra) {
+	private IProcessingInfo<IMassSpectrumFilterResult> validateMassSpectra(List<IScanMSD> massSpectra) {
 
-		IProcessingInfo<T> processingInfo = new ProcessingInfo<>();
+		IProcessingInfo<IMassSpectrumFilterResult> processingInfo = new ProcessingInfo<>();
 		if(massSpectra == null) {
 			processingInfo.addErrorMessage(DESCRIPTION, "The mass spectrum list is not valid.");
 		}
@@ -75,9 +76,9 @@ public abstract class AbstractMassSpectrumFilter implements IMassSpectrumFilter 
 	 * @param massSpectrumFilterSettings
 	 * @return {@link IProcessingInfo}
 	 */
-	private <T> IProcessingInfo<T> validateFilterSettings(IMassSpectrumFilterSettings massSpectrumFilterSettings) {
+	private IProcessingInfo<IMassSpectrumFilterResult> validateFilterSettings(IMassSpectrumFilterSettings massSpectrumFilterSettings) {
 
-		IProcessingInfo<T> processingInfo = new ProcessingInfo<>();
+		IProcessingInfo<IMassSpectrumFilterResult> processingInfo = new ProcessingInfo<>();
 		if(massSpectrumFilterSettings == null) {
 			processingInfo.addErrorMessage(DESCRIPTION, "The filter settings are not valid.");
 		}

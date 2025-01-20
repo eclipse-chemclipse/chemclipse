@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2023 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  *
  * All rights reserved. This
  * program and the accompanying materials are made available under the terms of
@@ -162,9 +162,9 @@ public class LibraryService {
 		return null;
 	}
 
-	private static <T> IProcessingInfo<T> getNoIdentifierAvailableProcessingInfo() {
+	private static IProcessingInfo<IMassSpectra> getNoIdentifierAvailableProcessingInfo() {
 
-		IProcessingInfo<T> processingInfo = new ProcessingInfo<>();
+		IProcessingInfo<IMassSpectra> processingInfo = new ProcessingInfo<>();
 		IProcessingMessage processingMessage = new ProcessingMessage(MessageType.ERROR, "Library Service", NO_IDENTIFIER_AVAILABLE);
 		processingInfo.addMessage(processingMessage);
 		return processingInfo;

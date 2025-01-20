@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2023 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -22,7 +22,7 @@ import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-public class ChromatogramIntegrator extends AbstractChromatogramIntegrator<IChromatogramIntegrationResults> {
+public class ChromatogramIntegrator extends AbstractChromatogramIntegrator {
 
 	@Override
 	public IProcessingInfo<IChromatogramIntegrationResults> integrate(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramIntegrationSettings chromatogramIntegrationSettings, IProgressMonitor monitor) {
@@ -34,7 +34,7 @@ public class ChromatogramIntegrator extends AbstractChromatogramIntegrator<IChro
 				IChromatogramIntegrationResults chromatogramIntegrationResults = chromatogramIntegratorSupport.calculateChromatogramIntegrationResults(chromatogramSelectionMSD, settings, monitor);
 				processingInfo.setProcessingResult(chromatogramIntegrationResults);
 			} else {
-				processingInfo.addErrorMessage("Sumarea Integrator", "The settings and/or chromatogram are not of type MSD.");
+				processingInfo.addErrorMessage("Sum Area Integrator", "The settings and/or chromatogram are not of type MSD.");
 			}
 		}
 		return processingInfo;

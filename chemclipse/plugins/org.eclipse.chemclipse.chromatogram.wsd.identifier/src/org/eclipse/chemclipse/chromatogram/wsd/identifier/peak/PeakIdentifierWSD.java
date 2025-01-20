@@ -72,9 +72,9 @@ public class PeakIdentifierWSD {
 		return null;
 	}
 
-	private static <T> IProcessingInfo<T> getNoIdentifierAvailableProcessingInfo() {
+	private static IProcessingInfo<IPeakIdentificationResults> getNoIdentifierAvailableProcessingInfo() {
 
-		IProcessingInfo<T> processingInfo = new ProcessingInfo<>();
+		IProcessingInfo<IPeakIdentificationResults> processingInfo = new ProcessingInfo<>();
 		IProcessingMessage processingMessage = new ProcessingMessage(MessageType.ERROR, "Peak Identifier", NO_IDENTIFIER_AVAILABLE);
 		processingInfo.addMessage(processingMessage);
 		return processingInfo;
