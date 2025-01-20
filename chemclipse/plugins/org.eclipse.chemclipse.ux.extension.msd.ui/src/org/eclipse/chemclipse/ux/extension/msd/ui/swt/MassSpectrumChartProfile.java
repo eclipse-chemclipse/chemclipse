@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,9 +20,6 @@ import java.util.Locale;
 import org.eclipse.chemclipse.chromatogram.msd.filter.core.massspectrum.IMassSpectrumFilterSupplier;
 import org.eclipse.chemclipse.chromatogram.msd.filter.core.massspectrum.IMassSpectrumFilterSupport;
 import org.eclipse.chemclipse.chromatogram.msd.filter.core.massspectrum.MassSpectrumFilter;
-import org.eclipse.chemclipse.chromatogram.msd.identifier.massspectrum.IMassSpectrumIdentifierSupplier;
-import org.eclipse.chemclipse.chromatogram.msd.identifier.massspectrum.IMassSpectrumIdentifierSupport;
-import org.eclipse.chemclipse.chromatogram.msd.identifier.massspectrum.MassSpectrumIdentifier;
 import org.eclipse.chemclipse.model.core.IMassSpectrumPeak;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
@@ -31,15 +28,11 @@ import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
 import org.eclipse.chemclipse.processing.core.ICategories;
-import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
-import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
-import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.chemclipse.support.ui.workbench.PreferencesSupport;
 import org.eclipse.chemclipse.ux.extension.msd.ui.internal.provider.UpdateMenuEntry;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -120,7 +113,6 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 		//
 		chartSettings.addMenuEntry(new UpdateMenuEntry());
 		addMassSpectrumFilter(chartSettings);
-		addMassSpectrumIdentifier(chartSettings);
 		//
 		RangeRestriction rangeRestriction = chartSettings.getRangeRestriction();
 		rangeRestriction.setZeroX(false);
@@ -161,42 +153,6 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 					if(massSpectrum != null) {
 						MassSpectrumFilter.applyFilter(massSpectrum, supplier.getId(), new NullProgressMonitor());
 						massSpectrum.setDirty(true);
-						update();
-					}
-				}
-			});
-		}
-	}
-
-	private void addMassSpectrumIdentifier(IChartSettings chartSettings) {
-
-		IMassSpectrumIdentifierSupport massSpectrumIdentifierSupport = MassSpectrumIdentifier.getMassSpectrumIdentifierSupport();
-		for(IMassSpectrumIdentifierSupplier supplier : massSpectrumIdentifierSupport.getSuppliers()) {
-			chartSettings.addMenuEntry(new IChartMenuEntry() {
-
-				@Override
-				public String getName() {
-
-					return supplier.getIdentifierName();
-				}
-
-				@Override
-				public String getCategory() {
-
-					return ICategories.IDENTIFIER;
-				}
-
-				@Override
-				public Image getIcon() {
-
-					return ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_IDENTIFY_MASS_SPECTRUM, IApplicationImageProvider.SIZE_16x16);
-				}
-
-				@Override
-				public void execute(Shell shell, ScrollableChart scrollableChart) {
-
-					if(massSpectrum != null) {
-						MassSpectrumIdentifier.identify(massSpectrum, supplier.getId(), new NullProgressMonitor());
 						update();
 					}
 				}

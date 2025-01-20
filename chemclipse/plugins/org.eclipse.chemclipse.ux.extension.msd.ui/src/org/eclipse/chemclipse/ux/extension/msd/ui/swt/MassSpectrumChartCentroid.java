@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2023 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,17 +20,27 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.eclipse.chemclipse.chromatogram.msd.identifier.massspectrum.IMassSpectrumIdentifierSupplier;
+import org.eclipse.chemclipse.chromatogram.msd.identifier.massspectrum.IMassSpectrumIdentifierSupport;
+import org.eclipse.chemclipse.chromatogram.msd.identifier.massspectrum.MassSpectrumIdentifier;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
+import org.eclipse.chemclipse.processing.core.ICategories;
+import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
+import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
+import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.chemclipse.support.ui.workbench.PreferencesSupport;
 import org.eclipse.chemclipse.ux.extension.msd.ui.internal.provider.BarSeriesIon;
 import org.eclipse.chemclipse.ux.extension.msd.ui.internal.provider.BarSeriesIonComparator;
 import org.eclipse.chemclipse.ux.extension.msd.ui.internal.provider.UpdateMenuEntry;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swtchart.IAxis.Position;
 import org.eclipse.swtchart.ICustomPaintListener;
 import org.eclipse.swtchart.IPlotArea;
@@ -46,8 +56,10 @@ import org.eclipse.swtchart.extensions.core.IPrimaryAxisSettings;
 import org.eclipse.swtchart.extensions.core.ISecondaryAxisSettings;
 import org.eclipse.swtchart.extensions.core.ISeriesData;
 import org.eclipse.swtchart.extensions.core.RangeRestriction;
+import org.eclipse.swtchart.extensions.core.ScrollableChart;
 import org.eclipse.swtchart.extensions.core.SecondaryAxisSettings;
 import org.eclipse.swtchart.extensions.core.SeriesData;
+import org.eclipse.swtchart.extensions.menu.IChartMenuEntry;
 
 public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrumChart {
 
@@ -112,6 +124,7 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 		chartSettings.setCreateMenu(true);
 		//
 		chartSettings.addMenuEntry(new UpdateMenuEntry());
+		addMassSpectrumIdentifier(chartSettings);
 		//
 		RangeRestriction rangeRestriction = chartSettings.getRangeRestriction();
 		rangeRestriction.setZeroX(false);
@@ -295,5 +308,41 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 		}
 		//
 		return new SeriesData(xSeries, ySeries, "Mass Spectrum");
+	}
+
+	private void addMassSpectrumIdentifier(IChartSettings chartSettings) {
+
+		IMassSpectrumIdentifierSupport massSpectrumIdentifierSupport = MassSpectrumIdentifier.getMassSpectrumIdentifierSupport();
+		for(IMassSpectrumIdentifierSupplier supplier : massSpectrumIdentifierSupport.getSuppliers()) {
+			chartSettings.addMenuEntry(new IChartMenuEntry() {
+
+				@Override
+				public String getName() {
+
+					return supplier.getIdentifierName();
+				}
+
+				@Override
+				public String getCategory() {
+
+					return ICategories.IDENTIFIER;
+				}
+
+				@Override
+				public Image getIcon() {
+
+					return ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_IDENTIFY_MASS_SPECTRUM, IApplicationImageProvider.SIZE_16x16);
+				}
+
+				@Override
+				public void execute(Shell shell, ScrollableChart scrollableChart) {
+
+					if(massSpectrum != null) {
+						MassSpectrumIdentifier.identify(massSpectrum, supplier.getId(), new NullProgressMonitor());
+						update();
+					}
+				}
+			});
+		}
 	}
 }
