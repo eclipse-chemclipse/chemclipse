@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.msd.ui.swt;
 
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -20,28 +22,31 @@ import java.util.Locale;
 import org.eclipse.chemclipse.chromatogram.msd.filter.core.massspectrum.IMassSpectrumFilterSupplier;
 import org.eclipse.chemclipse.chromatogram.msd.filter.core.massspectrum.IMassSpectrumFilterSupport;
 import org.eclipse.chemclipse.chromatogram.msd.filter.core.massspectrum.MassSpectrumFilter;
-import org.eclipse.chemclipse.chromatogram.msd.identifier.massspectrum.IMassSpectrumIdentifierSupplier;
-import org.eclipse.chemclipse.chromatogram.msd.identifier.massspectrum.IMassSpectrumIdentifierSupport;
-import org.eclipse.chemclipse.chromatogram.msd.identifier.massspectrum.MassSpectrumIdentifier;
 import org.eclipse.chemclipse.model.core.IMassSpectrumPeak;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.notifier.UpdateNotifier;
+import org.eclipse.chemclipse.msd.converter.massspectrum.MassSpectrumConverter;
+import org.eclipse.chemclipse.msd.converter.massspectrum.MassSpectrumConverterSupport;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
+import org.eclipse.chemclipse.processing.converter.ISupplier;
 import org.eclipse.chemclipse.processing.core.ICategories;
-import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
-import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
-import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
+import org.eclipse.chemclipse.processing.core.IProcessingInfo;
+import org.eclipse.chemclipse.processing.core.ProcessingInfo;
+import org.eclipse.chemclipse.processing.ui.support.ProcessingInfoPartSupport;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.chemclipse.support.ui.workbench.PreferencesSupport;
 import org.eclipse.chemclipse.ux.extension.msd.ui.internal.provider.UpdateMenuEntry;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swtchart.IAxis.Position;
 import org.eclipse.swtchart.ILineSeries.PlotSymbolType;
@@ -120,7 +125,7 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 		//
 		chartSettings.addMenuEntry(new UpdateMenuEntry());
 		addMassSpectrumFilter(chartSettings);
-		addMassSpectrumIdentifier(chartSettings);
+		addMassSpectrumExport(chartSettings);
 		//
 		RangeRestriction rangeRestriction = chartSettings.getRangeRestriction();
 		rangeRestriction.setZeroX(false);
@@ -161,42 +166,6 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 					if(massSpectrum != null) {
 						MassSpectrumFilter.applyFilter(massSpectrum, supplier.getId(), new NullProgressMonitor());
 						massSpectrum.setDirty(true);
-						update();
-					}
-				}
-			});
-		}
-	}
-
-	private void addMassSpectrumIdentifier(IChartSettings chartSettings) {
-
-		IMassSpectrumIdentifierSupport massSpectrumIdentifierSupport = MassSpectrumIdentifier.getMassSpectrumIdentifierSupport();
-		for(IMassSpectrumIdentifierSupplier supplier : massSpectrumIdentifierSupport.getSuppliers()) {
-			chartSettings.addMenuEntry(new IChartMenuEntry() {
-
-				@Override
-				public String getName() {
-
-					return supplier.getIdentifierName();
-				}
-
-				@Override
-				public String getCategory() {
-
-					return ICategories.IDENTIFIER;
-				}
-
-				@Override
-				public Image getIcon() {
-
-					return ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_IDENTIFY_MASS_SPECTRUM, IApplicationImageProvider.SIZE_16x16);
-				}
-
-				@Override
-				public void execute(Shell shell, ScrollableChart scrollableChart) {
-
-					if(massSpectrum != null) {
-						MassSpectrumIdentifier.identify(massSpectrum, supplier.getId(), new NullProgressMonitor());
 						update();
 					}
 				}
@@ -307,5 +276,72 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 		}
 		labelMarker.setLabels(labels, 1, SWT.VERTICAL);
 		plotarea.addCustomPaintListener(labelMarker);
+	}
+
+	private void addMassSpectrumExport(IChartSettings chartSettings) {
+
+		MassSpectrumConverterSupport converterSupport = MassSpectrumConverter.getMassSpectrumConverterSupport();
+		List<ISupplier> exportSupplier = converterSupport.getExportSupplier();
+		for(ISupplier supplier : exportSupplier) {
+			chartSettings.addMenuEntry(new IChartMenuEntry() {
+
+				@Override
+				public String getName() {
+
+					return supplier.getFilterName();
+				}
+
+				@Override
+				public String getToolTipText() {
+
+					return supplier.getDescription();
+				}
+
+				@Override
+				public String getCategory() {
+
+					return "Export";
+				}
+
+				@Override
+				public void execute(Shell shell, ScrollableChart scrollableChart) {
+
+					if(massSpectrum == null) {
+						return;
+					}
+					FileDialog fileDialog = new FileDialog(shell, SWT.SAVE);
+					fileDialog.setText("Mass Spectrum Export");
+					String fileName = "Mass Spectrum";
+					if(massSpectrum instanceof IStandaloneMassSpectrum standaloneMassSpectrum) {
+						fileName = standaloneMassSpectrum.getName();
+					}
+					fileDialog.setFileName(fileName + "." + supplier.getFileExtension());
+					fileDialog.setFilterExtensions(new String[]{"*" + supplier.getFileExtension()});
+					fileDialog.setFilterNames(new String[]{supplier.getFilterName()});
+					String pathname = fileDialog.open();
+					if(pathname != null) {
+						File file = new File(pathname);
+						ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);
+						try {
+							dialog.run(true, true, new IRunnableWithProgress() {
+
+								@Override
+								public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+
+									IProcessingInfo<File> convert = MassSpectrumConverter.convert(file, massSpectrum, false, supplier.getId(), monitor);
+									ProcessingInfoPartSupport.getInstance().update(convert);
+								}
+							});
+						} catch(InvocationTargetException e) {
+							IProcessingInfo<?> processingInfo = new ProcessingInfo<>();
+							processingInfo.addErrorMessage("MS Export", "Export failed", e.getCause());
+							ProcessingInfoPartSupport.getInstance().update(processingInfo);
+						} catch(InterruptedException e) {
+							Thread.currentThread().interrupt();
+						}
+					}
+				}
+			});
+		}
 	}
 }
