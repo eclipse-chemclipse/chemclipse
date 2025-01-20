@@ -27,7 +27,7 @@
             importContentMatcher="org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.MassSpectrumFileContentMatcher"
             importConverter="org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.MassSpectrumImportConverter"
             importMagicNumberMatcher="org.eclipse.chemclipse.xxd.converter.supplier.mzml.converter.MagicNumberMatcher"
-            isExportable="false"
+            isExportable="true"
             isImportable="true">
       </MassSpectrumSupplier>
    </extension>

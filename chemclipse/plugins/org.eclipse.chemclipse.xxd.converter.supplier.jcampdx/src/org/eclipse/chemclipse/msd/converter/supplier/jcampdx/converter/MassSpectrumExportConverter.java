@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -7,10 +7,9 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
- * Matthias Mailänder - adapted for MALDI
+ * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
-package org.eclipse.chemclipse.msd.converter.supplier.mzxml.converter;
+package org.eclipse.chemclipse.msd.converter.supplier.jcampdx.converter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,7 +20,7 @@ import org.eclipse.chemclipse.converter.l10n.ConverterMessages;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.msd.converter.io.IMassSpectraWriter;
 import org.eclipse.chemclipse.msd.converter.massspectrum.AbstractMassSpectrumExportConverter;
-import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.io.MassSpectrumWriterVersion22;
+import org.eclipse.chemclipse.msd.converter.supplier.jcampdx.io.MassSpectraWriter;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.implementation.MassSpectra;
@@ -33,7 +32,7 @@ import org.eclipse.osgi.util.NLS;
 public class MassSpectrumExportConverter extends AbstractMassSpectrumExportConverter {
 
 	private static final Logger logger = Logger.getLogger(MassSpectrumExportConverter.class);
-	private static final String DESCRIPTION = "mzML Mass Spectra Export Converter";
+	private static final String DESCRIPTION = "JCAMP-DX Mass Spectra Export Converter";
 
 	@Override
 	public IProcessingInfo<File> convert(File file, IScanMSD massSpectrum, boolean append, IProgressMonitor monitor) {
@@ -49,7 +48,7 @@ public class MassSpectrumExportConverter extends AbstractMassSpectrumExportConve
 		IProcessingInfo<File> processingInfo = validate(file, massSpectra);
 		if(!processingInfo.hasErrorMessages()) {
 			try {
-				IMassSpectraWriter massSpectraWriter = new MassSpectrumWriterVersion22();
+				IMassSpectraWriter massSpectraWriter = new MassSpectraWriter();
 				massSpectraWriter.write(file, massSpectra, append, monitor);
 				processingInfo.setProcessingResult(file);
 			} catch(FileNotFoundException e) {
