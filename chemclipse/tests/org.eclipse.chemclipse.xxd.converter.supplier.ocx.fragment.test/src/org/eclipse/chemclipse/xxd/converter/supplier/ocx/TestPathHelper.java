@@ -12,12 +12,6 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.converter.supplier.ocx;
 
-/**
- * THIS CLASS IS NOT SUITED FOR PRODUCTIVE USE!<br/>
- * IT IS A TESTCLASS!
- * 
- * @author eselmeister
- */
 public class TestPathHelper extends PathResolver {
 
 	/*
@@ -43,7 +37,7 @@ public class TestPathHelper extends PathResolver {
 	public static final String TESTFILE_IMPORT_CHROMATOGRAM_1_MSD_1400 = "testData/files/import/Chromatogram1-1400.ocb";
 	public static final String TESTFILE_IMPORT_CHROMATOGRAM_1_MSD_1500 = "testData/files/import/Chromatogram1-1500.ocb";
 	public static final String TESTFILE_IMPORT_CHROMATOGRAM_1_MSD_1501 = "testData/files/import/Chromatogram1-1501.ocb";
-	//
+
 	public static final String TESTFILE_IMPORT_CHROMATOGRAM_2_MSD_0701 = "testData/files/import/Chromatogram2-0701.ocb";
 	public static final String TESTFILE_IMPORT_CHROMATOGRAM_2_MSD_0801 = "testData/files/import/Chromatogram2-0801.ocb";
 	public static final String TESTFILE_IMPORT_CHROMATOGRAM_2_MSD_0802 = "testData/files/import/Chromatogram2-0802.ocb";

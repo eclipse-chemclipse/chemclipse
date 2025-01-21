@@ -21,21 +21,19 @@ import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.exceptions.TypeCastException;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.versions.VersionConstants;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
 import org.junit.Ignore;
 
-import junit.framework.TestCase;
-
 @Ignore
-public class ChromatogramReaderFIDTestCase extends TestCase {
+public class ChromatogramReaderFIDTestCase {
 
 	protected IChromatogramCSD chromatogram;
 	protected String pathImport;
 	protected File fileImport;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		fileImport = new File(this.pathImport);
 		IProcessingInfo<IChromatogramCSD> processingInfo = ChromatogramConverterCSD.getInstance().convert(fileImport, VersionConstants.CONVERTER_ID_CHROMATOGRAM, new NullProgressMonitor());
 		try {
@@ -43,15 +41,5 @@ public class ChromatogramReaderFIDTestCase extends TestCase {
 		} catch(TypeCastException e) {
 			chromatogram = null;
 		}
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		pathImport = null;
-		fileImport = null;
-		chromatogram = null;
-
-		super.tearDown();
 	}
 }

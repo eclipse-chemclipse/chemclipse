@@ -12,159 +12,185 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.converter.supplier.ocx.io;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.msd.model.core.IIonTransitionSettings;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.TestPathHelper;
+import org.junit.Before;
+import org.junit.Test;
 
 public class ChromatogramReader_2_MSD_0701_ITest extends ChromatogramReaderMSDTestCase {
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		pathImport = TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_CHROMATOGRAM_2_MSD_0701);
 		super.setUp();
 	}
 
+	@Test
 	public void testReader_1() {
 
 		assertEquals(207, chromatogram.getNumberOfScans());
 	}
 
+	@Test
 	public void testReader_2() {
 
 		assertEquals("Chromatogram2-0701", chromatogram.getName());
 	}
 
+	@Test
 	public void testReader_3() {
 
 		assertEquals(2030, chromatogram.getNumberOfScanIons());
 	}
 
+	@Test
 	public void testReader_4() {
 
 		assertEquals(925500, chromatogram.getStartRetentionTime());
 	}
 
+	@Test
 	public void testReader_5() {
 
 		assertEquals(1031906, chromatogram.getStopRetentionTime());
 	}
 
+	@Test
 	public void testReader_6() {
 
-		assertEquals(62.8d, chromatogram.getStartIon());
+		assertEquals(62.8d, chromatogram.getStartIon(), 0);
 	}
 
+	@Test
 	public void testReader_7() {
 
-		assertEquals(456.3d, chromatogram.getStopIon());
+		assertEquals(456.3d, chromatogram.getStopIon(), 0);
 	}
 
+	@Test
 	public void testReader_8() {
 
-		assertEquals(3.237204E7f, chromatogram.getMaxSignal());
+		assertEquals(3.237204E7f, chromatogram.getMaxSignal(), 0);
 	}
 
+	@Test
 	public void testReader_9() {
 
-		assertEquals(143985.0f, chromatogram.getMinSignal());
+		assertEquals(143985.0f, chromatogram.getMinSignal(), 0);
 	}
 
+	@Test
 	public void testReader_10() {
 
 		assertEquals(925500, chromatogram.getScanDelay());
 	}
 
+	@Test
 	public void testReader_11() {
 
 		assertEquals(520, chromatogram.getScanInterval());
 	}
 
+	@Test
 	public void testChromatogramReader_12() {
 
 		IScanMSD massSpectrum = chromatogram.getSupplierScan(1);
 		//
 		assertEquals(6, massSpectrum.getNumberOfIons());
-		assertEquals(159.0d, massSpectrum.getLowestIon().getIon());
-		assertEquals(41303.0f, massSpectrum.getLowestIon().getAbundance());
-		assertEquals(456.3d, massSpectrum.getHighestIon().getIon());
-		assertEquals(58610.0f, massSpectrum.getHighestIon().getAbundance());
-		assertEquals(377.4d, massSpectrum.getHighestAbundance().getIon());
-		assertEquals(61234.0f, massSpectrum.getHighestAbundance().getAbundance());
+		assertEquals(159.0d, massSpectrum.getLowestIon().getIon(), 0);
+		assertEquals(41303.0f, massSpectrum.getLowestIon().getAbundance(), 0);
+		assertEquals(456.3d, massSpectrum.getHighestIon().getIon(), 0);
+		assertEquals(58610.0f, massSpectrum.getHighestIon().getAbundance(), 0);
+		assertEquals(377.4d, massSpectrum.getHighestAbundance().getIon(), 0);
+		assertEquals(61234.0f, massSpectrum.getHighestAbundance().getAbundance(), 0);
 		assertEquals(925500, massSpectrum.getRetentionTime());
-		assertEquals(0.0f, massSpectrum.getRetentionIndex());
+		assertEquals(0.0f, massSpectrum.getRetentionIndex(), 0);
 	}
 
+	@Test
 	public void testChromatogramReader_13() {
 
 		IScanMSD massSpectrum = chromatogram.getSupplierScan(92);
 		//
 		assertEquals(11, massSpectrum.getNumberOfIons());
-		assertEquals(135.0d, massSpectrum.getLowestIon().getIon());
-		assertEquals(24425.0f, massSpectrum.getLowestIon().getAbundance());
-		assertEquals(330.0d, massSpectrum.getHighestIon().getIon());
-		assertEquals(89695.0f, massSpectrum.getHighestIon().getAbundance());
-		assertEquals(265.0d, massSpectrum.getHighestAbundance().getIon());
-		assertEquals(176973.0f, massSpectrum.getHighestAbundance().getAbundance());
+		assertEquals(135.0d, massSpectrum.getLowestIon().getIon(), 0);
+		assertEquals(24425.0f, massSpectrum.getLowestIon().getAbundance(), 0);
+		assertEquals(330.0d, massSpectrum.getHighestIon().getIon(), 0);
+		assertEquals(89695.0f, massSpectrum.getHighestIon().getAbundance(), 0);
+		assertEquals(265.0d, massSpectrum.getHighestAbundance().getIon(), 0);
+		assertEquals(176973.0f, massSpectrum.getHighestAbundance().getAbundance(), 0);
 		assertEquals(972500, massSpectrum.getRetentionTime());
-		assertEquals(0.0f, massSpectrum.getRetentionIndex());
+		assertEquals(0.0f, massSpectrum.getRetentionIndex(), 0);
 	}
 
+	@Test
 	public void testChromatogramReader_14() {
 
 		IScanMSD massSpectrum = chromatogram.getSupplierScan(147);
 		//
 		assertEquals(10, massSpectrum.getNumberOfIons());
-		assertEquals(62.9d, massSpectrum.getLowestIon().getIon());
-		assertEquals(5871.0f, massSpectrum.getLowestIon().getAbundance());
-		assertEquals(231.0d, massSpectrum.getHighestIon().getIon());
-		assertEquals(47918.0f, massSpectrum.getHighestIon().getAbundance());
-		assertEquals(81.1d, massSpectrum.getHighestAbundance().getIon());
-		assertEquals(105117.0f, massSpectrum.getHighestAbundance().getAbundance());
+		assertEquals(62.9d, massSpectrum.getLowestIon().getIon(), 0);
+		assertEquals(5871.0f, massSpectrum.getLowestIon().getAbundance(), 0);
+		assertEquals(231.0d, massSpectrum.getHighestIon().getIon(), 0);
+		assertEquals(47918.0f, massSpectrum.getHighestIon().getAbundance(), 0);
+		assertEquals(81.1d, massSpectrum.getHighestAbundance().getIon(), 0);
+		assertEquals(105117.0f, massSpectrum.getHighestAbundance().getAbundance(), 0);
 		assertEquals(1001031, massSpectrum.getRetentionTime());
-		assertEquals(0.0f, massSpectrum.getRetentionIndex());
+		assertEquals(0.0f, massSpectrum.getRetentionIndex(), 0);
 	}
 
+	@Test
 	public void testChromatogramReader_15() {
 
 		IScanMSD massSpectrum = chromatogram.getSupplierScan(207);
 		//
 		assertEquals(15, massSpectrum.getNumberOfIons());
-		assertEquals(78.9d, massSpectrum.getLowestIon().getIon());
-		assertEquals(96610.0f, massSpectrum.getLowestIon().getAbundance());
-		assertEquals(245.0d, massSpectrum.getHighestIon().getIon());
-		assertEquals(43242.0f, massSpectrum.getHighestIon().getAbundance());
-		assertEquals(78.9d, massSpectrum.getHighestAbundance().getIon());
-		assertEquals(96610.0f, massSpectrum.getHighestAbundance().getAbundance());
+		assertEquals(78.9d, massSpectrum.getLowestIon().getIon(), 0);
+		assertEquals(96610.0f, massSpectrum.getLowestIon().getAbundance(), 0);
+		assertEquals(245.0d, massSpectrum.getHighestIon().getIon(), 0);
+		assertEquals(43242.0f, massSpectrum.getHighestIon().getAbundance(), 0);
+		assertEquals(78.9d, massSpectrum.getHighestAbundance().getIon(), 0);
+		assertEquals(96610.0f, massSpectrum.getHighestAbundance().getAbundance(), 0);
 		assertEquals(1031906, massSpectrum.getRetentionTime());
-		assertEquals(0.0f, massSpectrum.getRetentionIndex());
+		assertEquals(0.0f, massSpectrum.getRetentionIndex(), 0);
 	}
 
+	@Test
 	public void testReader_16() {
 
 		assertEquals(0, chromatogram.getPeaks().size());
 	}
 
+	@Test
 	public void testReader_17() {
 
-		assertEquals(0.0d, chromatogram.getPeakIntegratedArea());
+		assertEquals(0.0d, chromatogram.getPeakIntegratedArea(), 0);
 	}
 
+	@Test
 	public void testReader_18() {
 
-		assertEquals(0.0d, chromatogram.getChromatogramIntegratedArea());
+		assertEquals(0.0d, chromatogram.getChromatogramIntegratedArea(), 0);
 	}
 
+	@Test
 	public void testReader_19() {
 
-		assertEquals(0.0d, chromatogram.getBackgroundIntegratedArea());
+		assertEquals(0.0d, chromatogram.getBackgroundIntegratedArea(), 0);
 	}
 
+	@Test
 	public void testReader_20() {
 
-		assertEquals(0.0d, chromatogram.getSampleWeight());
+		assertEquals(0.0d, chromatogram.getSampleWeight(), 0);
 	}
 
+	@Test
 	public void testReader_21() {
 
 		IIonTransitionSettings ionTransitionSettings = chromatogram.getIonTransitionSettings();

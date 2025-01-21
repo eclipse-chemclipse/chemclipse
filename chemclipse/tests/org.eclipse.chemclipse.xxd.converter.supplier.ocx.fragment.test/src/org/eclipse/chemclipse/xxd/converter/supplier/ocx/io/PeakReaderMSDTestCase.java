@@ -20,22 +20,20 @@ import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.exceptions.TypeCastException;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
 import org.junit.Ignore;
 
-import junit.framework.TestCase;
-
 @Ignore
-public class PeakReaderMSDTestCase extends TestCase {
+public class PeakReaderMSDTestCase {
 
 	protected IPeaksMSD peaks;
 	protected String pathImport;
 	protected File fileImport;
 	private static final String EXTENSION_POINT_ID = "org.eclipse.chemclipse.xxd.converter.supplier.chemclipse.peaks";
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		fileImport = new File(this.pathImport);
 		IProcessingInfo<IPeaksMSD> processingInfo = PeakConverterMSD.convert(fileImport, EXTENSION_POINT_ID, new NullProgressMonitor());
 		try {
@@ -43,15 +41,5 @@ public class PeakReaderMSDTestCase extends TestCase {
 		} catch(TypeCastException e) {
 			peaks = null;
 		}
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		pathImport = null;
-		fileImport = null;
-		peaks = null;
-
-		super.tearDown();
 	}
 }

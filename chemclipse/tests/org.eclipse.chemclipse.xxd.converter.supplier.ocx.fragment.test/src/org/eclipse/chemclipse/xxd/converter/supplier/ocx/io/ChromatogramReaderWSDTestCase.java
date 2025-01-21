@@ -21,21 +21,19 @@ import org.eclipse.chemclipse.wsd.converter.chromatogram.ChromatogramConverterWS
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.versions.VersionConstants;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
 import org.junit.Ignore;
 
-import junit.framework.TestCase;
-
 @Ignore
-public class ChromatogramReaderWSDTestCase extends TestCase {
+public class ChromatogramReaderWSDTestCase {
 
 	protected IChromatogramWSD chromatogram;
 	protected String pathImport;
 	protected File fileImport;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		fileImport = new File(this.pathImport);
 		IProcessingInfo<IChromatogramWSD> processingInfo = ChromatogramConverterWSD.getInstance().convert(fileImport, VersionConstants.CONVERTER_ID_CHROMATOGRAM, new NullProgressMonitor());
 		try {
@@ -43,15 +41,5 @@ public class ChromatogramReaderWSDTestCase extends TestCase {
 		} catch(TypeCastException e) {
 			chromatogram = null;
 		}
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		pathImport = null;
-		fileImport = null;
-		chromatogram = null;
-
-		super.tearDown();
 	}
 }

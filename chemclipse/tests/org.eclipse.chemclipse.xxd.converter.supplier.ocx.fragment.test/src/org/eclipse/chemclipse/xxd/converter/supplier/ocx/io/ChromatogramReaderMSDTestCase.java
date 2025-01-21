@@ -23,19 +23,15 @@ import org.eclipse.chemclipse.xxd.converter.supplier.ocx.versions.VersionConstan
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Ignore;
 
-import junit.framework.TestCase;
-
 @Ignore
-public class ChromatogramReaderMSDTestCase extends TestCase {
+public class ChromatogramReaderMSDTestCase {
 
 	protected IChromatogramMSD chromatogram;
 	protected String pathImport;
 	protected File fileImport;
 
-	@Override
-	protected void setUp() throws Exception {
+	public void setUp() throws Exception {
 
-		super.setUp();
 		fileImport = new File(this.pathImport);
 		IProcessingInfo<IChromatogramMSD> processingInfo = ChromatogramConverterMSD.getInstance().convert(fileImport, VersionConstants.CONVERTER_ID_CHROMATOGRAM, new NullProgressMonitor());
 		try {
@@ -43,15 +39,5 @@ public class ChromatogramReaderMSDTestCase extends TestCase {
 		} catch(TypeCastException e) {
 			chromatogram = null;
 		}
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		pathImport = null;
-		fileImport = null;
-		chromatogram = null;
-
-		super.tearDown();
 	}
 }

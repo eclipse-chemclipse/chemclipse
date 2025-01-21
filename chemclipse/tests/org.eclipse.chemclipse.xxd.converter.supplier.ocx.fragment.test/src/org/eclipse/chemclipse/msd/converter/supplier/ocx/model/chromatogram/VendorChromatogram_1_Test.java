@@ -12,10 +12,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
 
-public class VendorChromatogram_1_Test extends TestCase {
+import org.junit.Test;
 
+public class VendorChromatogram_1_Test {
+
+	@Test
 	public void test1() {
 
 		assertFalse(new VendorChromatogram().isParseSeparationColumnEnabled());

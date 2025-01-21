@@ -12,32 +12,38 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.support.model.SeparationColumnType;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class RetentionIndexTypeSupport_1_Test {
 
-public class RetentionIndexTypeSupport_1_Test extends TestCase {
-
+	@Test
 	public void test1() {
 
 		assertEquals("POLAR", RetentionIndexTypeSupport.getBackwardCompatibleName(null));
 	}
 
+	@Test
 	public void test2() {
 
 		assertEquals("POLAR", RetentionIndexTypeSupport.getBackwardCompatibleName(SeparationColumnType.DEFAULT));
 	}
 
+	@Test
 	public void test3() {
 
 		assertEquals("POLAR", RetentionIndexTypeSupport.getBackwardCompatibleName(SeparationColumnType.POLAR));
 	}
 
+	@Test
 	public void test4() {
 
 		assertEquals("SEMIPOLAR", RetentionIndexTypeSupport.getBackwardCompatibleName(SeparationColumnType.SEMI_POLAR));
 	}
 
+	@Test
 	public void test5() {
 
 		assertEquals("APOLAR", RetentionIndexTypeSupport.getBackwardCompatibleName(SeparationColumnType.NON_POLAR));
