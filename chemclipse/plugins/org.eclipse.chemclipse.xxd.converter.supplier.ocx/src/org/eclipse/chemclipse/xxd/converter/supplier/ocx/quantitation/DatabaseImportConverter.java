@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2023 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -24,7 +24,7 @@ import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.quantitation.D
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.quantitation.IDatabaseReader;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-public class DatabaseImportConverter extends AbstractQuantDBImportConverter<IQuantitationDatabase> implements IQuantDBImportConverter<IQuantitationDatabase> {
+public class DatabaseImportConverter extends AbstractQuantDBImportConverter implements IQuantDBImportConverter {
 
 	private static final Logger logger = Logger.getLogger(DatabaseImportConverter.class);
 

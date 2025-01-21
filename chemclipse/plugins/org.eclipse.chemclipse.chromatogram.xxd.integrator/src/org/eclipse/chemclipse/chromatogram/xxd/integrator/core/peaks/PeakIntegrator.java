@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2022 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -15,6 +15,7 @@ package org.eclipse.chemclipse.chromatogram.xxd.integrator.core.peaks;
 import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings.peaks.IPeakIntegrationSettings;
+import org.eclipse.chemclipse.chromatogram.xxd.integrator.result.IPeakIntegrationResults;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
@@ -76,10 +77,10 @@ public class PeakIntegrator {
 	 * @param monitor
 	 * @return {@link IProcessingInfo}
 	 */
-	public static <T> IProcessingInfo<T> integrate(IPeak peak, IPeakIntegrationSettings peakIntegrationSettings, String integratorId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IPeakIntegrationResults> integrate(IPeak peak, IPeakIntegrationSettings peakIntegrationSettings, String integratorId, IProgressMonitor monitor) {
 
-		IProcessingInfo<T> processingInfo;
-		IPeakIntegrator<T> integrator = getPeakIntegrator(integratorId);
+		IProcessingInfo<IPeakIntegrationResults> processingInfo;
+		IPeakIntegrator integrator = getPeakIntegrator(integratorId);
 		if(integrator != null) {
 			processingInfo = integrator.integrate(peak, peakIntegrationSettings, monitor);
 		} else {
@@ -97,10 +98,10 @@ public class PeakIntegrator {
 	 * @param monitor
 	 * @return {@link IProcessingInfo}
 	 */
-	public static <T> IProcessingInfo<T> integrate(List<? extends IPeak> peaks, IPeakIntegrationSettings peakIntegrationSettings, String integratorId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IPeakIntegrationResults> integrate(List<? extends IPeak> peaks, IPeakIntegrationSettings peakIntegrationSettings, String integratorId, IProgressMonitor monitor) {
 
-		IProcessingInfo<T> processingInfo;
-		IPeakIntegrator<T> integrator = getPeakIntegrator(integratorId);
+		IProcessingInfo<IPeakIntegrationResults> processingInfo;
+		IPeakIntegrator integrator = getPeakIntegrator(integratorId);
 		if(integrator != null) {
 			processingInfo = integrator.integrate(peaks, peakIntegrationSettings, monitor);
 		} else {
@@ -117,10 +118,10 @@ public class PeakIntegrator {
 	 * @param monitor
 	 * @return {@link IProcessingInfo}
 	 */
-	public static <T> IProcessingInfo<T> integrate(List<? extends IPeak> peaks, String integratorId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IPeakIntegrationResults> integrate(List<? extends IPeak> peaks, String integratorId, IProgressMonitor monitor) {
 
-		IProcessingInfo<T> processingInfo;
-		IPeakIntegrator<T> integrator = getPeakIntegrator(integratorId);
+		IProcessingInfo<IPeakIntegrationResults> processingInfo;
+		IPeakIntegrator integrator = getPeakIntegrator(integratorId);
 		if(integrator != null) {
 			processingInfo = integrator.integrate(peaks, monitor);
 		} else {
@@ -138,10 +139,10 @@ public class PeakIntegrator {
 	 * @param monitor
 	 * @return {@link IProcessingInfo}
 	 */
-	public static <T> IProcessingInfo<T> integrate(IChromatogramSelection<?, ?> chromatogramSelection, IPeakIntegrationSettings peakIntegrationSettings, String integratorId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IPeakIntegrationResults> integrate(IChromatogramSelection<?, ?> chromatogramSelection, IPeakIntegrationSettings peakIntegrationSettings, String integratorId, IProgressMonitor monitor) {
 
-		IProcessingInfo<T> processingInfo;
-		IPeakIntegrator<T> integrator = getPeakIntegrator(integratorId);
+		IProcessingInfo<IPeakIntegrationResults> processingInfo;
+		IPeakIntegrator integrator = getPeakIntegrator(integratorId);
 		if(integrator != null) {
 			processingInfo = integrator.integrate(chromatogramSelection, peakIntegrationSettings, monitor);
 			chromatogramSelection.getChromatogram().setDirty(true);
@@ -159,10 +160,10 @@ public class PeakIntegrator {
 	 * @param monitor
 	 * @return {@link IProcessingInfo}
 	 */
-	public static <T> IProcessingInfo<T> integrate(IChromatogramSelection<?, ?> chromatogramSelection, String integratorId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IPeakIntegrationResults> integrate(IChromatogramSelection<?, ?> chromatogramSelection, String integratorId, IProgressMonitor monitor) {
 
-		IProcessingInfo<T> processingInfo;
-		IPeakIntegrator<T> integrator = getPeakIntegrator(integratorId);
+		IProcessingInfo<IPeakIntegrationResults> processingInfo;
+		IPeakIntegrator integrator = getPeakIntegrator(integratorId);
 		if(integrator != null) {
 			processingInfo = integrator.integrate(chromatogramSelection, monitor);
 			chromatogramSelection.getChromatogram().setDirty(true);
@@ -203,15 +204,14 @@ public class PeakIntegrator {
 	}
 
 	// --------------------------------------------private methods
-	@SuppressWarnings("unchecked")
-	private static <T> IPeakIntegrator<T> getPeakIntegrator(final String integratorId) {
+	private static IPeakIntegrator getPeakIntegrator(final String integratorId) {
 
 		IConfigurationElement element;
 		element = getConfigurationElement(integratorId);
-		IPeakIntegrator<T> instance = null;
+		IPeakIntegrator instance = null;
 		if(element != null) {
 			try {
-				instance = (IPeakIntegrator<T>)element.createExecutableExtension(INTEGRATOR);
+				instance = (IPeakIntegrator)element.createExecutableExtension(INTEGRATOR);
 			} catch(CoreException e) {
 				logger.warn(e);
 			}
@@ -241,9 +241,9 @@ public class PeakIntegrator {
 	}
 
 	// --------------------------------------------private methods
-	private static <T> IProcessingInfo<T> getNoIntegratorAvailableProcessingInfo() {
+	private static IProcessingInfo<IPeakIntegrationResults> getNoIntegratorAvailableProcessingInfo() {
 
-		IProcessingInfo<T> processingInfo = new ProcessingInfo<>();
+		IProcessingInfo<IPeakIntegrationResults> processingInfo = new ProcessingInfo<>();
 		IProcessingMessage processingMessage = new ProcessingMessage(MessageType.ERROR, "Peak Integrator", NO_INTEGRATOR_AVAILABLE);
 		processingInfo.addMessage(processingMessage);
 		return processingInfo;

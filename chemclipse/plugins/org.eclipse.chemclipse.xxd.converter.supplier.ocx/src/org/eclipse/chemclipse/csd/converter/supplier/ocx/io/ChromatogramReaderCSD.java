@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2024 Lablicate GmbH.
+ * Copyright (c) 2014, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -39,7 +39,6 @@ import org.eclipse.chemclipse.csd.converter.supplier.ocx.model.chromatogram.Vend
 import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
-import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.io.ChromatogramReaderMSD;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.Format;
@@ -165,7 +164,6 @@ public class ChromatogramReaderCSD extends AbstractChromatogramCSDReader impleme
 		return chromatogramReader;
 	}
 
-	@SuppressWarnings("unchecked")
 	private IChromatogramCSD createChromatogramFIDFromMSD(File file, IProgressMonitor monitor) throws IOException {
 
 		IChromatogramCSD chromatogramFID = null;
@@ -175,8 +173,7 @@ public class ChromatogramReaderCSD extends AbstractChromatogramCSDReader impleme
 		if(PreferenceSupplier.isForceLoadAlternateDetector()) {
 			ChromatogramReaderMSD chromatogramReaderMSD = new ChromatogramReaderMSD();
 			IChromatogramOverview chromatogramOverview = chromatogramReaderMSD.readOverview(file, monitor);
-			if(chromatogramOverview instanceof IChromatogram) {
-				IChromatogram<? extends IPeak> chromatogram = (IChromatogram<? extends IPeak>)chromatogramOverview;
+			if(chromatogramOverview instanceof IChromatogram<?> chromatogram) {
 				chromatogramFID = new VendorChromatogram();
 				for(IScan scan : chromatogram.getScans()) {
 					IVendorScan scanCSD = new VendorScan(scan.getRetentionTime(), scan.getTotalSignal());
