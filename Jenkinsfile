@@ -23,7 +23,7 @@ pipeline {
 		buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '1'))
 	}
 	stages {
-		stage('build') {
+		stage('Build') {
 			steps {
 				sh """
 					mvn -B ${params.CODESIGN ? '-P eclipse-sign' : ''} \\
@@ -38,7 +38,7 @@ pipeline {
 				archiveArtifacts 'chemclipse/products/org.eclipse.chemclipse.rcp.compilation.community.product/target/products/*.zip,chemclipse/products/org.eclipse.chemclipse.rcp.compilation.community.product/target/products/*.tar.gz'
 			}
 		}
-		stage('deploy') {
+		stage('Deploy') {
 			steps {
 				sshagent ( ['projects-storage.eclipse.org-bot-ssh']) {
 					sh '''
@@ -50,7 +50,7 @@ pipeline {
 				}
 			}
 		}
-		stage('publish') {
+		stage('Publish') {
 			when {
 				environment name: 'PUBLISH_PRODUCTS', value: 'true'
 			}
