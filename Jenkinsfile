@@ -8,7 +8,6 @@ pipeline {
 		pollSCM('H/5 * * * *')
 	}
 	parameters {
-		booleanParam(name: 'CLEAN_INTEGRATION', defaultValue: false, description: 'Attention: Cleans the integration folder with all branches completely.')
 		booleanParam(name: 'CODESIGN', defaultValue: false, description: 'Sign the artifacts.')
 		booleanParam(name: 'PUBLISH_PRODUCTS', defaultValue: false, description: 'Copy to the compiled products for Windows, macOS and Linux')
 	}
@@ -37,16 +36,6 @@ pipeline {
 				"""
 
 				archiveArtifacts 'chemclipse/products/org.eclipse.chemclipse.rcp.compilation.community.product/target/products/*.zip,chemclipse/products/org.eclipse.chemclipse.rcp.compilation.community.product/target/products/*.tar.gz'
-			}
-		}
-		stage('clean integration') {
-			when {
-				environment name: 'CLEAN_INTEGRATION', value: 'true'
-			}
-			steps {
-				sshagent ( ['projects-storage.eclipse.org-bot-ssh']) {
-					sh "ssh genie.chemclipse@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/chemclipse/integration/"
-				}
 			}
 		}
 		stage('deploy') {
