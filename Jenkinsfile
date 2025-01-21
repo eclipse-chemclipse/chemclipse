@@ -8,7 +8,6 @@ pipeline {
 		pollSCM('H/5 * * * *')
 	}
 	parameters {
-		booleanParam(name: 'CLEAN_INTEGRATION', defaultValue: false, description: 'Attention: Cleans the integration folder with all branches completely.')
 		booleanParam(name: 'CODESIGN', defaultValue: false, description: 'Sign the artifacts.')
 		booleanParam(name: 'PUBLISH_PRODUCTS', defaultValue: false, description: 'Copy to the compiled products for Windows, macOS and Linux')
 	}
@@ -24,7 +23,7 @@ pipeline {
 		buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '1'))
 	}
 	stages {
-		stage('build') {
+		stage('Build') {
 			steps {
 				sh """
 					mvn -B ${params.CODESIGN ? '-P eclipse-sign' : ''} \\
@@ -39,30 +38,11 @@ pipeline {
 				archiveArtifacts 'chemclipse/products/org.eclipse.chemclipse.rcp.compilation.community.product/target/products/*.zip,chemclipse/products/org.eclipse.chemclipse.rcp.compilation.community.product/target/products/*.tar.gz'
 			}
 		}
-		stage('clean integration') {
-			when {
-				environment name: 'CLEAN_INTEGRATION', value: 'true'
-			}
-			steps {
-				sshagent ( ['projects-storage.eclipse.org-bot-ssh']) {
-					sh "ssh genie.chemclipse@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/chemclipse/integration/"
-				}
-			}
-		}
-		stage('clean deploy') {
-			when {
-				environment name: 'CLEAN_WORKSPACE', value: 'true'
-			}
-			steps {
-				sshagent ( ['projects-storage.eclipse.org-bot-ssh']) {
-					sh "ssh genie.chemclipse@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/chemclipse/integration/${BRANCH_NAME}"
-				}
-			}
-		}
-		stage('deploy') {
+		stage('Deploy') {
 			steps {
 				sshagent ( ['projects-storage.eclipse.org-bot-ssh']) {
 					sh '''
+						ssh genie.chemclipse@projects-storage.eclipse.org rm -rf /home/data/httpd/download.eclipse.org/chemclipse/integration/${BRANCH_NAME}
 						ssh genie.chemclipse@projects-storage.eclipse.org mkdir -p /home/data/httpd/download.eclipse.org/chemclipse/integration/${BRANCH_NAME}/repository
 						ssh genie.chemclipse@projects-storage.eclipse.org mkdir -p /home/data/httpd/download.eclipse.org/chemclipse/integration/${BRANCH_NAME}/downloads
 						scp -r chemclipse/sites/chemclipse/target/repository/* genie.chemclipse@projects-storage.eclipse.org:/home/data/httpd/download.eclipse.org/chemclipse/integration/${BRANCH_NAME}/repository
@@ -70,7 +50,7 @@ pipeline {
 				}
 			}
 		}
-		stage('publish') {
+		stage('Publish') {
 			when {
 				environment name: 'PUBLISH_PRODUCTS', value: 'true'
 			}
