@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023, 2024 Lablicate GmbH.
+ * Copyright (c) 2023, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,6 +20,8 @@ public class RetentionIndexLibrarySettings {
 	private boolean caseSensitive = false;
 	private boolean removeWhiteSpace = false;
 	private int retentionIndexDelta = 10;
+	private String specificDatabase = ""; // If empty, take all.
+	//
 	private List<IRetentionIndexLibraryService> retentionIndexLibraryServices = new ArrayList<>();
 
 	public String getSearchColumn() {
@@ -60,6 +62,16 @@ public class RetentionIndexLibrarySettings {
 	public void setRetentionIndexDelta(int retentionIndexDelta) {
 
 		this.retentionIndexDelta = retentionIndexDelta;
+	}
+
+	public String getSpecificDatabase() {
+
+		return specificDatabase;
+	}
+
+	public void setSpecificDatabase(String specificDatabase) {
+
+		this.specificDatabase = specificDatabase;
 	}
 
 	public List<IRetentionIndexLibraryService> getRetentionIndexLibraryServices() {

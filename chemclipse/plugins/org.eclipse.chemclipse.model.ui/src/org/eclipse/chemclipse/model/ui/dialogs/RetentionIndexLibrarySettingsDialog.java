@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023, 2024 Lablicate GmbH.
+ * Copyright (c) 2023, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -58,6 +58,7 @@ public class RetentionIndexLibrarySettingsDialog extends TitleAreaDialog {
 	private AtomicReference<Button> buttonCaseSensitiveControl = new AtomicReference<>();
 	private AtomicReference<Button> buttonRemoveWhitespaceControl = new AtomicReference<>();
 	private AtomicReference<Spinner> spinnerRetentionIndexDeltaControl = new AtomicReference<>();
+	private AtomicReference<Text> textSpecificDatabaseControl = new AtomicReference<>();
 	//
 	private List<IRetentionIndexLibraryService> retentionIndexLibraryServices = LibrarySearchSupport.getRetentionIndexLibraryServices();
 	private RetentionIndexLibrarySettings retentionIndexLibrarySettings = new RetentionIndexLibrarySettings();
@@ -95,6 +96,7 @@ public class RetentionIndexLibrarySettingsDialog extends TitleAreaDialog {
 		createSectionCaseSensitive(composite);
 		createSectionRemoveWhiteSpace(composite);
 		createSectionRetentionIndexDelta(composite);
+		createSectionSpecificDatabase(composite);
 		//
 		initialize();
 		return container;
@@ -118,11 +120,12 @@ public class RetentionIndexLibrarySettingsDialog extends TitleAreaDialog {
 		buttonCaseSensitiveControl.get().setSelection(retentionIndexLibrarySettings.isCaseSensitive());
 		buttonRemoveWhitespaceControl.get().setSelection(retentionIndexLibrarySettings.isRemoveWhiteSpace());
 		spinnerRetentionIndexDeltaControl.get().setSelection(retentionIndexLibrarySettings.getRetentionIndexDelta());
+		textSpecificDatabaseControl.get().setText(retentionIndexLibrarySettings.getSpecificDatabase());
 	}
 
 	private void createComboViewerServices(Composite parent) {
 
-		createLabel(parent, "Use Service(s):");
+		createLabel(parent, "Use Services:");
 		//
 		ComboViewer comboViewer = new EnhancedComboViewer(parent, SWT.READ_ONLY);
 		Combo combo = comboViewer.getCombo();
@@ -249,6 +252,26 @@ public class RetentionIndexLibrarySettingsDialog extends TitleAreaDialog {
 		});
 		//
 		spinnerRetentionIndexDeltaControl.set(spinner);
+	}
+
+	private void createSectionSpecificDatabase(Composite parent) {
+
+		createLabel(parent, "Specific Database:");
+		//
+		Text text = new Text(parent, SWT.BORDER);
+		text.setText("");
+		text.setToolTipText("If set, the name of the database to search must match. Otherwise, take all available into account.");
+		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		text.addModifyListener(new ModifyListener() {
+
+			@Override
+			public void modifyText(ModifyEvent e) {
+
+				retentionIndexLibrarySettings.setSpecificDatabase(text.getText().trim());
+			}
+		});
+		//
+		textSpecificDatabaseControl.set(text);
 	}
 
 	private void createLabel(Composite parent, String text) {
