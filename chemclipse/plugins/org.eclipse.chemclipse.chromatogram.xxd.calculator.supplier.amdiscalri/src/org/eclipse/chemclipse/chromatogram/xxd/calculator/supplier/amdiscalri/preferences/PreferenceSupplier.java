@@ -21,6 +21,7 @@ import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.se
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.settings.ResetterSettings;
 import org.eclipse.chemclipse.support.preferences.AbstractPreferenceSupplier;
 import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
+import org.eclipse.chemclipse.support.settings.UserManagement;
 import org.eclipse.chemclipse.support.util.FileListUtil;
 
 public class PreferenceSupplier extends AbstractPreferenceSupplier implements IPreferenceSupplier {
@@ -43,6 +44,10 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static final boolean DEF_PROCESS_REFERENCED_CHROMATOGRAMS = true;
 	public static final String P_OPEN_REPORT_AFTER_PROCESSING = "openReportAfterProcessing";
 	public static final boolean DEF_OPEN_REPORT_AFTER_PROCESSING = true;
+	public static final String P_USE_DIRECTORY_IMPORT_CALIBRATION_FILES = "useDirectoryImportCalibrationFiles";
+	public static final boolean DEF_USE_DIRECTORY_IMPORT_CALIBRATION_FILES = false;
+	public static final String P_STANDARD_DIRECTORY_IMPORT_CALIBRATION_FILES = "standardDirectoryImportCalibrationFiles";
+	public static final String DEF_STANDARD_DIRECTORY_IMPORT_CALIBRATION_FILES = UserManagement.getUserHome();
 	/*
 	 * Alkane Identifier
 	 */
@@ -59,7 +64,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static final float MIN_MIN_REVERSE_MATCH_FACTOR = 0.0f;
 	public static final float MAX_MIN_REVERSE_MATCH_FACTOR = 100.0f;
 	/*
-	 * Cal Export
+	 * Calibration File Export
 	 */
 	public static final String P_CALIBRATION_EXPORT_USE_CURATED_NAMES = "calibrationExportUseCuratedNames";
 	public static final boolean DEF_CALIBRATION_EXPORT_USE_CURATED_NAMES = true;
@@ -109,6 +114,8 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 		putDefault(P_CALIBRATION_EXPORT_USE_CURATED_NAMES, Boolean.toString(DEF_CALIBRATION_EXPORT_USE_CURATED_NAMES));
 		putDefault(P_CALIBRATION_EXPORT_DERIVE_MISSING_INDICES, Boolean.toString(DEF_CALIBRATION_EXPORT_DERIVE_MISSING_INDICES));
 		putDefault(P_OPEN_REPORT_AFTER_PROCESSING, Boolean.toString(DEF_OPEN_REPORT_AFTER_PROCESSING));
+		putDefault(P_USE_DIRECTORY_IMPORT_CALIBRATION_FILES, DEF_USE_DIRECTORY_IMPORT_CALIBRATION_FILES);
+		putDefault(P_STANDARD_DIRECTORY_IMPORT_CALIBRATION_FILES, DEF_STANDARD_DIRECTORY_IMPORT_CALIBRATION_FILES);
 		//
 		putDefault(P_FILTER_PATH_INDEX_FILES, DEF_FILTER_PATH_INDEX_FILES);
 		putDefault(P_FILTER_PATH_MODELS_MSD, DEF_FILTER_PATH_MODELS_MSD);
@@ -207,6 +214,21 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static boolean isOpenReportAfterProcessing() {
 
 		return INSTANCE().getBoolean(P_OPEN_REPORT_AFTER_PROCESSING, DEF_OPEN_REPORT_AFTER_PROCESSING);
+	}
+
+	public static boolean isUseDirectoryImportCalibrationFiles() {
+
+		return INSTANCE().getBoolean(P_USE_DIRECTORY_IMPORT_CALIBRATION_FILES, DEF_USE_DIRECTORY_IMPORT_CALIBRATION_FILES);
+	}
+
+	public static String getStandardDirectoryImportCalibrationFiles() {
+
+		return INSTANCE().get(P_STANDARD_DIRECTORY_IMPORT_CALIBRATION_FILES, DEF_STANDARD_DIRECTORY_IMPORT_CALIBRATION_FILES);
+	}
+
+	public static void setStandardDirectoryImportCalibrationFiles(String standardPath) {
+
+		INSTANCE().set(P_STANDARD_DIRECTORY_IMPORT_CALIBRATION_FILES, standardPath);
 	}
 
 	private static CalculatorStrategy getCalculatorStrategy() {

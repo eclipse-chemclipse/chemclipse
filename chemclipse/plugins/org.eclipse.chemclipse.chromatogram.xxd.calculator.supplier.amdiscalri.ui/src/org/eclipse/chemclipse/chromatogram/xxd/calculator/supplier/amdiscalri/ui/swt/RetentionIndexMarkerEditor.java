@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2024 Lablicate GmbH.
+ * Copyright (c) 2022, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -343,10 +343,34 @@ public class RetentionIndexMarkerEditor extends Composite implements IChangeList
 				fileDialog.setText(IMPORT_TITLE_FILE);
 				fileDialog.setFilterExtensions(new String[]{CalibrationFile.FILTER_EXTENSION + ";" + CalibrationFile.FILTER_EXTENSION.toUpperCase()});
 				fileDialog.setFilterNames(new String[]{CalibrationFile.FILTER_NAME});
-				fileDialog.setFilterPath(PreferenceSupplier.getListPathImportFile());
+				/*
+				 * Import *.cal files from a specified directory.
+				 */
+				boolean useDirectoryImportCalibrationFiles = PreferenceSupplier.isUseDirectoryImportCalibrationFiles();
+				File standardDirectory = new File(PreferenceSupplier.getStandardDirectoryImportCalibrationFiles());
+				if(useDirectoryImportCalibrationFiles && standardDirectory.exists()) {
+					fileDialog.setFilterPath(standardDirectory.getAbsolutePath());
+				} else {
+					fileDialog.setFilterPath(PreferenceSupplier.getListPathImportFile());
+				}
+				/*
+				 * 
+				 */
 				String path = fileDialog.open();
 				if(path != null) {
-					PreferenceSupplier.setListPathImportFile(fileDialog.getFilterPath());
+					/*
+					 * Save the selected path or update the standard directory.
+					 */
+					if(useDirectoryImportCalibrationFiles) {
+						if(!standardDirectory.exists()) {
+							PreferenceSupplier.setStandardDirectoryImportCalibrationFiles(fileDialog.getFilterPath());
+						}
+					} else {
+						PreferenceSupplier.setListPathImportFile(fileDialog.getFilterPath());
+					}
+					/*
+					 * Import the *.cal file.
+					 */
 					File file = new File(path);
 					CalibrationFile calibrationFile = new CalibrationFile(file);
 					retentionIndexMarker.addAll(calibrationFile.getSeparationColumnIndices().values());
