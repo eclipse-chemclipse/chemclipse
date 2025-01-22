@@ -12,6 +12,7 @@
 package org.eclipse.chemclipse.chromatogram.filter.system;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -58,7 +59,7 @@ public class FilterIonRounding extends AbstractSystemProcessSettings {
 
 		String content;
 		try {
-			content = new String(FilterIonRounding.class.getResourceAsStream("9294.ris").readAllBytes(), "UTF-8");
+			content = new String(FilterIonRounding.class.getResourceAsStream("9294.ris").readAllBytes(), StandardCharsets.UTF_8);
 		} catch(IOException e) {
 			content = "https://doi.org/10.1002/rcm.9294";
 		}
