@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2024 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -58,7 +58,7 @@ public class FilterIonRounding extends AbstractSystemProcessSettings {
 
 		String content;
 		try {
-			content = new String(FilterIonRounding.class.getResourceAsStream("9294.ris").readAllBytes());
+			content = new String(FilterIonRounding.class.getResourceAsStream("9294.ris").readAllBytes(), "UTF-8");
 		} catch(IOException e) {
 			content = "https://doi.org/10.1002/rcm.9294";
 		}
