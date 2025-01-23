@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2024 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -50,6 +50,7 @@ public class ExtensionMessages extends NLS {
 	public static String editorNMR;
 	public static String editorVSD;
 	public static String editorWSD;
+	public static String editorFSD;
 	public static String sequenceEditor;
 	public static String adjustChromatogramEditor;
 	public static String chromatogramEditorReset;
@@ -343,6 +344,7 @@ public class ExtensionMessages extends NLS {
 	public static String absorbance;
 	public static String wavenumber;
 	public static String wavelength;
+	public static String intensity;
 	public static String process;
 	public static String selectProfile;
 	public static String tooltipRecordMethod;

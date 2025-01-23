@@ -80,6 +80,7 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_SCAN_VSD_INVERTED = "scan-vsd-inverted.gif";
 	String IMAGE_SCAN_NMR = "scan-nmr.gif";
 	String IMAGE_SCAN_FID = "scan-fid.png";
+	String IMAGE_SCAN_FSD = "scan-fsd.png"; // fluorimetry
 	//
 	String IMAGE_SAMPLE = "sample.gif";
 	String IMAGE_SAMPLE_CALIBRATION = "sample-calibration.gif";

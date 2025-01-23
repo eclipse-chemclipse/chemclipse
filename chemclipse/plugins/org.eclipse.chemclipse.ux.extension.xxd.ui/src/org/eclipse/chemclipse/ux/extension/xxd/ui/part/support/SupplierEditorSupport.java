@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -23,6 +23,7 @@ import org.eclipse.chemclipse.converter.methods.MethodConverter;
 import org.eclipse.chemclipse.converter.quantitation.QuantDBConverter;
 import org.eclipse.chemclipse.converter.sequence.SequenceConverter;
 import org.eclipse.chemclipse.csd.converter.chromatogram.ChromatogramConverterCSD;
+import org.eclipse.chemclipse.fsd.converter.core.ScanConverterFSD;
 import org.eclipse.chemclipse.model.core.IMeasurement;
 import org.eclipse.chemclipse.model.core.IMeasurementInfo;
 import org.eclipse.chemclipse.model.core.support.HeaderField;
@@ -48,6 +49,7 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.editors.ChromatogramEditorWSD;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.editors.PlateEditorPCR;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.editors.ProcessMethodEditor;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.editors.QuantitationDatabaseEditor;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.editors.ScanEditorFSD;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.editors.ScanEditorNMR;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.editors.ScanEditorVSD;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.editors.ScanEditorWSD;
@@ -112,6 +114,9 @@ public class SupplierEditorSupport extends AbstractSupplierFileEditorSupport imp
 				break;
 			case SCAN_WSD:
 				supplier = ScanConverterWSD.getScanConverterSupport().getSupplier();
+				break;
+			case SCAN_FSD:
+				supplier = ScanConverterFSD.getScanConverterSupport().getSupplier();
 				break;
 			case NMR:
 				supplier = ScanConverterNMR.getScanConverterSupport().getSupplier();
@@ -302,6 +307,15 @@ public class SupplierEditorSupport extends AbstractSupplierFileEditorSupport imp
 				tooltip = ScanEditorWSD.TOOLTIP;
 				topicUpdateRawfile = IChemClipseEvents.TOPIC_SCAN_WSD_UPDATE_RAWFILE;
 				topicUpdateOverview = IChemClipseEvents.TOPIC_SCAN_WSD_UPDATE_OVERVIEW;
+				break;
+			case SCAN_FSD:
+				type = TYPE_SCAN_FSD;
+				elementId = ScanEditorFSD.ID;
+				contributionURI = ScanEditorFSD.CONTRIBUTION_URI;
+				iconURI = ScanEditorFSD.ICON_URI;
+				tooltip = ScanEditorFSD.TOOLTIP;
+				topicUpdateRawfile = IChemClipseEvents.TOPIC_SCAN_FSD_UPDATE_RAWFILE;
+				topicUpdateOverview = IChemClipseEvents.TOPIC_SCAN_FSD_UPDATE_OVERVIEW;
 				break;
 			case NMR:
 				type = TYPE_NMR;

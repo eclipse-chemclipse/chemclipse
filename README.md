@@ -15,6 +15,7 @@ Currently it offers workflows in the following areas:
     * infrared spectroscopy (FTIR, NIR, MIR)
     * raman spectroscopy (Raman)
   * ultraviolet–visible spectroscopy (UV/Vis)
+  * fluorescence spectroscopy (aka fluorimetry or spectrofluorometry)
 * molecular biology
   * real-time polymerase chain reaction (PCR)
 

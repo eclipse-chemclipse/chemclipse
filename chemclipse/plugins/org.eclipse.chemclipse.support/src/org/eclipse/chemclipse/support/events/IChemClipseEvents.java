@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2024 Lablicate GmbH.
+ * Copyright (c) 2012, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -26,6 +26,7 @@ public interface IChemClipseEvents {
 	String TOPIC_CHROMATOGRAM_TSD_UPDATE_RAWFILE = "chromatogram/tsd/update/rawfile";
 	String TOPIC_SCAN_VSD_UPDATE_RAWFILE = "scan/vsd/update/rawfile";
 	String TOPIC_SCAN_WSD_UPDATE_RAWFILE = "scan/wsd/update/rawfile";
+	String TOPIC_SCAN_FSD_UPDATE_RAWFILE = "scan/fsd/update/rawfile";
 	String TOPIC_SCAN_NMR_UPDATE_RAWFILE = "scan/nmr/update/rawfile";
 	String TOPIC_PLATE_PCR_UPDATE_RAWFILE = "plate/pcr/update/rawfile";
 	String TOPIC_SEQUENCE_UPDATE_RAWFILE = "sequence/update/rawfile";
@@ -42,6 +43,7 @@ public interface IChemClipseEvents {
 	String TOPIC_SCAN_NMR_UPDATE_OVERVIEW = "scan/nmr/update/overview";
 	String TOPIC_SCAN_VSD_UPDATE_OVERVIEW = "scan/vsd/update/overview";
 	String TOPIC_SCAN_WSD_UPDATE_OVERVIEW = "scan/wsd/update/overview";
+	String TOPIC_SCAN_FSD_UPDATE_OVERVIEW = "scan/wsd/update/overview";
 	String TOPIC_SEQUENCE_UPDATE_OVERVIEW = "sequence/update/overview";
 	String TOPIC_MASS_SPECTRUM_UPDATE_OVERVIEW = "spectrum/ms/update/overview";
 	String TOPIC_METHOD_UPDATE_OVERVIEW = "method/update/overview";
@@ -114,6 +116,7 @@ public interface IChemClipseEvents {
 	String TOPIC_EDITOR_NMR_CLOSE = "editor/nmr/close";
 	String TOPIC_EDITOR_VSD_CLOSE = "editor/vsd/close";
 	String TOPIC_EDITOR_WSD_CLOSE = "editor/wsd/close";
+	String TOPIC_EDITOR_FSD_CLOSE = "editor/fsd/close";
 	String TOPIC_EDITOR_PCA_CLOSE = "editor/pca/close";
 	//
 	String TOPIC_EDITOR_CHROMATOGRAM_TOOLBAR_UPDATE = "editor/chromatogram/toolbar/update";
