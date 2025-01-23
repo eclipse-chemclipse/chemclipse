@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2024 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -23,7 +23,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.eclipse.chemclipse.model.core.IPeak;
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.quantitation.IQuantitationEntry;
@@ -38,13 +37,13 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Samples;
 
 public class PeakTargetExtractor extends AbstractClassifierDescriptionExtractor {
 
-	public Samples extractPeakData(Map<IDataInputEntry, IPeaks<IPeak>> peaks, DescriptionOption descriptionOption, ValueOption valueOption) {
+	public Samples extractPeakData(Map<IDataInputEntry, List<IPeak>> peaks, DescriptionOption descriptionOption, ValueOption valueOption) {
 
 		List<Sample> samplesList = new ArrayList<>();
 		peaks.keySet().forEach(d -> samplesList.add(new Sample(d.getSampleName(), d.getGroupName())));
 		Samples samples = new Samples(samplesList);
 		//
-		Map<String, IPeaks<IPeak>> peakMap = new LinkedHashMap<>();
+		Map<String, List<IPeak>> peakMap = new LinkedHashMap<>();
 		peaks.forEach((dataInputEntry, peaksInput) -> {
 			peakMap.put(dataInputEntry.getSampleName(), peaksInput);
 		});
@@ -59,12 +58,12 @@ public class PeakTargetExtractor extends AbstractClassifierDescriptionExtractor 
 		return samples;
 	}
 
-	private Set<String> extractPeakTargets(Collection<IPeaks<IPeak>> peaksCollection) {
+	private Set<String> extractPeakTargets(Collection<List<IPeak>> peaksCollection) {
 
 		Set<String> targets = new HashSet<>();
 		//
-		for(IPeaks<?> peaks : peaksCollection) {
-			for(IPeak peak : peaks.getPeaks()) {
+		for(List<IPeak> peaks : peaksCollection) {
+			for(IPeak peak : peaks) {
 				ILibraryInformation libraryInformation = IIdentificationTarget.getLibraryInformation(peak);
 				if(libraryInformation != null) {
 					targets.add(libraryInformation.getName());
@@ -75,16 +74,16 @@ public class PeakTargetExtractor extends AbstractClassifierDescriptionExtractor 
 		return targets;
 	}
 
-	private Map<String, SortedMap<String, IPeak>> exctractPcaPeakMap(Map<String, IPeaks<IPeak>> peakMap) {
+	private Map<String, SortedMap<String, IPeak>> exctractPcaPeakMap(Map<String, List<IPeak>> peakMap) {
 
 		Map<String, SortedMap<String, IPeak>> pcaPeaks = new LinkedHashMap<>();
 		//
-		for(Map.Entry<String, IPeaks<IPeak>> peakEnry : peakMap.entrySet()) {
+		for(Map.Entry<String, List<IPeak>> peakEnry : peakMap.entrySet()) {
 			String name = peakEnry.getKey();
-			IPeaks<IPeak> peaks = peakEnry.getValue();
+			List<IPeak> peaks = peakEnry.getValue();
 			TreeMap<String, IPeak> peakTree = new TreeMap<>();
 			//
-			for(IPeak peak : peaks.getPeaks()) {
+			for(IPeak peak : peaks) {
 				String target;
 				ILibraryInformation libraryInformation = IIdentificationTarget.getLibraryInformation(peak);
 				if(libraryInformation != null) {

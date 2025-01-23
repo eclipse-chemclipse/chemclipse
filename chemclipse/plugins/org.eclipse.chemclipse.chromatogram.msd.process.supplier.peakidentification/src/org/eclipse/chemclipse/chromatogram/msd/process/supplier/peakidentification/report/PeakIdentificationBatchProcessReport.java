@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2023 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,21 +11,20 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.process.supplier.peakidentification.report;
 
-import org.eclipse.chemclipse.model.core.IPeak;
-import org.eclipse.chemclipse.model.core.IPeaks;
-import org.eclipse.chemclipse.model.implementation.Peaks;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
+import org.eclipse.chemclipse.msd.model.core.PeaksMSD;
 
 public class PeakIdentificationBatchProcessReport implements IPeakIdentificationBatchProcessReport {
 
-	private IPeaks<IPeak> peaks;
+	private IPeaksMSD peaks;
 
 	public PeakIdentificationBatchProcessReport() {
 
-		peaks = new Peaks();
+		peaks = new PeaksMSD();
 	}
 
 	@Override
-	public IPeaks<IPeak> getPeaks() {
+	public IPeaksMSD getPeaks() {
 
 		return peaks;
 	}

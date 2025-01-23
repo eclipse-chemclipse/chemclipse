@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2023 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,7 +19,6 @@ import java.util.List;
 
 import org.eclipse.chemclipse.converter.exceptions.FileIsEmptyException;
 import org.eclipse.chemclipse.converter.exceptions.FileIsNotReadableException;
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.PathResolver;
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.TestPathHelper;
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.io.ELUReader;
@@ -27,6 +26,7 @@ import org.eclipse.chemclipse.msd.converter.supplier.amdis.preferences.Preferenc
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.exceptions.TypeCastException;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -62,7 +62,7 @@ public class ELUImportConverter_2_ITest extends TestCase {
 		IEclipsePreferences preferences = PreferenceSupplier.INSTANCE().getPreferences();
 		preferences.putBoolean(PreferenceSupplier.P_EXCLUDE_UNCERTAIN_IONS, true);
 		try {
-			IProcessingInfo<IPeaks<IPeakMSD>> processingInfo = reader.read(file, new NullProgressMonitor());
+			IProcessingInfo<IPeaksMSD> processingInfo = reader.read(file, new NullProgressMonitor());
 			List<IPeakMSD> peaks = processingInfo.getProcessingResult().getPeaks();
 			IPeakMSD peak1 = peaks.get(0);
 			IPeakMassSpectrum peakMassSpectrum1 = peak1.getPeakModel().getPeakMassSpectrum();

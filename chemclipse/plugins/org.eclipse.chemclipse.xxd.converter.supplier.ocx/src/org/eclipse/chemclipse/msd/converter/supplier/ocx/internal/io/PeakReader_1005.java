@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2024 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -23,7 +23,6 @@ import java.util.zip.ZipFile;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IIntegrationEntry;
 import org.eclipse.chemclipse.model.core.IPeakIntensityValues;
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.model.core.ISignal;
 import org.eclipse.chemclipse.model.core.PeakType;
 import org.eclipse.chemclipse.model.exceptions.PeakException;
@@ -50,6 +49,7 @@ import org.eclipse.chemclipse.msd.model.core.IIonTransitionSettings;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.msd.model.core.PeaksMSD;
@@ -72,12 +72,12 @@ public class PeakReader_1005 extends AbstractZipReader implements IPeakReader {
 	private static final Logger logger = Logger.getLogger(PeakReader_1005.class);
 
 	@Override
-	public IProcessingInfo<IPeaks<IPeakMSD>> read(File file, IProgressMonitor monitor) throws IOException {
+	public IProcessingInfo<IPeaksMSD> read(File file, IProgressMonitor monitor) throws IOException {
 
 		ZipFile zipFile = new ZipFile(file);
-		IProcessingInfo<IPeaks<IPeakMSD>> processingInfo = new ProcessingInfo<>();
+		IProcessingInfo<IPeaksMSD> processingInfo = new ProcessingInfo<>();
 		try {
-			IPeaks<IPeakMSD> peaks = readPeaksFromZipFile(zipFile, monitor);
+			IPeaksMSD peaks = readPeaksFromZipFile(zipFile, monitor);
 			processingInfo.setProcessingResult(peaks);
 		} finally {
 			zipFile.close();
@@ -85,9 +85,9 @@ public class PeakReader_1005 extends AbstractZipReader implements IPeakReader {
 		return processingInfo;
 	}
 
-	private IPeaks<IPeakMSD> readPeaksFromZipFile(ZipFile zipFile, IProgressMonitor monitor) throws IOException {
+	private IPeaksMSD readPeaksFromZipFile(ZipFile zipFile, IProgressMonitor monitor) throws IOException {
 
-		IPeaks<IPeakMSD> peaks = new PeaksMSD();
+		IPeaksMSD peaks = new PeaksMSD();
 		DataInputStream dataInputStream = getDataInputStream(zipFile, Format.FILE_PEAKS_MSD);
 		//
 		int numberOfPeaks = dataInputStream.readInt();

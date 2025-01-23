@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2023 Lablicate GmbH.
+ * Copyright (c) 2017, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,10 +12,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.extraction;
 
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.chemclipse.model.core.IPeak;
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.core.ValueOption;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.DescriptionOption;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IDataInputEntry;
@@ -23,7 +23,7 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Samples;
 
 public class PeakExtractionSupport {
 
-	public Samples extractPeakData(Map<IDataInputEntry, IPeaks<IPeak>> peaks, ExtractionSettings extractionSettings) {
+	public Samples extractPeakData(Map<IDataInputEntry, List<IPeak>> peaks, ExtractionSettings extractionSettings) {
 
 		Samples samples;
 		DescriptionOption descriptionOption = extractionSettings.getDescriptionOption();

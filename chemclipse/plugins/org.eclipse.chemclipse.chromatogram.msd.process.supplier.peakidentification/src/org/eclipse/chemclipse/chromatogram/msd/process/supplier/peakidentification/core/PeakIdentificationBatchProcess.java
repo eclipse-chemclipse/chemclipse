@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2023 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -30,10 +30,9 @@ import org.eclipse.chemclipse.chromatogram.msd.process.supplier.peakidentificati
 import org.eclipse.chemclipse.chromatogram.msd.process.supplier.peakidentification.report.PeakIdentificationBatchProcessReport;
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.core.peaks.PeakIntegrator;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.core.IPeak;
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.msd.converter.peak.PeakConverterMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.msd.model.core.PeaksMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.IProcessingMessage;
@@ -67,10 +66,10 @@ public class PeakIdentificationBatchProcess implements IPeakIdentificationBatchP
 		for(IPeakInputEntry inputEntry : peakIdentificationBatchJob.getPeakInputEntries()) {
 			try {
 				peakInputFile = new File(inputEntry.getInputFile());
-				IProcessingInfo<IPeaks<IPeakMSD>> processingPeakImportConverterInfo = loadPeaksFromFile(peakInputFile, monitor);
+				IProcessingInfo<IPeaksMSD> processingPeakImportConverterInfo = loadPeaksFromFile(peakInputFile, monitor);
 				processingInfo.addMessages(processingPeakImportConverterInfo);
 				try {
-					IPeaks<IPeakMSD> peakImports = processingPeakImportConverterInfo.getProcessingResult();
+					IPeaksMSD peakImports = processingPeakImportConverterInfo.getProcessingResult();
 					for(IPeakMSD peak : peakImports.getPeaks()) {
 						peaks.add(peak);
 					}
@@ -101,7 +100,7 @@ public class PeakIdentificationBatchProcess implements IPeakIdentificationBatchP
 		return processingInfo;
 	}
 
-	private IProcessingInfo<IPeaks<IPeakMSD>> loadPeaksFromFile(File peakInputFile, IProgressMonitor monitor) {
+	private IProcessingInfo<IPeaksMSD> loadPeaksFromFile(File peakInputFile, IProgressMonitor monitor) {
 
 		return PeakConverterMSD.convert(peakInputFile, monitor);
 	}
@@ -124,7 +123,7 @@ public class PeakIdentificationBatchProcess implements IPeakIdentificationBatchP
 		/*
 		 * Add the peaks to the report.
 		 */
-		IPeaks<IPeak> reportPeaks = batchProcessReport.getPeaks();
+		IPeaksMSD reportPeaks = batchProcessReport.getPeaks();
 		for(IPeakMSD peak : peaks) {
 			reportPeaks.addPeak(peak);
 		}
@@ -148,16 +147,16 @@ public class PeakIdentificationBatchProcess implements IPeakIdentificationBatchP
 			 * Write the mass spectra.
 			 */
 			File peakOutputFile = new File(outputFolder + peakIdentificationBatchJob.getName());
-			IPeaks<? extends IPeakMSD> peaks = getPeaksInstance(peakList);
+			IPeaksMSD peaks = getPeaksInstance(peakList);
 			IProcessingInfo<?> processingInfo = PeakConverterMSD.convert(peakOutputFile, peaks, false, converterId, monitor);
 			peakIdentificationProcessingInfo.addMessages(processingInfo);
 		}
 		return peakIdentificationProcessingInfo;
 	}
 
-	private IPeaks<? extends IPeakMSD> getPeaksInstance(List<IPeakMSD> peakList) {
+	private IPeaksMSD getPeaksInstance(List<IPeakMSD> peakList) {
 
-		IPeaks<? extends IPeakMSD> peaks = new PeaksMSD();
+		IPeaksMSD peaks = new PeaksMSD();
 		for(IPeakMSD peak : peakList) {
 			peaks.addPeak(peak);
 		}
@@ -197,7 +196,7 @@ public class PeakIdentificationBatchProcess implements IPeakIdentificationBatchP
 			/*
 			 * Integrator Report
 			 */
-			IPeaks<IPeak> peaks = batchProcessReport.getPeaks();
+			IPeaksMSD peaks = batchProcessReport.getPeaks();
 			String integrator = peakIdentificationBatchJob.getPeakIntegrationEntry().getProcessorId();
 			String identifier = peakIdentificationBatchJob.getPeakIdentificationEntry().getProcessorId();
 			PeakReport.writeResults(peaks, printWriter, integrator, identifier);

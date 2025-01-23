@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2024 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,12 +18,12 @@ import java.text.DecimalFormat;
 
 import org.eclipse.chemclipse.converter.exceptions.FileIsNotWriteableException;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.msd.converter.io.IPeakWriter;
 import org.eclipse.chemclipse.msd.converter.supplier.matlab.parafac.internal.converter.MatlabParafac;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.IProcessingMessage;
@@ -60,7 +60,7 @@ public class MatlabParafacPeakWriter implements IPeakWriter {
 	}
 
 	@Override
-	public IProcessingInfo<File> write(File file, IPeaks<? extends IPeakMSD> peaks, boolean append) throws FileIsNotWriteableException, IOException {
+	public IProcessingInfo<File> write(File file, IPeaksMSD peaks, boolean append) throws FileIsNotWriteableException, IOException {
 
 		IProcessingInfo<File> processingInfo = new ProcessingInfo<>();
 		FileWriter fileWriter = new FileWriter(file, append);
@@ -73,7 +73,7 @@ public class MatlabParafacPeakWriter implements IPeakWriter {
 		return processingInfo;
 	}
 
-	private void writePeaks(FileWriter fileWriter, IPeaks<? extends IPeakMSD> peaks, IProcessingInfo<File> processingInfo) throws IOException {
+	private void writePeaks(FileWriter fileWriter, IPeaksMSD peaks, IProcessingInfo<File> processingInfo) throws IOException {
 
 		int size = peaks.getPeaks().size();
 		for(int i = 0; i < size; i++) {

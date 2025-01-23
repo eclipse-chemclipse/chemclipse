@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2024 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -42,7 +42,6 @@ import org.eclipse.chemclipse.model.core.IChromatogramPeak;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IPeakIntensityValues;
 import org.eclipse.chemclipse.model.core.IPeakModel;
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.identifier.ComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
@@ -59,6 +58,7 @@ import org.eclipse.chemclipse.msd.model.core.IIonProvider;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.msd.model.core.PeaksMSD;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.PeakMSD;
@@ -91,7 +91,7 @@ public class CSVPeakConverter implements IPeakExportConverter, IPeakImportConver
 
 	// export
 	@Override
-	public IProcessingInfo<File> convert(File file, IPeaks<? extends IPeakMSD> peaks, boolean append, IProgressMonitor monitor) {
+	public IProcessingInfo<File> convert(File file, IPeaksMSD peaks, boolean append, IProgressMonitor monitor) {
 
 		try {
 			try (FileOutputStream stream = new FileOutputStream(file, append)) {
@@ -149,20 +149,20 @@ public class CSVPeakConverter implements IPeakExportConverter, IPeakImportConver
 
 	// import
 	@Override
-	public IProcessingInfo<IPeaks<IPeakMSD>> convert(File file, IProgressMonitor monitor) {
+	public IProcessingInfo<IPeaksMSD> convert(File file, IProgressMonitor monitor) {
 
 		try {
 			try (FileInputStream stream = new FileInputStream(file)) {
 				return new ProcessingInfo<>(readPeaks(new InputStreamReader(stream, CHARSET)));
 			}
 		} catch(ParseException | IOException e) {
-			ProcessingInfo<IPeaks<IPeakMSD>> error = new ProcessingInfo<>();
+			ProcessingInfo<IPeaksMSD> error = new ProcessingInfo<>();
 			error.addErrorMessage(NAME, "Import failed", e);
 			return error;
 		}
 	}
 
-	public static void writePeaks(IPeaks<? extends IPeak> peaks, Writer writer, boolean writeHeader) throws IOException {
+	public static void writePeaks(IPeaksMSD peaks, Writer writer, boolean writeHeader) throws IOException {
 
 		CSVFormat csvFormat = CSVFormat.EXCEL.builder().setNullString("").setQuoteMode(QuoteMode.ALL).build();
 		try (CSVPrinter csv = new CSVPrinter(writer, csvFormat)) {
@@ -208,7 +208,7 @@ public class CSVPeakConverter implements IPeakExportConverter, IPeakImportConver
 		}
 	}
 
-	public static IPeaks<IPeakMSD> readPeaks(Reader reader) throws IOException, ParseException {
+	public static IPeaksMSD readPeaks(Reader reader) throws IOException, ParseException {
 
 		PeaksMSD result = new PeaksMSD();
 		CSVFormat csvFormat = CSVFormat.EXCEL.builder().setHeader(HEADERS).setSkipHeaderRecord(true).build();

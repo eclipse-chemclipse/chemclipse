@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2023 Lablicate GmbH.
+ * Copyright (c) 2012, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -17,11 +17,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.msd.converter.peak.AbstractPeakExportConverter;
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.internal.converter.SpecificationValidatorMSL;
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.io.PeakWriterMSL;
-import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -38,7 +37,7 @@ public class MSLPeakExportConverter extends AbstractPeakExportConverter {
 	private static final String DESCRIPTION = "AMDIS MSL Peak Export";
 
 	@Override
-	public IProcessingInfo<File> convert(File file, IPeaks<? extends IPeakMSD> peaks, boolean append, IProgressMonitor monitor) {
+	public IProcessingInfo<File> convert(File file, IPeaksMSD peaks, boolean append, IProgressMonitor monitor) {
 
 		IProcessingInfo<File> processingInfo = new ProcessingInfo<>();
 		/*
@@ -67,7 +66,7 @@ public class MSLPeakExportConverter extends AbstractPeakExportConverter {
 		return processingInfo;
 	}
 
-	private IProcessingInfo<File> validate(File file, IPeaks<?> peaks) {
+	private IProcessingInfo<File> validate(File file, IPeaksMSD peaks) {
 
 		IProcessingInfo<File> processingInfo = new ProcessingInfo<>();
 		processingInfo.addMessages(super.validate(file));

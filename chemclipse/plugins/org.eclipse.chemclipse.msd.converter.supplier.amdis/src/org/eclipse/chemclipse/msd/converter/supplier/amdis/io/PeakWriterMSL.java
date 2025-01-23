@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2023 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -15,14 +15,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 
 public class PeakWriterMSL extends AbstractWriter {
 
-	public void write(File file, IPeaks<? extends IPeakMSD> peaks, boolean append) throws IOException {
+	public void write(File file, IPeaksMSD peaks, boolean append) throws IOException {
 
 		try (FileWriter fileWriter = new FileWriter(file, append)) {
 			for(IPeakMSD peak : peaks.getPeaks()) {

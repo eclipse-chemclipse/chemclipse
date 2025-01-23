@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2024 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,11 +19,10 @@ import org.eclipse.chemclipse.converter.exceptions.FileIsEmptyException;
 import org.eclipse.chemclipse.converter.exceptions.FileIsNotReadableException;
 import org.eclipse.chemclipse.converter.l10n.ConverterMessages;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.msd.converter.io.IPeakReader;
 import org.eclipse.chemclipse.msd.converter.peak.AbstractPeakImportConverter;
 import org.eclipse.chemclipse.msd.converter.supplier.matlab.parafac.io.MatlabParafacPeakReader;
-import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.IProcessingMessage;
 import org.eclipse.chemclipse.processing.core.MessageType;
@@ -37,10 +36,10 @@ public class MatlabParafacPeakImportConverter extends AbstractPeakImportConverte
 	private static final Logger logger = Logger.getLogger(MatlabParafacPeakImportConverter.class);
 
 	@Override
-	public IProcessingInfo<IPeaks<IPeakMSD>> convert(File file, IProgressMonitor monitor) {
+	public IProcessingInfo<IPeaksMSD> convert(File file, IProgressMonitor monitor) {
 
 		IProcessingMessage processingMessage;
-		IProcessingInfo<IPeaks<IPeakMSD>> processingInfo = new ProcessingInfo<>();
+		IProcessingInfo<IPeaksMSD> processingInfo = new ProcessingInfo<>();
 		try {
 			super.validate(file);
 			IPeakReader peakReader = new MatlabParafacPeakReader();

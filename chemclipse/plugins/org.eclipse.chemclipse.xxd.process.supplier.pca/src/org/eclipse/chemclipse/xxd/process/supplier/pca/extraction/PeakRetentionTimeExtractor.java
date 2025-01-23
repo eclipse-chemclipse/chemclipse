@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2024 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -24,7 +24,6 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.eclipse.chemclipse.model.core.IPeak;
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.model.quantitation.IQuantitationEntry;
 import org.eclipse.chemclipse.model.statistics.IVariable;
 import org.eclipse.chemclipse.model.statistics.RetentionTime;
@@ -37,13 +36,13 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Samples;
 
 public class PeakRetentionTimeExtractor extends AbstractClassifierDescriptionExtractor {
 
-	public Samples extractPeakData(Map<IDataInputEntry, IPeaks<IPeak>> peaks, int retentionTimeWindow, DescriptionOption descriptionOption, ValueOption valueOption) {
+	public Samples extractPeakData(Map<IDataInputEntry, List<IPeak>> peaks, int retentionTimeWindow, DescriptionOption descriptionOption, ValueOption valueOption) {
 
 		List<Sample> samplesList = new ArrayList<>();
 		peaks.keySet().forEach(d -> samplesList.add(new Sample(d.getSampleName(), d.getGroupName())));
 		Samples samples = new Samples(samplesList);
 		//
-		Map<String, IPeaks<IPeak>> peakMap = new LinkedHashMap<>();
+		Map<String, List<IPeak>> peakMap = new LinkedHashMap<>();
 		peaks.forEach((dataInputEntry, peaksInput) -> peakMap.put(dataInputEntry.getSampleName(), peaksInput));
 		//
 		Map<String, SortedMap<Integer, IPeak>> extractPeaks = exctractPcaPeakMap(peakMap, retentionTimeWindow);
@@ -67,17 +66,17 @@ public class PeakRetentionTimeExtractor extends AbstractClassifierDescriptionExt
 		return new ArrayList<>(rententionTimes);
 	}
 
-	private Map<String, SortedMap<Integer, IPeak>> exctractPcaPeakMap(Map<String, IPeaks<IPeak>> peakMap, int retentionTimeWindow) {
+	private Map<String, SortedMap<Integer, IPeak>> exctractPcaPeakMap(Map<String, List<IPeak>> peakMap, int retentionTimeWindow) {
 
 		Map<String, TreeMap<Integer, IPeak>> pcaPeakRetentionTime = new LinkedHashMap<>();
 		Map<String, SortedMap<Integer, IPeak>> pcaPeakCondenseRetentionTime = new LinkedHashMap<>();
 		int totalCountPeak = 0;
 		//
-		for(Map.Entry<String, IPeaks<IPeak>> peakEnry : peakMap.entrySet()) {
+		for(Map.Entry<String, List<IPeak>> peakEnry : peakMap.entrySet()) {
 			String name = peakEnry.getKey();
-			IPeaks<?> peaks = peakEnry.getValue();
+			List<IPeak> peaks = peakEnry.getValue();
 			TreeMap<Integer, IPeak> peakTree = new TreeMap<>();
-			for(IPeak peak : peaks.getPeaks()) {
+			for(IPeak peak : peaks) {
 				int retentionTime = peak.getPeakModel().getRetentionTimeAtPeakMaximum();
 				peakTree.put(retentionTime, peak);
 			}

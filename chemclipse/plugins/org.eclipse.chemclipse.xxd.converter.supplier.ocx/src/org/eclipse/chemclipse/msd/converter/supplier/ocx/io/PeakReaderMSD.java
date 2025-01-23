@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2024 Lablicate GmbH.
+ * Copyright (c) 2013, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,7 +14,6 @@ package org.eclipse.chemclipse.msd.converter.supplier.ocx.io;
 import java.io.File;
 import java.io.IOException;
 
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.msd.converter.io.IPeakReader;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.internal.io.PeakReader_0701;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.internal.io.PeakReader_0801;
@@ -37,7 +36,7 @@ import org.eclipse.chemclipse.msd.converter.supplier.ocx.internal.io.PeakReader_
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.internal.io.PeakReader_1500;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.internal.io.PeakReader_1501;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.internal.io.PeakReader_1502;
-import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.Format;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.ReaderHelper;
@@ -46,9 +45,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class PeakReaderMSD implements IPeakReader {
 
 	@Override
-	public IProcessingInfo<IPeaks<IPeakMSD>> read(File file, IProgressMonitor monitor) throws IOException {
+	public IProcessingInfo<IPeaksMSD> read(File file, IProgressMonitor monitor) throws IOException {
 
-		IProcessingInfo<IPeaks<IPeakMSD>> processingInfo = null;
+		IProcessingInfo<IPeaksMSD> processingInfo = null;
 		ReaderHelper readerHelper = new ReaderHelper();
 		String version = readerHelper.getVersion(file);
 		/*
