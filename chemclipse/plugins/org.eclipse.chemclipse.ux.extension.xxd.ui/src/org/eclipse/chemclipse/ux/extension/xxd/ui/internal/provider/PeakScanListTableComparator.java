@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -74,25 +74,39 @@ public class PeakScanListTableComparator extends AbstractRecordTableComparator i
 				sortOrder = Integer.compare(getRetentionTime(object2), getRetentionTime(object1));
 				break;
 			case 3:
-				sortOrder = Integer.compare(getRelativeRetentionTime(object2), getRelativeRetentionTime(object1));
+				if(chromatogramPeakArea > 0) {
+					double factor = 100.0d / chromatogramPeakArea;
+					double peakAreaPercent1 = factor * getIntegratedArea(object1);
+					double peakAreaPercent2 = factor * getIntegratedArea(object2);
+					return Double.compare(peakAreaPercent2, peakAreaPercent1);
+				}
+				sortOrder = 0;
 				break;
 			case 4:
-				sortOrder = Float.compare(getRetentionIndex(object2), getRetentionIndex(object1));
+				String name1 = TargetSupport.getBestTargetLibraryField(object1);
+				String name2 = TargetSupport.getBestTargetLibraryField(object2);
+				sortOrder = PreferenceSupplierModel.isSortCaseSensitive() ? name2.compareTo(name1) : name2.compareToIgnoreCase(name1);
 				break;
 			case 5:
-				sortOrder = Double.compare(getIntegratedArea(object2), getIntegratedArea(object1));
+				sortOrder = Integer.compare(getRelativeRetentionTime(object2), getRelativeRetentionTime(object1));
 				break;
 			case 6:
-				sortOrder = Integer.compare(getStartRetentionTime(object2), getStartRetentionTime(object1));
+				sortOrder = Float.compare(getRetentionIndex(object2), getRetentionIndex(object1));
 				break;
 			case 7:
-				sortOrder = Integer.compare(getStopRetentionTime(object2), getStopRetentionTime(object1));
+				sortOrder = Double.compare(getIntegratedArea(object2), getIntegratedArea(object1));
 				break;
 			case 8:
-				sortOrder = Integer.compare(getWidth(object2), getWidth(object1));
+				sortOrder = Integer.compare(getStartRetentionTime(object2), getStartRetentionTime(object1));
 				break;
 			case 9:
+				sortOrder = Integer.compare(getStopRetentionTime(object2), getStopRetentionTime(object1));
+				break;
 			case 10:
+				sortOrder = Integer.compare(getWidth(object2), getWidth(object1));
+				break;
+			case 11:
+			case 12:
 				if(object1 instanceof IChromatogramPeakMSD chromatogramPeak1 && object2 instanceof IChromatogramPeakMSD chromatogramPeak2) {
 					switch(getPropertyIndex()) {
 						case 9:
@@ -122,37 +136,23 @@ public class PeakScanListTableComparator extends AbstractRecordTableComparator i
 					}
 				}
 				break;
-			case 11:
+			case 13:
 				sortOrder = Float.compare(getLeading(object2), getLeading(object1));
 				break;
-			case 12:
+			case 14:
 				sortOrder = Float.compare(getTailing(object2), getTailing(object1));
 				break;
-			case 13:
+			case 15:
 				sortOrder = getModelDescription(object2).compareTo(getModelDescription(object1));
 				break;
-			case 14:
+			case 16:
 				sortOrder = getDetectorDescription(object2).compareTo(getDetectorDescription(object1));
 				break;
-			case 15:
+			case 17:
 				sortOrder = getIntegratorDescription(object2).compareTo(getIntegratorDescription(object1));
 				break;
-			case 16:
-				sortOrder = Integer.compare(getSuggestedNumberOfComponents(object2), getSuggestedNumberOfComponents(object1));
-				break;
-			case 17:
-				String name1 = TargetSupport.getBestTargetLibraryField(object1);
-				String name2 = TargetSupport.getBestTargetLibraryField(object2);
-				sortOrder = PreferenceSupplierModel.isSortCaseSensitive() ? name2.compareTo(name1) : name2.compareToIgnoreCase(name1);
-				break;
 			case 18:
-				if(chromatogramPeakArea > 0) {
-					double factor = 100.0d / chromatogramPeakArea;
-					double peakAreaPercent1 = factor * getIntegratedArea(object1);
-					double peakAreaPercent2 = factor * getIntegratedArea(object2);
-					return Double.compare(peakAreaPercent2, peakAreaPercent1);
-				}
-				sortOrder = 0;
+				sortOrder = Integer.compare(getSuggestedNumberOfComponents(object2), getSuggestedNumberOfComponents(object1));
 				break;
 			case 19:
 				sortOrder = Integer.compare(getInternalStandards(object2), getInternalStandards(object1));

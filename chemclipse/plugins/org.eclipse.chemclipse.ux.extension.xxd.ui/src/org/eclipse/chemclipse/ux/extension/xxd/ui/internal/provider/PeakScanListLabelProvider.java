@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -76,6 +76,8 @@ public class PeakScanListLabelProvider extends AbstractChemClipseLabelProvider {
 			ACTIVE_FOR_ANALYSIS, //
 			TYPE, //
 			RETENTION_TIME, //
+			AREA_PERCENT, //
+			BEST_TARGET, //
 			RELATIVE_RETENTION_TIME, //
 			RETENTION_INDEX, //
 			AREA_TOTAL, //
@@ -90,8 +92,6 @@ public class PeakScanListLabelProvider extends AbstractChemClipseLabelProvider {
 			DETECTOR, //
 			INTEGRATOR, //
 			SUGGESTED_COMPONENTS, //
-			BEST_TARGET, //
-			AREA_PERCENT, //
 			QUANTIFIER, //
 			CLASSIFIER, //
 			PEAK_MODEL //
@@ -99,12 +99,12 @@ public class PeakScanListLabelProvider extends AbstractChemClipseLabelProvider {
 	//
 	public static final int[] BOUNDS = { //
 			30, //
-			80, //
-			100, //
+			60, //
+			60, //
+			60, //
+			180, //
 			100, //
 			60, //
-			100, //
-			100, //
 			100, //
 			100, //
 			100, //
@@ -185,7 +185,7 @@ public class PeakScanListLabelProvider extends AbstractChemClipseLabelProvider {
 		IPeakModel peakModel = peak.getPeakModel();
 		DecimalFormat decimalFormat = getDecimalFormat();
 		String text = BLANK;
-		//
+
 		switch(columnIndex) {
 			case 0:
 				text = BLANK;
@@ -197,9 +197,21 @@ public class PeakScanListLabelProvider extends AbstractChemClipseLabelProvider {
 				text = decimalFormat.format(peakModel.getRetentionTimeAtPeakMaximum() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
 				break;
 			case 3:
-				text = decimalFormat.format(peakModel.getPeakMaximum().getRelativeRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
+				if(chromatogramPeakArea > 0) {
+					DecimalFormat decimalFormatPercent = ValueFormat.getDecimalFormatEnglish("0.000");
+					double peakAreaPercent = (100.0d / chromatogramPeakArea) * peak.getIntegratedArea();
+					text = decimalFormatPercent.format(peakAreaPercent);
+				} else {
+					text = NO_VALUE;
+				}
 				break;
 			case 4:
+				text = TargetSupport.getBestTargetLibraryField(peak);
+				break;
+			case 5:
+				text = decimalFormat.format(peakModel.getPeakMaximum().getRelativeRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
+				break;
+			case 6:
 				if(PreferenceSupplierModel.showRetentionIndexWithoutDecimals()) {
 					DecimalFormat integerFormat = getIntegerDecimalFormatInstance();
 					text = integerFormat.format(peakModel.getPeakMaximum().getRetentionIndex());
@@ -207,7 +219,7 @@ public class PeakScanListLabelProvider extends AbstractChemClipseLabelProvider {
 					text = decimalFormat.format(peakModel.getPeakMaximum().getRetentionIndex());
 				}
 				break;
-			case 5:
+			case 7:
 				if(PreferenceSupplierModel.showAreaWithoutDecimals()) {
 					DecimalFormat integerFormat = getIntegerDecimalFormatInstance();
 					text = integerFormat.format(peak.getIntegratedArea());
@@ -215,17 +227,17 @@ public class PeakScanListLabelProvider extends AbstractChemClipseLabelProvider {
 					text = decimalFormat.format(peak.getIntegratedArea());
 				}
 				break;
-			case 6:
+			case 8:
 				text = decimalFormat.format(peakModel.getStartRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
 				break;
-			case 7:
+			case 9:
 				text = decimalFormat.format(peakModel.getStopRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
 				break;
-			case 8:
+			case 10:
 				text = decimalFormat.format(peakModel.getWidthByInflectionPoints() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
 				break;
-			case 9:
-			case 10:
+			case 11:
+			case 12:
 				if(peak instanceof IChromatogramPeakMSD chromatogramPeak) {
 					switch(columnIndex) {
 						case 9:
@@ -256,35 +268,23 @@ public class PeakScanListLabelProvider extends AbstractChemClipseLabelProvider {
 					}
 				}
 				break;
-			case 11:
+			case 13:
 				text = decimalFormat.format(peakModel.getLeading());
 				break;
-			case 12:
+			case 14:
 				text = decimalFormat.format(peakModel.getTailing());
 				break;
-			case 13:
+			case 15:
 				text = peak.getModelDescription();
 				break;
-			case 14:
+			case 16:
 				text = peak.getDetectorDescription();
 				break;
-			case 15:
+			case 17:
 				text = peak.getIntegratorDescription();
 				break;
-			case 16:
-				text = Integer.toString(peak.getSuggestedNumberOfComponents());
-				break;
-			case 17:
-				text = TargetSupport.getBestTargetLibraryField(peak);
-				break;
 			case 18:
-				if(chromatogramPeakArea > 0) {
-					DecimalFormat decimalFormatPercent = ValueFormat.getDecimalFormatEnglish("0.000");
-					double peakAreaPercent = (100.0d / chromatogramPeakArea) * peak.getIntegratedArea();
-					text = decimalFormatPercent.format(peakAreaPercent);
-				} else {
-					text = NO_VALUE;
-				}
+				text = Integer.toString(peak.getSuggestedNumberOfComponents());
 				break;
 			case 19:
 				text = (!peak.getInternalStandards().isEmpty()) ? ISTD : BLANK;
@@ -296,7 +296,7 @@ public class PeakScanListLabelProvider extends AbstractChemClipseLabelProvider {
 				text = peakModel.isStrictModel() ? "S" : "";
 				break;
 		}
-		//
+
 		return text;
 	}
 
@@ -304,7 +304,7 @@ public class PeakScanListLabelProvider extends AbstractChemClipseLabelProvider {
 
 		DecimalFormat decimalFormat = getDecimalFormat();
 		String text = BLANK;
-		//
+
 		switch(columnIndex) {
 			case 0:
 				text = BLANK;
@@ -316,9 +316,15 @@ public class PeakScanListLabelProvider extends AbstractChemClipseLabelProvider {
 				text = decimalFormat.format(scan.getRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
 				break;
 			case 3:
-				text = decimalFormat.format(scan.getRelativeRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
+				text = NO_VALUE;
 				break;
 			case 4:
+				text = TargetSupport.getBestTargetLibraryField(scan);
+				break;
+			case 5:
+				text = decimalFormat.format(scan.getRelativeRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
+				break;
+			case 6:
 				if(PreferenceSupplierModel.showRetentionIndexWithoutDecimals()) {
 					DecimalFormat integerFormat = getIntegerDecimalFormatInstance();
 					text = integerFormat.format(scan.getRetentionIndex());
@@ -326,30 +332,24 @@ public class PeakScanListLabelProvider extends AbstractChemClipseLabelProvider {
 					text = decimalFormat.format(scan.getRetentionIndex());
 				}
 				break;
-			case 5:
-			case 6:
 			case 7:
 			case 8:
 			case 9:
 			case 10:
 			case 11:
 			case 12:
-				text = NO_VALUE;
-				break;
 			case 13:
-				text = BLANK;
-				break;
 			case 14:
 				text = NO_VALUE;
 				break;
 			case 15:
-				text = NO_VALUE;
+				text = BLANK;
 				break;
 			case 16:
 				text = NO_VALUE;
 				break;
 			case 17:
-				text = TargetSupport.getBestTargetLibraryField(scan);
+				text = NO_VALUE;
 				break;
 			case 18:
 				text = NO_VALUE;
@@ -360,7 +360,7 @@ public class PeakScanListLabelProvider extends AbstractChemClipseLabelProvider {
 				text = BLANK;
 				break;
 		}
-		//
+
 		return text;
 	}
 
