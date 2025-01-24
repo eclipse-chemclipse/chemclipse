@@ -178,6 +178,9 @@ public class DataExplorerLabelProvider extends ColumnLabelProvider implements IL
 				case ISupplierFileIdentifier.TYPE_SCAN_VSD:
 					descriptor = ApplicationImageFactory.getInstance().getImageDescriptor(IApplicationImage.IMAGE_SCAN_VSD, IApplicationImageProvider.SIZE_16x16);
 					break;
+				case ISupplierFileIdentifier.TYPE_SCAN_FSD:
+					descriptor = ApplicationImageFactory.getInstance().getImageDescriptor(IApplicationImage.IMAGE_SCAN_FSD, IApplicationImageProvider.SIZE_16x16);
+					break;
 				case ISupplierFileIdentifier.TYPE_PCR:
 					descriptor = ApplicationImageFactory.getInstance().getImageDescriptor(IApplicationImage.IMAGE_PLATE_PCR, IApplicationImageProvider.SIZE_16x16);
 					break;
