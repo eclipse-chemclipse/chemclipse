@@ -115,20 +115,18 @@ public class ChromatogramReferencesUI extends Composite {
 		/*
 		 * Add data and change listener.
 		 */
-		if(comboChromatograms != null) {
-			selectionChangeListener = comboChromatograms;
-			comboViewerReferences.addSelectionChangedListener(selectionChangeListener);
-			//
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
-			List<IChromatogramSelection<?, ?>> chromatogramSelections = new ArrayList<IChromatogramSelection<?, ?>>();
-			chromatogramSelections.add(chromatogramSelection);
-			for(IChromatogram<?> chromatogramReference : chromatogram.getReferencedChromatograms()) {
-				chromatogramSelections.add(createChromatogramSelection(chromatogramReference));
-			}
-			comboChromatograms.data = chromatogramSelections;
-			//
-			comboViewerReferences.setInput(comboChromatograms.data);
+		selectionChangeListener = comboChromatograms;
+		comboViewerReferences.addSelectionChangedListener(selectionChangeListener);
+		//
+		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		List<IChromatogramSelection<?, ?>> chromatogramSelections = new ArrayList<>();
+		chromatogramSelections.add(chromatogramSelection);
+		for(IChromatogram<?> chromatogramReference : chromatogram.getReferencedChromatograms()) {
+			chromatogramSelections.add(createChromatogramSelection(chromatogramReference));
 		}
+		comboChromatograms.data = chromatogramSelections;
+		//
+		comboViewerReferences.setInput(comboChromatograms.data);
 	}
 
 	public void updateInput() {
