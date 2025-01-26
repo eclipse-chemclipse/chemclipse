@@ -380,6 +380,7 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 		createButtonToggleSelection(composite);
 		createButtonToggleChartGrid(composite);
 		createToggleChartSeriesLegendButton(composite);
+		createButtonSettings(composite);
 		//
 		toolbarMainControl.set(composite);
 	}
@@ -642,4 +643,67 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 		});
 	}
 
+	private void createButtonSettings(Composite parent) {
+
+		createSettingsButton(parent, getPreferencePagesSupplier());
+	}
+
+	private Button createSettingsButton(Composite parent, Supplier<List<Class<? extends IPreferencePage>>> supplierPreferencePages) {
+
+		Button button = createSettingsButtonBasic(parent);
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent event) {
+
+				showPreferencesDialog(event, supplierPreferencePages.get());
+			}
+		});
+		return button;
+	}
+
+	void showPreferencesDialog(SelectionEvent event, List<Class<? extends IPreferencePage>> preferencePages) {
+
+		List<IPreferencePage> pages = new ArrayList<>();
+		for(Class<? extends IPreferencePage> page : preferencePages) {
+			try {
+				IPreferencePage preferencePage = page.getConstructor().newInstance();
+				pages.add(preferencePage);
+			} catch(Exception e) {
+				logger.error(e);
+			}
+		}
+		PreferenceManager preferenceManager = new PreferenceManager();
+		int i = 1;
+		for(IPreferencePage preferencePage : pages) {
+			preferenceManager.addToRoot(new PreferenceNode(Integer.toString(i++), preferencePage));
+		}
+		PreferenceDialog preferenceDialog = new PreferenceDialog(event.display.getActiveShell(), preferenceManager);
+		preferenceDialog.create();
+		preferenceDialog.setMessage("Settings");
+		preferenceDialog.open();
+	}
+
+	private Button createSettingsButtonBasic(Composite parent) {
+
+		Button button = new Button(parent, SWT.PUSH);
+		button.setText("");
+		button.setToolTipText("Settings");
+		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_CONFIGURE, IApplicationImageProvider.SIZE_16x16));
+		return button;
+	}
+
+	private Supplier<List<Class<? extends IPreferencePage>>> getPreferencePagesSupplier() {
+
+		return new Supplier<List<Class<? extends IPreferencePage>>>() {
+
+			@Override
+			public List<Class<? extends IPreferencePage>> get() {
+
+				List<Class<? extends IPreferencePage>> preferencePages = new ArrayList<>();
+				preferencePages.add(org.eclipse.chemclipse.msd.swt.ui.preferences.PreferencePage.class);
+				return preferencePages;
+			}
+		};
+	}
 }
