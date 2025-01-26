@@ -15,6 +15,7 @@ package org.eclipse.chemclipse.ux.extension.msd.ui.editors;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -83,6 +84,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swtchart.LineStyle;
+import org.eclipse.swtchart.extensions.core.IAxisSettings;
+import org.eclipse.swtchart.extensions.core.IChartSettings;
+import org.eclipse.swtchart.extensions.core.ScrollableChart;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -123,6 +128,7 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 	private AtomicReference<Composite> toolbarMainControl = new AtomicReference<>();
 	private AtomicReference<MassSpectraSelectionUI> toolbarSelectionControl = new AtomicReference<>();
 	private IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+	private Map<IAxisSettings, LineStyle> axisSettingsInitial = new HashMap<>();
 
 	@PostConstruct
 	private void createControl(Composite parent) {
@@ -372,6 +378,7 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 		composite.setLayout(new GridLayout(4, false));
 		//
 		createButtonToggleSelection(composite);
+		createButtonToggleChartGrid(composite);
 		//
 		toolbarMainControl.set(composite);
 	}
@@ -529,5 +536,91 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 				}
 			}
 		};
+	}
+
+	private Button createButtonToggleChartGrid(Composite parent) {
+
+		Button button = new Button(parent, SWT.TOGGLE);
+		button.setText("");
+		setButtonImage(button, IApplicationImage.IMAGE_GRID, "Chart Grid", false);
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				if(massSpectrumChart instanceof ScrollableChart scrollableChart) {
+					IChartSettings chartSettings = scrollableChart.getChartSettings();
+					boolean isGridDisplayed = !isGridDisplayed(chartSettings);
+					setGrid(scrollableChart.getChartSettings(), isGridDisplayed);
+					scrollableChart.applySettings(chartSettings);
+					setButtonImage(button, IApplicationImage.IMAGE_GRID, "Chart Grid", isGridDisplayed);
+				}
+			}
+		});
+		return button;
+	}
+
+	private boolean isGridDisplayed(IChartSettings chartSettings) {
+
+		List<IAxisSettings> axisSettingsList = getAxisSettings(chartSettings);
+		for(IAxisSettings axisSettings : axisSettingsList) {
+			if(isGridDisplayed(axisSettings)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private List<IAxisSettings> getAxisSettings(IChartSettings chartSettings) {
+
+		List<IAxisSettings> axisSettingsList = new ArrayList<>();
+		/*
+		 * Primary Axis X/Y
+		 */
+		axisSettingsList.add(chartSettings.getPrimaryAxisSettingsX());
+		axisSettingsList.add(chartSettings.getPrimaryAxisSettingsY());
+		/*
+		 * Secondary Axes X/Y
+		 */
+		for(IAxisSettings axisSettings : chartSettings.getSecondaryAxisSettingsListX()) {
+			axisSettingsList.add(axisSettings);
+		}
+		for(IAxisSettings axisSettings : chartSettings.getSecondaryAxisSettingsListY()) {
+			axisSettingsList.add(axisSettings);
+		}
+		return axisSettingsList;
+	}
+
+	private boolean isGridDisplayed(IAxisSettings axisSettings) {
+
+		return axisSettings.isVisible() && !LineStyle.NONE.equals(axisSettings.getGridLineStyle());
+	}
+
+	public void setGrid(IChartSettings chartSettings, boolean show) {
+
+		List<IAxisSettings> axisSettingsList = getAxisSettings(chartSettings);
+		for(IAxisSettings axisSettings : axisSettingsList) {
+			setGrid(axisSettings, show);
+		}
+	}
+
+	private void setGrid(IAxisSettings axisSettings, boolean show) {
+
+		if(axisSettings.isVisible()) {
+			if(show) {
+				LineStyle lineStyle = axisSettingsInitial.getOrDefault(axisSettings, LineStyle.DOT);
+				axisSettings.setGridLineStyle(lineStyle);
+			} else {
+				persistInitialState(axisSettings);
+				axisSettings.setGridLineStyle(LineStyle.NONE);
+			}
+		}
+	}
+
+	private void persistInitialState(IAxisSettings axisSettings) {
+
+		if(!axisSettingsInitial.containsKey(axisSettings)) {
+			axisSettingsInitial.put(axisSettings, axisSettings.getGridLineStyle());
+		}
 	}
 }
