@@ -379,6 +379,7 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 		//
 		createButtonToggleSelection(composite);
 		createButtonToggleChartGrid(composite);
+		createToggleChartSeriesLegendButton(composite);
 		//
 		toolbarMainControl.set(composite);
 	}
@@ -623,4 +624,22 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 			axisSettingsInitial.put(axisSettings, axisSettings.getGridLineStyle());
 		}
 	}
+
+	private void createToggleChartSeriesLegendButton(Composite parent) {
+
+		Button button = new Button(parent, SWT.PUSH);
+		button.setToolTipText("Toggle the chart series legend.");
+		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_TAG, IApplicationImageProvider.SIZE_16x16));
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				if(massSpectrumChart instanceof ScrollableChart scrollableChart) {
+					scrollableChart.toggleSeriesLegendVisibility();
+				}
+			}
+		});
+	}
+
 }
