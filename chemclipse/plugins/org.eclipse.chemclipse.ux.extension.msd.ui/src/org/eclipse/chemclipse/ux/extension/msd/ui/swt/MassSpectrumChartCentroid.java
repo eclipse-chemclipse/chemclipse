@@ -50,6 +50,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -124,6 +125,8 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 
 	private void initialize() {
 
+		setLayoutData(new GridData(GridData.FILL_BOTH));
+		//
 		numberOfHighestIntensitiesToLabel = 5;
 		barSeriesIonComparator = new BarSeriesIonComparator();
 		labelOption = LabelOption.EXACT;

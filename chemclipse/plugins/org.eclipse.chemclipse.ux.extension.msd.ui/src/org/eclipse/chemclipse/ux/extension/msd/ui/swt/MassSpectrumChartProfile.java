@@ -44,6 +44,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
@@ -116,6 +117,8 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 
 	private void initialize() {
 
+		setLayoutData(new GridData(GridData.FILL_BOTH));
+		//
 		IChartSettings chartSettings = getChartSettings();
 		chartSettings.setTitle("");
 		chartSettings.setOrientation(SWT.HORIZONTAL);
