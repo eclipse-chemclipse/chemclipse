@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2023 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,7 +11,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.charts;
 
-import org.eclipse.chemclipse.ux.extension.xxd.ui.support.BaselineSelectionPaintListener;
+import org.eclipse.chemclipse.ux.extension.ui.model.IRulerUpdateNotifier;
+import org.eclipse.chemclipse.ux.extension.ui.support.BaselineSelectionPaintListener;
+import org.eclipse.chemclipse.ux.extension.ui.support.RulerEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Point;
@@ -28,7 +30,7 @@ public class ChromatogramRulerChart extends ChromatogramChart {
 	private Cursor defaultCursor;
 	private BaselineSelectionPaintListener baselineSelectionPaintListener;
 	private IRulerUpdateNotifier rulerUpdateNotifier = null;
-	//
+
 	private int xStart;
 	private int yStart;
 	private int xStop;
@@ -97,7 +99,7 @@ public class ChromatogramRulerChart extends ChromatogramChart {
 		Point rectangle = baseChart.getPlotArea().getSize();
 		int width = rectangle.x;
 		int height = rectangle.y;
-		//
+
 		if(rulerUpdateNotifier != null) {
 			if(width != 0) {
 				/*
@@ -106,7 +108,7 @@ public class ChromatogramRulerChart extends ChromatogramChart {
 				double factorWidth = 100.0d / width;
 				double percentageStartWidth = (factorWidth * xStart) / 100.0d;
 				double percentageStopWidth = (factorWidth * xStop) / 100.0d;
-				//
+
 				IAxis retentionTime = axisSet.getXAxis(BaseChart.ID_PRIMARY_X_AXIS);
 				Range millisecondsRange = retentionTime.getRange();
 				double millisecondsWidth = millisecondsRange.upper - millisecondsRange.lower;
@@ -124,7 +126,7 @@ public class ChromatogramRulerChart extends ChromatogramChart {
 					double factorHeight = 100.0d / height;
 					double percentageStartHeight = (100.0d - (factorHeight * yStart)) / 100.0d;
 					double percentageStopHeight = (100.0d - (factorHeight * yStop)) / 100.0d;
-					//
+
 					startY = (float)(intensityRange.lower + abundanceHeight * percentageStartHeight);
 					stopY = (float)(intensityRange.lower + abundanceHeight * percentageStopHeight);
 				}
@@ -156,12 +158,12 @@ public class ChromatogramRulerChart extends ChromatogramChart {
 
 		xStop = x;
 		yStop = y;
-		//
+
 		baselineSelectionPaintListener.setX1(xStart);
 		baselineSelectionPaintListener.setY1(yStart);
 		baselineSelectionPaintListener.setX2(xStop);
 		baselineSelectionPaintListener.setY2(yStop);
-		//
+
 		redrawChart();
 	}
 
@@ -174,12 +176,12 @@ public class ChromatogramRulerChart extends ChromatogramChart {
 	private void resetSelectedRange() {
 
 		baselineSelectionPaintListener.reset();
-		//
+
 		xStart = 0;
 		yStart = 0;
 		xStop = 0;
 		yStop = 0;
-		//
+
 		redrawChart();
 	}
 

@@ -37,6 +37,7 @@ import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.chemclipse.swt.ui.components.InformationUI;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
+import org.eclipse.chemclipse.ux.extension.ui.support.BaselineSelectionPaintListener;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.chemclipse.ux.extension.ui.swt.ISettingsHandler;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
@@ -45,7 +46,6 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.listener.BoxSelection
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.support.ManualPeakDetector;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePagePeaks;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.support.BaselineSelectionPaintListener;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ChromatogramChartSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ChromatogramDataSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.PeakChartSupport;
@@ -86,7 +86,7 @@ import jakarta.inject.Inject;
 public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI {
 
 	private static final Logger logger = Logger.getLogger(ExtendedPeakDetectorUI.class);
-	//
+
 	private static final String ID_PEAK = "Peak";
 	/*
 	 * Detection Types
@@ -98,9 +98,9 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 	private static final String DETECTION_TYPE_BOX_BV = DETECTION_TYPE_BOX + "_BV";
 	private static final String DETECTION_TYPE_BOX_VB = DETECTION_TYPE_BOX + "_VB";
 	private static final String DETECTION_TYPE_NONE = "";
-	//
+
 	private Map<String, String> detectionTypeDescriptions;
-	//
+
 	private static final char KEY_BASELINE = IKeyboardSupport.KEY_CODE_LC_D;
 	private static final char KEY_BB = IKeyboardSupport.KEY_CODE_LC_B;
 	private static final char KEY_VV = IKeyboardSupport.KEY_CODE_LC_V;
@@ -112,15 +112,15 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 	private static final String DETECTION_BOX_LEFT = "DETECTION_BOX_LEFT";
 	private static final String DETECTION_BOX_RIGHT = "DETECTION_BOX_RIGHT";
 	private static final String DETECTION_BOX_NONE = "DETECTION_BOX_NONE";
-	//
+
 	private static final int BOX_SNAP_MARKER_WINDOW = 4;
 	private static final int BOX_MAX_DELTA = 1;
-	//
+
 	private static final int STATUS_DETECTION_HINT_NONE = -1;
 	private static final int STATUS_DETECTION_HINT_INACTIVE = 0;
 	private static final int STATUS_DETECTION_HINT_ACTIVE = 1;
 	private static final String MESSAGE_DETECTION_MODUS = "CTRL";
-	//
+
 	private Button buttonToolbarInfo;
 	private AtomicReference<InformationUI> toolbarInfo = new AtomicReference<>();
 	private Label labelDetectionType;
@@ -132,13 +132,13 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 	private Button buttonDetectionTypeBoxVB;
 	private Button buttonAddPeak;
 	private AtomicReference<ChromatogramChart> chartControl = new AtomicReference<>();
-	//
+
 	private IChromatogramSelection<?, ?> chromatogramSelection;
 	private IPeak peak;
-	//
+
 	private BaselineSelectionPaintListener baselineSelectionPaintListener;
 	private BoxSelectionPaintListener boxSelectionPaintListener;
-	//
+
 	private Cursor defaultCursor;
 	private String detectionType = DETECTION_TYPE_NONE;
 	private String detectionBox = DETECTION_BOX_NONE;
@@ -150,7 +150,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 	private int xStop;
 	private int yStop;
 	private int xBoxMoveStart;
-	//
+
 	private ChromatogramChartSupport chromatogramChartSupport = new ChromatogramChartSupport();
 	private PeakChartSupport peakChartSupport = new PeakChartSupport();
 
@@ -301,7 +301,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 		detectionTypeDescriptions.put(DETECTION_TYPE_BOX_BV, "Modus (BV) [Key:" + KEY_BV + "]");
 		detectionTypeDescriptions.put(DETECTION_TYPE_BOX_VB, "Modus (VB) [Key:" + KEY_VB + "]");
 		detectionTypeDescriptions.put(DETECTION_TYPE_NONE, "");
-		//
+
 		createControl();
 	}
 
@@ -319,11 +319,11 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 		if(chromatogramSelection != null) {
 			chromatogram = chromatogramSelection.getChromatogram();
 		}
-		//
+
 		setDetectionType(DETECTION_TYPE_NONE);
 		toolbarInfo.get().setText(ChromatogramDataSupport.getChromatogramLabel(chromatogram));
 		this.peak = null;
-		//
+
 		updateChromatogramAndPeak();
 	}
 
@@ -332,9 +332,9 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 		chartControl.get().deleteSeries();
 		buttonAddPeak.setEnabled(false);
 		enableButtons(DETECTION_TYPE_NONE);
-		//
+
 		if(chromatogramSelection != null) {
-			//
+
 			IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 			List<ILineSeriesData> lineSeriesDataList = new ArrayList<>();
 			/*
@@ -345,7 +345,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 			int scanMarkerSize = preferenceStore.getInt(PreferenceSupplier.P_PEAK_DETECTOR_SCAN_MARKER_SIZE);
 			Color scanMarkerColor = Colors.getColor(preferenceStore.getString(PreferenceSupplier.P_PEAK_DETECTOR_SCAN_MARKER_COLOR));
 			PlotSymbolType scanMarkerSymbol = PlotSymbolType.valueOf(preferenceStore.getString(PreferenceSupplier.P_PEAK_DETECTOR_SCAN_MARKER_TYPE));
-			//
+
 			ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesDataChromatogram(chromatogramSelection, "Chromatogram", colorChromatogram);
 			ILineSeriesSettings lineSeriesSettings = lineSeriesData.getSettings();
 			lineSeriesSettings.setEnableArea(enableAreaChromatogram);
@@ -353,7 +353,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 			lineSeriesSettings.setSymbolColor(scanMarkerColor);
 			lineSeriesSettings.setSymbolType(scanMarkerSymbol);
 			lineSeriesDataList.add(lineSeriesData);
-			//
+
 			if(peak != null) {
 				/*
 				 * Peak
@@ -363,7 +363,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 				Color colorPeak = Colors.getColor(preferenceStore.getString(PreferenceSupplier.P_COLOR_PEAK_1));
 				lineSeriesDataList.add(peakChartSupport.getPeak(peak, true, mirrored, colorPeak, ID_PEAK));
 			}
-			//
+
 			chartControl.get().addSeriesData(lineSeriesDataList, ICompressionSupport.LOW_COMPRESSION);
 		}
 	}
@@ -371,11 +371,11 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 	private void createControl() {
 
 		setLayout(new GridLayout(1, true));
-		//
+
 		createToolbarMain(this);
 		createToolbarInfo(this);
 		createChromatogramChart(this);
-		//
+
 		initialize();
 	}
 
@@ -390,7 +390,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		composite.setLayoutData(gridData);
 		composite.setLayout(new GridLayout(12, false));
-		//
+
 		labelDetectionType = createDetectionTypeLabel(composite);
 		labelDetectionModus = createDetectionModusLabel(composite);
 		buttonToolbarInfo = createButtonToggleToolbar(composite, toolbarInfo, IMAGE_INFO, TOOLTIP_INFO);
@@ -429,7 +429,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 
 		InformationUI informationUI = new InformationUI(parent, SWT.NONE);
 		informationUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		//
+
 		toolbarInfo.set(informationUI);
 	}
 
@@ -537,7 +537,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 		boxSelectionPaintListener = new BoxSelectionPaintListener();
 		plotArea.addCustomPaintListener(baselineSelectionPaintListener);
 		plotArea.addCustomPaintListener(boxSelectionPaintListener);
-		//
+
 		chartControl.set(chromatogramChart);
 	}
 
@@ -587,7 +587,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 
 		baselineSelectionPaintListener.reset();
 		boxSelectionPaintListener.reset();
-		//
+
 		xStart = 0;
 		yStart = 0;
 		xStop = 0;
@@ -674,7 +674,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 			} else {
 				setCursor(SWT.CURSOR_CROSS);
 			}
-			//
+
 			if(isLeftMouseButtonPressed(event)) {
 				if(!detectionBox.equals(DETECTION_BOX_NONE)) {
 					int delta = getDeltaMove(event.x);
@@ -867,12 +867,12 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 
 		xStop = x;
 		yStop = y;
-		//
+
 		baselineSelectionPaintListener.setX1(xStart);
 		baselineSelectionPaintListener.setY1(yStart);
 		baselineSelectionPaintListener.setX2(xStop);
 		baselineSelectionPaintListener.setY2(yStop);
-		//
+
 		redraw();
 	}
 
@@ -880,7 +880,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 
 		xStop = x;
 		yStop = y;
-		//
+
 		extractPeak(DETECTION_TYPE_NONE);
 	}
 
@@ -888,11 +888,11 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 
 		xStart = x;
 		yStart = y;
-		//
+
 		setCursor(SWT.CURSOR_CROSS);
 		boxSelectionPaintListener.setX1(xStart);
 		boxSelectionPaintListener.setX2(xStop);
-		//
+
 		redraw();
 	}
 
@@ -903,9 +903,9 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 			yStop = y;
 			boxSelectionPaintListener.setX1(xStart);
 			boxSelectionPaintListener.setX2(xStop);
-			//
+
 			redraw();
-			//
+
 			extractPeak(DETECTION_TYPE_BOX);
 			enableButtons(DETECTION_TYPE_BOX);
 		}
@@ -915,7 +915,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 
 		boxSelectionPaintListener.setX1(xStart);
 		boxSelectionPaintListener.setX2(xStop);
-		//
+
 		if(detectionBox.equals(DETECTION_BOX_LEFT)) {
 			boxSelectionPaintListener.setHighlightBox(BoxSelectionPaintListener.HIGHLIGHT_BOX_LEFT);
 		} else if(detectionBox.equals(DETECTION_BOX_RIGHT)) {
@@ -923,7 +923,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 		} else {
 			boxSelectionPaintListener.setHighlightBox(BoxSelectionPaintListener.HIGHLIGHT_BOX_NONE);
 		}
-		//
+
 		redraw();
 		/*
 		 * Extract the peak.
@@ -1044,7 +1044,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 				logger.warn(e);
 			}
 		}
-		//
+
 		return peak;
 	}
 

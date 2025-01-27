@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2023 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,7 +17,7 @@ import java.util.List;
 import org.eclipse.chemclipse.support.text.ValueFormat;
 import org.eclipse.chemclipse.support.ui.provider.AbstractLabelProvider;
 import org.eclipse.chemclipse.support.ui.swt.EnhancedComboViewer;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.charts.RulerEvent;
+import org.eclipse.chemclipse.ux.extension.ui.support.RulerEvent;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
@@ -44,7 +44,7 @@ public class RulerDetailsUI extends Composite {
 	private Text textStopY;
 	private Text textDeltaY;
 	private ComboViewer comboViewerY;
-	//
+
 	private BaseChart baseChart = null;
 	private RulerEvent rulerEvent = null;
 	private DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0.000");
@@ -66,7 +66,7 @@ public class RulerDetailsUI extends Composite {
 		if(scrollableChart != null) {
 			this.baseChart = scrollableChart.getBaseChart();
 		}
-		//
+
 		setAxisValues();
 		updateRanges();
 	}
@@ -75,7 +75,7 @@ public class RulerDetailsUI extends Composite {
 
 		GridLayout gridLayout = new GridLayout(8, false);
 		setLayout(gridLayout);
-		//
+
 		textStartX = createText(this, "Start X");
 		textStopX = createText(this, "Stop X");
 		textDeltaX = createText(this, "Delta X");
@@ -92,7 +92,7 @@ public class RulerDetailsUI extends Composite {
 		text.setText("");
 		text.setToolTipText(tooltip);
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		//
+
 		return text;
 	}
 
@@ -112,7 +112,7 @@ public class RulerDetailsUI extends Composite {
 				return null;
 			}
 		});
-		//
+
 		combo.setToolTipText("Select the x axis.");
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.widthHint = 150;
@@ -128,7 +128,7 @@ public class RulerDetailsUI extends Composite {
 				}
 			}
 		});
-		//
+
 		return comboViewer;
 	}
 
@@ -148,7 +148,7 @@ public class RulerDetailsUI extends Composite {
 				return null;
 			}
 		});
-		//
+
 		combo.setToolTipText("Select the y axis.");
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.widthHint = 150;
@@ -164,7 +164,7 @@ public class RulerDetailsUI extends Composite {
 				}
 			}
 		});
-		//
+
 		return comboViewer;
 	}
 
@@ -223,7 +223,7 @@ public class RulerDetailsUI extends Composite {
 				value = axisScaleConverter.convertToSecondaryUnit(primaryValue);
 			}
 		}
-		//
+
 		return decimalFormat.format(value);
 	}
 
