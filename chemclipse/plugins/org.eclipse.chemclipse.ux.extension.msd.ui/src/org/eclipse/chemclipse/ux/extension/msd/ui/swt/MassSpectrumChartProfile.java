@@ -118,18 +118,18 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 	private void initialize() {
 
 		setLayoutData(new GridData(GridData.FILL_BOTH));
-		//
+
 		IChartSettings chartSettings = getChartSettings();
 		chartSettings.setTitle("");
 		chartSettings.setOrientation(SWT.HORIZONTAL);
 		chartSettings.setHorizontalSliderVisible(true);
 		chartSettings.setVerticalSliderVisible(false);
 		chartSettings.setCreateMenu(true);
-		//
+
 		chartSettings.addMenuEntry(new UpdateMenuEntry());
 		addMassSpectrumFilter(chartSettings);
 		addMassSpectrumExport(chartSettings);
-		//
+
 		RangeRestriction rangeRestriction = chartSettings.getRangeRestriction();
 		rangeRestriction.setZeroX(false);
 		rangeRestriction.setZeroY(false);
@@ -139,7 +139,7 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 		rangeRestriction.setExtendMaxX(2.0d);
 		rangeRestriction.setExtendTypeY(RangeRestriction.ExtendType.RELATIVE);
 		rangeRestriction.setExtendMaxY(0.5d);
-		//
+
 		setPrimaryAxisSet(chartSettings);
 		addSecondaryAxisSet(chartSettings);
 		applySettings(chartSettings);
@@ -186,7 +186,7 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 		} else {
 			primaryAxisSettingsX.setColor(DisplayUtils.getDisplay().getSystemColor(SWT.COLOR_BLACK));
 		}
-		//
+
 		IPrimaryAxisSettings primaryAxisSettingsY = chartSettings.getPrimaryAxisSettingsY();
 		primaryAxisSettingsY.setTitle("Intensity");
 		primaryAxisSettingsY.setDecimalFormat(new DecimalFormat(("0.0#E0"), new DecimalFormatSymbols(Locale.ENGLISH)));
@@ -216,13 +216,13 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 		int size = ions.size();
 		double[] xSeries = new double[size];
 		double[] ySeries = new double[size];
-		//
+
 		for(int i = 0; i < size; i++) {
 			IIon ion = ions.get(i);
 			xSeries[i] = ion.getIon();
 			ySeries[i] = ion.getAbundance();
 		}
-		//
+
 		return new SeriesData(xSeries, ySeries, "Mass Spectrum");
 	}
 
