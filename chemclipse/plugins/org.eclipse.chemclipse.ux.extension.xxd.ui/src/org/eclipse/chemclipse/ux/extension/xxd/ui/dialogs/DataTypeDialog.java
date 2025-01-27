@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2023 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -85,10 +85,10 @@ public class DataTypeDialog extends Dialog {
 		layout.marginRight = 10;
 		layout.marginLeft = 10;
 		composite.setLayout(layout);
-		//
+
 		createLabel(composite);
 		comboViewer = createComboViewer(composite);
-		//
+
 		return composite;
 	}
 
@@ -111,11 +111,11 @@ public class DataTypeDialog extends Dialog {
 				if(element instanceof DataType dataType) {
 					return dataType.name();
 				}
-				//
+
 				return null;
 			}
 		});
-		//
+
 		combo.setToolTipText("Select a data type.");
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.widthHint = 150;
@@ -126,12 +126,13 @@ public class DataTypeDialog extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 
 				Object object = comboViewer.getStructuredSelection().getFirstElement();
-				if(object instanceof DataType) {
+				if(object instanceof DataType selectedDataType) {
+					dataType = selectedDataType;
 					validate();
 				}
 			}
 		});
-		//
+
 		comboViewer.setInput(dataTypes);
 		return comboViewer;
 	}
