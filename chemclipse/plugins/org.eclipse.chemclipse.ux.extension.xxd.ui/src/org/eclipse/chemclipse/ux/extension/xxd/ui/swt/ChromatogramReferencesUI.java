@@ -412,7 +412,7 @@ public class ChromatogramReferencesUI extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 
 				if(comboChromatograms != null) {
-					DataTypeDialog dataTypeDialog = new DataTypeDialog(e.display.getActiveShell(), new DataType[]{DataType.MSD, DataType.CSD, DataType.WSD});
+					DataTypeDialog dataTypeDialog = new DataTypeDialog(e.display.getActiveShell(), new DataType[]{DataType.MSD, DataType.CSD, DataType.WSD, DataType.VSD});
 					if(IDialogConstants.OK_ID == dataTypeDialog.open()) {
 						DataType dataType = dataTypeDialog.getDataType();
 						InputWizardSettings inputWizardSettings = InputWizardSettings.create(Activator.getDefault().getPreferenceStore(), dataType);
