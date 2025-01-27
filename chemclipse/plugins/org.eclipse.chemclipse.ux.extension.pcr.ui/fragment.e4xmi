@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_RvTHsKuDEeSKQ7OYnQVHjQ">
+  <imports xsi:type="advanced:Area" xmi:id="_qjvtkCskEeakPPc3RJFSAg" elementId="org.eclipse.chemclipse.rcp.app.ui.editor"/>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_TxCZIKuHEeSKQ7OYnQVHjQ" featurename="sharedElements" parentElementId="org.eclipse.chemclipse.rcp.app.ui.trimmedwindow.main">
+    <elements xsi:type="basic:Part" xmi:id="_2wi6ECfdEeu5Pepo04c08Q" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.platecharts" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.pcr.ui/org.eclipse.chemclipse.ux.extension.pcr.ui.parts.PlateChartsPart" label="%PlateCharts" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/plateCharts.png"/>
+    <elements xsi:type="basic:Part" xmi:id="_3OFKoCfdEeu5Pepo04c08Q" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.welldata" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.pcr.ui/org.eclipse.chemclipse.ux.extension.pcr.ui.parts.WellDataPart" label="%WellData" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/header.gif"/>
+    <elements xsi:type="basic:Part" xmi:id="_3pxoICfdEeu5Pepo04c08Q" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.wellchart" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.pcr.ui/org.eclipse.chemclipse.ux.extension.pcr.ui.parts.WellChartPart" label="%WellChart" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/wellChart.png"/>
+    <elements xsi:type="basic:Part" xmi:id="_4El74CfdEeu5Pepo04c08Q" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.platedata" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.pcr.ui/org.eclipse.chemclipse.ux.extension.pcr.ui.parts.PlateDataPart" label="%PlateData" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/file.gif"/>
+    <elements xsi:type="basic:Part" xmi:id="_4fuYsCfdEeu5Pepo04c08Q" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.wellchannels" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.pcr.ui/org.eclipse.chemclipse.ux.extension.pcr.ui.parts.WellChannelsPart" label="%WellChannels" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/wellChannels.png"/>
+    <elements xsi:type="basic:Part" xmi:id="_0tI_oOCjEe-rPY8RFjn_WQ" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.dataexplorer" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.pcr.ui/org.eclipse.chemclipse.ux.extension.pcr.ui.parts.DataExplorerPart" label="%DataExplorer" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/file.gif"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_NOrRACskEeakPPc3RJFSAg" featurename="children" parentElementId="org.eclipse.chemclipse.rcp.app.ui.perspectivestack.main">
+    <elements xsi:type="advanced:Perspective" xmi:id="_LTsDcCfdEeu5Pepo04c08Q" elementId="org.eclipse.chemclipse.ux.extension.pcr.ui.perspective.pcr" label="Polymerase Chain Reaction (PCR)" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/plateCharts.png" tooltip="Polymerase Chain Reaction (PCR)">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_YY3xACfdEeu5Pepo04c08Q" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.partsashcontainer.5">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_ZJOP4CfdEeu5Pepo04c08Q" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.partsashcontainer.6" horizontal="true">
+          <children xsi:type="basic:PartSashContainer" xmi:id="_yrc3gCfeEeu5Pepo04c08Q" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.partsashcontainer.8" containerData="3000">
+            <children xsi:type="basic:PartSashContainer" xmi:id="_7y4EIKwPEey7K4kYy1L1Sw" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.partsashcontainer.14">
+              <children xsi:type="basic:PartStack" xmi:id="_eCbagCfdEeu5Pepo04c08Q" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.partstack.0">
+                <children xsi:type="advanced:Placeholder" xmi:id="_e7z5kCfdEeu5Pepo04c08Q" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.dataexplorer" ref="_0tI_oOCjEe-rPY8RFjn_WQ"/>
+              </children>
+              <children xsi:type="advanced:Placeholder" xmi:id="_2AQ3MCfeEeu5Pepo04c08Q" elementId="org.eclipse.ui.editorss" ref="_qjvtkCskEeakPPc3RJFSAg"/>
+              <children xsi:type="basic:PartStack" xmi:id="_FzwjIKwkEey7K4kYy1L1Sw" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.partstack.3" visible="false">
+                <children xsi:type="advanced:Placeholder" xmi:id="_sUSmgKwgEey7K4kYy1L1Sw" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.welldata" toBeRendered="false" ref="_3OFKoCfdEeu5Pepo04c08Q"/>
+                <children xsi:type="advanced:Placeholder" xmi:id="_apy94KwkEey7K4kYy1L1Sw" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.wellchart" toBeRendered="false" ref="_3pxoICfdEeu5Pepo04c08Q"/>
+                <children xsi:type="advanced:Placeholder" xmi:id="_ma-s8KwkEey7K4kYy1L1Sw" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.platedata" toBeRendered="false" ref="_4El74CfdEeu5Pepo04c08Q"/>
+                <children xsi:type="advanced:Placeholder" xmi:id="_qnIkUKwkEey7K4kYy1L1Sw" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.wellchannels" toBeRendered="false" ref="_4fuYsCfdEeu5Pepo04c08Q"/>
+              </children>
+            </children>
+          </children>
+          <children xsi:type="basic:PartSashContainer" xmi:id="_y_wTkCfeEeu5Pepo04c08Q" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.partsashcontainer.9" containerData="7500" horizontal="true">
+            <children xsi:type="basic:PartStack" xmi:id="_hMdGgCfdEeu5Pepo04c08Q" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.partstack.1">
+              <children xsi:type="advanced:Placeholder" xmi:id="_lEE4UCfdEeu5Pepo04c08Q" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.platecharts" ref="_2wi6ECfdEeu5Pepo04c08Q"/>
+            </children>
+          </children>
+        </children>
+      </children>
+    </elements>
+  </fragments>
+</fragment:ModelFragments>

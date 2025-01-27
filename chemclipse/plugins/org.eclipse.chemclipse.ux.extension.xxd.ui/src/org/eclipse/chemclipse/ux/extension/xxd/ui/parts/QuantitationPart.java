@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,13 +13,15 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.parts;
 
 import java.util.List;
 
-import jakarta.inject.Inject;
-
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
+import org.eclipse.chemclipse.ux.extension.ui.parts.AbstractPart;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedQuantitationListUI;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+
+import jakarta.inject.Inject;
 
 public class QuantitationPart extends AbstractPart<ExtendedQuantitationListUI> {
 
@@ -28,7 +30,7 @@ public class QuantitationPart extends AbstractPart<ExtendedQuantitationListUI> {
 	@Inject
 	public QuantitationPart(Composite parent) {
 
-		super(parent, TOPIC);
+		super(parent, TOPIC, Activator.getDefault().getDataUpdateSupport());
 	}
 
 	@Override

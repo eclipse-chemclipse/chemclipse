@@ -60,6 +60,7 @@ import org.eclipse.chemclipse.ux.extension.ui.support.RulerEvent;
 import org.eclipse.chemclipse.ux.extension.ui.swt.ChartGridSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.chemclipse.ux.extension.ui.swt.ISettingsHandler;
+import org.eclipse.chemclipse.ux.extension.ui.swt.RulerDetailsUI;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.charts.ChromatogramChart;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.charts.ChromatogramRulerChart;

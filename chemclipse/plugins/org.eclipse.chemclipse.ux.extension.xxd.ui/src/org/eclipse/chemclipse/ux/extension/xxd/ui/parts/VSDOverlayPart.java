@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,6 +14,8 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.parts;
 import java.util.List;
 
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
+import org.eclipse.chemclipse.ux.extension.ui.parts.AbstractPart;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedVSDOverlayUI;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.swt.SWT;
@@ -28,9 +30,10 @@ public class VSDOverlayPart extends AbstractPart<ExtendedVSDOverlayUI> {
 	@Inject
 	public VSDOverlayPart(Composite parent) {
 
-		super(parent, TOPIC);
+		super(parent, TOPIC, Activator.getDefault().getDataUpdateSupport());
 	}
 
+	@Override
 	@Focus
 	public void setFocus() {
 

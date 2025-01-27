@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2024 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,16 +12,17 @@
 package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.parts;
 
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.parts.AbstractPart;
+import org.eclipse.chemclipse.ux.extension.ui.parts.AbstractPart;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.swt.widgets.Composite;
 
 public abstract class AbstractPartPCA<T extends Composite> extends AbstractPart<T> {
 
 	private static final String TOPIC = IChemClipseEvents.TOPIC_PCA_UPDATE_SELECTION;
 
-	public AbstractPartPCA(Composite parent) {
+	protected AbstractPartPCA(Composite parent) {
 
-		super(parent, TOPIC);
+		super(parent, TOPIC, Activator.getDefault().getDataUpdateSupport());
 	}
 
 	/**
