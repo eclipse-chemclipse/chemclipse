@@ -135,7 +135,7 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 		IChartSettings chartSettings = getChartSettings();
 		chartSettings.setOrientation(SWT.HORIZONTAL);
 		chartSettings.setHorizontalSliderVisible(true);
-		chartSettings.setVerticalSliderVisible(true);
+		chartSettings.setVerticalSliderVisible(false);
 		chartSettings.setCreateMenu(true);
 		//
 		chartSettings.addMenuEntry(new UpdateMenuEntry());
