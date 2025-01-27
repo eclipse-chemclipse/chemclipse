@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2024 Lablicate GmbH.
+ * Copyright (c) 2013, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -7,36 +7,41 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
  * Christoph Läubrich - reuse the DataExplorerUI
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.msd.ui.views;
 
 import java.util.Collections;
-
-import jakarta.inject.Inject;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.chemclipse.ux.extension.msd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.msd.ui.support.MassSpectrumSupport;
+import org.eclipse.chemclipse.ux.extension.ui.model.DataExplorerTreeSettings;
 import org.eclipse.chemclipse.ux.extension.ui.swt.MultiDataExplorerTreeUI;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+
+import jakarta.inject.Inject;
 
 public class MassSpectrumFileExplorer {
 
-	private MultiDataExplorerTreeUI explorerUI;
+	private AtomicReference<MultiDataExplorerTreeUI> dataExplorerControl = new AtomicReference<>();
 
 	@Inject
 	public MassSpectrumFileExplorer(Composite parent) {
 
-		explorerUI = new MultiDataExplorerTreeUI(parent, Activator.getDefault().getPreferenceStore());
+		MultiDataExplorerTreeUI explorerUI = new MultiDataExplorerTreeUI(parent, SWT.NONE, new DataExplorerTreeSettings(Activator.getDefault().getPreferenceStore()));
 		explorerUI.setSupplierFileIdentifier(Collections.singleton(MassSpectrumSupport.getInstanceEditorSupport()));
 		explorerUI.expandLastDirectoryPath();
+		//
+		dataExplorerControl.set(explorerUI);
 	}
 
 	@Focus
 	private void setFocus() {
 
-		explorerUI.setFocus();
+		dataExplorerControl.get().setFocus();
 	}
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2023 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -25,8 +25,9 @@ import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.processing.supplier.IProcessorPreferences;
 import org.eclipse.chemclipse.support.l10n.TranslationSupport;
 import org.eclipse.chemclipse.support.settings.parser.InputValue;
+import org.eclipse.chemclipse.ux.extension.ui.methods.SettingsUIProvider;
+import org.eclipse.chemclipse.ux.extension.ui.methods.SettingsUIProvider.SettingsUIControl;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.l10n.ExtensionMessages;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.methods.SettingsUIProvider.SettingsUIControl;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IStatus;

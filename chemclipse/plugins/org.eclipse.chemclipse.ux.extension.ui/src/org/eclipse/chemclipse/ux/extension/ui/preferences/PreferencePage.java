@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2024 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -15,7 +15,6 @@ import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.LabelFieldEdit
 import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.SpacerFieldEditor;
 import org.eclipse.chemclipse.ux.extension.ui.Activator;
 import org.eclipse.jface.preference.BooleanFieldEditor;
-import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
@@ -30,20 +29,9 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 		setDescription("");
 	}
 
-	/**
-	 * Creates the field editors. Field editors are abstractions of the common
-	 * GUI blocks needed to manipulate various types of preferences. Each field
-	 * editor knows how to save and restore itself.
-	 */
 	@Override
 	public void createFieldEditors() {
 
-		addField(new SpacerFieldEditor(getFieldEditorParent()));
-		addField(new DirectoryFieldEditor(PreferenceSupplier.P_SELECTED_DRIVE_PATH, "Selected Drive Path", getFieldEditorParent()));
-		addField(new DirectoryFieldEditor(PreferenceSupplier.P_SELECTED_HOME_PATH, "Selected Home Path", getFieldEditorParent()));
-		addField(new DirectoryFieldEditor(PreferenceSupplier.P_SELECTED_WORKSPACE_PATH, "Selected Workspace Path", getFieldEditorParent()));
-		addField(new DirectoryFieldEditor(PreferenceSupplier.P_SELECTED_USER_LOCATION_PATH, "Selected User Location Path", getFieldEditorParent()));
-		addField(new DirectoryFieldEditor(PreferenceSupplier.P_USER_LOCATION_PATH, "User Location", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_OPEN_FIRST_DATA_MATCH_ONLY, "Open First Data Match Only", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_OPEN_EDITOR_MULTIPLE_TIMES, "Open Editor Multiple Times", getFieldEditorParent()));
 		//
@@ -52,11 +40,6 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_SHOW_NETWORK_SHARES, "Show Network Shares (requires restart)", getFieldEditorParent()));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
-	 */
 	@Override
 	public void init(IWorkbench workbench) {
 

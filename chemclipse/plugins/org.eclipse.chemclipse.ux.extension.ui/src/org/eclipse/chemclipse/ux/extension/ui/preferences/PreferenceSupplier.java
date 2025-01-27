@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2024 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -36,6 +36,11 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static final boolean DEF_OPEN_FIRST_DATA_MATCH_ONLY = true;
 	public static final String P_OPEN_EDITOR_MULTIPLE_TIMES = "openEditorMultipleTimes";
 	public static final boolean DEF_OPEN_EDITOR_MULTIPLE_TIMES = true;
+	public static final String P_USER_LOCATIONS = "userLocations";
+	public static final String DEF_USER_LOCATIONS = "";
+	//
+	public static final String P_USER_LOCATIONS_TEMPLATE_FOLDER = "userLocationsTemplateFolder";
+	public static final String DEF_USER_LOCATIONS_TEMPLATE_FOLDER = "";
 
 	public static IPreferenceSupplier INSTANCE() {
 
@@ -59,6 +64,9 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 		putDefault(P_SHOW_NETWORK_SHARES, DEF_SHOW_NETWORK_SHARES);
 		putDefault(P_OPEN_FIRST_DATA_MATCH_ONLY, DEF_OPEN_FIRST_DATA_MATCH_ONLY);
 		putDefault(P_OPEN_EDITOR_MULTIPLE_TIMES, DEF_OPEN_EDITOR_MULTIPLE_TIMES);
+		putDefault(P_USER_LOCATIONS, DEF_USER_LOCATIONS);
+		//
+		putDefault(P_USER_LOCATIONS_TEMPLATE_FOLDER, DEF_USER_LOCATIONS_TEMPLATE_FOLDER);
 	}
 
 	public static String getSelectedDrivePath() {
@@ -121,8 +129,28 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 		return INSTANCE().getBoolean(P_OPEN_EDITOR_MULTIPLE_TIMES);
 	}
 
+	public static String getUserLocations() {
+
+		return INSTANCE().get(P_USER_LOCATIONS);
+	}
+
+	public static void setUserLocations(String userLocations) {
+
+		INSTANCE().set(P_USER_LOCATIONS, userLocations);
+	}
+
 	public static boolean showNetworkShares() {
 
 		return INSTANCE().getBoolean(P_SHOW_NETWORK_SHARES);
+	}
+
+	public static String getUserLocationsTemplateFolder() {
+
+		return INSTANCE().get(P_USER_LOCATIONS_TEMPLATE_FOLDER);
+	}
+
+	public static void setUserLocationsTemplateFolder(String filterPath) {
+
+		INSTANCE().set(P_USER_LOCATIONS_TEMPLATE_FOLDER, filterPath);
 	}
 }

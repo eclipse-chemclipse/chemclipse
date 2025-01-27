@@ -299,7 +299,7 @@
             adaptableType="org.eclipse.chemclipse.converter.methods.MetaProcessorSettings"
             class="org.eclipse.chemclipse.ux.extension.xxd.ui.adapters.MetaProcessorSettingsAdapterFactory">
          <adapter
-               type="org.eclipse.chemclipse.ux.extension.xxd.ui.methods.SettingsUIProvider">
+               type="org.eclipse.chemclipse.ux.extension.ui.methods.SettingsUIProvider">
          </adapter>
       </factory>
    </extension>

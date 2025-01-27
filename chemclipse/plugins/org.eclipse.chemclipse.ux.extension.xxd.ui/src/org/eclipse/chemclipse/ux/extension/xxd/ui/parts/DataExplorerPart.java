@@ -14,12 +14,9 @@
 package org.eclipse.chemclipse.ux.extension.xxd.ui.parts;
 
 import org.eclipse.chemclipse.processing.converter.ISupplierFileIdentifier;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.DataExplorerUI;
-import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Composite;
 
 import jakarta.annotation.PostConstruct;
@@ -31,12 +28,11 @@ public class DataExplorerPart {
 	private ISupplierFileIdentifier supplierFileIdentifier;
 	//
 	private DataExplorerUI dataExplorerUI;
-	private IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 
 	@PostConstruct
-	public void init(Composite parent, MPart part, IEclipseContext context) {
+	public void init(Composite parent, MPart part) {
 
-		dataExplorerUI = new DataExplorerUI(parent, preferenceStore, context, supplierFileIdentifier);
+		dataExplorerUI = new DataExplorerUI(parent, supplierFileIdentifier);
 	}
 
 	public DataExplorerUI getDataExplorerUI() {

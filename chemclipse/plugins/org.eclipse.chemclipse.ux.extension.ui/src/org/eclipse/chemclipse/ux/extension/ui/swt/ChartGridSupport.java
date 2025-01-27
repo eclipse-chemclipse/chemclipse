@@ -9,7 +9,7 @@
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
-package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
+package org.eclipse.chemclipse.ux.extension.ui.swt;
 
 import java.util.ArrayList;
 import java.util.HashMap;

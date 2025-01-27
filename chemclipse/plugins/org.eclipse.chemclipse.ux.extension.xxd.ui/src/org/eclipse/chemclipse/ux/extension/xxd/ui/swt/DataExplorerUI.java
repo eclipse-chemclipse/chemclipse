@@ -14,17 +14,14 @@
 package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.chemclipse.model.types.DataType;
 import org.eclipse.chemclipse.processing.converter.ISupplierFileIdentifier;
-import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
-import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
-import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
-import org.eclipse.chemclipse.swt.ui.preferences.PreferencePageSystem;
+import org.eclipse.chemclipse.ux.extension.ui.model.DataExplorerTreeSettings;
 import org.eclipse.chemclipse.ux.extension.ui.provider.ISupplierFileEditorSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.MultiDataExplorerTreeUI;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.editors.ProjectExplorerSupportFactory;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.GenericSupplierEditorSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.SupplierEditorSupport;
@@ -32,81 +29,39 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePage;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageFileExplorer;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.jface.preference.IPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 
-public class DataExplorerUI extends MultiDataExplorerTreeUI implements IExtendedPartUI {
+public class DataExplorerUI extends MultiDataExplorerTreeUI {
 
-	private IEclipseContext context;
 	private ISupplierFileIdentifier supplierFileIdentifier;
-	//
-	private IPreferenceStore preferenceStore;
 
-	public DataExplorerUI(Composite parent, IPreferenceStore preferenceStore, IEclipseContext context, ISupplierFileIdentifier supplierFileIdentifier) {
+	public DataExplorerUI(Composite parent, ISupplierFileIdentifier supplierFileIdentifier) {
 
-		super(parent, preferenceStore);
-		this.preferenceStore = preferenceStore;
-		this.context = context;
+		super(parent, SWT.NONE, new DataExplorerTreeSettings(Activator.getDefault().getPreferenceStore()));
+		//
 		this.supplierFileIdentifier = supplierFileIdentifier;
 		setSupplierFileEditorSupport();
 	}
 
 	@Override
-	protected void createToolbarMain(Composite parent) {
+	protected List<Class<? extends IPreferencePage>> addPreferencePages() {
 
-		Composite composite = new Composite(parent, SWT.NONE);
-		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
-		gridData.horizontalAlignment = SWT.END;
-		composite.setLayoutData(gridData);
-		composite.setLayout(new GridLayout(2, false));
+		List<Class<? extends IPreferencePage>> preferencePages = new ArrayList<>();
 		//
-		createResetButton(composite);
-		createSettingsButton(composite);
+		preferencePages.add(PreferencePageFileExplorer.class);
+		preferencePages.add(PreferencePage.class);
+		//
+		return preferencePages;
 	}
 
-	private void createResetButton(Composite parent) {
+	@Override
+	protected void setSupplierFileEditorSupport() {
 
-		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Reset the data explorer.");
-		button.setText("");
-		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_RESET, IApplicationImageProvider.SIZE_16x16));
-		button.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-				setSupplierFileEditorSupport();
-				expandLastDirectoryPath();
-			}
-		});
-	}
-
-	private void createSettingsButton(Composite parent) {
-
-		createSettingsButton(parent, Arrays.asList( //
-				PreferencePageFileExplorer.class, //
-				PreferencePageSystem.class, //
-				PreferencePage.class, //
-				org.eclipse.chemclipse.ux.extension.ui.preferences.PreferencePage.class //
-		), new ISettingsHandler() {
-
-			@Override
-			public void apply(Display display) {
-
-				setSupplierFileEditorSupport();
-			}
-		}, false);
-	}
-
-	private void setSupplierFileEditorSupport() {
-
+		IEclipseContext context = Activator.getDefault().getEclipseContext();
+		IPreferenceStore preferenceStore = getDataExplorerTreeSettings().getPreferenceStore();
 		List<ISupplierFileEditorSupport> editorSupportList = new ArrayList<>();
 		/*
 		 * MSD

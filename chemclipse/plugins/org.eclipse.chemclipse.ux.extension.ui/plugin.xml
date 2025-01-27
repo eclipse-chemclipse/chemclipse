@@ -220,6 +220,12 @@
             id="org.eclipse.chemclipse.ux.extension.ui.preferencePage"
             name="Drive Settings">
       </page>
+      <page
+            category="org.eclipse.chemclipse.rcp.app.ui.preferences.settingsPreferencePage"
+            class="org.eclipse.chemclipse.ux.extension.ui.preferences.PreferencePageUserLocations"
+            id="org.eclipse.chemclipse.ux.extension.ui.preferencePageUserLocations"
+            name="User Locations">
+      </page>      
    </extension>
    <extension
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
