@@ -37,6 +37,9 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	//
 	public static final String P_USE_PROFILE_MASS_SPECTRUM_VIEW = "useProfileMassSpectrumView";
 	public static final boolean DEF_USE_PROFILE_MASS_SPECTRUM_VIEW = false;
+	//
+	public static final String P_SHOW_MASS_SPECTRUM_SELECTION_COMBO = "showMassSpectrumSelectionCombo";
+	public static final boolean DEF_SHOW_MASS_SPECTRUM_SELECTION_COMBO = false;
 
 	public static IPreferenceSupplier INSTANCE() {
 
@@ -57,6 +60,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 		putDefault(P_PATH_MASS_SPECTRUM_LIBRARIES, DEF_PATH_MASS_SPECTRUM_LIBRARIES);
 		putDefault(P_LIBRARY_MSD_LIMIT_SORTING, Integer.toString(DEF_LIBRARY_MSD_LIMIT_SORTING));
 		putDefault(PreferenceSupplier.P_USE_PROFILE_MASS_SPECTRUM_VIEW, PreferenceSupplier.DEF_USE_PROFILE_MASS_SPECTRUM_VIEW);
+		putDefault(PreferenceSupplier.P_SHOW_MASS_SPECTRUM_SELECTION_COMBO, PreferenceSupplier.DEF_SHOW_MASS_SPECTRUM_SELECTION_COMBO);
 	}
 
 	public static String getPathMassSpectrumLibraries() {
@@ -77,5 +81,10 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static boolean useProfileMassSpectrumView() {
 
 		return INSTANCE().getBoolean(P_USE_PROFILE_MASS_SPECTRUM_VIEW);
+	}
+
+	public static boolean isSelectionComboVisible() {
+
+		return INSTANCE().getBoolean(P_SHOW_MASS_SPECTRUM_SELECTION_COMBO);
 	}
 }

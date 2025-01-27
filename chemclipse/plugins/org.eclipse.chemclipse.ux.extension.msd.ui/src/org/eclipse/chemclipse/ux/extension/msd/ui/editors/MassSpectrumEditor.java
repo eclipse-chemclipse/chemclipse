@@ -15,8 +15,11 @@ package org.eclipse.chemclipse.ux.extension.msd.ui.editors;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Supplier;
 
 import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException;
 import org.eclipse.chemclipse.logging.core.Logger;
@@ -44,10 +47,13 @@ import org.eclipse.chemclipse.support.events.IPerspectiveAndViewIds;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.chemclipse.support.ui.workbench.EditorSupport;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
+import org.eclipse.chemclipse.ux.extension.msd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.msd.ui.internal.support.MassSpectrumImportRunnable;
 import org.eclipse.chemclipse.ux.extension.msd.ui.swt.IMassSpectrumChart;
+import org.eclipse.chemclipse.ux.extension.msd.ui.swt.MassSpectraSelectionUI;
 import org.eclipse.chemclipse.ux.extension.msd.ui.swt.MassSpectrumChartCentroid;
 import org.eclipse.chemclipse.ux.extension.msd.ui.swt.MassSpectrumChartProfile;
+import org.eclipse.chemclipse.ux.extension.ui.support.PartSupport;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
@@ -59,12 +65,29 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.preference.IPreferencePage;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.PreferenceDialog;
+import org.eclipse.jface.preference.PreferenceManager;
+import org.eclipse.jface.preference.PreferenceNode;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swtchart.LineStyle;
+import org.eclipse.swtchart.extensions.core.IAxisSettings;
+import org.eclipse.swtchart.extensions.core.IChartSettings;
+import org.eclipse.swtchart.extensions.core.ScrollableChart;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -102,6 +125,10 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 	private ArrayList<EventHandler> registeredEventHandler;
 	private IMassSpectrumChart massSpectrumChart;
 	private List<Object> objects = new ArrayList<>();
+	private AtomicReference<Composite> toolbarMainControl = new AtomicReference<>();
+	private AtomicReference<MassSpectraSelectionUI> toolbarSelectionControl = new AtomicReference<>();
+	private IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+	private Map<IAxisSettings, LineStyle> axisSettingsInitial = new HashMap<>();
 
 	@PostConstruct
 	private void createControl(Composite parent) {
@@ -280,6 +307,9 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 			Thread.currentThread().interrupt();
 		}
 		massSpectra = runnable.getMassSpectra();
+		if(toolbarSelectionControl.get() != null) {
+			toolbarSelectionControl.get().update(massSpectra);
+		}
 		massSpectrumFile = file;
 	}
 
@@ -294,9 +324,18 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 
 	private void createMassSpectrumPage(Composite parent) {
 
-		/*
-		 * Create the mass spectrum UI.
-		 */
+		setPartLabel();
+		//
+		Composite composite = new Composite(parent, SWT.NONE);
+		composite.setLayout(new GridLayout(1, true));
+		//
+		createToolbarMain(composite);
+		createToolbarSelection(composite);
+		createMassSpectrumChart(composite);
+	}
+
+	private void setPartLabel() {
+
 		String name = ("".equals(massSpectra.getName())) ? "NoName" : massSpectra.getName();
 		massSpectrum = massSpectra.getMassSpectrum(1);
 		massSpectrum.setDirty(false);
@@ -309,24 +348,51 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 			}
 		}
 		part.setLabel(name);
-		/*
-		 * Centroid / Profile
-		 */
-		boolean isProfile;
-		if(massSpectrum instanceof IRegularMassSpectrum regularLibraryMassSpectrum) {
-			isProfile = regularLibraryMassSpectrum.getMassSpectrumType() == MassSpectrumType.PROFILE;
+	}
+
+	private void createMassSpectrumChart(Composite composite) {
+
+		if(isProfile()) {
+			massSpectrumChart = new MassSpectrumChartProfile(composite, SWT.BORDER);
 		} else {
-			isProfile = PreferenceSupplier.useProfileMassSpectrumView();
-		}
-		/*
-		 * Create and update the chart.
-		 */
-		if(isProfile) {
-			massSpectrumChart = new MassSpectrumChartProfile(parent, SWT.NONE);
-		} else {
-			massSpectrumChart = new MassSpectrumChartCentroid(parent, SWT.NONE);
+			massSpectrumChart = new MassSpectrumChartCentroid(composite, SWT.BORDER);
 		}
 		massSpectrumChart.update(massSpectrum);
+	}
+
+	private boolean isProfile() {
+
+		if(massSpectrum instanceof IRegularMassSpectrum regularLibraryMassSpectrum) {
+			return regularLibraryMassSpectrum.getMassSpectrumType() == MassSpectrumType.PROFILE;
+		} else {
+			return PreferenceSupplier.useProfileMassSpectrumView();
+		}
+	}
+
+	private void createToolbarMain(Composite parent) {
+
+		Composite composite = new Composite(parent, SWT.NONE);
+		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+		gridData.horizontalAlignment = GridData.END;
+		composite.setLayoutData(gridData);
+		composite.setLayout(new GridLayout(4, false));
+		//
+		createButtonToggleSelection(composite);
+		createButtonToggleChartGrid(composite);
+		createToggleChartSeriesLegendButton(composite);
+		createButtonSettings(composite);
+		//
+		toolbarMainControl.set(composite);
+	}
+
+	private void createToolbarSelection(Composite parent) {
+
+		MassSpectraSelectionUI massSpectraSelectionUI = new MassSpectraSelectionUI(parent, SWT.NONE);
+		massSpectraSelectionUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		massSpectraSelectionUI.setVisible(PreferenceSupplier.isSelectionComboVisible());
+		toolbarSelectionControl.set(massSpectraSelectionUI);
+		massSpectraSelectionUI.update(massSpectra);
+		massSpectraSelectionUI.addSelectionChangeListener(createSelectionChangedListener());
 	}
 
 	private void createErrorMessagePage(Composite parent) {
@@ -402,5 +468,242 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 	public IScanMSD getScanSelection() {
 
 		return massSpectrum;
+	}
+
+	private Button createButtonToggleSelection(Composite parent) {
+
+		Button button = createButtonToggleToolbar(parent, toolbarSelectionControl, IApplicationImage.IMAGE_EXPAND_ALL, "Selection toolbar.");
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				preferenceStore.setValue(PreferenceSupplier.P_SHOW_MASS_SPECTRUM_SELECTION_COMBO, toolbarSelectionControl.get().isVisible());
+			}
+		});
+		return button;
+	}
+
+	private Button createButtonToggleToolbar(Composite parent, AtomicReference<? extends Composite> toolbar, String image, String tooltip) {
+
+		Button button = new Button(parent, SWT.TOGGLE);
+		button.setText("");
+		setButtonImage(button, image, tooltip, false);
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				Composite composite = toolbar.get();
+				if(composite != null) {
+					boolean active = PartSupport.toggleCompositeVisibility(composite);
+					setButtonImage(button, image, tooltip, active);
+				}
+			}
+		});
+		return button;
+	}
+
+	void setButtonImage(Button button, String image, String tooltip, boolean enabled) {
+
+		if(isToggleButton(button)) {
+			button.setSelection(enabled);
+			if(button.getImage() == null) {
+				button.setImage(ApplicationImageFactory.getInstance().getImage(image, IApplicationImageProvider.SIZE_16x16));
+			}
+		} else {
+			button.setImage(ApplicationImageFactory.getInstance().getImage(image, IApplicationImageProvider.SIZE_16x16, enabled));
+		}
+		button.setToolTipText(tooltip);
+	}
+
+	private boolean isToggleButton(Button button) {
+
+		return (button.getStyle() & SWT.TOGGLE) == SWT.TOGGLE;
+	}
+
+	private ISelectionChangedListener createSelectionChangedListener() {
+
+		return new ISelectionChangedListener() {
+
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+
+				if(event.getSelection() instanceof IStructuredSelection selection) {
+					if(selection.getFirstElement() instanceof IScanMSD scanMSD) {
+						massSpectrum = scanMSD;
+						massSpectrumChart.update(massSpectrum);
+						UpdateNotifier.update(massSpectrum);
+					}
+				}
+			}
+		};
+	}
+
+	private Button createButtonToggleChartGrid(Composite parent) {
+
+		Button button = new Button(parent, SWT.TOGGLE);
+		button.setText("");
+		setButtonImage(button, IApplicationImage.IMAGE_GRID, "Chart Grid", false);
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				if(massSpectrumChart instanceof ScrollableChart scrollableChart) {
+					IChartSettings chartSettings = scrollableChart.getChartSettings();
+					boolean isGridDisplayed = !isGridDisplayed(chartSettings);
+					setGrid(scrollableChart.getChartSettings(), isGridDisplayed);
+					scrollableChart.applySettings(chartSettings);
+					setButtonImage(button, IApplicationImage.IMAGE_GRID, "Chart Grid", isGridDisplayed);
+				}
+			}
+		});
+		return button;
+	}
+
+	private boolean isGridDisplayed(IChartSettings chartSettings) {
+
+		List<IAxisSettings> axisSettingsList = getAxisSettings(chartSettings);
+		for(IAxisSettings axisSettings : axisSettingsList) {
+			if(isGridDisplayed(axisSettings)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private List<IAxisSettings> getAxisSettings(IChartSettings chartSettings) {
+
+		List<IAxisSettings> axisSettingsList = new ArrayList<>();
+		/*
+		 * Primary Axis X/Y
+		 */
+		axisSettingsList.add(chartSettings.getPrimaryAxisSettingsX());
+		axisSettingsList.add(chartSettings.getPrimaryAxisSettingsY());
+		/*
+		 * Secondary Axes X/Y
+		 */
+		for(IAxisSettings axisSettings : chartSettings.getSecondaryAxisSettingsListX()) {
+			axisSettingsList.add(axisSettings);
+		}
+		for(IAxisSettings axisSettings : chartSettings.getSecondaryAxisSettingsListY()) {
+			axisSettingsList.add(axisSettings);
+		}
+		return axisSettingsList;
+	}
+
+	private boolean isGridDisplayed(IAxisSettings axisSettings) {
+
+		return axisSettings.isVisible() && !LineStyle.NONE.equals(axisSettings.getGridLineStyle());
+	}
+
+	public void setGrid(IChartSettings chartSettings, boolean show) {
+
+		List<IAxisSettings> axisSettingsList = getAxisSettings(chartSettings);
+		for(IAxisSettings axisSettings : axisSettingsList) {
+			setGrid(axisSettings, show);
+		}
+	}
+
+	private void setGrid(IAxisSettings axisSettings, boolean show) {
+
+		if(axisSettings.isVisible()) {
+			if(show) {
+				LineStyle lineStyle = axisSettingsInitial.getOrDefault(axisSettings, LineStyle.DOT);
+				axisSettings.setGridLineStyle(lineStyle);
+			} else {
+				persistInitialState(axisSettings);
+				axisSettings.setGridLineStyle(LineStyle.NONE);
+			}
+		}
+	}
+
+	private void persistInitialState(IAxisSettings axisSettings) {
+
+		if(!axisSettingsInitial.containsKey(axisSettings)) {
+			axisSettingsInitial.put(axisSettings, axisSettings.getGridLineStyle());
+		}
+	}
+
+	private void createToggleChartSeriesLegendButton(Composite parent) {
+
+		Button button = new Button(parent, SWT.PUSH);
+		button.setToolTipText("Toggle the chart series legend.");
+		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_TAG, IApplicationImageProvider.SIZE_16x16));
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				if(massSpectrumChart instanceof ScrollableChart scrollableChart) {
+					scrollableChart.toggleSeriesLegendVisibility();
+				}
+			}
+		});
+	}
+
+	private void createButtonSettings(Composite parent) {
+
+		createSettingsButton(parent, getPreferencePagesSupplier());
+	}
+
+	private Button createSettingsButton(Composite parent, Supplier<List<Class<? extends IPreferencePage>>> supplierPreferencePages) {
+
+		Button button = createSettingsButtonBasic(parent);
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent event) {
+
+				showPreferencesDialog(event, supplierPreferencePages.get());
+			}
+		});
+		return button;
+	}
+
+	void showPreferencesDialog(SelectionEvent event, List<Class<? extends IPreferencePage>> preferencePages) {
+
+		List<IPreferencePage> pages = new ArrayList<>();
+		for(Class<? extends IPreferencePage> page : preferencePages) {
+			try {
+				IPreferencePage preferencePage = page.getConstructor().newInstance();
+				pages.add(preferencePage);
+			} catch(Exception e) {
+				logger.error(e);
+			}
+		}
+		PreferenceManager preferenceManager = new PreferenceManager();
+		int i = 1;
+		for(IPreferencePage preferencePage : pages) {
+			preferenceManager.addToRoot(new PreferenceNode(Integer.toString(i++), preferencePage));
+		}
+		PreferenceDialog preferenceDialog = new PreferenceDialog(event.display.getActiveShell(), preferenceManager);
+		preferenceDialog.create();
+		preferenceDialog.setMessage("Settings");
+		preferenceDialog.open();
+	}
+
+	private Button createSettingsButtonBasic(Composite parent) {
+
+		Button button = new Button(parent, SWT.PUSH);
+		button.setText("");
+		button.setToolTipText("Settings");
+		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_CONFIGURE, IApplicationImageProvider.SIZE_16x16));
+		return button;
+	}
+
+	private Supplier<List<Class<? extends IPreferencePage>>> getPreferencePagesSupplier() {
+
+		return new Supplier<List<Class<? extends IPreferencePage>>>() {
+
+			@Override
+			public List<Class<? extends IPreferencePage>> get() {
+
+				List<Class<? extends IPreferencePage>> preferencePages = new ArrayList<>();
+				preferencePages.add(org.eclipse.chemclipse.msd.swt.ui.preferences.PreferencePage.class);
+				return preferencePages;
+			}
+		};
 	}
 }
