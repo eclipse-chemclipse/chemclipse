@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2022 Lablicate GmbH.
+ * Copyright (c) 2012, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -31,7 +31,7 @@ public abstract class AbstractChromatogramReportGenerator implements IChromatogr
 		if(file == null) {
 			return getProcessingInfo("The file couldn't be found.");
 		}
-		//
+
 		IProcessingInfo<File> processingInfo = createDirectoriesAndFiles(file);
 		/*
 		 * Tests if the file can be written.
@@ -77,12 +77,12 @@ public abstract class AbstractChromatogramReportGenerator implements IChromatogr
 				return getProcessingInfo("The given file couldn't be created:" + file.getAbsolutePath());
 			}
 		}
-		return new ProcessingInfo<File>();
+		return new ProcessingInfo<>();
 	}
 
 	private IProcessingInfo<File> getProcessingInfo(String message) {
 
-		IProcessingInfo<File> processingInfo = new ProcessingInfo<File>();
+		IProcessingInfo<File> processingInfo = new ProcessingInfo<>();
 		IProcessingMessage processingMessage = new ProcessingMessage(MessageType.ERROR, "Chromatogram Report", message);
 		processingInfo.addMessage(processingMessage);
 		return processingInfo;
