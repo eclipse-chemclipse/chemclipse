@@ -51,13 +51,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static final String P_METHOD_COMPRESSION_LEVEL = "methodCompressionLevel";
 	public static final int DEF_METHOD_COMPRESSION_LEVEL = Format.METHOD_COMPRESSION_LEVEL;
 	/*
-	 * .ocq (quanititation table container)
-	 */
-	public static final String P_QUANTITATION_DB_VERSION_SAVE = "quantitationDatabaseVersionSave";
-	public static final String DEF_QUANTITATION_DB_VERSION_SAVE = Format.QUANTDB_VERSION_LATEST;
-	public static final String P_QUANTITATION_DB_COMPRESSION_LEVEL = "quantitationDatabaseCompressionLevel";
-	public static final int DEF_QUANTITATION_DB_COMPRESSION_LEVEL = Format.QUANTDB_COMPRESSION_LEVEL;
-	/*
 	 * General
 	 */
 	public static final String P_LIST_PATH_IMPORT = "listPathImport";
@@ -88,9 +81,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 		putDefault(P_MIN_BYTES_TO_LOAD_IN_BACKGROUND, Integer.toString(DEF_MIN_BYTES_TO_LOAD_IN_BACKGROUND));
 		//
 		putDefault(P_METHOD_COMPRESSION_LEVEL, Integer.toString(DEF_METHOD_COMPRESSION_LEVEL));
-		//
-		putDefault(P_QUANTITATION_DB_VERSION_SAVE, DEF_QUANTITATION_DB_VERSION_SAVE);
-		putDefault(P_QUANTITATION_DB_COMPRESSION_LEVEL, Integer.toString(DEF_QUANTITATION_DB_COMPRESSION_LEVEL));
 		//
 		putDefault(P_LIST_PATH_IMPORT, DEF_LIST_PATH_IMPORT);
 		putDefault(P_LIST_PATH_EXPORT, DEF_LIST_PATH_EXPORT);

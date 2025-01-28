@@ -69,14 +69,6 @@ public class Format {
 	public static final String METHOD_VERSION_1401 = "1.4.0.1";
 	public static final String METHOD_VERSION_1402 = "1.4.0.2";
 	public static final String METHOD_VERSION_LATEST = METHOD_VERSION_1402;
-	/*
-	 * Quantitation DB (*.ocq)
-	 */
-	public static final int QUANTDB_COMPRESSION_LEVEL = 0; // 0 - 9 => 0 no compression
-	public static final int QUANTDB_COMPRESSION_TYPE = ZipOutputStream.DEFLATED;
-	//
-	public static final String QUANTDB_VERSION_0001 = "0.0.0.1";
-	public static final String QUANTDB_VERSION_LATEST = QUANTDB_VERSION_0001;
 	//
 	public static final String DIR_SEPARATOR = "/";
 	public static final String WSD = "WSD";
@@ -197,11 +189,4 @@ public class Format {
 	 * Process Method
 	 */
 	public static final String FILE_PROCESS_METHOD = "PROCESS_METHOD";
-	/*
-	 * MSD
-	 */
-	public static final String QUANTDB = "QUANTDB";
-	public static final String QUANTITATION_DATABASE = "QUANTITATION_DATABASE";
-	public static final String DIR_QUANTDB = QUANTDB + DIR_SEPARATOR;
-	public static final String FILE_QUANTDB = DIR_QUANTDB + QUANTITATION_DATABASE;
 }
