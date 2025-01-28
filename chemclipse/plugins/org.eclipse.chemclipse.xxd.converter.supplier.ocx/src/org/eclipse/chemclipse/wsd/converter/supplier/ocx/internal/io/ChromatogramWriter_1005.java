@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2024 Michael Chang.
+ * Copyright (c) 2015, 2025 Michael Chang.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -30,8 +30,8 @@ import org.eclipse.chemclipse.wsd.converter.supplier.ocx.io.IChromatogramWSDZipW
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.wsd.model.core.IScanSignalWSD;
 import org.eclipse.chemclipse.wsd.model.core.IScanWSD;
-import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.Format;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public class ChromatogramWriter_1005 extends AbstractChromatogramWriter implements IChromatogramWSDZipWriter {

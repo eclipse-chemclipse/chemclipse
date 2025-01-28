@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2024 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.ocx.internal.io;
 
@@ -44,10 +44,10 @@ import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.support.history.IEditHistory;
 import org.eclipse.chemclipse.support.history.IEditInformation;
-import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.Format;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.IScanProxy;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.ScanProxy;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**

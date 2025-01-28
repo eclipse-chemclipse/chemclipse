@@ -27,8 +27,7 @@ import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.methods.Method
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.methods.MethodReaderWriter_1402;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.methods.MethodWriter_1000;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.methods.MethodWriter_1001;
-import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.Format;
-import org.eclipse.chemclipse.xxd.converter.supplier.ocx.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public class MethodExportConverter extends AbstractExportConverter implements IMethodExportConverter {
@@ -49,8 +48,12 @@ public class MethodExportConverter extends AbstractExportConverter implements IM
 
 	private IMethodWriter getMethodWriter() {
 
-		String methodVersion = PreferenceSupplier.getMethodVersionSave();
-		switch(methodVersion) {
+		return getMethodWriter(Format.METHOD_VERSION_LATEST);
+	}
+
+	private IMethodWriter getMethodWriter(String version) {
+
+		switch(version) {
 			case Format.METHOD_VERSION_0001:
 				return new MethodWriter_1000();
 			case Format.METHOD_VERSION_0002:

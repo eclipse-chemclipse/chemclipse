@@ -61,7 +61,7 @@ import org.eclipse.chemclipse.msd.model.implementation.ScanMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
 import org.eclipse.chemclipse.support.model.SeparationColumnType;
-import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.Format;
+import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**

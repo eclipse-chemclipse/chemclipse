@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2024 Lablicate GmbH.
+ * Copyright (c) 2014, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -35,8 +35,8 @@ import org.eclipse.chemclipse.csd.converter.supplier.ocx.internal.io.Chromatogra
 import org.eclipse.chemclipse.csd.converter.supplier.ocx.internal.io.ChromatogramWriter_1502;
 import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.ChromatogramReferencesSupport;
-import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.Format;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public class ChromatogramWriterCSD extends AbstractChromatogramWriter implements IChromatogramCSDZipWriter {
@@ -44,7 +44,12 @@ public class ChromatogramWriterCSD extends AbstractChromatogramWriter implements
 	@Override
 	public void writeChromatogram(File file, IChromatogramCSD chromatogram, IProgressMonitor monitor) throws FileIsNotWriteableException, IOException {
 
-		IChromatogramCSDZipWriter chromatogramWriter = getChromatogramWriter(chromatogram, monitor);
+		writeChromatogram(file, Format.CHROMATOGRAM_VERSION_LATEST, chromatogram, monitor);
+	}
+
+	public void writeChromatogram(File file, String version, IChromatogramCSD chromatogram, IProgressMonitor monitor) throws FileIsNotWriteableException, IOException {
+
+		IChromatogramCSDZipWriter chromatogramWriter = getChromatogramWriter(chromatogram, version, monitor);
 		chromatogramWriter.writeChromatogram(file, chromatogram, monitor);
 		/*
 		 * Export References
@@ -57,52 +62,52 @@ public class ChromatogramWriterCSD extends AbstractChromatogramWriter implements
 	@Override
 	public void writeChromatogram(ZipOutputStream zipOutputStream, String directoryPrefix, IChromatogramCSD chromatogram, IProgressMonitor monitor) throws IOException {
 
-		IChromatogramCSDZipWriter chromatogramWriter = getChromatogramWriter(chromatogram, monitor);
+		IChromatogramCSDZipWriter chromatogramWriter = getChromatogramWriter(chromatogram, Format.CHROMATOGRAM_VERSION_LATEST, monitor);
 		chromatogramWriter.writeChromatogram(zipOutputStream, directoryPrefix, chromatogram, monitor);
 	}
 
-	private IChromatogramCSDZipWriter getChromatogramWriter(IChromatogramCSD chromatogram, IProgressMonitor monitor) {
+	private IChromatogramCSDZipWriter getChromatogramWriter(IChromatogramCSD chromatogram, String version, IProgressMonitor monitor) {
 
-		String versionSave = PreferenceSupplier.getChromatogramVersionSave();
-		IChromatogramCSDZipWriter chromatogramWriter;
-		/*
-		 * Check the requested version of the file to be exported.
-		 * TODO Optimize
-		 */
-		if(versionSave.equals(Format.CHROMATOGRAM_VERSION_1001)) {
+		monitor.setTaskName("Open Chromatography Binary");
+		monitor.subTask(ConverterMessages.exportChromatogram);
+		IChromatogramCSDZipWriter chromatogramWriter = getChromatogramWriter(version);
+		//
+		return chromatogramWriter;
+	}
+
+	private IChromatogramCSDZipWriter getChromatogramWriter(String version) {
+
+		IChromatogramCSDZipWriter chromatogramWriter = null;
+		//
+		if(version.equals(Format.CHROMATOGRAM_VERSION_1001)) {
 			chromatogramWriter = new ChromatogramWriter_1001();
-		} else if(versionSave.equals(Format.CHROMATOGRAM_VERSION_1002)) {
+		} else if(version.equals(Format.CHROMATOGRAM_VERSION_1002)) {
 			chromatogramWriter = new ChromatogramWriter_1002();
-		} else if(versionSave.equals(Format.CHROMATOGRAM_VERSION_1003)) {
+		} else if(version.equals(Format.CHROMATOGRAM_VERSION_1003)) {
 			chromatogramWriter = new ChromatogramWriter_1003();
-		} else if(versionSave.equals(Format.CHROMATOGRAM_VERSION_1004)) {
+		} else if(version.equals(Format.CHROMATOGRAM_VERSION_1004)) {
 			chromatogramWriter = new ChromatogramWriter_1004();
-		} else if(versionSave.equals(Format.CHROMATOGRAM_VERSION_1005)) {
+		} else if(version.equals(Format.CHROMATOGRAM_VERSION_1005)) {
 			chromatogramWriter = new ChromatogramWriter_1005();
-		} else if(versionSave.equals(Format.CHROMATOGRAM_VERSION_1006)) {
+		} else if(version.equals(Format.CHROMATOGRAM_VERSION_1006)) {
 			chromatogramWriter = new ChromatogramWriter_1006();
-		} else if(versionSave.equals(Format.CHROMATOGRAM_VERSION_1007)) {
+		} else if(version.equals(Format.CHROMATOGRAM_VERSION_1007)) {
 			chromatogramWriter = new ChromatogramWriter_1007();
-		} else if(versionSave.equals(Format.CHROMATOGRAM_VERSION_1100)) {
+		} else if(version.equals(Format.CHROMATOGRAM_VERSION_1100)) {
 			chromatogramWriter = new ChromatogramWriter_1100();
-		} else if(versionSave.equals(Format.CHROMATOGRAM_VERSION_1300)) {
+		} else if(version.equals(Format.CHROMATOGRAM_VERSION_1300)) {
 			chromatogramWriter = new ChromatogramWriter_1300();
-		} else if(versionSave.equals(Format.CHROMATOGRAM_VERSION_1301)) {
+		} else if(version.equals(Format.CHROMATOGRAM_VERSION_1301)) {
 			chromatogramWriter = new ChromatogramWriter_1301();
-		} else if(versionSave.equals(Format.CHROMATOGRAM_VERSION_1400)) {
+		} else if(version.equals(Format.CHROMATOGRAM_VERSION_1400)) {
 			chromatogramWriter = new ChromatogramWriter_1400();
-		} else if(versionSave.equals(Format.CHROMATOGRAM_VERSION_1500)) {
+		} else if(version.equals(Format.CHROMATOGRAM_VERSION_1500)) {
 			chromatogramWriter = new ChromatogramWriter_1500();
-		} else if(versionSave.equals(Format.CHROMATOGRAM_VERSION_1501)) {
+		} else if(version.equals(Format.CHROMATOGRAM_VERSION_1501)) {
 			chromatogramWriter = new ChromatogramWriter_1501();
 		} else {
 			chromatogramWriter = new ChromatogramWriter_1502();
 		}
-		/*
-		 * Monitor Message
-		 */
-		monitor.setTaskName("Open Chromatography Binary");
-		monitor.subTask(ConverterMessages.exportChromatogram);
 		//
 		return chromatogramWriter;
 	}

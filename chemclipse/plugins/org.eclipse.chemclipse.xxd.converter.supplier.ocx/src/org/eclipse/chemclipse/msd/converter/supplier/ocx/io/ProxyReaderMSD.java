@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2024 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,7 +28,7 @@ import org.eclipse.chemclipse.msd.converter.supplier.ocx.internal.io.ReaderProxy
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.internal.io.ReaderProxy_1502;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorScanProxy;
 import org.eclipse.chemclipse.msd.model.core.IIonTransitionSettings;
-import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.Format;
+import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public class ProxyReaderMSD {

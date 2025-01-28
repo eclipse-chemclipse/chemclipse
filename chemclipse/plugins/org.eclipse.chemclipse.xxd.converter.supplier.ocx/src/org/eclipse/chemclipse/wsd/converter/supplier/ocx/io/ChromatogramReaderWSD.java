@@ -35,8 +35,8 @@ import org.eclipse.chemclipse.wsd.converter.supplier.ocx.internal.io.Chromatogra
 import org.eclipse.chemclipse.wsd.converter.supplier.ocx.internal.io.ChromatogramReader_1501;
 import org.eclipse.chemclipse.wsd.converter.supplier.ocx.internal.io.ChromatogramReader_1502;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
-import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.Format;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.ReaderHelper;
+import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public class ChromatogramReaderWSD extends AbstractChromatogramWSDReader implements IChromatogramWSDZipReader {

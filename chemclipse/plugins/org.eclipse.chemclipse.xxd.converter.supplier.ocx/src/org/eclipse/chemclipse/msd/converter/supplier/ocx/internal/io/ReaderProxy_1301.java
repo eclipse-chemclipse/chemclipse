@@ -38,7 +38,7 @@ import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.msd.model.implementation.ScanMSD;
 import org.eclipse.chemclipse.support.model.SeparationColumnType;
-import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.Format;
+import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 
 /**
  * Methods are copied to ensure that file formats are kept readable even if they contain errors.

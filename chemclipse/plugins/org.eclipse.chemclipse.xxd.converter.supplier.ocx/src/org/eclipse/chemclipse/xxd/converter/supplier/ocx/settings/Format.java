@@ -10,7 +10,7 @@
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - add new format
  *******************************************************************************/
-package org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support;
+package org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings;
 
 import java.util.zip.ZipOutputStream;
 

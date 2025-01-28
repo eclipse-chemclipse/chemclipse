@@ -44,8 +44,8 @@ import org.eclipse.chemclipse.model.quantitation.IInternalStandard;
 import org.eclipse.chemclipse.model.quantitation.InternalStandard;
 import org.eclipse.chemclipse.support.model.SeparationColumnType;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.BaselineElement;
-import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.Format;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.IBaselineElement;
+import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 

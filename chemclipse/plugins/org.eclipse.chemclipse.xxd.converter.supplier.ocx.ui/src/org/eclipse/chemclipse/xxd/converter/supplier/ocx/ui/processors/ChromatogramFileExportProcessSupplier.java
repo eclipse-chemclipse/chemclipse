@@ -16,14 +16,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.Callable;
 
-import org.eclipse.chemclipse.csd.converter.io.IChromatogramCSDWriter;
 import org.eclipse.chemclipse.csd.converter.supplier.ocx.io.ChromatogramWriterCSD;
 import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.model.supplier.IChromatogramSelectionProcessSupplier;
-import org.eclipse.chemclipse.msd.converter.io.IChromatogramMSDWriter;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.io.ChromatogramWriterMSD;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.processing.DataCategory;
@@ -33,11 +31,11 @@ import org.eclipse.chemclipse.processing.supplier.IProcessSupplier;
 import org.eclipse.chemclipse.processing.supplier.IProcessTypeSupplier;
 import org.eclipse.chemclipse.processing.supplier.ProcessExecutionContext;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
-import org.eclipse.chemclipse.wsd.converter.io.IChromatogramWSDWriter;
 import org.eclipse.chemclipse.wsd.converter.supplier.ocx.io.ChromatogramWriterWSD;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.ChromatogramExportSettings;
+import org.eclipse.chemclipse.xxd.converter.supplier.ocx.versions.ChromatogramVersion;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.versions.VersionConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
@@ -51,7 +49,7 @@ public class ChromatogramFileExportProcessSupplier implements IProcessTypeSuppli
 	private static final Logger logger = Logger.getLogger(ChromatogramFileExportProcessSupplier.class);
 	//
 	private static final String ID = "org.eclipse.chemclipse.xxd.converter.supplier.chemclipse.ui.processors.chromatogramFileExportProcessSupplier";
-	private static final String NAME = "Open Chromatography Binary UI (*.ocb)";
+	private static final String NAME = "Open Chromatography Binary [Specific Version] (*.ocb)";
 	private static final String DESCRIPTION = "Exports the chromatogram to a file.";
 
 	@Override
@@ -110,41 +108,33 @@ public class ChromatogramFileExportProcessSupplier implements IProcessTypeSuppli
 									fileDialog.setFilterPath(PreferenceSupplier.getListPathExport());
 									String path = fileDialog.open();
 									if(path != null) {
-										/*
-										 * Store the settings
-										 */
 										try {
+											/*
+											 * Save the chromatogram in a specific version.
+											 */
 											PreferenceSupplier.setListPathExport(fileDialog.getFilterPath());
-											PreferenceSupplier.setChromatogramVersionSave(processSettings.getChromatogramVersion().getVersion());
-											PreferenceSupplier.setChromatogramCompressionLevel(processSettings.getChromatogramCompressionLevel());
-											PreferenceSupplier.setChromatogramExportReferencesSeparately(processSettings.isExportReferencesSeparately());
-											PreferenceSupplier.setChromatogramExportReferencesHeaderField(processSettings.getHeaderFieldReferencesExport());
-										} catch(Exception e) {
-											logger.warn(e);
-										}
-										/*
-										 * Save the chromatogram.
-										 */
-										try {
+											ChromatogramVersion chromatogramVersion = processSettings.getChromatogramVersion();
+											String version = chromatogramVersion.getVersion();
+											//
 											File file = new File(path);
 											if(chromatogram instanceof IChromatogramCSD chromatogramCSD) {
 												/*
 												 * CSD
 												 */
-												IChromatogramCSDWriter writer = new ChromatogramWriterCSD();
-												writer.writeChromatogram(file, chromatogramCSD, context.getProgressMonitor());
+												ChromatogramWriterCSD writer = new ChromatogramWriterCSD();
+												writer.writeChromatogram(file, version, chromatogramCSD, context.getProgressMonitor());
 											} else if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
 												/*
 												 * MSD
 												 */
-												IChromatogramMSDWriter writer = new ChromatogramWriterMSD();
-												writer.writeChromatogram(file, chromatogramMSD, context.getProgressMonitor());
+												ChromatogramWriterMSD writer = new ChromatogramWriterMSD();
+												writer.writeChromatogram(file, version, chromatogramMSD, context.getProgressMonitor());
 											} else if(chromatogram instanceof IChromatogramWSD chromatogramWSD) {
 												/*
 												 * WSD
 												 */
-												IChromatogramWSDWriter writer = new ChromatogramWriterWSD();
-												writer.writeChromatogram(file, chromatogramWSD, context.getProgressMonitor());
+												ChromatogramWriterWSD writer = new ChromatogramWriterWSD();
+												writer.writeChromatogram(file, version, chromatogramWSD, context.getProgressMonitor());
 											}
 										} catch(Exception e) {
 											logger.warn(e);

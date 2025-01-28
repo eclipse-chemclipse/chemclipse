@@ -12,7 +12,7 @@
 package org.eclipse.chemclipse.xxd.converter.supplier.ocx.versions;
 
 import org.eclipse.chemclipse.support.text.ILabel;
-import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.Format;
+import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 
 public enum MethodVersion implements IFormatVersion, ILabel {
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,10 +12,10 @@
 package org.eclipse.chemclipse.xxd.converter.supplier.ocx.ui.preferences;
 
 import org.eclipse.chemclipse.model.core.support.HeaderField;
-import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.SpacerFieldEditor;
+import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.LabelFieldEditor;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.ui.Activator;
-import org.eclipse.chemclipse.xxd.converter.supplier.ocx.versions.ChromatogramVersion;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
@@ -41,8 +41,7 @@ public class PreferencePageOCB extends FieldEditorPreferencePage implements IWor
 	@Override
 	public void createFieldEditors() {
 
-		addField(new SpacerFieldEditor(getFieldEditorParent()));
-		addField(new ComboFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_VERSION_SAVE, "Save (*.ocb) as version:", ChromatogramVersion.getOptions(), getFieldEditorParent()));
+		addField(new LabelFieldEditor("Save (*.ocb) as version: " + Format.CHROMATOGRAM_VERSION_LATEST, getFieldEditorParent()));
 		addField(new ScaleFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_COMPRESSION_LEVEL, "Compression: none to best", getFieldEditorParent(), PreferenceSupplier.MIN_COMPRESSION_LEVEL, PreferenceSupplier.MAX_COMPRESSION_LEVEL, 1, 1));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_CHROMATGRAM_EXPORT_REFERENCES_SEPARATELY, "Export References Separately", getFieldEditorParent()));
 		addField(new ComboFieldEditor(PreferenceSupplier.P_CHROMATGRAM_EXPORT_REFERENCES_HEADER_FIELD, "Header Field (Export References)", HeaderField.getOptions(), getFieldEditorParent()));

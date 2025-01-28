@@ -66,8 +66,8 @@ import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.io.AbstractIO_1502;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.io.ReaderIO_1502;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.BaselineElement;
-import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.Format;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.IBaselineElement;
+import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 

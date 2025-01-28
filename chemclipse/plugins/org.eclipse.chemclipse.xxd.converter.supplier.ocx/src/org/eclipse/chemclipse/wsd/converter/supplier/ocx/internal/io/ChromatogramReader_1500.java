@@ -87,8 +87,8 @@ import org.eclipse.chemclipse.wsd.model.core.implementation.ChromatogramPeakWSD;
 import org.eclipse.chemclipse.wsd.model.core.implementation.PeakModelWSD;
 import org.eclipse.chemclipse.wsd.model.core.implementation.ScanSignalWSD;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.BaselineElement;
-import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.Format;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.IBaselineElement;
+import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 

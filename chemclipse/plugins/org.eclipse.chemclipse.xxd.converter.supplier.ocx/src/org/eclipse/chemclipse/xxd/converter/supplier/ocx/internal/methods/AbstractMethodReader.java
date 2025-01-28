@@ -22,7 +22,7 @@ import java.util.zip.ZipFile;
 
 import org.eclipse.chemclipse.processing.core.IMessageConsumer;
 import org.eclipse.chemclipse.processing.methods.IProcessMethod;
-import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.Format;
+import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public abstract class AbstractMethodReader implements IMethodReader {

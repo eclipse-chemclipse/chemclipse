@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023, 2024 Lablicate GmbH.
+ * Copyright (c) 2023, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -47,11 +47,9 @@ public class ConverterProcessSupplier extends AbstractSystemProcessSettings {
 		public void executeUserSettings(ISystemProcessSettings settings, ProcessExecutionContext context) throws Exception {
 
 			if(settings instanceof ConverterProcessSettings processSettings) {
-				PreferenceSupplier.setChromatogramVersionSave(processSettings.getChromatogramVersion().getVersion());
 				PreferenceSupplier.setChromatogramCompressionLevel(processSettings.getChromatogramCompressionLevel());
 				PreferenceSupplier.setChromatogramExportReferencesSeparately(processSettings.isExportReferencesSeparately());
 				PreferenceSupplier.setChromatogramExportReferencesHeaderField(processSettings.getHeaderFieldReferencesExport());
-				PreferenceSupplier.setMethodVersionSave(processSettings.getMethodVersion().getVersion());
 				PreferenceSupplier.setMethodCompressionLevel(processSettings.getMethodCompressionLevel());
 			}
 		}

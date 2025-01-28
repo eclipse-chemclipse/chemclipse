@@ -71,7 +71,7 @@ import org.eclipse.chemclipse.msd.model.implementation.PeakModelMSD;
 import org.eclipse.chemclipse.msd.model.implementation.QuantitationPeakMSD;
 import org.eclipse.chemclipse.msd.model.implementation.ScanMSD;
 import org.eclipse.chemclipse.support.model.SeparationColumnType;
-import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.Format;
+import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 import org.eclipse.chemclipse.xxd.model.quantitation.QuantitationCompound;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2024 Lablicate GmbH.
+ * Copyright (c) 2013, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,7 +16,7 @@ import org.eclipse.chemclipse.model.core.support.HeaderField;
 import org.eclipse.chemclipse.support.preferences.AbstractPreferenceSupplier;
 import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.Activator;
-import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.Format;
+import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 
 public class PreferenceSupplier extends AbstractPreferenceSupplier implements IPreferenceSupplier {
 
@@ -25,10 +25,9 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	//
 	public static final HeaderField DEF_HEADER_FIELD = HeaderField.DATA_NAME;
 	/*
-	 * *.ocb (measurement data container)
+	 * .ocb (measurement data container)
+	 * Use always the latest version.
 	 */
-	public static final String P_CHROMATOGRAM_VERSION_SAVE = "chromatogramVersionSave";
-	public static final String DEF_CHROMATOGRAM_VERSION_SAVE = Format.CHROMATOGRAM_VERSION_LATEST;
 	public static final String P_CHROMATOGRAM_COMPRESSION_LEVEL = "chromatogramCompressionLevel";
 	public static final int DEF_CHROMATOGRAM_COMPRESSION_LEVEL = 1; // compromise between file size and write speed
 	public static final String P_CHROMATGRAM_EXPORT_REFERENCES_SEPARATELY = "chromatogramExportReferencesSeparately";
@@ -46,14 +45,13 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static final String P_MIN_BYTES_TO_LOAD_IN_BACKGROUND = "minBytesToLoadInBackground"; // TODO REMOVE
 	public static final int DEF_MIN_BYTES_TO_LOAD_IN_BACKGROUND = 2000000; // 2 MB
 	/*
-	 * *.ocm (process method container)
+	 * .ocm (process method container)
+	 * Use always the latest version.
 	 */
-	public static final String P_METHOD_VERSION_SAVE = "methodVersionSave";
-	public static final String DEF_METHOD_VERSION_SAVE = Format.METHOD_VERSION_LATEST;
 	public static final String P_METHOD_COMPRESSION_LEVEL = "methodCompressionLevel";
 	public static final int DEF_METHOD_COMPRESSION_LEVEL = Format.METHOD_COMPRESSION_LEVEL;
 	/*
-	 * *.ocq (quanititation table container)
+	 * .ocq (quanititation table container)
 	 */
 	public static final String P_QUANTITATION_DB_VERSION_SAVE = "quantitationDatabaseVersionSave";
 	public static final String DEF_QUANTITATION_DB_VERSION_SAVE = Format.QUANTDB_VERSION_LATEST;
@@ -81,7 +79,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	@Override
 	public void initializeDefaults() {
 
-		putDefault(P_CHROMATOGRAM_VERSION_SAVE, DEF_CHROMATOGRAM_VERSION_SAVE);
 		putDefault(P_CHROMATOGRAM_COMPRESSION_LEVEL, Integer.toString(DEF_CHROMATOGRAM_COMPRESSION_LEVEL));
 		putDefault(P_CHROMATGRAM_EXPORT_REFERENCES_SEPARATELY, DEF_CHROMATGRAM_EXPORT_REFERENCES_SEPARATELY);
 		putDefault(P_CHROMATGRAM_EXPORT_REFERENCES_HEADER_FIELD, DEF_CHROMATGRAM_EXPORT_REFERENCES_HEADER_FIELD);
@@ -90,7 +87,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 		putDefault(P_LOAD_SCAN_PROXIES_IN_BACKGROUND, Boolean.toString(DEF_LOAD_SCAN_PROXIES_IN_BACKGROUND));
 		putDefault(P_MIN_BYTES_TO_LOAD_IN_BACKGROUND, Integer.toString(DEF_MIN_BYTES_TO_LOAD_IN_BACKGROUND));
 		//
-		putDefault(P_METHOD_VERSION_SAVE, DEF_METHOD_VERSION_SAVE);
 		putDefault(P_METHOD_COMPRESSION_LEVEL, Integer.toString(DEF_METHOD_COMPRESSION_LEVEL));
 		//
 		putDefault(P_QUANTITATION_DB_VERSION_SAVE, DEF_QUANTITATION_DB_VERSION_SAVE);
@@ -98,16 +94,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 		//
 		putDefault(P_LIST_PATH_IMPORT, DEF_LIST_PATH_IMPORT);
 		putDefault(P_LIST_PATH_EXPORT, DEF_LIST_PATH_EXPORT);
-	}
-
-	public static String getChromatogramVersionSave() {
-
-		return INSTANCE().get(P_CHROMATOGRAM_VERSION_SAVE, DEF_CHROMATOGRAM_VERSION_SAVE);
-	}
-
-	public static void setChromatogramVersionSave(String value) {
-
-		INSTANCE().put(P_CHROMATOGRAM_VERSION_SAVE, value);
 	}
 
 	public static int getChromatogramCompressionLevel() {
@@ -142,16 +128,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 		} catch(Exception e) {
 			return DEF_HEADER_FIELD;
 		}
-	}
-
-	public static String getMethodVersionSave() {
-
-		return INSTANCE().get(P_METHOD_VERSION_SAVE, DEF_METHOD_VERSION_SAVE);
-	}
-
-	public static void setMethodVersionSave(String value) {
-
-		INSTANCE().put(P_METHOD_VERSION_SAVE, value);
 	}
 
 	public static int getMethodCompressionLevel() {
