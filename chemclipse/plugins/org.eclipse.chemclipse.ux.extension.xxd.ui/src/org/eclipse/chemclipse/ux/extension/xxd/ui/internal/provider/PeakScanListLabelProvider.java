@@ -96,7 +96,7 @@ public class PeakScanListLabelProvider extends AbstractChemClipseLabelProvider {
 			CLASSIFIER, //
 			PEAK_MODEL //
 	};
-	//
+
 	public static final int[] BOUNDS = { //
 			30, //
 			60, //
@@ -240,28 +240,28 @@ public class PeakScanListLabelProvider extends AbstractChemClipseLabelProvider {
 			case 12:
 				if(peak instanceof IChromatogramPeakMSD chromatogramPeak) {
 					switch(columnIndex) {
-						case 9:
+						case 11:
 							text = Integer.toString(chromatogramPeak.getScanMax());
 							break;
-						case 10:
+						case 12:
 							text = decimalFormat.format(chromatogramPeak.getSignalToNoiseRatio());
 							break;
 					}
 				} else if(peak instanceof IChromatogramPeakCSD chromatogramPeak) {
 					switch(columnIndex) {
-						case 9:
+						case 11:
 							text = Integer.toString(chromatogramPeak.getScanMax());
 							break;
-						case 10:
+						case 12:
 							text = decimalFormat.format(chromatogramPeak.getSignalToNoiseRatio());
 							break;
 					}
 				} else if(peak instanceof IChromatogramPeakWSD chromatogramPeak) {
 					switch(columnIndex) {
-						case 9:
+						case 11:
 							text = Integer.toString(chromatogramPeak.getScanMax());
 							break;
-						case 10:
+						case 12:
 							float sn = chromatogramPeak.getSignalToNoiseRatio();
 							text = Float.isNaN(sn) ? NO_VALUE : decimalFormat.format(sn);
 							break;
