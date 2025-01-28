@@ -24,13 +24,13 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
 import org.eclipse.chemclipse.swt.ui.support.IColorScheme;
+import org.eclipse.chemclipse.ux.extension.msd.ui.views.MassSpectrumRulerChart;
+import org.eclipse.chemclipse.ux.extension.ui.model.IRulerUpdateNotifier;
 import org.eclipse.chemclipse.ux.extension.ui.support.PartSupport;
+import org.eclipse.chemclipse.ux.extension.ui.support.RulerEvent;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.chemclipse.ux.extension.ui.swt.ISettingsHandler;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.charts.IRulerUpdateNotifier;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.charts.MassSpectrumRulerChart;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.charts.RulerEvent;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.EditorUpdateSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageOverlay;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
@@ -70,16 +70,16 @@ public class ExtendedMassSpectrumOverlayUI extends Composite implements IExtende
 	private Button buttonToolbarDataShift;
 	private AtomicReference<DataShiftControllerUI> toolbarDataShift = new AtomicReference<>();
 	private Label labelStatus;
-	//
+
 	private static final String IMAGE_RULER = IApplicationImage.IMAGE_RULER;
 	private static final String TOOLTIP_RULER = "the ruler toolbar.";
 	private Button buttonToolbarRulerDetails;
 	private AtomicReference<RulerDetailsUI> toolbarRulerDetails = new AtomicReference<>();
-	//
+
 	private AtomicReference<MassSpectrumRulerChart> chartControl = new AtomicReference<>();
-	//
+
 	private EditorUpdateSupport editorUpdateSupport = new EditorUpdateSupport();
-	//
+
 	private List<IScanMSD> scanSelections = new ArrayList<>();
 	private IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 	private IColorScheme colorSchemeNormal = Colors.getColorScheme(preferenceStore.getString(PreferenceSupplier.P_COLOR_SCHEME_DISPLAY_OVERLAY));
@@ -101,15 +101,15 @@ public class ExtendedMassSpectrumOverlayUI extends Composite implements IExtende
 	private void createControl() {
 
 		setLayout(new GridLayout(1, true));
-		//
+
 		createToolbarMain(this);
 		createRulerDetailsUI(this);
 		createDataShiftControllerUI(this);
 		createOverlayChart(this);
-		//
+
 		enableToolbar(toolbarDataShift, buttonToolbarDataShift, IMAGE_SHIFT, TOOLTIP_SHIFT, false);
 		enableToolbar(toolbarRulerDetails, buttonToolbarRulerDetails, IMAGE_RULER, TOOLTIP_RULER, false);
-		//
+
 		toolbarDataShift.get().setScrollableChart(chartControl.get());
 		toolbarRulerDetails.get().setScrollableChart(chartControl.get());
 	}
@@ -121,13 +121,13 @@ public class ExtendedMassSpectrumOverlayUI extends Composite implements IExtende
 		gridData.horizontalAlignment = SWT.END;
 		composite.setLayoutData(gridData);
 		composite.setLayout(new GridLayout(7, false));
-		//
+
 		labelStatus = createLabelStatus(composite);
 		createButtonToggleChartLegend(composite, chartControl, IMAGE_LEGEND);
 		createResetButton(composite);
 		createSettingsButton(composite);
 		createNewOverlayPartButton(composite);
-		//
+
 		buttonToolbarDataShift = createButtonToggleToolbar(composite, toolbarDataShift, IMAGE_SHIFT, TOOLTIP_SHIFT);
 		buttonToolbarRulerDetails = createButtonToggleToolbar(composite, toolbarRulerDetails, IMAGE_RULER, TOOLTIP_RULER);
 	}
@@ -136,7 +136,7 @@ public class ExtendedMassSpectrumOverlayUI extends Composite implements IExtende
 
 		DataShiftControllerUI dataShiftControllerUI = new DataShiftControllerUI(parent, SWT.NONE);
 		dataShiftControllerUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		//
+
 		toolbarDataShift.set(dataShiftControllerUI);
 	}
 
@@ -144,7 +144,7 @@ public class ExtendedMassSpectrumOverlayUI extends Composite implements IExtende
 
 		RulerDetailsUI rulerDetailsUI = new RulerDetailsUI(parent, SWT.NONE);
 		rulerDetailsUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		//
+
 		toolbarRulerDetails.set(rulerDetailsUI);
 	}
 
@@ -210,7 +210,7 @@ public class ExtendedMassSpectrumOverlayUI extends Composite implements IExtende
 		chartSettings.setSupportDataShift(true);
 		chartSettings.getRangeRestriction().setZeroY(false);
 		chart.applySettings(chartSettings);
-		//
+
 		BaseChart baseChart = chart.getBaseChart();
 		baseChart.addSeriesModificationListener(new ISeriesModificationListener() {
 
@@ -220,7 +220,7 @@ public class ExtendedMassSpectrumOverlayUI extends Composite implements IExtende
 				modifyDataStatusLabel();
 			}
 		});
-		//
+
 		chart.setRulerUpdateNotifier(new IRulerUpdateNotifier() {
 
 			@Override
@@ -229,7 +229,7 @@ public class ExtendedMassSpectrumOverlayUI extends Composite implements IExtende
 				toolbarRulerDetails.get().setInput(rulerEvent);
 			}
 		});
-		//
+
 		chartControl.set(chart);
 	}
 
@@ -280,7 +280,7 @@ public class ExtendedMassSpectrumOverlayUI extends Composite implements IExtende
 
 		double[] xSeries;
 		double[] ySeries;
-		//
+
 		if(scanMSD != null) {
 			int size = scanMSD.getNumberOfIons();
 			xSeries = new double[size];
@@ -295,7 +295,7 @@ public class ExtendedMassSpectrumOverlayUI extends Composite implements IExtende
 			xSeries = new double[0];
 			ySeries = new double[0];
 		}
-		//
+
 		return new SeriesData(xSeries, ySeries, id);
 	}
 
@@ -316,7 +316,7 @@ public class ExtendedMassSpectrumOverlayUI extends Composite implements IExtende
 		label.setToolTipText("Indicates whether the data has been modified or not.");
 		label.setText("");
 		label.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		//
+
 		return label;
 	}
 
@@ -328,13 +328,13 @@ public class ExtendedMassSpectrumOverlayUI extends Composite implements IExtende
 		EModelService modelService = Activator.getDefault().getModelService();
 		MApplication application = Activator.getDefault().getApplication();
 		EPartService partService = Activator.getDefault().getPartService();
-		//
+
 		if(modelService != null && application != null && partService != null) {
 			MPart part = MBasicFactory.INSTANCE.createPart();
 			part.setLabel(name);
 			part.setCloseable(true);
 			part.setContributionURI("bundleclass://" + bundle + "/" + classPath);
-			//
+
 			MPartStack partStack = PartSupport.getPartStack(PartSupport.PARTSTACK_LEFT_CENTER, modelService, application);
 			partStack.getChildren().add(part);
 			PartSupport.showPart(part, partService);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2023 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,7 +9,7 @@
  * Contributors:
  * Dr. Philip Wenig - initial API and implementation
  *******************************************************************************/
-package org.eclipse.chemclipse.ux.extension.xxd.ui.support;
+package org.eclipse.chemclipse.ux.extension.ui.support;
 
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.swt.SWT;
@@ -20,12 +20,11 @@ import org.eclipse.swtchart.ICustomPaintListener;
 public class BaselineSelectionPaintListener implements ICustomPaintListener {
 
 	private static final int VERTICAL_MARKER_SIZE = 10;
-	//
+
 	private int x1;
 	private int y1;
 	private int x2;
 	private int y2;
-	//
 
 	@Override
 	public void paintControl(PaintEvent e) {

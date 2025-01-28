@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2024 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -54,15 +54,15 @@ import org.eclipse.chemclipse.support.ui.swt.EnhancedComboViewer;
 import org.eclipse.chemclipse.support.updates.IUpdateListener;
 import org.eclipse.chemclipse.support.validators.TraceValidator;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
+import org.eclipse.chemclipse.ux.extension.ui.model.IRulerUpdateNotifier;
 import org.eclipse.chemclipse.ux.extension.ui.support.PartSupport;
+import org.eclipse.chemclipse.ux.extension.ui.support.RulerEvent;
 import org.eclipse.chemclipse.ux.extension.ui.swt.ChartGridSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.chemclipse.ux.extension.ui.swt.ISettingsHandler;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.charts.ChromatogramChart;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.charts.ChromatogramRulerChart;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.charts.IRulerUpdateNotifier;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.charts.RulerEvent;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.help.HelpContext;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.support.OverlayChartSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogram;
@@ -131,11 +131,11 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 	private static final String TOOLTIP_ZOOM_LOCKED = "the zoom lock functionality.";
 	private static final String IMAGE_FOCUS_SELECTION = IApplicationImage.IMAGE_CHROMATOGRAM_SELECTION;
 	private static final String TOOLTIP_FOCUS_SELECTION = "the focus chromatogram selection functionality.";
-	//
+
 	private static final String MPC_LABEL = "Max Plot";
-	//
-	// The traces toolbar is controlled by the combo overlay type.
-	//
+	/*
+	 * The traces toolbar is controlled by the combo overlay type.
+	 */
 	private AtomicReference<Button> buttonLockControl = new AtomicReference<>();
 	private AtomicReference<Button> buttonFocusControl = new AtomicReference<>();
 	private AtomicReference<NamedTracesUI> toolbarNamedTraces = new AtomicReference<>();
@@ -148,14 +148,14 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 	private AtomicReference<Label> labelStatus = new AtomicReference<>();
 	private AtomicReference<Combo> comboOverlayType = new AtomicReference<>();
 	private AtomicReference<ComboViewer> comboViewerDerivative = new AtomicReference<>();
-	//
+
 	private ChartGridSupport chartGridSupport = new ChartGridSupport();
 	private final ChromatogramChartSupport chromatogramChartSupport = new ChromatogramChartSupport();
 	private final OverlayChartSupport overlayChartSupport = new OverlayChartSupport();
-	//
+
 	private int previousChromatograms;
 	private final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-	//
+
 	private final Map<IChromatogramSelection<?, ?>, List<String>> chromatogramSelections = new LinkedHashMap<>();
 
 	public ExtendedChromatogramOverlayUI(Composite parent, int style) {
@@ -194,13 +194,13 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 	private void createControl() {
 
 		setLayout(new GridLayout(1, true));
-		//
+
 		createToolbarMain(this);
 		createNamedTraces(this);
 		createDataShiftControllerUI(this);
 		createRulerDetailsUI(this);
 		createOverlayChart(this);
-		//
+
 		initialize();
 	}
 
@@ -210,7 +210,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		enableToolbar(toolbarDataShift, buttonToolbarDataShift.get(), IMAGE_SHIFT, TOOLTIP_SHIFT, false);
 		enableToolbar(toolbarRulerDetails, buttonToolbarRulerDetails.get(), IMAGE_RULER, TOOLTIP_RULER, false);
 		enableChartGrid(chartControl, buttonChartGrid.get(), IMAGE_CHART_GRID, chartGridSupport);
-		//
+
 		toolbarDataShift.get().setScrollableChart(chartControl.get());
 		toolbarRulerDetails.get().setScrollableChart(chartControl.get());
 		modifyWidgetStatus();
@@ -227,7 +227,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		composite.setLayout(new GridLayout(13, false));
-		//
+
 		createLabelStatus(composite);
 		createButtonZoomLock(composite);
 		createButtonFocusSelection(composite);
@@ -241,7 +241,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		createToggleGridButton(composite);
 		createButtonHelp(composite);
 		createSettingsButton(composite);
-		//
+
 		return composite;
 	}
 
@@ -273,7 +273,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				refreshUpdateOverlayChart();
 			}
 		});
-		//
+
 		buttonChartGrid.set(button);
 	}
 
@@ -294,7 +294,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				}
 			}
 		});
-		//
+
 		toolbarNamedTraces.set(namedTracesUI);
 	}
 
@@ -302,7 +302,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 
 		DataShiftControllerUI dataShiftControllerUI = new DataShiftControllerUI(parent, SWT.NONE);
 		dataShiftControllerUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		//
+
 		toolbarDataShift.set(dataShiftControllerUI);
 	}
 
@@ -310,7 +310,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 
 		RulerDetailsUI rulerDetailsUI = new RulerDetailsUI(parent, SWT.NONE);
 		rulerDetailsUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		//
+
 		toolbarRulerDetails.set(rulerDetailsUI);
 	}
 
@@ -320,7 +320,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		label.setToolTipText("Indicates whether the data has been modified or not.");
 		label.setText("");
 		label.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		//
+
 		labelStatus.set(label);
 	}
 
@@ -339,7 +339,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				setButtonImage(button, IMAGE_ZOOM_LOCKED, PREFIX_ENABLE, PREFIX_DISABLE, TOOLTIP_ZOOM_LOCKED, active);
 			}
 		});
-		//
+
 		buttonLockControl.set(button);
 	}
 
@@ -358,7 +358,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				setButtonImage(button, IMAGE_FOCUS_SELECTION, PREFIX_ENABLE, PREFIX_DISABLE, TOOLTIP_FOCUS_SELECTION, active);
 			}
 		});
-		//
+
 		buttonFocusControl.set(button);
 	}
 
@@ -371,7 +371,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		combo.setLayoutData(gridData);
 		combo.setItems(overlayChartSupport.getOverlayTypes());
 		combo.select(0);
-		//
+
 		combo.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -383,7 +383,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				refreshUpdateOverlayChart();
 			}
 		});
-		//
+
 		comboOverlayType.set(combo);
 	}
 
@@ -402,7 +402,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				return null;
 			}
 		});
-		//
+
 		Combo combo = comboViewer.getCombo();
 		combo.setToolTipText("Select the derivative type");
 		GridData gridData = new GridData();
@@ -417,7 +417,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				refreshUpdateOverlayChart();
 			}
 		});
-		//
+
 		comboViewerDerivative.set(comboViewer);
 	}
 
@@ -471,13 +471,13 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 			EModelService modelService = Activator.getDefault().getModelService();
 			MApplication application = Activator.getDefault().getApplication();
 			EPartService partService = Activator.getDefault().getPartService();
-			//
+
 			if(modelService != null && application != null && partService != null) {
 				MPart part = MBasicFactory.INSTANCE.createPart();
 				part.setLabel(name);
 				part.setCloseable(true);
 				part.setContributionURI("bundleclass://" + bundle + "/" + classPath);
-				//
+
 				MPartStack partStack = PartSupport.getPartStack(partStackId, modelService, application);
 				partStack.getChildren().add(part);
 				PartSupport.showPart(part, partService);
@@ -535,7 +535,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				enableToolbar(toolbarNamedTraces, false);
 			}
 		}
-		//
+
 		NamedTracesUI namedTracesUI = toolbarNamedTraces.get();
 		if(isExtractedIonsModusEnabled()) {
 			namedTracesUI.setEnabled(true);
@@ -546,7 +546,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		} else {
 			namedTracesUI.setEnabled(false);
 		}
-		//
+
 		toolbarDataShift.get().update();
 	}
 
@@ -589,7 +589,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		chartSettings.setSupportDataShift(true);
 		chartSettings.getRangeRestriction().setZeroY(false);
 		chromatogramRulerChart.applySettings(chartSettings);
-		//
+
 		BaseChart baseChart = chromatogramRulerChart.getBaseChart();
 		baseChart.addSeriesModificationListener(new ISeriesModificationListener() {
 
@@ -599,7 +599,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				modifyDataStatusLabel();
 			}
 		});
-		//
+
 		chromatogramRulerChart.setRulerUpdateNotifier(new IRulerUpdateNotifier() {
 
 			@Override
@@ -608,7 +608,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				toolbarRulerDetails.get().setInput(rulerEvent);
 			}
 		});
-		//
+
 		chartControl.set(chromatogramRulerChart);
 	}
 
@@ -646,11 +646,11 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 			rangeRestriction.setExtendTypeY(ExtendType.ABSOLUTE);
 			rangeRestriction.setExtendMaxY(0.0d);
 			chromatogramChart.applySettings(chartSettings);
-			//
+
 			Set<String> availableSeriesIds = new HashSet<>();
 			List<ILineSeriesData> lineSeriesDataList = new ArrayList<>();
 			LinkedHashSet<String> usefulTypes = new LinkedHashSet<>();
-			//
+
 			int i = 0;
 			for(Entry<IChromatogramSelection<?, ?>, List<String>> entry : chromatogramSelections.entrySet()) {
 				IChromatogramSelection<?, ?> chromatogramSelection = entry.getKey();
@@ -682,7 +682,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 					comboOverlayType.get().setItems(usefulTypes.toArray(new String[usefulTypes.size()]));
 					comboOverlayType.get().select(0);
 				}
-				//
+
 				List<String> selectionSeries = entry.getValue();
 				IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
 				String chromatogramName = chromatogram.getName() + ChromatogramChartSupport.EDITOR_TAB + (i + 1);
@@ -714,7 +714,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				}
 				i++;
 			}
-			//
+
 			if(previousChromatograms != chromatogramSelections.size()) {
 				comboOverlayType.get().setItems(usefulTypes.toArray(new String[usefulTypes.size()]));
 				comboOverlayType.get().select(0);
@@ -741,7 +741,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 			toolbarDataShift.get().reset();
 			modifyDataStatusLabel();
 			chromatogramChart.adjustRange(true);
-			//
+
 			if(!isEmpty) {
 				if(overlayLockZoom) {
 					chromatogramChart.setRange(IExtendedChart.X_AXIS, rangeX);
@@ -755,7 +755,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 
 		String seriesId;
 		Color color;
-		//
+
 		BaseChart baseChart = chartControl.get().getBaseChart();
 		Derivative derivative = getSelectedDerivative();
 		/*
@@ -812,7 +812,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 
 		String seriesId;
 		Color color;
-		//
+
 		BaseChart baseChart = chartControl.get().getBaseChart();
 		Derivative derivative = getSelectedDerivative();
 		/*
@@ -867,7 +867,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 
 		String seriesId;
 		Color color;
-		//
+
 		BaseChart baseChart = chartControl.get().getBaseChart();
 		Derivative derivative = getSelectedDerivative();
 		/*
@@ -878,7 +878,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		for(Number wavenumber : wavenumbers) {
 			markedTraces.add(new MarkedTrace(wavenumber.intValue()));
 		}
-		//
+
 		if(chromatogram instanceof IChromatogramVSD) {
 			String description = ChromatogramDataSupport.getReferenceLabel(chromatogram, 0, false);
 			seriesId = chromatogramName + OverlayChartSupport.OVERLAY_START_MARKER + displayType + OverlayChartSupport.DELIMITER_SIGNAL_DERIVATIVE + derivative + OverlayChartSupport.DELIMITER_SIGNAL_DERIVATIVE + displayType.name() + OverlayChartSupport.OVERLAY_STOP_MARKER;
@@ -917,7 +917,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 
 		String seriesId;
 		Color color;
-		//
+
 		BaseChart baseChart = chartControl.get().getBaseChart();
 		Derivative derivative = getSelectedDerivative();
 		/*
@@ -974,7 +974,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 
 		String seriesId;
 		Color color;
-		//
+
 		BaseChart baseChart = chartControl.get().getBaseChart();
 		Derivative derivative = getSelectedDerivative();
 		/*
@@ -991,7 +991,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				color = chromatogramChartSupport.getSeriesColor(seriesId, displayType);
 				IMarkedWavelengths markedWavelengths = new MarkedWavelengths();
 				markedWavelengths.add(wavelength);
-				//
+
 				if(!baseChart.isSeriesContained(seriesId)) {
 					ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(chromatogram, seriesId, displayType, derivative, color, markedWavelengths, false);
 					lineSeriesData.getSettings().setDescription(Float.toString(wavelength) + " nm (" + description + ")");
@@ -1017,7 +1017,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 						color = chromatogramChartSupport.getSeriesColor(seriesId, displayType);
 						IMarkedWavelengths markedWavelengths = new MarkedWavelengths();
 						markedWavelengths.add(wavelength);
-						//
+
 						if(!baseChart.isSeriesContained(seriesId)) {
 							ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(referencedChromatogram, seriesId, displayType, derivative, color, markedWavelengths, false);
 							lineSeriesData.getSettings().setDescription(Float.toString(wavelength) + " nm (" + description + ")");
@@ -1065,7 +1065,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 
 		BaseChart baseChart = chartControl.get().getBaseChart();
 		Derivative derivative = getSelectedDerivative();
-		//
+
 		if(chromatogram instanceof IChromatogramWSD chromatogramWSD) {
 			String description = ChromatogramDataSupport.getReferenceLabel(chromatogram, 0, false);
 			for(float wavelength : chromatogramWSD.getWavelengths()) {
@@ -1075,7 +1075,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				Color color = chromatogramChartSupport.getSeriesColor(seriesId, displayType);
 				IMarkedWavelengths markedWavelengths = new MarkedWavelengths();
 				markedWavelengths.add(wavelength);
-				//
+
 				if(!baseChart.isSeriesContained(seriesId)) {
 					ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(chromatogram, seriesId, displayType, derivative, color, markedWavelengths, false);
 					lineSeriesData.getSettings().setDescription(Float.toString(wavelength) + " nm (" + description + ")");
@@ -1089,19 +1089,19 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 
 		BaseChart baseChart = chartControl.get().getBaseChart();
 		Derivative derivative = getSelectedDerivative();
-		//
+
 		if(referencedChromatogram instanceof IChromatogramWSD referencedChromatogramWSD) {
 			String description = ChromatogramDataSupport.getReferenceLabel(referencedChromatogram, j, false);
 			String referenceChromatogramName = chromatogramName + ChromatogramChartSupport.REFERENCE_MARKER + j + 1;
 			for(float wavelength : referencedChromatogramWSD.getWavelengths()) {
-				//
+
 				String seriesId = referenceChromatogramName + OverlayChartSupport.OVERLAY_START_MARKER + displayType + OverlayChartSupport.DELIMITER_SIGNAL_DERIVATIVE + derivative + OverlayChartSupport.DELIMITER_SIGNAL_DERIVATIVE + wavelength + OverlayChartSupport.OVERLAY_STOP_MARKER;
 				availableSeriesIds.add(seriesId);
 				selectionSeries.add(seriesId);
 				Color color = chromatogramChartSupport.getSeriesColor(seriesId, displayType);
 				IMarkedWavelengths markedWavelengths = new MarkedWavelengths();
 				markedWavelengths.add(wavelength);
-				//
+
 				if(!baseChart.isSeriesContained(seriesId)) {
 					ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(referencedChromatogram, seriesId, displayType, derivative, color, markedWavelengths, false);
 					lineSeriesData.getSettings().setDescription(Float.toString(wavelength) + " nm (" + description + ")");
@@ -1117,7 +1117,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		Derivative derivative = Derivative.NONE; // Always no derivative at the moment.
 		LineStyle lineStyle = LineStyle.valueOf(preferenceStore.getString(PreferenceSupplier.P_LINE_STYLE_DISPLAY_OVERLAY));
 		boolean showArea = preferenceStore.getBoolean(PreferenceSupplier.P_OVERLAY_SHOW_AREA);
-		//
+
 		if(chromatogram instanceof IChromatogramWSD chromatogramWSD) {
 			/*
 			 * WSD
@@ -1394,7 +1394,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				traces.addAll(TraceFactory.parseTraces(namedTrace.getTraces(), traceType.clazz()));
 			}
 		}
-		//
+
 		return traces;
 	}
 
@@ -1413,7 +1413,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				}
 			}
 		}
-		//
+
 		return traceList;
 	}
 

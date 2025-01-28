@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2024 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,8 +17,8 @@ import java.util.List;
 
 import org.eclipse.chemclipse.model.ranges.TimeRange;
 import org.eclipse.chemclipse.model.ranges.TimeRanges;
+import org.eclipse.chemclipse.ux.extension.ui.support.BaselineSelectionPaintListener;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.custom.ChromatogramPeakChart;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.support.BaselineSelectionPaintListener;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
@@ -37,18 +37,18 @@ public class TimeRangesChart extends ChromatogramPeakChart {
 
 	private Cursor defaultCursor;
 	private BaselineSelectionPaintListener baselineSelectionPaintListener = new BaselineSelectionPaintListener();
-	//
+
 	private int xStart;
 	private int yStart;
 	private int xStop;
 	private int yStop;
-	//
+
 	private TimeRangeModus timeRangeModus = TimeRangeModus.TEMPLATE;
 	private TimeRange timeRange = null;
 	private TimeRanges timeRanges = null;
 	private TimeRangeLabels timeRangeLabels = new TimeRangeLabels();
 	private String timeRangeLabelCycling = null;
-	//
+
 	private ITimeRangeUpdateListener timeRangeUpdateListener = null;
 	private ITimeRangePeakListener timeRangePeakListener = null;
 	private ITimeRangePointsListener timeRangePointsListener = null;
@@ -396,12 +396,12 @@ public class TimeRangesChart extends ChromatogramPeakChart {
 
 		xStop = x;
 		yStop = y;
-		//
+
 		baselineSelectionPaintListener.setX1(xStart);
 		baselineSelectionPaintListener.setY1(yStart);
 		baselineSelectionPaintListener.setX2(xStop);
 		baselineSelectionPaintListener.setY2(yStop);
-		//
+
 		redrawChart();
 	}
 
@@ -414,12 +414,12 @@ public class TimeRangesChart extends ChromatogramPeakChart {
 	private void resetSelectedRange() {
 
 		baselineSelectionPaintListener.reset();
-		//
+
 		xStart = 0;
 		yStart = 0;
 		xStop = 0;
 		yStop = 0;
-		//
+
 		redrawChart();
 	}
 

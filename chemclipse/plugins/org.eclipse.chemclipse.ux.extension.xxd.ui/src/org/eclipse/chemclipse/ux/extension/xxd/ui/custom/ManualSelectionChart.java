@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2022 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,9 +13,9 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.custom;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IPeak;
+import org.eclipse.chemclipse.ux.extension.ui.support.BaselineSelectionPaintListener;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.ranges.TimeRangesChart;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.ranges.TimeRangesChromatogramUI;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.support.BaselineSelectionPaintListener;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -32,16 +32,16 @@ import org.eclipse.swtchart.extensions.core.BaseChart;
 public class ManualSelectionChart extends TimeRangesChromatogramUI {
 
 	private Cursor defaultCursor;
-	//
+
 	private int xStart;
 	private int yStart;
 	private int xStop;
 	private int yStop;
-	//
+
 	private IChromatogram<? extends IPeak> chromatogram;
 	private BaselineSelectionPaintListener baselineSelectionPaintListener;
 	private ISelectionListener selectionListener = null;
-	//
+
 	private boolean manualDetectionEnabled = false;
 
 	public ManualSelectionChart(Composite parent, int style) {
@@ -80,7 +80,7 @@ public class ManualSelectionChart extends TimeRangesChromatogramUI {
 		TimeRangesChart peakChart = getChromatogramChartControl().get();
 		BaseChart baseChart = peakChart.getBaseChart();
 		defaultCursor = baseChart.getCursor();
-		//
+
 		peakChart.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -107,7 +107,7 @@ public class ManualSelectionChart extends TimeRangesChromatogramUI {
 				}
 			}
 		});
-		//
+
 		peakChart.addMouseMoveListener(new MouseMoveListener() {
 
 			@Override
@@ -150,12 +150,12 @@ public class ManualSelectionChart extends TimeRangesChromatogramUI {
 
 		xStop = x;
 		yStop = y;
-		//
+
 		baselineSelectionPaintListener.setX1(xStart);
 		baselineSelectionPaintListener.setY1(yStart);
 		baselineSelectionPaintListener.setX2(xStop);
 		baselineSelectionPaintListener.setY2(yStop);
-		//
+
 		redrawChart();
 	}
 
@@ -168,12 +168,12 @@ public class ManualSelectionChart extends TimeRangesChromatogramUI {
 	private void resetSelectedRange() {
 
 		baselineSelectionPaintListener.reset();
-		//
+
 		xStart = 0;
 		yStart = 0;
 		xStop = 0;
 		yStop = 0;
-		//
+
 		redrawChart();
 	}
 
@@ -255,7 +255,7 @@ public class ManualSelectionChart extends TimeRangesChromatogramUI {
 				}
 			}
 		}
-		//
+
 		return selectionCoordinates;
 	}
 }
