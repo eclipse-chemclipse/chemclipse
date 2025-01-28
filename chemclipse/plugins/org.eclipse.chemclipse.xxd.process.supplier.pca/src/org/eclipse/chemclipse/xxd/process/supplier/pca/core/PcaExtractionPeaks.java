@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2023 Lablicate GmbH.
+ * Copyright (c) 2017, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,6 +14,7 @@
 package org.eclipse.chemclipse.xxd.process.supplier.pca.core;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,10 +23,9 @@ import org.eclipse.chemclipse.csd.converter.chromatogram.ChromatogramConverterCS
 import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IPeak;
-import org.eclipse.chemclipse.model.core.IPeaks;
-import org.eclipse.chemclipse.model.implementation.Peaks;
 import org.eclipse.chemclipse.msd.converter.peak.PeakConverterMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.extraction.ExtractionSettings;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.extraction.PeakExtractionSupport;
@@ -46,12 +46,12 @@ public class PcaExtractionPeaks implements IExtractionData {
 		this.extractionSettings = extractionSettings;
 	}
 
-	private Map<IDataInputEntry, IPeaks<IPeak>> extractPeaks(List<IDataInputEntry> peakInputFiles, IProgressMonitor monitor) {
+	private Map<IDataInputEntry, List<IPeak>> extractPeaks(List<IDataInputEntry> peakInputFiles, IProgressMonitor monitor) {
 
-		Map<IDataInputEntry, IPeaks<IPeak>> peakMap = new LinkedHashMap<>();
+		Map<IDataInputEntry, List<IPeak>> peakMap = new LinkedHashMap<>();
 		for(IDataInputEntry peakFile : peakInputFiles) {
 			try {
-				IPeaks<IPeak> peaks = extractPeaks(peakFile, monitor);
+				List<IPeak> peaks = extractPeaks(peakFile, monitor);
 				if(!peaks.isEmpty()) {
 					peakMap.put(peakFile, peaks);
 				} else {
@@ -68,23 +68,23 @@ public class PcaExtractionPeaks implements IExtractionData {
 	public Samples process(IProgressMonitor monitor) {
 
 		PeakExtractionSupport peakExtractionSupport = new PeakExtractionSupport();
-		Map<IDataInputEntry, IPeaks<IPeak>> peakMap = extractPeaks(dataInputEntries, monitor);
+		Map<IDataInputEntry, List<IPeak>> peakMap = extractPeaks(dataInputEntries, monitor);
 		return peakExtractionSupport.extractPeakData(peakMap, extractionSettings);
 	}
 
-	private IPeaks<IPeak> extractPeaks(IDataInputEntry peakFile, IProgressMonitor monitor) {
+	private List<IPeak> extractPeaks(IDataInputEntry peakFile, IProgressMonitor monitor) {
 
-		IPeaks<IPeak> peaks = new Peaks();
+		List<IPeak> peaks = new ArrayList<>();
 		File file = new File(peakFile.getInputFile());
 		//
-		IProcessingInfo<IPeaks<IPeakMSD>> processingInfo = PeakConverterMSD.convert(file, monitor);
+		IProcessingInfo<IPeaksMSD> processingInfo = PeakConverterMSD.convert(file, monitor);
 		if(processingInfo.getProcessingResult() != null) {
 			/*
 			 * MSD
 			 */
-			IPeaks<IPeakMSD> result = processingInfo.getProcessingResult();
-			for(IPeak peak : result.getPeaks()) {
-				peaks.addPeak(peak);
+			IPeaksMSD result = processingInfo.getProcessingResult();
+			for(IPeakMSD peak : result.getPeaks()) {
+				peaks.add(peak);
 			}
 		} else {
 			/*
@@ -93,12 +93,11 @@ public class PcaExtractionPeaks implements IExtractionData {
 			IChromatogramCSD chromatogram = ChromatogramConverterCSD.getInstance().convert(file, monitor).getProcessingResult();
 			if(chromatogram.getNumberOfPeaks() > 0) {
 				for(IPeak peak : chromatogram.getPeaks()) {
-					peaks.addPeak(peak);
+					peaks.add(peak);
 				}
 				return peaks;
 			}
 		}
-		//
 		return peaks;
 	}
 }

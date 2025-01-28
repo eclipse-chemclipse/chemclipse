@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023 Lablicate GmbH.
+ * Copyright (c) 2023, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -11,12 +11,30 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core;
 
-import org.eclipse.chemclipse.model.core.AbstractPeaks;
+import java.util.ArrayList;
+import java.util.List;
 
-public class PeaksMSD extends AbstractPeaks<IPeakMSD> {
+public class PeaksMSD implements IPeaksMSD {
 
-	public PeaksMSD() {
+	List<IPeakMSD> peaks = new ArrayList<>();
 
-		super(IPeakMSD.class);
+	@Override
+	public void addPeak(IPeakMSD peak) {
+
+		peaks.add(peak);
+	}
+
+	@Override
+	public void removePeak(IPeakMSD peak) {
+
+		if(peak != null) {
+			peaks.remove(peak);
+		}
+	}
+
+	@Override
+	public List<IPeakMSD> getPeaks() {
+
+		return peaks;
 	}
 }

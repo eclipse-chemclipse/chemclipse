@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2024 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,9 +15,8 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.editors;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.msd.converter.peak.PeakConverterMSD;
-import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
@@ -47,13 +46,13 @@ public class PeakListEditor {
 				@Override
 				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 
-					IProcessingInfo<IPeaks<IPeakMSD>> convert = PeakConverterMSD.convert(file, supplier.getId(), monitor);
+					IProcessingInfo<IPeaksMSD> convert = PeakConverterMSD.convert(file, supplier.getId(), monitor);
 					Display.getDefault().asyncExec(new Runnable() {
 
 						@Override
 						public void run() {
 
-							IPeaks<IPeakMSD> result = convert.getProcessingResult();
+							IPeaksMSD result = convert.getProcessingResult();
 							if(convert.hasErrorMessages() || result == null) {
 								ProcessingInfoPartSupport.getInstance().update(convert);
 							} else {

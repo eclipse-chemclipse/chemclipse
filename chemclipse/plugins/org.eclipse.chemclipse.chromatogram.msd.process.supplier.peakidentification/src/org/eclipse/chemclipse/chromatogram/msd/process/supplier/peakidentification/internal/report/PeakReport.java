@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2023 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,10 +16,10 @@ import java.io.PrintWriter;
 
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.core.IPeak;
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 
 public class PeakReport {
 
@@ -30,7 +30,7 @@ public class PeakReport {
 
 	}
 
-	public static void writeResults(IPeaks<IPeak> peaks, PrintWriter printWriter, String integrator, String identifier) {
+	public static void writeResults(IPeaksMSD peaks, PrintWriter printWriter, String integrator, String identifier) {
 
 		if(peaks == null || printWriter == null) {
 			return;

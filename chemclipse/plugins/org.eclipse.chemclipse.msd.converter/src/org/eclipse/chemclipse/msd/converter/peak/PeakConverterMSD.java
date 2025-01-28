@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2023 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,8 +18,7 @@ import org.eclipse.chemclipse.converter.core.Converter;
 import org.eclipse.chemclipse.converter.core.IMagicNumberMatcher;
 import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.core.IPeaks;
-import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.IProcessingMessage;
 import org.eclipse.chemclipse.processing.core.MessageType;
@@ -57,7 +56,7 @@ public class PeakConverterMSD {
 
 	}
 
-	public static IProcessingInfo<IPeaks<IPeakMSD>> convert(File file, String converterId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IPeaksMSD> convert(File file, String converterId, IProgressMonitor monitor) {
 
 		/*
 		 * Do not use a safe runnable here.
@@ -70,12 +69,12 @@ public class PeakConverterMSD {
 		}
 	}
 
-	public static IProcessingInfo<IPeaks<IPeakMSD>> convert(File file, IProgressMonitor monitor) {
+	public static IProcessingInfo<IPeaksMSD> convert(File file, IProgressMonitor monitor) {
 
 		return getPeaks(file, monitor);
 	}
 
-	public static IProcessingInfo<File> convert(File file, IPeaks<? extends IPeakMSD> peaks, boolean append, String converterId, IProgressMonitor monitor) {
+	public static IProcessingInfo<File> convert(File file, IPeaksMSD peaks, boolean append, String converterId, IProgressMonitor monitor) {
 
 		IProcessingInfo<File> processingInfo;
 		/*
@@ -90,9 +89,9 @@ public class PeakConverterMSD {
 		return processingInfo;
 	}
 
-	private static IProcessingInfo<IPeaks<IPeakMSD>> getPeaks(final File file, IProgressMonitor monitor) {
+	private static IProcessingInfo<IPeaksMSD> getPeaks(final File file, IProgressMonitor monitor) {
 
-		IProcessingInfo<IPeaks<IPeakMSD>> processingInfo;
+		IProcessingInfo<IPeaksMSD> processingInfo;
 		PeakConverterSupport converterSupport = getPeakConverterSupport();
 		/*
 		 * Try to convert.

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2023 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,8 +15,8 @@ package org.eclipse.chemclipse.msd.converter.peak;
 import java.io.File;
 
 import org.eclipse.chemclipse.converter.core.AbstractExportConverter;
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.IProcessingMessage;
 import org.eclipse.chemclipse.processing.core.MessageType;
@@ -34,10 +34,10 @@ public abstract class AbstractPeakExportConverter extends AbstractExportConverte
 		}
 	}
 
-	public IProcessingInfo<File> validate(IPeaks<?> peaks) {
+	public IProcessingInfo<File> validate(IPeaksMSD peaks) {
 
 		if(peaks == null) {
-			return getProcessingInfo("The peaks couldn't be found.");
+			return getProcessingInfo("The peak list couldn't be found.");
 		} else {
 			return new ProcessingInfo<>();
 		}

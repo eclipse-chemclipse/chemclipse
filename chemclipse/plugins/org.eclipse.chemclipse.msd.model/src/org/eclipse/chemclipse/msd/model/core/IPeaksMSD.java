@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2023 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,9 +10,8 @@
  * Dr. Philip Wenig - initial API and implementation
  * Christoph Läubrich - add default implementations, adjust API
  *******************************************************************************/
-package org.eclipse.chemclipse.model.core;
+package org.eclipse.chemclipse.msd.model.core;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,11 +20,11 @@ import java.util.List;
  * @author eselmeister
  * 
  */
-public interface IPeaks<T extends IPeak> {
+public interface IPeaksMSD {
 
 	/**
 	 * 
-	 * @return the name of this IPeaks<?> list or <code>null</code> if none is available
+	 * @return the name of this peak list or <code>null</code> if none is available
 	 */
 	default String getName() {
 
@@ -37,10 +36,7 @@ public interface IPeaks<T extends IPeak> {
 	 * 
 	 * @param peak
 	 */
-	default boolean addPeak(IPeak peak) throws UnsupportedOperationException {
-
-		return false;
-	}
+	void addPeak(IPeakMSD peak) throws UnsupportedOperationException;
 
 	/**
 	 * Removes the peak from the list.
@@ -48,10 +44,7 @@ public interface IPeaks<T extends IPeak> {
 	 * @param peak
 	 * @return <code>true</code> if peak was removed, <code>false</code> otherwise
 	 */
-	default boolean removePeak(IPeak peak) throws UnsupportedOperationException {
-
-		return false;
-	}
+	void removePeak(IPeakMSD peak) throws UnsupportedOperationException;
 
 	/**
 	 * Returns the peak with the given number.<br/>
@@ -61,9 +54,9 @@ public interface IPeaks<T extends IPeak> {
 	 * @param i
 	 * @return IPeak
 	 */
-	default T getPeak(int i) {
+	default IPeakMSD getPeak(int i) {
 
-		List<T> peaks = getPeaks();
+		List<IPeakMSD> peaks = getPeaks();
 		if(i > 0 && i <= peaks.size()) {
 			return peaks.get(--i);
 		}
@@ -75,15 +68,13 @@ public interface IPeaks<T extends IPeak> {
 	 * 
 	 * @return List<IPeak>
 	 */
-	List<T> getPeaks();
+	List<IPeakMSD> getPeaks();
 
 	/**
 	 * Returns the number of stored peaks.
 	 * 
-	 * @deprecated use {@link #getPeaks().size()} instead
 	 * @return int
 	 */
-	@Deprecated
 	default int size() {
 
 		return getPeaks().size();
@@ -92,17 +83,5 @@ public interface IPeaks<T extends IPeak> {
 	default boolean isEmpty() {
 
 		return getPeaks().isEmpty();
-	}
-
-	static <X extends IPeak> IPeaks<X> singelton(X peak) {
-
-		return new IPeaks<X>() {
-
-			@Override
-			public List<X> getPeaks() {
-
-				return Collections.singletonList(peak);
-			}
-		};
 	}
 }

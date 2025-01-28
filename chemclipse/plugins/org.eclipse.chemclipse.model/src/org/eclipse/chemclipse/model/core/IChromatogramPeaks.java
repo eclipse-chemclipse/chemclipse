@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2019 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -12,7 +12,6 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.core;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.chemclipse.model.support.IRetentionTimeRange;
@@ -57,41 +56,5 @@ public interface IChromatogramPeaks<T extends IPeak> {
 			return getPeaks();
 		}
 		return getPeaks(range.getStartRetentionTime(), range.getStopRetentionTime());
-	}
-
-	default IPeaks<T> toPeaks(String name) {
-
-		return new IPeaks<T>() {
-
-			@Override
-			public String getName() {
-
-				return name;
-			}
-
-			@Override
-			public List<T> getPeaks() {
-
-				return Collections.unmodifiableList(IChromatogramPeaks.this.getPeaks());
-			}
-		};
-	}
-
-	default IPeaks<T> toPeaks(String name, IRetentionTimeRange range) {
-
-		return new IPeaks<T>() {
-
-			@Override
-			public String getName() {
-
-				return name;
-			}
-
-			@Override
-			public List<T> getPeaks() {
-
-				return Collections.unmodifiableList(IChromatogramPeaks.this.getPeaks(range));
-			}
-		};
 	}
 }

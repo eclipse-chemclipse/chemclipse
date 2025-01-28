@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2024 Lablicate GmbH.
+ * Copyright (c) 2014, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -27,7 +27,6 @@ import org.apache.commons.io.FileUtils;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.core.IPeakIntensityValues;
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.model.implementation.PeakIntensityValues;
 import org.eclipse.chemclipse.msd.converter.io.IPeakReader;
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.preferences.PreferenceSupplier;
@@ -35,6 +34,7 @@ import org.eclipse.chemclipse.msd.model.core.IPeakIon;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.msd.model.core.PeaksMSD;
 import org.eclipse.chemclipse.msd.model.implementation.PeakIon;
 import org.eclipse.chemclipse.msd.model.implementation.PeakMSD;
@@ -65,10 +65,10 @@ public class ELUReader implements IPeakReader {
 	private static final String CARRIAGE_RETURN = "\r";
 
 	@Override
-	public IProcessingInfo<IPeaks<IPeakMSD>> read(File file, IProgressMonitor monitor) throws IOException {
+	public IProcessingInfo<IPeaksMSD> read(File file, IProgressMonitor monitor) throws IOException {
 
 		Charset charset = PreferenceSupplier.getCharsetImportELU();
-		IProcessingInfo<IPeaks<IPeakMSD>> processingInfo = new ProcessingInfo<>();
+		IProcessingInfo<IPeaksMSD> processingInfo = new ProcessingInfo<>();
 		String content = FileUtils.readFileToString(file, charset);
 		int numberOfHits = getNumberOfHits(content);
 		if(numberOfHits <= 0) {
@@ -207,12 +207,12 @@ public class ELUReader implements IPeakReader {
 	 * @param scanInterval
 	 * @return {@link IProcessingInfo}
 	 */
-	private void extractAmdisPeaks(String content, int scanInterval, IProcessingInfo<IPeaks<IPeakMSD>> processingInfo) {
+	private void extractAmdisPeaks(String content, int scanInterval, IProcessingInfo<IPeaksMSD> processingInfo) {
 
 		if(scanInterval <= 0) {
 			processingInfo.addErrorMessage("AMDIS ELU Parser", "There seems to be no peak in the file. The scan interval is <= 0.");
 		} else {
-			IPeaks<IPeakMSD> peaks = new PeaksMSD();
+			IPeaksMSD peaks = new PeaksMSD();
 			Matcher matcher = PEAK_DATA_PATTERN.matcher(content);
 			while(matcher.find()) {
 				/*

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2024 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,14 +17,13 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.model.exceptions.PeakException;
 import org.eclipse.chemclipse.msd.converter.io.IPeakReader;
 import org.eclipse.chemclipse.msd.converter.supplier.matlab.parafac.internal.converter.MatlabParafac;
 import org.eclipse.chemclipse.msd.converter.supplier.matlab.parafac.internal.converter.ParseStatus;
 import org.eclipse.chemclipse.msd.converter.supplier.matlab.parafac.internal.converter.PeakSupport;
 import org.eclipse.chemclipse.msd.model.core.IPeakIon;
-import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.msd.model.core.PeaksMSD;
 import org.eclipse.chemclipse.msd.model.implementation.PeakIon;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
@@ -40,9 +39,9 @@ public class MatlabParafacPeakReader implements IPeakReader {
 	private ParseStatus parseStatus;
 
 	@Override
-	public IProcessingInfo<IPeaks<IPeakMSD>> read(File file, IProgressMonitor monitor) throws IOException {
+	public IProcessingInfo<IPeaksMSD> read(File file, IProgressMonitor monitor) throws IOException {
 
-		IProcessingInfo<IPeaks<IPeakMSD>> processingInfo = new ProcessingInfo<>();
+		IProcessingInfo<IPeaksMSD> processingInfo = new ProcessingInfo<>();
 		validateContent(file, processingInfo);
 		readPeaks(file, processingInfo);
 		return processingInfo;
@@ -61,12 +60,12 @@ public class MatlabParafacPeakReader implements IPeakReader {
 		}
 	}
 
-	private void readPeaks(File file, IProcessingInfo<IPeaks<IPeakMSD>> processingInfo) throws IOException, IllegalArgumentException {
+	private void readPeaks(File file, IProcessingInfo<IPeaksMSD> processingInfo) throws IOException, IllegalArgumentException {
 
 		try (FileReader fileReader = new FileReader(file)) {
 			try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
 				String line;
-				IPeaks<IPeakMSD> peaks = new PeaksMSD();
+				IPeaksMSD peaks = new PeaksMSD();
 				PeakSupport peakSupport = null;
 				/*
 				 * Parse each line the file
@@ -105,7 +104,7 @@ public class MatlabParafacPeakReader implements IPeakReader {
 		}
 	}
 
-	private void addPeak(IPeaks<IPeakMSD> peaks, PeakSupport peakSupport, IProcessingInfo<?> processingInfo, File file) {
+	private void addPeak(IPeaksMSD peaks, PeakSupport peakSupport, IProcessingInfo<?> processingInfo, File file) {
 
 		IProcessingMessage processingMessage;
 		try {

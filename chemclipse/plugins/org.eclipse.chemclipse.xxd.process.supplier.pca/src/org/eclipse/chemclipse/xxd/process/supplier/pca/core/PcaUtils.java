@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2024 Lablicate GmbH.
+ * Copyright (c) 2017, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -32,12 +32,12 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.stat.correlation.Covariance;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IPeakModel;
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.statistics.ISample;
 import org.eclipse.chemclipse.model.statistics.ISampleData;
 import org.eclipse.chemclipse.model.statistics.ISamples;
 import org.eclipse.chemclipse.model.statistics.IVariable;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IDataInputEntry;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Sample;
@@ -187,7 +187,7 @@ public class PcaUtils {
 	 * @param rightRetentionTimeBound
 	 * @return all peaks which has peak maximum {@link IPeakModel#getPeakMaximum()} between {@code leftRetentionTimeBound} and {@code rightRetentionTimeBound}
 	 */
-	public static List<IPeak> getPeaks(IPeaks<IPeak> peaks, int leftRetentionTimeBound, int rightRetentionTimeBound) {
+	public static List<IPeak> getPeaks(IPeaksMSD peaks, int leftRetentionTimeBound, int rightRetentionTimeBound) {
 
 		List<IPeak> peakInInterval = new ArrayList<>();
 		for(IPeak peak : peaks.getPeaks()) {

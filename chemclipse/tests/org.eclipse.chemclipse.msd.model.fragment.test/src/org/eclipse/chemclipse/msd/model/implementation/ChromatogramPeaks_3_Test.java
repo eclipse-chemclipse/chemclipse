@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2023 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,13 +11,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.msd.model.core.PeaksMSD;
 
 public class ChromatogramPeaks_3_Test extends ChromatogramPeaksTestCase {
 
-	private IPeaks<IPeakMSD> peaks;
+	private IPeaksMSD peaks;
 	private IPeakMSD peak;
 
 	@Override

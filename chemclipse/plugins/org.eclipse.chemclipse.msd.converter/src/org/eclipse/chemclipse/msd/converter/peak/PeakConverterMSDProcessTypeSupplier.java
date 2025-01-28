@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2023 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,12 +15,15 @@ package org.eclipse.chemclipse.msd.converter.peak;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.model.supplier.IChromatogramSelectionProcessSupplier;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
+import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
+import org.eclipse.chemclipse.msd.model.core.PeaksMSD;
 import org.eclipse.chemclipse.processing.DataCategory;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
 import org.eclipse.chemclipse.processing.core.ICategories;
@@ -71,12 +74,30 @@ public class PeakConverterMSDProcessTypeSupplier implements IProcessTypeSupplier
 
 			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
 			if(chromatogram instanceof IChromatogramMSD msd) {
-				IProcessingInfo<File> info = converter.convert(processSettings.getExportFile(supplier.getFileExtension(), chromatogram), msd.toPeaks(msd.getName(), chromatogramSelection), false, context.getProgressMonitor());
+				IProcessingInfo<File> info = converter.convert(processSettings.getExportFile(supplier.getFileExtension(), chromatogram), createPeaks(msd), false, context.getProgressMonitor());
 				context.addMessages(info);
 			} else {
 				context.addWarnMessage(getName(), "Can only export MSD Data, skipping...");
 			}
 			return chromatogramSelection;
+		}
+
+		private PeaksMSD createPeaks(IChromatogramMSD chromatogram) {
+
+			return new PeaksMSD() {
+
+				@Override
+				public String getName() {
+
+					return chromatogram.getName();
+				}
+
+				@Override
+				public List<IPeakMSD> getPeaks() {
+
+					return Collections.unmodifiableList(chromatogram.getPeaks());
+				}
+			};
 		}
 	}
 }

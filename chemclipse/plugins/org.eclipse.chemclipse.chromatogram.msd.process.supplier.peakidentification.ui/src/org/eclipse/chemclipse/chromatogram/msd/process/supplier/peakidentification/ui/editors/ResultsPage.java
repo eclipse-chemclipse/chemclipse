@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2023 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,9 +12,8 @@
 package org.eclipse.chemclipse.chromatogram.msd.process.supplier.peakidentification.ui.editors;
 
 import org.eclipse.chemclipse.chromatogram.msd.process.supplier.peakidentification.model.IPeakIdentificationBatchJob;
-import org.eclipse.chemclipse.model.core.IPeak;
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.msd.swt.ui.components.peak.PeakListUI;
 import org.eclipse.chemclipse.support.ui.swt.ExtendedTableViewer;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
@@ -47,7 +46,7 @@ public class ResultsPage implements IMultiEditorPage {
 	@Override
 	public void setFocus() {
 
-		IPeaks<IPeak> peaks = selectionUpdateListener.getPeaks();
+		IPeaksMSD peaks = selectionUpdateListener.getPeaks();
 		if(peaks != null) {
 			update(peaks);
 		}
@@ -67,7 +66,7 @@ public class ResultsPage implements IMultiEditorPage {
 		}
 	}
 
-	public void update(IPeaks<IPeak> peaks) {
+	public void update(IPeaksMSD peaks) {
 
 		if(editorPart.getActivePage() == getPageIndex() && peaks != null) {
 			peakListUI.update(peaks);
@@ -128,7 +127,7 @@ public class ResultsPage implements IMultiEditorPage {
 	public static class SelectionUpdateListener {
 
 		private static ResultsPage parentWidget;
-		private static IPeaks<IPeak> evaluatedPeaks = null;
+		private static IPeaksMSD evaluatedPeaks = null;
 
 		public void setParent(IMultiEditorPage parent) {
 
@@ -137,7 +136,7 @@ public class ResultsPage implements IMultiEditorPage {
 			}
 		}
 
-		public void update(IPeaks<IPeak> peaks) {
+		public void update(IPeaksMSD peaks) {
 
 			evaluatedPeaks = peaks;
 			if(parentWidget != null) {
@@ -152,7 +151,7 @@ public class ResultsPage implements IMultiEditorPage {
 			}
 		}
 
-		public IPeaks<IPeak> getPeaks() {
+		public IPeaksMSD getPeaks() {
 
 			return evaluatedPeaks;
 		}

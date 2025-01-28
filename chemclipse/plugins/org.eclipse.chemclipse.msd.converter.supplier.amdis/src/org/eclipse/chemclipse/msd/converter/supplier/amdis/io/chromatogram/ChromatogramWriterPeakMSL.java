@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2023 Lablicate GmbH.
+ * Copyright (c) 2012, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,12 +16,11 @@ import java.io.IOException;
 import java.util.List;
 
 import org.eclipse.chemclipse.converter.exceptions.FileIsNotWriteableException;
-import org.eclipse.chemclipse.model.core.IPeaks;
 import org.eclipse.chemclipse.msd.converter.io.AbstractChromatogramMSDWriter;
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.converter.msl.MSLPeakExportConverter;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
-import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.msd.model.core.PeaksMSD;
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -36,7 +35,7 @@ public class ChromatogramWriterPeakMSL extends AbstractChromatogramMSDWriter {
 		/*
 		 * Extract the peaks
 		 */
-		IPeaks<? extends IPeakMSD> peaks = new PeaksMSD();
+		IPeaksMSD peaks = new PeaksMSD();
 		List<IChromatogramPeakMSD> chromatogramPeaks = chromatogram.getPeaks();
 		for(IChromatogramPeakMSD chromatogramPeak : chromatogramPeaks) {
 			peaks.addPeak(chromatogramPeak);
