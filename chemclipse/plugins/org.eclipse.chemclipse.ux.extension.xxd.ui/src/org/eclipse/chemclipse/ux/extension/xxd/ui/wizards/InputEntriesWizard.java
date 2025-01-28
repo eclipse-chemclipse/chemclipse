@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2022 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.wizards;
 
@@ -25,7 +25,7 @@ import org.eclipse.swt.widgets.Shell;
 
 public class InputEntriesWizard extends Wizard {
 
-	private final InputWizardSettings inputWizardSettings;
+	private InputWizardSettings inputWizardSettings;
 	private InputEntriesWizardPage inputEntriesPage;
 
 	private InputEntriesWizard(InputWizardSettings inputWizardSettings) {
@@ -58,10 +58,10 @@ public class InputEntriesWizard extends Wizard {
 	public static Map<File, Map<ISupplierFileIdentifier, Collection<ISupplier>>> openWizard(Shell shell, InputWizardSettings inputWizardSettings) {
 
 		InputEntriesWizard inputWizard = new InputEntriesWizard(inputWizardSettings);
-		WizardDialog wizardDialog = new WizardDialog(shell, inputWizard);
-		wizardDialog.setPageSize(InputWizardSettings.DEFAULT_WIDTH, InputWizardSettings.DEFAULT_HEIGHT);
-		wizardDialog.create();
 		try {
+			WizardDialog wizardDialog = new WizardDialog(shell, inputWizard);
+			wizardDialog.setPageSize(InputWizardSettings.DEFAULT_WIDTH, InputWizardSettings.DEFAULT_HEIGHT);
+			wizardDialog.create();
 			if(wizardDialog.open() == Window.OK) {
 				return inputWizard.inputEntriesPage.getSelectedItems();
 			} else {

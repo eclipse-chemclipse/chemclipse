@@ -38,7 +38,7 @@ public class InputEntriesWizardPage extends WizardPage {
 
 		private WizardMultiDataExplorerTreeUI(Composite parent, IPreferenceStore preferenceStore, InputEntriesWizardPage page) {
 
-			super(parent, SWT.NONE, new DataExplorerTreeSettings(preferenceStore, new DataExplorerTreeRoot[]{DataExplorerTreeRoot.USER_LOCATION}));
+			super(parent, SWT.NONE, new DataExplorerTreeSettings(preferenceStore));
 			this.page = page;
 		}
 
@@ -85,12 +85,12 @@ public class InputEntriesWizardPage extends WizardPage {
 
 	public InputEntriesWizardPage(InputWizardSettings inputWizardSettings) {
 
-		//
 		super(InputEntriesWizardPage.class.getName());
 		this.inputWizardSettings = inputWizardSettings;
 		//
 		setTitle(inputWizardSettings.getTitle());
 		setDescription(inputWizardSettings.getDescription());
+		//
 		validate();
 	}
 
@@ -116,6 +116,7 @@ public class InputEntriesWizardPage extends WizardPage {
 		multiDataExplorerTreeUI = new WizardMultiDataExplorerTreeUI(parent, inputWizardSettings.getPreferenceStore(), this);
 		multiDataExplorerTreeUI.setSupplierFileIdentifier(inputWizardSettings.getSupplierFileEditorSupportList());
 		multiDataExplorerTreeUI.expandLastDirectoryPath();
+		//
 		setControl(multiDataExplorerTreeUI.getControl());
 	}
 

@@ -257,14 +257,13 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		composite.setLayout(new GridLayout(5, false));
+		composite.setLayout(new GridLayout(4, false));
 		//
 		if(dataExplorerTreeRoot == DataExplorerTreeRoot.USER_LOCATION) {
 			createComboViewerLocations(composite);
-			createButtonSetLocation(composite);
 			createButtonDeleteLocation(composite);
 		} else {
-			createLocationPlaceholder(composite, 3);
+			createLocationPlaceholder(composite, 2);
 		}
 		/*
 		 * Add custom elements.
@@ -355,22 +354,6 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 		comboViewerUserLocations.set(comboViewer);
 	}
 
-	private void createButtonSetLocation(Composite parent) {
-
-		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Set the user location.");
-		button.setText("");
-		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EXECUTE, IApplicationImageProvider.SIZE_16x16));
-		button.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-				switchUserLocation(e.display.getActiveShell());
-			}
-		});
-	}
-
 	private void switchUserLocation(Shell shell) {
 
 		UserLocation userLocation = getUserLocation();
@@ -383,9 +366,7 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 			} else {
 				DataExplorerTreeUI dataExplorerTreeUI = getUserLocationTreeUI();
 				if(dataExplorerTreeUI != null) {
-					if(MessageDialog.openQuestion(shell, "User Location", "Would you like to switch to the selected location?")) {
-						dataExplorerTreeUI.updateDirectory(directory);
-					}
+					dataExplorerTreeUI.updateDirectory(directory);
 				}
 			}
 		}
@@ -445,6 +426,13 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 						IPreferenceStore preferenceStore = dataExplorerTreeSettings.getPreferenceStore();
 						preferenceStore.setValue(getUserLocationPreferenceKey(), directory.getAbsolutePath());
 						dataExplorerTreeUI.getTreeViewer().setInput(new File[]{directory});
+						//
+						String name = directory.getName();
+						if(userLocations.get(name) == null) {
+							if(MessageDialog.openQuestion(e.display.getActiveShell(), "User Selection", "Would you like to bookmark the selected user selection?")) {
+								addUserLocationBookmark(e.display.getActiveShell(), name, directory);
+							}
+						}
 					}
 				}
 			}
@@ -536,6 +524,7 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 			 * Select a specific user location.
 			 */
 			addUserLocationButton(parent, dataExplorerTreeUI);
+			//
 			IPreferenceStore preferenceStore = dataExplorerTreeSettings.getPreferenceStore();
 			File directory = new File(preferenceStore.getString(getUserLocationPreferenceKey()));
 			if(directory.exists()) {
@@ -562,12 +551,12 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 		if(selection.length >= 1) {
 			if(selection[0] instanceof File file) {
 				if(file.isDirectory()) {
-					menuManager.add(new Action("Add User Location", ApplicationImageFactory.getInstance().getImageDescriptor(IApplicationImage.IMAGE_FOLDER, IApplicationImageProvider.SIZE_16x16)) {
+					menuManager.add(new Action("Bookmark User Location", ApplicationImageFactory.getInstance().getImageDescriptor(IApplicationImage.IMAGE_BOOKMARK, IApplicationImageProvider.SIZE_16x16)) {
 
 						@Override
 						public void run() {
 
-							InputDialog inputDialog = new InputDialog(Display.getDefault().getActiveShell(), "User Location", "Add a new user location.", file.getName(), new IInputValidator() {
+							InputDialog inputDialog = new InputDialog(Display.getDefault().getActiveShell(), "User Location", "Bookmark the user location.", file.getName(), new IInputValidator() {
 
 								@Override
 								public String isValid(String name) {
@@ -586,16 +575,22 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 							 */
 							if(inputDialog.open() == Window.OK) {
 								String name = inputDialog.getValue();
-								UserLocation userLocation = new UserLocation(name, file.getAbsolutePath());
-								userLocations.add(userLocation);
-								PreferenceSupplier.setUserLocations(userLocations.save());
-								updateUserLocations(userLocation);
+								addUserLocationBookmark(Display.getDefault().getActiveShell(), name, file);
 							}
 						}
 					});
 				}
 			}
 		}
+	}
+
+	private void addUserLocationBookmark(Shell shell, String name, File directory) {
+
+		UserLocation userLocation = new UserLocation(name, directory.getAbsolutePath());
+		userLocations.add(userLocation);
+		PreferenceSupplier.setUserLocations(userLocations.save());
+		updateUserLocations(userLocation);
+		switchUserLocation(shell);
 	}
 
 	private void selectMethodDirectory(MenuManager menuManager, Object[] files) {
