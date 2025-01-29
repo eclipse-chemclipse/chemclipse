@@ -366,6 +366,8 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 			} else {
 				DataExplorerTreeUI dataExplorerTreeUI = getUserLocationTreeUI();
 				if(dataExplorerTreeUI != null) {
+					IPreferenceStore preferenceStore = dataExplorerTreeSettings.getPreferenceStore();
+					preferenceStore.setValue(getUserLocationPreferenceKey(), directory.getAbsolutePath());
 					dataExplorerTreeUI.updateDirectory(directory);
 				}
 			}
@@ -388,6 +390,8 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 					if(MessageDialog.openQuestion(e.display.getActiveShell(), "User Selection", "Would you like to delete the user selection?")) {
 						userLocations.remove(userLocation);
 						PreferenceSupplier.setUserLocations(userLocations.save());
+						IPreferenceStore preferenceStore = dataExplorerTreeSettings.getPreferenceStore();
+						preferenceStore.setValue(getUserLocationPreferenceKey(), "");
 						updateUserLocations();
 					}
 				}

@@ -9,7 +9,6 @@
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - Move custom made toolbar to the native toolbar with E4Handlers
- * Philip Wenig - modularization
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.parts;
 
