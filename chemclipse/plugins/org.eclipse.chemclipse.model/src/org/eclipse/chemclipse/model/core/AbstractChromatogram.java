@@ -768,6 +768,16 @@ public abstract class AbstractChromatogram<T extends IPeak> extends AbstractMeas
 	}
 
 	@Override
+	public double getPeakIntegratedArea() {
+
+		double integratedArea = 0.0d;
+		for(IPeak peak : getPeaks()) {
+			integratedArea += peak.getIntegratedArea();
+		}
+		return integratedArea;
+	}
+
+	@Override
 	public double getChromatogramIntegratedArea() {
 
 		return getIntegratedArea(chromatogramIntegrationEntries);
