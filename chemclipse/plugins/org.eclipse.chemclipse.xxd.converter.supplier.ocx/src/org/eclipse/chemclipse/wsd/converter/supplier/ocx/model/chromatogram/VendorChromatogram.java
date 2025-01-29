@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2018 Michael Chang.
+ * Copyright (c) 2015, 2025 Michael Chang.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,7 +13,6 @@
 package org.eclipse.chemclipse.wsd.converter.supplier.ocx.model.chromatogram;
 
 import org.eclipse.chemclipse.wsd.model.core.AbstractChromatogramWSD;
-import org.eclipse.chemclipse.wsd.model.core.IChromatogramPeakWSD;
 
 public class VendorChromatogram extends AbstractChromatogramWSD implements IVendorChromatogram {
 
@@ -28,15 +27,5 @@ public class VendorChromatogram extends AbstractChromatogramWSD implements IVend
 	public String getName() {
 
 		return extractNameFromFile("Chromatogram");
-	}
-
-	@Override
-	public double getPeakIntegratedArea() {
-
-		double integratedArea = 0.0d;
-		for(IChromatogramPeakWSD peak : getPeaks()) {
-			integratedArea += peak.getIntegratedArea();
-		}
-		return integratedArea;
 	}
 }
