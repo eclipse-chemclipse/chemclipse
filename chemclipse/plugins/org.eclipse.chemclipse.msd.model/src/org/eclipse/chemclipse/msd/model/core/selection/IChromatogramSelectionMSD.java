@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2024 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -33,14 +33,10 @@ public interface IChromatogramSelectionMSD extends IChromatogramSelection<IChrom
 	 * Returns the stored chromatogram.
 	 * May return null.
 	 *
-	 * @deprecated use {@link #getChromatogram()} instead
 	 * @return {@link IChromatogramMSD}
 	 */
-	@Deprecated
-	default IChromatogramMSD getChromatogramMSD() {
-
-		return getChromatogram();
-	}
+	@Override
+	IChromatogramMSD getChromatogram();
 
 	/**
 	 * Returns the selected scan of the current chromatogram or null, if none is
