@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2024 Lablicate GmbH.
+ * Copyright (c) 2022, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -81,7 +81,7 @@ public class FilterDuplicator extends AbstractChromatogramFilter {
 			for(IScan scan : chromatogram.getScans()) {
 				scanMap.put(scan.getRetentionTime(), scan);
 			}
-			//
+
 			List<IScan> scansToReplace = new ArrayList<>();
 			for(IScan scan : chromatogram.getScans()) {
 				/*
@@ -99,7 +99,7 @@ public class FilterDuplicator extends AbstractChromatogramFilter {
 					IScan scanNext = scanEntryNext.getValue();
 					int retentionTimeCenter = (int)((scanNext.getRetentionTime() + scan.getRetentionTime()) / 2.0d);
 					float intensityCenter = (scanNext.getTotalSignal() + scan.getTotalSignal()) / 2.0f;
-					//
+
 					if(scan instanceof IScanCSD) {
 						/*
 						 * CSD
@@ -168,13 +168,9 @@ public class FilterDuplicator extends AbstractChromatogramFilter {
 
 		List<IIon> traces = new ArrayList<>();
 		for(IIon trace : scanMSD.getIons()) {
-			try {
-				traces.add(new Ion(trace.getIon(), trace.getAbundance()));
-			} catch(Exception e) {
-				// logger.warn(e);
-			}
+			traces.add(new Ion(trace.getIon(), trace.getAbundance()));
 		}
-		//
+
 		return traces;
 	}
 
@@ -184,7 +180,7 @@ public class FilterDuplicator extends AbstractChromatogramFilter {
 		for(IScanSignalWSD trace : scanWSD.getScanSignals()) {
 			traceMap.put(trace.getWavelength(), trace.getAbsorbance());
 		}
-		//
+
 		return traceMap;
 	}
 }

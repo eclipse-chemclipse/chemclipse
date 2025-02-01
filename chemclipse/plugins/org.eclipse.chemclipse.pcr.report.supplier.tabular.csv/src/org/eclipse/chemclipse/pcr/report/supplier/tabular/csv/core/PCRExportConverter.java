@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2023 Lablicate GmbH.
+ * Copyright (c) 2022, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -58,9 +58,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class PCRExportConverter extends AbstractPlateExportConverter implements IPlateExportConverter {
 
 	private static final Logger logger = Logger.getLogger(PCRExportConverter.class);
-	//
+
 	private static final String DESCRIPTION = "PCR CSV Export";
-	//
+
 	private DecimalFormat decimalFormat = new DecimalFormat("00" + PreferenceSupplier.getDecimalSeparator().getCharacter() + "00");
 
 	@Override

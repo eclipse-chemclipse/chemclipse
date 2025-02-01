@@ -107,19 +107,19 @@ public class CSVPeakConverter implements IPeakExportConverter, IPeakImportConver
 
 	private static StringBuilder writeIntensities(IPeakModelMSD peakModel) {
 
-		StringBuilder sb = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder();
 		if(peakModel != null) {
 			List<Integer> retentionTimes = peakModel.getRetentionTimes();
 			for(Integer rt : retentionTimes) {
-				if(sb.length() > 0) {
-					sb.append(SEPERATOR_RECORD);
+				if(stringBuilder.length() > 0) {
+					stringBuilder.append(SEPERATOR_RECORD);
 				}
-				sb.append(rt);
-				sb.append(SEPERATOR_VALUE);
-				sb.append(peakModel.getPeakAbundance(rt));
+				stringBuilder.append(rt);
+				stringBuilder.append(SEPERATOR_VALUE);
+				stringBuilder.append(peakModel.getPeakAbundance(rt));
 			}
 		}
-		return sb;
+		return stringBuilder;
 	}
 
 	private static StringBuilder writeMassSpectrum(IIonProvider provider) {
@@ -217,7 +217,7 @@ public class CSVPeakConverter implements IPeakExportConverter, IPeakImportConver
 			synchronized(NUMBER_FORMAT) {
 				nf = (NumberFormat)NUMBER_FORMAT.clone();
 			}
-			//
+
 			for(CSVRecord csvRecord : parser) {
 				PeakModelMSD peakModel = new PeakModelMSD(parseMassSpectrum(csvRecord.get(HEADER_MZ)), parseIntensityValues(csvRecord.get(HEADER_INTENSITIES)));
 				IScan maximum = peakModel.getPeakMaximum();
@@ -279,7 +279,7 @@ public class CSVPeakConverter implements IPeakExportConverter, IPeakImportConver
 		if(libraryInformation != null) {
 			return libraryInformation.getName();
 		}
-		//
+
 		return "";
 	}
 }
