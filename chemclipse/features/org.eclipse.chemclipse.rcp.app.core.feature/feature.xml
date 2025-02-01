@@ -501,10 +501,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.apache.commons.cli"
-         version="0.0.0"/>
-
-   <plugin
          id="org.eclipse.equinox.bidi"
          version="0.0.0"/>
 
