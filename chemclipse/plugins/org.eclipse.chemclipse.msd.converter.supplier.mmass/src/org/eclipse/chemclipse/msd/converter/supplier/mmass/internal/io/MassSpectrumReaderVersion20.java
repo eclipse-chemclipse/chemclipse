@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2024 Lablicate GmbH.
+ * Copyright (c) 2022, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -68,7 +68,7 @@ public class MassSpectrumReaderVersion20 extends AbstractMassSpectraReader imple
 			massSpectrum.setFile(file);
 			massSpectrum.setIdentifier(file.getName());
 			massSpectrum.setMassSpectrumType(MassSpectrumType.PROFILE);
-			//
+
 			NodeList nodeList = getTopNode(file);
 			for(int i = 0; i < nodeList.getLength(); i++) {
 				Node node = nodeList.item(i);
@@ -85,10 +85,12 @@ public class MassSpectrumReaderVersion20 extends AbstractMassSpectraReader imple
 			logger.warn(e);
 		} catch(ParserConfigurationException e) {
 			logger.warn(e);
-		} catch(Exception e) {
-			e.printStackTrace();
+		} catch(DOMException e) {
+			logger.warn(e);
+		} catch(DataFormatException e) {
+			logger.warn(e);
 		}
-		//
+
 		IVendorMassSpectra massSpectra = new VendorMassSpectra();
 		massSpectra.setName(file.getName());
 		massSpectra.addMassSpectrum(massSpectrum);

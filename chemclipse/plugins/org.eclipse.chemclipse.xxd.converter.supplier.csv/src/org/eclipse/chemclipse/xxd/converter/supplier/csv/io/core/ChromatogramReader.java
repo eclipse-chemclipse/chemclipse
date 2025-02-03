@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2024 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -38,7 +38,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class ChromatogramReader extends AbstractChromatogramMSDReader implements IChromatogramMSDReader {
 
 	private static final Logger logger = Logger.getLogger(ChromatogramReader.class);
-	//
+
 	private static final String ZERO_VALUE = "0.0";
 	private static final int ION_COLUMN_START = 3;
 
@@ -69,7 +69,7 @@ public class ChromatogramReader extends AbstractChromatogramMSDReader implements
 		char[] chars = new char[ChromatogramWriter.RT_MILLISECONDS_COLUMN.length()];
 		reader.read(chars);
 		reader.close();
-		//
+
 		String firstColumn = new String(chars);
 		return firstColumn.equals(ChromatogramWriter.RT_MILLISECONDS_COLUMN);
 	}
@@ -77,7 +77,7 @@ public class ChromatogramReader extends AbstractChromatogramMSDReader implements
 	private IChromatogramMSD readChromatogram(File file, boolean overview) throws IOException {
 
 		IChromatogramMSD chromatogram = null;
-		//
+
 		try (FileReader fileReader = new FileReader(file)) {
 			String zeroMarker = PreferenceSupplier.getImportZeroMarker();
 			zeroMarker = zeroMarker.startsWith(ZERO_VALUE) ? zeroMarker : ZERO_VALUE;
@@ -99,7 +99,7 @@ public class ChromatogramReader extends AbstractChromatogramMSDReader implements
 				IRegularMassSpectrum supplierMassSpectrum = getScan(csvRecord, ionsMap, zeroMarker, overview);
 				chromatogram.addScan(supplierMassSpectrum);
 			}
-			//
+
 			int scanDelay = chromatogram.getScan(1).getRetentionTime();
 			chromatogram.setScanDelay(scanDelay);
 			csvParser.close();
@@ -136,23 +136,19 @@ public class ChromatogramReader extends AbstractChromatogramMSDReader implements
 		float retentionIndex = Float.parseFloat(retentionIndexValue);
 		massSpectrum.setRetentionIndex(retentionIndex);
 		if(overview) {
-			try {
-				IIon ion = getIonsOverview(csvRecord, zeroMarker);
-				massSpectrum.addIon(ion);
-			} catch(Exception e) {
-				// logger.warn(e); - Don't log this.
-			}
+			IIon ion = getIonsOverview(csvRecord, zeroMarker);
+			massSpectrum.addIon(ion);
 		} else {
 			List<IIon> ions = getIons(csvRecord, ionsMap, zeroMarker);
 			for(IIon ion : ions) {
 				massSpectrum.addIon(ion);
 			}
 		}
-		//
+
 		return massSpectrum;
 	}
 
-	private IIon getIonsOverview(CSVRecord csvRecord, String zeroMarker)  {
+	private IIon getIonsOverview(CSVRecord csvRecord, String zeroMarker) {
 
 		float abundanceTotalSignal = 0.0f;
 		for(int index = ION_COLUMN_START; index < csvRecord.size(); index++) {
@@ -162,7 +158,7 @@ public class ChromatogramReader extends AbstractChromatogramMSDReader implements
 				abundanceTotalSignal += abundance;
 			}
 		}
-		//
+
 		return new VendorIon(IIon.TIC_ION, abundanceTotalSignal);
 	}
 
@@ -182,7 +178,7 @@ public class ChromatogramReader extends AbstractChromatogramMSDReader implements
 				}
 			}
 		}
-		//
+
 		return ions;
 	}
 }

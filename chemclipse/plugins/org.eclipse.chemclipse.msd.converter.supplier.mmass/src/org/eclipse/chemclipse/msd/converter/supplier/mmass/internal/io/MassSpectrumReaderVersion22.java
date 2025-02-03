@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2024 Lablicate GmbH.
+ * Copyright (c) 2022, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -85,8 +85,10 @@ public class MassSpectrumReaderVersion22 extends AbstractMassSpectraReader imple
 			logger.warn(e);
 		} catch(ParserConfigurationException e) {
 			logger.warn(e);
-		} catch(Exception e) {
-			e.printStackTrace();
+		} catch(DOMException e) {
+			logger.warn(e);
+		} catch(DataFormatException e) {
+			logger.warn(e);
 		}
 		//
 		IVendorMassSpectra massSpectra = new VendorMassSpectra();
