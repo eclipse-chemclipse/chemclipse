@@ -12,6 +12,8 @@
 package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -210,9 +212,9 @@ public class ExtendedLiteratureUI extends Composite implements IExtendedPartUI {
 				if(data instanceof String value) {
 					if(!value.isEmpty()) {
 						try {
-							URL url = new URL(value);
+							URL url = new URI(value).toURL();
 							SystemEditor.browse(url);
-						} catch(MalformedURLException e1) {
+						} catch(MalformedURLException | URISyntaxException e1) {
 							logger.warn(e1);
 						}
 					}

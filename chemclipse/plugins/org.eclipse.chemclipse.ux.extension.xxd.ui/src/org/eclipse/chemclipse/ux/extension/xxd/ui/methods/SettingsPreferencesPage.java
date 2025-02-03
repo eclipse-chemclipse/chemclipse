@@ -14,6 +14,8 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.methods;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -232,9 +234,9 @@ public class SettingsPreferencesPage<T> extends WizardPage {
 				if(data instanceof String value) {
 					if(!value.isEmpty()) {
 						try {
-							URL url = new URL(value);
+							URL url = new URI(value).toURL();
 							SystemEditor.browse(url);
-						} catch(MalformedURLException e1) {
+						} catch(MalformedURLException | URISyntaxException e1) {
 							logger.warn(e1);
 						}
 					}
