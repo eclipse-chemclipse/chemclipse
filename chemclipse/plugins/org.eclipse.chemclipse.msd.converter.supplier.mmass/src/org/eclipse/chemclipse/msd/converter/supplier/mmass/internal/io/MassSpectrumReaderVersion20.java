@@ -137,7 +137,11 @@ public class MassSpectrumReaderVersion20 extends AbstractMassSpectraReader imple
 		float[] mzs = null;
 		float[] intensities = null;
 		NodeList spectrumList = element.getElementsByTagName("spectrum");
-		for(int i = 0; i < spectrumList.getLength(); i++) {
+		int spectrumLength = spectrumList.getLength();
+		if(spectrumLength > 0) {
+			massSpectrum.setMassSpectrumType(MassSpectrumType.PROFILE);
+		}
+		for(int i = 0; i < spectrumLength; i++) {
 			Node node = spectrumList.item(i);
 			Element spectrum = (Element)node;
 			points = Integer.parseInt(spectrum.getAttribute("points"));

@@ -67,8 +67,7 @@ public class MassSpectrumReaderVersion22 extends AbstractMassSpectraReader imple
 			massSpectrum = new StandaloneMassSpectrum();
 			massSpectrum.setFile(file);
 			massSpectrum.setIdentifier(file.getName());
-			massSpectrum.setMassSpectrumType(MassSpectrumType.PROFILE);
-			//
+
 			NodeList nodeList = getTopNode(file);
 			for(int i = 0; i < nodeList.getLength(); i++) {
 				Node node = nodeList.item(i);
@@ -90,7 +89,7 @@ public class MassSpectrumReaderVersion22 extends AbstractMassSpectraReader imple
 		} catch(DataFormatException e) {
 			logger.warn(e);
 		}
-		//
+
 		IVendorMassSpectra massSpectra = new VendorMassSpectra();
 		massSpectra.setName(file.getName());
 		massSpectra.addMassSpectrum(massSpectrum);
@@ -137,7 +136,11 @@ public class MassSpectrumReaderVersion22 extends AbstractMassSpectraReader imple
 		float[] mzs = null;
 		float[] intensities = null;
 		NodeList spectrumList = element.getElementsByTagName("spectrum");
-		for(int i = 0; i < spectrumList.getLength(); i++) {
+		int spectrumLength = spectrumList.getLength();
+		if(spectrumLength > 0) {
+			massSpectrum.setMassSpectrumType(MassSpectrumType.PROFILE);
+		}
+		for(int i = 0; i < spectrumLength; i++) {
 			Node node = spectrumList.item(i);
 			Element spectrum = (Element)node;
 			points = Integer.parseInt(spectrum.getAttribute("points"));

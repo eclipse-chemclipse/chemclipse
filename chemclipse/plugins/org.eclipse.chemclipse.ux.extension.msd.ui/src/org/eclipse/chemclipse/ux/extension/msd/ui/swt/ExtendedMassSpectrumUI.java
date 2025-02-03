@@ -88,6 +88,7 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 	private void createPages(Composite parent) {
 
 		if(massSpectra != null && massSpectra.getMassSpectrum(1) != null) {
+			massSpectrum = massSpectra.getMassSpectrum(1);
 			createMassSpectrumPage(parent);
 		} else {
 			createErrorMessagePage(parent);
@@ -116,8 +117,8 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 
 	private boolean isProfile() {
 
-		if(massSpectrum instanceof IRegularMassSpectrum regularLibraryMassSpectrum) {
-			return regularLibraryMassSpectrum.getMassSpectrumType() == MassSpectrumType.PROFILE;
+		if(massSpectrum instanceof IRegularMassSpectrum regularMassSpectrum) {
+			return regularMassSpectrum.getMassSpectrumType() == MassSpectrumType.PROFILE;
 		} else {
 			return PreferenceSupplier.useProfileMassSpectrumView();
 		}

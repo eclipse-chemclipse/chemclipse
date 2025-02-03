@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -20,6 +20,7 @@ import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.msd.converter.supplier.mmass.TestPathHelper;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Test;
@@ -51,6 +52,7 @@ public class ProteinIdentification_ITest extends TestCase {
 	@Test
 	public void testSpectrum() {
 
+		assertEquals(MassSpectrumType.PROFILE, massSpectrum.getMassSpectrumType());
 		assertEquals(71561, massSpectrum.getNumberOfIons());
 		assertEquals(993.4036865234375d, massSpectrum.getBasePeak());
 		assertEquals(3634.0f, massSpectrum.getBasePeakAbundance());
