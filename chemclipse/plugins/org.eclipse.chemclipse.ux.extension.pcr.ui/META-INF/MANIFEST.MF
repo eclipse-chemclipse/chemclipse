@@ -32,7 +32,7 @@ Bundle-Vendor: ChemClipse
 Automatic-Module-Name: org.eclipse.chemclipse.ux.extension.pcr.ui
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.chemclipse.ux.extension.pcr.ui.Activator
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Export-Package: org.eclipse.chemclipse.ux.extension.pcr.ui.editors
 Import-Package: jakarta.annotation;version="[2.1.0,3.0.0)",
  jakarta.inject;version="[2.0.0,3.0.0)"

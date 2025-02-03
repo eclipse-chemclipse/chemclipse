@@ -20,7 +20,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.chemclipse.nmr.model
 Service-Component: OSGI-INF/org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.core.FirstDerivativePeakDetector.xml
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Export-Package: org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.core
 Bundle-Vendor: ChemClipse
 Import-Package: com.fasterxml.jackson.databind.annotation;version="2.9.93",

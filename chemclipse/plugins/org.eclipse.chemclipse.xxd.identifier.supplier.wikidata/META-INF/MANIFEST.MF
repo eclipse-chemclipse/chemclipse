@@ -26,5 +26,5 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.chemclipse.chromatogram.xxd.identifier;bundle-version="0.9.0",
  org.apache.httpcomponents.httpclient;bundle-version="4.5.14",
  org.apache.httpcomponents.httpcore;bundle-version="4.4.16"
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Bundle-ActivationPolicy: lazy

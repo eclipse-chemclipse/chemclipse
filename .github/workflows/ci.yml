@@ -31,7 +31,7 @@ jobs:
       id: temurin
       with:
         candidate: java
-        version: 17.0.14-tem
+        version: 21.0.6-tem
 
     - uses: sdkman/sdkman-action@main
       name: Setup Maven
