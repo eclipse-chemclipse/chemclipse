@@ -1,0 +1,19 @@
+<plugin>
+   <extension
+         point="org.eclipse.chemclipse.ux.extension.ui.welcometile">
+      <WelcomeTile
+            Description="Polymerase Chain Reaction (PCR)"
+            PerspectiveId="org.eclipse.chemclipse.ux.extension.pcr.ui.perspective.pcr"
+            Section="PCR"
+            defaultShow="true">
+      </WelcomeTile>
+   </extension>
+
+   <extension
+         id="org.eclipse.chemclipse.ux.extension.xxd.ui.modelContribution"
+         point="org.eclipse.e4.workbench.model">
+      <fragment
+            uri="fragment.e4xmi">
+      </fragment>
+   </extension>
+</plugin>

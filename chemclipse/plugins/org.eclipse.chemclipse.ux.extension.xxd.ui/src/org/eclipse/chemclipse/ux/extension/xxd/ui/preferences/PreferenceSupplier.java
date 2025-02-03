@@ -15,7 +15,6 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.preferences;
 import org.eclipse.chemclipse.model.core.support.HeaderField;
 import org.eclipse.chemclipse.model.support.CalculationType;
 import org.eclipse.chemclipse.model.traces.NamedTraceUtil;
-import org.eclipse.chemclipse.pcr.model.core.support.LabelSetting;
 import org.eclipse.chemclipse.processing.DataCategory;
 import org.eclipse.chemclipse.support.preferences.AbstractPreferenceSupplier;
 import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
@@ -938,19 +937,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static final String P_QUANTITATION_REFERENCE_LIST = "quantitationReferenceList";
 	public static final String DEF_QUANTITATION_REFERENCE_LIST = "";
 	/*
-	 * PCR
-	 */
-	public static final String P_PCR_DEFAULT_COLOR = "pcrDefaultColor";
-	public static final String DEF_PCR_DEFAULT_COLOR = "192,192,192";
-	public static final String P_PCR_PLATE_COLOR_CODES = "pcrColorCodes";
-	public static final String DEF_PCR_PLATE_COLOR_CODES = "";
-	public static final String P_PCR_WELL_COLOR_CODES = "pcrWellColorCodes";
-	public static final String DEF_PCR_WELL_COLOR_CODES = "";
-	public static final String P_PCR_SAVE_AS_FOLDER = "pcrSaveAsFolder";
-	public static final String DEF_PCR_SAVE_AS_FOLDER = "";
-	public static final String P_PCR_REFERENCE_LABEL = "pcrReferenceLabel";
-	public static final String DEF_PCR_REFERENCE_LABEL = LabelSetting.COORDINATE_SAMPLENAME.name();
-	/*
 	 * Processor
 	 */
 	public static final String P_PROCESSOR_SELECTION_DATA_CATEGORY = "processorSelectionDataCategory";
@@ -1275,14 +1261,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 		 */
 		putDefault(P_USE_QUANTITATION_REFERENCE_LIST, DEF_USE_QUANTITATION_REFERENCE_LIST);
 		putDefault(P_QUANTITATION_REFERENCE_LIST, DEF_QUANTITATION_REFERENCE_LIST);
-		/*
-		 * PCR
-		 */
-		putDefault(P_PCR_DEFAULT_COLOR, DEF_PCR_DEFAULT_COLOR);
-		putDefault(P_PCR_PLATE_COLOR_CODES, DEF_PCR_PLATE_COLOR_CODES);
-		putDefault(P_PCR_WELL_COLOR_CODES, DEF_PCR_WELL_COLOR_CODES);
-		putDefault(P_PCR_SAVE_AS_FOLDER, DEF_PCR_SAVE_AS_FOLDER);
-		putDefault(P_PCR_REFERENCE_LABEL, DEF_PCR_REFERENCE_LABEL);
 		/*
 		 * Molecules
 		 */

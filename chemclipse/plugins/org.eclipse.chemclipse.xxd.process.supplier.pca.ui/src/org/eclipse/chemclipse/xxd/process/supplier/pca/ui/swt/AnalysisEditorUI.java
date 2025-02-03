@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2024 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -36,10 +36,10 @@ import org.eclipse.chemclipse.swt.ui.components.ISearchListener;
 import org.eclipse.chemclipse.swt.ui.components.SearchSupportUI;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
+import org.eclipse.chemclipse.ux.extension.ui.model.IDataUpdateListener;
+import org.eclipse.chemclipse.ux.extension.ui.support.DataUpdateSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.chemclipse.ux.extension.ui.swt.ISettingsHandler;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.DataUpdateSupport;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.IDataUpdateListener;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.io.SampleTemplateIO;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Algorithm;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.EvaluationPCA;

@@ -13,7 +13,7 @@
    </description>
 
    <copyright url="https://www.chemclipse.net">
-      Copyright (c) 2008, 2024 Lablicate GmbH.
+      Copyright (c) 2008, 2025 Lablicate GmbH.
    </copyright>
 
    <license url="%licenseURL">
@@ -370,6 +370,10 @@
 
    <plugin
          id="org.eclipse.chemclipse.fsd.model"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.chemclipse.ux.extension.pcr.ui"
          version="0.0.0"/>
 
 </feature>

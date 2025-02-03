@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2024 Lablicate GmbH.
+ * Copyright (c) 2012, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -33,7 +33,7 @@ public class Activator extends AbstractActivatorUI {
 
 	public static final String INFO_PERSPECTIVES = "Perspectives";
 	public static final String PATH_PERSPECTIVES_INFO = "files/images/perspectives.png";
-	//
+
 	private static Activator plugin;
 	private static final Logger logger = Logger.getLogger(Activator.class);
 	private ServiceTracker<TileDefinition, TileDefinition> tileServiceTracker;

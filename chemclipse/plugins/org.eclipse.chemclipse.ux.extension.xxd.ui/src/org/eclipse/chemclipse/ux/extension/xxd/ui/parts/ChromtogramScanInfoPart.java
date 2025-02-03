@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2024 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -13,13 +13,15 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.parts;
 
 import java.util.List;
 
-import jakarta.inject.Inject;
-
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
+import org.eclipse.chemclipse.ux.extension.ui.parts.AbstractPart;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedScanInfoUI;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+
+import jakarta.inject.Inject;
 
 public class ChromtogramScanInfoPart extends AbstractPart<ExtendedScanInfoUI> {
 
@@ -28,7 +30,7 @@ public class ChromtogramScanInfoPart extends AbstractPart<ExtendedScanInfoUI> {
 	@Inject
 	public ChromtogramScanInfoPart(Composite parent) {
 
-		super(parent, TOPIC);
+		super(parent, TOPIC, Activator.getDefault().getDataUpdateSupport());
 	}
 
 	@Override

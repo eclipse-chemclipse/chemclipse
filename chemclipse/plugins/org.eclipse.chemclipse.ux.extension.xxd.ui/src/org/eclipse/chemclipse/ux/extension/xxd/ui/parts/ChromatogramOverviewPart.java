@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2024 Lablicate GmbH.
+ * Copyright (c) 2017, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,14 +14,14 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.parts;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.inject.Inject;
-
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignalExtractor;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignalExtractor;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
+import org.eclipse.chemclipse.ux.extension.ui.parts.AbstractPart;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.IOverviewListener;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.OverviewSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.OverviewChartUI;
@@ -33,6 +33,8 @@ import org.eclipse.swtchart.extensions.linecharts.ILineSeriesData;
 import org.eclipse.swtchart.extensions.linecharts.ILineSeriesSettings;
 import org.eclipse.swtchart.extensions.linecharts.LineSeriesData;
 
+import jakarta.inject.Inject;
+
 public class ChromatogramOverviewPart extends AbstractPart<OverviewChartUI> {
 
 	private static final String TOPIC = IChemClipseEvents.TOPIC_CHROMATOGRAM_XXD_UPDATE_SELECTION;
@@ -41,7 +43,7 @@ public class ChromatogramOverviewPart extends AbstractPart<OverviewChartUI> {
 	@Inject
 	public ChromatogramOverviewPart(Composite parent) {
 
-		super(parent, TOPIC);
+		super(parent, TOPIC, Activator.getDefault().getDataUpdateSupport());
 		overviewSupport.setOverviewListener(new IOverviewListener() {
 
 			@Override

@@ -54,6 +54,7 @@ import org.eclipse.chemclipse.support.ui.workbench.EditorSupport;
 import org.eclipse.chemclipse.support.ui.workbench.PartSupport;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.ux.extension.ui.editors.IChromatogramEditor;
+import org.eclipse.chemclipse.ux.extension.ui.parts.AbstractUpdater;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.charts.ChromatogramChart;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.editors.ChromatogramFileSupport;
@@ -62,7 +63,6 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.l10n.ExtensionMessages;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.MeasurementResultNotification;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.ObjectChangedListener;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.ProcessMethodNotifications;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.parts.AbstractUpdater;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ChromatogramDataSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI;
@@ -139,7 +139,7 @@ public abstract class AbstractChromatogramEditor extends AbstractUpdater<Extende
 	 */
 	protected AbstractChromatogramEditor(DataType dataType, Composite parent, MPart part, MDirtyable dirtyable, IProcessSupplierContext processSupplierContext, Shell shell) {
 
-		super(TOPIC_CHROMATOGRAM);
+		super(TOPIC_CHROMATOGRAM, Activator.getDefault().getDataUpdateSupport());
 		//
 		this.dataType = dataType;
 		this.part = part;

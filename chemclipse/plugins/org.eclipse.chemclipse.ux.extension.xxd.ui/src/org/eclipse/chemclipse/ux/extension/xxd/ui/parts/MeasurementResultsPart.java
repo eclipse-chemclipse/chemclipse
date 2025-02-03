@@ -17,6 +17,8 @@ import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IMeasurementResult;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
+import org.eclipse.chemclipse.ux.extension.ui.parts.AbstractPart;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.MeasurementResultNotification;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedMeasurementResultUI;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -38,7 +40,7 @@ public class MeasurementResultsPart extends AbstractPart<ExtendedMeasurementResu
 	@Inject
 	public MeasurementResultsPart(Composite parent) {
 
-		super(parent, TOPIC);
+		super(parent, TOPIC, Activator.getDefault().getDataUpdateSupport());
 	}
 
 	@Override

@@ -100,7 +100,7 @@ public class InputWizardSettings {
 			IEclipseContext context = Activator.getDefault().getEclipseContext();
 			list.add(new SupplierEditorSupport(dataType, () -> context));
 		}
-		//
+
 		return new InputWizardSettings(preferenceStore, userLocationPreferenceKey, list);
 	}
 }

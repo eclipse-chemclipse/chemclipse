@@ -56,6 +56,7 @@ import org.eclipse.chemclipse.swt.ui.components.InformationUI;
 import org.eclipse.chemclipse.swt.ui.components.SearchSupportUI;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.swt.ui.preferences.PreferencePageSystem;
+import org.eclipse.chemclipse.ux.extension.ui.support.DataUpdateSupport;
 import org.eclipse.chemclipse.ux.extension.ui.support.PartSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.chemclipse.ux.extension.ui.swt.ISettingsHandler;
@@ -67,7 +68,6 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.support.TableConfigSu
 import org.eclipse.chemclipse.ux.extension.xxd.ui.operations.DeletePeaksOperation;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.operations.DeleteScanTargetsOperation;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.operations.DeleteTargetsOperation;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.DataUpdateSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageLists;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageMergePeaks;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageScans;
