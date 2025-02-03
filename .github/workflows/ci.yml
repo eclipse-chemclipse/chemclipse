@@ -40,7 +40,8 @@ jobs:
         candidate: maven
 
     - name: Build with Maven
+      env:
+        MAVEN_ARGS: "--batch-mode --no-transfer-progress -Dstyle.color=always"
       run: |
         source $HOME/.sdkman/bin/sdkman-init.sh
-        mvn -f chemclipse/releng/org.eclipse.chemclipse.aggregator/pom.xml -T 1C verify -Pci \
-          --batch-mode --no-transfer-progress -Dstyle.color=always
+        mvn -f chemclipse/releng/org.eclipse.chemclipse.aggregator/pom.xml -T 1C verify -Pci
