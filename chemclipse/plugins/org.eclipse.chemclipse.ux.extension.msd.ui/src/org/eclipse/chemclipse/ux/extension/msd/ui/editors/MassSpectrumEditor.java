@@ -137,10 +137,6 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 			part.setVisible(false);
 			partStack.getChildren().remove(part);
 		}
-		/*
-		 * Run the garbage collector.
-		 */
-		System.gc();
 	}
 
 	@Persist

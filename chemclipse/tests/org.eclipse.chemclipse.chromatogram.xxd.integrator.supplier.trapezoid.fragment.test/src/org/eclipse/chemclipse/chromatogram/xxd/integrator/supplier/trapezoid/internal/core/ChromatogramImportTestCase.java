@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2022 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -46,9 +46,7 @@ public class ChromatogramImportTestCase extends TestCase {
 
 		chromatogramSelection = null;
 		chromatogram = null;
-		//
-		System.gc();
-		//
+
 		super.tearDown();
 	}
 }

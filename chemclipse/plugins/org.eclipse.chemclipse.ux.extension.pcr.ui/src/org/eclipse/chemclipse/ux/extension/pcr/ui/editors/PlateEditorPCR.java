@@ -108,10 +108,6 @@ public class PlateEditorPCR implements IChemClipseEditor {
 				}
 			});
 		}
-		/*
-		 * Run the garbage collector.
-		 */
-		System.gc();
 	}
 
 	@Persist

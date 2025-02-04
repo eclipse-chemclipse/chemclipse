@@ -50,9 +50,7 @@ public class PeakReaderMSDTestCase extends TestCase {
 		pathImport = null;
 		fileImport = null;
 		peaks = null;
-		//
-		System.gc();
-		//
+
 		super.tearDown();
 	}
 }

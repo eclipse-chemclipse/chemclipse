@@ -107,10 +107,6 @@ public class ScanEditorVSD implements IScanEditorVSD {
 				}
 			});
 		}
-		/*
-		 * Run the garbage collector.
-		 */
-		System.gc();
 	}
 
 	@Persist
