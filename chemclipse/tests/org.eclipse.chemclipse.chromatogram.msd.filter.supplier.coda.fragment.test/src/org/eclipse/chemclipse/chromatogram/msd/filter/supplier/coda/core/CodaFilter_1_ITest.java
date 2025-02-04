@@ -33,9 +33,7 @@ public class CodaFilter_1_ITest extends ChromatogramImporterTestCase {
 
 		chromatogramFilter = null;
 		chromatogramFilterSettings = null;
-		//
-		System.gc();
-		//
+
 		super.tearDown();
 	}
 

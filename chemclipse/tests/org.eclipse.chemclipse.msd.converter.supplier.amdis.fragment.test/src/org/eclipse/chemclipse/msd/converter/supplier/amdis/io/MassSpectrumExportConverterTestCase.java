@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2022 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -55,9 +55,7 @@ public class MassSpectrumExportConverterTestCase extends TestCase {
 		exportConverter = null;
 		importConverter = null;
 		massSpectra = null;
-		//
-		System.gc();
-		//
+
 		super.tearDown();
 	}
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2022 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -49,9 +49,7 @@ public class MassChromatographicQualityResult_1_ITest extends TestCase {
 		importFile = null;
 		chromatogram = null;
 		chromatogramSelection = null;
-		//
-		System.gc();
-		//
+
 		super.tearDown();
 	}
 

@@ -107,10 +107,6 @@ public class ScanEditorFSD implements IScanEditorFSD {
 				}
 			});
 		}
-		/*
-		 * Run the garbage collector.
-		 */
-		System.gc();
 	}
 
 	@Persist
