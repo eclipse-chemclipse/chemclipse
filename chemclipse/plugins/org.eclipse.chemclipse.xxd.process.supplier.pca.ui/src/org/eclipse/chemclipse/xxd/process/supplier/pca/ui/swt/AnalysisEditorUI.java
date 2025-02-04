@@ -29,8 +29,11 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
+import org.eclipse.chemclipse.support.ui.menu.ITableMenuEntry;
 import org.eclipse.chemclipse.support.ui.provider.AbstractLabelProvider;
 import org.eclipse.chemclipse.support.ui.swt.EnhancedComboViewer;
+import org.eclipse.chemclipse.support.ui.swt.ExtendedTableViewer;
+import org.eclipse.chemclipse.support.ui.swt.ITableSettings;
 import org.eclipse.chemclipse.support.updates.IUpdateListener;
 import org.eclipse.chemclipse.swt.ui.components.ISearchListener;
 import org.eclipse.chemclipse.swt.ui.components.SearchSupportUI;
@@ -61,6 +64,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.IWizard;
@@ -601,6 +605,58 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 		});
 		//
 		sampleListControl.set(sampleListUI);
+		ITableSettings tableSettings = sampleListUI.getTableSettings();
+		tableSettings.addMenuEntry(new ITableMenuEntry() {
+
+			@Override
+			public String getCategory() {
+
+				return "";
+			}
+
+			@Override
+			public String getName() {
+
+				return "Toggle 'Use'";
+			}
+
+			@Override
+			public void execute(ExtendedTableViewer extendedTableViewer) {
+
+				IStructuredSelection selection = sampleListUI.getStructuredSelection();
+				@SuppressWarnings("unchecked")
+				List<Sample> samples = (List<Sample>)selection.toList();
+				for(Sample sample : samples) {
+					sample.setSelected(!sample.isSelected());
+				}
+				sampleListUI.updateContent();
+			}
+		});
+		tableSettings.addMenuEntry(new ITableMenuEntry() {
+
+			@Override
+			public String getCategory() {
+
+				return "";
+			}
+
+			@Override
+			public String getName() {
+
+				return "Use All Sample";
+			}
+
+			@Override
+			public void execute(ExtendedTableViewer extendedTableViewer) {
+
+				@SuppressWarnings("unchecked")
+				List<Sample> samples = (List<Sample>)sampleListUI.getInput();
+				for(Sample sample : samples) {
+					sample.setSelected(true);
+				}
+				sampleListUI.updateContent();
+			}
+		});
 	}
 
 	private void handleRowSelection(List<Object> selectedElements) {
