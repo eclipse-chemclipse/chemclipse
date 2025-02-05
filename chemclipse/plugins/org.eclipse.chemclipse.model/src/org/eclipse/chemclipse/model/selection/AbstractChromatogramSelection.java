@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2023 Lablicate GmbH.
+ * Copyright (c) 2012, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IChromatogramPeak;
+import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.numeric.core.Point;
@@ -30,7 +31,7 @@ public abstract class AbstractChromatogramSelection<T extends IChromatogramPeak,
 	private float startAbundance;
 	private float stopAbundance;
 	//
-	private List<T> selectedPeaks = new ArrayList<>();
+	private List<IPeak> selectedPeaks = new ArrayList<>();
 	private List<IScan> selectedIdentifiedScans = new ArrayList<>();
 	/*
 	 * UI fields
@@ -39,7 +40,7 @@ public abstract class AbstractChromatogramSelection<T extends IChromatogramPeak,
 	private boolean lockOffset;
 	private Point offset;
 
-	public AbstractChromatogramSelection(C chromatogram) throws ChromatogramIsNullException {
+	protected AbstractChromatogramSelection(C chromatogram) throws ChromatogramIsNullException {
 
 		/*
 		 * Check
@@ -240,7 +241,7 @@ public abstract class AbstractChromatogramSelection<T extends IChromatogramPeak,
 	}
 
 	@Override
-	public T getSelectedPeak() {
+	public IPeak getSelectedPeak() {
 
 		if(!selectedPeaks.isEmpty()) {
 			return validatePeak(selectedPeaks.get(0));
@@ -250,7 +251,7 @@ public abstract class AbstractChromatogramSelection<T extends IChromatogramPeak,
 	}
 
 	@Override
-	public List<T> getSelectedPeaks() {
+	public List<IPeak> getSelectedPeaks() {
 
 		if(chromatogram.getNumberOfPeaks() == 0) {
 			selectedPeaks.clear();
@@ -260,7 +261,7 @@ public abstract class AbstractChromatogramSelection<T extends IChromatogramPeak,
 	}
 
 	@Override
-	public void setSelectedPeak(T selectedPeak) {
+	public void setSelectedPeak(IPeak selectedPeak) {
 
 		selectedPeaks.clear();
 		if(selectedPeak != null) {
@@ -269,7 +270,7 @@ public abstract class AbstractChromatogramSelection<T extends IChromatogramPeak,
 	}
 
 	@Override
-	public void setSelectedPeaks(List<T> selectedPeaks) {
+	public void setSelectedPeaks(List<IPeak> selectedPeaks) {
 
 		this.selectedPeaks.clear();
 		this.selectedPeaks.addAll(selectedPeaks);

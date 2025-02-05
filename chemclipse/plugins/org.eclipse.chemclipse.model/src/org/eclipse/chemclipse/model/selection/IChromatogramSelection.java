@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2021 Lablicate GmbH.
+ * Copyright (c) 2012, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -167,13 +167,13 @@ public interface IChromatogramSelection<P extends IPeak, C extends IChromatogram
 	 *
 	 * @return IPeak
 	 */
-	P getSelectedPeak();
+	IPeak getSelectedPeak();
 
-	List<P> getSelectedPeaks();
+	List<IPeak> getSelectedPeaks();
 
-	void setSelectedPeak(P selectedPeak);
+	void setSelectedPeak(IPeak selectedPeak);
 
-	void setSelectedPeaks(List<P> selectedPeaks);
+	void setSelectedPeaks(List<IPeak> selectedPeaks);
 
 	IScan getSelectedIdentifiedScan();
 
@@ -234,7 +234,7 @@ public interface IChromatogramSelection<P extends IPeak, C extends IChromatogram
 	 * @param peak
 	 * @return P
 	 */
-	default P validatePeak(P peak) {
+	default IPeak validatePeak(IPeak peak) {
 
 		if(peak != null) {
 			if(peak.isMarkedAsDeleted()) {
@@ -243,7 +243,7 @@ public interface IChromatogramSelection<P extends IPeak, C extends IChromatogram
 				return null;
 			}
 		}
-		//
+
 		return peak;
 	}
 }

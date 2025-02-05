@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2021 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -42,7 +42,7 @@ public class ChromatogramSelection_10_Test extends TestCase {
 		peak = EasyMock.createNiceMock(IChromatogramPeakMSD.class);
 		EasyMock.expect(peak.getIntegratedArea()).andStubReturn(893002.3d);
 		EasyMock.replay(peak);
-		List<IChromatogramPeakMSD> peaks = new ArrayList<IChromatogramPeakMSD>();
+		List<IChromatogramPeakMSD> peaks = new ArrayList<>();
 		peaks.add(peak);
 		/*
 		 * When the chromatogram selection will initialized, the first peak will
@@ -67,7 +67,7 @@ public class ChromatogramSelection_10_Test extends TestCase {
 
 	public void testGetSelectedPeak_1() {
 
-		IChromatogramPeakMSD selectedPeak = selection.getSelectedPeak();
+		IChromatogramPeakMSD selectedPeak = (IChromatogramPeakMSD)selection.getSelectedPeak();
 		assertNotNull(selectedPeak);
 		assertEquals("IntegratedArea", 893002.3d, selectedPeak.getIntegratedArea());
 	}
