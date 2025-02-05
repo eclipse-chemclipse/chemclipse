@@ -5,7 +5,7 @@ pipeline {
 		}
 	}
 	triggers {
-		pollSCM('H/5 * * * *')
+		githubPush()
 	}
 	parameters {
 		booleanParam(name: 'CODESIGN', defaultValue: false, description: 'Sign the artifacts.')
