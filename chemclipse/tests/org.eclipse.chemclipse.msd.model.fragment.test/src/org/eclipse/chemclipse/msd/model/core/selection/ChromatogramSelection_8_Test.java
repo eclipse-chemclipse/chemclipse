@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2024 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -86,7 +86,7 @@ public class ChromatogramSelection_8_Test extends TestCase {
 	public void testSetSelectedPeak_2() {
 
 		selection.setSelectedPeak(peak);
-		peak = selection.getSelectedPeak();
+		peak = (IChromatogramPeakMSD)selection.getSelectedPeak();
 		assertNotNull(peak);
 		assertEquals("IntegratedArea", 893002.3d, peak.getIntegratedArea());
 	}
