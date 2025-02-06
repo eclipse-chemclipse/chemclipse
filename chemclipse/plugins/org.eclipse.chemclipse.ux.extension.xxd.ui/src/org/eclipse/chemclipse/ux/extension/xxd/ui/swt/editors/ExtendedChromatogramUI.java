@@ -1910,7 +1910,9 @@ public class ExtendedChromatogramUI extends Composite implements ToolbarConfig, 
 		boolean showRetentionIndexMarker = preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_RETENTION_INDEX_MARKER);
 		setButtonImage(buttonToggleRetentionIndexControl.get(), IMAGE_RETENTION_INDICES, PREFIX_SHOW, PREFIX_HIDE, TOOLTIP_RETENTION_INDICES, showRetentionIndexMarker);
 		retentionIndexMarker.setDraw(showRetentionIndexMarker);
-		chromatogramChartControl.get().redraw();
+		ChromatogramChart chromatogramChart = chromatogramChartControl.get();
+		BaseChart baseChart = chromatogramChart.getBaseChart();
+		baseChart.redraw();
 	}
 
 	private void executeMethod(IChromatogramSelection<?, ?> chromatogramSelection, Consumer<IChromatogramSelection<?, ?>> consumer) {
