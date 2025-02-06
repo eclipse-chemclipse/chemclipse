@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate Gmbh.
+ * Copyright (c) 2018, 2025 Lablicate Gmbh.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -44,7 +44,7 @@ public class CalculatorNIPALS extends AbstractMultivariateCalculator {
 			randCol.set(i, 0, rand.nextDouble(1.e-20, 1.e-19));
 		}
 		for(int i = 0; i < matrix.numCols; i++) {
-			if(colSums.get(i) == 0) {
+			if(colSums.get(i) == 0 || Double.isNaN(colSums.get(i))) {
 				CommonOps_DDRM.insert(randCol, matrix, 0, i);
 			}
 		}
@@ -53,6 +53,7 @@ public class CalculatorNIPALS extends AbstractMultivariateCalculator {
 	@Override
 	public void compute() {
 
+		replaceZeroColsWithSmallRandom();
 		// Prepare data, E, p, t, threshold, scores, loadings
 		int numberOfSamples = getSampleData().getNumRows();
 		int numberOfVariables = getSampleData().getNumCols();
