@@ -12,7 +12,9 @@
 package org.eclipse.chemclipse.ux.extension.msd.ui;
 
 import org.eclipse.chemclipse.logging.core.Logger;
+import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.support.ui.activator.AbstractActivatorUI;
+import org.eclipse.chemclipse.ux.extension.ui.support.DataUpdateSupport;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
@@ -23,6 +25,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractActivatorUI {
 
 	private static Activator plugin;
+	private DataUpdateSupport dataUpdateSupport;
 
 	@Override
 	public void start(BundleContext context) throws Exception {
@@ -68,5 +71,19 @@ public class Activator extends AbstractActivatorUI {
 
 		IEclipseContext eclipseContext = getEclipseContext();
 		return eclipseContext.get(IEventBroker.class);
+	}
+
+	public DataUpdateSupport getDataUpdateSupport() {
+
+		if(dataUpdateSupport == null) {
+			dataUpdateSupport = new DataUpdateSupport(getEventBroker());
+			initialize(dataUpdateSupport);
+		}
+		return dataUpdateSupport;
+	}
+
+	private void initialize(DataUpdateSupport dataUpdateSupport) {
+
+		dataUpdateSupport.subscribe(IChemClipseEvents.TOPIC_SCAN_XXD_UPDATE_SELECTION, IChemClipseEvents.EVENT_BROKER_DATA);
 	}
 }

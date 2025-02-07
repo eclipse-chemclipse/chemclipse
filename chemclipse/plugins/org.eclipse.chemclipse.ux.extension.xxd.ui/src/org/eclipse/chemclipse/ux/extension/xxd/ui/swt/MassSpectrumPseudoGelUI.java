@@ -38,7 +38,7 @@ public class MassSpectrumPseudoGelUI extends Composite implements IExtendedPartU
 
 	private LightweightSystem lightweightSystem;
 	private IntensityGraphFigure intensityGraphFigure;
-	//
+
 	private EditorUpdateSupport editorUpdateSupport = new EditorUpdateSupport();
 	private List<IScanMSD> scanSelections = new ArrayList<>();
 
@@ -68,7 +68,7 @@ public class MassSpectrumPseudoGelUI extends Composite implements IExtendedPartU
 	private void setPseudoGel(List<IScanMSD> scanList) {
 
 		clear();
-		//
+
 		int dataWidth = 0;
 		int dataHeight = scanList.size();
 		double lowestIon = Double.MAX_VALUE;
@@ -99,19 +99,19 @@ public class MassSpectrumPseudoGelUI extends Composite implements IExtendedPartU
 			}
 			j = i * dataWidth; // align
 		}
-		//
+
 		intensityGraphFigure.getXAxis().setRange(new Range(lowestIon, highestIon));
 		intensityGraphFigure.getYAxis().setRange(new Range(0, dataHeight));
-		//
+
 		intensityGraphFigure.setMin(0);
 		intensityGraphFigure.setMax(highestAbundance);
-		//
+
 		intensityGraphFigure.setDataWidth(dataWidth);
 		intensityGraphFigure.setDataHeight(dataHeight);
-		//
+
 		intensityGraphFigure.getXAxis().setTitle("m/z");
 		intensityGraphFigure.getYAxis().setTitle("");
-		//
+
 		ColorMap reversedGrayScale = new ColorMap();
 		reversedGrayScale.setColorMap(getReversedGrayScaleMap());
 		intensityGraphFigure.setColorMap(reversedGrayScale);
@@ -146,10 +146,10 @@ public class MassSpectrumPseudoGelUI extends Composite implements IExtendedPartU
 	private void createControl() {
 
 		setLayout(new FillLayout());
-		//
+
 		Composite composite = new Composite(this, SWT.FILL);
 		composite.setLayout(new GridLayout(1, true));
-		//
+
 		createCanvas(composite);
 	}
 
@@ -158,9 +158,9 @@ public class MassSpectrumPseudoGelUI extends Composite implements IExtendedPartU
 		Canvas canvas = new Canvas(parent, SWT.FILL | SWT.BORDER);
 		canvas.setLayoutData(new GridData(GridData.FILL_BOTH));
 		canvas.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-		//
+
 		lightweightSystem = createLightweightSystem(canvas);
-		//
+
 		return canvas;
 	}
 
@@ -185,7 +185,7 @@ public class MassSpectrumPseudoGelUI extends Composite implements IExtendedPartU
 		}
 		intensityGraphFigure.getXAxis().setTitle("Retention Time [min]");
 		intensityGraphFigure.getYAxis().setTitle("Trace");
-		//
+
 		return intensityGraphFigure;
 	}
 }
