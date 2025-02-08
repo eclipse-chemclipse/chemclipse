@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2024 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,7 +10,7 @@
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - add validationmethod/getter, optimize progressmonitor usage and retrieval of mass spectrum comparator, unify peak/scan identification methods
  *******************************************************************************/
-package org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.internal.identifier;
+package org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.identifier;
 
 import java.io.FileNotFoundException;
 import java.text.NumberFormat;
