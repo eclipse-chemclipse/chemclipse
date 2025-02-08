@@ -60,6 +60,7 @@ public class ChromatogramIdentifierProcessTypeSupplier implements IProcessTypeSu
 		public ChromatogramIdentifierProcessorSupplier(IChromatogramIdentifierSupplier supplier, IProcessTypeSupplier parent) {
 
 			super(supplier.getId(), supplier.getIdentifierName(), supplier.getDescription(), (Class<IChromatogramIdentifierSettings>)supplier.getSettingsClass(), parent, DataType.WSD);
+			getLiteratureReferences().addAll(supplier.getLiteratureReferences());
 		}
 
 		@Override

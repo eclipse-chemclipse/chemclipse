@@ -109,6 +109,7 @@ public class ChromatogramIdentifier {
 				try {
 					IChromatogramIdentifierSettings instance = (IChromatogramIdentifierSettings)element.createExecutableExtension(Identifier.IDENTIFIER_SETTINGS);
 					supplier.setIdentifierSettingsClass(instance.getClass());
+					supplier.getLiteratureReferences().addAll(instance.getLiteratureReferences());
 				} catch(CoreException e) {
 					logger.warn(e);
 					// settings class is optional, set null instead
