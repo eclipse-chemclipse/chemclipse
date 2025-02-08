@@ -320,4 +320,8 @@
          id="org.eclipse.chemclipse.wsd.converter.supplier.scf.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.feature"
+         version="0.0.0"/>
+
 </feature>
