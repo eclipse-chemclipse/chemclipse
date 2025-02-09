@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2023 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -111,6 +111,7 @@ public class ChromatogramIdentifier {
 				try {
 					IChromatogramIdentifierSettings instance = (IChromatogramIdentifierSettings)element.createExecutableExtension(Identifier.IDENTIFIER_SETTINGS);
 					supplier.setIdentifierSettingsClass(instance.getClass());
+					supplier.getLiteratureReferences().addAll(instance.getLiteratureReferences());
 				} catch(CoreException e) {
 					logger.warn(e);
 					// settings class is optional, set null instead

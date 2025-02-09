@@ -82,6 +82,6 @@
             identifier="org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.core.ChromatogramIdentifier"
             identifierName="Library File (MS)"
             identifierSettings="org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.IdentifierSettings">
-      </ChromatogramIdentificationSupplier>>      
+      </ChromatogramIdentificationSupplier>
    </extension>    
 </plugin>

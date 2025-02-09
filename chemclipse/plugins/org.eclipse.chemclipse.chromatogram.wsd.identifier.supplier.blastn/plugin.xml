@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.chemclipse.chromatogram.wsd.identifier.chromatogramIdentifier">
+      <ChromatogramIdentificationSupplier
+            description="Run a local BLAST nucleotide search."
+            id="org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn"
+            identifier="org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.core.ChromatogramIdentifier"
+            identifierName="Local Nucleotide BLAST"
+            identifierSettings="org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.settings.IdentifierSettings">
+      </ChromatogramIdentificationSupplier>
+   </extension>
+</plugin>

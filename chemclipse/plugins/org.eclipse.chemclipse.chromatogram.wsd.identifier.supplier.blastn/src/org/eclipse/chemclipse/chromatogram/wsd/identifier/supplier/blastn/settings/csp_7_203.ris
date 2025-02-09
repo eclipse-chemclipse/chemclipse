@@ -1,0 +1,25 @@
+
+TY  - JOUR
+T1  - A Greedy Algorithm for Aligning DNA Sequences
+AU  - Zhang, Zheng
+AU  - Schwartz, Scott
+AU  - Wagner, Lukas
+AU  - Miller, Webb
+Y1  - 2000/02/01
+PY  - 2000
+DA  - 2000/02/01
+N1  - doi: 10.1089/10665270050081478
+DO  - 10.1089/10665270050081478
+T2  - Journal of Computational Biology
+JF  - Journal of Computational Biology
+SP  - 203
+EP  - 214
+VL  - 7
+IS  - 1-2
+PB  - Mary Ann Liebert, Inc., publishers
+N2  - For aligning DNA sequences that differ only by sequencing errors, or by equivalent errors from other sources, a greedy algorithm can be much faster than traditional dynamic programming approaches and yet produce an alignment that is guaranteed to be theoretically optimal. We introduce a new greedy alignment algorithm with particularly good performance and show that it computes the same alignment as does a certain dynamic programming algorithm, while executing over 10 times faster on appropriate data. An implementation of this algorithm is currently used in a program that assembles the UniGene database at the National Center for Biotechnology Information.
+AB  - For aligning DNA sequences that differ only by sequencing errors, or by equivalent errors from other sources, a greedy algorithm can be much faster than traditional dynamic programming approaches and yet produce an alignment that is guaranteed to be theoretically optimal. We introduce a new greedy alignment algorithm with particularly good performance and show that it computes the same alignment as does a certain dynamic programming algorithm, while executing over 10 times faster on appropriate data. An implementation of this algorithm is currently used in a program that assembles the UniGene database at the National Center for Biotechnology Information.
+M3  - doi: 10.1089/10665270050081478
+UR  - https://doi.org/10.1089/10665270050081478
+Y2  - 2025/02/08
+ER  - 
