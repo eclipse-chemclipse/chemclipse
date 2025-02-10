@@ -23,8 +23,6 @@ import org.eclipse.chemclipse.model.core.support.PeakSupport;
 import org.eclipse.chemclipse.model.identifier.ComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
-import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
-import org.eclipse.chemclipse.model.identifier.LibraryInformation;
 import org.eclipse.chemclipse.model.implementation.IdentificationTarget;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.model.supplier.IChromatogramSelectionProcessSupplier;
@@ -69,13 +67,11 @@ public class TargetTransferFilter implements IProcessTypeSupplier {
 		public IChromatogramSelection<?, ?> apply(IChromatogramSelection<?, ?> chromatogramSelection, TargetTransferFilterSettings processSettings, ProcessExecutionContext context) throws InterruptedException {
 
 			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
-			//
+
 			int startRetentionTime = chromatogramSelection.getStartRetentionTime();
 			int stopRetentionTime = chromatogramSelection.getStopRetentionTime();
-			float limitMatchFactor = processSettings.getLimitMatchFactor();
-			float matchFactor = processSettings.getMatchQuality();
-			//
 			List<? extends IPeak> peaks = chromatogram.getPeaks(startRetentionTime, stopRetentionTime);
+
 			List<IChromatogram<?>> referenceChromatograms = chromatogram.getReferencedChromatograms();
 			for(IChromatogram<?> referenceChromatogram : referenceChromatograms) {
 				for(IPeak peak : peaks) {
@@ -93,12 +89,9 @@ public class TargetTransferFilter implements IProcessTypeSupplier {
 							/*
 							 * Reference Peaks
 							 */
-							if(LimitSupport.doIdentify(nearestPeak.getTargets(), limitMatchFactor)) {
+							if(LimitSupport.doIdentify(nearestPeak.getTargets(), processSettings.getLimitMatchFactor())) {
 								for(IIdentificationTarget identificationTarget : identificationTargets) {
-									ILibraryInformation libraryInformation = identificationTarget.getLibraryInformation();
-									String name = libraryInformation.getName();
-									String casNumber = libraryInformation.getCasNumber();
-									addIdentificationTarget(nearestPeak, name, casNumber, matchFactor);
+									addIdentificationTarget(nearestPeak, identificationTarget, processSettings);
 								}
 							}
 						}
@@ -109,13 +102,12 @@ public class TargetTransferFilter implements IProcessTypeSupplier {
 			return chromatogramSelection;
 		}
 
-		private void addIdentificationTarget(IPeak peak, String name, String casNumber, float matchFactor) {
+		private void addIdentificationTarget(IPeak peak, IIdentificationTarget identificationTarget, TargetTransferFilterSettings processSettings) {
 
-			ILibraryInformation libraryInformation = new LibraryInformation();
-			libraryInformation.setName(name);
-			libraryInformation.setCasNumber(casNumber);
-			IComparisonResult comparisonResult = new ComparisonResult(matchFactor);
-			peak.getTargets().add(new IdentificationTarget(libraryInformation, comparisonResult, NAME));
+			float matchFactor = processSettings.getMatchQuality();
+			IComparisonResult comparisonResult = matchFactor > 0 ? new ComparisonResult(matchFactor) : identificationTarget.getComparisonResult();
+			IdentificationTarget newIdentificationTarget = new IdentificationTarget(identificationTarget.getLibraryInformation(), comparisonResult, NAME);
+			peak.getTargets().add(newIdentificationTarget);
 		}
 
 		private List<IPeak> getOverlappingPeaks(IPeak peak, IChromatogram<?> referenceChromatogram) {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -27,10 +27,10 @@ public class TargetTransferFilterSettings {
 	@JsonProperty(value = "Transfer Best Target Only", defaultValue = "false")
 	@JsonPropertyDescription(value = "If this value is true, only the best target will be transfered.")
 	private boolean useBestTargetOnly = false;
-	@JsonProperty(value = "Match Quality", defaultValue = "80.0")
-	@JsonPropertyDescription(value = "The match quality is set as the Match Factor.")
+	@JsonProperty(value = "Match Quality", defaultValue = "")
+	@JsonPropertyDescription(value = "Overrides the match quality.")
 	@FloatSettingsProperty(minValue = PreferenceSupplier.MIN_FACTOR, maxValue = PreferenceSupplier.MAX_FACTOR)
-	private float matchQuality = 80.0f;
+	private float matchQuality = 0f;
 
 	public float getLimitMatchFactor() {
 
