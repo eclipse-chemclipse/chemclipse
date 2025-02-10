@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023, 2024 Lablicate GmbH.
+ * Copyright (c) 2023, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,6 +19,7 @@ import java.util.List;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IPeakModel;
+import org.eclipse.chemclipse.model.core.support.PeakSupport;
 import org.eclipse.chemclipse.model.identifier.ComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
@@ -79,8 +80,9 @@ public class TargetTransferFilter implements IProcessTypeSupplier {
 			for(IChromatogram<?> referenceChromatogram : referenceChromatograms) {
 				for(IPeak peak : peaks) {
 					if(!peak.getTargets().isEmpty()) {
-						List<IPeak> peakReferences = getReferencePeaks(peak, referenceChromatogram);
-						if(!peakReferences.isEmpty()) {
+						List<IPeak> overlappingsPeaks = getOverlappingPeaks(peak, referenceChromatogram);
+						IPeak nearestPeak = PeakSupport.selectNearestPeak(overlappingsPeaks, peak);
+						if(nearestPeak != null) {
 							/*
 							 * Transfer Targets
 							 */
@@ -94,21 +96,19 @@ public class TargetTransferFilter implements IProcessTypeSupplier {
 							/*
 							 * Reference Peaks
 							 */
-							for(IPeak peakReference : peakReferences) {
-								if(LimitSupport.doIdentify(peakReference.getTargets(), limitMatchFactor)) {
-									for(IIdentificationTarget identificationTarget : identificationTargets) {
-										ILibraryInformation libraryInformation = identificationTarget.getLibraryInformation();
-										String name = libraryInformation.getName();
-										String casNumber = libraryInformation.getCasNumber();
-										addIdentificationTarget(peakReference, name, casNumber, matchFactor);
-									}
+							if(LimitSupport.doIdentify(nearestPeak.getTargets(), limitMatchFactor)) {
+								for(IIdentificationTarget identificationTarget : identificationTargets) {
+									ILibraryInformation libraryInformation = identificationTarget.getLibraryInformation();
+									String name = libraryInformation.getName();
+									String casNumber = libraryInformation.getCasNumber();
+									addIdentificationTarget(nearestPeak, name, casNumber, matchFactor);
 								}
 							}
 						}
 					}
 				}
 			}
-			//
+
 			return chromatogramSelection;
 		}
 
@@ -121,21 +121,21 @@ public class TargetTransferFilter implements IProcessTypeSupplier {
 			peak.getTargets().add(new IdentificationTarget(libraryInformation, comparisonResult, NAME));
 		}
 
-		private List<IPeak> getReferencePeaks(IPeak peak, IChromatogram<?> referenceChromatogram) {
+		private List<IPeak> getOverlappingPeaks(IPeak peak, IChromatogram<?> referenceChromatogram) {
 
 			List<IPeak> peaks = new ArrayList<>();
-			//
+
 			IPeakModel peakModel = peak.getPeakModel();
 			int retentionTimeStart = peakModel.getStartRetentionTime();
 			int retentionTimeStop = peakModel.getStopRetentionTime();
-			//
+
 			for(IPeak referencePeak : referenceChromatogram.getPeaks()) {
 				int retentionTime = referencePeak.getPeakModel().getPeakMaximum().getRetentionTime();
 				if(retentionTime >= retentionTimeStart && retentionTime <= retentionTimeStop) {
 					peaks.add(referencePeak);
 				}
 			}
-			//
+
 			return peaks;
 		}
 	}
