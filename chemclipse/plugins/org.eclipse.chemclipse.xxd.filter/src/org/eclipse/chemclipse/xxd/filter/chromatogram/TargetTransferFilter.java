@@ -29,6 +29,7 @@ import org.eclipse.chemclipse.model.implementation.IdentificationTarget;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.model.supplier.IChromatogramSelectionProcessSupplier;
 import org.eclipse.chemclipse.model.support.LimitSupport;
+import org.eclipse.chemclipse.model.targets.TargetSupport;
 import org.eclipse.chemclipse.processing.DataCategory;
 import org.eclipse.chemclipse.processing.core.ICategories;
 import org.eclipse.chemclipse.processing.supplier.AbstractProcessSupplier;
@@ -73,7 +74,6 @@ public class TargetTransferFilter implements IProcessTypeSupplier {
 			int stopRetentionTime = chromatogramSelection.getStopRetentionTime();
 			float limitMatchFactor = processSettings.getLimitMatchFactor();
 			float matchFactor = processSettings.getMatchQuality();
-			boolean useBestTargetOnly = processSettings.isUseBestTargetOnly();
 			//
 			List<? extends IPeak> peaks = chromatogram.getPeaks(startRetentionTime, stopRetentionTime);
 			List<IChromatogram<?>> referenceChromatograms = chromatogram.getReferencedChromatograms();
@@ -87,11 +87,8 @@ public class TargetTransferFilter implements IProcessTypeSupplier {
 							 * Transfer Targets
 							 */
 							List<IIdentificationTarget> identificationTargets = new ArrayList<>(peak.getTargets());
-							if(useBestTargetOnly) {
-								Collections.sort(identificationTargets, (t1, t2) -> Float.compare(t2.getComparisonResult().getMatchFactor(), t1.getComparisonResult().getMatchFactor()));
-								IIdentificationTarget identificationTarget = identificationTargets.get(0);
-								identificationTargets.clear();
-								identificationTargets.add(identificationTarget);
+							if(processSettings.isUseBestTargetOnly()) {
+								peak.getTargets().add(TargetSupport.getBestIdentificationTarget(peak));
 							}
 							/*
 							 * Reference Peaks
