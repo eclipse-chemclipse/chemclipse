@@ -107,6 +107,7 @@ public class TargetTransferFilter implements IProcessTypeSupplier {
 			float matchFactor = processSettings.getMatchQuality();
 			IComparisonResult comparisonResult = matchFactor > 0 ? new ComparisonResult(matchFactor) : identificationTarget.getComparisonResult();
 			IdentificationTarget newIdentificationTarget = new IdentificationTarget(identificationTarget.getLibraryInformation(), comparisonResult, NAME);
+			newIdentificationTarget.setVerified(identificationTarget.isVerified());
 			peak.getTargets().add(newIdentificationTarget);
 		}
 
