@@ -68,9 +68,9 @@ public class TraceRanges extends ArrayList<TraceRange> {
 		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
 			String line;
 			while((line = bufferedReader.readLine()) != null) {
-				TraceRange stackRange = extract(line);
-				if(stackRange != null) {
-					add(stackRange);
+				TraceRange traceRange = extract(line);
+				if(traceRange != null) {
+					add(traceRange);
 				}
 			}
 		} catch(FileNotFoundException e) {
@@ -129,6 +129,8 @@ public class TraceRanges extends ArrayList<TraceRange> {
 			builder.append(traceRange.getName());
 			addSeparator(builder);
 			builder.append(traceRange.getTraces());
+			addSeparator(builder);
+			builder.append(traceRange.getSecondDimensionHint().name());
 		}
 		//
 		return builder.toString();
@@ -136,17 +138,17 @@ public class TraceRanges extends ArrayList<TraceRange> {
 
 	private TraceRange extract(String text) {
 
-		TraceRange stackRange = null;
+		TraceRange traceRange = null;
 		TraceRangeValidator validator = new TraceRangeValidator();
 		//
 		IStatus status = validator.validate(text);
 		if(status.isOK()) {
-			stackRange = validator.getSetting();
+			traceRange = validator.getSetting();
 		} else {
 			logger.warn(status.getMessage());
 		}
 		//
-		return stackRange;
+		return traceRange;
 	}
 
 	private void loadRules(String input) {
@@ -160,9 +162,9 @@ public class TraceRanges extends ArrayList<TraceRange> {
 		}
 		//
 		for(String line : lines) {
-			TraceRange stackRange = extract(line);
-			if(stackRange != null && !contains(stackRange)) {
-				add(stackRange);
+			TraceRange traceRange = extract(line);
+			if(traceRange != null && !contains(traceRange)) {
+				add(traceRange);
 			}
 		}
 	}

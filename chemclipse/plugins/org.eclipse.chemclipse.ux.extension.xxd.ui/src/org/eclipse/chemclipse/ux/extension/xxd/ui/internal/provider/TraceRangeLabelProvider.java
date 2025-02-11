@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -29,6 +29,7 @@ public class TraceRangeLabelProvider extends AbstractChemClipseLabelProvider {
 	public static final String SCAN_INDICES_COLUMN2 = "Scan Indices (Column2)";
 	public static final String NAME = "Name";
 	public static final String TRACES = "Traces";
+	public static final String SECOND_DIMENSION_HINT = "Second Dimension Hint";
 	//
 	public static final String[] TITLES = { //
 			RETENTION_TIME_COLUMN1_START, //
@@ -37,7 +38,8 @@ public class TraceRangeLabelProvider extends AbstractChemClipseLabelProvider {
 			RETENTION_TIME_COLUMN2_STOP, //
 			SCAN_INDICES_COLUMN2, //
 			NAME, //
-			TRACES //
+			TRACES, //
+			SECOND_DIMENSION_HINT //
 	};
 	public static final int[] BOUNDS = { //
 			80, //
@@ -46,6 +48,7 @@ public class TraceRangeLabelProvider extends AbstractChemClipseLabelProvider {
 			80, //
 			100, //
 			100, //
+			200, //
 			100 //
 	};
 
@@ -63,28 +66,31 @@ public class TraceRangeLabelProvider extends AbstractChemClipseLabelProvider {
 	public String getColumnText(Object element, int columnIndex) {
 
 		String text = "";
-		if(element instanceof TraceRange stackRange) {
+		if(element instanceof TraceRange traceRange) {
 			switch(columnIndex) {
 				case 0:
-					text = TraceRangeSupport.DF_COLUMN_1_MINUTES.format(stackRange.getRetentionTimeColumn1Start() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
+					text = TraceRangeSupport.DF_COLUMN_1_MINUTES.format(traceRange.getRetentionTimeColumn1Start() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
 					break;
 				case 1:
-					text = TraceRangeSupport.DF_COLUMN_1_MINUTES.format(stackRange.getRetentionTimeColumn1Stop() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
+					text = TraceRangeSupport.DF_COLUMN_1_MINUTES.format(traceRange.getRetentionTimeColumn1Stop() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
 					break;
 				case 2:
-					text = TraceRangeSupport.DF_COLUMN_2_SECONDS.format(stackRange.getRetentionTimeColumn2Start() / IChromatogramOverview.SECOND_CORRELATION_FACTOR);
+					text = TraceRangeSupport.DF_COLUMN_2_SECONDS.format(traceRange.getRetentionTimeColumn2Start() / IChromatogramOverview.SECOND_CORRELATION_FACTOR);
 					break;
 				case 3:
-					text = TraceRangeSupport.DF_COLUMN_2_SECONDS.format(stackRange.getRetentionTimeColumn2Stop() / IChromatogramOverview.SECOND_CORRELATION_FACTOR);
+					text = TraceRangeSupport.DF_COLUMN_2_SECONDS.format(traceRange.getRetentionTimeColumn2Stop() / IChromatogramOverview.SECOND_CORRELATION_FACTOR);
 					break;
 				case 4:
-					text = stackRange.getScanIndicesColumn2();
+					text = traceRange.getScanIndicesColumn2();
 					break;
 				case 5:
-					text = stackRange.getName();
+					text = traceRange.getName();
 					break;
 				case 6:
-					text = stackRange.getTraces();
+					text = traceRange.getTraces();
+					break;
+				case 7:
+					text = traceRange.getSecondDimensionHint().label();
 					break;
 				default:
 					text = "n.a.";

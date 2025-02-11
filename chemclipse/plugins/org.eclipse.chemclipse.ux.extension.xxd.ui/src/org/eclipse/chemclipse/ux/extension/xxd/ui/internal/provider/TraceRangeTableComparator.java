@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,28 +22,31 @@ public class TraceRangeTableComparator extends AbstractRecordTableComparator imp
 	public int compare(Viewer viewer, Object e1, Object e2) {
 
 		int sortOrder = 0;
-		if(e1 instanceof TraceRange stackRange1 && e2 instanceof TraceRange stackRange2) {
+		if(e1 instanceof TraceRange traceRange1 && e2 instanceof TraceRange traceRange2) {
 			switch(getPropertyIndex()) {
 				case 0:
-					sortOrder = Integer.compare(stackRange2.getRetentionTimeColumn1Start(), stackRange1.getRetentionTimeColumn1Start());
+					sortOrder = Integer.compare(traceRange2.getRetentionTimeColumn1Start(), traceRange1.getRetentionTimeColumn1Start());
 					break;
 				case 1:
-					sortOrder = Integer.compare(stackRange2.getRetentionTimeColumn1Stop(), stackRange1.getRetentionTimeColumn1Stop());
+					sortOrder = Integer.compare(traceRange2.getRetentionTimeColumn1Stop(), traceRange1.getRetentionTimeColumn1Stop());
 					break;
 				case 2:
-					sortOrder = Integer.compare(stackRange2.getRetentionTimeColumn2Start(), stackRange1.getRetentionTimeColumn2Start());
+					sortOrder = Integer.compare(traceRange2.getRetentionTimeColumn2Start(), traceRange1.getRetentionTimeColumn2Start());
 					break;
 				case 3:
-					sortOrder = Integer.compare(stackRange2.getRetentionTimeColumn2Stop(), stackRange1.getRetentionTimeColumn2Stop());
+					sortOrder = Integer.compare(traceRange2.getRetentionTimeColumn2Stop(), traceRange1.getRetentionTimeColumn2Stop());
 					break;
 				case 4:
-					sortOrder = stackRange2.getScanIndicesColumn2().compareTo(stackRange1.getScanIndicesColumn2());
+					sortOrder = traceRange2.getScanIndicesColumn2().compareTo(traceRange1.getScanIndicesColumn2());
 					break;
 				case 5:
-					sortOrder = stackRange2.getName().compareTo(stackRange1.getName());
+					sortOrder = traceRange2.getName().compareTo(traceRange1.getName());
 					break;
 				case 6:
-					sortOrder = stackRange2.getTraces().compareTo(stackRange1.getTraces());
+					sortOrder = traceRange2.getTraces().compareTo(traceRange1.getTraces());
+					break;
+				case 7:
+					sortOrder = traceRange2.getSecondDimensionHint().compareTo(traceRange1.getSecondDimensionHint());
 					break;
 			}
 			//

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -30,6 +30,7 @@ public class TraceRange {
 	private String scanIndicesColumn2 = "";
 	private String name = "";
 	private String traces = "";
+	private SecondDimensionHint secondDimensionHint = SecondDimensionHint.NONE;
 	/*
 	 * Transient
 	 * Used to parse traces from GCxGC chromatograms.
@@ -114,6 +115,16 @@ public class TraceRange {
 		this.traces = traces;
 	}
 
+	public SecondDimensionHint getSecondDimensionHint() {
+
+		return secondDimensionHint;
+	}
+
+	public void setSecondDimensionHint(SecondDimensionHint secondDimensionHint) {
+
+		this.secondDimensionHint = secondDimensionHint;
+	}
+
 	public Set<Integer> getScanIndices() {
 
 		return scanIndices;
@@ -173,6 +184,6 @@ public class TraceRange {
 	@Override
 	public String toString() {
 
-		return "TraceRange [retentionTimeColumn1Start=" + retentionTimeColumn1Start + ", retentionTimeColumn1Stop=" + retentionTimeColumn1Stop + ", retentionTimeColumn2Start=" + retentionTimeColumn2Start + ", retentionTimeColumn2Stop=" + retentionTimeColumn2Stop + ", scanIndicesColumn2=" + scanIndicesColumn2 + ", name=" + name + ", traces=" + traces + ", scanIndices=" + scanIndices + "]";
+		return "TraceRange [retentionTimeColumn1Start=" + retentionTimeColumn1Start + ", retentionTimeColumn1Stop=" + retentionTimeColumn1Stop + ", retentionTimeColumn2Start=" + retentionTimeColumn2Start + ", retentionTimeColumn2Stop=" + retentionTimeColumn2Stop + ", scanIndicesColumn2=" + scanIndicesColumn2 + ", name=" + name + ", traces=" + traces + ", secondDimensionHint=" + secondDimensionHint + ", scanIndices=" + scanIndices + ", genericTraces=" + genericTraces + ", traceIndices=" + traceIndices + "]";
 	}
 }

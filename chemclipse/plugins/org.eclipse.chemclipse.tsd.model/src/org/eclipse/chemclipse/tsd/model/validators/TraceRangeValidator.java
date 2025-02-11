@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,6 +13,7 @@ package org.eclipse.chemclipse.tsd.model.validators;
 
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.support.util.ValueParserSupport;
+import org.eclipse.chemclipse.tsd.model.core.SecondDimensionHint;
 import org.eclipse.chemclipse.tsd.model.core.TraceRange;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
@@ -27,6 +28,7 @@ public class TraceRangeValidator extends ValueParserSupport implements IValidato
 	private String scanIndicesColumn2 = "";
 	private String name = "";
 	private String traces = "";
+	private SecondDimensionHint secondDimensionHint = SecondDimensionHint.NONE;
 
 	@Override
 	public IStatus validate(Object value) {
@@ -50,6 +52,7 @@ public class TraceRangeValidator extends ValueParserSupport implements IValidato
 					scanIndicesColumn2 = "";
 					name = "";
 					traces = "";
+					secondDimensionHint = SecondDimensionHint.NONE;
 					//
 					String[] values = text.trim().split("\\" + '|'); // The pipe needs to be escaped.
 					if(values.length > 1) {
@@ -71,6 +74,7 @@ public class TraceRangeValidator extends ValueParserSupport implements IValidato
 						scanIndicesColumn2 = parseString(values, 4);
 						name = parseString(values, 5);
 						traces = parseString(values, 6);
+						secondDimensionHint = getSecondDimensionHint(parseString(values, 7));
 						//
 					} else {
 						message = "Please enter a valid trace range.";
@@ -88,6 +92,15 @@ public class TraceRangeValidator extends ValueParserSupport implements IValidato
 		}
 	}
 
+	private SecondDimensionHint getSecondDimensionHint(String value) {
+
+		try {
+			return SecondDimensionHint.valueOf(value.trim());
+		} catch(Exception e) {
+			return SecondDimensionHint.NONE;
+		}
+	}
+
 	public TraceRange getSetting() {
 
 		TraceRange traceRange = new TraceRange();
@@ -98,6 +111,7 @@ public class TraceRangeValidator extends ValueParserSupport implements IValidato
 		traceRange.setScanIndicesColumn2(scanIndicesColumn2);
 		traceRange.setName(name);
 		traceRange.setTraces(traces);
+		traceRange.setSecondDimensionHint(secondDimensionHint);
 		//
 		return traceRange;
 	}
