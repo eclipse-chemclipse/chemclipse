@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2024 Lablicate GmbH.
+ * Copyright (c) 2013, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -213,7 +213,7 @@ public abstract class AbstractPeakModel extends AbstractPeakModelStrict implemen
 		 * Calculation
 		 */
 		if(strictModel) {
-			return calucalteTailingByInflectionPoints(percentageHeightBaseline);
+			return calculateTailingByInflectionPoints(percentageHeightBaseline);
 		} else {
 			return calculateTailingByIntensityValues();
 		}
@@ -454,12 +454,15 @@ public abstract class AbstractPeakModel extends AbstractPeakModelStrict implemen
 	@Override
 	public boolean equals(Object obj) {
 
-		if(this == obj)
+		if(this == obj) {
 			return true;
-		if(obj == null)
+		}
+		if(obj == null) {
 			return false;
-		if(getClass() != obj.getClass())
+		}
+		if(getClass() != obj.getClass()) {
 			return false;
+		}
 		AbstractPeakModel other = (AbstractPeakModel)obj;
 		return Double.doubleToLongBits(gradientAngle) == Double.doubleToLongBits(other.gradientAngle) && //
 				peakMaximum.getRetentionTime() == other.peakMaximum.getRetentionTime() && //
