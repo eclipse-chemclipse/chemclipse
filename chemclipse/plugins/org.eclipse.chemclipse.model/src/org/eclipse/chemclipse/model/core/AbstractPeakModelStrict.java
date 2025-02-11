@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2024 Lablicate GmbH.
+ * Copyright (c) 2013, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -208,7 +208,7 @@ public abstract class AbstractPeakModelStrict implements IPeakModel {
 		return new LinearEquation(0, percentageHeight);
 	}
 
-	protected float calucalteTailingByInflectionPoints(LinearEquation percentageHeightBaseline) {
+	protected float calculateTailingByInflectionPoints(LinearEquation percentageHeightBaseline) {
 
 		float tailing = 0.0f;
 		/*
