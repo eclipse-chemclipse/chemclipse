@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023, 2024 Lablicate GmbH.
+ * Copyright (c) 2023, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,15 +19,15 @@ import java.util.List;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IPeakModel;
+import org.eclipse.chemclipse.model.core.support.PeakSupport;
 import org.eclipse.chemclipse.model.identifier.ComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
-import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
-import org.eclipse.chemclipse.model.identifier.LibraryInformation;
 import org.eclipse.chemclipse.model.implementation.IdentificationTarget;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.model.supplier.IChromatogramSelectionProcessSupplier;
 import org.eclipse.chemclipse.model.support.LimitSupport;
+import org.eclipse.chemclipse.model.targets.TargetSupport;
 import org.eclipse.chemclipse.processing.DataCategory;
 import org.eclipse.chemclipse.processing.core.ICategories;
 import org.eclipse.chemclipse.processing.supplier.AbstractProcessSupplier;
@@ -67,75 +67,65 @@ public class TargetTransferFilter implements IProcessTypeSupplier {
 		public IChromatogramSelection<?, ?> apply(IChromatogramSelection<?, ?> chromatogramSelection, TargetTransferFilterSettings processSettings, ProcessExecutionContext context) throws InterruptedException {
 
 			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
-			//
+
 			int startRetentionTime = chromatogramSelection.getStartRetentionTime();
 			int stopRetentionTime = chromatogramSelection.getStopRetentionTime();
-			float limitMatchFactor = processSettings.getLimitMatchFactor();
-			float matchFactor = processSettings.getMatchQuality();
-			boolean useBestTargetOnly = processSettings.isUseBestTargetOnly();
-			//
 			List<? extends IPeak> peaks = chromatogram.getPeaks(startRetentionTime, stopRetentionTime);
+
 			List<IChromatogram<?>> referenceChromatograms = chromatogram.getReferencedChromatograms();
 			for(IChromatogram<?> referenceChromatogram : referenceChromatograms) {
 				for(IPeak peak : peaks) {
 					if(!peak.getTargets().isEmpty()) {
-						List<IPeak> peakReferences = getReferencePeaks(peak, referenceChromatogram);
-						if(!peakReferences.isEmpty()) {
+						List<IPeak> overlappingsPeaks = getOverlappingPeaks(peak, referenceChromatogram);
+						IPeak nearestPeak = PeakSupport.selectNearestPeak(overlappingsPeaks, peak);
+						if(nearestPeak != null) {
 							/*
 							 * Transfer Targets
 							 */
 							List<IIdentificationTarget> identificationTargets = new ArrayList<>(peak.getTargets());
-							if(useBestTargetOnly) {
-								Collections.sort(identificationTargets, (t1, t2) -> Float.compare(t2.getComparisonResult().getMatchFactor(), t1.getComparisonResult().getMatchFactor()));
-								IIdentificationTarget identificationTarget = identificationTargets.get(0);
-								identificationTargets.clear();
-								identificationTargets.add(identificationTarget);
+							if(processSettings.isUseBestTargetOnly()) {
+								peak.getTargets().add(TargetSupport.getBestIdentificationTarget(peak));
 							}
 							/*
 							 * Reference Peaks
 							 */
-							for(IPeak peakReference : peakReferences) {
-								if(LimitSupport.doIdentify(peakReference.getTargets(), limitMatchFactor)) {
-									for(IIdentificationTarget identificationTarget : identificationTargets) {
-										ILibraryInformation libraryInformation = identificationTarget.getLibraryInformation();
-										String name = libraryInformation.getName();
-										String casNumber = libraryInformation.getCasNumber();
-										addIdentificationTarget(peakReference, name, casNumber, matchFactor);
-									}
+							if(LimitSupport.doIdentify(nearestPeak.getTargets(), processSettings.getLimitMatchFactor())) {
+								for(IIdentificationTarget identificationTarget : identificationTargets) {
+									addIdentificationTarget(nearestPeak, identificationTarget, processSettings);
 								}
 							}
 						}
 					}
 				}
 			}
-			//
+
 			return chromatogramSelection;
 		}
 
-		private void addIdentificationTarget(IPeak peak, String name, String casNumber, float matchFactor) {
+		private void addIdentificationTarget(IPeak peak, IIdentificationTarget identificationTarget, TargetTransferFilterSettings processSettings) {
 
-			ILibraryInformation libraryInformation = new LibraryInformation();
-			libraryInformation.setName(name);
-			libraryInformation.setCasNumber(casNumber);
-			IComparisonResult comparisonResult = new ComparisonResult(matchFactor);
-			peak.getTargets().add(new IdentificationTarget(libraryInformation, comparisonResult, NAME));
+			float matchFactor = processSettings.getMatchQuality();
+			IComparisonResult comparisonResult = matchFactor > 0 ? new ComparisonResult(matchFactor) : identificationTarget.getComparisonResult();
+			IdentificationTarget newIdentificationTarget = new IdentificationTarget(identificationTarget.getLibraryInformation(), comparisonResult, NAME);
+			newIdentificationTarget.setVerified(identificationTarget.isVerified());
+			peak.getTargets().add(newIdentificationTarget);
 		}
 
-		private List<IPeak> getReferencePeaks(IPeak peak, IChromatogram<?> referenceChromatogram) {
+		private List<IPeak> getOverlappingPeaks(IPeak peak, IChromatogram<?> referenceChromatogram) {
 
 			List<IPeak> peaks = new ArrayList<>();
-			//
+
 			IPeakModel peakModel = peak.getPeakModel();
 			int retentionTimeStart = peakModel.getStartRetentionTime();
 			int retentionTimeStop = peakModel.getStopRetentionTime();
-			//
+
 			for(IPeak referencePeak : referenceChromatogram.getPeaks()) {
 				int retentionTime = referencePeak.getPeakModel().getPeakMaximum().getRetentionTime();
 				if(retentionTime >= retentionTimeStart && retentionTime <= retentionTimeStop) {
 					peaks.add(referencePeak);
 				}
 			}
-			//
+
 			return peaks;
 		}
 	}

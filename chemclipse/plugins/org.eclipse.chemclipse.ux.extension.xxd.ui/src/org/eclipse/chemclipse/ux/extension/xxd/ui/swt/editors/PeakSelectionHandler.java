@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IPeak;
+import org.eclipse.chemclipse.model.core.support.PeakSupport;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
@@ -74,43 +75,26 @@ public class PeakSelectionHandler extends AbstractHandledEventProcessor implemen
 				/*
 				 * Fire an update.
 				 */
-				IPeak peak = selectNearestPeak(peaks, retentionTime);
+				IPeak peak = PeakSupport.selectNearestPeak(peaks, retentionTime);
 				if(peak != null) {
-					//
+
 					chromatogramSelection.setSelectedPeak(peak);
 					extendedChromatogramUI.updateSelectedPeak();
-					//
+
 					boolean moveRetentionTimeOnPeakSelection = preferenceStore.getBoolean(PreferenceSupplier.P_MOVE_RETENTION_TIME_ON_PEAK_SELECTION);
 					if(moveRetentionTimeOnPeakSelection) {
 						ChromatogramDataSupport.adjustChromatogramSelection(peak, chromatogramSelection);
 					}
-					//
+
 					extendedChromatogramUI.updateSelection();
-					//
+
 					UpdateNotifierUI.update(event.display, peak);
 					IIdentificationTarget identificationTarget = IIdentificationTarget.getIdentificationTarget(peak);
 					UpdateNotifierUI.update(event.display, identificationTarget);
-					//
+
 					showClickbindingHelp(baseChart, "Peak Selection", "Select nearest peak.");
 				}
 			}
 		}
-	}
-
-	private IPeak selectNearestPeak(List<IPeak> peaks, int retentionTime) {
-
-		IPeak nearestPeak = null;
-		for(IPeak peak : peaks) {
-			if(nearestPeak == null) {
-				nearestPeak = peak;
-			} else {
-				int deltaNearest = Math.abs(retentionTime - nearestPeak.getPeakModel().getRetentionTimeAtPeakMaximum());
-				int deltaCurrent = Math.abs(retentionTime - peak.getPeakModel().getRetentionTimeAtPeakMaximum());
-				if(deltaCurrent <= deltaNearest) {
-					nearestPeak = peak;
-				}
-			}
-		}
-		return nearestPeak;
 	}
 }
