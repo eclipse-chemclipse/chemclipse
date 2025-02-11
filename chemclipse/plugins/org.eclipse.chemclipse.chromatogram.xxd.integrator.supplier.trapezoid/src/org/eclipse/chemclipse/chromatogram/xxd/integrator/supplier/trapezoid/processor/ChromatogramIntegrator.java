@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2024 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -24,10 +24,10 @@ public class ChromatogramIntegrator extends AbstractIntegrator {
 
 	private static final Logger logger = Logger.getLogger(ChromatogramIntegrator.class);
 
-	public double integrate(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public double integrate(IChromatogramSelection chromatogramSelection) {
 
 		double chromatogramArea = 0.0d;
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		//
 		try {
 			ITotalScanSignalExtractor totalScanSignalExtractor = new TotalScanSignalExtractor(chromatogram);

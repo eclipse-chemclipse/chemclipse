@@ -13,11 +13,10 @@
 package org.eclipse.chemclipse.csd.model.core.selection;
 
 import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
-import org.eclipse.chemclipse.csd.model.core.IChromatogramPeakCSD;
 import org.eclipse.chemclipse.csd.model.core.IScanCSD;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 
-public interface IChromatogramSelectionCSD extends IChromatogramSelection<IChromatogramPeakCSD, IChromatogramCSD> {
+public interface IChromatogramSelectionCSD extends IChromatogramSelection {
 
 	/**
 	 * Returns the stored chromatogram.

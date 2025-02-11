@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,10 +20,10 @@ import org.eclipse.chemclipse.model.support.IScanRange;
 public class ChromatogramAnalysisSegment implements IAnalysisSegment {
 
 	private final IScanRange scanRange;
-	private final IChromatogram<?> chromatogram;
+	private final IChromatogram chromatogram;
 	private final Collection<? extends IAnalysisSegment> children;
 
-	public ChromatogramAnalysisSegment(IScanRange scanRange, IChromatogram<?> chromatogram, Collection<? extends IAnalysisSegment> children) {
+	public ChromatogramAnalysisSegment(IScanRange scanRange, IChromatogram chromatogram, Collection<? extends IAnalysisSegment> children) {
 
 		this.scanRange = scanRange;
 		this.chromatogram = chromatogram;
@@ -40,7 +40,7 @@ public class ChromatogramAnalysisSegment implements IAnalysisSegment {
 		return children;
 	}
 
-	public IChromatogram<?> getChromatogram() {
+	public IChromatogram getChromatogram() {
 
 		return chromatogram;
 	}

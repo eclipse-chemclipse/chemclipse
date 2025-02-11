@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2024 Lablicate GmbH.
+ * Copyright (c) 2022, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -45,7 +45,7 @@ public class PeakActiveForAnalysisFilter extends AbstractPeakFilter<PeakActiveFo
 	}
 
 	@Override
-	public void filterPeaks(IChromatogramSelection<?, ?> chromatogramSelection, PeakActiveForAnalysisSettings configuration, ProcessExecutionContext context) throws IllegalArgumentException {
+	public void filterPeaks(IChromatogramSelection chromatogramSelection, PeakActiveForAnalysisSettings configuration, ProcessExecutionContext context) throws IllegalArgumentException {
 
 		Collection<IPeak> peaks = getReadOnlyPeaks(chromatogramSelection);
 		if(configuration == null) {

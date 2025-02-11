@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2022 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,7 +20,6 @@ import org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.zeroset.core.sett
 import org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.zeroset.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.csd.model.core.selection.IChromatogramSelectionCSD;
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -48,7 +47,7 @@ public class ChromatogramFilterCSD extends AbstractChromatogramFilterCSD {
 
 	private void applyFilter(IChromatogramSelectionCSD chromatogramSelection) {
 
-		IChromatogram<? extends IPeak> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		float minSignal = chromatogram.getMinSignal();
 		if(minSignal < 0) {
 			float delta = minSignal * -1;

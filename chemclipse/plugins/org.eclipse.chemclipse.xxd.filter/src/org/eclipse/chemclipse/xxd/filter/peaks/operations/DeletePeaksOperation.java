@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2023 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,9 +13,15 @@ package org.eclipse.chemclipse.xxd.filter.peaks.operations;
 
 import java.util.List;
 
+import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
+import org.eclipse.chemclipse.csd.model.core.IChromatogramPeakCSD;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
+import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
+import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
+import org.eclipse.chemclipse.wsd.model.core.IChromatogramPeakWSD;
+import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.AbstractOperation;
 import org.eclipse.core.runtime.IAdaptable;
@@ -25,14 +31,13 @@ import org.eclipse.core.runtime.Status;
 
 public class DeletePeaksOperation extends AbstractOperation {
 
-	private IChromatogramSelection<IPeak, ?> chromatogramSelection;
+	private IChromatogramSelection chromatogramSelection;
 	private List<IPeak> peaksToDelete;
 
-	@SuppressWarnings("unchecked")
-	public DeletePeaksOperation(IChromatogramSelection<?, ?> chromatogramSelection, List<IPeak> peaksToDelete) {
+	public DeletePeaksOperation(IChromatogramSelection chromatogramSelection, List<IPeak> peaksToDelete) {
 
 		super("Delete Peaks");
-		this.chromatogramSelection = (IChromatogramSelection<IPeak, ?>)chromatogramSelection;
+		this.chromatogramSelection = chromatogramSelection;
 		this.peaksToDelete = peaksToDelete;
 	}
 
@@ -57,8 +62,8 @@ public class DeletePeaksOperation extends AbstractOperation {
 	@Override
 	public IStatus execute(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
 
-		IChromatogram<IPeak> chromatogram = chromatogramSelection.getChromatogram();
-		chromatogram.removePeaks(peaksToDelete);
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
+		chromatogram.getPeaks().removeAll(peaksToDelete);
 		updateChromatogramSelection();
 		return Status.OK_STATUS;
 	}
@@ -85,9 +90,27 @@ public class DeletePeaksOperation extends AbstractOperation {
 	@Override
 	public IStatus undo(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
 
-		IChromatogram<IPeak> chromatogram = chromatogramSelection.getChromatogram();
-		for(IPeak peak : peaksToDelete) {
-			chromatogram.addPeak(peak);
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
+		if(chromatogram instanceof IChromatogramCSD chromatogramCSD) {
+			for(IPeak peak : peaksToDelete) {
+				if(peak instanceof IChromatogramPeakCSD chromatogramPeakCSD) {
+					chromatogramCSD.getPeaks().add(chromatogramPeakCSD);
+				}
+			}
+		}
+		if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
+			for(IPeak peak : peaksToDelete) {
+				if(peak instanceof IChromatogramPeakMSD chromatogramPeakMSD) {
+					chromatogramMSD.getPeaks().add(chromatogramPeakMSD);
+				}
+			}
+		}
+		if(chromatogram instanceof IChromatogramWSD chromatogramWSD) {
+			for(IPeak peak : peaksToDelete) {
+				if(peak instanceof IChromatogramPeakWSD chromatogramPeakWSD) {
+					chromatogramWSD.getPeaks().add(chromatogramPeakWSD);
+				}
+			}
 		}
 		updateChromatogramSelection();
 		return Status.OK_STATUS;

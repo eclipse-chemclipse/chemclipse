@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2023 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -41,7 +41,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public abstract class AbstractBaselineSignalDetector extends AbstractBaselineDetector {
 
 	@Override
-	public IProcessingInfo<?> setBaseline(IChromatogramSelection<?, ?> chromatogramSelection, IBaselineDetectorSettings baselineDetectorSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<?> setBaseline(IChromatogramSelection chromatogramSelection, IBaselineDetectorSettings baselineDetectorSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<?> processingInfo = validate(chromatogramSelection, baselineDetectorSettings, monitor);
 		if(!processingInfo.hasErrorMessages()) {
@@ -52,7 +52,7 @@ public abstract class AbstractBaselineSignalDetector extends AbstractBaselineDet
 	}
 
 	@Override
-	public IProcessingInfo<?> setBaseline(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor) {
+	public IProcessingInfo<?> setBaseline(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor) {
 
 		IProcessingInfo<?> processingInfo = validate(chromatogramSelection, monitor);
 		if(!processingInfo.hasErrorMessages()) {
@@ -62,7 +62,7 @@ public abstract class AbstractBaselineSignalDetector extends AbstractBaselineDet
 		}
 	}
 
-	private IProcessingInfo<?> process(IChromatogramSelection<?, ?> chromatogramSelection, IBaselineDetectorSettings settings, IProgressMonitor monitor) {
+	private IProcessingInfo<?> process(IChromatogramSelection chromatogramSelection, IBaselineDetectorSettings settings, IProgressMonitor monitor) {
 
 		if(chromatogramSelection instanceof IChromatogramSelectionMSD chromatogramSelectionMSD) {
 			return process(chromatogramSelectionMSD, settings, monitor);

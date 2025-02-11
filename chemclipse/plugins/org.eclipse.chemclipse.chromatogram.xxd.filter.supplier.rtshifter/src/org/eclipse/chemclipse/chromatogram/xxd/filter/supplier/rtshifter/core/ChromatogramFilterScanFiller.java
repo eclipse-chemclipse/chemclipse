@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -26,7 +26,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class ChromatogramFilterScanFiller extends AbstractChromatogramFilter {
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<IChromatogramFilterResult> processingInfo = validate(chromatogramSelection, chromatogramFilterSettings);
 		if(!processingInfo.hasErrorMessages()) {
@@ -40,7 +40,7 @@ public class ChromatogramFilterScanFiller extends AbstractChromatogramFilter {
 	}
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor) {
 
 		FilterSettingsScanFiller filterSettings = PreferenceSupplier.getFilterSettingsFillScans();
 		return applyFilter(chromatogramSelection, filterSettings, monitor);

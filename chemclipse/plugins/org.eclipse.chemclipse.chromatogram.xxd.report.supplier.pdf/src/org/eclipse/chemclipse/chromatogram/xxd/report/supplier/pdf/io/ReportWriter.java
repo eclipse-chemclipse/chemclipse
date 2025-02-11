@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -49,7 +49,7 @@ public class ReportWriter {
 	private static final Unit PAGE_UNIT = Unit.PT;
 	private static final boolean LANDSCAPE = true;
 
-	public void generate(File file, boolean append, IChromatogram<? extends IPeak> chromatogram, ReportSettings reportSettings, IProgressMonitor monitor) throws IOException {
+	public void generate(File file, boolean append, IChromatogram chromatogram, ReportSettings reportSettings, IProgressMonitor monitor) throws IOException {
 
 		if(file.exists() && append) {
 			try (PDDocument document = PDDocument.load(file)) {
@@ -61,7 +61,7 @@ public class ReportWriter {
 		}
 	}
 
-	private void addPages(PDDocument document, File file, IChromatogram<? extends IPeak> chromatogram, ReportSettings reportSettings, IProgressMonitor monitor) throws IOException {
+	private void addPages(PDDocument document, File file, IChromatogram chromatogram, ReportSettings reportSettings, IProgressMonitor monitor) throws IOException {
 
 		int pages = reportSettings.getPages();
 		ITotalScanSignalExtractor totalScanSignalExtractor = new TotalScanSignalExtractor(chromatogram);
@@ -80,7 +80,7 @@ public class ReportWriter {
 		document.save(file);
 	}
 
-	private void printPageHeader(IChromatogram<? extends IPeak> chromatogram, PageUtil pageUtil) throws IOException {
+	private void printPageHeader(IChromatogram chromatogram, PageUtil pageUtil) throws IOException {
 
 		try (PDPageContentStream contentStream = new PDPageContentStream(pageUtil.getDocument(), pageUtil.getPage(), AppendMode.APPEND, false, false);) {
 			String name = chromatogram.getDataName().isBlank() ? chromatogram.getFile().getName() : chromatogram.getDataName();
@@ -95,7 +95,7 @@ public class ReportWriter {
 		}
 	}
 
-	private void drawChromatogram(PageUtil pageUtil, IChromatogram<? extends IPeak> chromatogram, ITotalScanSignals scans, ValueScaling valueScaling, IProgressMonitor monitor) {
+	private void drawChromatogram(PageUtil pageUtil, IChromatogram chromatogram, ITotalScanSignals scans, ValueScaling valueScaling, IProgressMonitor monitor) {
 
 		try (PDPageContentStream contentStream = new PDPageContentStream(pageUtil.getDocument(), pageUtil.getPage(), AppendMode.APPEND, false, false)) {
 			contentStream.setStrokingColor(1f, 0f, 0f);
@@ -120,7 +120,7 @@ public class ReportWriter {
 		}
 	}
 
-	private void drawAxis(PDPageContentStream contentStream, IChromatogram<? extends IPeak> chromatogram, ITotalScanSignals scans) throws IOException {
+	private void drawAxis(PDPageContentStream contentStream, IChromatogram chromatogram, ITotalScanSignals scans) throws IOException {
 
 		contentStream.setStrokingColor(0f, 0f, 0f);
 		contentStream.setLineWidth(1f);
@@ -175,7 +175,7 @@ public class ReportWriter {
 		}
 	}
 
-	private void drawYAxisMarkers(PDPageContentStream contentStream, IChromatogram<? extends IPeak> chromatogram) throws IOException {
+	private void drawYAxisMarkers(PDPageContentStream contentStream, IChromatogram chromatogram) throws IOException {
 
 		contentStream.setFont(PDType1Font.HELVETICA, 8);
 		float minY = 50;
@@ -199,7 +199,7 @@ public class ReportWriter {
 		}
 	}
 
-	private void drawPeaks(IChromatogram<? extends IPeak> chromatogram, ValueScaling valueScaling, PageUtil pageUtil) throws IOException {
+	private void drawPeaks(IChromatogram chromatogram, ValueScaling valueScaling, PageUtil pageUtil) throws IOException {
 
 		float textHeight = pageUtil.calculateTextHeight(PDType1Font.HELVETICA, 8);
 		try (PDPageContentStream contentStream = new PDPageContentStream(pageUtil.getDocument(), pageUtil.getPage(), AppendMode.APPEND, false, false)) {

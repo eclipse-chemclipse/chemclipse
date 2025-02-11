@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2024 Lablicate GmbH.
+ * Copyright (c) 2012, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -76,7 +76,7 @@ public class ChromatogramHeatmapUI extends Composite implements IExtendedPartUI 
 	private IntensityGraphFigure intensityGraphFigure;
 	//
 	private ChromatogramHeatmapSupport chromatogramHeatmapSupport = new ChromatogramHeatmapSupport();
-	private IChromatogramSelection<?, ?> chromatogramSelection = null;
+	private IChromatogramSelection chromatogramSelection = null;
 	private IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 
 	public ChromatogramHeatmapUI(Composite parent, int style) {
@@ -115,7 +115,7 @@ public class ChromatogramHeatmapUI extends Composite implements IExtendedPartUI 
 		updateButtonZoom();
 	}
 
-	public void update(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public void update(IChromatogramSelection chromatogramSelection) {
 
 		if(this.chromatogramSelection == chromatogramSelection) {
 			return;

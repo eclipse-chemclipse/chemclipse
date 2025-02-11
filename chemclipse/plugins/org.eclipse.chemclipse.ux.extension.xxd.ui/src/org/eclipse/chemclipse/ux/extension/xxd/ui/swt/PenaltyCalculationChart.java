@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2024 Lablicate GmbH.
+ * Copyright (c) 2022, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -196,7 +196,7 @@ public class PenaltyCalculationChart extends ChromatogramChart {
 
 	private void displayRetentionIndexPenalty() {
 
-		IChromatogram<?> chromatogram = getChromatogram();
+		IChromatogram chromatogram = getChromatogram();
 		if(chromatogram != null) {
 			IPeakModel peakModel = peak.getPeakModel();
 			IScan peakMaximum = peakModel.getPeakMaximum();
@@ -248,9 +248,9 @@ public class PenaltyCalculationChart extends ChromatogramChart {
 		return seriesAdjusted;
 	}
 
-	private IChromatogram<?> getChromatogram() {
+	private IChromatogram getChromatogram() {
 
-		IChromatogram<?> chromatogram = null;
+		IChromatogram chromatogram = null;
 		if(peak instanceof IChromatogramPeak chromatogramPeak) {
 			chromatogram = chromatogramPeak.getChromatogram();
 		}

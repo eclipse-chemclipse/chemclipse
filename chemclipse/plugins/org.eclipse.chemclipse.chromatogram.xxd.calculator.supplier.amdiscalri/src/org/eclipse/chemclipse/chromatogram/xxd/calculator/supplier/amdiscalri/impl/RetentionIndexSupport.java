@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023 Lablicate GmbH.
+ * Copyright (c) 2023, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -62,7 +62,7 @@ public class RetentionIndexSupport {
 		}
 	}
 
-	public static RetentionIndexMarker getRetentionIndexMarker(ISeparationColumnIndices separationColumnIndices, IChromatogram<?> chromatogram, boolean extrapolateLeft, boolean extrapolateRight) {
+	public static RetentionIndexMarker getRetentionIndexMarker(ISeparationColumnIndices separationColumnIndices, IChromatogram chromatogram, boolean extrapolateLeft, boolean extrapolateRight) {
 
 		RetentionIndexMarker retentionIndexMarker = new RetentionIndexMarker();
 		transferRetentionIndexMarker(separationColumnIndices, retentionIndexMarker);
@@ -70,7 +70,7 @@ public class RetentionIndexSupport {
 		return getRetentionIndexMarker(retentionIndexMarker, chromatogram, extrapolateLeft, extrapolateRight);
 	}
 
-	public static RetentionIndexMarker getRetentionIndexMarker(RetentionIndexMarker retentionIndexMarker, IChromatogram<?> chromatogram, boolean extrapolateLeft, boolean extrapolateRight) {
+	public static RetentionIndexMarker getRetentionIndexMarker(RetentionIndexMarker retentionIndexMarker, IChromatogram chromatogram, boolean extrapolateLeft, boolean extrapolateRight) {
 
 		if(retentionIndexMarker != null && retentionIndexMarker.size() >= 2) {
 			if(RetentionIndexSupport.extrapolateData(extrapolateLeft, extrapolateRight)) {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2024 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -78,7 +78,7 @@ public class ScanSupport {
 		/*
 		 * Get the ions.
 		 */
-		List<Integer> ions = new ArrayList<Integer>();
+		List<Integer> ions = new ArrayList<>();
 		for(IIon ion : scanMSD.getIons()) {
 			ions.add(AbstractIon.getIon(ion.getIon()));
 		}

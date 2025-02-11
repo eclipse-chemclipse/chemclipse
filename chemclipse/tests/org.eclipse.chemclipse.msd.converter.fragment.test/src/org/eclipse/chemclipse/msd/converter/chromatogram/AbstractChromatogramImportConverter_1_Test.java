@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2023 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -53,7 +53,7 @@ public class AbstractChromatogramImportConverter_1_Test extends TestCase {
 	public void testFileNotFoundException_1() {
 
 		File file = new File("");
-		IProcessingInfo<IChromatogram<?>> processingInfo = ic.convert(file, new NullProgressMonitor());
+		IProcessingInfo<IChromatogram> processingInfo = ic.convert(file, new NullProgressMonitor());
 		assertTrue(processingInfo.hasErrorMessages());
 	}
 
@@ -64,7 +64,7 @@ public class AbstractChromatogramImportConverter_1_Test extends TestCase {
 		try {
 			file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_CHROMATOGRAM_NOT_READABLE));
 			file.setReadable(false);
-			IProcessingInfo<IChromatogram<?>> processingInfo = ic.convert(file, new NullProgressMonitor());
+			IProcessingInfo<IChromatogram> processingInfo = ic.convert(file, new NullProgressMonitor());
 			assertTrue(processingInfo.hasErrorMessages());
 		} catch(IOException e) {
 			assertTrue("IOException", false);
@@ -81,7 +81,7 @@ public class AbstractChromatogramImportConverter_1_Test extends TestCase {
 		File file = null;
 		try {
 			file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_CHROMATOGRAM_EMPTY));
-			IProcessingInfo<IChromatogram<?>> processingInfo = ic.convert(file, new NullProgressMonitor());
+			IProcessingInfo<IChromatogram> processingInfo = ic.convert(file, new NullProgressMonitor());
 			assertTrue(processingInfo.hasErrorMessages());
 		} catch(IOException e) {
 			assertTrue("IOException", false);

@@ -17,20 +17,21 @@ import java.util.List;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IScan;
+import org.eclipse.chemclipse.model.implementation.Chromatogram;
 import org.eclipse.chemclipse.model.support.IRetentionTimeRange;
 import org.eclipse.chemclipse.model.support.IScanRange;
 import org.eclipse.chemclipse.model.updates.IChromatogramUpdateListener;
 import org.eclipse.chemclipse.numeric.core.Point;
 
-public interface IChromatogramSelection<P extends IPeak, C extends IChromatogram<P>> extends IChromatogramUpdateListener, IRetentionTimeRange, IScanRange {
+public interface IChromatogramSelection extends IChromatogramUpdateListener, IRetentionTimeRange, IScanRange {
 
 	/**
 	 * Returns the stored chromatogram.
 	 * May return null.
 	 *
-	 * @return {@link IChromatogram}
+	 * @return {@link Chromatogram}
 	 */
-	C getChromatogram();
+	IChromatogram getChromatogram();
 
 	/**
 	 * Reset all values to the given chromatogram bounds.<br/>
@@ -239,7 +240,7 @@ public interface IChromatogramSelection<P extends IPeak, C extends IChromatogram
 		if(peak != null) {
 			if(peak.isMarkedAsDeleted()) {
 				return null;
-			} else if(getChromatogram().getNumberOfPeaks() == 0) {
+			} else if(getChromatogram().getPeaks().isEmpty()) {
 				return null;
 			}
 		}

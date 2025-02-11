@@ -133,7 +133,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 	private Button buttonAddPeak;
 	private AtomicReference<ChromatogramChart> chartControl = new AtomicReference<>();
 
-	private IChromatogramSelection<?, ?> chromatogramSelection;
+	private IChromatogramSelection chromatogramSelection;
 	private IPeak peak;
 
 	private BaselineSelectionPaintListener baselineSelectionPaintListener;
@@ -312,10 +312,10 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 		return true;
 	}
 
-	public void update(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public void update(IChromatogramSelection chromatogramSelection) {
 
 		this.chromatogramSelection = chromatogramSelection;
-		IChromatogram<?> chromatogram = null;
+		IChromatogram chromatogram = null;
 		if(chromatogramSelection != null) {
 			chromatogram = chromatogramSelection.getChromatogram();
 		}
@@ -465,10 +465,10 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 			public void widgetSelected(SelectionEvent e) {
 
 				if(peak != null) {
-					IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+					IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 					if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
 						if(peak instanceof IChromatogramPeakMSD peakMSD) {
-							chromatogramMSD.addPeak(peakMSD);
+							chromatogramMSD.getPeaks().add(peakMSD);
 							peak = null;
 							setDetectionType(DETECTION_TYPE_NONE);
 							updateChromatogramAndPeak();
@@ -476,7 +476,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 						}
 					} else if(chromatogram instanceof IChromatogramCSD chromatogramCSD) {
 						if(peak instanceof IChromatogramPeakCSD peakCSD) {
-							chromatogramCSD.addPeak(peakCSD);
+							chromatogramCSD.getPeaks().add(peakCSD);
 							peak = null;
 							setDetectionType(DETECTION_TYPE_NONE);
 							updateChromatogramAndPeak();

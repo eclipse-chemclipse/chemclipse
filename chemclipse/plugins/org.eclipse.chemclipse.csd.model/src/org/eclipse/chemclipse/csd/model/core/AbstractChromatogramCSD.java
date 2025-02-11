@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.csd.model.core;
 
+import java.util.List;
+
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.NoiseCalculator;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.csd.model.core.selection.ChromatogramSelectionCSD;
@@ -23,11 +25,11 @@ import org.eclipse.chemclipse.model.results.ChromatogramSegmentation;
 import org.eclipse.chemclipse.model.results.NoiseSegmentMeasurementResult;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 
-public abstract class AbstractChromatogramCSD extends AbstractChromatogram<IChromatogramPeakCSD> implements IChromatogramCSD {
+public abstract class AbstractChromatogramCSD extends AbstractChromatogram implements IChromatogramCSD {
 
 	private static final long serialVersionUID = -1514838958855146167L;
 
-	public AbstractChromatogramCSD() {
+	protected AbstractChromatogramCSD() {
 
 		updateNoiseFactor();
 	}
@@ -58,7 +60,7 @@ public abstract class AbstractChromatogramCSD extends AbstractChromatogram<IChro
 	}
 
 	@Override
-	public void fireUpdate(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public void fireUpdate(IChromatogramSelection chromatogramSelection) {
 
 		/*
 		 * Fire an update to inform all listeners.
@@ -95,5 +97,19 @@ public abstract class AbstractChromatogramCSD extends AbstractChromatogram<IChro
 		} else {
 			return PreferenceSupplier.getSelectedNoiseCalculatorId();
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<IChromatogramPeakCSD> getPeaks() {
+
+		return (List<IChromatogramPeakCSD>)super.getPeaks();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<IChromatogramPeakCSD> getPeaks(int startRetentionTime, int stopRetentionTime) {
+
+		return (List<IChromatogramPeakCSD>)super.getPeaks(startRetentionTime, stopRetentionTime);
 	}
 }

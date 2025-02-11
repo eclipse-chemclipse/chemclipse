@@ -33,11 +33,11 @@ public class ChromatogramColumnParser extends AbstractChromatogramClassifier {
 	}
 
 	@Override
-	public IProcessingInfo<IChromatogramClassifierResult> applyClassifier(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramClassifierSettings chromatogramClassifierSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramClassifierResult> applyClassifier(IChromatogramSelection chromatogramSelection, IChromatogramClassifierSettings chromatogramClassifierSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<IChromatogramClassifierResult> processingInfo = new ProcessingInfo<>();
 		//
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		ChromatogramColumnParserSettings chromatogramColumnParserSettings = getChromatogramColumnParserSettings(chromatogramClassifierSettings);
 		ColumnField columnField = chromatogramColumnParserSettings.getColumnField();
 		SeparationColumnMapping separationColumnMapping = chromatogramColumnParserSettings.getSeparationColumnMapping();

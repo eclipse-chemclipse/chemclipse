@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2021 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -35,7 +35,7 @@ public class ChromatogramReader_3_FID_1301_ITest extends ChromatogramReaderFIDTe
 
 	public void testReader_3() {
 
-		assertEquals(7, chromatogram.getNumberOfPeaks());
+		assertEquals(7, chromatogram.getPeaks().size());
 	}
 
 	public void testReader_4() {

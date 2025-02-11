@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023 Lablicate GmbH.
+ * Copyright (c) 2023, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,7 +22,6 @@ import org.eclipse.chemclipse.csd.model.core.IScanCSD;
 import org.eclipse.chemclipse.csd.model.implementation.ChromatogramCSD;
 import org.eclipse.chemclipse.csd.model.implementation.ScanCSD;
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
@@ -36,13 +35,13 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class ChromatogramFilterTransform extends AbstractChromatogramFilter implements IChromatogramFilter {
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<IChromatogramFilterResult> processingInfo = validate(chromatogramSelection, chromatogramFilterSettings);
 		if(!processingInfo.hasErrorMessages()) {
 			if(chromatogramFilterSettings instanceof FilterSettingsTransform filterSettings) {
-				IChromatogram<? extends IPeak> chromatogram = chromatogramSelection.getChromatogram();
-				IChromatogram<? extends IPeak> chromatogramReference = null;
+				IChromatogram chromatogram = chromatogramSelection.getChromatogram();
+				IChromatogram chromatogramReference = null;
 				//
 				if(chromatogram instanceof IChromatogramCSD chromatogramCSD) {
 					int mz = filterSettings.getMz();
@@ -63,7 +62,7 @@ public class ChromatogramFilterTransform extends AbstractChromatogramFilter impl
 	}
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor) {
 
 		FilterSettingsTransform filterSettings = PreferenceSupplier.getFilterSettingsTransform();
 		return applyFilter(chromatogramSelection, filterSettings, monitor);

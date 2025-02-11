@@ -79,7 +79,6 @@ public class PagePeakSelection extends AbstractExtendedWizardPage {
 
 	}
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
 	public void setVisible(boolean visible) {
 
@@ -88,7 +87,7 @@ public class PagePeakSelection extends AbstractExtendedWizardPage {
 			IChromatogramSelection chromatogramSelection = getChromatogramSelection();
 			wizardElements.setChromatogramSelection(chromatogramSelection);
 			if(chromatogramSelection != null) {
-				IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+				IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 				/*
 				 * Hide the mass spectrum view if it is CSD data.
 				 */
@@ -106,7 +105,7 @@ public class PagePeakSelection extends AbstractExtendedWizardPage {
 					List<IPeak> selectedPeaks = new ArrayList<>();
 					IPeak selectedPeak = peaks.get(0);
 					selectedPeaks.add(selectedPeak);
-					chromatogramSelection.setSelectedPeak(selectedPeak);
+					chromatogramSelection.getSelectedPeaks().add(selectedPeak);
 					updateChromatogramChart(chromatogramSelection);
 					updateSelectedPeaksInChart(selectedPeaks);
 					if(selectedPeak instanceof IPeakMSD peakMSD) {
@@ -189,7 +188,7 @@ public class PagePeakSelection extends AbstractExtendedWizardPage {
 		Table table = peakTableViewerUI.getTable();
 		int index = table.getSelectionIndex();
 		Object object = peakTableViewerUI.getElementAt(index);
-		IChromatogramSelection<IPeak, IChromatogram<IPeak>> chromatogramSelection = wizardElements.getChromatogramSelection();
+		IChromatogramSelection chromatogramSelection = wizardElements.getChromatogramSelection();
 		if(chromatogramSelection != null && object instanceof IPeak selectedPeak) {
 			/*
 			 * Get the selected peak.
@@ -203,8 +202,8 @@ public class PagePeakSelection extends AbstractExtendedWizardPage {
 					break;
 				case PEAKS_DELETE:
 					List<IPeak> peaksToDelete = getSelectionChromatogramPeakList();
-					IChromatogram<IPeak> chromatogram = chromatogramSelection.getChromatogram();
-					chromatogram.removePeaks(peaksToDelete);
+					IChromatogram chromatogram = chromatogramSelection.getChromatogram();
+					chromatogram.getPeaks().removeAll(peaksToDelete);
 					chromatogramSelection.reset();
 					peakTableViewerUI.setInput(chromatogram.getPeaks());
 					updateChromatogramChart(chromatogramSelection);
@@ -214,14 +213,14 @@ public class PagePeakSelection extends AbstractExtendedWizardPage {
 		}
 	}
 
-	private IChromatogramSelection<?, ?> getChromatogramSelection() {
+	private IChromatogramSelection getChromatogramSelection() {
 
-		IChromatogramSelection<?, ?> chromatogramSelection = null;
+		IChromatogramSelection chromatogramSelection = null;
 		ChromatogramImportRunnable runnable = new ChromatogramImportRunnable(wizardElements);
 		//
 		try {
 			getContainer().run(true, false, runnable);
-			IChromatogram<?> chromatogram = runnable.getChromatogram();
+			IChromatogram chromatogram = runnable.getChromatogram();
 			if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
 				chromatogramSelection = new ChromatogramSelectionMSD(chromatogramMSD);
 			} else if(chromatogram instanceof IChromatogramCSD chromatogramCSD) {
@@ -272,7 +271,7 @@ public class PagePeakSelection extends AbstractExtendedWizardPage {
 		}
 		//
 		if(message == null) {
-			IChromatogram<?> chromatogram = wizardElements.getChromatogramSelection().getChromatogram();
+			IChromatogram chromatogram = wizardElements.getChromatogramSelection().getChromatogram();
 			if(chromatogram == null || chromatogram.getPeaks().isEmpty()) {
 				message = "There is no peak available.";
 			}
@@ -283,7 +282,7 @@ public class PagePeakSelection extends AbstractExtendedWizardPage {
 		updateStatus(message);
 	}
 
-	private void updateChromatogramChart(IChromatogramSelection<?, ?> chromatogramSelection) {
+	private void updateChromatogramChart(IChromatogramSelection chromatogramSelection) {
 
 		chromatogramPeakChart.updateChromatogram(chromatogramSelection);
 	}

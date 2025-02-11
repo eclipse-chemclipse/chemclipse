@@ -15,7 +15,7 @@ import org.eclipse.chemclipse.model.core.IChromatogram;
 
 public class ChromatogramSupport {
 
-	public static void calculateScanIntervalAndDelay(IChromatogram<?> chromatogram) {
+	public static void calculateScanIntervalAndDelay(IChromatogram chromatogram) {
 
 		int startRetentionTime = chromatogram.getStartRetentionTime();
 		int stopRetentionTime = chromatogram.getStopRetentionTime();

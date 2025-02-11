@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2023 Lablicate GmbH.
+ * Copyright (c) 2022, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,7 +20,6 @@ import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.mo
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.settings.RetentionIndexSettings;
 import org.eclipse.chemclipse.model.columns.ISeparationColumnIndices;
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.model.supplier.IChromatogramSelectionProcessSupplier;
 import org.eclipse.chemclipse.processing.DataCategory;
@@ -58,9 +57,9 @@ public class ChromatogramRetentionIndexer implements IProcessTypeSupplier {
 		}
 
 		@Override
-		public IChromatogramSelection<?, ?> apply(IChromatogramSelection<?, ?> chromatogramSelection, RetentionIndexSettings processSettings, ProcessExecutionContext context) throws InterruptedException {
+		public IChromatogramSelection apply(IChromatogramSelection chromatogramSelection, RetentionIndexSettings processSettings, ProcessExecutionContext context) throws InterruptedException {
 
-			IChromatogram<? extends IPeak> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			boolean extrapolateLeft = processSettings.isExtrapolateLeft();
 			boolean extrapolateRight = processSettings.isExtrapolateRight();
 			RetentionIndexMarker retentionIndexMarker = RetentionIndexSupport.getRetentionIndexMarker(processSettings.getRetentionIndexMarker(), chromatogram, extrapolateLeft, extrapolateRight);

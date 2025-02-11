@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2024 Lablicate GmbH.
+ * Copyright (c) 2017, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -43,7 +43,7 @@ public class EditorUpdateSupport {
 	private static final Logger logger = Logger.getLogger(EditorUpdateSupport.class);
 	private EPartService partService = Activator.getDefault().getPartService();
 
-	public IChromatogramSelection<?, ?> getActiveEditorSelection() {
+	public IChromatogramSelection getActiveEditorSelection() {
 
 		if(partService != null) {
 			try {
@@ -65,14 +65,14 @@ public class EditorUpdateSupport {
 		return null;
 	}
 
-	public List<IChromatogramSelection<?, ?>> getChromatogramSelections() {
+	public List<IChromatogramSelection> getChromatogramSelections() {
 
 		return getChromatogramSelections(false);
 	}
 
-	public List<IChromatogramSelection<?, ?>> getChromatogramSelections(boolean forceByApplication) {
+	public List<IChromatogramSelection> getChromatogramSelections(boolean forceByApplication) {
 
-		List<IChromatogramSelection<?, ?>> chromatogramSelections = new ArrayList<>();
+		List<IChromatogramSelection> chromatogramSelections = new ArrayList<>();
 		if(partService != null) {
 			if(forceByApplication) {
 				chromatogramSelections.addAll(getChromatogramSelectionsByApplication());
@@ -201,9 +201,9 @@ public class EditorUpdateSupport {
 		return quantitationDatabases;
 	}
 
-	private List<IChromatogramSelection<?, ?>> getChromatogramSelectionsByPart(EPartService partService) {
+	private List<IChromatogramSelection> getChromatogramSelectionsByPart(EPartService partService) {
 
-		List<IChromatogramSelection<?, ?>> chromatogramSelections = new ArrayList<>();
+		List<IChromatogramSelection> chromatogramSelections = new ArrayList<>();
 		//
 		Collection<MPart> parts = partService.getParts();
 		if(parts != null) {
@@ -215,9 +215,9 @@ public class EditorUpdateSupport {
 		return chromatogramSelections;
 	}
 
-	private List<IChromatogramSelection<?, ?>> getChromatogramSelectionsByApplication() {
+	private List<IChromatogramSelection> getChromatogramSelectionsByApplication() {
 
-		List<IChromatogramSelection<?, ?>> chromatogramSelections = new ArrayList<>();
+		List<IChromatogramSelection> chromatogramSelections = new ArrayList<>();
 		/*
 		 * Error like "Application does not have an active window" occur if this method
 		 * is called by a modal dialog.
@@ -240,23 +240,23 @@ public class EditorUpdateSupport {
 		return chromatogramSelections;
 	}
 
-	private void addChromatogramSelection(List<IChromatogramSelection<?, ?>> chromatogramSelections, IChromatogramSelection<?, ?> selection) {
+	private void addChromatogramSelection(List<IChromatogramSelection> chromatogramSelections, IChromatogramSelection selection) {
 
 		if(selection != null) {
 			chromatogramSelections.add(selection);
 		}
 	}
 
-	private void addChromatogramSelections(List<IChromatogramSelection<?, ?>> chromatogramSelections, List<IChromatogramSelection<?, ?>> selections) {
+	private void addChromatogramSelections(List<IChromatogramSelection> chromatogramSelections, List<IChromatogramSelection> selections) {
 
 		if(selections != null && !selections.isEmpty()) {
 			chromatogramSelections.addAll(selections);
 		}
 	}
 
-	private List<IChromatogramSelection<?, ?>> extractChromatogramSelections(Object object) {
+	private List<IChromatogramSelection> extractChromatogramSelections(Object object) {
 
-		List<IChromatogramSelection<?, ?>> chromatogramSelections = new ArrayList<>();
+		List<IChromatogramSelection> chromatogramSelections = new ArrayList<>();
 		//
 		if(object != null) {
 			/*

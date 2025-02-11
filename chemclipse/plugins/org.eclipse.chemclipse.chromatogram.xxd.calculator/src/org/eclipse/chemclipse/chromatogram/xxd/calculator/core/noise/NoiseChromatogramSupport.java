@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2024 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -36,7 +36,7 @@ import org.eclipse.core.runtime.SubMonitor;
 
 public class NoiseChromatogramSupport {
 
-	public static List<INoiseSegment> getNoiseSegments(IChromatogram<?> chromatogram, IScanRange range, boolean includeBorders, IProgressMonitor monitor) {
+	public static List<INoiseSegment> getNoiseSegments(IChromatogram chromatogram, IScanRange range, boolean includeBorders, IProgressMonitor monitor) {
 
 		NoiseSegmentMeasurementResult noiseSegmentMeasurementResult = chromatogram.getMeasurementResult(NoiseSegmentMeasurementResult.class);
 		if(noiseSegmentMeasurementResult == null) {
@@ -49,7 +49,7 @@ public class NoiseChromatogramSupport {
 		return noiseSegmentMeasurementResult.getSegments(range, includeBorders);
 	}
 
-	public static NoiseSegmentMeasurementResult applyNoiseSettings(IChromatogram<?> chromatogram, NoiseChromatogramClassifierSettings settings, IProgressMonitor monitor) {
+	public static NoiseSegmentMeasurementResult applyNoiseSettings(IChromatogram chromatogram, NoiseChromatogramClassifierSettings settings, IProgressMonitor monitor) {
 
 		SubMonitor subMonitor = SubMonitor.convert(monitor, 100);
 		//
@@ -83,12 +83,12 @@ public class NoiseChromatogramSupport {
 		return null;
 	}
 
-	public static String addNoiseSegment(IChromatogramSelection<?, ?> chromatogramSelection, boolean useOnlyNewSegment) {
+	public static String addNoiseSegment(IChromatogramSelection chromatogramSelection, boolean useOnlyNewSegment) {
 
 		String message = null;
 		//
 		if(chromatogramSelection != null) {
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			if(chromatogram != null) {
 				INoiseCalculator noiseCalculator = chromatogram.getNoiseCalculator();
 				if(noiseCalculator != null) {
@@ -150,7 +150,7 @@ public class NoiseChromatogramSupport {
 		return message;
 	}
 
-	private static INoiseCalculatorSupplier getNoiseCalculatorSupplier(IChromatogram<?> chromatogram) {
+	private static INoiseCalculatorSupplier getNoiseCalculatorSupplier(IChromatogram chromatogram) {
 
 		Collection<INoiseCalculatorSupplier> noiseCalculatorSuppliers = NoiseCalculator.getNoiseCalculatorSupport().getCalculatorSupplier();
 		//

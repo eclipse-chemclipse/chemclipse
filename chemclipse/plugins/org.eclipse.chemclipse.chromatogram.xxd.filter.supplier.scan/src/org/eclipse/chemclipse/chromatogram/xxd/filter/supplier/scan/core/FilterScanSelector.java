@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2024 Lablicate GmbH.
+ * Copyright (c) 2022, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -62,7 +62,7 @@ public class FilterScanSelector implements IProcessTypeSupplier {
 		}
 
 		@Override
-		public IChromatogramSelection<?, ?> apply(IChromatogramSelection<?, ?> chromatogramSelection, FilterSettingsScanSelector processSettings, ProcessExecutionContext context) throws InterruptedException {
+		public IChromatogramSelection apply(IChromatogramSelection chromatogramSelection, FilterSettingsScanSelector processSettings, ProcessExecutionContext context) throws InterruptedException {
 
 			try {
 				selectScan(chromatogramSelection, processSettings);
@@ -74,9 +74,9 @@ public class FilterScanSelector implements IProcessTypeSupplier {
 			return chromatogramSelection;
 		}
 
-		private void selectScan(IChromatogramSelection<?, ?> chromatogramSelection, FilterSettingsScanSelector filterSettingsScanSelector) throws FilterException {
+		private void selectScan(IChromatogramSelection chromatogramSelection, FilterSettingsScanSelector filterSettingsScanSelector) throws FilterException {
 
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			int startScan = chromatogram.getScanNumber(chromatogramSelection.getStartRetentionTime());
 			int stopScan = chromatogram.getScanNumber(chromatogramSelection.getStopRetentionTime());
 			int scanNumber = getScanNumber(chromatogram, filterSettingsScanSelector);
@@ -89,7 +89,7 @@ public class FilterScanSelector implements IProcessTypeSupplier {
 			}
 		}
 
-		private int getScanNumber(IChromatogram<?> chromatogram, FilterSettingsScanSelector filterSettingsScanSelector) {
+		private int getScanNumber(IChromatogram chromatogram, FilterSettingsScanSelector filterSettingsScanSelector) {
 
 			int scanNumber;
 			double value = filterSettingsScanSelector.getScanSelectorValue();

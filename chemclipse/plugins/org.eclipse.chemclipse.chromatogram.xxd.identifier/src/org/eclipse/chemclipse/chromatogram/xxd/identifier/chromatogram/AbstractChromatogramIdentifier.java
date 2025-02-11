@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2023 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -21,7 +21,7 @@ public abstract class AbstractChromatogramIdentifier implements IChromatogramIde
 
 	private static final String DESCRIPTION = "ChromatogramIdentifier";
 
-	public IProcessingInfo<?> validate(IChromatogramSelection<?, ?> chromatogramSelection, IIdentifierSettings identifierSettings) {
+	public IProcessingInfo<?> validate(IChromatogramSelection chromatogramSelection, IIdentifierSettings identifierSettings) {
 
 		IProcessingInfo<?> processingInfo = new ProcessingInfo<>();
 		try {
@@ -39,7 +39,7 @@ public abstract class AbstractChromatogramIdentifier implements IChromatogramIde
 	 * @param chromatogramSelection
 	 * @throws ValueMustNotBeNullException
 	 */
-	public void validateChromatogramSelection(IChromatogramSelection<?, ?> chromatogramSelection) throws ValueMustNotBeNullException {
+	public void validateChromatogramSelection(IChromatogramSelection chromatogramSelection) throws ValueMustNotBeNullException {
 
 		if(chromatogramSelection == null) {
 			throw new ValueMustNotBeNullException("The chromatogram selection must not be null.");

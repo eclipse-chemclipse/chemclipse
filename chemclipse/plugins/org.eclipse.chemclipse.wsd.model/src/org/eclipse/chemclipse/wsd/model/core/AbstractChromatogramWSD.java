@@ -15,6 +15,7 @@ package org.eclipse.chemclipse.wsd.model.core;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,13 +32,13 @@ import org.eclipse.chemclipse.model.results.NoiseSegmentMeasurementResult;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.wsd.model.core.selection.ChromatogramSelectionWSD;
 
-public abstract class AbstractChromatogramWSD extends AbstractChromatogram<IChromatogramPeakWSD> implements IChromatogramWSD {
+public abstract class AbstractChromatogramWSD extends AbstractChromatogram implements IChromatogramWSD {
 
 	private static final long serialVersionUID = -7048942996283330150L;
-	//
+
 	private final Map<Double, IBaselineModel> baselineModels;
 
-	public AbstractChromatogramWSD() {
+	protected AbstractChromatogramWSD() {
 
 		baselineModels = new HashMap<>();
 		updateNoiseFactor();
@@ -79,7 +80,7 @@ public abstract class AbstractChromatogramWSD extends AbstractChromatogram<IChro
 	}
 
 	@Override
-	public void fireUpdate(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public void fireUpdate(IChromatogramSelection chromatogramSelection) {
 
 		/*
 		 * Fire an update to inform all listeners.
@@ -141,5 +142,19 @@ public abstract class AbstractChromatogramWSD extends AbstractChromatogram<IChro
 		} else {
 			return PreferenceSupplier.getSelectedNoiseCalculatorId();
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<IChromatogramPeakWSD> getPeaks() {
+
+		return (List<IChromatogramPeakWSD>)super.getPeaks();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<IChromatogramPeakWSD> getPeaks(int startRetentionTime, int stopRetentionTime) {
+
+		return (List<IChromatogramPeakWSD>)super.getPeaks(startRetentionTime, stopRetentionTime);
 	}
 }

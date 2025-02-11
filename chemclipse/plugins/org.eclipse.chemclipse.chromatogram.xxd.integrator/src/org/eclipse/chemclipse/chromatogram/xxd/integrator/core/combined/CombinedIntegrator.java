@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2023 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -48,7 +48,7 @@ public class CombinedIntegrator {
 
 	}
 
-	public static IProcessingInfo<ICombinedIntegrationResult> integrate(IChromatogramSelection<?, ?> chromatogramSelection, ICombinedIntegrationSettings combinedIntegrationSettings, String integratorId, IProgressMonitor monitor) {
+	public static IProcessingInfo<ICombinedIntegrationResult> integrate(IChromatogramSelection chromatogramSelection, ICombinedIntegrationSettings combinedIntegrationSettings, String integratorId, IProgressMonitor monitor) {
 
 		IProcessingInfo<ICombinedIntegrationResult> processingInfo;
 		ICombinedIntegrator integrator = getCombinedIntegrator(integratorId);
@@ -60,12 +60,12 @@ public class CombinedIntegrator {
 		return processingInfo;
 	}
 
-	public static IProcessingInfo<ICombinedIntegrationResult> integrate(IChromatogramSelection<?, ?> chromatogramSelection, String integratorId, IProgressMonitor monitor) {
+	public static IProcessingInfo<ICombinedIntegrationResult> integrate(IChromatogramSelection chromatogramSelection, String integratorId, IProgressMonitor monitor) {
 
 		return integrate(chromatogramSelection, getCombinedIntegrator(integratorId), monitor);
 	}
 
-	public static IProcessingInfo<ICombinedIntegrationResult> integrate(IChromatogramSelection<?, ?> chromatogramSelection, ICombinedIntegrator integrator, IProgressMonitor monitor) {
+	public static IProcessingInfo<ICombinedIntegrationResult> integrate(IChromatogramSelection chromatogramSelection, ICombinedIntegrator integrator, IProgressMonitor monitor) {
 
 		IProcessingInfo<ICombinedIntegrationResult> processingInfo;
 		if(integrator != null) {

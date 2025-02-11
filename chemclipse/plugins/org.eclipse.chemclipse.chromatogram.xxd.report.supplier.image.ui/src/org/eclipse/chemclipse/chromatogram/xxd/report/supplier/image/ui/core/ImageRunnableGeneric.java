@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2023 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -57,11 +57,11 @@ public class ImageRunnableGeneric implements Runnable {
 	private PeakRetentionTimeComparator peakRetentionTimeComparator = new PeakRetentionTimeComparator(SortOrder.ASC);
 	//
 	private File file;
-	private IChromatogram<? extends IPeak> chromatogram;
+	private IChromatogram chromatogram;
 	//
 	private IChromatogramImageReportSettings settings;
 
-	public ImageRunnableGeneric(File file, IChromatogram<? extends IPeak> chromatogram, IChromatogramImageReportSettings settings) {
+	public ImageRunnableGeneric(File file, IChromatogram chromatogram, IChromatogramImageReportSettings settings) {
 
 		this.file = file;
 		this.chromatogram = chromatogram;

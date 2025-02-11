@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2024 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -26,7 +26,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 public class ChromatogramWriter {
 
-	public void writeChromatogram(File file, IChromatogram<?> chromatogram, IndexExportSettings indexExportSettings, IProgressMonitor monitor) throws FileNotFoundException, FileIsNotWriteableException, IOException {
+	public void writeChromatogram(File file, IChromatogram chromatogram, IndexExportSettings indexExportSettings, IProgressMonitor monitor) throws FileNotFoundException, FileIsNotWriteableException, IOException {
 
 		if(chromatogram == null || file == null) {
 			throw new IOException("The chromatogram and the file must be not null.");

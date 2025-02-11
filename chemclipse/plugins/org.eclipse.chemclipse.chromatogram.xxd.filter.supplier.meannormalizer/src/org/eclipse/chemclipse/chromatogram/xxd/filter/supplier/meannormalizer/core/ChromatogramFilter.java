@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2023 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -36,7 +36,7 @@ public class ChromatogramFilter extends AbstractChromatogramFilter {
 
 	// TODO IProgressMonitor
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<IChromatogramFilterResult> processingInfo = validate(chromatogramSelection, chromatogramFilterSettings);
 		if(!processingInfo.hasErrorMessages()) {
@@ -55,19 +55,19 @@ public class ChromatogramFilter extends AbstractChromatogramFilter {
 
 	// TODO Junit
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor) {
 
 		FilterSettings filterSettings = PreferenceSupplier.getFilterSettings();
 		return applyFilter(chromatogramSelection, filterSettings, monitor);
 	}
 
-	private void applyMeanNormalizerFilter(IChromatogramSelection<?, ?> chromatogramSelection) throws FilterException {
+	private void applyMeanNormalizerFilter(IChromatogramSelection chromatogramSelection) throws FilterException {
 
 		/*
 		 * Get the chromatogram to determine the start and stop scan of the
 		 * chromatogram selection.
 		 */
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		int startScan = chromatogram.getScanNumber(chromatogramSelection.getStartRetentionTime());
 		int stopScan = chromatogram.getScanNumber(chromatogramSelection.getStopRetentionTime());
 		/*

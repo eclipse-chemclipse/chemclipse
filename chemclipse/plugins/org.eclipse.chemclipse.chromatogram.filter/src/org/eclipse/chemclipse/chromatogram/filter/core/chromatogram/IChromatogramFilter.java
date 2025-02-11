@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2023 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -32,7 +32,7 @@ public interface IChromatogramFilter {
 	 * @param monitor
 	 * @return {@link IProcessingInfo}
 	 */
-	IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor);
+	IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor);
 
 	/**
 	 * Apply the filter in the given chromatogram selection.
@@ -43,7 +43,7 @@ public interface IChromatogramFilter {
 	 * @param monitor
 	 * @return {@link IProcessingInfo}
 	 */
-	IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor);
+	IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor);
 
 	/**
 	 * Validates the selection and settings and returns a process info instance.
@@ -52,7 +52,7 @@ public interface IChromatogramFilter {
 	 * @param chromatogramFilterSettings
 	 * @return {@link IProcessingInfo}
 	 */
-	IProcessingInfo<IChromatogramFilterResult> validate(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings);
+	IProcessingInfo<IChromatogramFilterResult> validate(IChromatogramSelection chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings);
 
 	/**
 	 * Validates that chromatogram selection and the stored chromatogram are not
@@ -61,7 +61,7 @@ public interface IChromatogramFilter {
 	 * @param chromatogramSelection
 	 * @return {@link IProcessingInfo}
 	 */
-	IProcessingInfo<IChromatogramFilterResult> validateChromatogramSelection(IChromatogramSelection<?, ?> chromatogramSelection);
+	IProcessingInfo<IChromatogramFilterResult> validateChromatogramSelection(IChromatogramSelection chromatogramSelection);
 
 	/**
 	 * Validates that the filter settings are not null.

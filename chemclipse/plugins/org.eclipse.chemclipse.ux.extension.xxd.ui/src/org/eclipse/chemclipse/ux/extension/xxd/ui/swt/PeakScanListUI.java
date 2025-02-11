@@ -44,10 +44,10 @@ public class PeakScanListUI extends ExtendedTableViewer {
 		createColumns();
 	}
 
-	public void setInput(IChromatogramSelection<?, ?> chromatogramSelection, boolean showPeaks, boolean showPeaksInRange, boolean showScans, boolean showScansInRange) {
+	public void setInput(IChromatogramSelection chromatogramSelection, boolean showPeaks, boolean showPeaksInRange, boolean showScans, boolean showScansInRange) {
 
 		if(chromatogramSelection != null) {
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			double chromatogramPeakArea = chromatogram.getPeakIntegratedArea();
 			labelProvider.setChromatogramPeakArea(chromatogramPeakArea);
 			tableComparator.setChromatogramPeakArea(chromatogramPeakArea);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -36,7 +36,7 @@ public abstract class AbstractProcessSettings implements IProcessSettings {
 	 * @param extension
 	 * @return String
 	 */
-	protected String getFileName(IChromatogram<?> chromatogram, String fileNamePattern, String extension) {
+	protected String getFileName(IChromatogram chromatogram, String fileNamePattern, String extension) {
 
 		String fileName = replaceFileName(chromatogram, fileNamePattern);
 		fileName = replaceFileExtension(fileName, extension);
@@ -66,7 +66,7 @@ public abstract class AbstractProcessSettings implements IProcessSettings {
 		return value;
 	}
 
-	private String replaceFileName(IChromatogram<?> chromatogram, String fileNamePattern) {
+	private String replaceFileName(IChromatogram chromatogram, String fileNamePattern) {
 
 		String fileName = fileNamePattern;
 		/*

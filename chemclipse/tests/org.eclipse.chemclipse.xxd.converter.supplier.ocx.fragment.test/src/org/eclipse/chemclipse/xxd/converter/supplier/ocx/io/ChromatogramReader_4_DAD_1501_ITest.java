@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023 Lablicate GmbH.
+ * Copyright (c) 2023, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -82,7 +82,7 @@ public class ChromatogramReader_4_DAD_1501_ITest extends ChromatogramReaderWSDTe
 
 	public void testReader_10() {
 
-		assertEquals(4, chromatogram.getNumberOfPeaks());
+		assertEquals(4, chromatogram.getPeaks().size());
 	}
 
 	public void testReader_11() {

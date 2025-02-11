@@ -23,7 +23,6 @@ import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.exceptions.NoIdentifierAvailableException;
 import org.eclipse.chemclipse.model.identifier.IPeakIdentificationResults;
 import org.eclipse.chemclipse.model.identifier.core.Identifier;
-import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
@@ -152,9 +151,9 @@ public class PeakIdentifierMSD {
 	 * @return {@link IProcessingInfo}
 	 * @throws NoIdentifierAvailableException
 	 */
-	public static IProcessingInfo<IPeakIdentificationResults> identify(IChromatogramPeakMSD peak, IPeakIdentifierSettingsMSD identifierSettings, String identifierId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IPeakIdentificationResults> identify(IPeakMSD peak, IPeakIdentifierSettingsMSD identifierSettings, String identifierId, IProgressMonitor monitor) {
 
-		List<IChromatogramPeakMSD> peaks = new ArrayList<>();
+		List<IPeakMSD> peaks = new ArrayList<>();
 		peaks.add(peak);
 		return identify(peaks, identifierSettings, identifierId, monitor);
 	}

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023 Lablicate GmbH.
+ * Copyright (c) 2023, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,11 +16,10 @@ import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.model.notifier.UpdateNotifier;
 import org.eclipse.chemclipse.model.selection.AbstractChromatogramSelection;
-import org.eclipse.chemclipse.vsd.model.core.IChromatogramPeakVSD;
 import org.eclipse.chemclipse.vsd.model.core.IChromatogramVSD;
 import org.eclipse.chemclipse.vsd.model.core.IScanVSD;
 
-public class ChromatogramSelectionVSD extends AbstractChromatogramSelection<IChromatogramPeakVSD, IChromatogramVSD> implements IChromatogramSelectionVSD {
+public class ChromatogramSelectionVSD extends AbstractChromatogramSelection implements IChromatogramSelectionVSD {
 
 	private IScanVSD selectedScan;
 
@@ -58,7 +57,7 @@ public class ChromatogramSelectionVSD extends AbstractChromatogramSelection<IChr
 	public void reset(boolean fireUpdate) {
 
 		super.reset(fireUpdate);
-		IChromatogram<?> chromatogram = getChromatogram();
+		IChromatogram chromatogram = getChromatogram();
 		/*
 		 * Scan
 		 */
@@ -111,5 +110,15 @@ public class ChromatogramSelectionVSD extends AbstractChromatogramSelection<IChr
 		super.update(forceReload);
 		setSelectedScan(selectedScan, false);
 		fireUpdateChange(forceReload);
+	}
+
+	@Override
+	public IChromatogramVSD getChromatogram() {
+
+		IChromatogram chromatogram = super.getChromatogram();
+		if(chromatogram instanceof IChromatogramVSD chromatogramVSD) {
+			return chromatogramVSD;
+		}
+		return null;
 	}
 }

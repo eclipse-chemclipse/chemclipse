@@ -70,9 +70,9 @@ public class PeakConverterMSDProcessTypeSupplier implements IProcessTypeSupplier
 		}
 
 		@Override
-		public IChromatogramSelection<?, ?> apply(IChromatogramSelection<?, ?> chromatogramSelection, PeakExportSettings processSettings, ProcessExecutionContext context) {
+		public IChromatogramSelection apply(IChromatogramSelection chromatogramSelection, PeakExportSettings processSettings, ProcessExecutionContext context) {
 
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			if(chromatogram instanceof IChromatogramMSD msd) {
 				IProcessingInfo<File> info = converter.convert(processSettings.getExportFile(supplier.getFileExtension(), chromatogram), createPeaks(msd), false, context.getProgressMonitor());
 				context.addMessages(info);

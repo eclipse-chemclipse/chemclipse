@@ -74,7 +74,7 @@ public class PeakIntegrator extends AbstractPeakIntegrator {
 	}
 
 	@Override
-	public IProcessingInfo<IPeakIntegrationResults> integrate(IChromatogramSelection<?, ?> chromatogramSelection, IPeakIntegrationSettings peakIntegrationSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<IPeakIntegrationResults> integrate(IChromatogramSelection chromatogramSelection, IPeakIntegrationSettings peakIntegrationSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<IPeakIntegrationResults> processingInfo = super.validate(chromatogramSelection, peakIntegrationSettings);
 		if(!processingInfo.hasErrorMessages()) {
@@ -88,7 +88,7 @@ public class PeakIntegrator extends AbstractPeakIntegrator {
 	}
 
 	@Override
-	public IProcessingInfo<IPeakIntegrationResults> integrate(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor) {
+	public IProcessingInfo<IPeakIntegrationResults> integrate(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor) {
 
 		PeakIntegrationSettings peakIntegrationSettings = PreferenceSupplier.getPeakIntegrationSettings();
 		return integrate(chromatogramSelection, peakIntegrationSettings, monitor);

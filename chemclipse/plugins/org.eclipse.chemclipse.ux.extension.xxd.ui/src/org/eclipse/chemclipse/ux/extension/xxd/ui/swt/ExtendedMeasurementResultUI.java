@@ -63,7 +63,7 @@ public class ExtendedMeasurementResultUI extends Composite implements IExtendedP
 	private AtomicReference<Button> buttonClipboard = new AtomicReference<>();
 	private AtomicReference<MeasurementResultUI> measurementResultsControl = new AtomicReference<>();
 	//
-	private IChromatogram<?> chromatogram = null;
+	private IChromatogram chromatogram = null;
 
 	public ExtendedMeasurementResultUI(Composite parent, int style) {
 
@@ -71,7 +71,7 @@ public class ExtendedMeasurementResultUI extends Composite implements IExtendedP
 		createControl();
 	}
 
-	public void setInput(IChromatogram<?> chromatogram) {
+	public void setInput(IChromatogram chromatogram) {
 
 		this.chromatogram = chromatogram;
 		updateInput();
@@ -372,7 +372,7 @@ public class ExtendedMeasurementResultUI extends Composite implements IExtendedP
 		comboMeasurementResults.get().getCombo().select(index);
 	}
 
-	private List<IMeasurementResult<?>> getMeasurementResults(IChromatogram<?> chromatogram) {
+	private List<IMeasurementResult<?>> getMeasurementResults(IChromatogram chromatogram) {
 
 		List<IMeasurementResult<?>> measurementResults = new ArrayList<>();
 		//

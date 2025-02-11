@@ -23,7 +23,7 @@ import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.model.notifier.UpdateNotifier;
 import org.eclipse.chemclipse.model.selection.AbstractChromatogramSelection;
 
-public class ChromatogramSelectionCSD extends AbstractChromatogramSelection<IChromatogramPeakCSD, IChromatogramCSD> implements IChromatogramSelectionCSD {
+public class ChromatogramSelectionCSD extends AbstractChromatogramSelection implements IChromatogramSelectionCSD {
 
 	private IScanCSD selectedScan;
 
@@ -52,7 +52,7 @@ public class ChromatogramSelectionCSD extends AbstractChromatogramSelection<IChr
 	@Override
 	public IChromatogramCSD getChromatogram() {
 
-		IChromatogram<?> chromatogram = super.getChromatogram();
+		IChromatogram chromatogram = super.getChromatogram();
 		if(chromatogram instanceof IChromatogramCSD chromatogramCSD) {
 			return chromatogramCSD;
 		}
@@ -75,7 +75,7 @@ public class ChromatogramSelectionCSD extends AbstractChromatogramSelection<IChr
 	public void reset(boolean fireUpdate) {
 
 		super.reset(fireUpdate);
-		IChromatogram<?> chromatogram = getChromatogram();
+		IChromatogram chromatogram = getChromatogram();
 		/*
 		 * Scan
 		 */

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2024 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -26,7 +26,7 @@ public class ChromatogramSubtractor {
 
 	private static final boolean CHANNEL_WISE_SUBTRACTION = true;
 
-	public void perform(IChromatogram<?> chromatogramMaster, IChromatogram<?> chromatogramSubtract) {
+	public void perform(IChromatogram chromatogramMaster, IChromatogram chromatogramSubtract) {
 
 		if(chromatogramMaster != null && chromatogramSubtract != null) {
 			int startRetentionTime = chromatogramMaster.getStartRetentionTime();
@@ -35,7 +35,7 @@ public class ChromatogramSubtractor {
 		}
 	}
 
-	public void perform(IChromatogram<?> chromatogramMaster, IChromatogram<?> chromatogramSubtract, int startRetentionTime, int stopRetentionTime) {
+	public void perform(IChromatogram chromatogramMaster, IChromatogram chromatogramSubtract, int startRetentionTime, int stopRetentionTime) {
 
 		if(chromatogramMaster != null && chromatogramSubtract != null) {
 			int startScan = chromatogramMaster.getScanNumber(startRetentionTime);
@@ -73,7 +73,7 @@ public class ChromatogramSubtractor {
 		}
 	}
 
-	private void subtractWSD(IScanWSD scanMasterWSD, IChromatogram<?> chromatogramSubtract) {
+	private void subtractWSD(IScanWSD scanMasterWSD, IChromatogram chromatogramSubtract) {
 
 		if(scanMasterWSD != null) {
 			int scanNumberSubtract = chromatogramSubtract.getScanNumber(scanMasterWSD.getRetentionTime());
@@ -92,7 +92,7 @@ public class ChromatogramSubtractor {
 		}
 	}
 
-	private void subtractMSD(IScanMSD scanMasterMSD, IChromatogram<?> chromatogramSubtract) {
+	private void subtractMSD(IScanMSD scanMasterMSD, IChromatogram chromatogramSubtract) {
 
 		if(scanMasterMSD != null) {
 			int scanNumberSubtract = chromatogramSubtract.getScanNumber(scanMasterMSD.getRetentionTime());

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2024 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -37,7 +37,7 @@ public class UpdateNotifierUI {
 		}
 	}
 
-	public static void update(Display display, IChromatogramSelection<?, ?> chromatogramSelection) {
+	public static void update(Display display, IChromatogramSelection chromatogramSelection) {
 
 		if(display != null) {
 			display.asyncExec(new Runnable() {

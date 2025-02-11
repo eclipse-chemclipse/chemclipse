@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2023 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -25,13 +25,13 @@ public class RetentionTimeStretcher extends AbstractRetentionTimeModifier {
 
 	}
 
-	public static void stretchChromatogram(IChromatogramSelection<?, ?> chromatogramSelection, FilterSettingsStretch filterSettings) throws FilterException {
+	public static void stretchChromatogram(IChromatogramSelection chromatogramSelection, FilterSettingsStretch filterSettings) throws FilterException {
 
 		if(chromatogramSelection == null || chromatogramSelection.getChromatogram() == null) {
 			throw new FilterException("The chromatogram must not be null.");
 		}
 		//
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		int scanRange = chromatogram.getNumberOfScans() - 1;
 		if(scanRange > 0) {
 			float retentionTimeRange = filterSettings.getChromatogramLength() - filterSettings.getScanDelay();

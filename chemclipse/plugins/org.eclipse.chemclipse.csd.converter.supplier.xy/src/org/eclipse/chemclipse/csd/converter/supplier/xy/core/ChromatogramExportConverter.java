@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2024 Lablicate GmbH.
+ * Copyright (c) 2012, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -24,7 +24,6 @@ import org.eclipse.chemclipse.csd.converter.supplier.xy.io.ChromatogramWriter;
 import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.osgi.util.NLS;
@@ -37,7 +36,7 @@ public class ChromatogramExportConverter extends AbstractChromatogramExportConve
 	private static final String FILE_EXTENSION = ".xy";
 
 	@Override
-	public IProcessingInfo<File> convert(File file, IChromatogram<? extends IPeak> chromatogram, IProgressMonitor monitor) {
+	public IProcessingInfo<File> convert(File file, IChromatogram chromatogram, IProgressMonitor monitor) {
 
 		IProcessingInfo<File> processingInfo = super.validate(file);
 		if(!processingInfo.hasErrorMessages() && chromatogram instanceof IChromatogramCSD chromatogramCSD) {
@@ -58,8 +57,8 @@ public class ChromatogramExportConverter extends AbstractChromatogramExportConve
 				 * References
 				 */
 				int id = 1;
-				List<IChromatogram<?>> chromatogramReferences = chromatogram.getReferencedChromatograms();
-				for(IChromatogram<?> chromatogramReference : chromatogramReferences) {
+				List<IChromatogram> chromatogramReferences = chromatogram.getReferencedChromatograms();
+				for(IChromatogram chromatogramReference : chromatogramReferences) {
 					if(chromatogramReference instanceof IChromatogramCSD referenceChromatogramCSD) {
 						File fileReference = new File(directory + File.separator + fileName + "-" + id++ + FILE_EXTENSION);
 						writer.writeChromatogram(fileReference, referenceChromatogramCSD, monitor);

@@ -37,7 +37,7 @@ public class ChromatogramUpdateSupport {
 					List<Object> objects = dataUpdateSupport.getUpdates(IChemClipseEvents.TOPIC_CHROMATOGRAM_XXD_UPDATE_SELECTION);
 					if(objects != null && !objects.isEmpty()) {
 						Object object = objects.get(0);
-						if(object instanceof IChromatogramSelection<?, ?> chromatogramSelection) {
+						if(object instanceof IChromatogramSelection chromatogramSelection) {
 							if(scan != null) {
 								/*
 								 * We assume that the subtraction takes place in the same
@@ -48,7 +48,7 @@ public class ChromatogramUpdateSupport {
 								 * the best way to prevent unwanted behavior. The scan chart shows
 								 * data from scans and peaks.
 								 */
-								IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+								IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 								int retentionTime = scan.getRetentionTime();
 								int scanNumber = chromatogram.getScanNumber(retentionTime);
 								IScan scanReference = chromatogram.getScan(scanNumber);

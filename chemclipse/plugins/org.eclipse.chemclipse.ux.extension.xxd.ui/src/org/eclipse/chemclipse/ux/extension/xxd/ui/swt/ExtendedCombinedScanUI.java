@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2024 Lablicate GmbH.
+ * Copyright (c) 2017, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -90,7 +90,7 @@ public class ExtendedCombinedScanUI extends Composite implements IExtendedPartUI
 	/*
 	 * MSD, VSD
 	 */
-	private IChromatogramSelection<?, ?> chromatogramSelection = null;
+	private IChromatogramSelection chromatogramSelection = null;
 	private IScan combinedScan = null;
 	private boolean locked = false;
 	//
@@ -510,10 +510,10 @@ public class ExtendedCombinedScanUI extends Composite implements IExtendedPartUI
 	private String getCombinedRangeInfo(Object object) {
 
 		StringBuilder builder = new StringBuilder();
-		if(object instanceof IChromatogramSelection<?, ?> chromatogramSelection) {
+		if(object instanceof IChromatogramSelection chromatogramSelection) {
 			int startRetentionTime = chromatogramSelection.getStartRetentionTime();
 			int stopRetentionTime = chromatogramSelection.getStopRetentionTime();
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			builder.append("Scan range: ");
 			builder.append(chromatogram.getScanNumber(startRetentionTime));
 			builder.append("–");

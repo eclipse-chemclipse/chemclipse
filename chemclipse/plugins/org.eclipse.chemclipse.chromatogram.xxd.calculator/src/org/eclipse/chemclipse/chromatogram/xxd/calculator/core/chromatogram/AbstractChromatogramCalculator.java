@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2023 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -21,7 +21,7 @@ public abstract class AbstractChromatogramCalculator implements IChromatogramCal
 	private static final String DESCRIPTION = "Chromatogram Calculator";
 
 	@Override
-	public IProcessingInfo<?> validate(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramCalculatorSettings chromatogramCalculatorSettings) {
+	public IProcessingInfo<?> validate(IChromatogramSelection chromatogramSelection, IChromatogramCalculatorSettings chromatogramCalculatorSettings) {
 
 		IProcessingInfo<?> processingInfo = new ProcessingInfo<>();
 		processingInfo.addMessages(validateChromatogramSelection(chromatogramSelection));
@@ -36,7 +36,7 @@ public abstract class AbstractChromatogramCalculator implements IChromatogramCal
 	 * @param chromatogramSelection
 	 * @return {@link IProcessingInfo}
 	 */
-	private IProcessingInfo<?> validateChromatogramSelection(IChromatogramSelection<?, ?> chromatogramSelection) {
+	private IProcessingInfo<?> validateChromatogramSelection(IChromatogramSelection chromatogramSelection) {
 
 		IProcessingInfo<?> processingInfo = new ProcessingInfo<>();
 		if(chromatogramSelection == null) {

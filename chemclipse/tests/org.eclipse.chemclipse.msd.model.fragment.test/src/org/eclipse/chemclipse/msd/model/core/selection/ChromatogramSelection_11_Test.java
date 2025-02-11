@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2021 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -37,7 +37,6 @@ public class ChromatogramSelection_11_Test extends TestCase {
 		EasyMock.expect(chromatogram.getStartRetentionTime()).andStubReturn(1);
 		EasyMock.expect(chromatogram.getStopRetentionTime()).andStubReturn(100);
 		EasyMock.expect(chromatogram.getMaxSignal()).andStubReturn(127500.0f);
-		EasyMock.expect(chromatogram.getNumberOfPeaks()).andStubReturn(1);
 		EasyMock.replay(chromatogram);
 		/*
 		 * Default values from IChromatogram will be chosen.

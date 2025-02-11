@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2024 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -25,10 +25,10 @@ public class BackgroundIntegrator extends AbstractIntegrator {
 
 	private static final Logger logger = Logger.getLogger(BackgroundIntegrator.class);
 
-	public double integrate(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public double integrate(IChromatogramSelection chromatogramSelection) {
 
 		double backgroundArea = 0.0d;
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		int startScan = chromatogram.getScanNumber(chromatogramSelection.getStartRetentionTime());
 		int stopScan = chromatogram.getScanNumber(chromatogramSelection.getStopRetentionTime());
 		IBaselineModel baselineModel = chromatogram.getBaselineModel();

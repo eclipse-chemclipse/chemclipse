@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,7 +13,6 @@ package org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.i
 
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.settings.RetentionIndexImporterSettings;
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IPeak;
 
 public class RetentionIndexImporter_1_ITest extends RetentionIndexImporterTestCase {
 
@@ -21,7 +20,7 @@ public class RetentionIndexImporter_1_ITest extends RetentionIndexImporterTestCa
 
 		RetentionIndexImporterSettings settings = getRetentionIndexImporterSettings();
 		//
-		IChromatogram<? extends IPeak> chromatogram = getChromatogram(CHROMATOGRAM_1);
+		IChromatogram chromatogram = getChromatogram(CHROMATOGRAM_1);
 		apply(chromatogram, settings);
 		//
 		assertEquals(5, chromatogram.getSeparationColumnIndices().size());
@@ -33,7 +32,7 @@ public class RetentionIndexImporter_1_ITest extends RetentionIndexImporterTestCa
 		RetentionIndexImporterSettings settings = getRetentionIndexImporterSettings();
 		settings.setCaseSensitive(false);
 		//
-		IChromatogram<? extends IPeak> chromatogram = getChromatogram(CHROMATOGRAM_1);
+		IChromatogram chromatogram = getChromatogram(CHROMATOGRAM_1);
 		apply(chromatogram, settings);
 		//
 		assertEquals(5, chromatogram.getSeparationColumnIndices().size());
@@ -45,7 +44,7 @@ public class RetentionIndexImporter_1_ITest extends RetentionIndexImporterTestCa
 		RetentionIndexImporterSettings settings = getRetentionIndexImporterSettings();
 		settings.setFileNamePattern("");
 		//
-		IChromatogram<? extends IPeak> chromatogram = getChromatogram(CHROMATOGRAM_1);
+		IChromatogram chromatogram = getChromatogram(CHROMATOGRAM_1);
 		apply(chromatogram, settings);
 		//
 		assertEquals(5, chromatogram.getSeparationColumnIndices().size());
@@ -57,7 +56,7 @@ public class RetentionIndexImporter_1_ITest extends RetentionIndexImporterTestCa
 		RetentionIndexImporterSettings settings = getRetentionIndexImporterSettings();
 		settings.setFileNamePattern("{chromatogram}");
 		//
-		IChromatogram<? extends IPeak> chromatogram = getChromatogram(CHROMATOGRAM_1);
+		IChromatogram chromatogram = getChromatogram(CHROMATOGRAM_1);
 		apply(chromatogram, settings);
 		//
 		assertEquals(10, chromatogram.getSeparationColumnIndices().size());
@@ -69,7 +68,7 @@ public class RetentionIndexImporter_1_ITest extends RetentionIndexImporterTestCa
 		RetentionIndexImporterSettings settings = getRetentionIndexImporterSettings();
 		settings.setFileNamePattern("heptane C7 - tridecane C13");
 		//
-		IChromatogram<? extends IPeak> chromatogram = getChromatogram(CHROMATOGRAM_1);
+		IChromatogram chromatogram = getChromatogram(CHROMATOGRAM_1);
 		apply(chromatogram, settings);
 		//
 		assertEquals(7, chromatogram.getSeparationColumnIndices().size());
@@ -81,7 +80,7 @@ public class RetentionIndexImporter_1_ITest extends RetentionIndexImporterTestCa
 		RetentionIndexImporterSettings settings = getRetentionIndexImporterSettings();
 		settings.setFileNamePattern("(.*)(C7)(.*)(C13)");
 		//
-		IChromatogram<? extends IPeak> chromatogram = getChromatogram(CHROMATOGRAM_1);
+		IChromatogram chromatogram = getChromatogram(CHROMATOGRAM_1);
 		apply(chromatogram, settings);
 		//
 		assertEquals(7, chromatogram.getSeparationColumnIndices().size());
@@ -93,7 +92,7 @@ public class RetentionIndexImporter_1_ITest extends RetentionIndexImporterTestCa
 		RetentionIndexImporterSettings settings = getRetentionIndexImporterSettings();
 		settings.setProcessReferenceChromatograms(false);
 		//
-		IChromatogram<? extends IPeak> chromatogram = getChromatogram(CHROMATOGRAM_1);
+		IChromatogram chromatogram = getChromatogram(CHROMATOGRAM_1);
 		apply(chromatogram, settings);
 		//
 		assertEquals(5, chromatogram.getSeparationColumnIndices().size());
@@ -106,7 +105,7 @@ public class RetentionIndexImporter_1_ITest extends RetentionIndexImporterTestCa
 		settings.setProcessReferenceChromatograms(false);
 		settings.setFileNamePattern("{chromatogram}");
 		//
-		IChromatogram<? extends IPeak> chromatogram = getChromatogram(CHROMATOGRAM_1);
+		IChromatogram chromatogram = getChromatogram(CHROMATOGRAM_1);
 		apply(chromatogram, settings);
 		//
 		assertEquals(10, chromatogram.getSeparationColumnIndices().size());

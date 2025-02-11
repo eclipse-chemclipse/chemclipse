@@ -34,18 +34,18 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 public class ChromatogramReferencesSupport {
 
-	public static void exportReferences(File file, IChromatogram<?> chromatogram, IProgressMonitor monitor) throws FileNotFoundException, FileIsNotWriteableException, IOException {
+	public static void exportReferences(File file, IChromatogram chromatogram, IProgressMonitor monitor) throws FileNotFoundException, FileIsNotWriteableException, IOException {
 
 		ChromatogramWriterMSD chromatogramWriterMSD = new ChromatogramWriterMSD();
 		ChromatogramWriterCSD chromatogramWriterCSD = new ChromatogramWriterCSD();
 		ChromatogramWriterWSD chromatogramWriterWSD = new ChromatogramWriterWSD();
 		//
 		HeaderField headerField = PreferenceSupplier.getChromatogramExportReferencesHeaderField();
-		List<IChromatogram<?>> chromatogramReferences = chromatogram.getReferencedChromatograms();
+		List<IChromatogram> chromatogramReferences = chromatogram.getReferencedChromatograms();
 		DecimalFormat decimalFormat = getDecimalFormatIndex(chromatogramReferences.size());
 		//
 		int i = 1;
-		for(IChromatogram<?> chromatogramReference : chromatogramReferences) {
+		for(IChromatogram chromatogramReference : chromatogramReferences) {
 			if(!chromatogramReference.getScans().isEmpty()) {
 				if(chromatogramReference instanceof IChromatogramCSD referencedChromatogramCSD) {
 					/*
@@ -89,7 +89,7 @@ public class ChromatogramReferencesSupport {
 		return ValueFormat.getDecimalFormatEnglish(builder.toString());
 	}
 
-	private static File getFileReference(File file, IChromatogram<?> chromatogram, HeaderField headerField, String index, String type) {
+	private static File getFileReference(File file, IChromatogram chromatogram, HeaderField headerField, String index, String type) {
 
 		String extension = VersionConstants.FILE_EXTENSION_CHROMATOGRAM;
 		String identifier = HeaderUtil.getHeaderData(chromatogram, headerField, index);

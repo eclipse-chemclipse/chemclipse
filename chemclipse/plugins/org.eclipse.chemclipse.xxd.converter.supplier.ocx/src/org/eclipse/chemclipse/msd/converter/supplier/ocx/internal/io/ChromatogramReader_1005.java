@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2024 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -340,12 +340,11 @@ public class ChromatogramReader_1005 extends AbstractChromatogramReader implemen
 
 	private void readPeaks(DataInputStream dataInputStream, boolean closeStream, IChromatogramMSD chromatogram, IProgressMonitor monitor) throws IOException {
 
-		//
 		int numberOfPeaks = dataInputStream.readInt();
 		for(int i = 1; i <= numberOfPeaks; i++) {
 			try {
 				IChromatogramPeakMSD peak = readPeak(dataInputStream, chromatogram, monitor);
-				chromatogram.addPeak(peak);
+				chromatogram.getPeaks().add(peak);
 			} catch(IllegalArgumentException e) {
 				logger.warn(e);
 			} catch(PeakException e) {

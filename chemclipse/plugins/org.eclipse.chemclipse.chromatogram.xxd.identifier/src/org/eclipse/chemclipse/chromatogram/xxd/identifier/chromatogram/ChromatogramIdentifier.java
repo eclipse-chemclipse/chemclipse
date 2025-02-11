@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2023 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -54,7 +54,7 @@ public class ChromatogramIdentifier {
 	 * @param monitor
 	 * @return {@link IProcessingInfo}
 	 */
-	public static IProcessingInfo<?> identify(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramIdentifierSettings identifierSettings, String identifierId, IProgressMonitor monitor) {
+	public static IProcessingInfo<?> identify(IChromatogramSelection chromatogramSelection, IChromatogramIdentifierSettings identifierSettings, String identifierId, IProgressMonitor monitor) {
 
 		IProcessingInfo<?> processingInfo;
 		IChromatogramIdentifier chromatogramIdentifier = getChromatogramIdentifier(identifierId);
@@ -74,7 +74,7 @@ public class ChromatogramIdentifier {
 	 * @param monitor
 	 * @return {@link IProcessingInfo}
 	 */
-	public static IProcessingInfo<?> identify(IChromatogramSelection<?, ?> chromatogramSelection, String identifierId, IProgressMonitor monitor) {
+	public static IProcessingInfo<?> identify(IChromatogramSelection chromatogramSelection, String identifierId, IProgressMonitor monitor) {
 
 		IProcessingInfo<?> processingInfo;
 		IChromatogramIdentifier chromatogramIdentifier = getChromatogramIdentifier(identifierId);

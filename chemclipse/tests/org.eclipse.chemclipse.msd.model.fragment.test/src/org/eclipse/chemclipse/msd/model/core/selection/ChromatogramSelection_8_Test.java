@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.selection;
 
+import java.util.List;
+
 import org.easymock.EasyMock;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
@@ -36,10 +38,17 @@ public class ChromatogramSelection_8_Test extends TestCase {
 		 * test.
 		 */
 		chromatogram = EasyMock.createNiceMock(IChromatogramMSD.class);
+
 		EasyMock.expect(chromatogram.getStartRetentionTime()).andStubReturn(1);
 		EasyMock.expect(chromatogram.getStopRetentionTime()).andStubReturn(100);
 		EasyMock.expect(chromatogram.getMaxSignal()).andStubReturn(127500.0f);
-		EasyMock.expect(chromatogram.getNumberOfPeaks()).andStubReturn(1); // see additional check in selection.getSelectedPeak();
+
+		// see additional check in selection.getSelectedPeak();
+		List<IChromatogramPeakMSD> peaks = EasyMock.createNiceMock(List.class);
+		EasyMock.expect(peaks.add(EasyMock.createNiceMock(IChromatogramPeakMSD.class))).andReturn(true);
+		EasyMock.replay(peaks);
+		EasyMock.expect(chromatogram.getPeaks()).andStubReturn(peaks);
+
 		scan = new VendorMassSpectrum();
 		scan.setRetentionTime(4500);
 		scan.addIon(new Ion(45.0f, 2883.9f));

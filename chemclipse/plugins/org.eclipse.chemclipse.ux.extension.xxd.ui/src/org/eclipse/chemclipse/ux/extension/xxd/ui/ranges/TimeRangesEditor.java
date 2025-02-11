@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2024 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -372,7 +372,7 @@ public class TimeRangesEditor extends Composite {
 	private TimeRanges extractTimeRangesFromChromatogram(File file, IProgressMonitor monitor) {
 
 		TimeRanges timeRanges = new TimeRanges();
-		IChromatogram<? extends IPeak> chromatogram = loadChromatogram(file, monitor);
+		IChromatogram chromatogram = loadChromatogram(file, monitor);
 		if(chromatogram != null) {
 			/*
 			 * Extract the time ranges from the chromatogram.
@@ -396,10 +396,10 @@ public class TimeRangesEditor extends Composite {
 		return timeRanges;
 	}
 
-	private IChromatogram<? extends IPeak> loadChromatogram(File file, IProgressMonitor monitor) {
+	private IChromatogram loadChromatogram(File file, IProgressMonitor monitor) {
 
 		IProcessingInfo<IChromatogramMSD> processingInfoMSD = ChromatogramConverterMSD.getInstance().convert(file, monitor);
-		IChromatogram<? extends IPeak> chromatogram = processingInfoMSD.getProcessingResult();
+		IChromatogram chromatogram = processingInfoMSD.getProcessingResult();
 		if(chromatogram == null) {
 			IProcessingInfo<IChromatogramCSD> processingInfoCSD = ChromatogramConverterCSD.getInstance().convert(file, monitor);
 			chromatogram = processingInfoCSD.getProcessingResult();
@@ -408,7 +408,7 @@ public class TimeRangesEditor extends Composite {
 		return chromatogram;
 	}
 
-	private TimeRanges extractTimeRanges(IChromatogram<? extends IPeak> chromatogram) {
+	private TimeRanges extractTimeRanges(IChromatogram chromatogram) {
 
 		TimeRanges timeRanges = new TimeRanges();
 		//

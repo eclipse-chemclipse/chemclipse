@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2023 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -47,7 +47,7 @@ public class Classifier extends AbstractChromatogramClassifier {
 	}
 
 	@Override
-	public IProcessingInfo<IChromatogramClassifierResult> applyClassifier(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramClassifierSettings chromatogramClassifierSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramClassifierResult> applyClassifier(IChromatogramSelection chromatogramSelection, IChromatogramClassifierSettings chromatogramClassifierSettings, IProgressMonitor monitor) {
 
 		ClassifierSettings classifierSettings;
 		if(chromatogramClassifierSettings instanceof ClassifierSettings settings) {
@@ -59,7 +59,7 @@ public class Classifier extends AbstractChromatogramClassifier {
 		IProcessingInfo<IChromatogramClassifierResult> processingInfo = validate(chromatogramSelection, chromatogramClassifierSettings);
 		if(!processingInfo.hasErrorMessages()) {
 			try {
-				IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+				IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 				if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
 					IWncIons resultWncIons = Calculator.calculateIonPercentages(chromatogramMSD, chromatogramSelection, classifierSettings);
 					IWncClassifierResult chromatogramClassifierResult = new WncClassifierResult(ResultStatus.OK, Messages.chromatogramClassified, resultWncIons);

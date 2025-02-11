@@ -49,8 +49,8 @@ public class ExtendedScanInfoUI extends Composite implements IExtendedPartUI {
 
 	public void setInput(Object input) {
 
-		if(input instanceof IChromatogramSelection<?, ?> chromatogramSelection) {
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		if(input instanceof IChromatogramSelection chromatogramSelection) {
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			labelInfo.setText(chromatogram.getName());
 			int startRetentionTime = chromatogramSelection.getStartRetentionTime();
 			int stopRetentionTime = chromatogramSelection.getStopRetentionTime();

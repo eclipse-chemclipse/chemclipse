@@ -12,7 +12,6 @@
 package org.eclipse.chemclipse.ux.extension.xxd.ui.custom;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.ux.extension.ui.support.BaselineSelectionPaintListener;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.ranges.TimeRangesChart;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.ranges.TimeRangesChromatogramUI;
@@ -38,7 +37,7 @@ public class ManualSelectionChart extends TimeRangesChromatogramUI {
 	private int xStop;
 	private int yStop;
 
-	private IChromatogram<? extends IPeak> chromatogram;
+	private IChromatogram chromatogram;
 	private BaselineSelectionPaintListener baselineSelectionPaintListener;
 	private ISelectionListener selectionListener = null;
 
@@ -70,7 +69,7 @@ public class ManualSelectionChart extends TimeRangesChromatogramUI {
 		this.manualDetectionEnabled = manualDetectionEnabled;
 	}
 
-	public void setChromatogram(IChromatogram<? extends IPeak> chromatogram) {
+	public void setChromatogram(IChromatogram chromatogram) {
 
 		this.chromatogram = chromatogram;
 	}

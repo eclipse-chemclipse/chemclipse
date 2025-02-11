@@ -21,7 +21,6 @@ import org.eclipse.chemclipse.chromatogram.xxd.report.supplier.pdf.io.ReportWrit
 import org.eclipse.chemclipse.chromatogram.xxd.report.supplier.pdf.settings.ReportSettings;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -30,7 +29,7 @@ public class ChromatogramReportGenerator extends AbstractChromatogramReportGener
 	private static final Logger logger = Logger.getLogger(ChromatogramReportGenerator.class);
 
 	@Override
-	public IProcessingInfo<?> generate(File file, boolean append, IChromatogram<? extends IPeak> chromatogram, IChromatogramReportSettings chromatogramReportSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<?> generate(File file, boolean append, IChromatogram chromatogram, IChromatogramReportSettings chromatogramReportSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<File> processingInfo = super.validate(file);
 		ReportWriter reportWriter = new ReportWriter();
@@ -46,19 +45,19 @@ public class ChromatogramReportGenerator extends AbstractChromatogramReportGener
 	}
 
 	@Override
-	public IProcessingInfo<?> generate(File file, boolean append, IChromatogram<? extends IPeak> chromatogram, IProgressMonitor monitor) {
+	public IProcessingInfo<?> generate(File file, boolean append, IChromatogram chromatogram, IProgressMonitor monitor) {
 
 		return generate(file, append, chromatogram, new ReportSettings(), monitor);
 	}
 
 	@Override
-	public IProcessingInfo<?> generate(File file, boolean append, List<IChromatogram<? extends IPeak>> chromatograms, IChromatogramReportSettings chromatogramReportSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<?> generate(File file, boolean append, List<IChromatogram> chromatograms, IChromatogramReportSettings chromatogramReportSettings, IProgressMonitor monitor) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public IProcessingInfo<?> generate(File file, boolean append, List<IChromatogram<? extends IPeak>> chromatograms, IProgressMonitor monitor) {
+	public IProcessingInfo<?> generate(File file, boolean append, List<IChromatogram> chromatograms, IProgressMonitor monitor) {
 
 		throw new UnsupportedOperationException();
 	}

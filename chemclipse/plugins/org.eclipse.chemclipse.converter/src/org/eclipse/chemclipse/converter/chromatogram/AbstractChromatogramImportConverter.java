@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2020 Lablicate GmbH.
+ * Copyright (c) 2012, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,5 +16,5 @@ package org.eclipse.chemclipse.converter.chromatogram;
 import org.eclipse.chemclipse.converter.core.AbstractImportConverter;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 
-public abstract class AbstractChromatogramImportConverter<R extends IChromatogram<?>> extends AbstractImportConverter implements IChromatogramImportConverter<R> {
+public abstract class AbstractChromatogramImportConverter<R extends IChromatogram> extends AbstractImportConverter implements IChromatogramImportConverter<R> {
 }

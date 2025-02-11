@@ -57,7 +57,7 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 	private Button buttonNextScan;
 	private ScanChartUI scanChartUI;
 	//
-	private IChromatogramSelection<?, ?> chromatogramSelection;
+	private IChromatogramSelection chromatogramSelection;
 	private int masterRetentionTime;
 	//
 	private final ScanDataSupport scanDataSupport = new ScanDataSupport();
@@ -87,7 +87,7 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 		createControl();
 	}
 
-	public void update(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public void update(IChromatogramSelection chromatogramSelection) {
 
 		this.chromatogramSelection = chromatogramSelection;
 		IScan scan = chromatogramSelection != null ? chromatogramSelection.getSelectedScan() : null;
@@ -196,8 +196,8 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 			public String getText(Object element) {
 
 				String label = "";
-				if(element instanceof IChromatogramSelection<?, ?> chromatogramSelection) {
-					IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+				if(element instanceof IChromatogramSelection chromatogramSelection) {
+					IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 					label = ChromatogramDataSupport.getReferenceLabel(chromatogram, -1, false);
 				}
 				return label;
@@ -299,8 +299,8 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 		IScan referenceScan = null;
 		IStructuredSelection structuredSelection = comboViewerSource.getStructuredSelection();
 		Object object = structuredSelection.getFirstElement();
-		if(object instanceof IChromatogramSelection<?, ?> chromatogramSelection) {
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		if(object instanceof IChromatogramSelection chromatogramSelection) {
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			int scanNumber = chromatogram.getScanNumber(masterRetentionTime);
 			referenceScan = chromatogram.getScan(scanNumber);
 		}
@@ -328,7 +328,6 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 		scanChartUI.getBaseChart().redraw();
 	}
 
-	@SuppressWarnings("rawtypes")
 	private void updateComboViewer() {
 
 		Type type = getSelectedType();
@@ -380,15 +379,14 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 		return Type.BOTH;
 	}
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	private List<IChromatogramSelection<?, ?>> extractInternal() {
+	private List<IChromatogramSelection> extractInternal() {
 
-		List<IChromatogramSelection<?, ?>> chromatogramSelections = new ArrayList<>();
+		List<IChromatogramSelection> chromatogramSelections = new ArrayList<>();
 		if(chromatogramSelection != null) {
 			Object object = chromatogramSelection.getChromatogram();
-			if(object instanceof IChromatogram<?> chromatogram) {
-				List<IChromatogram<?>> chromatograms = chromatogram.getReferencedChromatograms();
-				for(IChromatogram<?> chromatogramReference : chromatograms) {
+			if(object instanceof IChromatogram chromatogram) {
+				List<IChromatogram> chromatograms = chromatogram.getReferencedChromatograms();
+				for(IChromatogram chromatogramReference : chromatograms) {
 					chromatogramSelections.add(new ChromatogramSelection(chromatogramReference));
 				}
 			}
@@ -396,14 +394,13 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 		return chromatogramSelections;
 	}
 
-	@SuppressWarnings("rawtypes")
 	private List<IChromatogramSelection> extractExternal() {
 
 		List<IChromatogramSelection> chromatogramSelections = new ArrayList<>();
 		EditorUpdateSupport editorUpdateSupport = new EditorUpdateSupport();
 		if(chromatogramSelection != null) {
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
-			for(IChromatogramSelection<?, ?> chromatogramSelectionEditor : editorUpdateSupport.getChromatogramSelections()) {
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
+			for(IChromatogramSelection chromatogramSelectionEditor : editorUpdateSupport.getChromatogramSelections()) {
 				if(chromatogram != chromatogramSelectionEditor.getChromatogram()) {
 					chromatogramSelections.add(chromatogramSelectionEditor);
 				}

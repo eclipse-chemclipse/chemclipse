@@ -50,7 +50,7 @@ public class PeakQuantitationListPart extends AbstractPart<ExtendedPeakQuantitat
 			Object object = objects.get(0);
 			if(isUpdateEvent(topic)) {
 				if(object instanceof IChromatogramSelection) {
-					IChromatogramSelection<?, ?> chromatogramSelection = (IChromatogramSelection<?, ?>)object;
+					IChromatogramSelection chromatogramSelection = (IChromatogramSelection)object;
 					List<? extends IPeak> peaks = ChromatogramDataSupport.extractPeaks(chromatogramSelection);
 					getControl().update(peakQuantitationsExtractor.extract(peaks, chromatogramSelection));
 					return true;

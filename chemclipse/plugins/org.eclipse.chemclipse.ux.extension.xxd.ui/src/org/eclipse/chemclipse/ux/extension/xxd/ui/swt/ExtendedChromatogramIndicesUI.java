@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2024 Lablicate GmbH.
+ * Copyright (c) 2022, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -46,7 +46,7 @@ public class ExtendedChromatogramIndicesUI extends Composite implements IExtende
 	private AtomicReference<InformationUI> toolbarInfo = new AtomicReference<>();
 	private AtomicReference<RetentionIndexUI> retentionIndexControl = new AtomicReference<>();
 	//
-	private IChromatogramSelection<?, ?> chromatogramSelection = null;
+	private IChromatogramSelection chromatogramSelection = null;
 
 	public ExtendedChromatogramIndicesUI(Composite parent, int style) {
 
@@ -54,7 +54,7 @@ public class ExtendedChromatogramIndicesUI extends Composite implements IExtende
 		createControl();
 	}
 
-	public void setInput(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public void setInput(IChromatogramSelection chromatogramSelection) {
 
 		this.chromatogramSelection = chromatogramSelection;
 		updateInput();
@@ -156,7 +156,7 @@ public class ExtendedChromatogramIndicesUI extends Composite implements IExtende
 					String path = fileDialog.open();
 					if(path != null) {
 						PreferenceSupplier.setFilterPathRetentionIndices(fileDialog.getFilterPath());
-						IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+						IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 						ISeparationColumnIndices separationColumnIndices = chromatogram.getSeparationColumnIndices();
 						File file = new File(path);
 						CalibrationFileWriter calibrationFileWriter = new CalibrationFileWriter();
@@ -206,7 +206,7 @@ public class ExtendedChromatogramIndicesUI extends Composite implements IExtende
 		ISeparationColumnIndices separationColumnIndices = null;
 		//
 		if(chromatogramSelection != null) {
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			info = ChromatogramDataSupport.getChromatogramLabel(chromatogram);
 			separationColumnIndices = chromatogram.getSeparationColumnIndices();
 		}

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2024 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -35,17 +35,17 @@ public interface IChromatogramSelectionProcessSupplier<SettingType> extends IPro
 	 *            the monitor to use for reporting progress or <code>null</code> if no progress is desired
 	 * @return the processed {@link IChromatogramSelection}
 	 */
-	IChromatogramSelection<?, ?> apply(IChromatogramSelection<?, ?> chromatogramSelection, SettingType processSettings, ProcessExecutionContext context) throws InterruptedException;
+	IChromatogramSelection apply(IChromatogramSelection chromatogramSelection, SettingType processSettings, ProcessExecutionContext context) throws InterruptedException;
 
-	static IProcessExecutionConsumer<IChromatogramSelection<?, ?>> createConsumer(IChromatogramSelection<?, ?> chromatogramSelection) {
+	static IProcessExecutionConsumer<IChromatogramSelection> createConsumer(IChromatogramSelection chromatogramSelection) {
 
 		if(chromatogramSelection == null) {
 			return null;
 		}
 		//
-		return new IProcessExecutionConsumer<IChromatogramSelection<?, ?>>() {
+		return new IProcessExecutionConsumer<IChromatogramSelection>() {
 
-			AtomicReference<IChromatogramSelection<?, ?>> result = new AtomicReference<>(chromatogramSelection);
+			AtomicReference<IChromatogramSelection> result = new AtomicReference<>(chromatogramSelection);
 
 			@Override
 			public <X> void execute(IProcessorPreferences<X> preferences, ProcessExecutionContext context) throws Exception {
@@ -56,7 +56,7 @@ public interface IChromatogramSelectionProcessSupplier<SettingType> extends IPro
 					updateResult(chromatogramSelectionProcessSupplier.apply(getResult(), preferences.getSettings(), context));
 				} else if(supplier instanceof IMeasurementProcessSupplier<?>) {
 					IMeasurementProcessSupplier<X> measurementProcessSupplier = (IMeasurementProcessSupplier<X>)supplier;
-					IChromatogram<?> chromatogram = getResult().getChromatogram();
+					IChromatogram chromatogram = getResult().getChromatogram();
 					measurementProcessSupplier.applyProcessor(Collections.singleton(chromatogram), preferences.getSettings(), context);
 				}
 			}
@@ -68,22 +68,22 @@ public interface IChromatogramSelectionProcessSupplier<SettingType> extends IPro
 				return (supplier instanceof IChromatogramSelectionProcessSupplier<?>) || (supplier instanceof IMeasurementProcessSupplier<?>);
 			}
 
-			private void updateResult(IChromatogramSelection<?, ?> newSelection) {
+			private void updateResult(IChromatogramSelection newSelection) {
 
 				result.set(newSelection);
 			}
 
 			@Override
-			public IChromatogramSelection<?, ?> getResult() {
+			public IChromatogramSelection getResult() {
 
 				return result.get();
 			}
 
 			@Override
-			public IProcessExecutionConsumer<IChromatogramSelection<?, ?>> withResult(Object initialResult) {
+			public IProcessExecutionConsumer<IChromatogramSelection> withResult(Object initialResult) {
 
-				if(initialResult instanceof IChromatogramSelection<?, ?>) {
-					return IChromatogramSelectionProcessSupplier.createConsumer((IChromatogramSelection<?, ?>)initialResult);
+				if(initialResult instanceof IChromatogramSelection) {
+					return IChromatogramSelectionProcessSupplier.createConsumer((IChromatogramSelection)initialResult);
 				}
 				return null;
 			}

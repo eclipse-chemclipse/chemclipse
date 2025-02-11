@@ -23,7 +23,7 @@ import org.eclipse.chemclipse.support.model.SeparationColumnType;
 
 public class ChromatogramColumnSupport {
 
-	public static void parseSeparationColumn(IChromatogram<?> chromatogram) {
+	public static void parseSeparationColumn(IChromatogram chromatogram) {
 
 		if(PreferenceSupplier.isParseSeparationColumnFromHeader()) {
 			ColumnField columnField = PreferenceSupplier.getSeparationColumnField();
@@ -33,19 +33,19 @@ public class ChromatogramColumnSupport {
 		}
 	}
 
-	public static void parseSeparationColumn(IChromatogram<?> chromatogram, ColumnField columnField, SeparationColumnMapping separationColumnMapping, boolean parseReferences) {
+	public static void parseSeparationColumn(IChromatogram chromatogram, ColumnField columnField, SeparationColumnMapping separationColumnMapping, boolean parseReferences) {
 
 		if(!separationColumnMapping.isEmpty()) {
 			mapSeparationColumn(chromatogram, columnField, separationColumnMapping);
 			if(parseReferences) {
-				for(IChromatogram<?> chromatogramReference : chromatogram.getReferencedChromatograms()) {
+				for(IChromatogram chromatogramReference : chromatogram.getReferencedChromatograms()) {
 					mapSeparationColumn(chromatogramReference, columnField, separationColumnMapping);
 				}
 			}
 		}
 	}
 
-	private static void mapSeparationColumn(IChromatogram<?> chromatogram, ColumnField columnField, SeparationColumnMapping separationColumnMapping) {
+	private static void mapSeparationColumn(IChromatogram chromatogram, ColumnField columnField, SeparationColumnMapping separationColumnMapping) {
 
 		String mappedData = ColumnUtil.getColumnData(chromatogram, columnField, "");
 		if(!mappedData.isEmpty()) {

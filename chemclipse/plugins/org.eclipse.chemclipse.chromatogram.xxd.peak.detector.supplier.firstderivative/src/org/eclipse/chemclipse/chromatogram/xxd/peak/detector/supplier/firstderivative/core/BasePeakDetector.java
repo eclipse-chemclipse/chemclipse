@@ -22,7 +22,6 @@ import org.eclipse.chemclipse.chromatogram.peak.detector.support.IRawPeak;
 import org.eclipse.chemclipse.chromatogram.peak.detector.support.RawPeak;
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.support.IFirstDerivativeDetectorSlopes;
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IPeakModel;
 import org.eclipse.chemclipse.numeric.miscellaneous.Evaluation;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -103,7 +102,7 @@ public class BasePeakDetector extends AbstractPeakDetector {
 		return rawPeaks;
 	}
 
-	protected int getRetentionTime(IChromatogram<? extends IPeak> chromatogram, int scanNumber) {
+	protected int getRetentionTime(IChromatogram chromatogram, int scanNumber) {
 
 		return chromatogram.getScan(scanNumber).getRetentionTime();
 	}

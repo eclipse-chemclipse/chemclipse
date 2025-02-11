@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2024 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -69,7 +69,7 @@ public class BaselineDetector {
 	 * @param monitor
 	 * @return IProcessingInfo
 	 */
-	public static IProcessingInfo<?> setBaseline(IChromatogramSelection<?, ?> chromatogramSelection, IBaselineDetectorSettings baselineDetectorSettings, final String detectorId, IProgressMonitor monitor) {
+	public static IProcessingInfo<?> setBaseline(IChromatogramSelection chromatogramSelection, IBaselineDetectorSettings baselineDetectorSettings, final String detectorId, IProgressMonitor monitor) {
 
 		IProcessingInfo<?> processingInfo;
 		IBaselineDetector detector = getBaselineDetector(detectorId);
@@ -90,7 +90,7 @@ public class BaselineDetector {
 	 * @param monitor
 	 * @return IProcessingInfo
 	 */
-	public static IProcessingInfo<?> setBaseline(IChromatogramSelection<?, ?> chromatogramSelection, final String detectorId, IProgressMonitor monitor) {
+	public static IProcessingInfo<?> setBaseline(IChromatogramSelection chromatogramSelection, final String detectorId, IProgressMonitor monitor) {
 
 		IProcessingInfo<?> processingInfo;
 		IBaselineDetector detector = getBaselineDetector(detectorId);

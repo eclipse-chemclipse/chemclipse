@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2023 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Shell;
 public class ChromatogramFilter extends AbstractChromatogramFilter {
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<IChromatogramFilterResult> processingInfo = validate(chromatogramSelection, chromatogramFilterSettings);
 		if(!processingInfo.hasErrorMessages()) {
@@ -66,24 +66,24 @@ public class ChromatogramFilter extends AbstractChromatogramFilter {
 	}
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor) {
 
 		ChromatogramFilterSettings filterSettings = PreferenceSupplier.getFilterSettings();
 		return applyFilter(chromatogramSelection, filterSettings, monitor);
 	}
 
-	private void subtractChromatogram(Shell shell, IChromatogramSelection<?, ?> chromatogramSelectionMaster) {
+	private void subtractChromatogram(Shell shell, IChromatogramSelection chromatogramSelectionMaster) {
 
-		IChromatogram<?> chromatogramMaster = chromatogramSelectionMaster.getChromatogram();
+		IChromatogram chromatogramMaster = chromatogramSelectionMaster.getChromatogram();
 		ChromatogramEditorDialog dialog = new ChromatogramEditorDialog(shell, chromatogramMaster);
 		//
 		if(IDialogConstants.OK_ID == dialog.open()) {
-			IChromatogramSelection<?, ?> chromatogramSelectionSubtract = dialog.getChromatogramSelection();
+			IChromatogramSelection chromatogramSelectionSubtract = dialog.getChromatogramSelection();
 			if(chromatogramSelectionSubtract != null) {
 				/*
 				 * Check that both chromatograms are not the same
 				 */
-				IChromatogram<?> chromatogramSubtract = chromatogramSelectionSubtract.getChromatogram();
+				IChromatogram chromatogramSubtract = chromatogramSelectionSubtract.getChromatogram();
 				if(chromatogramMaster != chromatogramSubtract) {
 					int startRetentionTime = chromatogramSelectionMaster.getStartRetentionTime();
 					int stopRetentionTime = chromatogramSelectionMaster.getStopRetentionTime();

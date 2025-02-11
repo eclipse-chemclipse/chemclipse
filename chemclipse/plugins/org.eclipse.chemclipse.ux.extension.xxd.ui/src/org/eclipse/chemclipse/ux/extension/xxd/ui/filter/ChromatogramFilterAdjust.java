@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2024 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -60,7 +60,7 @@ public class ChromatogramFilterAdjust implements IProcessTypeSupplier {
 		}
 
 		@Override
-		public IChromatogramSelection<?, ?> apply(IChromatogramSelection<?, ?> chromatogramSelection, FilterSettingsAdjust processSettings, ProcessExecutionContext context) throws InterruptedException {
+		public IChromatogramSelection apply(IChromatogramSelection chromatogramSelection, FilterSettingsAdjust processSettings, ProcessExecutionContext context) throws InterruptedException {
 
 			UpdateNotifierUI.update(Display.getDefault(), IChemClipseEvents.TOPIC_EDITOR_CHROMATOGRAM_ADJUST, ExtensionMessages.adjustChromatogramEditor);
 			context.addInfoMessage(IChartMenuCategories.RANGE_SELECTION, ExtensionMessages.chromatogramEditorReset);

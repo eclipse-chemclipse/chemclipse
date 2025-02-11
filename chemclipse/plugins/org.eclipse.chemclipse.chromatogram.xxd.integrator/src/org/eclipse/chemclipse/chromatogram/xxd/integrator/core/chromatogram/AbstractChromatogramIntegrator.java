@@ -22,7 +22,7 @@ public abstract class AbstractChromatogramIntegrator implements IChromatogramInt
 
 	private static final String DESCRIPTON = "Chromatogram Integrator";
 
-	protected IProcessingInfo<IChromatogramIntegrationResults> validate(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramIntegrationSettings chromatogramIntegrationSettings) {
+	protected IProcessingInfo<IChromatogramIntegrationResults> validate(IChromatogramSelection chromatogramSelection, IChromatogramIntegrationSettings chromatogramIntegrationSettings) {
 
 		IProcessingInfo<IChromatogramIntegrationResults> processingInfo = new ProcessingInfo<>();
 		if(chromatogramSelection == null) {

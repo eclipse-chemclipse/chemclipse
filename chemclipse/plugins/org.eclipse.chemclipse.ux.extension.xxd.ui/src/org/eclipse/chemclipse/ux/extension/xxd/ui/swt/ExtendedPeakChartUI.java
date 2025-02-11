@@ -338,7 +338,7 @@ public class ExtendedPeakChartUI extends Composite implements IExtendedPartUI {
 		return button;
 	}
 
-	private void addPeaks(IChromatogram<?> chromatogram, IPeak peakOriginal, IPeak peak1, IPeak peak2) {
+	private void addPeaks(IChromatogram chromatogram, IPeak peakOriginal, IPeak peak1, IPeak peak2) {
 
 		if(peak1 != null || peak2 != null) {
 			removePeakFromChromatogram(chromatogram, peakOriginal);
@@ -347,24 +347,24 @@ public class ExtendedPeakChartUI extends Composite implements IExtendedPartUI {
 		}
 	}
 
-	private void removePeakFromChromatogram(IChromatogram<?> chromatogram, IPeak peak) {
+	private void removePeakFromChromatogram(IChromatogram chromatogram, IPeak peak) {
 
 		if(peak != null) {
 			if(chromatogram instanceof IChromatogramMSD chromatogramMSD && peak instanceof IChromatogramPeakMSD chromatogramPeakMSD) {
-				chromatogramMSD.removePeak(chromatogramPeakMSD);
+				chromatogramMSD.getPeaks().remove(chromatogramPeakMSD);
 			} else if(chromatogram instanceof IChromatogramCSD chromatogramCSD && peak instanceof IChromatogramPeakCSD chromatogramPeakCSD) {
-				chromatogramCSD.removePeak(chromatogramPeakCSD);
+				chromatogramCSD.getPeaks().remove(chromatogramPeakCSD);
 			}
 		}
 	}
 
-	private void addPeakToChromatogram(IChromatogram<?> chromatogram, IPeak peak) {
+	private void addPeakToChromatogram(IChromatogram chromatogram, IPeak peak) {
 
 		if(peak != null) {
 			if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
-				chromatogramMSD.addPeak((IChromatogramPeakMSD)peak);
+				chromatogramMSD.getPeaks().add((IChromatogramPeakMSD)peak);
 			} else if(chromatogram instanceof IChromatogramCSD chromatogramCSD) {
-				chromatogramCSD.addPeak((IChromatogramPeakCSD)peak);
+				chromatogramCSD.getPeaks().add((IChromatogramPeakCSD)peak);
 			}
 		}
 	}

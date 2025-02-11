@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2024 Lablicate GmbH.
+ * Copyright (c) 2022, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -51,7 +51,7 @@ public class ExtendedChromatogramStatisticsUI extends Composite implements IExte
 	private AtomicReference<InformationUI> toolbarInfo = new AtomicReference<>();
 	private AtomicReference<KeyValueListUI> tableControl = new AtomicReference<>();
 	//
-	private IChromatogramSelection<?, ?> chromatogramSelection = null;
+	private IChromatogramSelection chromatogramSelection = null;
 	private PeakQuantitationsExtractor peakQuantitationsExtractor = new PeakQuantitationsExtractor();
 	private DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish();
 
@@ -61,7 +61,7 @@ public class ExtendedChromatogramStatisticsUI extends Composite implements IExte
 		createControl();
 	}
 
-	public void setInput(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public void setInput(IChromatogramSelection chromatogramSelection) {
 
 		this.chromatogramSelection = chromatogramSelection;
 		updateInput();
@@ -144,7 +144,7 @@ public class ExtendedChromatogramStatisticsUI extends Composite implements IExte
 			addPeakData(chromatogramSelection, dataMap);
 			addIonTransitionData(chromatogramSelection, dataMap);
 			//
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			info = ChromatogramDataSupport.getChromatogramLabel(chromatogram);
 		}
 		//
@@ -152,18 +152,18 @@ public class ExtendedChromatogramStatisticsUI extends Composite implements IExte
 		tableControl.get().setInput(dataMap);
 	}
 
-	private void addTimeData(IChromatogramSelection<?, ?> chromatogramSelection, Map<String, String> dataMap) {
+	private void addTimeData(IChromatogramSelection chromatogramSelection, Map<String, String> dataMap) {
 
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		dataMap.put("Start Total [min]", decimalFormat.format(chromatogram.getStartRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
 		dataMap.put("Stop Total [min]", decimalFormat.format(chromatogram.getStopRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
 		dataMap.put("Start Selection [min]", decimalFormat.format(chromatogramSelection.getStartRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
 		dataMap.put("Stop Selection [min]", decimalFormat.format(chromatogramSelection.getStopRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
 	}
 
-	private void addScanData(IChromatogramSelection<?, ?> chromatogramSelection, Map<String, String> dataMap) {
+	private void addScanData(IChromatogramSelection chromatogramSelection, Map<String, String> dataMap) {
 
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		int scanStart = chromatogram.getScanNumber(chromatogramSelection.getStartRetentionTime());
 		int scanStop = chromatogram.getScanNumber(chromatogramSelection.getStopRetentionTime());
 		dataMap.put("Scans Total", Integer.toString(chromatogram.getNumberOfScans()));
@@ -174,14 +174,14 @@ public class ExtendedChromatogramStatisticsUI extends Composite implements IExte
 		dataMap.put("Scan Selection Stop", Integer.toString(scanStop));
 	}
 
-	private void addPeakData(IChromatogramSelection<?, ?> chromatogramSelection, Map<String, String> dataMap) {
+	private void addPeakData(IChromatogramSelection chromatogramSelection, Map<String, String> dataMap) {
 
-		IChromatogram<? extends IPeak> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		List<? extends IPeak> peaks = ChromatogramDataSupport.extractPeaks(chromatogramSelection);
 		/*
 		 * Peak Area
 		 */
-		dataMap.put("Peaks Total", Integer.toString(chromatogram.getNumberOfPeaks()));
+		dataMap.put("Peaks Total", Integer.toString(chromatogram.getPeaks().size()));
 		dataMap.put("Peak Area Sum Total", Double.toString(getSummedPeakArea(chromatogram.getPeaks())));
 		dataMap.put("Peaks Selection", Integer.toString(peaks.size()));
 		dataMap.put("Peak Area Sum Selection", Double.toString(getSummedPeakArea(peaks)));
@@ -197,9 +197,9 @@ public class ExtendedChromatogramStatisticsUI extends Composite implements IExte
 		}
 	}
 
-	private void addIonTransitionData(IChromatogramSelection<?, ?> chromatogramSelection, Map<String, String> dataMap) {
+	private void addIonTransitionData(IChromatogramSelection chromatogramSelection, Map<String, String> dataMap) {
 
-		IChromatogram<? extends IPeak> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
 			Set<IIonTransition> ionsTransitions = chromatogramMSD.getIonTransitionSettings().getIonTransitions();
 			if(!ionsTransitions.isEmpty()) {

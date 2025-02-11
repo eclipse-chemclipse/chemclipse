@@ -17,7 +17,7 @@ import junit.framework.TestCase;
 
 public class Chromatogram_6_Test extends TestCase {
 
-	private IChromatogram<?> chromatogram;
+	private IChromatogram chromatogram;
 
 	@Override
 	protected void setUp() throws Exception {

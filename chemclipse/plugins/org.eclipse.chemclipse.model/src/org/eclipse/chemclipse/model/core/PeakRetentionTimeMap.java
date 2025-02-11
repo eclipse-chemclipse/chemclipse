@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -21,20 +21,19 @@ import java.util.List;
 import java.util.TreeMap;
 
 /**
- * A specialized Map-Like-Datastructure that retains peaks indexed by there maximum signal retention time,
+ * A specialized map like datastructure that retains peaks indexed by their maximum signal retention time,
  * 
  * @author Christoph Läubrich
  *
  * @param <T>
  */
-public final class PeakRTMap<T extends IPeak> implements Serializable, IChromatogramPeaks<T> {
+public final class PeakRetentionTimeMap<T extends IPeak> implements Serializable {
 
 	private static final long serialVersionUID = 6339698016420166069L;
 	//
 	private int peakcount;
 	private final TreeMap<Integer, Collection<T>> internalMap = new TreeMap<>();
 
-	@Override
 	public void addPeak(T peak) {
 
 		Integer rt = getKey(peak);
@@ -50,7 +49,6 @@ public final class PeakRTMap<T extends IPeak> implements Serializable, IChromato
 		}
 	}
 
-	@Override
 	public void removePeak(T peakToRemove) {
 
 		Integer rt = getKey(peakToRemove);
@@ -75,7 +73,6 @@ public final class PeakRTMap<T extends IPeak> implements Serializable, IChromato
 	 * 
 	 * @return a copy of all peaks in this map
 	 */
-	@Override
 	public List<T> getPeaks() {
 
 		return collectPeaks(internalMap.values());
@@ -87,7 +84,6 @@ public final class PeakRTMap<T extends IPeak> implements Serializable, IChromato
 	 * @param retentionTime
 	 * @return a list of peaks at the given retention time, ordered by the start retention time of the peak
 	 */
-	@Override
 	public List<T> getPeaks(int startRetentionTime, int stopRetentionTime) {
 
 		return collectPeaks(internalMap.subMap(startRetentionTime, true, stopRetentionTime, true).values());
@@ -115,20 +111,17 @@ public final class PeakRTMap<T extends IPeak> implements Serializable, IChromato
 		return peak.getPeakModel().getRetentionTimeAtPeakMaximum();
 	}
 
-	@Override
 	public void removeAllPeaks() {
 
 		internalMap.clear();
 		peakcount = 0;
 	}
 
-	@Override
 	public int getNumberOfPeaks() {
 
 		return peakcount;
 	}
 
-	@Override
 	public void removePeaks(List<T> peaksToDelete) {
 
 		// because of the datastructure we can't use removeAll, but removing one peak at a time is quite efficient anyways

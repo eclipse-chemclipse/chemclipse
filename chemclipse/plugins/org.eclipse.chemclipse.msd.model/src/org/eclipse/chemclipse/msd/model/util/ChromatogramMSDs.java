@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2018 Lablicate GmbH.
+ * Copyright (c) 2017, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -52,7 +52,7 @@ public class ChromatogramMSDs {
 		ChromatogramPeakMSD chromatogramPeak = new ChromatogramPeakMSD(peak.getPeakModel(), chromatogram);
 		chromatogramPeak.addAllIntegrationEntries(peak.getIntegrationEntries());
 		chromatogramPeak.getTargets().addAll(peak.getTargets());
-		chromatogram.addPeak(chromatogramPeak);
+		chromatogram.getPeaks().add(chromatogramPeak);
 		return chromatogramPeak;
 	}
 }

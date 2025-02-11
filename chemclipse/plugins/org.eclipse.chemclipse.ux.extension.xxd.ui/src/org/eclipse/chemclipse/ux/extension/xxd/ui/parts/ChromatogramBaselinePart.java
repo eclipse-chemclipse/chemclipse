@@ -47,7 +47,7 @@ public class ChromatogramBaselinePart extends AbstractPart<ExtendedBaselineUI> {
 			if(isUpdateEvent(topic)) {
 				object = objects.get(0);
 				if(object instanceof IChromatogramSelection) {
-					getControl().update((IChromatogramSelection<?, ?>)object);
+					getControl().update((IChromatogramSelection)object);
 					return true;
 				}
 			} else if(isCloseEvent(topic)) {

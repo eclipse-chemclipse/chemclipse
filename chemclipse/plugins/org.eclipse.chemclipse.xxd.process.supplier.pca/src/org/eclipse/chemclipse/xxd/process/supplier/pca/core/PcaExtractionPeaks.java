@@ -91,7 +91,7 @@ public class PcaExtractionPeaks implements IExtractionData {
 			 * CSD
 			 */
 			IChromatogramCSD chromatogram = ChromatogramConverterCSD.getInstance().convert(file, monitor).getProcessingResult();
-			if(chromatogram.getNumberOfPeaks() > 0) {
+			if(!chromatogram.getPeaks().isEmpty()) {
 				for(IPeak peak : chromatogram.getPeaks()) {
 					peaks.add(peak);
 				}

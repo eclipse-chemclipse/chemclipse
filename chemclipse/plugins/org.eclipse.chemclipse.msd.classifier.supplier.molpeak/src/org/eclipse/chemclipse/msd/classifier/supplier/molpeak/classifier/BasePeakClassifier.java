@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2023 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -53,11 +53,11 @@ public class BasePeakClassifier {
 		return true;
 	}
 
-	public static List<IPeakMSD> getPeaks(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public static List<IPeakMSD> getPeaks(IChromatogramSelection chromatogramSelection) {
 
 		List<IPeakMSD> peaks = new ArrayList<>();
 		//
-		IChromatogram<? extends IPeak> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		for(IPeak peak : chromatogram.getPeaks()) {
 			if(peak instanceof IPeakMSD peakMSD) {
 				peaks.add(peakMSD);
@@ -85,7 +85,7 @@ public class BasePeakClassifier {
 		return false;
 	}
 
-	public static ILigninRatios calculateLigninRatios(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public static ILigninRatios calculateLigninRatios(IChromatogramSelection chromatogramSelection) {
 
 		ILigninRatios ligninRatios = new LigninRatios();
 		//

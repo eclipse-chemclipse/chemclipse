@@ -139,7 +139,7 @@ public class PeakIntegrator {
 	 * @param monitor
 	 * @return {@link IProcessingInfo}
 	 */
-	public static IProcessingInfo<IPeakIntegrationResults> integrate(IChromatogramSelection<?, ?> chromatogramSelection, IPeakIntegrationSettings peakIntegrationSettings, String integratorId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IPeakIntegrationResults> integrate(IChromatogramSelection chromatogramSelection, IPeakIntegrationSettings peakIntegrationSettings, String integratorId, IProgressMonitor monitor) {
 
 		IProcessingInfo<IPeakIntegrationResults> processingInfo;
 		IPeakIntegrator integrator = getPeakIntegrator(integratorId);
@@ -160,7 +160,7 @@ public class PeakIntegrator {
 	 * @param monitor
 	 * @return {@link IProcessingInfo}
 	 */
-	public static IProcessingInfo<IPeakIntegrationResults> integrate(IChromatogramSelection<?, ?> chromatogramSelection, String integratorId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IPeakIntegrationResults> integrate(IChromatogramSelection chromatogramSelection, String integratorId, IProgressMonitor monitor) {
 
 		IProcessingInfo<IPeakIntegrationResults> processingInfo;
 		IPeakIntegrator integrator = getPeakIntegrator(integratorId);

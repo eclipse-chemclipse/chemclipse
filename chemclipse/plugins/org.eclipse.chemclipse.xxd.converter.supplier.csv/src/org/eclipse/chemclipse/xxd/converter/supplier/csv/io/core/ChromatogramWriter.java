@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2024 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -23,7 +23,6 @@ import org.eclipse.chemclipse.converter.io.AbstractChromatogramWriter;
 import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
-import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignalExtractor;
@@ -56,7 +55,7 @@ public class ChromatogramWriter extends AbstractChromatogramWriter {
 	public static final String RI_COLUMN = "RI";
 	public static final String TIC_COLUMN = "TIC";
 
-	public void writeChromatogram(File file, IChromatogram<? extends IPeak> chromatogram, IProgressMonitor monitor) throws IOException {
+	public void writeChromatogram(File file, IChromatogram chromatogram, IProgressMonitor monitor) throws IOException {
 
 		/*
 		 * Master / References
@@ -67,7 +66,7 @@ public class ChromatogramWriter extends AbstractChromatogramWriter {
 		}
 	}
 
-	private void writeChromatogramReferencesOnDemand(File file, IChromatogram<? extends IPeak> chromatogram, IProgressMonitor monitor) throws IOException {
+	private void writeChromatogramReferencesOnDemand(File file, IChromatogram chromatogram, IProgressMonitor monitor) throws IOException {
 
 		if(PreferenceSupplier.isExportReferences()) {
 			/*
@@ -78,7 +77,7 @@ public class ChromatogramWriter extends AbstractChromatogramWriter {
 			name = name.substring(0, name.length() - FILE_EXTENSION.length());
 			//
 			int i = 1;
-			for(IChromatogram<? extends IPeak> chromatogramReference : chromatogram.getReferencedChromatograms()) {
+			for(IChromatogram chromatogramReference : chromatogram.getReferencedChromatograms()) {
 				StringBuilder builder = new StringBuilder();
 				builder.append(directory);
 				builder.append(File.separator);
@@ -93,7 +92,7 @@ public class ChromatogramWriter extends AbstractChromatogramWriter {
 		}
 	}
 
-	private void writeChromatogramByType(File file, IChromatogram<? extends IPeak> chromatogram, IProgressMonitor monitor) throws IOException {
+	private void writeChromatogramByType(File file, IChromatogram chromatogram, IProgressMonitor monitor) throws IOException {
 
 		if(chromatogram instanceof IChromatogramCSD chromatogramCSD) {
 			writeChromatogram(file, chromatogramCSD, monitor);
@@ -166,7 +165,7 @@ public class ChromatogramWriter extends AbstractChromatogramWriter {
 		}
 	}
 
-	private void writeTIC(CSVPrinter csvPrinter, IChromatogram<? extends IPeak> chromatogram) throws IOException {
+	private void writeTIC(CSVPrinter csvPrinter, IChromatogram chromatogram) throws IOException {
 
 		ITotalScanSignalExtractor totalIonSignalExtractor = new TotalScanSignalExtractor(chromatogram);
 		ITotalScanSignals totalScanSignals = totalIonSignalExtractor.getTotalScanSignals();

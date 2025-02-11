@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -304,7 +304,7 @@ public class ChromatogramReader_1300 extends AbstractChromatogramReader implemen
 		for(int i = 1; i <= numberOfPeaks; i++) {
 			try {
 				IChromatogramPeakCSD peak = readPeak(dataInputStream, chromatogram);
-				chromatogram.addPeak(peak);
+				chromatogram.getPeaks().add(peak);
 			} catch(IllegalArgumentException e) {
 				logger.warn(e);
 			} catch(PeakException e) {

@@ -20,14 +20,13 @@ import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.model.notifier.UpdateNotifier;
 import org.eclipse.chemclipse.model.selection.AbstractChromatogramSelection;
-import org.eclipse.chemclipse.wsd.model.core.IChromatogramPeakWSD;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.wsd.model.core.IScanSignalWSD;
 import org.eclipse.chemclipse.wsd.model.core.IScanWSD;
 import org.eclipse.chemclipse.wsd.model.core.support.IMarkedWavelengths;
 import org.eclipse.chemclipse.wsd.model.core.support.MarkedWavelengths;
 
-public class ChromatogramSelectionWSD extends AbstractChromatogramSelection<IChromatogramPeakWSD, IChromatogramWSD> implements IChromatogramSelectionWSD {
+public class ChromatogramSelectionWSD extends AbstractChromatogramSelection implements IChromatogramSelectionWSD {
 
 	private IScanWSD selectedScan;
 	private IMarkedWavelengths selectedWavelengths;
@@ -71,7 +70,7 @@ public class ChromatogramSelectionWSD extends AbstractChromatogramSelection<IChr
 	@Override
 	public IChromatogramWSD getChromatogram() {
 
-		IChromatogram<?> chromatogram = super.getChromatogram();
+		IChromatogram chromatogram = super.getChromatogram();
 		if(chromatogram instanceof IChromatogramWSD chromatogramWSD) {
 			return chromatogramWSD;
 		}
@@ -94,7 +93,7 @@ public class ChromatogramSelectionWSD extends AbstractChromatogramSelection<IChr
 	public void reset(boolean fireUpdate) {
 
 		super.reset(fireUpdate);
-		IChromatogram<?> chromatogram = getChromatogram();
+		IChromatogram chromatogram = getChromatogram();
 		/*
 		 * Scan
 		 */

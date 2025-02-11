@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2023 Lablicate GmbH.
+ * Copyright (c) 2014, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -24,7 +24,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class ChromatogramCalculator extends AbstractChromatogramCalculator {
 
 	@Override
-	public IProcessingInfo<?> applyCalculator(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramCalculatorSettings chromatogramCalculatorSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<?> applyCalculator(IChromatogramSelection chromatogramSelection, IChromatogramCalculatorSettings chromatogramCalculatorSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<?> processingInfo = new ProcessingInfo<>();
 		//
@@ -39,7 +39,7 @@ public class ChromatogramCalculator extends AbstractChromatogramCalculator {
 	}
 
 	@Override
-	public IProcessingInfo<?> applyCalculator(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor) {
+	public IProcessingInfo<?> applyCalculator(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor) {
 
 		CalculatorSettings calculatorSettings = PreferenceSupplier.getChromatogramCalculatorSettings();
 		return applyCalculator(chromatogramSelection, calculatorSettings, monitor);

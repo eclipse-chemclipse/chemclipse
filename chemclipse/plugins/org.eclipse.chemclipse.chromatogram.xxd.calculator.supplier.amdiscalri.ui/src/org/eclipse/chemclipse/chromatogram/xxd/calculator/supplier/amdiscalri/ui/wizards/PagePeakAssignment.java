@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2024 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -112,7 +112,7 @@ public class PagePeakAssignment extends AbstractExtendedWizardPage {
 
 		super.setVisible(visible);
 		if(visible) {
-			IChromatogramSelection<?, ?> chromatogramSelection = wizardElements.getChromatogramSelection();
+			IChromatogramSelection chromatogramSelection = wizardElements.getChromatogramSelection();
 			if(chromatogramSelection != null && chromatogramSelection.getChromatogram() != null) {
 				/*
 				 * Set the start index.
@@ -126,7 +126,7 @@ public class PagePeakAssignment extends AbstractExtendedWizardPage {
 				/*
 				 * Set the first selection.
 				 */
-				IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+				IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 				List<? extends IPeak> peaks = chromatogram.getPeaks();
 				peakTableViewerUI.setInput(peaks);
 				peakTableViewerUI.getTable().setSelection(0);
@@ -265,9 +265,9 @@ public class PagePeakAssignment extends AbstractExtendedWizardPage {
 				messageBox.setText("Auto assign standards");
 				messageBox.setMessage("Would you like to set all standards automatically?");
 				if(messageBox.open() == SWT.YES) {
-					IChromatogramSelection<?, ?> chromatogramSelection = wizardElements.getChromatogramSelection();
+					IChromatogramSelection chromatogramSelection = wizardElements.getChromatogramSelection();
 					if(chromatogramSelection != null && chromatogramSelection.getChromatogram() != null) {
-						IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+						IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 						List<? extends IPeak> chromatogramPeaks = chromatogram.getPeaks();
 						List<String> selectedIndices = wizardElements.getSelectedIndices();
 						//

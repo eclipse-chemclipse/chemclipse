@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2023 Lablicate GmbH.
+ * Copyright (c) 2013, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -247,7 +247,7 @@ public abstract class AbstractPeak implements IPeak {
 		}
 	}
 
-	protected void validateChromatogram(IChromatogram<?> chromatogram) throws IllegalArgumentException {
+	protected void validateChromatogram(IChromatogram chromatogram) throws IllegalArgumentException {
 
 		/*
 		 * Do not allow that the parentChromatogram is null.
@@ -261,7 +261,7 @@ public abstract class AbstractPeak implements IPeak {
 	 * Check that the peak model is within the chromatogram retention time
 	 * borders.
 	 */
-	protected void validateRetentionTimes(IChromatogram<?> chromatogram, IPeakModel peakModel) throws PeakException {
+	protected void validateRetentionTimes(IChromatogram chromatogram, IPeakModel peakModel) throws PeakException {
 
 		int start = chromatogram.getStartRetentionTime();
 		int stop = chromatogram.getStopRetentionTime();

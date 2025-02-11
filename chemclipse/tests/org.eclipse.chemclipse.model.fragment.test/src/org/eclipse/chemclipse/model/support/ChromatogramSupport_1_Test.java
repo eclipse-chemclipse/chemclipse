@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,7 +20,7 @@ import junit.framework.TestCase;
 
 public class ChromatogramSupport_1_Test extends TestCase {
 
-	private IChromatogram<?> chromatogram = new Chromatogram();
+	private IChromatogram chromatogram = new Chromatogram();
 
 	@Override
 	protected void setUp() throws Exception {

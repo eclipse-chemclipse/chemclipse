@@ -58,7 +58,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class ChromatogramFilterReshape extends AbstractChromatogramFilter implements IChromatogramFilter {
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<IChromatogramFilterResult> processingInfo = validate(chromatogramSelection, chromatogramFilterSettings);
 		if(!processingInfo.hasErrorMessages()) {
@@ -66,7 +66,7 @@ public class ChromatogramFilterReshape extends AbstractChromatogramFilter implem
 				/*
 				 * Settings
 				 */
-				IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+				IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 				HeaderField headerField = filterSettings.getHeaderField();
 				double segmentWidthDefault = filterSettings.getSegmentWidthDefault();
 				boolean resetRetentionTimes = filterSettings.isResetRetentionTimes();
@@ -176,7 +176,7 @@ public class ChromatogramFilterReshape extends AbstractChromatogramFilter implem
 					 * Master
 					 */
 					int scanInterval = chromatogram.getScanInterval();
-					chromatogram.removeAllPeaks();
+					chromatogram.getPeaks().clear();
 					chromatogram.replaceAllScans(stackedScans.get(0));
 					HeaderUtil.setHeaderData(chromatogram, headerField, "Cut 1");
 					calculateScanIntervalAndDelay(chromatogram, resetRetentionTimes, 0, scanInterval);
@@ -184,7 +184,7 @@ public class ChromatogramFilterReshape extends AbstractChromatogramFilter implem
 					 * References
 					 */
 					for(int i = 1; i < stackedScans.size(); i++) {
-						IChromatogram<?> chromatogramReference = createChromatogramReference(chromatogram);
+						IChromatogram chromatogramReference = createChromatogramReference(chromatogram);
 						HeaderUtil.setHeaderData(chromatogramReference, headerField, "Cut " + (i + 1));
 						chromatogramReference.addScans(stackedScans.get(i));
 						calculateScanIntervalAndDelay(chromatogramReference, resetRetentionTimes, 0, scanInterval);
@@ -237,13 +237,13 @@ public class ChromatogramFilterReshape extends AbstractChromatogramFilter implem
 	}
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor) {
 
 		FilterSettingsReshape filterSettings = PreferenceSupplier.getFilterSettingsReshape();
 		return applyFilter(chromatogramSelection, filterSettings, monitor);
 	}
 
-	private List<IPeak> getRecurringPeaks(IChromatogram<?> chromatogram, String recurringPeakName) {
+	private List<IPeak> getRecurringPeaks(IChromatogram chromatogram, String recurringPeakName) {
 
 		List<IPeak> peaks = new ArrayList<>();
 		for(IPeak peak : chromatogram.getPeaks()) {
@@ -258,7 +258,7 @@ public class ChromatogramFilterReshape extends AbstractChromatogramFilter implem
 		return peaks;
 	}
 
-	private void calculateScanIntervalAndDelay(IChromatogram<?> chromatogram, boolean resetRetentionTimes, int scanDelay, int scanInterval) {
+	private void calculateScanIntervalAndDelay(IChromatogram chromatogram, boolean resetRetentionTimes, int scanDelay, int scanInterval) {
 
 		/*
 		 * First recalculate on demand.
@@ -296,9 +296,9 @@ public class ChromatogramFilterReshape extends AbstractChromatogramFilter implem
 		chromatogram.recalculateRetentionTimes();
 	}
 
-	private IChromatogram<?> createChromatogramReference(IChromatogram<?> chromatogram) {
+	private IChromatogram createChromatogramReference(IChromatogram chromatogram) {
 
-		IChromatogram<?> chromatogramReference = null;
+		IChromatogram chromatogramReference = null;
 		//
 		if(chromatogram instanceof IChromatogramCSD) {
 			chromatogramReference = new ChromatogramCSD();

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -118,86 +118,86 @@ public class ChromatogramChartSupport {
 		return color;
 	}
 
-	public ILineSeriesData getLineSeriesDataChromatogram(IChromatogramSelection<?, ?> chromatogramSelection, String seriesId, Color color) {
+	public ILineSeriesData getLineSeriesDataChromatogram(IChromatogramSelection chromatogramSelection, String seriesId, Color color) {
 
 		DisplayType dataType = DisplayType.TIC;
 		return getLineSeriesData(chromatogramSelection, seriesId, dataType, Derivative.NONE, color, null, false);
 	}
 
-	public ILineSeriesData getLineSeriesDataChromatogram(IChromatogram<?> chromatogram, String seriesId, Color color) {
+	public ILineSeriesData getLineSeriesDataChromatogram(IChromatogram chromatogram, String seriesId, Color color) {
 
 		DisplayType dataType = DisplayType.TIC;
 		return getLineSeriesData(chromatogram, seriesId, dataType, Derivative.NONE, color, null, false);
 	}
 
-	public ILineSeriesData getLineSeriesDataBaseline(IChromatogramSelection<?, ?> chromatogramSelection, String seriesId, Color color) {
+	public ILineSeriesData getLineSeriesDataBaseline(IChromatogramSelection chromatogramSelection, String seriesId, Color color) {
 
 		DisplayType dataType = DisplayType.TIC;
 		return getLineSeriesData(chromatogramSelection, seriesId, dataType, Derivative.NONE, color, null, true);
 	}
 
-	public ILineSeriesData getLineSeriesDataBaseline(IChromatogram<?> chromatogram, String seriesId, Color color) {
+	public ILineSeriesData getLineSeriesDataBaseline(IChromatogram chromatogram, String seriesId, Color color) {
 
 		DisplayType dataType = DisplayType.TIC;
 		return getLineSeriesData(chromatogram, seriesId, dataType, Derivative.NONE, color, null, true);
 	}
 
-	public ILineSeriesData getLineSeriesDataBaseline(IChromatogramSelection<?, ?> chromatogramSelection, String seriesId, DisplayType dataType, Color color, boolean timeIntervalSelection) {
+	public ILineSeriesData getLineSeriesDataBaseline(IChromatogramSelection chromatogramSelection, String seriesId, DisplayType dataType, Color color, boolean timeIntervalSelection) {
 
 		return getLineSeriesData(chromatogramSelection, seriesId, dataType, Derivative.NONE, color, true, timeIntervalSelection);
 	}
 
-	public ILineSeriesData getLineSeriesDataBaseline(IChromatogram<?> chromatogram, String seriesId, DisplayType dataType, Color color, IMarkedTraces<? extends IMarkedTrace> signals) {
+	public ILineSeriesData getLineSeriesDataBaseline(IChromatogram chromatogram, String seriesId, DisplayType dataType, Color color, IMarkedTraces<? extends IMarkedTrace> signals) {
 
 		return getLineSeriesData(chromatogram, seriesId, dataType, Derivative.NONE, color, signals, true);
 	}
 
-	public ILineSeriesData getLineSeriesData(IChromatogram<?> chromatogram, String seriesId, DisplayType displayType, Color color, IMarkedTraces<? extends IMarkedTrace> signals) {
+	public ILineSeriesData getLineSeriesData(IChromatogram chromatogram, String seriesId, DisplayType displayType, Color color, IMarkedTraces<? extends IMarkedTrace> signals) {
 
 		return getLineSeriesData(chromatogram, seriesId, displayType, color, signals, false);
 	}
 
-	public ILineSeriesData getLineSeriesData(IChromatogram<?> chromatogram, String seriesId, DisplayType displayType, Color color, IMarkedTraces<? extends IMarkedTrace> signals, boolean useRetentionIndex) {
+	public ILineSeriesData getLineSeriesData(IChromatogram chromatogram, String seriesId, DisplayType displayType, Color color, IMarkedTraces<? extends IMarkedTrace> signals, boolean useRetentionIndex) {
 
 		return getLineSeriesData(chromatogram, seriesId, displayType, Derivative.NONE, color, signals, false, useRetentionIndex);
 	}
 
-	public ILineSeriesData getLineSeriesData(IChromatogramSelection<?, ?> chromatogramSelection, String seriesId, DisplayType dataType, Color color, boolean timeIntervalSelection) {
+	public ILineSeriesData getLineSeriesData(IChromatogramSelection chromatogramSelection, String seriesId, DisplayType dataType, Color color, boolean timeIntervalSelection) {
 
 		return getLineSeriesData(chromatogramSelection, seriesId, dataType, Derivative.NONE, color, false, timeIntervalSelection);
 	}
 
-	public ILineSeriesData getLineSeriesData(IChromatogramSelection<?, ?> chromatogramSelection, String seriesId, DisplayType dataType, Derivative derivative, Color color, boolean timeIntervalSelection) {
+	public ILineSeriesData getLineSeriesData(IChromatogramSelection chromatogramSelection, String seriesId, DisplayType dataType, Derivative derivative, Color color, boolean timeIntervalSelection) {
 
 		return getLineSeriesData(chromatogramSelection, seriesId, dataType, derivative, color, false, timeIntervalSelection);
 	}
 
-	public ILineSeriesData getLineSeriesData(IChromatogramSelection<?, ?> chromatogramSelection, String seriesId, DisplayType dataType, Derivative derivative, Color color, IMarkedTraces<? extends IMarkedTrace> signals, boolean baseline) {
+	public ILineSeriesData getLineSeriesData(IChromatogramSelection chromatogramSelection, String seriesId, DisplayType dataType, Derivative derivative, Color color, IMarkedTraces<? extends IMarkedTrace> signals, boolean baseline) {
 
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		int startScan = chromatogram.getScanNumber(chromatogramSelection.getStartRetentionTime());
 		int stopScan = chromatogram.getScanNumber(chromatogramSelection.getStopRetentionTime());
 		return getLineSeriesData(chromatogram, startScan, stopScan, seriesId, dataType, derivative, color, signals, baseline, false);
 	}
 
-	public ILineSeriesData getLineSeriesData(IChromatogram<?> chromatogram, String seriesId, DisplayType displayType, Derivative derivative, Color color, IMarkedTraces<? extends IMarkedTrace> signals, boolean baseline) {
+	public ILineSeriesData getLineSeriesData(IChromatogram chromatogram, String seriesId, DisplayType displayType, Derivative derivative, Color color, IMarkedTraces<? extends IMarkedTrace> signals, boolean baseline) {
 
 		return getLineSeriesData(chromatogram, seriesId, displayType, derivative, color, signals, false, false);
 	}
 
-	public ILineSeriesData getLineSeriesData(IChromatogram<?> chromatogram, String seriesId, DisplayType displayType, Derivative derivative, Color color, IMarkedTraces<? extends IMarkedTrace> signals, boolean baseline, boolean useRetentionIndex) {
+	public ILineSeriesData getLineSeriesData(IChromatogram chromatogram, String seriesId, DisplayType displayType, Derivative derivative, Color color, IMarkedTraces<? extends IMarkedTrace> signals, boolean baseline, boolean useRetentionIndex) {
 
 		int startScan = 1;
 		int stopScan = chromatogram.getNumberOfScans();
 		return getLineSeriesData(chromatogram, startScan, stopScan, seriesId, displayType, derivative, color, signals, baseline, useRetentionIndex);
 	}
 
-	public ILineSeriesData getLineSeriesData(IChromatogram<?> chromatogram, String seriesId, Derivative derivative, Color color, List<ITrace> traces, boolean baseline) {
+	public ILineSeriesData getLineSeriesData(IChromatogram chromatogram, String seriesId, Derivative derivative, Color color, List<ITrace> traces, boolean baseline) {
 
 		return getLineSeriesData(chromatogram, seriesId, derivative, color, traces, false, false);
 	}
 
-	public ILineSeriesData getLineSeriesData(IChromatogram<?> chromatogram, String seriesId, Derivative derivative, Color color, List<ITrace> traces, boolean baseline, boolean useRetentionIndex) {
+	public ILineSeriesData getLineSeriesData(IChromatogram chromatogram, String seriesId, Derivative derivative, Color color, List<ITrace> traces, boolean baseline, boolean useRetentionIndex) {
 
 		int startScan = 1;
 		int stopScan = chromatogram.getNumberOfScans();
@@ -236,7 +236,7 @@ public class ChromatogramChartSupport {
 		return lineSeriesData;
 	}
 
-	private ILineSeriesData getLineSeriesData(IChromatogram<?> chromatogram, int startScan, int stopScan, String seriesId, DisplayType displayType, Derivative derivative, Color color, IMarkedTraces<? extends IMarkedTrace> signals, boolean baseline, boolean useRetentionIndex) {
+	private ILineSeriesData getLineSeriesData(IChromatogram chromatogram, int startScan, int stopScan, String seriesId, DisplayType displayType, Derivative derivative, Color color, IMarkedTraces<? extends IMarkedTrace> signals, boolean baseline, boolean useRetentionIndex) {
 
 		IBaselineModel baselineModel = null;
 		if(baseline) {
@@ -375,7 +375,7 @@ public class ChromatogramChartSupport {
 		return lineSeriesData;
 	}
 
-	private ILineSeriesData getLineSeriesData(IChromatogram<?> chromatogram, int startScan, int stopScan, String seriesId, Derivative derivative, Color color, List<ITrace> traces, boolean baseline, boolean useRetentionIndex) {
+	private ILineSeriesData getLineSeriesData(IChromatogram chromatogram, int startScan, int stopScan, String seriesId, Derivative derivative, Color color, List<ITrace> traces, boolean baseline, boolean useRetentionIndex) {
 
 		IBaselineModel baselineModel = baseline ? chromatogram.getBaselineModel() : null;
 		//
@@ -497,7 +497,7 @@ public class ChromatogramChartSupport {
 		return compressionToLength;
 	}
 
-	public ILineSeriesData getLineSeriesData(IChromatogramSelection<?, ?> chromatogramSelection, String seriesId, Color color, boolean baseline, boolean timeIntervalSelection) {
+	public ILineSeriesData getLineSeriesData(IChromatogramSelection chromatogramSelection, String seriesId, Color color, boolean baseline, boolean timeIntervalSelection) {
 
 		DisplayType dataType = null;
 		if(chromatogramSelection instanceof IChromatogramSelectionWSD) {
@@ -512,14 +512,14 @@ public class ChromatogramChartSupport {
 		return getLineSeriesData(chromatogramSelection, seriesId, dataType, Derivative.NONE, color, baseline, timeIntervalSelection);
 	}
 
-	public ILineSeriesData getLineSeriesData(IChromatogramSelection<?, ?> chromatogramSelection, String seriesId, DisplayType dataType, Derivative derivative, Color color, boolean baseline, boolean timeIntervalSelection) {
+	public ILineSeriesData getLineSeriesData(IChromatogramSelection chromatogramSelection, String seriesId, DisplayType dataType, Derivative derivative, Color color, boolean baseline, boolean timeIntervalSelection) {
 
 		/*
 		 * refreshUpdateOverlayChart
 		 * Select which series shall be displayed.
 		 */
 		//
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		IMarkedTraces<?> markedSignals = null;
 		//
 		if(chromatogramSelection instanceof IChromatogramSelectionMSD chromatogramSelectionMSD) {

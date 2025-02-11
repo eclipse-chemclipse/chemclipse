@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2023 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -25,9 +25,9 @@ import org.eclipse.swt.widgets.Shell;
 
 public abstract class AbstractIdentificationsHandler {
 
-	private static IChromatogramSelection<?, ?> chromatogramSelection;
+	private static IChromatogramSelection chromatogramSelection;
 
-	public void setChromatogramSelection(IChromatogramSelection<?, ?> chromatogramSelectionX) {
+	public void setChromatogramSelection(IChromatogramSelection chromatogramSelectionX) {
 
 		chromatogramSelection = chromatogramSelectionX;
 	}
@@ -35,7 +35,7 @@ public abstract class AbstractIdentificationsHandler {
 	public void deleteIdentifications(Shell shell, String text, boolean deleteChromatogramIdentifications, boolean deletePeakIdentifications, boolean deleteScanIdentifications) {
 
 		if(chromatogramSelection != null) {
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			if(chromatogram != null) {
 				MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING | SWT.YES | SWT.NO | SWT.CANCEL);
 				messageBox.setText(text);

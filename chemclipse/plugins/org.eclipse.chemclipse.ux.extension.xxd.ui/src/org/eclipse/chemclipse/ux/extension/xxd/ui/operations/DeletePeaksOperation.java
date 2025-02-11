@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2023 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -29,11 +29,10 @@ import org.eclipse.swt.widgets.Display;
 
 public class DeletePeaksOperation extends AbstractOperation {
 
-	private IChromatogramSelection<IPeak, ?> chromatogramSelection;
+	private IChromatogramSelection chromatogramSelection;
 	private Display display;
 	private List<IPeak> peaksToDelete;
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
 	public DeletePeaksOperation(Display display, IChromatogramSelection chromatogramSelection, List<IPeak> peaksToDelete) {
 
 		super(ExtensionMessages.deletePeaks);
@@ -63,8 +62,8 @@ public class DeletePeaksOperation extends AbstractOperation {
 	@Override
 	public IStatus execute(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
 
-		IChromatogram<IPeak> chromatogram = chromatogramSelection.getChromatogram();
-		chromatogram.removePeaks(peaksToDelete);
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
+		chromatogram.getPeaks().removeAll(peaksToDelete);
 		update(ExtensionMessages.peaksDeleted);
 		return Status.OK_STATUS;
 	}
@@ -91,10 +90,8 @@ public class DeletePeaksOperation extends AbstractOperation {
 	@Override
 	public IStatus undo(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
 
-		IChromatogram<IPeak> chromatogram = chromatogramSelection.getChromatogram();
-		for(IPeak peak : peaksToDelete) {
-			chromatogram.addPeak(peak);
-		}
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
+		chromatogram.getPeaks().removeAll(peaksToDelete);
 		update(ExtensionMessages.peaksUndeleted);
 		return Status.OK_STATUS;
 	}

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2024 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -39,7 +39,7 @@ public class ChromatogramIntegratorSupport {
 	//
 	public static final String INTEGRATOR_DESCRIPTION = translationService.translate("%Trapezoid", Activator.getContributorURI());
 
-	public IChromatogramIntegrationResults calculateChromatogramIntegrationResults(IChromatogramSelection<?, ?> chromatogramSelection, ChromatogramIntegrationSettings chromatogramIntegrationSettings, IProgressMonitor monitor) {
+	public IChromatogramIntegrationResults calculateChromatogramIntegrationResults(IChromatogramSelection chromatogramSelection, ChromatogramIntegrationSettings chromatogramIntegrationSettings, IProgressMonitor monitor) {
 
 		/*
 		 * Get the chromatogram and background area.
@@ -47,7 +47,7 @@ public class ChromatogramIntegratorSupport {
 		double scaleFactor = chromatogramIntegrationSettings.getScaleFactor();
 		List<IIntegrationEntry> chromatogramIntegrationEntries = calculateChromatogramIntegrationEntry(chromatogramSelection, scaleFactor, monitor);
 		List<IIntegrationEntry> backgroundIntegrationEntries = calculateBackgroundIntegrationEntry(chromatogramSelection, scaleFactor, monitor);
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		chromatogram.setIntegratedArea(chromatogramIntegrationEntries, backgroundIntegrationEntries, INTEGRATOR_DESCRIPTION);
 		/*
 		 * Chromatogram Results
@@ -67,7 +67,7 @@ public class ChromatogramIntegratorSupport {
 	 * @param monitor
 	 * @return
 	 */
-	private List<IIntegrationEntry> calculateChromatogramIntegrationEntry(IChromatogramSelection<?, ?> chromatogramSelection, double scaleFactor, IProgressMonitor monitor) {
+	private List<IIntegrationEntry> calculateChromatogramIntegrationEntry(IChromatogramSelection chromatogramSelection, double scaleFactor, IProgressMonitor monitor) {
 
 		List<IIntegrationEntry> chromatogramIntegrationEntries = new ArrayList<>();
 		ChromatogramIntegrator chromatogramIntegrator = new ChromatogramIntegrator();
@@ -89,7 +89,7 @@ public class ChromatogramIntegratorSupport {
 		return chromatogramIntegrationEntries;
 	}
 
-	private List<IIntegrationEntry> calculateBackgroundIntegrationEntry(IChromatogramSelection<?, ?> chromatogramSelection, double scaleFactor, IProgressMonitor monitor) {
+	private List<IIntegrationEntry> calculateBackgroundIntegrationEntry(IChromatogramSelection chromatogramSelection, double scaleFactor, IProgressMonitor monitor) {
 
 		List<IIntegrationEntry> backgroundIntegrationEntries = new ArrayList<>();
 		BackgroundIntegrator backgroundIntegrator = new BackgroundIntegrator();

@@ -12,11 +12,10 @@
 package org.eclipse.chemclipse.vsd.model.core.selection;
 
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
-import org.eclipse.chemclipse.vsd.model.core.IChromatogramPeakVSD;
 import org.eclipse.chemclipse.vsd.model.core.IChromatogramVSD;
 import org.eclipse.chemclipse.vsd.model.core.IScanVSD;
 
-public interface IChromatogramSelectionVSD extends IChromatogramSelection<IChromatogramPeakVSD, IChromatogramVSD> {
+public interface IChromatogramSelectionVSD extends IChromatogramSelection {
 
 	@Override
 	IChromatogramVSD getChromatogram();

@@ -54,7 +54,7 @@ public class RetentionIndexCalculator {
 	private static final Pattern PATTERN_ALKANE = Pattern.compile(ALKANE_REGEX);
 	private static final String DESCRIPTION = "Retention Index Calculator";
 
-	public static void calculateIndex(IChromatogram<? extends IPeak> chromatogram, RetentionIndexMarker retentionIndexMarker, boolean processReferenceChromatograms) {
+	public static void calculateIndex(IChromatogram chromatogram, RetentionIndexMarker retentionIndexMarker, boolean processReferenceChromatograms) {
 
 		/*
 		 * Calculate
@@ -63,7 +63,7 @@ public class RetentionIndexCalculator {
 		RetentionIndexSupport.transferRetentionIndexMarker(retentionIndexMarker, separationColumnIndices);
 		RetentionIndexCalculator.calculateIndex(chromatogram, separationColumnIndices);
 		if(processReferenceChromatograms) {
-			for(IChromatogram<? extends IPeak> referencedChromatogram : chromatogram.getReferencedChromatograms()) {
+			for(IChromatogram referencedChromatogram : chromatogram.getReferencedChromatograms()) {
 				RetentionIndexCalculator.calculateIndex(referencedChromatogram, separationColumnIndices);
 			}
 		}
@@ -260,7 +260,7 @@ public class RetentionIndexCalculator {
 		return alkaneNumber;
 	}
 
-	public IProcessingInfo<?> calculateIndices(IChromatogramSelection<?, ?> chromatogramSelection, CalculatorSettings calculatorSettings) {
+	public IProcessingInfo<?> calculateIndices(IChromatogramSelection chromatogramSelection, CalculatorSettings calculatorSettings) {
 
 		IProcessingInfo<?> processingInfo = new ProcessingInfo<>();
 		if(chromatogramSelection != null) {
@@ -274,9 +274,9 @@ public class RetentionIndexCalculator {
 					/*
 					 * References
 					 */
-					IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+					IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 					for(Object object : chromatogram.getReferencedChromatograms()) {
-						if(object instanceof IChromatogram<?> referencedChromatogram) {
+						if(object instanceof IChromatogram referencedChromatogram) {
 							calculateIndex(referencedChromatogram, separationColumnIndices);
 						}
 					}
@@ -292,7 +292,7 @@ public class RetentionIndexCalculator {
 		return processingInfo;
 	}
 
-	public IProcessingInfo<?> resetIndices(IChromatogramSelection<?, ?> chromatogramSelection, ResetterSettings resetterSettings) {
+	public IProcessingInfo<?> resetIndices(IChromatogramSelection chromatogramSelection, ResetterSettings resetterSettings) {
 
 		IProcessingInfo<?> processingInfo = new ProcessingInfo<>();
 		boolean clearStoredRetentionIndices = resetterSettings.isClearStoredRetentionIndices();
@@ -305,9 +305,9 @@ public class RetentionIndexCalculator {
 				/*
 				 * References
 				 */
-				IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+				IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 				for(Object object : chromatogram.getReferencedChromatograms()) {
-					if(object instanceof IChromatogram<?> referencedChromatograms) {
+					if(object instanceof IChromatogram referencedChromatograms) {
 						resetIndex(referencedChromatograms, clearStoredRetentionIndices);
 					}
 				}
@@ -326,7 +326,7 @@ public class RetentionIndexCalculator {
 	 * @param chromatogram
 	 * @param separationColumnIndices
 	 */
-	public static void calculateIndex(IChromatogram<? extends IPeak> chromatogram, ISeparationColumnIndices separationColumnIndices) {
+	public static void calculateIndex(IChromatogram chromatogram, ISeparationColumnIndices separationColumnIndices) {
 
 		if(separationColumnIndices != null) {
 			/*
@@ -358,7 +358,7 @@ public class RetentionIndexCalculator {
 		}
 	}
 
-	private ISeparationColumnIndices getSeparationColumnIndices(IChromatogramSelection<?, ?> chromatogramSelection, CalculatorSettings calculatorSettings) {
+	private ISeparationColumnIndices getSeparationColumnIndices(IChromatogramSelection chromatogramSelection, CalculatorSettings calculatorSettings) {
 
 		ISeparationColumnIndices separationColumnIndices;
 		switch(calculatorSettings.getCalculatorStrategy()) {
@@ -378,7 +378,7 @@ public class RetentionIndexCalculator {
 		return separationColumnIndices;
 	}
 
-	private ISeparationColumnIndices getAutoIndices(IChromatogramSelection<?, ?> chromatogramSelection, CalculatorSettings calculatorSettings) {
+	private ISeparationColumnIndices getAutoIndices(IChromatogramSelection chromatogramSelection, CalculatorSettings calculatorSettings) {
 
 		ISeparationColumnIndices separationColumnIndices = getChromatogramIndices(chromatogramSelection);
 		if(separationColumnIndices == null) {
@@ -392,7 +392,7 @@ public class RetentionIndexCalculator {
 		return separationColumnIndices;
 	}
 
-	private ISeparationColumnIndices getChromatogramIndices(IChromatogramSelection<?, ?> chromatogramSelection) {
+	private ISeparationColumnIndices getChromatogramIndices(IChromatogramSelection chromatogramSelection) {
 
 		if(chromatogramSelection != null) {
 			return chromatogramSelection.getChromatogram().getSeparationColumnIndices();
@@ -401,7 +401,7 @@ public class RetentionIndexCalculator {
 		}
 	}
 
-	private ISeparationColumnIndices getFileIndices(IChromatogramSelection<?, ?> chromatogramSelection, CalculatorSettings calculatorSettings) {
+	private ISeparationColumnIndices getFileIndices(IChromatogramSelection chromatogramSelection, CalculatorSettings calculatorSettings) {
 
 		/*
 		 * Prepare the index map.
@@ -442,7 +442,7 @@ public class RetentionIndexCalculator {
 		return separationColumnIndices;
 	}
 
-	private void resetIndex(IChromatogram<? extends IPeak> chromatogram, boolean clearStoredRetentionIndices) {
+	private void resetIndex(IChromatogram chromatogram, boolean clearStoredRetentionIndices) {
 
 		float retentionIndex = 0.0f;
 		/*

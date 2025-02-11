@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2024 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -94,7 +94,7 @@ public class ChromatogramPeakChart extends ChromatogramChart implements ITraceSu
 	private ITargetDisplaySettings targetDisplaySettings = null;
 	private DisplayType displayType = DisplayType.TIC;
 	//
-	private IChromatogramSelection<?, ?> chromatogramSelection;
+	private IChromatogramSelection chromatogramSelection;
 
 	public ChromatogramPeakChart() {
 
@@ -108,12 +108,12 @@ public class ChromatogramPeakChart extends ChromatogramChart implements ITraceSu
 		initialize();
 	}
 
-	public void updateChromatogram(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public void updateChromatogram(IChromatogramSelection chromatogramSelection) {
 
 		updateChromatogram(chromatogramSelection, peakChartSettingsDefault);
 	}
 
-	public void updateChromatogram(IChromatogramSelection<?, ?> chromatogramSelection, PeakChartSettings peakChartSettings) {
+	public void updateChromatogram(IChromatogramSelection chromatogramSelection, PeakChartSettings peakChartSettings) {
 
 		this.chromatogramSelection = chromatogramSelection;
 		//
@@ -285,7 +285,7 @@ public class ChromatogramPeakChart extends ChromatogramChart implements ITraceSu
 		}
 	}
 
-	private boolean containsTraces(IChromatogramSelection<?, ?> chromatogramSelection) {
+	private boolean containsTraces(IChromatogramSelection chromatogramSelection) {
 
 		if(chromatogramSelection instanceof IChromatogramSelectionMSD chromatogramSelectionMSD) {
 			if(!chromatogramSelectionMSD.getSelectedIons().isEmpty()) {
@@ -447,7 +447,7 @@ public class ChromatogramPeakChart extends ChromatogramChart implements ITraceSu
 		}
 	}
 
-	private void addIdentifiedScansData(IChromatogramSelection<?, ?> chromatogramSelection, List<ILineSeriesData> lineSeriesDataList, List<IScan> scans, PlotSymbolType plotSymbolType, int symbolSize, Color symbolColor, String seriesId) {
+	private void addIdentifiedScansData(IChromatogramSelection chromatogramSelection, List<ILineSeriesData> lineSeriesDataList, List<IScan> scans, PlotSymbolType plotSymbolType, int symbolSize, Color symbolColor, String seriesId) {
 
 		if(!scans.isEmpty()) {
 			ILineSeriesData lineSeriesData = null;

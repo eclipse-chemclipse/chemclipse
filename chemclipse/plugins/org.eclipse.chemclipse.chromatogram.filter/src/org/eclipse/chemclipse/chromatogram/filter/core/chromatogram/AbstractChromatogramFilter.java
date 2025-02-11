@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2023 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -25,7 +25,7 @@ public abstract class AbstractChromatogramFilter implements IChromatogramFilter 
 	private static final String DESCRIPTION = ICategories.CHROMATOGRAM_FILTER;
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> validate(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings) {
+	public IProcessingInfo<IChromatogramFilterResult> validate(IChromatogramSelection chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings) {
 
 		IProcessingInfo<IChromatogramFilterResult> processingInfo = new ProcessingInfo<>();
 		processingInfo.addMessages(validateChromatogramSelection(chromatogramSelection));
@@ -34,7 +34,7 @@ public abstract class AbstractChromatogramFilter implements IChromatogramFilter 
 	}
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> validateChromatogramSelection(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public IProcessingInfo<IChromatogramFilterResult> validateChromatogramSelection(IChromatogramSelection chromatogramSelection) {
 
 		IProcessingInfo<IChromatogramFilterResult> processingInfo = new ProcessingInfo<>();
 		if(chromatogramSelection == null) {

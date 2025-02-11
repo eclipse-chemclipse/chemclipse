@@ -32,7 +32,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class ChromatogramCalculator extends AbstractChromatogramCalculator {
 
 	@Override
-	public IProcessingInfo<?> applyCalculator(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramCalculatorSettings chromatogramCalculatorSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<?> applyCalculator(IChromatogramSelection chromatogramSelection, IChromatogramCalculatorSettings chromatogramCalculatorSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<?> processingInfo = validate(chromatogramSelection, chromatogramCalculatorSettings);
 		if(!processingInfo.hasErrorMessages()) {
@@ -42,12 +42,12 @@ public class ChromatogramCalculator extends AbstractChromatogramCalculator {
 	}
 
 	@Override
-	public IProcessingInfo<?> applyCalculator(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor) {
+	public IProcessingInfo<?> applyCalculator(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor) {
 
 		return applyCalculator(chromatogramSelection);
 	}
 
-	IProcessingInfo<IPeakResolutionResult> applyCalculator(IChromatogramSelection<?, ?> chromatogramSelection) {
+	IProcessingInfo<IPeakResolutionResult> applyCalculator(IChromatogramSelection chromatogramSelection) {
 
 		IProcessingInfo<IPeakResolutionResult> processingInfo = new ProcessingInfo<>();
 		PeakResolutionResult peakResolutionResult = new PeakResolutionResult(ResultStatus.OK, Messages.peakResolutionCalculated);

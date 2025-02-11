@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -67,12 +67,12 @@ public class PeakIdentifierFilter implements IProcessTypeSupplier {
 		}
 
 		@Override
-		public IChromatogramSelection<?, ?> apply(IChromatogramSelection<?, ?> chromatogramSelection, PeakIdentifierFilterSettings processSettings, ProcessExecutionContext context) throws InterruptedException {
+		public IChromatogramSelection apply(IChromatogramSelection chromatogramSelection, PeakIdentifierFilterSettings processSettings, ProcessExecutionContext context) throws InterruptedException {
 
 			/*
 			 * Assign the peaks
 			 */
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			float limitMatchFactor = processSettings.getLimitMatchFactor();
 			float matchQuality = processSettings.getMatchQuality();
 			PeakFilterOption peakFilterOption = processSettings.getPeakFilterOption();
@@ -105,7 +105,7 @@ public class PeakIdentifierFilter implements IProcessTypeSupplier {
 			return chromatogramSelection;
 		}
 
-		private List<IPeak> getPeaksInFocus(IChromatogram<?> chromatogram, TimeRange timeRange, float limitMatchFactor) {
+		private List<IPeak> getPeaksInFocus(IChromatogram chromatogram, TimeRange timeRange, float limitMatchFactor) {
 
 			List<IPeak> peaks = new ArrayList<>();
 			for(IPeak peak : chromatogram.getPeaks()) {

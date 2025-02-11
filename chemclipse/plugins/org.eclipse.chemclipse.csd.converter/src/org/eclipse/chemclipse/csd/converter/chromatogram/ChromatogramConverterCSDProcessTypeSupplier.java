@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2024 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -63,7 +63,7 @@ public class ChromatogramConverterCSDProcessTypeSupplier implements IProcessType
 		}
 
 		@Override
-		public IChromatogramSelection<?, ?> apply(IChromatogramSelection<?, ?> chromatogramSelection, ChromatogramExportSettings processSettings, IMessageConsumer messageConsumer, IProgressMonitor monitor) {
+		public IChromatogramSelection apply(IChromatogramSelection chromatogramSelection, ChromatogramExportSettings processSettings, IMessageConsumer messageConsumer, IProgressMonitor monitor) {
 
 			if(processSettings == null) {
 				processSettings = new ChromatogramExportSettings();
@@ -74,7 +74,7 @@ public class ChromatogramConverterCSDProcessTypeSupplier implements IProcessType
 				return chromatogramSelection;
 			}
 			if(exportFolder.exists() || exportFolder.mkdirs()) {
-				IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+				IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 				if(chromatogram instanceof IChromatogramCSD chromatogramCSD) {
 					File file = processSettings.getExportFile(supplier.getFileExtension(), chromatogram);
 					IProcessingInfo<File> info = ChromatogramConverterCSD.getInstance().convert(file, chromatogramCSD, supplier.getId(), monitor);

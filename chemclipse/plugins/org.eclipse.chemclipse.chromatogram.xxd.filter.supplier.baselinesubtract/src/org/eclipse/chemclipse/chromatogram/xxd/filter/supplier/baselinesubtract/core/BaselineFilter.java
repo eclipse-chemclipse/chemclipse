@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2023 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -26,9 +26,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class BaselineFilter extends AbstractChromatogramFilter implements IChromatogramFilter {
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
 
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		int startScan = chromatogram.getScanNumber(chromatogramSelection.getStartRetentionTime());
 		int stopScan = chromatogram.getScanNumber(chromatogramSelection.getStopRetentionTime());
 		IBaselineModel baselineModel = chromatogram.getBaselineModel();
@@ -43,14 +43,14 @@ public class BaselineFilter extends AbstractChromatogramFilter implements IChrom
 			}
 		}
 		chromatogram.recalculateTheNoiseFactor();
-		chromatogram.removeAllPeaks();
+		chromatogram.getPeaks().clear();
 		baselineModel.removeBaseline();
 		chromatogramSelection.getChromatogram().setDirty(true);
 		return new ProcessingInfo<>();
 	}
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor) {
 
 		return applyFilter(chromatogramSelection, null, monitor);
 	}

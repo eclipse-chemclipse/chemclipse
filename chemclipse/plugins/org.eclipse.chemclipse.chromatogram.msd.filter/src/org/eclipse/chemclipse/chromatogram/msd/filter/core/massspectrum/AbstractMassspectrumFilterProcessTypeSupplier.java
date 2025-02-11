@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2022 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -32,9 +32,9 @@ public abstract class AbstractMassspectrumFilterProcessTypeSupplier implements I
 
 	private final String category;
 	private final String prefix;
-	private final Function<IChromatogramSelection<?, ?>, List<IScanMSD>> extractionFunction;
+	private final Function<IChromatogramSelection, List<IScanMSD>> extractionFunction;
 
-	public AbstractMassspectrumFilterProcessTypeSupplier(String category, String prefix, Function<IChromatogramSelection<?, ?>, List<IScanMSD>> extractionFunction) {
+	public AbstractMassspectrumFilterProcessTypeSupplier(String category, String prefix, Function<IChromatogramSelection, List<IScanMSD>> extractionFunction) {
 
 		this.category = category;
 		this.prefix = prefix;
@@ -65,10 +65,10 @@ public abstract class AbstractMassspectrumFilterProcessTypeSupplier implements I
 	private static final class MassSpectrumFilterProcessorSupplier extends ChromatogramSelectionProcessorSupplier<IMassSpectrumFilterSettings> {
 
 		private final IMassSpectrumFilterSupplier supplier;
-		private final Function<IChromatogramSelection<?, ?>, List<IScanMSD>> extractionFunction;
+		private final Function<IChromatogramSelection, List<IScanMSD>> extractionFunction;
 
 		@SuppressWarnings("unchecked")
-		public MassSpectrumFilterProcessorSupplier(String prefix, IMassSpectrumFilterSupplier supplier, Function<IChromatogramSelection<?, ?>, List<IScanMSD>> extractionFunction, IProcessTypeSupplier parent) {
+		public MassSpectrumFilterProcessorSupplier(String prefix, IMassSpectrumFilterSupplier supplier, Function<IChromatogramSelection, List<IScanMSD>> extractionFunction, IProcessTypeSupplier parent) {
 
 			super(prefix + supplier.getId(), supplier.getFilterName(), supplier.getDescription(), (Class<IMassSpectrumFilterSettings>)supplier.getConfigClass(), parent, DataType.MSD);
 			this.supplier = supplier;
@@ -76,7 +76,7 @@ public abstract class AbstractMassspectrumFilterProcessTypeSupplier implements I
 		}
 
 		@Override
-		public IChromatogramSelection<?, ?> apply(IChromatogramSelection<?, ?> chromatogramSelection, IMassSpectrumFilterSettings processSettings, IMessageConsumer messageConsumer, IProgressMonitor monitor) {
+		public IChromatogramSelection apply(IChromatogramSelection chromatogramSelection, IMassSpectrumFilterSettings processSettings, IMessageConsumer messageConsumer, IProgressMonitor monitor) {
 
 			List<IScanMSD> massspectras = extractionFunction.apply(chromatogramSelection);
 			messageConsumer.addMessages(MassSpectrumFilter.applyFilter(massspectras, processSettings, supplier.getId(), monitor));

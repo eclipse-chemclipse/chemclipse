@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2024 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -131,7 +131,7 @@ public class ProcessTypeSupport implements IProcessSupplierContext {
 	}
 
 	@Deprecated
-	public <T> IProcessingInfo<T> applyProcessor(IChromatogramSelection<?, ?> chromatogramSelection, IProcessMethod processMethod, IProgressMonitor monitor) {
+	public <T> IProcessingInfo<T> applyProcessor(IChromatogramSelection chromatogramSelection, IProcessMethod processMethod, IProgressMonitor monitor) {
 
 		ProcessingInfo<T> processingInfo = new ProcessingInfo<>();
 		ProcessEntryContainer.applyProcessEntries(processMethod, new ProcessExecutionContext(monitor, processingInfo, this), IChromatogramSelectionProcessSupplier.createConsumer(chromatogramSelection));
@@ -139,11 +139,11 @@ public class ProcessTypeSupport implements IProcessSupplierContext {
 	}
 
 	@Deprecated
-	public <T, X> IProcessingInfo<T> applyProcessor(List<? extends IChromatogramSelection<?, ?>> chromatogramSelections, IProcessMethod processMethod, IProgressMonitor monitor) {
+	public <T, X> IProcessingInfo<T> applyProcessor(List<? extends IChromatogramSelection> chromatogramSelections, IProcessMethod processMethod, IProgressMonitor monitor) {
 
 		ProcessingInfo<T> processingInfo = new ProcessingInfo<>();
 		ProcessExecutionContext executionContext = new ProcessExecutionContext(monitor, processingInfo, this);
-		for(IChromatogramSelection<?, ?> selection : chromatogramSelections) {
+		for(IChromatogramSelection selection : chromatogramSelections) {
 			ProcessEntryContainer.applyProcessEntries(processMethod, executionContext.split(), IChromatogramSelectionProcessSupplier.createConsumer(selection));
 		}
 		//

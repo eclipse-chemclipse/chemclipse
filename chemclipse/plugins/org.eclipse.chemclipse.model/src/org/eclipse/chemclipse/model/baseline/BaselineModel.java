@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2023 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -31,7 +31,7 @@ import org.eclipse.chemclipse.numeric.equations.Equations;
  */
 public class BaselineModel implements IBaselineModel {
 
-	private IChromatogram<?> chromatogram;
+	private IChromatogram chromatogram;
 	/*
 	 * The start retention time is the key.
 	 */
@@ -39,14 +39,14 @@ public class BaselineModel implements IBaselineModel {
 	private float defaultBackgroundAbundance;
 	private boolean interpolate;
 
-	public BaselineModel(IChromatogram<?> chromatogram) {
+	public BaselineModel(IChromatogram chromatogram) {
 
 		this.chromatogram = chromatogram;
 		this.defaultBackgroundAbundance = 0f;
 		this.interpolate = false;
 	}
 
-	public BaselineModel(IChromatogram<?> chromatogram, float defaultBackgroundAbundance) {
+	public BaselineModel(IChromatogram chromatogram, float defaultBackgroundAbundance) {
 
 		this.chromatogram = chromatogram;
 		this.defaultBackgroundAbundance = defaultBackgroundAbundance;

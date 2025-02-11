@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022 Lablicate GmbH.
+ * Copyright (c) 2022, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -21,7 +21,7 @@ import junit.framework.TestCase;
 public class ProcessSettings_1_Test extends TestCase {
 
 	private ProcessSettingsTest processSettings = new ProcessSettingsTest();
-	private IChromatogram<?> chromatogram;
+	private IChromatogram chromatogram;
 
 	@Override
 	protected void setUp() throws Exception {

@@ -14,7 +14,6 @@ package org.eclipse.chemclipse.model.selection;
 
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IChromatogramPeak;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
@@ -28,11 +27,11 @@ import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
  * by a mass selective, a flame ionization or another detector.
  *
  */
-public class ChromatogramSelection<T extends IChromatogramPeak, C extends IChromatogram<T>> extends AbstractChromatogramSelection<T, C> implements IChromatogramSelection<T, C> {
+public class ChromatogramSelection extends AbstractChromatogramSelection implements IChromatogramSelection {
 
 	private static final Logger logger = Logger.getLogger(ChromatogramSelection.class);
 
-	public ChromatogramSelection(C chromatogram, boolean fireUpdate) throws ChromatogramIsNullException {
+	public ChromatogramSelection(IChromatogram chromatogram, boolean fireUpdate) throws ChromatogramIsNullException {
 
 		super(chromatogram);
 		/*
@@ -42,7 +41,7 @@ public class ChromatogramSelection<T extends IChromatogramPeak, C extends IChrom
 		reset(fireUpdate);
 	}
 
-	public ChromatogramSelection(C chromatogram) throws ChromatogramIsNullException {
+	public ChromatogramSelection(IChromatogram chromatogram) throws ChromatogramIsNullException {
 
 		this(chromatogram, true);
 	}
@@ -79,7 +78,7 @@ public class ChromatogramSelection<T extends IChromatogramPeak, C extends IChrom
 	}
 
 	@Override
-	public T getSelectedPeak() {
+	public IPeak getSelectedPeak() {
 
 		logger.warn("Bad boy - getSelectedPeak(): don't use the ChromatogramSelection implementation");
 		return null;

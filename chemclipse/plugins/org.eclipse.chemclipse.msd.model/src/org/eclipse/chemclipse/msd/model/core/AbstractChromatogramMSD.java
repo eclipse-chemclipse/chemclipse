@@ -13,6 +13,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core;
 
+import java.util.List;
+
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.NoiseCalculator;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.model.core.AbstractChromatogram;
@@ -55,7 +57,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * {@link IChromatogramUpdateListener}) will be informed if values of the
  * chromatogram has been changed.
  */
-public abstract class AbstractChromatogramMSD extends AbstractChromatogram<IChromatogramPeakMSD> implements IChromatogramMSD {
+public abstract class AbstractChromatogramMSD extends AbstractChromatogram implements IChromatogramMSD {
 
 	private static final long serialVersionUID = 6481555040060687481L;
 	//
@@ -127,7 +129,7 @@ public abstract class AbstractChromatogramMSD extends AbstractChromatogram<IChro
 	}
 
 	@Override
-	public void fireUpdate(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public void fireUpdate(IChromatogramSelection chromatogramSelection) {
 
 		/*
 		 * Fire an update to inform all listeners.
@@ -287,5 +289,19 @@ public abstract class AbstractChromatogramMSD extends AbstractChromatogram<IChro
 		} else {
 			return PreferenceSupplier.getSelectedNoiseCalculatorId();
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<IChromatogramPeakMSD> getPeaks() {
+
+		return (List<IChromatogramPeakMSD>)super.getPeaks();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<IChromatogramPeakMSD> getPeaks(int startRetentionTime, int stopRetentionTime) {
+
+		return (List<IChromatogramPeakMSD>)super.getPeaks(startRetentionTime, stopRetentionTime);
 	}
 }

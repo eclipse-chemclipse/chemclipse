@@ -31,6 +31,7 @@ import org.eclipse.chemclipse.model.columns.ISeparationColumnIndices;
 import org.eclipse.chemclipse.model.columns.SeparationColumnFactory;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
+import org.eclipse.chemclipse.model.implementation.ObservedPeakList;
 import org.eclipse.chemclipse.model.implementation.TripleQuadMethod;
 import org.eclipse.chemclipse.model.notifier.IChromatogramSelectionUpdateNotifier;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignalExtractor;
@@ -46,7 +47,7 @@ import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SafeRunner;
 
-public abstract class AbstractChromatogram<T extends IPeak> extends AbstractMeasurementTarget implements IChromatogram<T> {
+public abstract class AbstractChromatogram extends AbstractMeasurementTarget implements IChromatogram {
 
 	private static final long serialVersionUID = -2540103992883061431L;
 	private static final Logger logger = Logger.getLogger(AbstractChromatogram.class);
@@ -90,8 +91,8 @@ public abstract class AbstractChromatogram<T extends IPeak> extends AbstractMeas
 	/*
 	 * Some vendors store several chromatograms in one file.
 	 */
-	private IChromatogram<?> masterChromatogram = null;
-	private final List<IChromatogram<?>> referencedChromatograms = new ArrayList<>();
+	private IChromatogram masterChromatogram = null;
+	private final List<IChromatogram> referencedChromatograms = new ArrayList<>();
 	/*
 	 * Integration entries.
 	 */
@@ -106,7 +107,8 @@ public abstract class AbstractChromatogram<T extends IPeak> extends AbstractMeas
 	 * Specific chromatogram implementations might define
 	 * specific peak types, which must extend from IPeak.
 	 */
-	private final PeakRTMap<T> peaks = new PeakRTMap<>();
+	private final ObservedPeakList<? extends IChromatogramPeak> peaks = new ObservedPeakList<>();
+
 	private final Set<IIdentificationTarget> identificationTargets = new HashSet<>();
 	private int modCount;
 	/*
@@ -122,7 +124,7 @@ public abstract class AbstractChromatogram<T extends IPeak> extends AbstractMeas
 	 * Constructs a normal chromatogram.
 	 * Several initialization will be performed.
 	 */
-	public AbstractChromatogram() {
+	protected AbstractChromatogram() {
 
 		updateSupport = new ArrayList<>(5);
 		editHistory = new EditHistory();
@@ -705,7 +707,7 @@ public abstract class AbstractChromatogram<T extends IPeak> extends AbstractMeas
 	}
 
 	@Override
-	public IChromatogram<?> getMasterChromatogram() {
+	public IChromatogram getMasterChromatogram() {
 
 		return masterChromatogram;
 	}
@@ -717,28 +719,28 @@ public abstract class AbstractChromatogram<T extends IPeak> extends AbstractMeas
 	 * 
 	 * @param masterChromatogram
 	 */
-	private void setMasterChromatogram(IChromatogram<?> chromatogram, IChromatogram<?> masterChromatogram) {
+	private void setMasterChromatogram(IChromatogram chromatogram, IChromatogram masterChromatogram) {
 
-		if(chromatogram instanceof AbstractChromatogram<?> abstractChromatogram) {
+		if(chromatogram instanceof AbstractChromatogram abstractChromatogram) {
 			abstractChromatogram.masterChromatogram = masterChromatogram;
 		}
 	}
 
 	@Override
-	public List<IChromatogram<?>> getReferencedChromatograms() {
+	public List<IChromatogram> getReferencedChromatograms() {
 
 		return referencedChromatograms;
 	}
 
 	@Override
-	public void addReferencedChromatogram(IChromatogram<?> chromatogram) {
+	public void addReferencedChromatogram(IChromatogram chromatogram) {
 
 		setMasterChromatogram(chromatogram, this);
 		referencedChromatograms.add(chromatogram);
 	}
 
 	@Override
-	public void removeReferencedChromatogram(IChromatogram<?> chromatogram) {
+	public void removeReferencedChromatogram(IChromatogram chromatogram) {
 
 		setMasterChromatogram(chromatogram, null);
 		referencedChromatograms.remove(chromatogram);
@@ -747,7 +749,7 @@ public abstract class AbstractChromatogram<T extends IPeak> extends AbstractMeas
 	@Override
 	public void removeAllReferencedChromatograms() {
 
-		for(IChromatogram<?> chromatogram : referencedChromatograms) {
+		for(IChromatogram chromatogram : referencedChromatograms) {
 			setMasterChromatogram(chromatogram, null);
 		}
 		referencedChromatograms.clear();
@@ -787,11 +789,11 @@ public abstract class AbstractChromatogram<T extends IPeak> extends AbstractMeas
 	public void setIntegratedArea(List<IIntegrationEntry> chromatogramIntegrationEntries, List<IIntegrationEntry> backgroundIntegrationEntries, String integratorDescription) {
 
 		setIntegratorDescription(integratorDescription);
-		//
+
 		if(chromatogramIntegrationEntries != null) {
 			this.chromatogramIntegrationEntries = chromatogramIntegrationEntries;
 		}
-		//
+
 		if(backgroundIntegrationEntries != null) {
 			this.backgroundIntegrationEntries = backgroundIntegrationEntries;
 		}
@@ -910,64 +912,15 @@ public abstract class AbstractChromatogram<T extends IPeak> extends AbstractMeas
 	}
 
 	@Override
-	public void removeAllPeaks() {
+	public List<? extends IChromatogramPeak> getPeaks() {
 
-		for(T peak : getPeaks()) {
-			peak.setMarkedAsDeleted(true);
-		}
-		peaks.removeAllPeaks();
+		return peaks;
 	}
 
 	@Override
-	public int getNumberOfPeaks() {
+	public List<? extends IChromatogramPeak> getPeaks(int startRetentionTime, int stopRetentionTime) {
 
-		return peaks.getNumberOfPeaks();
-	}
-
-	@Override
-	public void addPeak(T peak) {
-
-		boolean addPeak = false;
-		IPeakModel peakModel = peak.getPeakModel();
-		if(peakModel.areInflectionPointsAvailable()) {
-			addPeak = peak.getPeakModel().getWidthByInflectionPoints() > 0;
-		} else {
-			addPeak = true;
-		}
-		/*
-		 * Add the peak if the model is valid.
-		 */
-		if(addPeak) {
-			peaks.addPeak(peak);
-		}
-	}
-
-	@Override
-	public void removePeak(T peak) {
-
-		peaks.removePeak(peak);
-		peak.setMarkedAsDeleted(true);
-	}
-
-	@Override
-	public void removePeaks(List<T> peaksToDelete) {
-
-		peaks.removePeaks(peaksToDelete);
-		for(T peak : peaksToDelete) {
-			peak.setMarkedAsDeleted(true);
-		}
-	}
-
-	@Override
-	public List<T> getPeaks() {
-
-		return peaks.getPeaks();
-	}
-
-	@Override
-	public List<T> getPeaks(int startRetentionTime, int stopRetentionTime) {
-
-		return peaks.getPeaks(startRetentionTime, stopRetentionTime);
+		return peaks.getRetentionTimeMap().getPeaks(startRetentionTime, stopRetentionTime);
 	}
 
 	@Override
@@ -1032,7 +985,7 @@ public abstract class AbstractChromatogram<T extends IPeak> extends AbstractMeas
 		if(getClass() != otherObject.getClass()) {
 			return false;
 		}
-		IChromatogram<?> other = (IChromatogram<?>)otherObject;
+		IChromatogram other = (IChromatogram)otherObject;
 		return getNumberOfScans() == other.getNumberOfScans() && getTotalSignal() == other.getTotalSignal() && getMinSignal() == other.getMinSignal() && getMaxSignal() == other.getMaxSignal() && getStartRetentionTime() == other.getStartRetentionTime() && getStopRetentionTime() == other.getStopRetentionTime();
 	}
 

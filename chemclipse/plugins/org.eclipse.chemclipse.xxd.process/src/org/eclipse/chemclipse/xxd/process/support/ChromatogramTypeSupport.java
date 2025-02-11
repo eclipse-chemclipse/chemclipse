@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,7 +20,6 @@ import org.eclipse.chemclipse.csd.converter.chromatogram.ChromatogramConverterCS
 import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
 import org.eclipse.chemclipse.csd.model.core.selection.ChromatogramSelectionCSD;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.core.IChromatogramPeak;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.model.types.DataType;
 import org.eclipse.chemclipse.msd.converter.chromatogram.ChromatogramConverterMSD;
@@ -52,13 +51,13 @@ public class ChromatogramTypeSupport {
 		}
 	}
 
-	public IProcessingInfo<IChromatogramSelection<?, ?>> getChromatogramSelection(String pathChromatogram, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramSelection> getChromatogramSelection(String pathChromatogram, IProgressMonitor monitor) {
 
-		IProcessingInfo<IChromatogramSelection<?, ?>> processingInfo = new ProcessingInfo<>();
+		IProcessingInfo<IChromatogramSelection> processingInfo = new ProcessingInfo<>();
 		File file = new File(pathChromatogram);
 		DataType dataType = detectDataType(file);
 		if(dataType != null) {
-			IChromatogramSelection<? extends IChromatogramPeak, ?> chromatogramSelection = null;
+			IChromatogramSelection chromatogramSelection = null;
 			boolean fireUpdate = false;
 			// TODO chemclipse/#97
 			switch(dataType) {

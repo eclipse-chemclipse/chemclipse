@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2024 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -61,7 +61,7 @@ public class ChromatogramClassifier {
 
 	}
 
-	public static IProcessingInfo<IChromatogramClassifierResult> applyClassifier(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramClassifierSettings chromatogramClassifierSettings, String classifierId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IChromatogramClassifierResult> applyClassifier(IChromatogramSelection chromatogramSelection, IChromatogramClassifierSettings chromatogramClassifierSettings, String classifierId, IProgressMonitor monitor) {
 
 		IChromatogramClassifier chromatogramClassifier = getChromatogramClassifier(classifierId);
 		if(chromatogramClassifier != null) {
@@ -70,7 +70,7 @@ public class ChromatogramClassifier {
 		return getNoClassifierAvailableProcessingInfo();
 	}
 
-	public static IProcessingInfo<IChromatogramClassifierResult> applyClassifier(IChromatogramSelection<?, ?> chromatogramSelection, String classifierId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IChromatogramClassifierResult> applyClassifier(IChromatogramSelection chromatogramSelection, String classifierId, IProgressMonitor monitor) {
 
 		return applyClassifier(chromatogramSelection, null, classifierId, monitor);
 	}

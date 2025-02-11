@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2024 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -148,7 +148,7 @@ public class PeakTracesUI extends ScrollableChart {
 		int startRetentionTime = peakModel.getStartRetentionTime() - offsetRetentionTime;
 		int stopRetentionTime = peakModel.getStopRetentionTime() + offsetRetentionTime;
 		IPeakMassSpectrum massSpectrum = peakModel.getPeakMassSpectrum();
-		IChromatogramSelection<?, ?> chromatogramSelection = new ChromatogramSelection<>(chromatogram);
+		IChromatogramSelection chromatogramSelection = new ChromatogramSelection(chromatogram);
 		chromatogramSelection.setRangeRetentionTime(startRetentionTime, stopRetentionTime, false);
 		//
 		IColorScheme colors = Colors.getColorScheme(preferenceStore.getString(PreferenceSupplier.P_COLOR_SCHEME_PEAK_TRACES));
@@ -182,7 +182,7 @@ public class PeakTracesUI extends ScrollableChart {
 		int stopRetentionTime = peakModel.getStopRetentionTime() + offsetRetentionTime;
 		IScan peakMaximum = peakModel.getPeakMaximum();
 		if(peakMaximum instanceof IScanWSD scanWSD) {
-			IChromatogramSelection<?, ?> chromatogramSelection = new ChromatogramSelection<>(chromatogram);
+			IChromatogramSelection chromatogramSelection = new ChromatogramSelection(chromatogram);
 			chromatogramSelection.setRangeRetentionTime(startRetentionTime, stopRetentionTime, false);
 			//
 			IColorScheme colors = Colors.getColorScheme(preferenceStore.getString(PreferenceSupplier.P_COLOR_SCHEME_PEAK_TRACES));

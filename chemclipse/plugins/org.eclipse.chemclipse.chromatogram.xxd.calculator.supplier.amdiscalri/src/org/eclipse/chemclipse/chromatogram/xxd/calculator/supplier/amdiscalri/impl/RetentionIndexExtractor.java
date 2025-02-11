@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2023 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -32,7 +32,7 @@ import org.eclipse.chemclipse.model.support.RetentionIndexMath;
 
 public class RetentionIndexExtractor {
 
-	public ISeparationColumnIndices extract(IChromatogram<?> chromatogram, boolean deriveMissingIndices, boolean useCuratedNames) {
+	public ISeparationColumnIndices extract(IChromatogram chromatogram, boolean deriveMissingIndices, boolean useCuratedNames) {
 
 		String[] standards = RetentionIndexCalculator.getStandards();
 		ISeparationColumnIndices separationColumnIndices = new SeparationColumnIndices();
@@ -153,7 +153,7 @@ public class RetentionIndexExtractor {
 		return retentionIndex;
 	}
 
-	private List<? extends IPeak> getPeaks(IChromatogram<?> chromatogram) {
+	private List<? extends IPeak> getPeaks(IChromatogram chromatogram) {
 
 		List<IPeak> peaks = new ArrayList<>();
 		peaks.addAll(chromatogram.getPeaks());

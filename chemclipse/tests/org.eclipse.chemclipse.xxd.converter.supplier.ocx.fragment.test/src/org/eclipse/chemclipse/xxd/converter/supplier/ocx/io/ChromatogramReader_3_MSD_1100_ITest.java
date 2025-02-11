@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2018 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -44,7 +44,7 @@ public class ChromatogramReader_3_MSD_1100_ITest extends ChromatogramReaderMSDTe
 
 	public void testReader_3() {
 
-		assertEquals(0, chromatogram.getNumberOfPeaks());
+		assertEquals(0, chromatogram.getPeaks().size());
 	}
 
 	public void testReader_4() {

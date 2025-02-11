@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,7 +13,6 @@ package org.eclipse.chemclipse.chromatogram.xxd.report.supplier.pdf.support;
 
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 
 public class ValueScaling {
@@ -30,7 +29,7 @@ public class ValueScaling {
 	private float leftMargin = 50;
 	private float rightMargin = 50;
 
-	public ValueScaling(IChromatogram<? extends IPeak> chromatogram, PDPage page, ITotalScanSignals scans) {
+	public ValueScaling(IChromatogram chromatogram, PDPage page, ITotalScanSignals scans) {
 
 		startTime = scans.getFirstTotalScanSignal().getRetentionTime();
 		stopTime = scans.getLastTotalScanSignal().getRetentionTime();

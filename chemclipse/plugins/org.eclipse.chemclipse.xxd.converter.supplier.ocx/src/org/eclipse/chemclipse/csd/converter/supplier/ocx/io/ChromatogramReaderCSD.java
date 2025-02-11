@@ -173,7 +173,7 @@ public class ChromatogramReaderCSD extends AbstractChromatogramCSDReader impleme
 		if(PreferenceSupplier.isForceLoadAlternateDetector()) {
 			ChromatogramReaderMSD chromatogramReaderMSD = new ChromatogramReaderMSD();
 			IChromatogramOverview chromatogramOverview = chromatogramReaderMSD.readOverview(file, monitor);
-			if(chromatogramOverview instanceof IChromatogram<?> chromatogram) {
+			if(chromatogramOverview instanceof IChromatogram chromatogram) {
 				chromatogramFID = new VendorChromatogram();
 				for(IScan scan : chromatogram.getScans()) {
 					IVendorScan scanCSD = new VendorScan(scan.getRetentionTime(), scan.getTotalSignal());

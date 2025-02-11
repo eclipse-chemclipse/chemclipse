@@ -56,7 +56,7 @@ public class ChromatogramOverlayPart extends AbstractPart<ExtendedChromatogramOv
 		if(objects.size() == 1) {
 			Object object = objects.get(0);
 			if(isUpdateEvent(topic)) {
-				if(object instanceof IChromatogramSelection<?, ?> chromatogramSelection) {
+				if(object instanceof IChromatogramSelection chromatogramSelection) {
 					getControl().update(chromatogramSelection);
 					return true;
 				}

@@ -175,7 +175,7 @@ public class ExtendedSequenceListUI extends Composite implements IExtendedPartUI
 			@Override
 			public void execute(IProcessMethod processMethod, IProgressMonitor monitor) {
 
-				IProcessingInfo<IChromatogramSelection<?, ?>> processingInfo = new ProcessingInfo<>();
+				IProcessingInfo<IChromatogramSelection> processingInfo = new ProcessingInfo<>();
 				TableItem[] tableItems = sequenceListUI.getTable().getItems();
 				//
 				for(TableItem tableItem : tableItems) {
@@ -185,9 +185,9 @@ public class ExtendedSequenceListUI extends Composite implements IExtendedPartUI
 						 * Get the file.
 						 */
 						String pathChromatogram = sequence.getDataPath() + File.separator + sequenceRecord.getDataFile();
-						IProcessingInfo<IChromatogramSelection<?, ?>> processingInfoChromatogram = chromatogramTypeSupport.getChromatogramSelection(pathChromatogram, monitor);
+						IProcessingInfo<IChromatogramSelection> processingInfoChromatogram = chromatogramTypeSupport.getChromatogramSelection(pathChromatogram, monitor);
 						if(!processingInfoChromatogram.hasErrorMessages()) {
-							IChromatogramSelection<?, ?> chromatogramSelection = processingInfoChromatogram.getProcessingResult();
+							IChromatogramSelection chromatogramSelection = processingInfoChromatogram.getProcessingResult();
 							addSequenceRecordInformation(sequenceRecord, chromatogramSelection.getChromatogram());
 							ProcessingInfo<?> processorInfo = new ProcessingInfo<>();
 							ProcessEntryContainer.applyProcessEntries(processMethod, new ProcessExecutionContext(monitor, processorInfo, processSupplierContext), IChromatogramSelectionProcessSupplier.createConsumer(chromatogramSelection));

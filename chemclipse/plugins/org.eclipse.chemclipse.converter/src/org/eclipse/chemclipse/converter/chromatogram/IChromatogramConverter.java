@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2019 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,7 +20,7 @@ import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-public interface IChromatogramConverter<P extends IPeak, C extends IChromatogram<P>> {
+public interface IChromatogramConverter<P extends IPeak, C extends IChromatogram> {
 
 	/**
 	 * This methods returns an {@link IChromatogramConverterSupport} instance.<br/>

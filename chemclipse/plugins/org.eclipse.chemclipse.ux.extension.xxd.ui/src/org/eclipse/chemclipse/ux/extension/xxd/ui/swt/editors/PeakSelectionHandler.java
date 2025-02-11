@@ -14,6 +14,7 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors;
 import java.util.List;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
+import org.eclipse.chemclipse.model.core.IChromatogramPeak;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.support.PeakSupport;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
@@ -59,7 +60,6 @@ public class PeakSelectionHandler extends AbstractHandledEventProcessor implemen
 		return SWT.MOD3;
 	}
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
 	public void handleEvent(BaseChart baseChart, Event event) {
 
@@ -70,7 +70,7 @@ public class PeakSelectionHandler extends AbstractHandledEventProcessor implemen
 			int retentionTimeDelta = preferenceStore.getInt(PreferenceSupplier.P_DELTA_MILLISECONDS_PEAK_SELECTION);
 			int startRetentionTime = retentionTime - retentionTimeDelta;
 			int stopRetentiontime = retentionTime + retentionTimeDelta;
-			List<IPeak> peaks = chromatogram.getPeaks(startRetentionTime, stopRetentiontime);
+			List<? extends IChromatogramPeak> peaks = chromatogram.getPeaks(startRetentionTime, stopRetentiontime);
 			if(peaks != null && !peaks.isEmpty()) {
 				/*
 				 * Fire an update.

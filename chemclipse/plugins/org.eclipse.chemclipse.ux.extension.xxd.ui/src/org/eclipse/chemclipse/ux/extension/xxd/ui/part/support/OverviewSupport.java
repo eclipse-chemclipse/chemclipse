@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2024 Lablicate GmbH.
+ * Copyright (c) 2017, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -57,7 +57,7 @@ public class OverviewSupport {
 			if(object instanceof IChromatogramOverview chromatogramOverview) {
 				return fireUpdate(chromatogramOverview);
 			} else if(object instanceof IChromatogramSelection) {
-				IChromatogramSelection<?, ?> chromatogramSelection = (IChromatogramSelection<?, ?>)object;
+				IChromatogramSelection chromatogramSelection = (IChromatogramSelection)object;
 				return updateChromatogramSelection(chromatogramSelection);
 			} else if(object instanceof File file) {
 				return updateFile(file, topic);
@@ -76,9 +76,9 @@ public class OverviewSupport {
 		this.overviewListener = overviewListener;
 	}
 
-	private boolean updateChromatogramSelection(IChromatogramSelection<?, ?> chromatogramSelection) {
+	private boolean updateChromatogramSelection(IChromatogramSelection chromatogramSelection) {
 
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		if(chromatogram != null) {
 			return fireUpdate(chromatogram);
 		}
