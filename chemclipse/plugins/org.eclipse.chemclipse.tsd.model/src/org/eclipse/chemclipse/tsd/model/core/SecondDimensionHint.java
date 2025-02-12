@@ -18,7 +18,8 @@ public enum SecondDimensionHint implements ILabel {
 	NONE("--"), //
 	MIN("Min"), //
 	MEDIAN("Median"), //
-	MAX("Max"); //
+	MAX("Max"), //
+	MAX_DELTA_1("Max (±1)"); //
 
 	private String label = "";
 
