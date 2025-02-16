@@ -76,6 +76,8 @@ public class LocalNucleotideBLAST {
 		processBuilder.command().add(settings.getDatabase());
 		processBuilder.command().add("-query");
 		processBuilder.command().add(fasta.getAbsolutePath());
+		processBuilder.command().add("-task");
+		processBuilder.command().add(settings.getTask().value());
 		processBuilder.command().add("-outfmt");
 		processBuilder.command().add("5");
 		processBuilder.command().add("-out");

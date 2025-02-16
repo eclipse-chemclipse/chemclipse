@@ -38,6 +38,9 @@ public class IdentifierSettings extends AbstractIdentifierSettingsWSD implements
 	@JsonPropertyDescription(value = "Select the database to query against.")
 	private String database = "16S_ribosomal_RNA";
 
+	@JsonProperty(value = "Task", defaultValue = "blastn")
+	private Task task = Task.BLASTN;
+
 	public File getDatabaseFolder() {
 
 		return databaseFolder;
@@ -56,6 +59,16 @@ public class IdentifierSettings extends AbstractIdentifierSettingsWSD implements
 	public void setDatabase(String database) {
 
 		this.database = database;
+	}
+
+	public Task getTask() {
+
+		return task;
+	}
+
+	public void setTask(Task task) {
+
+		this.task = task;
 	}
 
 	@Override
