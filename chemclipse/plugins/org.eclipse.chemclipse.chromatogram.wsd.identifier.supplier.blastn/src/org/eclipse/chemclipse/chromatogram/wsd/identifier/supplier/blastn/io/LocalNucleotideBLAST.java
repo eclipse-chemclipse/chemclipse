@@ -76,6 +76,8 @@ public class LocalNucleotideBLAST {
 		processBuilder.command().add(settings.getDatabase());
 		processBuilder.command().add("-query");
 		processBuilder.command().add(fasta.getAbsolutePath());
+		processBuilder.command().add("-task");
+		processBuilder.command().add(settings.getTask().value());
 		processBuilder.command().add("-outfmt");
 		processBuilder.command().add("5");
 		processBuilder.command().add("-out");
@@ -113,7 +115,7 @@ public class LocalNucleotideBLAST {
 				libraryInformation.setMiscellaneous(hit.getId());
 				libraryInformation.setComments(hit.getAccession());
 				for(Hsp hsp : hit.getHsps().getHsp()) {
-					ComparisonResult comparisionResult = new ComparisonResult((float)hsp.getBitScore(), (float)hsp.getScore(), (float)hsp.getEvalue(), 0f); // TODO: wrong model
+					ComparisonResult comparisionResult = new ComparisonResult((float)hsp.getBitScore(), (float)hsp.getScore(), (float)hsp.getEvalue(), hsp.getIdentity().floatValue()); // TODO: wrong model
 					IdentificationTarget identificationTarget = new IdentificationTarget(libraryInformation, comparisionResult);
 					identificationTarget.setIdentifier(blastOutput.getVersion());
 					chromatogram.getTargets().add(identificationTarget);
