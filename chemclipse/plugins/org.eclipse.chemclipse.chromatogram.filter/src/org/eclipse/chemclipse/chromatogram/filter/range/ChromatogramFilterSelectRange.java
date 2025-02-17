@@ -61,7 +61,7 @@ public class ChromatogramFilterSelectRange implements IProcessTypeSupplier {
 		}
 
 		@Override
-		public IChromatogramSelection<?, ?> apply(IChromatogramSelection<?, ?> chromatogramSelection, FilterSettingsSelection processSettings, ProcessExecutionContext context) throws InterruptedException {
+		public IChromatogramSelection apply(IChromatogramSelection chromatogramSelection, FilterSettingsSelection processSettings, ProcessExecutionContext context) throws InterruptedException {
 
 			/*
 			 * Settings

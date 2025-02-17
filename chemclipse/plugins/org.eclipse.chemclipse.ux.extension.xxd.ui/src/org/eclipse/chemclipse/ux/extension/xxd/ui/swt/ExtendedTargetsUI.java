@@ -109,7 +109,7 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 	//
 	private Object objectCacheChromatogram = null; // IChromatogram
 	private Object objectCacheOther = null; // IScan, IPeak, ITargetSupplier
-	private IChromatogramSelection<IPeak, ?> chromatogramSelection;
+	private IChromatogramSelection chromatogramSelection;
 	//
 	private ScanDataSupport scanDataSupport = new ScanDataSupport();
 	private PeakDataSupport peakDataSupport = new PeakDataSupport();
@@ -149,7 +149,7 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 		targetListChromatogram.get().refresh();
 	}
 
-	public void updateChromatogram(IChromatogramSelection<IPeak, ?> chromatogramSelection) {
+	public void updateChromatogram(IChromatogramSelection chromatogramSelection) {
 
 		this.chromatogramSelection = chromatogramSelection;
 		if(chromatogramSelection != null) {
@@ -164,7 +164,7 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 			/*
 			 * Update Chromatogram
 			 */
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			if(objectCacheChromatogram != chromatogram) {
 				objectCacheChromatogram = chromatogram;
 			}
@@ -697,7 +697,7 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 		if(object instanceof ITargetSupplier) {
 			String dataDescription;
 			if(object instanceof IChromatogram) {
-				dataDescription = ChromatogramDataSupport.getChromatogramLabel((IChromatogram<?>)object);
+				dataDescription = ChromatogramDataSupport.getChromatogramLabel((IChromatogram)object);
 			} else if(object instanceof IPeak peak) {
 				dataDescription = peakDataSupport.getPeakLabel(peak);
 			} else if(object instanceof IScan scan) {
@@ -795,7 +795,7 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 
 	private void setChromatogramDirty() {
 
-		if(objectCacheChromatogram instanceof IChromatogram<?> chromatogram) {
+		if(objectCacheChromatogram instanceof IChromatogram chromatogram) {
 			chromatogram.setDirty(true);
 		}
 	}
@@ -858,7 +858,6 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 		return isChromatogramActive() ? targetListChromatogram : targetListOther;
 	}
 
-	@SuppressWarnings("unchecked")
 	private void updateOnFocus() {
 
 		DataUpdateSupport dataUpdateSupport = Activator.getDefault().getDataUpdateSupport();
@@ -866,8 +865,8 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 		//
 		if(!objects.isEmpty()) {
 			Object object = objects.get(0);
-			if(object instanceof IChromatogramSelection<?, ?> chromatogramSelection) {
-				updateChromatogram((IChromatogramSelection<IPeak, ?>)chromatogramSelection);
+			if(object instanceof IChromatogramSelection chromatogramSelection) {
+				updateChromatogram(chromatogramSelection);
 			} else {
 				updateOther(object);
 			}

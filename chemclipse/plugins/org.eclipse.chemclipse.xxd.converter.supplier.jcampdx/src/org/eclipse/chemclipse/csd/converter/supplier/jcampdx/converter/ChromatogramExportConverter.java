@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2024 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -23,7 +23,6 @@ import org.eclipse.chemclipse.csd.converter.supplier.jcampdx.io.ChromatogramWrit
 import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.xxd.converter.supplier.jcampdx.internal.converter.SpecificationValidator;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -35,7 +34,7 @@ public class ChromatogramExportConverter extends AbstractChromatogramExportConve
 	private static final String DESCRIPTION = "JCAMP-DX Export Converter";
 
 	@Override
-	public IProcessingInfo<File> convert(File file, IChromatogram<? extends IPeak> chromatogram, IProgressMonitor monitor) {
+	public IProcessingInfo<File> convert(File file, IChromatogram chromatogram, IProgressMonitor monitor) {
 
 		/*
 		 * Validate the file.

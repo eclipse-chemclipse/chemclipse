@@ -100,7 +100,6 @@ public class ExtendedPeakQuantitationListUI extends Composite implements IExtend
 		//
 		peakQuantitationListUI.getTable().addSelectionListener(new SelectionAdapter() {
 
-			@SuppressWarnings({"rawtypes"})
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 

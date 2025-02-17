@@ -20,7 +20,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 public interface IChromatogramIntegrator {
 
-	IProcessingInfo<IChromatogramIntegrationResults> integrate(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramIntegrationSettings chromatogramIntegrationSettings, IProgressMonitor monitor);
+	IProcessingInfo<IChromatogramIntegrationResults> integrate(IChromatogramSelection chromatogramSelection, IChromatogramIntegrationSettings chromatogramIntegrationSettings, IProgressMonitor monitor);
 
-	IProcessingInfo<IChromatogramIntegrationResults> integrate(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor);
+	IProcessingInfo<IChromatogramIntegrationResults> integrate(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor);
 }

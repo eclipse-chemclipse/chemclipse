@@ -97,7 +97,7 @@ public class HighResolutionSupport {
 		return chromatograms;
 	}
 
-	private static void calculateScanIntervalAndDelay(IChromatogram<?> chromatogram) {
+	private static void calculateScanIntervalAndDelay(IChromatogram chromatogram) {
 
 		int startRetentionTime = chromatogram.getStartRetentionTime();
 		int stopRetentionTime = chromatogram.getStopRetentionTime();

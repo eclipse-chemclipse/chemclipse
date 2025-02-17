@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -21,13 +21,12 @@ import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.mo
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.settings.RetentionIndexImporterSettings;
 import org.eclipse.chemclipse.model.columns.ISeparationColumnIndices;
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IPeak;
 
 public class RetentionIndexImporter {
 
 	public static final String PLACEHOLDER_CHROMATOGRAM_NAME = "{chromatogram}";
 
-	public void apply(IChromatogram<? extends IPeak> chromatogram, RetentionIndexImporterSettings processSettings) {
+	public void apply(IChromatogram chromatogram, RetentionIndexImporterSettings processSettings) {
 
 		boolean processReferenceChromatograms = processSettings.isProcessReferenceChromatograms();
 		/*
@@ -38,14 +37,14 @@ public class RetentionIndexImporter {
 		if(separationColumnIndices != null) {
 			setSeparationColumnIndices(chromatogram, separationColumnIndices);
 			if(processReferenceChromatograms) {
-				for(IChromatogram<?> chromatogramReference : chromatogram.getReferencedChromatograms()) {
+				for(IChromatogram chromatogramReference : chromatogram.getReferencedChromatograms()) {
 					setSeparationColumnIndices(chromatogramReference, separationColumnIndices);
 				}
 			}
 		}
 	}
 
-	private void setSeparationColumnIndices(IChromatogram<? extends IPeak> chromatogram, ISeparationColumnIndices separationColumnIndices) {
+	private void setSeparationColumnIndices(IChromatogram chromatogram, ISeparationColumnIndices separationColumnIndices) {
 
 		chromatogram.getSeparationColumnIndices().clear();
 		chromatogram.getSeparationColumnIndices().putAll(separationColumnIndices);

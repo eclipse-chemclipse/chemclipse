@@ -297,7 +297,7 @@ public class ChromatogramReader_1502 extends AbstractChromatogramReader implemen
 		for(int i = 1; i <= numberOfPeaks; i++) {
 			try {
 				IChromatogramPeakCSD peak = readPeak(dataInputStream, chromatogram);
-				chromatogram.addPeak(peak);
+				chromatogram.getPeaks().add(peak);
 			} catch(Exception e) {
 				logger.warn(e);
 			}

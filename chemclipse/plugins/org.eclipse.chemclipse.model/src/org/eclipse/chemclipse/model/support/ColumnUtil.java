@@ -17,7 +17,7 @@ import org.eclipse.chemclipse.model.core.support.HeaderField;
 
 public class ColumnUtil {
 
-	public static String getColumnData(IChromatogram<?> chromatogram, ColumnField columnField, String defaultData) {
+	public static String getColumnData(IChromatogram chromatogram, ColumnField columnField, String defaultData) {
 
 		String columnData = null;
 		//

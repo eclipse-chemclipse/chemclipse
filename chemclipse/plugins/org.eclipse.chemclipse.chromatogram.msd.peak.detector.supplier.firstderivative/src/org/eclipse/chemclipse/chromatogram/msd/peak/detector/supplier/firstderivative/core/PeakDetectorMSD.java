@@ -92,7 +92,7 @@ public class PeakDetectorMSD extends BasePeakDetector implements IPeakDetectorMS
 				 */
 				List<IChromatogramPeakMSD> peaks = detectPeaks(chromatogramSelection, peakDetectorSettings, noiseSegments, subMonitor.split(90));
 				for(IChromatogramPeakMSD peak : peaks) {
-					chromatogram.addPeak(peak);
+					chromatogram.getPeaks().add(peak);
 				}
 				chromatogram.setDirty(true);
 				TranslationService translationService = TranslationSupport.getTranslationService();

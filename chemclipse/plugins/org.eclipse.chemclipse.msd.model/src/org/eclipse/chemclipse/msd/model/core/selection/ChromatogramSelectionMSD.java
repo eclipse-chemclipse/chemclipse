@@ -38,7 +38,7 @@ import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
  * Start and stop scan are not provided as they can be calculated by the
  * retention time.
  */
-public class ChromatogramSelectionMSD extends AbstractChromatogramSelection<IChromatogramPeakMSD, IChromatogramMSD> implements IChromatogramSelectionMSD {
+public class ChromatogramSelectionMSD extends AbstractChromatogramSelection implements IChromatogramSelectionMSD {
 
 	private IRegularMassSpectrum selectedScan;
 	private IMarkedIons selectedIons;
@@ -90,7 +90,7 @@ public class ChromatogramSelectionMSD extends AbstractChromatogramSelection<IChr
 	@Override
 	public IChromatogramMSD getChromatogram() {
 
-		IChromatogram<?> chromatogram = super.getChromatogram();
+		IChromatogram chromatogram = super.getChromatogram();
 		if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
 			return chromatogramMSD;
 		}
@@ -131,7 +131,7 @@ public class ChromatogramSelectionMSD extends AbstractChromatogramSelection<IChr
 	public void reset(boolean fireUpdate) {
 
 		super.reset(fireUpdate);
-		IChromatogram<?> chromatogram = getChromatogram();
+		IChromatogram chromatogram = getChromatogram();
 		/*
 		 * Scan
 		 */

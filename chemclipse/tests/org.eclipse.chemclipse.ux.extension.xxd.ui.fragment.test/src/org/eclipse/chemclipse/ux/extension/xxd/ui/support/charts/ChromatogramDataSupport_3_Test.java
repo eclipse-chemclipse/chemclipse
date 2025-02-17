@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2023 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -37,7 +37,7 @@ public class ChromatogramDataSupport_3_Test extends TestCase {
 		super.tearDown();
 	}
 
-	private void setData(IChromatogram<?> chromatogram) {
+	private void setData(IChromatogram chromatogram) {
 
 		chromatogram.setFile(new File("This"));
 		chromatogram.setSampleName("sample");

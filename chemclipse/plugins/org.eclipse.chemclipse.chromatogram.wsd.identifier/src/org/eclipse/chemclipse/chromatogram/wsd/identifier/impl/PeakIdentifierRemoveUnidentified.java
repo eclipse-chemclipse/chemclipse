@@ -39,7 +39,7 @@ public class PeakIdentifierRemoveUnidentified extends AbstractPeakIdentifierWSD 
 					IChromatogramWSD chromatogramWSD = chromatogramPeakWSD.getChromatogram();
 					if(chromatogramWSD != null) {
 						if(chromatogramPeakWSD.getTargets().isEmpty()) {
-							chromatogramWSD.removePeak(chromatogramPeakWSD);
+							chromatogramWSD.getPeaks().remove(chromatogramPeakWSD);
 						}
 					}
 				}

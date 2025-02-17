@@ -69,9 +69,9 @@ public class PageCalibrationTable extends AbstractExtendedWizardPage {
 
 		super.setVisible(visible);
 		if(visible) {
-			IChromatogramSelection<IPeak, IChromatogram<IPeak>> chromatogramSelection = wizardElements.getChromatogramSelection();
+			IChromatogramSelection chromatogramSelection = wizardElements.getChromatogramSelection();
 			if(chromatogramSelection != null && chromatogramSelection.getChromatogram() != null) {
-				IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+				IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 				updateChromatogramChart(chromatogramSelection);
 				RetentionIndexExtractor retentionIndexExtractor = new RetentionIndexExtractor();
 				ISeparationColumnIndices separationColumnIndices = retentionIndexExtractor.extract(chromatogram, false, true);
@@ -140,9 +140,9 @@ public class PageCalibrationTable extends AbstractExtendedWizardPage {
 				Object object = tableItem.getData();
 				if(object instanceof IRetentionIndexEntry retentionIndexEntry) {
 					int retentionTime = retentionIndexEntry.getRetentionTime();
-					IChromatogramSelection<IPeak, IChromatogram<IPeak>> chromatogramSelection = wizardElements.getChromatogramSelection();
+					IChromatogramSelection chromatogramSelection = wizardElements.getChromatogramSelection();
 					if(chromatogramSelection != null && chromatogramSelection.getChromatogram() != null) {
-						IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+						IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 						IPeak selectedPeak = getSelectedPeak(chromatogram, retentionTime);
 						if(selectedPeak != null) {
 							chromatogramSelection.setSelectedPeak(selectedPeak);
@@ -163,7 +163,7 @@ public class PageCalibrationTable extends AbstractExtendedWizardPage {
 	 * @param retentionTime
 	 * @return {@link IChromatogramPeakMSD}
 	 */
-	private IPeak getSelectedPeak(IChromatogram<? extends IPeak> chromatogram, int retentionTime) {
+	private IPeak getSelectedPeak(IChromatogram chromatogram, int retentionTime) {
 
 		for(IPeak peak : chromatogram.getPeaks()) {
 			if(peak.getPeakModel().getRetentionTimeAtPeakMaximum() == retentionTime) {
@@ -185,7 +185,7 @@ public class PageCalibrationTable extends AbstractExtendedWizardPage {
 		updateStatus(message);
 	}
 
-	private void updateChromatogramChart(IChromatogramSelection<?, ?> chromatogramSelection) {
+	private void updateChromatogramChart(IChromatogramSelection chromatogramSelection) {
 
 		chromatogramPeakChart.updateChromatogram(chromatogramSelection);
 	}

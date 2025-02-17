@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023 Lablicate GmbH.
+ * Copyright (c) 2023, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -35,7 +35,7 @@ public class FilterScanClipper extends AbstractChromatogramFilter {
 	private static final String DESCRIPTION = "Scan Clipper";
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<IChromatogramFilterResult> processingInfo = validate(chromatogramSelection, chromatogramFilterSettings);
 		if(!processingInfo.hasErrorMessages()) {
@@ -62,19 +62,19 @@ public class FilterScanClipper extends AbstractChromatogramFilter {
 	}
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor) {
 
 		FilterSettingsRemover filterSettings = PreferenceSupplier.getRemoverFilterSettings();
 		return applyFilter(chromatogramSelection, filterSettings, monitor);
 	}
 
-	private void applyScanClipperFilter(IChromatogramSelection<?, ?> chromatogramSelection, String scanNumberPattern, IProgressMonitor monitor) throws FilterException {
+	private void applyScanClipperFilter(IChromatogramSelection chromatogramSelection, String scanNumberPattern, IProgressMonitor monitor) throws FilterException {
 
 		if(chromatogramSelection != null && scanNumberPattern != null) {
 			/*
 			 * Scans to be removed
 			 */
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			List<Integer> scanNumbers = extractScanNumbers(scanNumberPattern);
 			int offset = 0;
 			for(int scanNumber : scanNumbers) {

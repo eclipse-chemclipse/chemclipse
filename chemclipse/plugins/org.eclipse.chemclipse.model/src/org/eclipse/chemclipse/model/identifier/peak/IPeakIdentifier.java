@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2023 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -58,5 +58,5 @@ public interface IPeakIdentifier {
 	 */
 	IProcessingInfo<?> identify(List<IPeak> peaks, IProgressMonitor monitor);
 
-	IProcessingInfo<?> identify(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor);
+	IProcessingInfo<?> identify(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor);
 }

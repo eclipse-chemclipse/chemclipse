@@ -122,7 +122,6 @@ public class ExtendedPeakScanListUI extends Composite implements IExtendedPartUI
 	private AtomicReference<Button> buttonTableEdit = new AtomicReference<>();
 	private AtomicReference<PeakScanListUI> tableViewer = new AtomicReference<>();
 	//
-	@SuppressWarnings("rawtypes")
 	private IChromatogramSelection chromatogramSelection;
 	//
 	private boolean showScans = true;
@@ -151,7 +150,7 @@ public class ExtendedPeakScanListUI extends Composite implements IExtendedPartUI
 		List<Object> objects = dataUpdateSupport.getUpdates(IChemClipseEvents.TOPIC_CHROMATOGRAM_XXD_UPDATE_SELECTION);
 		if(!objects.isEmpty()) {
 			Object last = objects.get(0);
-			if(last instanceof IChromatogramSelection<?, ?> chromatogramSelection) {
+			if(last instanceof IChromatogramSelection chromatogramSelection) {
 				updateChromatogramSelection(chromatogramSelection);
 			}
 		}
@@ -159,7 +158,7 @@ public class ExtendedPeakScanListUI extends Composite implements IExtendedPartUI
 		return true;
 	}
 
-	public void updateChromatogramSelection(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public void updateChromatogramSelection(IChromatogramSelection chromatogramSelection) {
 
 		if(hasChanged(chromatogramSelection)) {
 			this.chromatogramSelection = chromatogramSelection;
@@ -181,7 +180,7 @@ public class ExtendedPeakScanListUI extends Composite implements IExtendedPartUI
 			currentModCount = chromatogramSelection.getChromatogram().getModCount();
 			lastRange = new RetentionTimeRange(chromatogramSelection);
 			tableViewer.get().setInput(chromatogramSelection, showPeaks, showPeaksInRange, showScans, showScansInRange);
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			if(chromatogram instanceof IChromatogramMSD) {
 				buttonSave.get().setEnabled(true);
 			}
@@ -614,7 +613,6 @@ public class ExtendedPeakScanListUI extends Composite implements IExtendedPartUI
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	private void deleteTargetsAll(Display display) {
 
 		for(Object object : tableViewer.get().getStructuredSelection().toList()) {
@@ -678,7 +676,6 @@ public class ExtendedPeakScanListUI extends Composite implements IExtendedPartUI
 		UpdateNotifierUI.update(display, IChemClipseEvents.TOPIC_EDITOR_CHROMATOGRAM_UPDATE, "Peaks/Scans unknown targets have been set.");
 	}
 
-	@SuppressWarnings("unchecked")
 	private void propagateSelection(Display display) {
 
 		if(interactionMode != InteractionMode.SOURCE && interactionMode != InteractionMode.BIDIRECTIONAL) {
@@ -831,12 +828,12 @@ public class ExtendedPeakScanListUI extends Composite implements IExtendedPartUI
 						 * Delete Origins on demand
 						 */
 						if(preferenceStore.getBoolean(PreferenceSupplier.P_MERGE_PEAKS_DELETE_ORIGINS)) {
-							chromatogramMSD.removePeaks(peaksToMerge);
+							chromatogramMSD.getPeaks().removeAll(peaksToMerge);
 						}
 						/*
 						 * Set and update the new peak.
 						 */
-						chromatogramMSD.addPeak(chromatogramPeakMSD);
+						chromatogramMSD.getPeaks().add(chromatogramPeakMSD);
 						chromatogramSelectionMSD.setSelectedPeak(chromatogramPeakMSD);
 						chromatogramMSD.setDirty(true);
 						updateChromatogramSelection();
@@ -944,7 +941,7 @@ public class ExtendedPeakScanListUI extends Composite implements IExtendedPartUI
 						/*
 						 * Peaks
 						 */
-						IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+						IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 						Table table = tableViewer.get().getTable();
 						int[] indices = table.getSelectionIndices();
 						List<IPeak> peaks;
@@ -1014,7 +1011,7 @@ public class ExtendedPeakScanListUI extends Composite implements IExtendedPartUI
 			/*
 			 * Display the selected and total amount of peaks/scans
 			 */
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			String chromatogramLabel = ChromatogramDataSupport.getChromatogramLabel(chromatogram);
 			//
 			int peaks = 0;
@@ -1033,7 +1030,7 @@ public class ExtendedPeakScanListUI extends Composite implements IExtendedPartUI
 			builder.append(" ");
 			builder.append(peaks);
 			builder.append(" / ");
-			builder.append(chromatogram.getNumberOfPeaks());
+			builder.append(chromatogram.getPeaks().size());
 			builder.append(" | ");
 			builder.append(DESCRIPTION_SCANS);
 			builder.append(" ");
@@ -1127,7 +1124,7 @@ public class ExtendedPeakScanListUI extends Composite implements IExtendedPartUI
 		return scanList;
 	}
 
-	private boolean hasChanged(IChromatogramSelection<?, ?> chromatogramSelection) {
+	private boolean hasChanged(IChromatogramSelection chromatogramSelection) {
 
 		boolean referenceChanged = this.chromatogramSelection != chromatogramSelection;
 		if(!referenceChanged && chromatogramSelection != null) {

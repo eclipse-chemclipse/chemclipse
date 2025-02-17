@@ -90,7 +90,7 @@ public class ChromatogramReferencesUI extends Composite {
 	//
 	private ComboContainer comboChromatograms = null;
 	private ISelectionChangedListener selectionChangeListener = null;
-	private HashMap<IChromatogram<?>, IChromatogramSelection<?, ?>> referenceSelections = new HashMap<>();
+	private HashMap<IChromatogram, IChromatogramSelection> referenceSelections = new HashMap<>();
 
 	public ChromatogramReferencesUI(Composite parent, int style) {
 
@@ -98,7 +98,7 @@ public class ChromatogramReferencesUI extends Composite {
 		createControl();
 	}
 
-	public void update(IChromatogramSelection<?, ?> chromatogramSelection, Consumer<IChromatogramSelection<?, ?>> chromatogramReferencesListener) {
+	public void update(IChromatogramSelection chromatogramSelection, Consumer<IChromatogramSelection> chromatogramReferencesListener) {
 
 		/*
 		 * Create the container
@@ -118,10 +118,10 @@ public class ChromatogramReferencesUI extends Composite {
 		selectionChangeListener = comboChromatograms;
 		comboViewerReferences.addSelectionChangedListener(selectionChangeListener);
 		//
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
-		List<IChromatogramSelection<?, ?>> chromatogramSelections = new ArrayList<>();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
+		List<IChromatogramSelection> chromatogramSelections = new ArrayList<>();
 		chromatogramSelections.add(chromatogramSelection);
-		for(IChromatogram<?> chromatogramReference : chromatogram.getReferencedChromatograms()) {
+		for(IChromatogram chromatogramReference : chromatogram.getReferencedChromatograms()) {
 			chromatogramSelections.add(createChromatogramSelection(chromatogramReference));
 		}
 		comboChromatograms.data = chromatogramSelections;
@@ -134,7 +134,7 @@ public class ChromatogramReferencesUI extends Composite {
 		updateButtons();
 	}
 
-	public List<IChromatogramSelection<?, ?>> getChromatogramSelections() {
+	public List<IChromatogramSelection> getChromatogramSelections() {
 
 		if(comboChromatograms != null) {
 			return Collections.unmodifiableList(comboChromatograms.data);
@@ -146,16 +146,16 @@ public class ChromatogramReferencesUI extends Composite {
 	@Override
 	public void update() {
 
-		List<IChromatogramSelection<?, ?>> chromatogramMasterAndReferences = new ArrayList<>();
+		List<IChromatogramSelection> chromatogramMasterAndReferences = new ArrayList<>();
 		//
 		if(comboChromatograms != null && comboChromatograms.master != null) {
 			//
-			IChromatogramSelection<?, ?> masterSelection = comboChromatograms.master;
+			IChromatogramSelection masterSelection = comboChromatograms.master;
 			chromatogramMasterAndReferences.add(masterSelection);
-			List<IChromatogram<?>> referencedChromatograms = masterSelection.getChromatogram().getReferencedChromatograms();
+			List<IChromatogram> referencedChromatograms = masterSelection.getChromatogram().getReferencedChromatograms();
 			//
-			for(IChromatogram<?> referencedChromatogram : referencedChromatograms) {
-				IChromatogramSelection<?, ?> referenceSelection = referenceSelections.get(referencedChromatogram);
+			for(IChromatogram referencedChromatogram : referencedChromatograms) {
+				IChromatogramSelection referenceSelection = referenceSelections.get(referencedChromatogram);
 				if(referenceSelection == null) {
 					referenceSelection = createChromatogramSelection(referencedChromatogram);
 					if(referenceSelection != null) {
@@ -172,7 +172,7 @@ public class ChromatogramReferencesUI extends Composite {
 		}
 	}
 
-	private IChromatogramSelection<?, ?> createChromatogramSelection(IChromatogram<?> referencedChromatogram) {
+	private IChromatogramSelection createChromatogramSelection(IChromatogram referencedChromatogram) {
 
 		if(referencedChromatogram instanceof IChromatogramCSD chromatogramCSD) {
 			return new ChromatogramSelectionCSD(chromatogramCSD);
@@ -187,7 +187,7 @@ public class ChromatogramReferencesUI extends Composite {
 		}
 	}
 
-	public void setMasterChromatogram(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public void setMasterChromatogram(IChromatogramSelection chromatogramSelection) {
 
 		if(chromatogramSelection != null && comboChromatograms != null && comboChromatograms.master != chromatogramSelection) {
 			comboChromatograms.master = chromatogramSelection;
@@ -258,14 +258,14 @@ public class ChromatogramReferencesUI extends Composite {
 			@Override
 			public String getText(Object element) {
 
-				if(element instanceof IChromatogramSelection<?, ?> selection) {
+				if(element instanceof IChromatogramSelection selection) {
 					if(comboChromatograms != null) {
 						int index = comboChromatograms.indexOf(selection);
 						if(index > -1) {
 							/*
 							 * Get the information to display.
 							 */
-							IChromatogram<?> chromatogram = selection.getChromatogram();
+							IChromatogram chromatogram = selection.getChromatogram();
 							return ChromatogramDataSupport.getReferenceLabel(chromatogram, index, true);
 						}
 					}
@@ -317,8 +317,8 @@ public class ChromatogramReferencesUI extends Composite {
 					int index = comboChromatograms.currentIndex();
 					if(index > 0 && comboChromatograms.master != null) {
 						if(MessageDialog.openQuestion(e.display.getActiveShell(), "Delete Reference", "Do you want to delete the chromatogram reference: " + index + "?")) {
-							IChromatogram<?> chromatogram = comboChromatograms.master.getChromatogram();
-							IChromatogramSelection<?, ?> remove = comboChromatograms.data.remove(index);
+							IChromatogram chromatogram = comboChromatograms.master.getChromatogram();
+							IChromatogramSelection remove = comboChromatograms.data.remove(index);
 							chromatogram.removeReferencedChromatogram(remove.getChromatogram());
 							comboChromatograms.selection = new StructuredSelection(comboChromatograms.master);
 							comboChromatograms.refreshUI();
@@ -346,7 +346,7 @@ public class ChromatogramReferencesUI extends Composite {
 					int index = comboChromatograms.currentIndex();
 					if(index == 0 && comboChromatograms.master != null) {
 						if(MessageDialog.openQuestion(e.display.getActiveShell(), "Delete References", "Do you want to delete all chromatogram references?")) {
-							IChromatogram<?> chromatogram = comboChromatograms.master.getChromatogram();
+							IChromatogram chromatogram = comboChromatograms.master.getChromatogram();
 							while(comboChromatograms.data.size() > 1) {
 								comboChromatograms.data.remove(1);
 							}
@@ -376,12 +376,12 @@ public class ChromatogramReferencesUI extends Composite {
 				if(comboChromatograms != null) {
 					ChromatogramEditorDialog dialog = new ChromatogramEditorDialog(e.display.getActiveShell(), comboChromatograms.master.getChromatogram());
 					if(IDialogConstants.OK_ID == dialog.open()) {
-						IChromatogramSelection<?, ?> chromatogramSelection = dialog.getChromatogramSelection();
+						IChromatogramSelection chromatogramSelection = dialog.getChromatogramSelection();
 						if(chromatogramSelection != null) {
-							IChromatogramSelection<?, ?> masterSelection = comboChromatograms.master;
+							IChromatogramSelection masterSelection = comboChromatograms.master;
 							if(masterSelection != null) {
 								if(masterSelection.getChromatogram() != chromatogramSelection.getChromatogram()) {
-									List<IChromatogramSelection<?, ?>> chromatogramSelections = new ArrayList<>();
+									List<IChromatogramSelection> chromatogramSelections = new ArrayList<>();
 									chromatogramSelections.add(chromatogramSelection);
 									addReferences(masterSelection, chromatogramSelections);
 									comboChromatograms.selection = new StructuredSelection(chromatogramSelection);
@@ -420,7 +420,7 @@ public class ChromatogramReferencesUI extends Composite {
 						inputWizardSettings.setDescription("Select chromatogram that will be added as references.");
 						Set<File> chromatogramFiles = InputEntriesWizard.openWizard(e.display.getActiveShell(), inputWizardSettings).keySet();
 						if(!chromatogramFiles.isEmpty()) {
-							IChromatogramSelection<?, ?> masterSelection = comboChromatograms.master;
+							IChromatogramSelection masterSelection = comboChromatograms.master;
 							if(masterSelection != null) {
 								//
 								List<File> files = new ArrayList<>(chromatogramFiles);
@@ -428,7 +428,7 @@ public class ChromatogramReferencesUI extends Composite {
 								ChromatogramImportRunnable runnable = new ChromatogramImportRunnable(files, dataType);
 								try {
 									progressMonitorDialog.run(false, false, runnable);
-									List<IChromatogramSelection<?, ?>> references = runnable.getChromatogramSelections();
+									List<IChromatogramSelection> references = runnable.getChromatogramSelections();
 									references.removeIf(r -> new RetentionTimeRange(r).contentEquals(masterSelection));
 									Collections.sort(references, (r1, r2) -> r1.getChromatogram().getName().compareTo(r2.getChromatogram().getName()));
 									addReferences(masterSelection, references);
@@ -450,13 +450,13 @@ public class ChromatogramReferencesUI extends Composite {
 		buttonImportControl.set(button);
 	}
 
-	private void addReferences(IChromatogramSelection<?, ?> masterSelection, List<IChromatogramSelection<?, ?>> chromatogramSelections) {
+	private void addReferences(IChromatogramSelection masterSelection, List<IChromatogramSelection> chromatogramSelections) {
 
 		IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 		HeaderField headerField = HeaderUtil.getHeaderField(preferenceStore.getString(PreferenceSupplier.P_CHROMATOGRAM_TRANSFER_NAME_TO_REFERENCES_HEADER_FIELD));
 		//
-		for(IChromatogramSelection<?, ?> chromatogramSelection : chromatogramSelections) {
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		for(IChromatogramSelection chromatogramSelection : chromatogramSelections) {
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			HeaderUtil.setHeaderData(chromatogram, headerField, chromatogram.getName(), false);
 			//
 			masterSelection.getChromatogram().addReferencedChromatogram(chromatogram);
@@ -479,8 +479,8 @@ public class ChromatogramReferencesUI extends Composite {
 
 				if(comboChromatograms != null) {
 					int index = comboChromatograms.currentIndex();
-					IChromatogramSelection<?, ?> chromatogramSelection = comboChromatograms.data.get(index);
-					IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+					IChromatogramSelection chromatogramSelection = comboChromatograms.data.get(index);
+					IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 					//
 					DataType dataType = null;
 					if(chromatogram instanceof IChromatogramMSD) {
@@ -555,13 +555,13 @@ public class ChromatogramReferencesUI extends Composite {
 	private static final class ComboContainer implements ISelectionChangedListener {
 
 		private final AtomicReference<ComboViewer> viewerReference = new AtomicReference<>();
-		private final Consumer<IChromatogramSelection<?, ?>> listener;
+		private final Consumer<IChromatogramSelection> listener;
 		//
-		private IChromatogramSelection<?, ?> master;
+		private IChromatogramSelection master;
 		private IStructuredSelection selection = StructuredSelection.EMPTY;
-		private List<IChromatogramSelection<?, ?>> data = Collections.emptyList();
+		private List<IChromatogramSelection> data = Collections.emptyList();
 
-		public ComboContainer(Consumer<IChromatogramSelection<?, ?>> chromatogramReferencesListener) {
+		public ComboContainer(Consumer<IChromatogramSelection> chromatogramReferencesListener) {
 
 			this.listener = chromatogramReferencesListener;
 		}
@@ -578,10 +578,10 @@ public class ChromatogramReferencesUI extends Composite {
 
 		private int currentIndex() {
 
-			return indexOf((IChromatogramSelection<?, ?>)selection.getFirstElement());
+			return indexOf((IChromatogramSelection)selection.getFirstElement());
 		}
 
-		public int indexOf(IChromatogramSelection<?, ?> chromatogramSelection) {
+		public int indexOf(IChromatogramSelection chromatogramSelection) {
 
 			if(data != null) {
 				return data.indexOf(chromatogramSelection);
@@ -593,7 +593,7 @@ public class ChromatogramReferencesUI extends Composite {
 		public void selectionChanged(SelectionChangedEvent event) {
 
 			selection = (IStructuredSelection)event.getSelection();
-			listener.accept((IChromatogramSelection<?, ?>)selection.getFirstElement());
+			listener.accept((IChromatogramSelection)selection.getFirstElement());
 		}
 
 		private void setSelection(IStructuredSelection selection) {
@@ -615,7 +615,7 @@ public class ChromatogramReferencesUI extends Composite {
 			}
 		}
 
-		private void setInput(List<IChromatogramSelection<?, ?>> data) {
+		private void setInput(List<IChromatogramSelection> data) {
 
 			this.data = data;
 			ComboViewer viewer = viewerReference.get();

@@ -17,15 +17,14 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IChromatogramPeak;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.numeric.core.Point;
 
-public abstract class AbstractChromatogramSelection<T extends IChromatogramPeak, C extends IChromatogram<T>> implements IChromatogramSelection<T, C> {
+public abstract class AbstractChromatogramSelection implements IChromatogramSelection {
 
-	private C chromatogram;
+	private IChromatogram chromatogram;
 	private int startRetentionTime;
 	private int stopRetentionTime;
 	private float startAbundance;
@@ -40,7 +39,7 @@ public abstract class AbstractChromatogramSelection<T extends IChromatogramPeak,
 	private boolean lockOffset;
 	private Point offset;
 
-	protected AbstractChromatogramSelection(C chromatogram) throws ChromatogramIsNullException {
+	protected AbstractChromatogramSelection(IChromatogram chromatogram) throws ChromatogramIsNullException {
 
 		/*
 		 * Check
@@ -68,7 +67,7 @@ public abstract class AbstractChromatogramSelection<T extends IChromatogramPeak,
 	}
 
 	@Override
-	public C getChromatogram() {
+	public IChromatogram getChromatogram() {
 
 		return chromatogram;
 	}
@@ -253,10 +252,10 @@ public abstract class AbstractChromatogramSelection<T extends IChromatogramPeak,
 	@Override
 	public List<IPeak> getSelectedPeaks() {
 
-		if(chromatogram.getNumberOfPeaks() == 0) {
+		if(chromatogram.getPeaks().isEmpty()) {
 			selectedPeaks.clear();
 		}
-		//
+
 		return Collections.unmodifiableList(selectedPeaks);
 	}
 
@@ -357,7 +356,7 @@ public abstract class AbstractChromatogramSelection<T extends IChromatogramPeak,
 		if(getClass() != otherObject.getClass()) {
 			return false;
 		}
-		AbstractChromatogramSelection<?, ?> other = (AbstractChromatogramSelection<?, ?>)otherObject;
+		AbstractChromatogramSelection other = (AbstractChromatogramSelection)otherObject;
 		return getChromatogram() == other.getChromatogram() && getStartRetentionTime() == other.getStartRetentionTime() && getStopRetentionTime() == other.getStopRetentionTime();
 	}
 

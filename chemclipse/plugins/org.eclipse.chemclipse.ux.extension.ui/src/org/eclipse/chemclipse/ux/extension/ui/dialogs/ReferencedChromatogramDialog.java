@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2023 Lablicate GmbH.
+ * Copyright (c) 2013, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -31,11 +31,11 @@ import org.eclipse.swt.widgets.Shell;
 
 public class ReferencedChromatogramDialog extends TitleAreaDialog {
 
-	private IChromatogram<?> chromatogram;
+	private IChromatogram chromatogram;
 	private List<Button> checkBoxList;
-	private List<IChromatogram<?>> selectedChromatograms;
+	private List<IChromatogram> selectedChromatograms;
 
-	public ReferencedChromatogramDialog(Shell parentShell, IChromatogram<?> chromatogram) {
+	public ReferencedChromatogramDialog(Shell parentShell, IChromatogram chromatogram) {
 
 		super(parentShell);
 		this.chromatogram = chromatogram;
@@ -43,7 +43,7 @@ public class ReferencedChromatogramDialog extends TitleAreaDialog {
 		selectedChromatograms = new ArrayList<>();
 	}
 
-	public List<IChromatogram<?>> getSelectedChromatograms() {
+	public List<IChromatogram> getSelectedChromatograms() {
 
 		return selectedChromatograms;
 	}
@@ -95,9 +95,9 @@ public class ReferencedChromatogramDialog extends TitleAreaDialog {
 		 */
 		Composite referencedChromatogramsComposite = new Composite(elementComposite, SWT.NONE);
 		referencedChromatogramsComposite.setLayout(new GridLayout(1, true));
-		List<IChromatogram<?>> references = chromatogram.getReferencedChromatograms();
+		List<IChromatogram> references = chromatogram.getReferencedChromatograms();
 		int counter = 1;
-		for(IChromatogram<?> chromatogram : references) {
+		for(IChromatogram chromatogram : references) {
 			/*
 			 * Enables to mark the referenced chromatogram to be opened in a new editor.
 			 */
@@ -156,7 +156,7 @@ public class ReferencedChromatogramDialog extends TitleAreaDialog {
 			 * Get only the selected elements.
 			 */
 			if(button.getSelection() == true) {
-				IChromatogram<?> chromatogram = (IChromatogram<?>)button.getData();
+				IChromatogram chromatogram = (IChromatogram)button.getData();
 				selectedChromatograms.add(chromatogram);
 			}
 			/*

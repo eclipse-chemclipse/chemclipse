@@ -38,7 +38,6 @@ public class ChromatogramSelection_10_Test extends TestCase {
 		EasyMock.expect(chromatogram.getStartRetentionTime()).andStubReturn(1);
 		EasyMock.expect(chromatogram.getStopRetentionTime()).andStubReturn(100);
 		EasyMock.expect(chromatogram.getMaxSignal()).andStubReturn(127500.0f);
-		EasyMock.expect(chromatogram.getNumberOfPeaks()).andStubReturn(1);
 		peak = EasyMock.createNiceMock(IChromatogramPeakMSD.class);
 		EasyMock.expect(peak.getIntegratedArea()).andStubReturn(893002.3d);
 		EasyMock.replay(peak);

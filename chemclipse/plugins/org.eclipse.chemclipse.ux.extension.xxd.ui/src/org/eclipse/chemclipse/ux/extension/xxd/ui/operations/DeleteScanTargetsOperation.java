@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2023 Lablicate GmbH.
+ * Copyright (c) 2022, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -32,12 +32,12 @@ import org.eclipse.swt.widgets.Display;
 
 public class DeleteScanTargetsOperation extends AbstractOperation {
 
-	private IChromatogramSelection<?, ?> chromatogramSelection;
+	private IChromatogramSelection chromatogramSelection;
 	private Display display;
 	private List<IScan> scansToClear;
 	private List<IScan> backupScans;
 
-	public DeleteScanTargetsOperation(Display display, IChromatogramSelection<?, ?> chromatogramSelection, List<IScan> scansToClear) {
+	public DeleteScanTargetsOperation(Display display, IChromatogramSelection chromatogramSelection, List<IScan> scansToClear) {
 
 		super(ExtensionMessages.deleteScanTargets);
 		this.display = display;

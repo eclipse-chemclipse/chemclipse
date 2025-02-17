@@ -14,7 +14,6 @@ package org.eclipse.chemclipse.msd.model.core.selection;
 
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
-import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.support.IMarkedIonTransitions;
 import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
@@ -27,7 +26,7 @@ import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
  * Start and stop scan are not provided as they can be calculated by the
  * retention time.<br/>
  */
-public interface IChromatogramSelectionMSD extends IChromatogramSelection<IChromatogramPeakMSD, IChromatogramMSD> {
+public interface IChromatogramSelectionMSD extends IChromatogramSelection {
 
 	/**
 	 * Returns the stored chromatogram.

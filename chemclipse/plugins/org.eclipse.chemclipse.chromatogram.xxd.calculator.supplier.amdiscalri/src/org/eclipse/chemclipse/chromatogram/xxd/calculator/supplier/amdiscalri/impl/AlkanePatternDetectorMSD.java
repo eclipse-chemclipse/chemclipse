@@ -66,7 +66,7 @@ public class AlkanePatternDetectorMSD {
 				/*
 				 * Peak detector.
 				 */
-				chromatogramMSD.removeAllPeaks();
+				chromatogramMSD.getPeaks().clear();
 				IPeakDetectorMSD peakDetectorMSD = new PeakDetectorMSD();
 				PeakDetectorSettingsMSD peakDetectorSettings = new PeakDetectorSettingsMSD();
 				peakDetectorSettings.setThreshold(Threshold.LOW);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2022 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -30,13 +30,13 @@ public abstract class AbstractPeakFilter<ConfigType> implements IPeakFilter<Conf
 
 	private static final Logger logger = Logger.getLogger(AbstractPeakFilter.class);
 
-	protected Collection<IPeak> getReadOnlyPeaks(IChromatogramSelection<?, ?> chromatogramSelection) {
+	protected Collection<IPeak> getReadOnlyPeaks(IChromatogramSelection chromatogramSelection) {
 
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		return Collections.unmodifiableCollection(chromatogram.getPeaks(chromatogramSelection));
 	}
 
-	protected void deletePeaks(List<IPeak> peaksToDelete, IChromatogramSelection<?, ?> chromatogramSelection) {
+	protected void deletePeaks(List<IPeak> peaksToDelete, IChromatogramSelection chromatogramSelection) {
 
 		if(!peaksToDelete.isEmpty()) {
 			DeletePeaksOperation deletePeaks = new DeletePeaksOperation(chromatogramSelection, peaksToDelete);
@@ -49,7 +49,7 @@ public abstract class AbstractPeakFilter<ConfigType> implements IPeakFilter<Conf
 		}
 	}
 
-	protected void resetPeakSelection(IChromatogramSelection<?, ?> chromatogramSelection) {
+	protected void resetPeakSelection(IChromatogramSelection chromatogramSelection) {
 
 		chromatogramSelection.setSelectedPeak(null);
 		chromatogramSelection.getChromatogram().setDirty(true);

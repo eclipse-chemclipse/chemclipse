@@ -73,7 +73,7 @@ public class ChromatogramIntegrator {
 	 * @param monitor
 	 * @return {@link IProcessingInfo}
 	 */
-	public static IProcessingInfo<IChromatogramIntegrationResults> integrate(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramIntegrationSettings chromatogramIntegrationSettings, String integratorId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IChromatogramIntegrationResults> integrate(IChromatogramSelection chromatogramSelection, IChromatogramIntegrationSettings chromatogramIntegrationSettings, String integratorId, IProgressMonitor monitor) {
 
 		IProcessingInfo<IChromatogramIntegrationResults> processingInfo;
 		IChromatogramIntegrator integrator = getIntegrator(integratorId);
@@ -93,7 +93,7 @@ public class ChromatogramIntegrator {
 	 * @param monitor
 	 * @return {@link IProcessingInfo}
 	 */
-	public static IProcessingInfo<IChromatogramIntegrationResults> integrate(IChromatogramSelection<?, ?> chromatogramSelection, String integratorId, IProgressMonitor monitor) {
+	public static IProcessingInfo<IChromatogramIntegrationResults> integrate(IChromatogramSelection chromatogramSelection, String integratorId, IProgressMonitor monitor) {
 
 		IProcessingInfo<IChromatogramIntegrationResults> processingInfo;
 		IChromatogramIntegrator integrator = getIntegrator(integratorId);

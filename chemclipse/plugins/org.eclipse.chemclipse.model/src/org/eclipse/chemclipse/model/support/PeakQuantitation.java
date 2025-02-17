@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2022 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -32,7 +32,7 @@ public class PeakQuantitation {
 	/*
 	 * Used as a reference
 	 */
-	private IChromatogramSelection<?, ?> chromatogramSelection;
+	private IChromatogramSelection chromatogramSelection;
 	private IPeak peak;
 
 	public int getRetentionTime() {
@@ -110,12 +110,12 @@ public class PeakQuantitation {
 		return concentrations;
 	}
 
-	public IChromatogramSelection<?, ?> getChromatogramSelection() {
+	public IChromatogramSelection getChromatogramSelection() {
 
 		return chromatogramSelection;
 	}
 
-	public void setChromatogramSelection(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public void setChromatogramSelection(IChromatogramSelection chromatogramSelection) {
 
 		this.chromatogramSelection = chromatogramSelection;
 	}

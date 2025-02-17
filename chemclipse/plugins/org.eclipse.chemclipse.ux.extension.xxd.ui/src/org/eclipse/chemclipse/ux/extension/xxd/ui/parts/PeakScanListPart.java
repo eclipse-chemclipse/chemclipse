@@ -92,7 +92,7 @@ public class PeakScanListPart extends AbstractPart<ExtendedPeakScanListUI> {
 				return false;
 			} else if(isChromatogramEvent(topic)) {
 				if(object instanceof IChromatogramSelection) {
-					IChromatogramSelection<?, ?> chromatogramSelection = (IChromatogramSelection<?, ?>)object;
+					IChromatogramSelection chromatogramSelection = (IChromatogramSelection)object;
 					getControl().updateChromatogramSelection(chromatogramSelection);
 					return true;
 				}

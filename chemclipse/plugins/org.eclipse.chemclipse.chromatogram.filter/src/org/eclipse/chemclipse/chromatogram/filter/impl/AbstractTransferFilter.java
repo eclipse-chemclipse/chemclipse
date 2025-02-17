@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2023 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -29,9 +29,9 @@ import org.eclipse.chemclipse.wsd.model.core.selection.ChromatogramSelectionWSD;
 
 public abstract class AbstractTransferFilter extends AbstractChromatogramFilter implements IChromatogramFilter {
 
-	protected List<IScan> extractIdentifiedScans(IChromatogramSelection<?, ?> chromatogramSelection) {
+	protected List<IScan> extractIdentifiedScans(IChromatogramSelection chromatogramSelection) {
 
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		//
 		int startRetentionTime = chromatogramSelection.getStartRetentionTime();
 		int stopRetentionTime = chromatogramSelection.getStopRetentionTime();
@@ -49,7 +49,7 @@ public abstract class AbstractTransferFilter extends AbstractChromatogramFilter 
 		return identifiedScans;
 	}
 
-	protected List<? extends IPeak> extractPeaks(IChromatogram<?> chromatogram) {
+	protected List<? extends IPeak> extractPeaks(IChromatogram chromatogram) {
 
 		if(chromatogram instanceof IChromatogramCSD chromatogramCSD) {
 			return extractPeaks(new ChromatogramSelectionCSD(chromatogramCSD));
@@ -62,7 +62,7 @@ public abstract class AbstractTransferFilter extends AbstractChromatogramFilter 
 		}
 	}
 
-	protected List<? extends IPeak> extractPeaks(IChromatogramSelection<?, ?> chromatogramSelection) {
+	protected List<? extends IPeak> extractPeaks(IChromatogramSelection chromatogramSelection) {
 
 		return chromatogramSelection.getChromatogram().getPeaks(chromatogramSelection);
 	}

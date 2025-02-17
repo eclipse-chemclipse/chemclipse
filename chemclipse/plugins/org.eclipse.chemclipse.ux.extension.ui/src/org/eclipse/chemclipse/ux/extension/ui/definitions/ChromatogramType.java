@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2023 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -36,13 +36,13 @@ public class ChromatogramType implements EventHandler {
 	public void handleEvent(Event event) {
 
 		String topic = event.getTopic();
-		IChromatogramSelection<?, ?> chromatogramSelection = null;
+		IChromatogramSelection chromatogramSelection = null;
 		String chromatogramType = CHROMATOGRAM_TYPE_NONE;
 		//
 		if(topic.equals(IChemClipseEvents.TOPIC_CHROMATOGRAM_XXD_UPDATE_SELECTION)) {
 			Object object = event.getProperty(IChemClipseEvents.EVENT_BROKER_DATA);
 			if(object instanceof IChromatogramSelection) {
-				chromatogramSelection = (IChromatogramSelection<?, ?>)object;
+				chromatogramSelection = (IChromatogramSelection)object;
 				if(chromatogramSelection instanceof IChromatogramSelectionCSD) {
 					chromatogramType = CHROMATOGRAM_TYPE_CSD;
 				} else if(chromatogramSelection instanceof IChromatogramSelectionMSD) {
@@ -72,13 +72,13 @@ public class ChromatogramType implements EventHandler {
 	 * 
 	 * @return {@link IChromatogramSelection}
 	 */
-	public static IChromatogramSelection<?, ?> getChromatogramSelection() {
+	public static IChromatogramSelection getChromatogramSelection() {
 
 		IEclipseContext eclipseContext = Activator.getDefault().getEclipseContext();
 		Object object = eclipseContext.get(ChromatogramType.CHROMATOGRAM_SELECTION);
 		//
-		IChromatogramSelection<?, ?> currentChromatogramSelection = null;
-		if(object instanceof IChromatogramSelection<?, ?> chromatogramSelection) {
+		IChromatogramSelection currentChromatogramSelection = null;
+		if(object instanceof IChromatogramSelection chromatogramSelection) {
 			currentChromatogramSelection = chromatogramSelection;
 		}
 		//

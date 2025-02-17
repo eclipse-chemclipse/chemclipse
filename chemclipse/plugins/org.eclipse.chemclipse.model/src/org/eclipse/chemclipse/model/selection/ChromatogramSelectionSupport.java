@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2023 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,7 +19,7 @@ public class ChromatogramSelectionSupport {
 
 	}
 
-	public static void moveRetentionTimeWindow(IChromatogramSelection<?, ?> chromatogramSelection, MoveDirection moveDirection, int retentionTimeDivider) {
+	public static void moveRetentionTimeWindow(IChromatogramSelection chromatogramSelection, MoveDirection moveDirection, int retentionTimeDivider) {
 
 		int startRetentionTime = chromatogramSelection.getStartRetentionTime();
 		int stopRetentionTime = chromatogramSelection.getStopRetentionTime();
@@ -33,9 +33,9 @@ public class ChromatogramSelectionSupport {
 		chromatogramSelection.setRanges(startRetentionTimeNew, stopRetentionTimeNew, chromatogramSelection.getStartAbundance(), chromatogramSelection.getStopAbundance());
 	}
 
-	public static int getValidatedStartRetentionTime(IChromatogramSelection<?, ?> chromatogramSelection, int startRetentionTimeNew) {
+	public static int getValidatedStartRetentionTime(IChromatogramSelection chromatogramSelection, int startRetentionTimeNew) {
 
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		int minRetentionTime = chromatogram.getStartRetentionTime();
 		if(startRetentionTimeNew < minRetentionTime) {
 			return minRetentionTime;
@@ -44,9 +44,9 @@ public class ChromatogramSelectionSupport {
 		}
 	}
 
-	public static int getValidatedStopRetentionTime(IChromatogramSelection<?, ?> chromatogramSelection, int stopRetentionTimeNew) {
+	public static int getValidatedStopRetentionTime(IChromatogramSelection chromatogramSelection, int stopRetentionTimeNew) {
 
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		int maxRetentionTime = chromatogram.getStopRetentionTime();
 		if(stopRetentionTimeNew > maxRetentionTime) {
 			return maxRetentionTime;

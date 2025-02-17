@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2023 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -36,7 +36,7 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 
-public abstract class AbstractChromatogramConverter<P extends IPeak, T extends IChromatogram<P>> implements IChromatogramConverter<P, T> {
+public abstract class AbstractChromatogramConverter<P extends IPeak, T extends IChromatogram> implements IChromatogramConverter<P, T> {
 
 	private static final Logger logger = Logger.getLogger(AbstractChromatogramConverter.class);
 	//
@@ -338,9 +338,9 @@ public abstract class AbstractChromatogramConverter<P extends IPeak, T extends I
 		return processingInfo;
 	}
 
-	private IProcessingInfo<IChromatogram<?>> getNoImportConverterAvailableProcessingInfo(File file) {
+	private IProcessingInfo<IChromatogram> getNoImportConverterAvailableProcessingInfo(File file) {
 
-		IProcessingInfo<IChromatogram<?>> processingInfo = new ProcessingInfo<>();
+		IProcessingInfo<IChromatogram> processingInfo = new ProcessingInfo<>();
 		processingInfo.addErrorMessage(DESCRIPTION_IMPORT, "There is no suitable converter available to load the chromatogram from the file: " + getFileName(file));
 		return processingInfo;
 	}

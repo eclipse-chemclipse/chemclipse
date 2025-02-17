@@ -40,7 +40,7 @@ public class PeakIdentifierRemoveUnidentified extends AbstractPeakIdentifierCSD 
 					IChromatogramCSD chromatogramCSD = chromatogramPeakCSD.getChromatogram();
 					if(chromatogramCSD != null) {
 						if(chromatogramPeakCSD.getTargets().isEmpty()) {
-							chromatogramCSD.removePeak(chromatogramPeakCSD);
+							chromatogramCSD.getPeaks().remove(chromatogramPeakCSD);
 						}
 					}
 				}

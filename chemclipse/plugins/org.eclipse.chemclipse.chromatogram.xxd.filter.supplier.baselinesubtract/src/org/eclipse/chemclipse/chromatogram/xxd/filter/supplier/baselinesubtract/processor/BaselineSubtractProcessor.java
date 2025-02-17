@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2023 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,9 +28,9 @@ public class BaselineSubtractProcessor {
 	 * 
 	 * @param chromatogramSelection
 	 */
-	public static void removeBaseline(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor) {
+	public static void removeBaseline(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor) {
 
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		int startScan = chromatogram.getScanNumber(chromatogramSelection.getStartRetentionTime());
 		int stopScan = chromatogram.getScanNumber(chromatogramSelection.getStopRetentionTime());
 		/*
@@ -72,7 +72,7 @@ public class BaselineSubtractProcessor {
 		 */
 		chromatogram.recalculateScanNumbers();
 		chromatogram.recalculateTheNoiseFactor();
-		chromatogram.removeAllPeaks();
+		chromatogram.getPeaks().clear();
 		baselineModel.removeBaseline();
 	}
 }

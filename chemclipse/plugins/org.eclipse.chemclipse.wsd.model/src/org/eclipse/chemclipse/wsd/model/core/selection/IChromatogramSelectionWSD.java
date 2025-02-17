@@ -14,12 +14,11 @@
 package org.eclipse.chemclipse.wsd.model.core.selection;
 
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
-import org.eclipse.chemclipse.wsd.model.core.IChromatogramPeakWSD;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.wsd.model.core.IScanWSD;
 import org.eclipse.chemclipse.wsd.model.core.support.IMarkedWavelengths;
 
-public interface IChromatogramSelectionWSD extends IChromatogramSelection<IChromatogramPeakWSD, IChromatogramWSD> {
+public interface IChromatogramSelectionWSD extends IChromatogramSelection {
 
 	/**
 	 * Returns the stored chromatogram.

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023 Lablicate GmbH.
+ * Copyright (c) 2023, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -36,9 +36,9 @@ public class DeleteTargetsOperation extends AbstractOperation {
 	private ITargetSupplier targetSupplier;
 	private Set<IIdentificationTarget> targetsToDelete;
 	private Display display;
-	private IChromatogramSelection<IPeak, ?> chromatogramSelection;
+	private IChromatogramSelection chromatogramSelection;
 
-	public DeleteTargetsOperation(Display display, IChromatogramSelection<IPeak, ?> chromatogramSelection, ITargetSupplier targetSupplier, Collection<IIdentificationTarget> targetsToDelete) {
+	public DeleteTargetsOperation(Display display, IChromatogramSelection chromatogramSelection, ITargetSupplier targetSupplier, Collection<IIdentificationTarget> targetsToDelete) {
 
 		super(ExtensionMessages.deleteTargets);
 		this.display = display;

@@ -16,17 +16,7 @@ import java.util.List;
 
 import org.eclipse.chemclipse.model.support.IRetentionTimeRange;
 
-public interface IChromatogramPeaks<T extends IPeak> {
-
-	void removeAllPeaks();
-
-	int getNumberOfPeaks();
-
-	void addPeak(T peak);
-
-	void removePeak(T peak);
-
-	void removePeaks(List<T> peaksToDelete);
+public interface IChromatogramPeaks {
 
 	/**
 	 * returns all peaks that are inside the given retention time, that means the retention time is within the start/stop retention time of the peak
@@ -34,23 +24,23 @@ public interface IChromatogramPeaks<T extends IPeak> {
 	 * @param retentionTime
 	 * @return a list of peaks at the given retention time, ordered by the start retention time of the peak
 	 */
-	List<T> getPeaks(int startRetentionTime, int stopRetentionTime);
+	List<? extends IChromatogramPeak> getPeaks(int startRetentionTime, int stopRetentionTime);
 
 	/**
 	 * Returns a list.
 	 * Modification does not change the chromatogram peak list.
 	 * 
-	 * @return List<T>
+	 * @return List<? extends IChromatogramPeak>
 	 */
-	List<T> getPeaks();
+	List<? extends IChromatogramPeak> getPeaks();
 
 	/**
 	 * Returns a list.
 	 * Modification does not change the chromatogram peak list.
 	 * 
-	 * @return List<T>
+	 * @return List<? extends IChromatogramPeak>
 	 */
-	default List<T> getPeaks(IRetentionTimeRange range) {
+	default List<? extends IChromatogramPeak> getPeaks(IRetentionTimeRange range) {
 
 		if(range == null) {
 			return getPeaks();

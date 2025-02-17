@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class ChromatogramFilterHeaderTransfer extends AbstractChromatogramFilter implements IChromatogramFilter {
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<IChromatogramFilterResult> processingInfo = validate(chromatogramSelection, chromatogramFilterSettings);
 		if(!processingInfo.hasErrorMessages()) {
@@ -35,12 +35,12 @@ public class ChromatogramFilterHeaderTransfer extends AbstractChromatogramFilter
 				/*
 				 * Settings
 				 */
-				IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+				IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 				HeaderField headerFieldSource = filterSettings.getHeaderFieldSource();
 				String dataSoure = HeaderUtil.getHeaderData(chromatogram, headerFieldSource, "");
 				//
 				HeaderField headerFieldSink = filterSettings.getHeaderFieldSink();
-				for(IChromatogram<?> chromatogramReference : chromatogram.getReferencedChromatograms()) {
+				for(IChromatogram chromatogramReference : chromatogram.getReferencedChromatograms()) {
 					HeaderUtil.setHeaderData(chromatogramReference, headerFieldSink, dataSoure);
 				}
 			}
@@ -50,7 +50,7 @@ public class ChromatogramFilterHeaderTransfer extends AbstractChromatogramFilter
 	}
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor) {
 
 		FilterSettingsHeaderTransfer filterSettings = PreferenceSupplier.getFilterSettingsHeaderTransfer();
 		return applyFilter(chromatogramSelection, filterSettings, monitor);

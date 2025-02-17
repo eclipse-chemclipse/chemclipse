@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023 Lablicate GmbH.
+ * Copyright (c) 2023, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,7 +20,6 @@ import org.eclipse.chemclipse.chromatogram.xxd.report.supplier.image.ui.preferen
 import org.eclipse.chemclipse.chromatogram.xxd.report.supplier.image.ui.settings.IChromatogramImageReportSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.report.supplier.image.ui.settings.ImageReportSettings;
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -28,7 +27,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class ImageReport extends AbstractChromatogramReportGenerator {
 
 	@Override
-	public IProcessingInfo<?> generate(File file, boolean append, IChromatogram<? extends IPeak> chromatogram, IChromatogramReportSettings chromatogramReportSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<?> generate(File file, boolean append, IChromatogram chromatogram, IChromatogramReportSettings chromatogramReportSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<File> processingInfo = super.validate(file);
 		//
@@ -43,14 +42,14 @@ public class ImageReport extends AbstractChromatogramReportGenerator {
 	}
 
 	@Override
-	public IProcessingInfo<?> generate(File file, boolean append, IChromatogram<? extends IPeak> chromatogram, IProgressMonitor monitor) {
+	public IProcessingInfo<?> generate(File file, boolean append, IChromatogram chromatogram, IProgressMonitor monitor) {
 
 		ImageReportSettings settings = PreferenceSupplier.getReportSettings();
 		return generate(file, append, chromatogram, settings, monitor);
 	}
 
 	@Override
-	public IProcessingInfo<?> generate(File file, boolean append, List<IChromatogram<? extends IPeak>> chromatograms, IChromatogramReportSettings chromatogramReportSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<?> generate(File file, boolean append, List<IChromatogram> chromatograms, IChromatogramReportSettings chromatogramReportSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<File> processingInfo = super.validate(file);
 		processingInfo.addErrorMessage("Image Report", "Only accepts single chromatograms at the moment");
@@ -58,7 +57,7 @@ public class ImageReport extends AbstractChromatogramReportGenerator {
 	}
 
 	@Override
-	public IProcessingInfo<?> generate(File file, boolean append, List<IChromatogram<? extends IPeak>> chromatograms, IProgressMonitor monitor) {
+	public IProcessingInfo<?> generate(File file, boolean append, List<IChromatogram> chromatograms, IProgressMonitor monitor) {
 
 		IProcessingInfo<File> processingInfo = super.validate(file);
 		processingInfo.addErrorMessage("Image Report", "Only accepts single chromatograms at the moment");

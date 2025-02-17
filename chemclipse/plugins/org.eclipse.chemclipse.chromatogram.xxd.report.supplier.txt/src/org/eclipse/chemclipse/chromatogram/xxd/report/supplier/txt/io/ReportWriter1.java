@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2023 Lablicate GmbH.
+ * Copyright (c) 2012, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -69,14 +69,14 @@ public class ReportWriter1 {
 	private IonAbundanceComparator ionComparator = new IonAbundanceComparator(SortOrder.DESC);
 	private PeakRetentionTimeComparator peakComparator = new PeakRetentionTimeComparator(SortOrder.ASC);
 
-	public void generate(File file, boolean append, List<IChromatogram<? extends IPeak>> chromatograms, ReportSettings1 reportSettings, IProgressMonitor monitor) throws IOException {
+	public void generate(File file, boolean append, List<IChromatogram> chromatograms, ReportSettings1 reportSettings, IProgressMonitor monitor) throws IOException {
 
 		try (PrintWriter printWriter = new PrintWriter(new FileWriter(file, append))) {
 			printWriter.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 			printWriter.println("ASCII Report");
 			printWriter.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 			//
-			for(IChromatogram<? extends IPeak> chromatogram : chromatograms) {
+			for(IChromatogram chromatogram : chromatograms) {
 				printHeader(printWriter, chromatogram, monitor);
 				reportChromatogram(printWriter, chromatogram, monitor);
 			}
@@ -133,7 +133,7 @@ public class ReportWriter1 {
 	 * @param chromatogram
 	 * @param monitor
 	 */
-	private void reportChromatogram(PrintWriter printWriter, IChromatogram<?> chromatogram, IProgressMonitor monitor) {
+	private void reportChromatogram(PrintWriter printWriter, IChromatogram chromatogram, IProgressMonitor monitor) {
 
 		/*
 		 * Print
@@ -197,7 +197,7 @@ public class ReportWriter1 {
 		printWriter.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 	}
 
-	private String getChromatogramType(IChromatogram<?> chromatogram) {
+	private String getChromatogramType(IChromatogram chromatogram) {
 
 		if(chromatogram instanceof IChromatogramCSD) {
 			return "CSD";
@@ -425,7 +425,7 @@ public class ReportWriter1 {
 		}
 	}
 
-	private void reportScanIdentificationResults(PrintWriter printWriter, IChromatogram<? extends IPeak> chromatogram, String messageNoResults, IProgressMonitor monitor) {
+	private void reportScanIdentificationResults(PrintWriter printWriter, IChromatogram chromatogram, String messageNoResults, IProgressMonitor monitor) {
 
 		if(scanTargetsAvailable(chromatogram)) {
 			/*
@@ -448,7 +448,7 @@ public class ReportWriter1 {
 		}
 	}
 
-	private boolean scanTargetsAvailable(IChromatogram<? extends IPeak> chromatogram) {
+	private boolean scanTargetsAvailable(IChromatogram chromatogram) {
 
 		chromatogram.getScans();
 		for(IScan scan : chromatogram.getScans()) {
@@ -460,7 +460,7 @@ public class ReportWriter1 {
 		return false;
 	}
 
-	private void reportChromatogramIdentificationResults(PrintWriter printWriter, IChromatogram<?> chromatogram, String messageNoResults, IProgressMonitor monitor) {
+	private void reportChromatogramIdentificationResults(PrintWriter printWriter, IChromatogram chromatogram, String messageNoResults, IProgressMonitor monitor) {
 
 		/*
 		 * Get the targets

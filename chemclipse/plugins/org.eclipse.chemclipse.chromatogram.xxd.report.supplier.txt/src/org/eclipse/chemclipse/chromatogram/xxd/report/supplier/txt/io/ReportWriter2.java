@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2023 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -48,12 +48,12 @@ public class ReportWriter2 {
 	 * This map is used to store the summed area result instead
 	 * of calculating it again and again.
 	 */
-	private Map<IChromatogram<?>, Double> chromatogramAreaMap = new HashMap<>();
+	private Map<IChromatogram, Double> chromatogramAreaMap = new HashMap<>();
 
-	public void generate(File file, boolean append, List<IChromatogram<? extends IPeak>> chromatograms, ReportSettings2 reportSettings, IProgressMonitor monitor) throws IOException {
+	public void generate(File file, boolean append, List<IChromatogram> chromatograms, ReportSettings2 reportSettings, IProgressMonitor monitor) throws IOException {
 
 		try (PrintWriter printWriter = new PrintWriter(new FileWriter(file, append))) {
-			for(IChromatogram<? extends IPeak> chromatogram : chromatograms) {
+			for(IChromatogram chromatogram : chromatograms) {
 				printHeader(printWriter, chromatogram);
 				printWriter.println("");
 				printAreaPercentList(printWriter, chromatogram, reportSettings);
@@ -65,7 +65,7 @@ public class ReportWriter2 {
 		}
 	}
 
-	private void printHeader(PrintWriter printWriter, IChromatogram<? extends IPeak> chromatogram) {
+	private void printHeader(PrintWriter printWriter, IChromatogram chromatogram) {
 
 		printWriter.println("File Name: " + chromatogram.getName());
 		printWriter.println("Sample Name: " + chromatogram.getDataName());
@@ -75,7 +75,7 @@ public class ReportWriter2 {
 		printWriter.println("Miscellaneous: " + chromatogram.getMiscInfo());
 	}
 
-	private void printAreaPercentList(PrintWriter printWriter, IChromatogram<? extends IPeak> chromatogramSource, ReportSettings2 reportSettings) {
+	private void printAreaPercentList(PrintWriter printWriter, IChromatogram chromatogramSource, ReportSettings2 reportSettings) {
 
 		double[] chromatogramAreaSumArray = getChromatogramAreaSumArray(chromatogramSource);
 		double[] peakAreaSumArray = initializePeakAreaSumArray(chromatogramSource);
@@ -176,13 +176,13 @@ public class ReportWriter2 {
 		printWriter.println("");
 	}
 
-	private void printAreaPercentHeadlines(PrintWriter printWriter, IChromatogram<?> chromatogramSource, ReportSettings2 reportSettings) {
+	private void printAreaPercentHeadlines(PrintWriter printWriter, IChromatogram chromatogramSource, ReportSettings2 reportSettings) {
 
-		List<IChromatogram<?>> referencedChromatograms = chromatogramSource.getReferencedChromatograms();
+		List<IChromatogram> referencedChromatograms = chromatogramSource.getReferencedChromatograms();
 		boolean addPeakArea = reportSettings.isAddPeakArea();
 		//
 		int i = 1;
-		for(IChromatogram<?> referencedChromatogram : referencedChromatograms) {
+		for(IChromatogram referencedChromatogram : referencedChromatograms) {
 			String labelArea;
 			if(referencedChromatogram instanceof IChromatogramMSD) {
 				labelArea = "MSD" + i;
@@ -205,9 +205,9 @@ public class ReportWriter2 {
 		}
 	}
 
-	private double[] printAreaPercentData(PrintWriter printWriter, IChromatogram<?> chromatogramSource, IPeak peakSource, ILibraryInformation libraryInformationSource, double[] peakAreaSumArray, ReportSettings2 reportSettings) {
+	private double[] printAreaPercentData(PrintWriter printWriter, IChromatogram chromatogramSource, IPeak peakSource, ILibraryInformation libraryInformationSource, double[] peakAreaSumArray, ReportSettings2 reportSettings) {
 
-		List<IChromatogram<?>> referencedChromatograms = chromatogramSource.getReferencedChromatograms();
+		List<IChromatogram> referencedChromatograms = chromatogramSource.getReferencedChromatograms();
 		boolean addPeakArea = reportSettings.isAddPeakArea();
 		/*
 		 * Master Peak
@@ -223,7 +223,7 @@ public class ReportWriter2 {
 		 * Reference Peak
 		 */
 		int i = 1;
-		for(IChromatogram<?> referencedChromatogram : referencedChromatograms) {
+		for(IChromatogram referencedChromatogram : referencedChromatograms) {
 			IPeak referencedPeak = getReferencedPeak(peakSource, libraryInformationSource, referencedChromatogram, reportSettings);
 			double peakArea = (referencedPeak != null) ? referencedPeak.getIntegratedArea() : 0.0d;
 			peakAreaSumArray[i] += peakArea;
@@ -256,30 +256,30 @@ public class ReportWriter2 {
 		}
 	}
 
-	private double[] getChromatogramAreaSumArray(IChromatogram<?> chromatogram) {
+	private double[] getChromatogramAreaSumArray(IChromatogram chromatogram) {
 
-		List<IChromatogram<?>> referencedChromatograms = chromatogram.getReferencedChromatograms();
+		List<IChromatogram> referencedChromatograms = chromatogram.getReferencedChromatograms();
 		int size = 1 + referencedChromatograms.size();
 		double[] chromatogramAreaSumArray = new double[size];
 		//
 		chromatogramAreaSumArray[0] = chromatogram.getPeakIntegratedArea();
 		//
 		int i = 1;
-		for(IChromatogram<?> referencedChromatogram : referencedChromatograms) {
+		for(IChromatogram referencedChromatogram : referencedChromatograms) {
 			chromatogramAreaSumArray[i++] = referencedChromatogram.getPeakIntegratedArea();
 		}
 		//
 		return chromatogramAreaSumArray;
 	}
 
-	private double[] initializePeakAreaSumArray(IChromatogram<?> chromatogram) {
+	private double[] initializePeakAreaSumArray(IChromatogram chromatogram) {
 
-		List<IChromatogram<?>> referencedChromatograms = chromatogram.getReferencedChromatograms();
+		List<IChromatogram> referencedChromatograms = chromatogram.getReferencedChromatograms();
 		int size = 1 + referencedChromatograms.size();
 		return new double[size];
 	}
 
-	private IPeak getReferencedPeak(IPeak peakSource, ILibraryInformation libraryInformationSource, IChromatogram<? extends IPeak> referencedChromatogram, ReportSettings2 reportSettings) {
+	private IPeak getReferencedPeak(IPeak peakSource, ILibraryInformation libraryInformationSource, IChromatogram referencedChromatogram, ReportSettings2 reportSettings) {
 
 		if(peakSource != null && libraryInformationSource != null && referencedChromatogram != null) {
 			//
@@ -363,7 +363,7 @@ public class ReportWriter2 {
 		}
 	}
 
-	private List<IPeak> extractPeaksOfInterest(IChromatogram<? extends IPeak> referencedChromatogram, int startRetentionTime, int stopRetentionTime) {
+	private List<IPeak> extractPeaksOfInterest(IChromatogram referencedChromatogram, int startRetentionTime, int stopRetentionTime) {
 
 		List<IPeak> peaksOfInterest = new ArrayList<>();
 		for(IPeak peak : referencedChromatogram.getPeaks()) {
@@ -406,7 +406,7 @@ public class ReportWriter2 {
 		return area;
 	}
 
-	private double getPercentagePeakArea(IChromatogram<?> chromatogram, IPeak peak) {
+	private double getPercentagePeakArea(IChromatogram chromatogram, IPeak peak) {
 
 		double peakAreaPercent = 0.0d;
 		if(chromatogram != null && peak != null) {

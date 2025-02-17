@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2023 Lablicate GmbH.
+ * Copyright (c) 2010, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -56,9 +56,9 @@ public class BatchProcess {
 			for(IChromatogramInputEntry chromatogramInput : batchProcessJob.getChromatogramInputEntries()) {
 				String file = chromatogramInput.getInputFile();
 				try {
-					IProcessingInfo<IChromatogramSelection<?, ?>> processingInfoX = chromatogramTypeSupport.getChromatogramSelection(file, monitor);
+					IProcessingInfo<IChromatogramSelection> processingInfoX = chromatogramTypeSupport.getChromatogramSelection(file, monitor);
 					if(!processingInfoX.hasErrorMessages()) {
-						IChromatogramSelection<?, ?> chromatogramSelection = processingInfoX.getProcessingResult();
+						IChromatogramSelection chromatogramSelection = processingInfoX.getProcessingResult();
 						ProcessingInfo<?> processorResult = new ProcessingInfo<>();
 						ProcessEntryContainer.applyProcessEntries(processMethod, new ProcessExecutionContext(monitor, processorResult, processSupplierContext), IChromatogramSelectionProcessSupplier.createConsumer(chromatogramSelection));
 						if(processorResult.hasErrorMessages()) {

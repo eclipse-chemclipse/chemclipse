@@ -100,7 +100,7 @@ public class ChromatogramWriter_1400 extends AbstractChromatogramWriter implemen
 		/*
 		 * Referenced Chromatograms
 		 */
-		List<IChromatogram<?>> referencedChromatograms = chromatogram.getReferencedChromatograms();
+		List<IChromatogram> referencedChromatograms = chromatogram.getReferencedChromatograms();
 		writeChromatogramReferenceInfo(zipOutputStream, directoryPrefix, referencedChromatograms, monitor);
 		writeReferencedChromatograms(zipOutputStream, directoryPrefix, referencedChromatograms, monitor);
 	}
@@ -644,7 +644,7 @@ public class ChromatogramWriter_1400 extends AbstractChromatogramWriter implemen
 		zipOutputStream.closeEntry();
 	}
 
-	private void writeChromatogramReferenceInfo(ZipOutputStream zipOutputStream, String directoryPrefix, List<IChromatogram<?>> referencedChromatograms, IProgressMonitor monitor) throws IOException {
+	private void writeChromatogramReferenceInfo(ZipOutputStream zipOutputStream, String directoryPrefix, List<IChromatogram> referencedChromatograms, IProgressMonitor monitor) throws IOException {
 
 		ZipEntry zipEntryType = new ZipEntry(directoryPrefix + Format.FILE_REFERENCE_INFO);
 		zipOutputStream.putNextEntry(zipEntryType);
@@ -653,7 +653,7 @@ public class ChromatogramWriter_1400 extends AbstractChromatogramWriter implemen
 		zipOutputStream.closeEntry();
 	}
 
-	private void writeReferencedChromatograms(ZipOutputStream zipOutputStream, String directoryPrefix, List<IChromatogram<?>> referencedChromatograms, IProgressMonitor monitor) throws IOException {
+	private void writeReferencedChromatograms(ZipOutputStream zipOutputStream, String directoryPrefix, List<IChromatogram> referencedChromatograms, IProgressMonitor monitor) throws IOException {
 
 		SubMonitor subMonitor = SubMonitor.convert(monitor, ConverterMessages.writeChromatogram, referencedChromatograms.size() * 20);
 		try {
@@ -662,7 +662,7 @@ public class ChromatogramWriter_1400 extends AbstractChromatogramWriter implemen
 			ChromatogramWriterWSD chromatogramWriterWSD = new ChromatogramWriterWSD();
 			//
 			int i = 0;
-			for(IChromatogram<?> referencedChromatogram : referencedChromatograms) {
+			for(IChromatogram referencedChromatogram : referencedChromatograms) {
 				/*
 				 * Create the measurement folder.
 				 */

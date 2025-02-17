@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2023 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This
  * program and the accompanying materials are made available under the terms of
@@ -21,11 +21,11 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 
 public class ChromatogramLengthModifier implements IRunnableWithProgress {
 
-	private IChromatogramSelection<?, ?> chromatogramSelection;
+	private IChromatogramSelection chromatogramSelection;
 	private int scanDelay;
 	private int chromatogramLength;
 
-	public ChromatogramLengthModifier(IChromatogramSelection<?, ?> chromatogramSelection, int scanDelay, int chromatogramLength) {
+	public ChromatogramLengthModifier(IChromatogramSelection chromatogramSelection, int scanDelay, int chromatogramLength) {
 
 		this.chromatogramSelection = chromatogramSelection;
 		this.scanDelay = scanDelay;
@@ -37,7 +37,7 @@ public class ChromatogramLengthModifier implements IRunnableWithProgress {
 
 		try {
 			monitor.beginTask(ExtensionMessages.chromatogramLengthModified, IProgressMonitor.UNKNOWN);
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			int scanRange = chromatogram.getNumberOfScans() - 1;
 			if(scanRange > 0) {
 				/*
@@ -51,7 +51,7 @@ public class ChromatogramLengthModifier implements IRunnableWithProgress {
 				chromatogram.removeAllBackgroundIntegrationEntries();
 				chromatogram.removeAllChromatogramIntegrationEntries();
 				chromatogram.removeAllMeasurementResults();
-				chromatogram.removeAllPeaks();
+				chromatogram.getPeaks().clear();
 				chromatogram.getTargets().clear();
 				/*
 				 * Calculate the new range

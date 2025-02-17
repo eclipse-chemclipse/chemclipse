@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2020 Lablicate GmbH.
+ * Copyright (c) 2014, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This
  * program and the accompanying materials are made available under the terms of
@@ -24,9 +24,9 @@ import org.eclipse.swt.widgets.Display;
 public class CalculatorRunnable implements IRunnableWithProgress {
 
 	private static final String CALCULATOR_ID = "org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri";
-	private IChromatogramSelection<?, ?> chromatogramSelection;
+	private IChromatogramSelection chromatogramSelection;
 
-	public CalculatorRunnable(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public CalculatorRunnable(IChromatogramSelection chromatogramSelection) {
 
 		this.chromatogramSelection = chromatogramSelection;
 	}

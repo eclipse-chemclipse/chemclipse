@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -33,11 +33,11 @@ public class ChromatogramExportRunnable implements IRunnableWithProgress {
 
 	private File data;
 	private File file;
-	private IChromatogram<?> chromatogram;
+	private IChromatogram chromatogram;
 	private ISupplier supplier;
 	private DataType dataType;
 
-	public ChromatogramExportRunnable(File file, IChromatogram<?> chromatogram, ISupplier supplier, DataType dataType) {
+	public ChromatogramExportRunnable(File file, IChromatogram chromatogram, ISupplier supplier, DataType dataType) {
 
 		this.file = file;
 		this.chromatogram = chromatogram;

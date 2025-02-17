@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2023 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -70,7 +70,7 @@ public final class ClassifierDialog extends Dialog implements ColumnDefinitionPr
 		if(proposals == null) {
 			if(classifiable instanceof IChromatogramPeak chromatogramPeak) {
 				Set<String> treeSetClassifier = new TreeSet<>();
-				IChromatogram<?> chromatogram = chromatogramPeak.getChromatogram();
+				IChromatogram chromatogram = chromatogramPeak.getChromatogram();
 				for(IPeak peak : chromatogram.getPeaks()) {
 					treeSetClassifier.addAll(peak.getClassifier());
 				}

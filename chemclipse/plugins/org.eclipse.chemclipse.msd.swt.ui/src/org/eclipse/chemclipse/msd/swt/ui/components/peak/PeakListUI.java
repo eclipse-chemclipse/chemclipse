@@ -57,7 +57,7 @@ public class PeakListUI {
 
 	private static final Logger logger = Logger.getLogger(PeakListUI.class);
 	//
-	private IChromatogramSelection<?, ?> chromatogramSelection;
+	private IChromatogramSelection chromatogramSelection;
 	//
 	private final DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish();
 	//
@@ -74,7 +74,7 @@ public class PeakListUI {
 		initialize(parent);
 	}
 
-	public void setChromatogramSelection(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public void setChromatogramSelection(IChromatogramSelection chromatogramSelection) {
 
 		this.chromatogramSelection = chromatogramSelection;
 	}
@@ -88,7 +88,7 @@ public class PeakListUI {
 
 		if(peaks != null) {
 			if(chromatogramSelection != null && chromatogramSelection.getChromatogram() != null) {
-				labelPeaks.setText(chromatogramSelection.getChromatogram().getNumberOfPeaks() + " chromatogram peaks - " + peaks.getPeaks().size() + " displayed peaks");
+				labelPeaks.setText(chromatogramSelection.getChromatogram().getPeaks().size() + " chromatogram peaks - " + peaks.getPeaks().size() + " displayed peaks");
 			} else {
 				labelPeaks.setText(peaks.getPeaks().size() + " displayed peaks");
 			}
@@ -150,7 +150,7 @@ public class PeakListUI {
 			 * Delete peak in chromatogram.
 			 */
 			IChromatogramMSD chromatogram = chromatogramSelection.getChromatogram();
-			chromatogram.removePeaks(chromatogramPeaksToDelete);
+			chromatogram.getPeaks().removeAll(chromatogramPeaksToDelete);
 			/*
 			 * Is the chromatogram updatable? IChromatogramSelection
 			 * at itself isn't.

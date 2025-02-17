@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2024 Lablicate GmbH.
+ * Copyright (c) 2012, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -48,23 +48,23 @@ public class AbstractChromatogram_4_Test extends TestCase {
 		IPeakModelMSD model3 = createPeakModel(1500, 600);
 		//
 		assertFalse("Peakmodels are equal", model1.equals(model2));
-		chromatogram.addPeak(createPeakForModel(chromatogram, model1));
-		assertEquals("Peak was not added", 1, chromatogram.getNumberOfPeaks());
+		chromatogram.getPeaks().add(createPeakForModel(chromatogram, model1));
+		assertEquals("Peak was not added", 1, chromatogram.getPeaks().size());
 		// now add a new peak with the same peakmodel
-		chromatogram.addPeak(createPeakForModel(chromatogram, model1));
-		assertEquals("Peak with same peak model was added again!", 2, chromatogram.getNumberOfPeaks()); // before 1
+		chromatogram.getPeaks().add(createPeakForModel(chromatogram, model1));
+		assertEquals("Peak with same peak model was added again!", 2, chromatogram.getPeaks().size()); // before 1
 		// add it with another model
-		chromatogram.addPeak(createPeakForModel(chromatogram, model2));
-		assertEquals("Peak with same rtmax but different model was not added!", 3, chromatogram.getNumberOfPeaks()); // before 2
+		chromatogram.getPeaks().add(createPeakForModel(chromatogram, model2));
+		assertEquals("Peak with same rtmax but different model was not added!", 3, chromatogram.getPeaks().size()); // before 2
 		// add peak with same model but different RT
-		chromatogram.addPeak(createPeakForModel(chromatogram, model3));
-		assertEquals("Peak with different rtmax but same model was not added!", 4, chromatogram.getNumberOfPeaks()); // before 3
+		chromatogram.getPeaks().add(createPeakForModel(chromatogram, model3));
+		assertEquals("Peak with different rtmax but same model was not added!", 4, chromatogram.getPeaks().size()); // before 3
 		// now remove one of the peaks
-		chromatogram.removePeak(createPeakForModel(chromatogram, model1));
-		assertEquals("Peak was not removed", 4, chromatogram.getNumberOfPeaks()); // before 2
+		chromatogram.getPeaks().remove(createPeakForModel(chromatogram, model1));
+		assertEquals("Peak was not removed", 4, chromatogram.getPeaks().size()); // before 2
 		// remove it again should not matter...
-		chromatogram.removePeak(createPeakForModel(chromatogram, model1));
-		assertEquals("Peak was not removed", 4, chromatogram.getNumberOfPeaks()); // befor 2
+		chromatogram.getPeaks().remove(createPeakForModel(chromatogram, model1));
+		assertEquals("Peak was not removed", 4, chromatogram.getPeaks().size()); // befor 2
 	}
 
 	public void testGetPeaks() {
@@ -77,10 +77,10 @@ public class AbstractChromatogram_4_Test extends TestCase {
 		int peakStart = 100;
 		for(int i = 0; i < numberOfPeaks / 2; i++) {
 			// create peaks that are very close together and overlap in their shapes and two peaks for each RT
-			chromatogram.addPeak(createPeakForModel(chromatogram, createPeakModel(peakStart + i, 500)));
-			chromatogram.addPeak(createPeakForModel(chromatogram, createPeakModel(peakStart + i, 600)));
+			chromatogram.getPeaks().add(createPeakForModel(chromatogram, createPeakModel(peakStart + i, 500)));
+			chromatogram.getPeaks().add(createPeakForModel(chromatogram, createPeakModel(peakStart + i, 600)));
 		}
-		assertEquals("Peak count differs", numberOfPeaks, chromatogram.getNumberOfPeaks());
+		assertEquals("Peak count differs", numberOfPeaks, chromatogram.getPeaks().size());
 		assertTrue("Peaks are returned even if no peak rt-max should be in this range", chromatogram.getPeaks(Integer.MIN_VALUE, peakStart - 1).isEmpty());
 		assertEquals("Peak list differs in expected size", 2, chromatogram.getPeaks(Integer.MIN_VALUE, peakStart).size());
 		assertEquals("Peak list differs in expected size", 4, chromatogram.getPeaks(Integer.MIN_VALUE, peakStart + 1).size());

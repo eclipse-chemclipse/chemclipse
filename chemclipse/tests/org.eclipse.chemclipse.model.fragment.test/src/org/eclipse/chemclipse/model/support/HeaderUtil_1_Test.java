@@ -21,7 +21,7 @@ import junit.framework.TestCase;
 
 public class HeaderUtil_1_Test extends TestCase {
 
-	private IChromatogram<?> chromatogram = new Chromatogram();
+	private IChromatogram chromatogram = new Chromatogram();
 
 	public void test1() {
 

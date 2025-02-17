@@ -20,7 +20,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public abstract class AbstractPeakDetector implements IPeakDetector {
 
 	@Override
-	public IProcessingInfo<?> validate(IChromatogramSelection<?, ?> chromatogramSelection, IPeakDetectorSettings peakDetectorSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<?> validate(IChromatogramSelection chromatogramSelection, IPeakDetectorSettings peakDetectorSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<?> processingInfo = new ProcessingInfo<>();
 		if(chromatogramSelection == null) {

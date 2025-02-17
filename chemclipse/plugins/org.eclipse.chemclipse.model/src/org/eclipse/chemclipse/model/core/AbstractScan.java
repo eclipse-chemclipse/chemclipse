@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2023 Lablicate GmbH.
+ * Copyright (c) 2012, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,7 +28,7 @@ public abstract class AbstractScan extends AbstractSignal implements IScan {
 	 * methods.
 	 */
 	private static final long serialVersionUID = 642924518234776409L;
-	private transient IChromatogram<?> parentChromatogram;
+	private transient IChromatogram parentChromatogram;
 	//
 	private int retentionTime = 0;
 	private int retentionTimeColumn1 = 0; // GCxGC, LCxLC
@@ -90,13 +90,13 @@ public abstract class AbstractScan extends AbstractSignal implements IScan {
 	}
 
 	@Override
-	public IChromatogram<?> getParentChromatogram() {
+	public IChromatogram getParentChromatogram() {
 
 		return parentChromatogram;
 	}
 
 	@Override
-	public void setParentChromatogram(IChromatogram<?> parentChromatogram) {
+	public void setParentChromatogram(IChromatogram parentChromatogram) {
 
 		this.parentChromatogram = parentChromatogram;
 	}

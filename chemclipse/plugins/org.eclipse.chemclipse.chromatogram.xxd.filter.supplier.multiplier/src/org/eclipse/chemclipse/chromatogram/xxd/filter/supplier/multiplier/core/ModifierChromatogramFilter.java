@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2023 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -23,9 +23,9 @@ import org.eclipse.chemclipse.model.signals.TotalScanSignalsModifier;
 
 public abstract class ModifierChromatogramFilter extends AbstractChromatogramFilter {
 
-	protected void applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, float factor, boolean multiply) throws FilterException {
+	protected void applyFilter(IChromatogramSelection chromatogramSelection, float factor, boolean multiply) throws FilterException {
 
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		int startScan = chromatogram.getScanNumber(chromatogramSelection.getStartRetentionTime());
 		int stopScan = chromatogram.getScanNumber(chromatogramSelection.getStopRetentionTime());
 		ITotalScanSignals totalScanSignals;

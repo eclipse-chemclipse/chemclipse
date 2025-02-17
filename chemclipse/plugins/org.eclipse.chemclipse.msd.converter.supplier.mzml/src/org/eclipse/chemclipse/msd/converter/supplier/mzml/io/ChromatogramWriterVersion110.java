@@ -218,7 +218,7 @@ public class ChromatogramWriterVersion110 extends AbstractChromatogramWriter imp
 		return scanType;
 	}
 
-	private SourceFileListType createSourceFileList(IChromatogram<?> chromatogram) {
+	private SourceFileListType createSourceFileList(IChromatogram chromatogram) {
 
 		SourceFileListType sourceFileListType = new SourceFileListType();
 		sourceFileListType.setCount(BigInteger.valueOf(1));

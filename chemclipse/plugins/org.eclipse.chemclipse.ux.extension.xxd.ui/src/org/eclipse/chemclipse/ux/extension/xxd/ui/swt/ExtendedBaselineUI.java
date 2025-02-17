@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,7 +18,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.chemclipse.model.baseline.IBaselineModel;
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
@@ -55,7 +54,7 @@ public class ExtendedBaselineUI extends Composite implements IExtendedPartUI {
 	private Button buttonToolbarInfo;
 	private AtomicReference<InformationUI> toolbarInfo = new AtomicReference<>();
 	private AtomicReference<ChromatogramChart> chartControl = new AtomicReference<>();
-	private IChromatogram<?> chromatogram;
+	private IChromatogram chromatogram;
 	//
 	private ChromatogramChartSupport chromatogramChartSupport = new ChromatogramChartSupport();
 	private IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
@@ -68,7 +67,7 @@ public class ExtendedBaselineUI extends Composite implements IExtendedPartUI {
 		createControl();
 	}
 
-	public void update(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public void update(IChromatogramSelection chromatogramSelection) {
 
 		toolbarInfo.get().setText(ChromatogramDataSupport.getChromatogramSelectionLabel(chromatogramSelection));
 		//
@@ -165,7 +164,7 @@ public class ExtendedBaselineUI extends Composite implements IExtendedPartUI {
 		refreshBaselineChart(chromatogram);
 	}
 
-	private void refreshBaselineChart(IChromatogram<? extends IPeak> chromatogram) {
+	private void refreshBaselineChart(IChromatogram chromatogram) {
 
 		ChromatogramChart chromatogramChart = chartControl.get();
 		chromatogramChart.deleteSeries();
@@ -190,14 +189,14 @@ public class ExtendedBaselineUI extends Composite implements IExtendedPartUI {
 		}
 	}
 
-	private ILineSeriesData getLineSeriesData(IChromatogram<? extends IPeak> chromatogram, String id, boolean baseline) {
+	private ILineSeriesData getLineSeriesData(IChromatogram chromatogram, String id, boolean baseline) {
 
 		ISeriesData seriesData = getSeriesDataProcessed(chromatogram, id, baseline);
 		ILineSeriesData lineSeriesData = new LineSeriesData(seriesData);
 		return lineSeriesData;
 	}
 
-	private ISeriesData getSeriesDataProcessed(IChromatogram<? extends IPeak> chromatogram, String id, boolean baseline) {
+	private ISeriesData getSeriesDataProcessed(IChromatogram chromatogram, String id, boolean baseline) {
 
 		double[] xSeries;
 		double[] ySeries;

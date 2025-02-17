@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2024 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -45,7 +45,7 @@ public interface IPeakFilter<ConfigType> extends Filter<ConfigType> {
 	 * @throws IllegalArgumentException
 	 *             if the given {@link IPeak}s are incompatible with this filter ({@link #acceptsPeaks(IPeak)} returns <code>false</code>)
 	 */
-	void filterPeaks(IChromatogramSelection<?, ?> chromatogramSelection, ConfigType configuration, ProcessExecutionContext context) throws IllegalArgumentException;
+	void filterPeaks(IChromatogramSelection chromatogramSelection, ConfigType configuration, ProcessExecutionContext context) throws IllegalArgumentException;
 
 	/**
 	 * Creates a new configuration that is specially suited for the given {@link IPeak} types

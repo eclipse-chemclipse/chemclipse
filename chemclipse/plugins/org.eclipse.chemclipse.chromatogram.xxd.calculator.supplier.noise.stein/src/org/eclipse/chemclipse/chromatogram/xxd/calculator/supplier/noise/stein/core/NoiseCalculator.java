@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2024 Lablicate GmbH.
+ * Copyright (c) 2014, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -42,7 +42,7 @@ import org.eclipse.core.runtime.SubMonitor;
  */
 public class NoiseCalculator implements INoiseCalculator {
 
-	private IChromatogram<?> chromatogram = null;
+	private IChromatogram chromatogram = null;
 	private float noiseFactor = Float.NaN;
 
 	@Override
@@ -64,7 +64,7 @@ public class NoiseCalculator implements INoiseCalculator {
 	}
 
 	@Override
-	public float getSignalToNoiseRatio(IChromatogram<?> chromatogram, float intensity) {
+	public float getSignalToNoiseRatio(IChromatogram chromatogram, float intensity) {
 
 		setNoiseFactor(chromatogram);
 		if(Float.isFinite(noiseFactor) && noiseFactor > 0) {
@@ -75,7 +75,7 @@ public class NoiseCalculator implements INoiseCalculator {
 	}
 
 	@Override
-	public List<INoiseSegment> getNoiseSegments(IChromatogram<?> chromatogram, IProgressMonitor monitor) {
+	public List<INoiseSegment> getNoiseSegments(IChromatogram chromatogram, IProgressMonitor monitor) {
 
 		if(chromatogram instanceof IChromatogramMSD) {
 			return getNoiseSegments(chromatogram, IIon.TIC_ION, monitor);
@@ -103,7 +103,7 @@ public class NoiseCalculator implements INoiseCalculator {
 		return Collections.emptyList();
 	}
 
-	private void setNoiseFactor(IChromatogram<?> chromatogram) {
+	private void setNoiseFactor(IChromatogram chromatogram) {
 
 		if(this.chromatogram != chromatogram) {
 			noiseFactor = calculateNoiseFactor(chromatogram);
@@ -117,7 +117,7 @@ public class NoiseCalculator implements INoiseCalculator {
 	 * 
 	 * @param IChromatogram
 	 */
-	private float calculateNoiseFactor(IChromatogram<?> chromatogram) {
+	private float calculateNoiseFactor(IChromatogram chromatogram) {
 
 		if(chromatogram != null) {
 			List<Double> noiseFactors = new ArrayList<>();
@@ -170,7 +170,7 @@ public class NoiseCalculator implements INoiseCalculator {
 		}
 	}
 
-	private List<INoiseSegment> getNoiseSegments(IChromatogram<?> chromatogram, double ion, IProgressMonitor monitor) {
+	private List<INoiseSegment> getNoiseSegments(IChromatogram chromatogram, double ion, IProgressMonitor monitor) {
 
 		if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
 			ChromatogramSegmentation segmentation = chromatogram.getMeasurementResult(ChromatogramSegmentation.class);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2024 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -96,14 +96,14 @@ public class ChromatogramExportSettings extends AbstractProcessSettings implemen
 	}
 
 	@JsonIgnore
-	public File getExportFile(String extension, IChromatogram<?> chromatogram) {
+	public File getExportFile(String extension, IChromatogram chromatogram) {
 
 		String exportPath = resolvedFolders(chromatogram);
 		String fileName = getFileName(chromatogram, getFileNamePattern(), extension);
 		return new File(exportPath, fileName);
 	}
 
-	private String resolvedFolders(IChromatogram<?> chromatogram) {
+	private String resolvedFolders(IChromatogram chromatogram) {
 
 		String exportPath = getExportFolder().getAbsolutePath();
 		if(exportPath.contains(IProcessSettings.VARIABLE_CURRENT_DIRECTORY)) {

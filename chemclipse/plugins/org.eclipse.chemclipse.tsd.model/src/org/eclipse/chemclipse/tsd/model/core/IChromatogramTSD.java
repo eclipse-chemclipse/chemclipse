@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2023 Lablicate GmbH.
+ * Copyright (c) 2021, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -13,14 +13,14 @@ package org.eclipse.chemclipse.tsd.model.core;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
 
-public interface IChromatogramTSD extends IChromatogram<IChromatogramPeakTSD> {
+public interface IChromatogramTSD extends IChromatogram {
 
 	/**
 	 * This could be null or a GC-MS, GCxGC, HPLC-DAD chromatogram.
 	 * 
 	 * @return {@link IChromatogram}
 	 */
-	IChromatogram<?> getChromatogram();
+	IChromatogram getChromatogram();
 
 	String getLabelAxisX();
 

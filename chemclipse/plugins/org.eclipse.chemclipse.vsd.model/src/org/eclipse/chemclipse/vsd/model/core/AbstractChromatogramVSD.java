@@ -15,7 +15,7 @@ import org.eclipse.chemclipse.model.core.AbstractChromatogram;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.vsd.model.core.selection.ChromatogramSelectionVSD;
 
-public abstract class AbstractChromatogramVSD extends AbstractChromatogram<IChromatogramPeakVSD> implements IChromatogramVSD {
+public abstract class AbstractChromatogramVSD extends AbstractChromatogram implements IChromatogramVSD {
 
 	private static final long serialVersionUID = -2463054178850833466L;
 
@@ -26,7 +26,7 @@ public abstract class AbstractChromatogramVSD extends AbstractChromatogram<IChro
 	}
 
 	@Override
-	public void fireUpdate(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public void fireUpdate(IChromatogramSelection chromatogramSelection) {
 
 		/*
 		 * Fire an update to inform all listeners.

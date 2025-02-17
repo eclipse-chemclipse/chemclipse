@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2024 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -31,14 +31,14 @@ public abstract class AbstractChromatogramClassifier implements IChromatogramCla
 		this.dataTypes = dataTypes;
 	}
 
-	public IProcessingInfo<IChromatogramClassifierResult> validate(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramClassifierSettings chromatogramClassifierSettings) {
+	public IProcessingInfo<IChromatogramClassifierResult> validate(IChromatogramSelection chromatogramSelection, IChromatogramClassifierSettings chromatogramClassifierSettings) {
 
 		IProcessingInfo<IChromatogramClassifierResult> processingInfo = new ProcessingInfo<>();
 		validateChromatogramSelection(chromatogramSelection, processingInfo);
 		return processingInfo;
 	}
 
-	private void validateChromatogramSelection(IChromatogramSelection<?, ?> chromatogramSelection, IProcessingInfo<?> processingInfo) {
+	private void validateChromatogramSelection(IChromatogramSelection chromatogramSelection, IProcessingInfo<?> processingInfo) {
 
 		if(chromatogramSelection == null) {
 			processingInfo.addErrorMessage(CLASSIFIER, Messages.chromatogramSelectionNull);

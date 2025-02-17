@@ -43,9 +43,9 @@ public class ChromatogramStatisticsPart extends AbstractPart<ExtendedChromatogra
 	protected boolean updateData(List<Object> objects, String topic) {
 
 		if(objects.size() == 1) {
-			IChromatogramSelection<?, ?> chromatogramSelection = null;
+			IChromatogramSelection chromatogramSelection = null;
 			if(isUpdateEvent(topic)) {
-				if(objects.get(0) instanceof IChromatogramSelection<?, ?> selection) {
+				if(objects.get(0) instanceof IChromatogramSelection selection) {
 					chromatogramSelection = selection;
 				}
 			}

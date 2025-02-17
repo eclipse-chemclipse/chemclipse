@@ -71,10 +71,10 @@ public class MeasurementResultsPart extends AbstractPart<ExtendedMeasurementResu
 	protected boolean updateData(List<Object> objects, String topic) {
 
 		if(objects.size() == 1) {
-			IChromatogram<?> chromatogram = null;
+			IChromatogram chromatogram = null;
 			Object object = objects.get(0);
 			if(isUpdateEvent(topic)) {
-				if(object instanceof IChromatogramSelection<?, ?> selection) {
+				if(object instanceof IChromatogramSelection selection) {
 					chromatogram = selection.getChromatogram();
 				}
 			}

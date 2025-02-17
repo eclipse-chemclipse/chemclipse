@@ -64,16 +64,16 @@ public class TargetTransferFilter implements IProcessTypeSupplier {
 		}
 
 		@Override
-		public IChromatogramSelection<?, ?> apply(IChromatogramSelection<?, ?> chromatogramSelection, TargetTransferFilterSettings processSettings, ProcessExecutionContext context) throws InterruptedException {
+		public IChromatogramSelection apply(IChromatogramSelection chromatogramSelection, TargetTransferFilterSettings processSettings, ProcessExecutionContext context) throws InterruptedException {
 
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 
 			int startRetentionTime = chromatogramSelection.getStartRetentionTime();
 			int stopRetentionTime = chromatogramSelection.getStopRetentionTime();
 			List<? extends IPeak> peaks = chromatogram.getPeaks(startRetentionTime, stopRetentionTime);
 
-			List<IChromatogram<?>> referenceChromatograms = chromatogram.getReferencedChromatograms();
-			for(IChromatogram<?> referenceChromatogram : referenceChromatograms) {
+			List<IChromatogram> referenceChromatograms = chromatogram.getReferencedChromatograms();
+			for(IChromatogram referenceChromatogram : referenceChromatograms) {
 				for(IPeak peak : peaks) {
 					if(!peak.getTargets().isEmpty()) {
 						List<IPeak> overlappingsPeaks = getOverlappingPeaks(peak, referenceChromatogram);
@@ -111,7 +111,7 @@ public class TargetTransferFilter implements IProcessTypeSupplier {
 			peak.getTargets().add(newIdentificationTarget);
 		}
 
-		private List<IPeak> getOverlappingPeaks(IPeak peak, IChromatogram<?> referenceChromatogram) {
+		private List<IPeak> getOverlappingPeaks(IPeak peak, IChromatogram referenceChromatogram) {
 
 			List<IPeak> peaks = new ArrayList<>();
 

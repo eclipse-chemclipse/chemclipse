@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2023 Lablicate GmbH.
+ * Copyright (c) 2013, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -35,7 +35,7 @@ import org.eclipse.core.runtime.SubMonitor;
 public class BaselineDetector extends AbstractBaselineDetector {
 
 	@Override
-	public IProcessingInfo<?> setBaseline(IChromatogramSelection<?, ?> chromatogramSelection, IBaselineDetectorSettings baselineDetectorSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<?> setBaseline(IChromatogramSelection chromatogramSelection, IBaselineDetectorSettings baselineDetectorSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<?> processingInfo = super.validate(chromatogramSelection, baselineDetectorSettings, monitor);
 		if(!processingInfo.hasErrorMessages()) {
@@ -47,7 +47,7 @@ public class BaselineDetector extends AbstractBaselineDetector {
 	}
 
 	@Override
-	public IProcessingInfo<?> setBaseline(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor) {
+	public IProcessingInfo<?> setBaseline(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor) {
 
 		BaselineDetectorSettings baselineDetectorSettings = PreferenceSupplier.getBaselineDetectorSettings();
 		return setBaseline(chromatogramSelection, baselineDetectorSettings, monitor);
@@ -56,9 +56,9 @@ public class BaselineDetector extends AbstractBaselineDetector {
 	/**
 	 * Calculates the baseline.
 	 */
-	public static void calculateBaseline(IChromatogramSelection<?, ?> chromatogramSelection, BaselineDetectorSettings detectorSettings, IProgressMonitor monitor) {
+	public static void calculateBaseline(IChromatogramSelection chromatogramSelection, BaselineDetectorSettings detectorSettings, IProgressMonitor monitor) {
 
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		int startScan = chromatogram.getScanNumber(chromatogramSelection.getStartRetentionTime());
 		int stopScan = chromatogram.getScanNumber(chromatogramSelection.getStopRetentionTime());
 		IScanRange scanRange = new ScanRange(startScan, stopScan);

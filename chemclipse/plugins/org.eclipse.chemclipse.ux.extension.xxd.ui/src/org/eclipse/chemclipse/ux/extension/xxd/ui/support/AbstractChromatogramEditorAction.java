@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2019 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,7 +20,7 @@ import org.eclipse.chemclipse.processing.core.ProcessingMessage;
 
 public abstract class AbstractChromatogramEditorAction<T> implements IChromatogramEditorAction<T> {
 
-	public IProcessingInfo<T> validate(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public IProcessingInfo<T> validate(IChromatogramSelection chromatogramSelection) {
 
 		IProcessingInfo<T> processingInfo = new ProcessingInfo<>();
 		if(chromatogramSelection == null) {

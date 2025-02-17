@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023, 2024 Lablicate GmbH.
+ * Copyright (c) 2023, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -66,7 +66,7 @@ public class CalibrationFileExportProcessSupplier implements IProcessTypeSupplie
 		}
 
 		@Override
-		public IChromatogramSelection<?, ?> apply(IChromatogramSelection<?, ?> chromatogramSelection, IndexExportSettings processSettings, ProcessExecutionContext context) throws InterruptedException {
+		public IChromatogramSelection apply(IChromatogramSelection chromatogramSelection, IndexExportSettings processSettings, ProcessExecutionContext context) throws InterruptedException {
 
 			try {
 				DisplayUtils.executeBusy(new Callable<Void>() {
@@ -81,7 +81,7 @@ public class CalibrationFileExportProcessSupplier implements IProcessTypeSupplie
 								@Override
 								public void run() {
 
-									IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+									IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 									String fileName = chromatogram.getName().isEmpty() ? CalibrationFile.FILE_NAME : chromatogram.getName() + CalibrationFile.FILE_EXTENSION;
 									/*
 									 * Sometimes the shell is null.

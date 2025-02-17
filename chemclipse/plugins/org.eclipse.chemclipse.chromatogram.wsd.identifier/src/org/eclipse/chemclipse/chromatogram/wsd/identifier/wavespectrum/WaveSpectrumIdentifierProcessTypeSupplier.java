@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2024 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -66,7 +66,7 @@ public class WaveSpectrumIdentifierProcessTypeSupplier implements IProcessTypeSu
 		}
 
 		@Override
-		public IChromatogramSelection<?, ?> apply(IChromatogramSelection<?, ?> chromatogramSelection, IWaveSpectrumIdentifierSettings processSettings, IMessageConsumer messageConsumer, IProgressMonitor monitor) {
+		public IChromatogramSelection apply(IChromatogramSelection chromatogramSelection, IWaveSpectrumIdentifierSettings processSettings, IMessageConsumer messageConsumer, IProgressMonitor monitor) {
 
 			if(chromatogramSelection instanceof IChromatogramSelectionWSD chromatogramSelectionWSD) {
 				if(processSettings instanceof IWaveSpectrumIdentifierSettings) {

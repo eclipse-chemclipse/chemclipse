@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2024 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -125,23 +125,23 @@ public class AnalysisSupport implements IAnalysisSupport {
 		return analysisSegments;
 	}
 
-	public static List<ChromatogramSegment> getChromatogramSegments(IChromatogram<?> chromatogram, int segmentWidth) {
+	public static List<ChromatogramSegment> getChromatogramSegments(IChromatogram chromatogram, int segmentWidth) {
 
 		return initializeAnalysisSegments(chromatogram.getNumberOfScans(), 1, segmentWidth, (startScan, segmentWidth1) -> new ChromatogramAnalysisSegment(chromatogram, startScan, segmentWidth1));
 	}
 
 	private static final class ChromatogramAnalysisSegment extends AnalysisSegment implements ChromatogramSegment {
 
-		private final IChromatogram<?> chromatogram;
+		private final IChromatogram chromatogram;
 
-		public ChromatogramAnalysisSegment(IChromatogram<?> chromatogram, int startScan, int segmentWidth) {
+		public ChromatogramAnalysisSegment(IChromatogram chromatogram, int startScan, int segmentWidth) {
 
 			super(startScan, segmentWidth);
 			this.chromatogram = chromatogram;
 		}
 
 		@Override
-		public IChromatogram<?> getChromatogram() {
+		public IChromatogram getChromatogram() {
 
 			return chromatogram;
 		}

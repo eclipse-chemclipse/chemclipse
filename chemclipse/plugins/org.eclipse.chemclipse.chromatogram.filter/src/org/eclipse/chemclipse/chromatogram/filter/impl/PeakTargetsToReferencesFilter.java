@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2023 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -31,7 +31,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class PeakTargetsToReferencesFilter extends AbstractTransferFilter {
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<IChromatogramFilterResult> processingInfo = validate(chromatogramSelection, chromatogramFilterSettings);
 		if(!processingInfo.hasErrorMessages()) {
@@ -45,21 +45,21 @@ public class PeakTargetsToReferencesFilter extends AbstractTransferFilter {
 	}
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor) {
 
 		PeakTargetsToReferencesSettings settings = PreferenceSupplier.getPeaksToReferencesTransferSettings();
 		return applyFilter(chromatogramSelection, settings, monitor);
 	}
 
-	private void transferTargets(IChromatogramSelection<?, ?> chromatogramSelection, PeakTargetsToReferencesSettings settings) {
+	private void transferTargets(IChromatogramSelection chromatogramSelection, PeakTargetsToReferencesSettings settings) {
 
 		TargetTransferSupport targetTransferSupport = new TargetTransferSupport();
-		List<IChromatogram<?>> referencedChromatograms = chromatogramSelection.getChromatogram().getReferencedChromatograms();
+		List<IChromatogram> referencedChromatograms = chromatogramSelection.getChromatogram().getReferencedChromatograms();
 		if(!referencedChromatograms.isEmpty()) {
 			int retentionTimeDelta = (int)(settings.getDeltaRetentionTime() * IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
 			boolean useBestTargetOnly = settings.isUseBestTargetOnly();
 			List<? extends IPeak> peaksSource = extractPeaks(chromatogramSelection);
-			for(IChromatogram<?> referencedChromatogram : referencedChromatograms) {
+			for(IChromatogram referencedChromatogram : referencedChromatograms) {
 				List<? extends IPeak> peaksSink = extractPeaks(referencedChromatogram);
 				targetTransferSupport.transferPeakTargets(peaksSource, peaksSink, retentionTimeDelta, useBestTargetOnly);
 			}

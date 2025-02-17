@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024 Lablicate GmbH.
+ * Copyright (c) 2024, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -64,7 +64,7 @@ public class ChromatogramSignalNoiseUI extends Composite implements IExtendedPar
 	private AtomicReference<ComboViewer> comboViewerNoiseCalculatorControl = new AtomicReference<>();
 	private AtomicReference<NoiseSegmentListUI> noiseSegmentListControl = new AtomicReference<>();
 	//
-	private IChromatogramSelection<?, ?> chromatogramSelection = null;
+	private IChromatogramSelection chromatogramSelection = null;
 	private DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0.0000");
 
 	public ChromatogramSignalNoiseUI(Composite parent, int style) {
@@ -73,7 +73,7 @@ public class ChromatogramSignalNoiseUI extends Composite implements IExtendedPar
 		createControl();
 	}
 
-	public void setInput(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public void setInput(IChromatogramSelection chromatogramSelection) {
 
 		this.chromatogramSelection = chromatogramSelection;
 		updateInput();
@@ -153,7 +153,7 @@ public class ChromatogramSignalNoiseUI extends Composite implements IExtendedPar
 			public void update() {
 
 				if(chromatogramSelection != null) {
-					IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+					IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 					if(chromatogram != null) {
 						chromatogram.recalculateTheNoiseFactor();
 						chromatogram.setDirty(true);
@@ -195,7 +195,7 @@ public class ChromatogramSignalNoiseUI extends Composite implements IExtendedPar
 				Object object = comboViewer.getStructuredSelection().getFirstElement();
 				if(object instanceof INoiseCalculatorSupplier noiseCalculatorSupplier) {
 					if(chromatogramSelection != null) {
-						IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+						IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 						if(chromatogram != null) {
 							NoiseChromatogramClassifierSettings settings = new NoiseChromatogramClassifierSettings();
 							settings.setNoiseCalculatorId(noiseCalculatorSupplier.getId());
@@ -245,7 +245,7 @@ public class ChromatogramSignalNoiseUI extends Composite implements IExtendedPar
 			public void widgetSelected(SelectionEvent e) {
 
 				if(chromatogramSelection != null) {
-					IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+					IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 					if(chromatogram != null) {
 						NoiseSegmentMeasurementResult noiseSegmentMeasurementResult = chromatogram.getMeasurementResult(NoiseSegmentMeasurementResult.class);
 						if(noiseSegmentMeasurementResult != null) {
@@ -285,7 +285,7 @@ public class ChromatogramSignalNoiseUI extends Composite implements IExtendedPar
 			public void widgetSelected(SelectionEvent e) {
 
 				if(chromatogramSelection != null) {
-					IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+					IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 					if(chromatogram != null) {
 						if(MessageDialog.openQuestion(e.display.getActiveShell(), "Noise Factor", "Would you like to reset the noise segments?")) {
 							NoiseSegmentMeasurementResult noiseSegmentMeasurementResult = chromatogram.getMeasurementResult(NoiseSegmentMeasurementResult.class);
@@ -327,7 +327,7 @@ public class ChromatogramSignalNoiseUI extends Composite implements IExtendedPar
 		toolbarInfoBottom.get().setText("");
 		//
 		if(chromatogramSelection != null) {
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			if(chromatogram != null) {
 				/*
 				 * Trigger the NoiseCalculator setup if not done already.
@@ -344,7 +344,7 @@ public class ChromatogramSignalNoiseUI extends Composite implements IExtendedPar
 		}
 	}
 
-	private void updateComboViewerNoiseCalculator(IChromatogram<?> chromatogram) {
+	private void updateComboViewerNoiseCalculator(IChromatogram chromatogram) {
 
 		Collection<INoiseCalculatorSupplier> noiseCalculatorSuppliers = NoiseCalculator.getNoiseCalculatorSupport().getCalculatorSupplier();
 		comboViewerNoiseCalculatorControl.get().setInput(noiseCalculatorSuppliers);
@@ -362,7 +362,7 @@ public class ChromatogramSignalNoiseUI extends Composite implements IExtendedPar
 		}
 	}
 
-	private void updateNoiseSegmentList(IChromatogram<?> chromatogram) {
+	private void updateNoiseSegmentList(IChromatogram chromatogram) {
 
 		NoiseSegmentMeasurementResult noiseSegmentMeasurementResult = chromatogram.getMeasurementResult(NoiseSegmentMeasurementResult.class);
 		if(noiseSegmentMeasurementResult != null) {
@@ -370,13 +370,13 @@ public class ChromatogramSignalNoiseUI extends Composite implements IExtendedPar
 		}
 	}
 
-	private String getScanRangeInfo(IChromatogramSelection<?, ?> chromatogramSelection) {
+	private String getScanRangeInfo(IChromatogramSelection chromatogramSelection) {
 
 		StringBuilder builder = new StringBuilder();
 		if(chromatogramSelection != null) {
 			int startRetentionTime = chromatogramSelection.getStartRetentionTime();
 			int stopRetentionTime = chromatogramSelection.getStopRetentionTime();
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			builder.append(ChromatogramDataSupport.getChromatogramLabel(chromatogram));
 			builder.append(" | Scan range: ");
 			builder.append(chromatogram.getScanNumber(startRetentionTime));
@@ -393,7 +393,7 @@ public class ChromatogramSignalNoiseUI extends Composite implements IExtendedPar
 		return builder.toString();
 	}
 
-	private String getNoiseFactorInfo(IChromatogram<?> chromatogram) {
+	private String getNoiseFactorInfo(IChromatogram chromatogram) {
 
 		INoiseCalculator noiseCalculator = chromatogram.getNoiseCalculator();
 		if(noiseCalculator != null) {
@@ -419,7 +419,7 @@ public class ChromatogramSignalNoiseUI extends Composite implements IExtendedPar
 		}
 	}
 
-	private float getSignalToNoiseRatio(IChromatogram<?> chromatogram, float intensity) {
+	private float getSignalToNoiseRatio(IChromatogram chromatogram, float intensity) {
 
 		return chromatogram.getSignalToNoiseRatio(intensity);
 	}

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2024 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,5 +16,5 @@ import org.eclipse.chemclipse.model.core.IChromatogram;
 
 public interface ChromatogramSegment extends IAnalysisSegment {
 
-	IChromatogram<?> getChromatogram();
+	IChromatogram getChromatogram();
 }

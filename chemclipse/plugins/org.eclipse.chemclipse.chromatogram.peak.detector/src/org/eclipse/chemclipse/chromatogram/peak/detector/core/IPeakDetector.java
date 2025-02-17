@@ -18,5 +18,5 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 public interface IPeakDetector {
 
-	IProcessingInfo<?> validate(IChromatogramSelection<?, ?> chromatogramSelection, IPeakDetectorSettings peakDetectorSettings, IProgressMonitor monitor);
+	IProcessingInfo<?> validate(IChromatogramSelection chromatogramSelection, IPeakDetectorSettings peakDetectorSettings, IProgressMonitor monitor);
 }

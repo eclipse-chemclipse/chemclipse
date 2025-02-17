@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -44,7 +44,7 @@ public class ChromatogramImportRunnable implements IRunnableWithProgress {
 	//
 	private List<File> files = new ArrayList<>();
 	private DataType dataType;
-	private List<IChromatogramSelection<?, ?>> chromatogramSelections = new ArrayList<>();
+	private List<IChromatogramSelection> chromatogramSelections = new ArrayList<>();
 
 	public ChromatogramImportRunnable(File file, DataType dataType) {
 
@@ -57,7 +57,7 @@ public class ChromatogramImportRunnable implements IRunnableWithProgress {
 		this.dataType = dataType;
 	}
 
-	public IChromatogramSelection<?, ?> getChromatogramSelection() {
+	public IChromatogramSelection getChromatogramSelection() {
 
 		if(!chromatogramSelections.isEmpty()) {
 			return chromatogramSelections.get(0);
@@ -66,7 +66,7 @@ public class ChromatogramImportRunnable implements IRunnableWithProgress {
 		}
 	}
 
-	public List<IChromatogramSelection<?, ?>> getChromatogramSelections() {
+	public List<IChromatogramSelection> getChromatogramSelections() {
 
 		return chromatogramSelections;
 	}

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2024 Lablicate GmbH.
+ * Copyright (c) 2013, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,28 +15,18 @@ import org.eclipse.chemclipse.model.core.AbstractChromatogram;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 
-@SuppressWarnings({"serial", "rawtypes"})
 public class Chromatogram extends AbstractChromatogram implements IChromatogram {
+
+	private static final long serialVersionUID = -8477205385713705933L;
+
+	@Override
+	public void fireUpdate(IChromatogramSelection chromatogramSelection) {
+
+	}
 
 	@Override
 	public void updateNoiseFactor() {
 
 	}
 
-	@Override
-	public float getSignalToNoiseRatio(float abundance) {
-
-		return 0;
-	}
-
-	@Override
-	public double getPeakIntegratedArea() {
-
-		return 0;
-	}
-
-	@Override
-	public void fireUpdate(IChromatogramSelection<?, ?> chromatogramSelection) {
-
-	}
 }

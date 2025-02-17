@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2023 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -45,7 +45,7 @@ public class ChromatogramFilterMSx extends AbstractChromatogramFilterMSD {
 		//
 		if(!processingInfo.hasErrorMessages()) {
 			//
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
 				//
 				Map<Short, List<IScan>> splittedScanMap = new HashMap<>();

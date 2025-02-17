@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2023 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -51,7 +51,7 @@ public class MinimumTracesFilter extends AbstractPeakFilter<MinimumTracesFilterS
 	}
 
 	@Override
-	public void filterPeaks(IChromatogramSelection<?, ?> chromatogramSelection, MinimumTracesFilterSettings configuration, ProcessExecutionContext context) throws IllegalArgumentException {
+	public void filterPeaks(IChromatogramSelection chromatogramSelection, MinimumTracesFilterSettings configuration, ProcessExecutionContext context) throws IllegalArgumentException {
 
 		Collection<IPeak> peaks = getReadOnlyPeaks(chromatogramSelection);
 		//

@@ -27,7 +27,7 @@ import org.eclipse.chemclipse.model.updates.IUpdater;
 import org.eclipse.chemclipse.support.history.ISupplierEditHistory;
 import org.eclipse.core.runtime.IAdaptable;
 
-public interface IChromatogram<T extends IPeak> extends SegmentedMeasurement, IMeasurement, IChromatogramOverview, IAdaptable, IChromatogramPeaks<T>, ISupplierEditHistory, IChromatogramBaseline, IUpdater, IChromatogramIntegrationSupport, IChromatogramProcessorSupport, ITargetSupplier, ITargetDisplaySettings {
+public interface IChromatogram extends SegmentedMeasurement, IMeasurement, IChromatogramOverview, IAdaptable, IChromatogramPeaks, ISupplierEditHistory, IChromatogramBaseline, IUpdater, IChromatogramIntegrationSupport, IChromatogramProcessorSupport, ITargetSupplier, ITargetDisplaySettings {
 
 	String DEFAULT_CHROMATOGRAM_NAME = "Chromatogram";
 	int MIN_SCANDELAY = 0;
@@ -199,7 +199,7 @@ public interface IChromatogram<T extends IPeak> extends SegmentedMeasurement, IM
 	 * 
 	 * @return {@link IChromatogram}
 	 */
-	IChromatogram<?> getMasterChromatogram();
+	IChromatogram getMasterChromatogram();
 
 	/**
 	 * Stores a list of referenced chromatograms.
@@ -208,21 +208,21 @@ public interface IChromatogram<T extends IPeak> extends SegmentedMeasurement, IM
 	 * 
 	 * @return {@link IChromatogram}
 	 */
-	List<IChromatogram<?>> getReferencedChromatograms();
+	List<IChromatogram> getReferencedChromatograms();
 
 	/**
 	 * Add a referenced chromatogram.
 	 * 
 	 * @param chromatogram
 	 */
-	void addReferencedChromatogram(IChromatogram<?> chromatogram);
+	void addReferencedChromatogram(IChromatogram chromatogram);
 
 	/**
 	 * Removes a referenced chromatogram.
 	 * 
 	 * @param chromatogram
 	 */
-	void removeReferencedChromatogram(IChromatogram<?> chromatogram);
+	void removeReferencedChromatogram(IChromatogram chromatogram);
 
 	void removeAllReferencedChromatograms();
 

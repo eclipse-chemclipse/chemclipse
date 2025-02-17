@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023, 2024 Lablicate GmbH.
+ * Copyright (c) 2023, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -72,7 +72,7 @@ public class ChromatogramFileExportProcessSupplier implements IProcessTypeSuppli
 		}
 
 		@Override
-		public IChromatogramSelection<?, ?> apply(IChromatogramSelection<?, ?> chromatogramSelection, ChromatogramExportSettings processSettings, ProcessExecutionContext context) throws InterruptedException {
+		public IChromatogramSelection apply(IChromatogramSelection chromatogramSelection, ChromatogramExportSettings processSettings, ProcessExecutionContext context) throws InterruptedException {
 
 			try {
 				DisplayUtils.executeBusy(new Callable<Void>() {
@@ -87,7 +87,7 @@ public class ChromatogramFileExportProcessSupplier implements IProcessTypeSuppli
 								@Override
 								public void run() {
 
-									IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+									IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 									String fileName = chromatogram.getName().isEmpty() ? VersionConstants.FILE_NAME_CHROMATOGRAM : chromatogram.getName() + VersionConstants.FILE_EXTENSION_CHROMATOGRAM;
 									/*
 									 * Sometimes the shell is null.

@@ -52,7 +52,7 @@ public class EditHistoryPart extends AbstractPart<ExtendedEditHistoryUI> {
 					return true;
 				}
 			} else if(isChromatogramTopic(topic)) {
-				if(object instanceof IChromatogramSelection<?, ?> chromatogramSelection) {
+				if(object instanceof IChromatogramSelection chromatogramSelection) {
 					getControl().setInput(chromatogramSelection.getChromatogram().getEditHistory());
 					return true;
 				}

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2023 Lablicate GmbH.
+ * Copyright (c) 2017, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,9 +18,9 @@ import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 
 public abstract class AbstractRetentionTimeModifier {
 
-	protected static void adjustScanDelayAndRetentionTimeRange(IChromatogramSelection<?, ?> chromatogramSelection) throws FilterException {
+	protected static void adjustScanDelayAndRetentionTimeRange(IChromatogramSelection chromatogramSelection) throws FilterException {
 
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		if(chromatogram.getNumberOfScans() <= 0) {
 			throw new FilterException("There is no scan available.");
 		}

@@ -58,9 +58,9 @@ public class MeasurementResultsFilter implements IProcessTypeSupplier {
 		}
 
 		@Override
-		public IChromatogramSelection<?, ?> apply(IChromatogramSelection<?, ?> chromatogramSelection, MeasurementResultsFilterSettings processSettings, ProcessExecutionContext context) throws InterruptedException {
+		public IChromatogramSelection apply(IChromatogramSelection chromatogramSelection, MeasurementResultsFilterSettings processSettings, ProcessExecutionContext context) throws InterruptedException {
 
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			switch(processSettings.getMeasurementResultOption()) {
 				case IDENTIFIER_ALL:
 					clearMeasurementResults(chromatogram);
@@ -78,12 +78,12 @@ public class MeasurementResultsFilter implements IProcessTypeSupplier {
 			return chromatogramSelection;
 		}
 
-		private void clearMeasurementResults(IChromatogram<?> chromatogram) {
+		private void clearMeasurementResults(IChromatogram chromatogram) {
 
 			chromatogram.removeAllMeasurementResults();
 		}
 
-		private void deleteMeasurementResults(IChromatogram<?> chromatogram, String target, boolean isRegularExpression) {
+		private void deleteMeasurementResults(IChromatogram chromatogram, String target, boolean isRegularExpression) {
 
 			if(!target.isBlank()) {
 				Set<String> identifiers = new HashSet<>();
@@ -105,7 +105,7 @@ public class MeasurementResultsFilter implements IProcessTypeSupplier {
 			}
 		}
 
-		private void deleteMeasurementResults(IChromatogram<?> chromatogram, Set<String> identifiers) {
+		private void deleteMeasurementResults(IChromatogram chromatogram, Set<String> identifiers) {
 
 			for(String identifier : identifiers) {
 				chromatogram.deleteMeasurementResult(identifier);

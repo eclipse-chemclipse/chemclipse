@@ -157,7 +157,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 	private int previousChromatograms;
 	private final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 
-	private final Map<IChromatogramSelection<?, ?>, List<String>> chromatogramSelections = new LinkedHashMap<>();
+	private final Map<IChromatogramSelection, List<String>> chromatogramSelections = new LinkedHashMap<>();
 
 	public ExtendedChromatogramOverlayUI(Composite parent, int style) {
 
@@ -165,7 +165,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		createControl();
 	}
 
-	public void update(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public void update(IChromatogramSelection chromatogramSelection) {
 
 		if(chromatogramSelection != null) {
 			if(preferenceStore.getBoolean(PreferenceSupplier.P_OVERLAY_FOCUS_SELECTION)) {
@@ -183,10 +183,10 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		}
 	}
 
-	public void update(List<IChromatogramSelection<?, ?>> chromatogramSelections) {
+	public void update(List<IChromatogramSelection> chromatogramSelections) {
 
 		this.chromatogramSelections.clear();
-		for(IChromatogramSelection<?, ?> selection : chromatogramSelections) {
+		for(IChromatogramSelection selection : chromatogramSelections) {
 			this.chromatogramSelections.put(selection, new ArrayList<>());
 		}
 		refreshUpdateOverlayChart();
@@ -653,8 +653,8 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 			LinkedHashSet<String> usefulTypes = new LinkedHashSet<>();
 
 			int i = 0;
-			for(Entry<IChromatogramSelection<?, ?>, List<String>> entry : chromatogramSelections.entrySet()) {
-				IChromatogramSelection<?, ?> chromatogramSelection = entry.getKey();
+			for(Entry<IChromatogramSelection, List<String>> entry : chromatogramSelections.entrySet()) {
+				IChromatogramSelection chromatogramSelection = entry.getKey();
 				if(previousChromatograms != chromatogramSelections.size()) {
 					if(chromatogramSelection instanceof IChromatogramSelectionCSD) {
 						usefulTypes.add(DisplayType.toShortcut(DisplayType.TIC));
@@ -685,7 +685,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				}
 
 				List<String> selectionSeries = entry.getValue();
-				IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+				IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 				String chromatogramName = chromatogram.getName() + ChromatogramChartSupport.EDITOR_TAB + (i + 1);
 				/*
 				 * refreshUpdateOverlayChart
@@ -752,7 +752,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		}
 	}
 
-	private void appendSIC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram<?> chromatogram, DisplayType displayType, String chromatogramName) {
+	private void appendSIC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram chromatogram, DisplayType displayType, String chromatogramName) {
 
 		String seriesId;
 		Color color;
@@ -784,9 +784,9 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		 * References
 		 */
 		if(preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_REFERENCED_CHROMATOGRAMS)) {
-			List<IChromatogram<?>> referencedChromatograms = chromatogram.getReferencedChromatograms();
+			List<IChromatogram> referencedChromatograms = chromatogram.getReferencedChromatograms();
 			int j = 1;
-			for(IChromatogram<?> referencedChromatogram : referencedChromatograms) {
+			for(IChromatogram referencedChromatogram : referencedChromatograms) {
 				if(referencedChromatogram instanceof IChromatogramMSD) {
 					String description = ChromatogramDataSupport.getReferenceLabel(referencedChromatogram, j, false);
 					for(Number number : ions) {
@@ -809,7 +809,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		}
 	}
 
-	private void appendHIC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram<?> chromatogram, DisplayType displayType, String chromatogramName) {
+	private void appendHIC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram chromatogram, DisplayType displayType, String chromatogramName) {
 
 		String seriesId;
 		Color color;
@@ -840,9 +840,9 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		 * References
 		 */
 		if(preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_REFERENCED_CHROMATOGRAMS)) {
-			List<IChromatogram<?>> referencedChromatograms = chromatogram.getReferencedChromatograms();
+			List<IChromatogram> referencedChromatograms = chromatogram.getReferencedChromatograms();
 			int j = 1;
-			for(IChromatogram<?> referencedChromatogram : referencedChromatograms) {
+			for(IChromatogram referencedChromatogram : referencedChromatograms) {
 				if(referencedChromatogram instanceof IChromatogramMSD) {
 					String description = ChromatogramDataSupport.getReferenceLabel(referencedChromatogram, j, false);
 					for(ITrace trace : traces) {
@@ -864,7 +864,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		}
 	}
 
-	private void appendXVC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram<?> chromatogram, DisplayType displayType, String chromatogramName) {
+	private void appendXVC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram chromatogram, DisplayType displayType, String chromatogramName) {
 
 		String seriesId;
 		Color color;
@@ -896,9 +896,9 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		 * References
 		 */
 		if(preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_REFERENCED_CHROMATOGRAMS)) {
-			List<IChromatogram<?>> referencedChromatograms = chromatogram.getReferencedChromatograms();
+			List<IChromatogram> referencedChromatograms = chromatogram.getReferencedChromatograms();
 			int j = 1;
-			for(IChromatogram<?> referencedChromatogram : referencedChromatograms) {
+			for(IChromatogram referencedChromatogram : referencedChromatograms) {
 				if(referencedChromatogram instanceof IChromatogramMSD) {
 					String description = ChromatogramDataSupport.getReferenceLabel(referencedChromatogram, j, false);
 					String referenceChromatogramName = chromatogramName + ChromatogramChartSupport.REFERENCE_MARKER + j++;
@@ -914,7 +914,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		}
 	}
 
-	private void appendSVC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram<?> chromatogram, DisplayType displayType, String chromatogramName) {
+	private void appendSVC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram chromatogram, DisplayType displayType, String chromatogramName) {
 
 		String seriesId;
 		Color color;
@@ -946,9 +946,9 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		 * References
 		 */
 		if(preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_REFERENCED_CHROMATOGRAMS)) {
-			List<IChromatogram<?>> referencedChromatograms = chromatogram.getReferencedChromatograms();
+			List<IChromatogram> referencedChromatograms = chromatogram.getReferencedChromatograms();
 			int j = 1;
-			for(IChromatogram<?> referencedChromatogram : referencedChromatograms) {
+			for(IChromatogram referencedChromatogram : referencedChromatograms) {
 				if(referencedChromatogram instanceof IChromatogramMSD) {
 					String description = ChromatogramDataSupport.getReferenceLabel(referencedChromatogram, j, false);
 					for(Number number : wavenumbers) {
@@ -971,7 +971,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		}
 	}
 
-	private void appendSWC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram<?> chromatogram, DisplayType displayType, String chromatogramName) {
+	private void appendSWC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram chromatogram, DisplayType displayType, String chromatogramName) {
 
 		String seriesId;
 		Color color;
@@ -1004,9 +1004,9 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		 * References
 		 */
 		if(preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_REFERENCED_CHROMATOGRAMS)) {
-			List<IChromatogram<?>> referencedChromatograms = chromatogram.getReferencedChromatograms();
+			List<IChromatogram> referencedChromatograms = chromatogram.getReferencedChromatograms();
 			int j = 1;
-			for(IChromatogram<?> referencedChromatogram : referencedChromatograms) {
+			for(IChromatogram referencedChromatogram : referencedChromatograms) {
 				if(referencedChromatogram instanceof IChromatogramWSD) {
 					String description = ChromatogramDataSupport.getReferenceLabel(referencedChromatogram, j, false);
 					String referenceChromatogramName = chromatogramName + ChromatogramChartSupport.REFERENCE_MARKER + j++;
@@ -1030,7 +1030,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		}
 	}
 
-	private void appendXWC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram<?> chromatogram, DisplayType displayType, String chromatogramName) {
+	private void appendXWC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram chromatogram, DisplayType displayType, String chromatogramName) {
 
 		boolean showOptimizedXWC = preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_OPTIMIZED_CHROMATOGRAM_XWC);
 		/*
@@ -1047,9 +1047,9 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		 * References
 		 */
 		if(preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_REFERENCED_CHROMATOGRAMS)) {
-			List<IChromatogram<?>> referencedChromatograms = chromatogram.getReferencedChromatograms();
+			List<IChromatogram> referencedChromatograms = chromatogram.getReferencedChromatograms();
 			int j = 1;
-			for(IChromatogram<?> referencedChromatogram : referencedChromatograms) {
+			for(IChromatogram referencedChromatogram : referencedChromatograms) {
 				if(referencedChromatogram instanceof IChromatogramWSD) {
 					if(showOptimizedXWC) {
 						String referenceChromatogramName = chromatogramName + ChromatogramChartSupport.REFERENCE_MARKER + j++;
@@ -1062,7 +1062,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		}
 	}
 
-	private void appendMasterFullXWC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram<?> chromatogram, DisplayType displayType, String chromatogramName) {
+	private void appendMasterFullXWC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram chromatogram, DisplayType displayType, String chromatogramName) {
 
 		BaseChart baseChart = chartControl.get().getBaseChart();
 		Derivative derivative = getSelectedDerivative();
@@ -1086,7 +1086,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		}
 	}
 
-	private void appendReferenceFullXWC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram<?> referencedChromatogram, DisplayType displayType, String chromatogramName, int j) {
+	private void appendReferenceFullXWC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram referencedChromatogram, DisplayType displayType, String chromatogramName, int j) {
 
 		BaseChart baseChart = chartControl.get().getBaseChart();
 		Derivative derivative = getSelectedDerivative();
@@ -1112,7 +1112,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		}
 	}
 
-	private void appendOptimizedXWC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram<?> chromatogram, DisplayType displayType, String chromatogramName, int index) {
+	private void appendOptimizedXWC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram chromatogram, DisplayType displayType, String chromatogramName, int index) {
 
 		BaseChart baseChart = chartControl.get().getBaseChart();
 		Derivative derivative = Derivative.NONE; // Always no derivative at the moment.
@@ -1203,7 +1203,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		}
 	}
 
-	private void appendXXC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram<?> chromatogram, DisplayType displayType, String chromatogramName) {
+	private void appendXXC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram chromatogram, DisplayType displayType, String chromatogramName) {
 
 		BaseChart baseChart = chartControl.get().getBaseChart();
 		Derivative derivative = getSelectedDerivative();
@@ -1236,9 +1236,9 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		 * References
 		 */
 		if(preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_REFERENCED_CHROMATOGRAMS)) {
-			List<IChromatogram<?>> referencedChromatograms = chromatogram.getReferencedChromatograms();
+			List<IChromatogram> referencedChromatograms = chromatogram.getReferencedChromatograms();
 			int j = 1;
-			for(IChromatogram<?> referencedChromatogram : referencedChromatograms) {
+			for(IChromatogram referencedChromatogram : referencedChromatograms) {
 				if(referencedChromatogram instanceof IChromatogramMSD) {
 					String description = ChromatogramDataSupport.getReferenceLabel(referencedChromatogram, j, addTypeInfo);
 					description += displayTypeInfo;
@@ -1258,7 +1258,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		}
 	}
 
-	private void appendMPC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram<?> chromatogram, DisplayType displayType, String chromatogramName) {
+	private void appendMPC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram chromatogram, DisplayType displayType, String chromatogramName) {
 
 		String seriesId;
 		Color color;
@@ -1287,9 +1287,9 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		 * References
 		 */
 		if(preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_REFERENCED_CHROMATOGRAMS)) {
-			List<IChromatogram<?>> referencedChromatograms = chromatogram.getReferencedChromatograms();
+			List<IChromatogram> referencedChromatograms = chromatogram.getReferencedChromatograms();
 			int j = 1;
-			for(IChromatogram<?> referencedChromatogram : referencedChromatograms) {
+			for(IChromatogram referencedChromatogram : referencedChromatograms) {
 				if(referencedChromatogram instanceof IChromatogramWSD || referencedChromatogram instanceof IChromatogramVSD) {
 					String description = ChromatogramDataSupport.getReferenceLabel(referencedChromatogram, j, false);
 					String referenceChromatogramName = chromatogramName + ChromatogramChartSupport.REFERENCE_MARKER + j++;
@@ -1309,7 +1309,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		}
 	}
 
-	private void appendTIC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram<?> chromatogram, DisplayType displayType, String chromatogramName) {
+	private void appendTIC(Set<String> availableSeriesIds, List<String> selectionSeries, List<ILineSeriesData> lineSeriesDataList, IChromatogram chromatogram, DisplayType displayType, String chromatogramName) {
 
 		BaseChart baseChart = chartControl.get().getBaseChart();
 		Derivative derivative = getSelectedDerivative();
@@ -1332,9 +1332,9 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		 * References
 		 */
 		if(preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_REFERENCED_CHROMATOGRAMS)) {
-			List<IChromatogram<?>> referencedChromatograms = chromatogram.getReferencedChromatograms();
+			List<IChromatogram> referencedChromatograms = chromatogram.getReferencedChromatograms();
 			int j = 1;
-			for(IChromatogram<?> referencedChromatogram : referencedChromatograms) {
+			for(IChromatogram referencedChromatogram : referencedChromatograms) {
 				if(referencedChromatogram != null) {
 					String description = ChromatogramDataSupport.getReferenceLabel(referencedChromatogram, j, addTypeInfo);
 					String referenceChromatogramName = chromatogramName + ChromatogramChartSupport.REFERENCE_MARKER + j++;

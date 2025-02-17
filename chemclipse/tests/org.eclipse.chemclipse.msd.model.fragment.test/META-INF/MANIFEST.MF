@@ -7,5 +7,5 @@ Bundle-Version: 0.9.0.qualifier
 Bundle-Vendor: ChemClipse
 Fragment-Host: org.eclipse.chemclipse.msd.model;bundle-version="0.8.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-21
-Require-Bundle: org.junit;bundle-version="4.11.0"
-Import-Package: org.easymock
+Require-Bundle: org.junit;bundle-version="4.11.0",
+ org.easymock;bundle-version="4.3.0"

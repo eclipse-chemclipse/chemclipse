@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2023 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -53,7 +53,7 @@ public class ExtendedIntegrationAreaUI extends Composite implements IExtendedPar
 		if(object instanceof IPeak peak) {
 			String description = peak.getIntegratorDescription();
 			toolbarInfo.get().setText(peakDataSupport.getPeakLabel(peak) + " | " + description);
-		} else if(object instanceof IChromatogram<?> chromatogram) {
+		} else if(object instanceof IChromatogram chromatogram) {
 			String description = chromatogram.getIntegratorDescription();
 			toolbarInfo.get().setText(ChromatogramDataSupport.getChromatogramLabel(chromatogram) + " | " + description);
 		} else {

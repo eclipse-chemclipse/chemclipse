@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2024 Lablicate GmbH.
+ * Copyright (c) 2011, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -29,7 +29,7 @@ public class RetentionTimeShifter extends AbstractRetentionTimeModifier {
 
 	}
 
-	public static void shiftRetentionTimes(IChromatogramSelection<?, ?> chromatogramSelection, FilterSettingsShift filterSettings) throws FilterException {
+	public static void shiftRetentionTimes(IChromatogramSelection chromatogramSelection, FilterSettingsShift filterSettings) throws FilterException {
 
 		if(chromatogramSelection == null || chromatogramSelection.getChromatogram() == null) {
 			throw new FilterException("The chromatogram must not be null.");
@@ -40,11 +40,11 @@ public class RetentionTimeShifter extends AbstractRetentionTimeModifier {
 		adjustScanDelayAndRetentionTimeRange(chromatogramSelection);
 	}
 
-	private static List<Integer> adjustRetentionTimesAndReturnScansToRemove(IChromatogramSelection<?, ?> chromatogramSelection, FilterSettingsShift filterSettings) {
+	private static List<Integer> adjustRetentionTimesAndReturnScansToRemove(IChromatogramSelection chromatogramSelection, FilterSettingsShift filterSettings) {
 
 		boolean isShiftAllScans = filterSettings.isShiftAllScans();
 		int millisecondToShift = filterSettings.getMillisecondsShift();
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		//
 		int startScan;
 		int stopScan;
@@ -82,7 +82,7 @@ public class RetentionTimeShifter extends AbstractRetentionTimeModifier {
 		return scansToRemove;
 	}
 
-	private static int getRetentionTimeLeftBorder(IChromatogram<?> chromatogram, int startScan) {
+	private static int getRetentionTimeLeftBorder(IChromatogram chromatogram, int startScan) {
 
 		int retentionTime = 0;
 		int scanLeftBorder = startScan - 1;
@@ -93,7 +93,7 @@ public class RetentionTimeShifter extends AbstractRetentionTimeModifier {
 		return retentionTime;
 	}
 
-	private static int getRetentionTimeRightBorder(IChromatogram<?> chromatogram, int stopScan) {
+	private static int getRetentionTimeRightBorder(IChromatogram chromatogram, int stopScan) {
 
 		int retentionTime = Integer.MAX_VALUE;
 		int scanRightBorder = stopScan + 1;
@@ -104,9 +104,9 @@ public class RetentionTimeShifter extends AbstractRetentionTimeModifier {
 		return retentionTime;
 	}
 
-	private static IChromatogram<?> removeMarkedScans(IChromatogramSelection<?, ?> chromatogramSelection, List<Integer> scansToRemove) {
+	private static IChromatogram removeMarkedScans(IChromatogramSelection chromatogramSelection, List<Integer> scansToRemove) {
 
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		int counter = 0;
 		for(int scan : scansToRemove) {
 			chromatogram.removeScan(scan - counter);

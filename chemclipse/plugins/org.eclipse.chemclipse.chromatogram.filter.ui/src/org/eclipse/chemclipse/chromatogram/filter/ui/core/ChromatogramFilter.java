@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2024 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -48,7 +48,7 @@ public class ChromatogramFilter extends AbstractChromatogramFilter {
 	private static final String IDENTIFIER = "Scan Maxima Detector UI";
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<IChromatogramFilterResult> processingInfo = validate(chromatogramSelection, chromatogramFilterSettings);
 		//
@@ -90,13 +90,13 @@ public class ChromatogramFilter extends AbstractChromatogramFilter {
 	}
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor) {
 
 		IChromatogramFilterSettings filterSettings = new MaxDetectorFilterSettings();
 		return applyFilter(chromatogramSelection, filterSettings, monitor);
 	}
 
-	private void detectScanMaxima(Shell shell, IChromatogramSelection<?, ?> chromatogramSelection, MaxDetectorFilterSettings filterSettings) {
+	private void detectScanMaxima(Shell shell, IChromatogramSelection chromatogramSelection, MaxDetectorFilterSettings filterSettings) {
 
 		ChromatogramFilterDialog dialog = new ChromatogramFilterDialog(shell);
 		if(IDialogConstants.OK_ID == dialog.open()) {
@@ -105,7 +105,7 @@ public class ChromatogramFilter extends AbstractChromatogramFilter {
 				/*
 				 * Extract the selection.
 				 */
-				IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+				IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 				int startScan = chromatogramSelection.getStartScan();
 				int stopScan = chromatogramSelection.getStopScan();
 				int size = stopScan - startScan + 1;

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2024 Lablicate GmbH.
+ * Copyright (c) 2014, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -25,7 +25,7 @@ public interface INoiseCalculator {
 
 	float getNoiseFactor();
 
-	float getSignalToNoiseRatio(IChromatogram<?> chromatogram, float intensity);
+	float getSignalToNoiseRatio(IChromatogram chromatogram, float intensity);
 
-	List<INoiseSegment> getNoiseSegments(IChromatogram<?> chromatogram, IProgressMonitor monitor);
+	List<INoiseSegment> getNoiseSegments(IChromatogram chromatogram, IProgressMonitor monitor);
 }

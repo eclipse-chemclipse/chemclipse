@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2023 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -34,10 +34,10 @@ import org.eclipse.chemclipse.processing.core.ProcessingInfo;
 
 public class PeakQuantitationCalculatorISTD extends AbstractPeakQuantitationCalculator {
 
-	public IProcessingInfo<Void> quantifySelectedPeak(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public IProcessingInfo<Void> quantifySelectedPeak(IChromatogramSelection chromatogramSelection) {
 
 		IProcessingInfo<Void> processingInfo = new ProcessingInfo<>();
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		List<? extends IPeak> internalStandardPeaks = getInternalStandardPeaks(chromatogram);
 		IPeak peakToQuantify = chromatogramSelection.getSelectedPeak();
 		//
@@ -46,10 +46,10 @@ public class PeakQuantitationCalculatorISTD extends AbstractPeakQuantitationCalc
 		return processingInfo;
 	}
 
-	public IProcessingInfo<Void> quantifyAllPeaks(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public IProcessingInfo<Void> quantifyAllPeaks(IChromatogramSelection chromatogramSelection) {
 
 		IProcessingInfo<Void> processingInfo = new ProcessingInfo<>();
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		List<? extends IPeak> internalStandardPeaks = getInternalStandardPeaks(chromatogram);
 		List<? extends IPeak> peaksToQuantify = getPeaksToQuantify(chromatogramSelection);
 		//
@@ -112,7 +112,7 @@ public class PeakQuantitationCalculatorISTD extends AbstractPeakQuantitationCalc
 		}
 	}
 
-	private List<? extends IPeak> getInternalStandardPeaks(IChromatogram<?> chromatogram) {
+	private List<? extends IPeak> getInternalStandardPeaks(IChromatogram chromatogram) {
 
 		if(chromatogram != null) {
 			if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
@@ -145,7 +145,7 @@ public class PeakQuantitationCalculatorISTD extends AbstractPeakQuantitationCalc
 		return new ArrayList<>();
 	}
 
-	private List<IPeak> getPeaksToQuantify(IChromatogramSelection<?, ?> chromatogramSelection) {
+	private List<IPeak> getPeaksToQuantify(IChromatogramSelection chromatogramSelection) {
 
 		List<IPeak> peaksToQuantify = new ArrayList<>();
 		if(chromatogramSelection instanceof IChromatogramSelectionMSD chromatogramSelectionMSD) {

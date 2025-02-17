@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2023 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -33,7 +33,7 @@ public class IntegrationAreaContentProvider implements IStructuredContentProvide
 			List<IIntegrationEntry> integrationEntries = peak.getIntegrationEntries();
 			adjustIntegrationType(integrationEntries, IntegrationType.PEAK);
 			return integrationEntries.toArray();
-		} else if(inputElement instanceof IChromatogram<?> chromatogram) {
+		} else if(inputElement instanceof IChromatogram chromatogram) {
 			/*
 			 * Chromatogram
 			 */

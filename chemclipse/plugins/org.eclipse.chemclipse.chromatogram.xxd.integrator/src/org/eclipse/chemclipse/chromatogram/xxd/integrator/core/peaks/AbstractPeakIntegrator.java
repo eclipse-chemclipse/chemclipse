@@ -46,13 +46,13 @@ public abstract class AbstractPeakIntegrator implements IPeakIntegrator {
 		return processingInfo;
 	}
 
-	protected IProcessingInfo<IPeakIntegrationResults> validate(IChromatogramSelection<?, ?> chromatogramSelection, IPeakIntegrationSettings peakIntegrationSettings) {
+	protected IProcessingInfo<IPeakIntegrationResults> validate(IChromatogramSelection chromatogramSelection, IPeakIntegrationSettings peakIntegrationSettings) {
 
 		IProcessingInfo<IPeakIntegrationResults> processingInfo = new ProcessingInfo<>();
 		if(chromatogramSelection == null) {
 			processingInfo.addErrorMessage(DESCRIPTION, "The chromatogram selection must not be null.");
 		}
-		IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		if(chromatogram == null) {
 			processingInfo.addErrorMessage(DESCRIPTION, "The chromatogram must not be null.");
 		}

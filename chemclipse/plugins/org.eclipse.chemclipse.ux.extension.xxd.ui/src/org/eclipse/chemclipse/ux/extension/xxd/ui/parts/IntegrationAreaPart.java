@@ -46,7 +46,7 @@ public class IntegrationAreaPart extends AbstractPart<ExtendedIntegrationAreaUI>
 			Object object = null;
 			if(isUpdateEvent(topic) || isChromatogramEvent(topic)) {
 				object = objects.get(0);
-				if(object instanceof IChromatogramSelection<?, ?> chromatogramSelection) {
+				if(object instanceof IChromatogramSelection chromatogramSelection) {
 					object = chromatogramSelection.getChromatogram();
 				}
 			}

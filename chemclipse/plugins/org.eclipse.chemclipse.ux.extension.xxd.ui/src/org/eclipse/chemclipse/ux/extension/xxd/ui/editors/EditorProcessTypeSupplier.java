@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2024 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -65,7 +65,7 @@ public class EditorProcessTypeSupplier implements IProcessTypeSupplier {
 		}
 
 		@Override
-		public IChromatogramSelection<?, ?> apply(IChromatogramSelection<?, ?> chromatogramSelection, Void processSettings, ProcessExecutionContext context) {
+		public IChromatogramSelection apply(IChromatogramSelection chromatogramSelection, Void processSettings, ProcessExecutionContext context) {
 
 			if(eclipseContext == null) {
 				context.addErrorMessage(getName(), "This supplier requires ContextInjection to work properly");
@@ -75,7 +75,7 @@ public class EditorProcessTypeSupplier implements IProcessTypeSupplier {
 					@Override
 					public void run() {
 
-						IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+						IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 						if(chromatogram instanceof IChromatogramMSD) {
 							new SupplierEditorSupport(DataType.MSD, () -> eclipseContext).openEditor(chromatogram);
 						} else if(chromatogram instanceof IChromatogramWSD) {

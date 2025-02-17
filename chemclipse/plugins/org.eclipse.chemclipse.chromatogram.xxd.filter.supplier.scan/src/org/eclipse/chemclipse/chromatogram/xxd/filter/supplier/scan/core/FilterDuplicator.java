@@ -45,7 +45,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class FilterDuplicator extends AbstractChromatogramFilter {
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<IChromatogramFilterResult> processingInfo = validate(chromatogramSelection, chromatogramFilterSettings);
 		if(!processingInfo.hasErrorMessages()) {
@@ -60,19 +60,19 @@ public class FilterDuplicator extends AbstractChromatogramFilter {
 	}
 
 	@Override
-	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor) {
 
 		FilterSettingsDuplicator filterSettings = PreferenceSupplier.getDuplicatorFilterSettings();
 		return applyFilter(chromatogramSelection, filterSettings, monitor);
 	}
 
-	private void applyScanDuplicatorFilter(IChromatogramSelection<?, ?> chromatogramSelection, FilterSettingsDuplicator settings) {
+	private void applyScanDuplicatorFilter(IChromatogramSelection chromatogramSelection, FilterSettingsDuplicator settings) {
 
 		if(chromatogramSelection != null) {
 			/*
 			 * The complete range of the chromatogram must be processed.
 			 */
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			int newScanInterval = (int)Math.round(chromatogram.getScanInterval() / 2.0d);
 			/*
 			 * Map the scans.

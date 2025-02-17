@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2023 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -43,10 +43,10 @@ public class ReportWriter3 {
 	private DecimalFormat decimalFormatTraces = ValueFormat.getDecimalFormatEnglish("0");
 	private DateFormat dateFormat = ValueFormat.getDateFormatEnglish();
 
-	public void generate(File file, boolean append, List<IChromatogram<? extends IPeak>> chromatograms, ReportSettings3 reportSettings, IProgressMonitor monitor) throws IOException {
+	public void generate(File file, boolean append, List<IChromatogram> chromatograms, ReportSettings3 reportSettings, IProgressMonitor monitor) throws IOException {
 
 		try (PrintWriter printWriter = new PrintWriter(new FileWriter(file, append))) {
-			for(IChromatogram<? extends IPeak> chromatogram : chromatograms) {
+			for(IChromatogram chromatogram : chromatograms) {
 				if(reportSettings.isPrintHeader()) {
 					printHeader(printWriter, chromatogram);
 					printWriter.println("");
@@ -58,7 +58,7 @@ public class ReportWriter3 {
 		}
 	}
 
-	private void printHeader(PrintWriter printWriter, IChromatogram<? extends IPeak> chromatogram) {
+	private void printHeader(PrintWriter printWriter, IChromatogram chromatogram) {
 
 		printWriter.println("Filename: " + chromatogram.getName());
 		printWriter.println("Sample Name: " + chromatogram.getDataName());
@@ -68,7 +68,7 @@ public class ReportWriter3 {
 		printWriter.println("Miscellaneous: " + chromatogram.getMiscInfo());
 	}
 
-	private void printQuantitationResults(PrintWriter printWriter, IChromatogram<? extends IPeak> chromatogram, ReportSettings3 reportSettings) {
+	private void printQuantitationResults(PrintWriter printWriter, IChromatogram chromatogram, ReportSettings3 reportSettings) {
 
 		printWriter.print("#");
 		printWriter.print(DELIMITER);

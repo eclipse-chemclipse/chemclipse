@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2024 Lablicate GmbH.
+ * Copyright (c) 2019, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -92,7 +92,7 @@ public class PeakExportSettings extends AbstractProcessSettings implements IProc
 	}
 
 	@JsonIgnore
-	public File getExportFile(String extension, IChromatogram<?> chromatogram) {
+	public File getExportFile(String extension, IChromatogram chromatogram) {
 
 		File exportFolder = getExportFolder();
 		String fileName = getFileName(chromatogram, getFileNamePattern(), extension);

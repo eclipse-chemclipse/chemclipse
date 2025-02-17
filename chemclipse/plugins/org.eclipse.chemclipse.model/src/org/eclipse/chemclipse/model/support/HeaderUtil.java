@@ -18,7 +18,7 @@ import org.eclipse.chemclipse.model.core.support.HeaderField;
 
 public class HeaderUtil {
 
-	public static String getHeaderData(IChromatogram<?> chromatogram, HeaderField headerField, String defaultData) {
+	public static String getHeaderData(IChromatogram chromatogram, HeaderField headerField, String defaultData) {
 
 		String headerData = null;
 		//
@@ -62,7 +62,7 @@ public class HeaderUtil {
 		}
 	}
 
-	public static void setHeaderData(IChromatogram<?> chromatogram, HeaderField headerField, File file) {
+	public static void setHeaderData(IChromatogram chromatogram, HeaderField headerField, File file) {
 
 		if(chromatogram != null) {
 			if(headerField != null) {
@@ -82,12 +82,12 @@ public class HeaderUtil {
 		}
 	}
 
-	public static void setHeaderData(IChromatogram<?> chromatogram, HeaderField headerField, String headerData) {
+	public static void setHeaderData(IChromatogram chromatogram, HeaderField headerField, String headerData) {
 
 		setHeaderData(chromatogram, headerField, headerData, true);
 	}
 
-	public static void setHeaderData(IChromatogram<?> chromatogram, HeaderField headerField, String headerData, boolean setFileByName) {
+	public static void setHeaderData(IChromatogram chromatogram, HeaderField headerField, String headerData, boolean setFileByName) {
 
 		if(chromatogram != null) {
 			if(headerField != null) {

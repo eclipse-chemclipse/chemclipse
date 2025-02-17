@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2023 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -25,13 +25,13 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * THIS CLASS IS NOT SUITED FOR PRODUCTIVE USE!<br/>
  * IT IS AN TESTCLASS!
  */
-public class TestChromatogramImportConverter extends AbstractChromatogramImportConverter<IChromatogram<?>> implements IChromatogramImportConverter<IChromatogram<?>> {
+public class TestChromatogramImportConverter extends AbstractChromatogramImportConverter<IChromatogram> implements IChromatogramImportConverter<IChromatogram> {
 
 	@Override
-	public IProcessingInfo<IChromatogram<?>> convert(File chromatogram, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogram> convert(File chromatogram, IProgressMonitor monitor) {
 
-		IProcessingInfo<IChromatogram<?>> processingInfo = super.validate(chromatogram);
-		IProcessingInfo<IChromatogram<?>> processingInfoImport = new ProcessingInfo<>();
+		IProcessingInfo<IChromatogram> processingInfo = super.validate(chromatogram);
+		IProcessingInfo<IChromatogram> processingInfoImport = new ProcessingInfo<>();
 		processingInfoImport.addMessages(processingInfo);
 		return processingInfoImport;
 	}

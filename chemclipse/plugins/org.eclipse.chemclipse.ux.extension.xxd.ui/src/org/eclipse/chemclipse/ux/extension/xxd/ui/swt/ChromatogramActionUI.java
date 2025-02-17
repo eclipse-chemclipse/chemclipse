@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,7 +19,6 @@ import java.util.List;
 
 import org.eclipse.chemclipse.csd.model.core.selection.IChromatogramSelectionCSD;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
@@ -68,7 +67,7 @@ public class ChromatogramActionUI extends Composite {
 	private ComboViewer comboChromatogramAction;
 	private Button buttonChromatogramAction;
 	//
-	private IChromatogramSelection<?, ?> chromatogramSelection;
+	private IChromatogramSelection chromatogramSelection;
 	private String selectedActionId = "";
 	private final HashMap<String, ChromatogramEditorActionExtension> actionHashMap = new HashMap<>();
 	private final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
@@ -79,7 +78,7 @@ public class ChromatogramActionUI extends Composite {
 		initialize();
 	}
 
-	public void setChromatogramActionMenu(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public void setChromatogramActionMenu(IChromatogramSelection chromatogramSelection) {
 
 		this.chromatogramSelection = chromatogramSelection;
 		boolean enabled = enableChromatogramActionMenu(chromatogramSelection);
@@ -185,7 +184,7 @@ public class ChromatogramActionUI extends Composite {
 		return button;
 	}
 
-	private boolean setChromatogramActionItems(Control parent, IChromatogramSelection<?, ?> chromatogramSelection) {
+	private boolean setChromatogramActionItems(Control parent, IChromatogramSelection chromatogramSelection) {
 
 		/*
 		 * Fill the hash map.
@@ -219,7 +218,7 @@ public class ChromatogramActionUI extends Composite {
 		return success;
 	}
 
-	private boolean enableChromatogramActionMenu(IChromatogramSelection<?, ?> chromatogramSelection) {
+	private boolean enableChromatogramActionMenu(IChromatogramSelection chromatogramSelection) {
 
 		boolean enabled = false;
 		IConfigurationElement[] elements = getConfigurationElements();
@@ -258,7 +257,7 @@ public class ChromatogramActionUI extends Composite {
 		return extensions;
 	}
 
-	private boolean isChromatogramSuitableForExtension(ChromatogramEditorActionExtension extension, IChromatogramSelection<? extends IPeak, ?> chromatogramSelection) {
+	private boolean isChromatogramSuitableForExtension(ChromatogramEditorActionExtension extension, IChromatogramSelection chromatogramSelection) {
 
 		if(extension != null && chromatogramSelection != null) {
 			if(chromatogramSelection instanceof IChromatogramSelectionMSD && extension.isMSD()) {

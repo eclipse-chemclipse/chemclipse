@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2023 Lablicate GmbH.
+ * Copyright (c) 2012, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,14 +13,13 @@ package org.eclipse.chemclipse.model.signals;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
-import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 
 public class TotalScanSignalExtractor implements ITotalScanSignalExtractor {
 
-	private IChromatogram<? extends IPeak> chromatogram;
+	private IChromatogram chromatogram;
 
 	/**
 	 * All values will be extracted from IChromatogram.
@@ -28,7 +27,7 @@ public class TotalScanSignalExtractor implements ITotalScanSignalExtractor {
 	 * @param chromatogram
 	 * @throws ChromatogramIsNullException
 	 */
-	public TotalScanSignalExtractor(IChromatogram<? extends IPeak> chromatogram) throws ChromatogramIsNullException {
+	public TotalScanSignalExtractor(IChromatogram chromatogram) throws ChromatogramIsNullException {
 
 		if(chromatogram == null) {
 			throw new ChromatogramIsNullException();
@@ -50,7 +49,7 @@ public class TotalScanSignalExtractor implements ITotalScanSignalExtractor {
 		/*
 		 * Cast to chromatogram.
 		 */
-		if(chromatogramOverview instanceof IChromatogram<?> genericChromatogram) {
+		if(chromatogramOverview instanceof IChromatogram genericChromatogram) {
 			this.chromatogram = genericChromatogram;
 		} else {
 			throw new ChromatogramIsNullException("Chromatogram Overview can't be casted to IChromatogram.");
@@ -157,13 +156,13 @@ public class TotalScanSignalExtractor implements ITotalScanSignalExtractor {
 	}
 
 	@Override
-	public ITotalScanSignals getTotalScanSignals(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public ITotalScanSignals getTotalScanSignals(IChromatogramSelection chromatogramSelection) {
 
 		return getTotalScanSignals(chromatogramSelection, true);
 	}
 
 	@Override
-	public ITotalScanSignals getTotalScanSignals(IChromatogram<?> chromatogram, boolean validatePositive, boolean condenseCycleNumberScans) {
+	public ITotalScanSignals getTotalScanSignals(IChromatogram chromatogram, boolean validatePositive, boolean condenseCycleNumberScans) {
 
 		/*
 		 * If the chromatogram selection is null, return an empty
@@ -181,13 +180,13 @@ public class TotalScanSignalExtractor implements ITotalScanSignalExtractor {
 	}
 
 	@Override
-	public ITotalScanSignals getTotalScanSignals(IChromatogramSelection<?, ?> chromatogramSelection, boolean validatePositive) {
+	public ITotalScanSignals getTotalScanSignals(IChromatogramSelection chromatogramSelection, boolean validatePositive) {
 
 		return getTotalScanSignals(chromatogramSelection, validatePositive, false);
 	}
 
 	@Override
-	public ITotalScanSignals getTotalScanSignals(IChromatogramSelection<?, ?> chromatogramSelection, boolean validatePositive, boolean condenseCycleNumberScans) {
+	public ITotalScanSignals getTotalScanSignals(IChromatogramSelection chromatogramSelection, boolean validatePositive, boolean condenseCycleNumberScans) {
 
 		/*
 		 * If the chromatogram selection is null, return an empty

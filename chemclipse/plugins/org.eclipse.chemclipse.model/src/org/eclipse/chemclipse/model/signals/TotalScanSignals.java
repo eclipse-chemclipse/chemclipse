@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2023 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -28,7 +28,7 @@ public class TotalScanSignals implements ITotalScanSignals {
 	private List<ITotalScanSignal> signals;
 	private int startScan;
 	private int stopScan;
-	private IChromatogram<?> chromatogram = null;
+	private IChromatogram chromatogram = null;
 
 	/**
 	 * Creates a TotalIonSignals instance with the given scan length.
@@ -51,7 +51,7 @@ public class TotalScanSignals implements ITotalScanSignals {
 	/**
 	 * Sets additionally the parent chromatogram to the signals instance.
 	 */
-	public TotalScanSignals(int numberOfScans, IChromatogram<?> chromatogram) {
+	public TotalScanSignals(int numberOfScans, IChromatogram chromatogram) {
 
 		this(numberOfScans);
 		this.chromatogram = chromatogram;
@@ -91,21 +91,20 @@ public class TotalScanSignals implements ITotalScanSignals {
 	 * @param stopScan
 	 * @param chromatogram
 	 */
-	public TotalScanSignals(int startScan, int stopScan, IChromatogram<?> chromatogram) {
+	public TotalScanSignals(int startScan, int stopScan, IChromatogram chromatogram) {
 
 		this(startScan, stopScan);
 		this.chromatogram = chromatogram;
 	}
 
 	// TODO JUnit
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	public TotalScanSignals(IChromatogram<?> chromatogram) throws ChromatogramIsNullException {
+	public TotalScanSignals(IChromatogram chromatogram) throws ChromatogramIsNullException {
 
 		this(new ChromatogramSelection(chromatogram));
 	}
 	// TODO JUnit
 
-	public TotalScanSignals(IChromatogramSelection<?, ?> chromatogramSelection) {
+	public TotalScanSignals(IChromatogramSelection chromatogramSelection) {
 
 		chromatogram = chromatogramSelection.getChromatogram();
 		startScan = chromatogram.getScanNumber(chromatogramSelection.getStartRetentionTime());
@@ -125,7 +124,7 @@ public class TotalScanSignals implements ITotalScanSignals {
 	}
 
 	@Override
-	public IChromatogram<?> getChromatogram() {
+	public IChromatogram getChromatogram() {
 
 		return chromatogram;
 	}

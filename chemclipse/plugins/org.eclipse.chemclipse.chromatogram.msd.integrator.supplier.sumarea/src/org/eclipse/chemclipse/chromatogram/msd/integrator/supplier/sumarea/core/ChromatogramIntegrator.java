@@ -25,7 +25,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public class ChromatogramIntegrator extends AbstractChromatogramIntegrator {
 
 	@Override
-	public IProcessingInfo<IChromatogramIntegrationResults> integrate(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramIntegrationSettings chromatogramIntegrationSettings, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramIntegrationResults> integrate(IChromatogramSelection chromatogramSelection, IChromatogramIntegrationSettings chromatogramIntegrationSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<IChromatogramIntegrationResults> processingInfo = super.validate(chromatogramSelection, chromatogramIntegrationSettings);
 		if(!processingInfo.hasErrorMessages()) {
@@ -41,7 +41,7 @@ public class ChromatogramIntegrator extends AbstractChromatogramIntegrator {
 	}
 
 	@Override
-	public IProcessingInfo<IChromatogramIntegrationResults> integrate(IChromatogramSelection<?, ?> chromatogramSelection, IProgressMonitor monitor) {
+	public IProcessingInfo<IChromatogramIntegrationResults> integrate(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor) {
 
 		IChromatogramIntegrationSettings chromatogramIntegrationSettings = PreferenceSupplier.getIntegrationSettings();
 		return integrate(chromatogramSelection, chromatogramIntegrationSettings, monitor);

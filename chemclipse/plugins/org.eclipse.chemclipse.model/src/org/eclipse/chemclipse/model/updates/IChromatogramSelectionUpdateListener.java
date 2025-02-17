@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2023 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -16,5 +16,5 @@ import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 public interface IChromatogramSelectionUpdateListener {
 
 	
-	void update(IChromatogramSelection<?, ?> chromatogramSelection);
+	void update(IChromatogramSelection chromatogramSelection);
 }

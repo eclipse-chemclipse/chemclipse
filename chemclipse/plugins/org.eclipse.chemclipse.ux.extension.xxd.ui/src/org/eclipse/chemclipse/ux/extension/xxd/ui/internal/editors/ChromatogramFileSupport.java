@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -47,12 +47,12 @@ public class ChromatogramFileSupport {
 
 	}
 
-	public static boolean saveChromatogram(Shell shell, IChromatogram<?> chromatogram, DataType dataType) throws NoConverterAvailableException {
+	public static boolean saveChromatogram(Shell shell, IChromatogram chromatogram, DataType dataType) throws NoConverterAvailableException {
 
 		return saveChromatogram(shell, chromatogram, dataType, UserManagement.getUserHome());
 	}
 
-	public static boolean saveChromatogram(Shell shell, IChromatogram<?> chromatogram, DataType dataType, String filterPath) throws NoConverterAvailableException {
+	public static boolean saveChromatogram(Shell shell, IChromatogram chromatogram, DataType dataType, String filterPath) throws NoConverterAvailableException {
 
 		if(chromatogram == null || shell == null) {
 			return false;
@@ -205,7 +205,7 @@ public class ChromatogramFileSupport {
 		return converterSupport;
 	}
 
-	public static void writeFile(Shell shell, File file, IChromatogram<?> chromatogram, ISupplier supplier, DataType dataType) {
+	public static void writeFile(Shell shell, File file, IChromatogram chromatogram, ISupplier supplier, DataType dataType) {
 
 		if(file == null || chromatogram == null || supplier == null) {
 			return;
@@ -228,7 +228,7 @@ public class ChromatogramFileSupport {
 		}
 	}
 
-	private static void validateAndExportFile(Shell shell, IChromatogram<?> chromatogram, DataType dataType, String filePath, boolean overwrite, ISupplier selectedSupplier) {
+	private static void validateAndExportFile(Shell shell, IChromatogram chromatogram, DataType dataType, String filePath, boolean overwrite, ISupplier selectedSupplier) {
 
 		File chromatogramFolder = null;
 		boolean folderExists = false;

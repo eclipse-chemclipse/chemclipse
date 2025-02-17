@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2024 Lablicate GmbH.
+ * Copyright (c) 2014, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -40,7 +40,7 @@ public class NoiseCalculator implements INoiseCalculator {
 
 	private static final String CALCULATOR_ID = "org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.noise.dyson";
 	//
-	private IChromatogram<?> chromatogram = null;
+	private IChromatogram chromatogram = null;
 	private float noiseFactor = Float.NaN;
 
 	@Override
@@ -62,7 +62,7 @@ public class NoiseCalculator implements INoiseCalculator {
 	}
 
 	@Override
-	public float getSignalToNoiseRatio(IChromatogram<?> chromatogram, float intensity) {
+	public float getSignalToNoiseRatio(IChromatogram chromatogram, float intensity) {
 
 		setNoiseFactor(chromatogram);
 		if(Float.isFinite(noiseFactor) && noiseFactor > 0) {
@@ -72,7 +72,7 @@ public class NoiseCalculator implements INoiseCalculator {
 		}
 	}
 
-	private void setNoiseFactor(IChromatogram<?> chromatogram) {
+	private void setNoiseFactor(IChromatogram chromatogram) {
 
 		if(this.chromatogram != chromatogram) {
 			noiseFactor = calculateNoiseFactor(chromatogram);
@@ -86,7 +86,7 @@ public class NoiseCalculator implements INoiseCalculator {
 	 * 
 	 * @param IChromatogram
 	 */
-	private float calculateNoiseFactor(IChromatogram<?> chromatogram) {
+	private float calculateNoiseFactor(IChromatogram chromatogram) {
 
 		if(chromatogram != null) {
 			/*
@@ -204,7 +204,7 @@ public class NoiseCalculator implements INoiseCalculator {
 	}
 
 	@Override
-	public List<INoiseSegment> getNoiseSegments(IChromatogram<?> chromatogram, IProgressMonitor monitor) {
+	public List<INoiseSegment> getNoiseSegments(IChromatogram chromatogram, IProgressMonitor monitor) {
 
 		if(chromatogram != null) {
 			ChromatogramSegmentation segmentation = chromatogram.getMeasurementResult(ChromatogramSegmentation.class);

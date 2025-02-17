@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2024 Lablicate GmbH.
+ * Copyright (c) 2012, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -46,7 +46,7 @@ public class ChromatogramHeatmapSupport {
 	 */
 	private static final int MAX_ARRAY_SIZE = 10000000;
 
-	public Optional<ChromatogramHeatmapData> getHeatmapData(IChromatogram<?> chromatogram, double scaleIntensityMin, double scaleIntensityMax) {
+	public Optional<ChromatogramHeatmapData> getHeatmapData(IChromatogram chromatogram, double scaleIntensityMin, double scaleIntensityMax) {
 
 		/*
 		 * Validation

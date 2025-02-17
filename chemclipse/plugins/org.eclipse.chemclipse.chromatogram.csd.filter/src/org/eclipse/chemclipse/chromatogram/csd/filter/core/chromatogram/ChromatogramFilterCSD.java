@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2023 Lablicate GmbH.
+ * Copyright (c) 2015, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -73,7 +73,7 @@ public class ChromatogramFilterCSD {
 	// TODO JUnit
 	/**
 	 * Applies the specified filter, but retrieves the IChromatogramFilterSettings dynamically.<br/>
-	 * See also method: applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, String filterId, IProgressMonitor monitor)
+	 * See also method: applyFilter(IChromatogramSelection chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, String filterId, IProgressMonitor monitor)
 	 * 
 	 * @param chromatogramSelection
 	 * @param filterId

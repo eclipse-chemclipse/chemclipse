@@ -61,7 +61,7 @@ public class ChromatogramFilterTandemMS extends AbstractChromatogramFilterMSD {
 		//
 		if(!processingInfo.hasErrorMessages()) {
 			HeaderField headerField = getHeaderField(chromatogramFilterSettings);
-			IChromatogram<?> chromatogram = chromatogramSelection.getChromatogram();
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
 				/*
 				 * Split all or only selected transitions.
@@ -207,7 +207,7 @@ public class ChromatogramFilterTandemMS extends AbstractChromatogramFilterMSD {
 		chromatogramMSD.addReferencedChromatogram(chromatogramReferenceMSD);
 	}
 
-	private void calculateScanIntervalAndDelay(IChromatogram<?> chromatogram) {
+	private void calculateScanIntervalAndDelay(IChromatogram chromatogram) {
 
 		int startRetentionTime = chromatogram.getStartRetentionTime();
 		int stopRetentionTime = chromatogram.getStopRetentionTime();

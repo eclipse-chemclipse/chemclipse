@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2024 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -58,7 +58,7 @@ public class ChromatogramFilterResetRange implements IProcessTypeSupplier {
 		}
 
 		@Override
-		public IChromatogramSelection<?, ?> apply(IChromatogramSelection<?, ?> chromatogramSelection, FilterSettingsReset processSettings, ProcessExecutionContext context) throws InterruptedException {
+		public IChromatogramSelection apply(IChromatogramSelection chromatogramSelection, FilterSettingsReset processSettings, ProcessExecutionContext context) throws InterruptedException {
 
 			chromatogramSelection.reset();
 			context.addInfoMessage(IChartMenuCategories.RANGE_SELECTION, Messages.chromatogramSelectionReset);

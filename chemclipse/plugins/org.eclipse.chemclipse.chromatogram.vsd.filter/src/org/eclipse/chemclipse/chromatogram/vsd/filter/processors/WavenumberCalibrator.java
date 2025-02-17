@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023, 2024 Lablicate GmbH.
+ * Copyright (c) 2023, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -61,7 +61,7 @@ public class WavenumberCalibrator implements IProcessTypeSupplier {
 		}
 
 		@Override
-		public IChromatogramSelection<?, ?> apply(IChromatogramSelection<?, ?> chromatogramSelection, WavenumberCalibratorSettings processSettings, ProcessExecutionContext context) throws InterruptedException {
+		public IChromatogramSelection apply(IChromatogramSelection chromatogramSelection, WavenumberCalibratorSettings processSettings, ProcessExecutionContext context) throws InterruptedException {
 
 			if(chromatogramSelection instanceof IChromatogramSelectionVSD chromatogramSelectionISD) {
 				List<Double> wavenumbers = getWavenumbers(processSettings.getWavenumbers());

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2023 Lablicate GmbH.
+ * Copyright (c) 2016, 2025 Lablicate GmbH.
  * 
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -57,7 +57,7 @@ public class ChromatogramCalculator {
 	 * @param filterId
 	 * @return {@link IChromatogramCalculatorProcessingInfo}
 	 */
-	public static IProcessingInfo<?> applyCalculator(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramCalculatorSettings chromatogramCalculatorSettings, String filterId, IProgressMonitor monitor) {
+	public static IProcessingInfo<?> applyCalculator(IChromatogramSelection chromatogramSelection, IChromatogramCalculatorSettings chromatogramCalculatorSettings, String filterId, IProgressMonitor monitor) {
 
 		IProcessingInfo<?> processingInfo;
 		IChromatogramCalculator chromatogramCalculator = getChromatogramCalculator(filterId);
@@ -74,14 +74,14 @@ public class ChromatogramCalculator {
 	// TODO JUnit
 	/**
 	 * Applies the specified filter, but retrieves the IChromatogramFilterSettings dynamically.<br/>
-	 * See also method: applyFilter(IChromatogramSelection<?, ?> chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, String filterId, IProgressMonitor monitor)
+	 * See also method: applyFilter(IChromatogramSelection chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, String filterId, IProgressMonitor monitor)
 	 * 
 	 * @param chromatogramSelection
 	 * @param calculatorId
 	 * @param monitor
 	 * @return {@link IProcessingInfo}
 	 */
-	public static IProcessingInfo<?> applyCalculator(IChromatogramSelection<?, ?> chromatogramSelection, String calculatorId, IProgressMonitor monitor) {
+	public static IProcessingInfo<?> applyCalculator(IChromatogramSelection chromatogramSelection, String calculatorId, IProgressMonitor monitor) {
 
 		IProcessingInfo<?> processingInfo;
 		IChromatogramCalculator chromatogramCalculator = getChromatogramCalculator(calculatorId);
