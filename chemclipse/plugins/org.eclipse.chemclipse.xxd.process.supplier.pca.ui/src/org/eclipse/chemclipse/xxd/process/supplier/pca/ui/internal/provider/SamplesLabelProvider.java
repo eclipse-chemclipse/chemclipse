@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2023 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,8 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
+ * Lorenz Gerber - prediction
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.internal.provider;
 
@@ -22,16 +23,18 @@ public class SamplesLabelProvider extends AbstractChemClipseLabelProvider {
 
 	public static final String SAMPLE_NAME = "Sample Name";
 	public static final String USE = "Use";
+	public static final String PREDICT = "Predict";
 	public static final String COLOR = "Color";
 	public static final String GROUP_NAME = "Group Name";
 	public static final String CLASSIFICATION = "Classification";
 	public static final String DESCRIPTION = "Description";
 	//
-	public static final int INDEX_COLOR = 2;
+	public static final int INDEX_COLOR = 3;
 	//
 	public static String[] TITLES = {//
 			SAMPLE_NAME, //
 			USE, //
+			PREDICT, //
 			COLOR, //
 			GROUP_NAME, //
 			CLASSIFICATION, //
@@ -40,6 +43,7 @@ public class SamplesLabelProvider extends AbstractChemClipseLabelProvider {
 	//
 	public static int[] BOUNDS = {//
 			300, //
+			30, //
 			30, //
 			30, //
 			100, //
@@ -55,6 +59,14 @@ public class SamplesLabelProvider extends AbstractChemClipseLabelProvider {
 		} else if(columnIndex == 1) {
 			if(element instanceof ISample sample) {
 				if(sample.isSelected()) {
+					return ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SELECTED, IApplicationImageProvider.SIZE_16x16);
+				} else {
+					return ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DESELECTED, IApplicationImageProvider.SIZE_16x16);
+				}
+			}
+		} else if(columnIndex == 2) {
+			if(element instanceof ISample sample) {
+				if(sample.isPredicted()) {
 					return ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SELECTED, IApplicationImageProvider.SIZE_16x16);
 				} else {
 					return ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DESELECTED, IApplicationImageProvider.SIZE_16x16);
@@ -78,15 +90,18 @@ public class SamplesLabelProvider extends AbstractChemClipseLabelProvider {
 					text = ""; // Checkbox
 					break;
 				case 2:
-					text = ""; // Color
+					text = ""; // Checkbox
 					break;
 				case 3:
-					text = sample.getGroupName() != null ? sample.getGroupName() : "";
+					text = ""; // Color
 					break;
 				case 4:
-					text = sample.getClassification() != null ? sample.getClassification() : "";
+					text = sample.getGroupName() != null ? sample.getGroupName() : "";
 					break;
 				case 5:
+					text = sample.getClassification() != null ? sample.getClassification() : "";
+					break;
+				case 6:
 					text = sample.getDescription() != null ? sample.getDescription() : "";
 					break;
 			}

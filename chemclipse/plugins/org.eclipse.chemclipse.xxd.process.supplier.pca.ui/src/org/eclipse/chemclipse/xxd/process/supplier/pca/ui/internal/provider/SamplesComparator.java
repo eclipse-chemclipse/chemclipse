@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2023 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,8 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Dr. Philip Wenig - initial API and implementation
+ * Philip Wenig - initial API and implementation
+ * Lorenz Gerber - prediction
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.internal.provider;
 
@@ -33,18 +34,21 @@ public class SamplesComparator extends AbstractRecordTableComparator implements 
 				case 1:
 					sortOrder = Boolean.compare(sample2.isSelected(), sample1.isSelected());
 					break;
-				case 2: // Color is defined by the group name
-				case 3:
+				case 2:
+					sortOrder = Boolean.compare(sample2.isPredicted(), sample1.isPredicted());
+					break;
+				case 3: // Color is defined by the group name
+				case 4:
 					String groupName1 = sample1.getGroupName() != null ? sample1.getGroupName() : "";
 					String groupName2 = sample2.getGroupName() != null ? sample2.getGroupName() : "";
 					sortOrder = groupName2.compareTo(groupName1);
 					break;
-				case 4:
+				case 5:
 					String classification1 = sample1.getClassification() != null ? sample1.getClassification() : "";
 					String classification2 = sample2.getClassification() != null ? sample2.getClassification() : "";
 					sortOrder = classification2.compareTo(classification1);
 					break;
-				case 5:
+				case 6:
 					String description1 = sample1.getDescription() != null ? sample1.getDescription() : "";
 					String description2 = sample2.getDescription() != null ? sample2.getDescription() : "";
 					sortOrder = description2.compareTo(description1);

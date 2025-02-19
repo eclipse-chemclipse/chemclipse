@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2024 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  * 
  * Contributors:
  * Philip Wenig - initial API and implementation
- * Lorenz Gerber - Opls Target Group
+ * Lorenz Gerber - Opls Target Group, prediction
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.internal.provider;
 
@@ -34,6 +34,8 @@ public class SamplesEditingSupport extends EditingSupport {
 		super(tableViewer);
 		this.column = column;
 		if(SamplesLabelProvider.USE.equals(column)) {
+			this.cellEditor = new CheckboxCellEditor(tableViewer.getTable());
+		} else if(SamplesLabelProvider.PREDICT.equals(column)) {
 			this.cellEditor = new CheckboxCellEditor(tableViewer.getTable());
 		} else if(SamplesLabelProvider.COLOR.equals(column)) {
 			this.cellEditor = new ColorCellEditor(tableViewer.getTable());
@@ -62,6 +64,8 @@ public class SamplesEditingSupport extends EditingSupport {
 			switch(column) {
 				case SamplesLabelProvider.USE:
 					return sample.isSelected();
+				case SamplesLabelProvider.PREDICT:
+					return sample.isPredicted();
 				case SamplesLabelProvider.COLOR:
 					return Colors.getColor(sample.getRGB()).getRGB();
 				case SamplesLabelProvider.GROUP_NAME:
@@ -82,6 +86,9 @@ public class SamplesEditingSupport extends EditingSupport {
 			switch(column) {
 				case SamplesLabelProvider.USE:
 					sample.setSelected((boolean)value);
+					break;
+				case SamplesLabelProvider.PREDICT:
+					sample.setPredicted((boolean)value);
 					break;
 				case SamplesLabelProvider.COLOR:
 					if(value instanceof RGB rgb) {

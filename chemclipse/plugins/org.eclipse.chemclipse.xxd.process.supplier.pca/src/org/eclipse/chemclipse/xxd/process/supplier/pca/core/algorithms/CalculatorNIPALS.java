@@ -11,8 +11,6 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.core.algorithms;
 
-import java.util.Random;
-
 import org.eclipse.chemclipse.xxd.process.supplier.pca.exception.MathIllegalArgumentException;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.AbstractMultivariateCalculator;
 import org.ejml.data.DMatrixRMaj;
@@ -23,31 +21,15 @@ public class CalculatorNIPALS extends AbstractMultivariateCalculator {
 
 	static final int SEED = 10;
 
-	public CalculatorNIPALS(int numObs, int numVars, int numComps) throws MathIllegalArgumentException {
+	public CalculatorNIPALS(int numObs, int numVars, int numComps, int numPredictionSamples) throws MathIllegalArgumentException {
 
-		super(numObs, numVars, numComps);
+		super(numObs, numVars, numComps, numPredictionSamples);
 	}
 
 	public CalculatorNIPALS(DMatrixRMaj matrix, int numComps) {
 
-		super(matrix.getNumRows(), matrix.getNumCols(), numComps);
+		super(matrix.getNumRows(), matrix.getNumCols(), numComps, 0);
 		setSampleData(matrix);
-	}
-
-	public void replaceZeroColsWithSmallRandom() {
-
-		DMatrixRMaj matrix = getSampleData();
-		DMatrixRMaj colSums = CommonOps_DDRM.sumCols(matrix, null);
-		DMatrixRMaj randCol = new DMatrixRMaj(matrix.numRows, 1);
-		final Random rand = new Random(SEED);
-		for(int i = 0; i < matrix.numRows; i++) {
-			randCol.set(i, 0, rand.nextDouble(1.e-20, 1.e-19));
-		}
-		for(int i = 0; i < matrix.numCols; i++) {
-			if(colSums.get(i) == 0 || Double.isNaN(colSums.get(i))) {
-				CommonOps_DDRM.insert(randCol, matrix, 0, i);
-			}
-		}
 	}
 
 	@Override

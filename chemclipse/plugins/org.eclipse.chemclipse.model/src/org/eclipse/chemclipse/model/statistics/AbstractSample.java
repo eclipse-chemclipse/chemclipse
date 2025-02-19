@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -25,6 +25,7 @@ public abstract class AbstractSample<D extends ISampleData<?>> implements ISampl
 	private String description = "";
 	private List<D> sampleData = new ArrayList<>();
 	private boolean selected = true;
+	private boolean predicted = false;
 	private String rgb = "255,0,0";
 
 	public AbstractSample(String sampleName) {
@@ -98,6 +99,18 @@ public abstract class AbstractSample<D extends ISampleData<?>> implements ISampl
 	public void setSelected(boolean selected) {
 
 		this.selected = selected;
+	}
+
+	@Override
+	public boolean isPredicted() {
+
+		return predicted;
+	}
+
+	@Override
+	public void setPredicted(boolean predicted) {
+
+		this.predicted = predicted;
 	}
 
 	@Override

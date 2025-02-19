@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2024 Lablicate GmbH.
+ * Copyright (c) 2017, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -117,19 +117,24 @@ public class ProcessorPCA {
 				Algorithm algorithm = analysisSettings.getAlgorithm();
 				boolean[] selectedVariables = getSelectedVariables(samples, analysisSettings, variablesSelectionMap);
 				Map<ISample, double[]> extractData = extractData(samples, algorithm, analysisSettings, selectedVariables);
+				int numberPredictionSamples = numberPredictionSamples(extractData);
 				assignVariables(results, samples, selectedVariables, variablesSelectionMap);
 				int numberVariables = getNumSampleVars(extractData);
 				subMonitor.worked(20);
 				/*
 				 * Prepare PCA Calculation
 				 */
-				IMultivariateCalculator principalComponentAnalysis = setupPCA(extractData, numberVariables, numberOfPrincipalComponents, algorithm, analysisSettings.getOplsTargetGroupName());
+				IMultivariateCalculator principalComponentAnalysis = setupPCA(extractData, numberPredictionSamples, numberVariables, numberOfPrincipalComponents, algorithm, analysisSettings.getOplsTargetGroupName());
 				subMonitor.worked(20);
 				/*
 				 * Compute PCA
 				 */
 				principalComponentAnalysis.compute();
 				subMonitor.worked(20);
+				/*
+				 * Predict samples
+				 */
+				principalComponentAnalysis.predict();
 				/*
 				 * Collect PCA results
 				 */
@@ -158,6 +163,12 @@ public class ProcessorPCA {
 		}
 		//
 		return evaluationPCA;
+	}
+
+	private int numberPredictionSamples(Map<ISample, double[]> samples) {
+
+		int numberPredictedSamples = (int)samples.keySet().stream().filter(x -> x.isPredicted()).count();
+		return numberPredictedSamples;
 	}
 
 	private void calculateFeatureDataMatrix(EvaluationPCA evaluationPCA) {
@@ -347,25 +358,29 @@ public class ProcessorPCA {
 	 * @return PrincipalComponentAnalysis
 	 * @throws Exception
 	 */
-	private IMultivariateCalculator setupPCA(Map<ISample, double[]> pcaPeakMap, int sampleSize, int numberOfPrincipalComponents, Algorithm algorithm, String oplsTargetGroup) throws MathIllegalArgumentException {
+	private IMultivariateCalculator setupPCA(Map<ISample, double[]> pcaPeakMap, int numberPredictionSamples, int sampleSize, int numberOfPrincipalComponents, Algorithm algorithm, String oplsTargetGroup) throws MathIllegalArgumentException {
 
 		/*
 		 * Initialize the PCA analysis.
 		 */
-		int numSamples = pcaPeakMap.size();
+		int numSamples = pcaPeakMap.size() - numberPredictionSamples;
 		IMultivariateCalculator principalComponentAnalysis = null;
 		if(algorithm.equals(Algorithm.NIPALS)) {
-			principalComponentAnalysis = new CalculatorNIPALS(numSamples, sampleSize, numberOfPrincipalComponents);
+			principalComponentAnalysis = new CalculatorNIPALS(numSamples, sampleSize, numberOfPrincipalComponents, numberPredictionSamples);
 		} else if(algorithm.equals(Algorithm.SVD)) {
-			principalComponentAnalysis = new CalculatorSVD(numSamples, sampleSize, numberOfPrincipalComponents);
+			principalComponentAnalysis = new CalculatorSVD(numSamples, sampleSize, numberOfPrincipalComponents, numberPredictionSamples);
 		} else if(algorithm.equals(Algorithm.OPLS)) {
-			principalComponentAnalysis = new CalculatorOPLS(numSamples, sampleSize, numberOfPrincipalComponents, oplsTargetGroup);
+			principalComponentAnalysis = new CalculatorOPLS(numSamples, sampleSize, numberOfPrincipalComponents, oplsTargetGroup, numberPredictionSamples);
 		}
 		/*
 		 * Add the samples.
 		 */
 		for(Map.Entry<ISample, double[]> entry : pcaPeakMap.entrySet()) {
-			principalComponentAnalysis.addObservation(entry.getValue(), entry.getKey(), entry.getKey().getGroupName(), entry.getKey().getClassification());
+			if(entry.getKey().isPredicted()) {
+				principalComponentAnalysis.addPrediction(entry.getValue(), entry.getKey(), entry.getKey().getGroupName(), entry.getKey().getClassification());
+			} else {
+				principalComponentAnalysis.addObservation(entry.getValue(), entry.getKey(), entry.getKey().getGroupName(), entry.getKey().getClassification());
+			}
 		}
 		//
 		return principalComponentAnalysis;
