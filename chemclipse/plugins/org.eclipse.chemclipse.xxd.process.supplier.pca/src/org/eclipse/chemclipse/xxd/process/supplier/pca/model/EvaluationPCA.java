@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2024 Lablicate GmbH.
+ * Copyright (c) 2020, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  * 
  * Contributors:
  * Philip Wenig - initial API and implementation
- * Lorenz Gerber - add highlight data
+ * Lorenz Gerber - add highlight data, prediction
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.model;
 
@@ -22,6 +22,7 @@ public class EvaluationPCA {
 
 	private ISamplesPCA<? extends IVariable, ? extends ISample> samples = null;
 	private IResultsPCA<? extends IResultPCA, ? extends IVariable> results = null;
+	private ISamplesPCA<? extends IVariable, ? extends ISample> predict = null;
 	/*
 	 * The feature data matrix can be calculated after samples and results are set.
 	 */

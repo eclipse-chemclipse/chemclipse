@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2024 Lablicate GmbH.
+ * Copyright (c) 2017, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,6 +9,7 @@
  * Contributors:
  * Jan Holy - initial API and implementation
  * Philip Wenig - refactoring
+ * Lorenz Gerber - infinite to NaN
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.core.preprocessing;
 
@@ -55,6 +56,9 @@ public class ScalingAuto extends AbstractScaling {
 						double data = getData(sampleData);
 						double scaleData = 0;
 						scaleData = (data - mean) / deviation;
+						if(Double.isInfinite(scaleData)) {
+							scaleData = Double.NaN;
+						}
 						sampleData.setModifiedData(scaleData);
 					}
 				}

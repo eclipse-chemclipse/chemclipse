@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Lorenz Gerber - initial API and implementation
+ * Lorenz Gerber - initial API and implementation, prediction
  * Philip Wenig - color refactorings
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.model;
@@ -18,7 +18,11 @@ public interface IMultivariateCalculator {
 
 	void addObservation(double[] obsData, ISample sampleKey, String groupName, String classificationName);
 
+	void addPrediction(double[] obsData, ISample sampleKey, String groupName, String classificationName);
+
 	void compute();
+
+	void predict();
 
 	boolean getComputeStatus();
 

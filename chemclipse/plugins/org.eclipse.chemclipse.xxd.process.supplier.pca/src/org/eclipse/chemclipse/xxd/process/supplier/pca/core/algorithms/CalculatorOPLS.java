@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Lorenz Gerber - initial API and implementation
+ * Lorenz Gerber - initial API and implementation, prediction
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.core.algorithms;
 
@@ -23,11 +23,12 @@ import org.ejml.dense.row.CommonOps_DDRM;
 
 public class CalculatorOPLS extends AbstractMultivariateCalculator {
 
+	static final int SEED = 10;
 	private String oplsTargetGroup;
 
-	public CalculatorOPLS(int numObs, int numVars, int numComps, String oplsTargetGroup) throws MathIllegalArgumentException {
+	public CalculatorOPLS(int numObs, int numVars, int numComps, String oplsTargetGroup, int numPredictionSamples) throws MathIllegalArgumentException {
 
-		super(numObs, numVars, numComps);
+		super(numObs, numVars, numComps, numPredictionSamples);
 		this.oplsTargetGroup = oplsTargetGroup;
 	}
 
@@ -61,6 +62,7 @@ public class CalculatorOPLS extends AbstractMultivariateCalculator {
 	@Override
 	public void compute() {
 
+		replaceZeroColsWithSmallRandom();
 		int numberOfSamples = getSampleData().getNumRows();
 		int numberOfVariables = getSampleData().getNumCols();
 		DMatrixRMaj T_ortho = new DMatrixRMaj(numberOfSamples, getNumComps() - 1);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2024 Lablicate GmbH.
+ * Copyright (c) 2017, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,6 +9,7 @@
  * Contributors:
  * Jan Holy - initial API and implementation
  * Philip Wenig - refactoring
+ * Lorenz Gerber - prediction
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.core.preprocessing;
 
@@ -29,7 +30,7 @@ public abstract class AbstractCentering extends AbstractDataModificator implemen
 	protected <S extends ISample> double getCenteringValue(List<S> list, int position, int type) {
 
 		boolean onlySelected = isOnlySelected();
-		DoubleStream selectedData = list.stream().filter(s -> s.isSelected() || !onlySelected).map(s -> s.getSampleData().get(position)).mapToDouble(d -> getData(d));
+		DoubleStream selectedData = list.stream().filter(s -> !s.isPredicted()).filter(s -> s.isSelected() || !onlySelected).map(s -> s.getSampleData().get(position)).mapToDouble(d -> getData(d));
 		switch(type) {
 			case MEAN:
 				return selectedData.summaryStatistics().getAverage();
@@ -55,7 +56,7 @@ public abstract class AbstractCentering extends AbstractDataModificator implemen
 	protected <S extends ISample> double getVariance(List<S> samples, int position, int type) {
 
 		boolean onlySelected = isOnlySelected();
-		List<ISampleData<?>> sampleData = samples.stream().filter(s -> s.isSelected() || !onlySelected).map(s -> s.getSampleData().get(position)).collect(Collectors.toList());
+		List<ISampleData<?>> sampleData = samples.stream().filter(s -> !s.isPredicted()).filter(s -> s.isSelected() || !onlySelected).map(s -> s.getSampleData().get(position)).collect(Collectors.toList());
 		int count = sampleData.size();
 		if(count > 1) {
 			final double mean = getCenteringValue(samples, position, type);

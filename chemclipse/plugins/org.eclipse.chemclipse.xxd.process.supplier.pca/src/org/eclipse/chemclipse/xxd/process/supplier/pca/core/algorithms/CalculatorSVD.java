@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2023 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Lorenz Gerber - initial API and implementation
+ * Lorenz Gerber - initial API and implementation, prediction
  * Philip Wenig - refactoring
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.core.algorithms;
@@ -22,9 +22,11 @@ import org.ejml.interfaces.decomposition.SingularValueDecomposition;
 
 public class CalculatorSVD extends AbstractMultivariateCalculator {
 
-	public CalculatorSVD(int numObs, int numVars, int numComps) throws MathIllegalArgumentException {
+	static final int SEED = 10;
 
-		super(numObs, numVars, numComps);
+	public CalculatorSVD(int numObs, int numVars, int numComps, int numPredictionSamples) throws MathIllegalArgumentException {
+
+		super(numObs, numVars, numComps, numPredictionSamples);
 		DMatrixRMaj emptyLoadings = new DMatrixRMaj(1, numVars);
 		setLoadings(emptyLoadings);
 	}
@@ -32,6 +34,7 @@ public class CalculatorSVD extends AbstractMultivariateCalculator {
 	@Override
 	public void compute() {
 
+		replaceZeroColsWithSmallRandom();
 		computeLoadings();
 		computeScores();
 		setComputeSuccess();

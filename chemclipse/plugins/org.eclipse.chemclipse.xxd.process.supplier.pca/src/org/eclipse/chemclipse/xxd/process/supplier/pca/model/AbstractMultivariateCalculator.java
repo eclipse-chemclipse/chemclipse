@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2024 Lablicate GmbH.
+ * Copyright (c) 2018, 2025 Lablicate GmbH.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,6 +14,7 @@
 package org.eclipse.chemclipse.xxd.process.supplier.pca.model;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.eclipse.chemclipse.model.statistics.ISample;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.exception.MathIllegalArgumentException;
@@ -22,18 +23,25 @@ import org.ejml.dense.row.CommonOps_DDRM;
 
 public abstract class AbstractMultivariateCalculator implements IMultivariateCalculator {
 
+	static final int SEED = 10;
 	private DMatrixRMaj loadings;
 	private DMatrixRMaj scores;
+	private DMatrixRMaj scoresPrediction;
 	private double[] mean;
 	private int numComps;
 	private DMatrixRMaj sampleData;
+	private DMatrixRMaj predictionData;
 	private ArrayList<ISample> sampleKeys = new ArrayList<>();
+	private ArrayList<ISample> sampleKeysPrediction = new ArrayList<>();
 	private ArrayList<String> groupNames = new ArrayList<>();
+	private ArrayList<String> groupNamesPrediction = new ArrayList<>();
 	private ArrayList<String> classificationNames = new ArrayList<>();
+	private ArrayList<String> classificationNamesPrediction = new ArrayList<>();
 	private int sampleIndex;
+	private int sampleIndexPrediction;
 	private boolean computeSuccess;
 
-	public AbstractMultivariateCalculator(int numSamples, int numVars, int numComponents) throws MathIllegalArgumentException {
+	public AbstractMultivariateCalculator(int numSamples, int numVars, int numComponents, int numPredictionSamples) throws MathIllegalArgumentException {
 
 		if(numComponents > numVars) {
 			throw new MathIllegalArgumentException("Number of components must be smaller than number of variables.");
@@ -48,8 +56,10 @@ public abstract class AbstractMultivariateCalculator implements IMultivariateCal
 			throw new MathIllegalArgumentException("Number of components must be larger than zero.");
 		}
 		sampleData = new DMatrixRMaj(numSamples, numVars);
+		predictionData = new DMatrixRMaj(numPredictionSamples, numVars);
 		this.mean = new double[numVars];
 		sampleIndex = 0;
+		sampleIndexPrediction = 0;
 		this.numComps = numComponents;
 		computeSuccess = false;
 	}
@@ -83,6 +93,23 @@ public abstract class AbstractMultivariateCalculator implements IMultivariateCal
 		sampleIndex++;
 	}
 
+	@Override
+	public void addPrediction(double[] obsData, ISample sampleKey, String groupName, String classificationName) {
+		/*
+		 * if(obsData.length < sampleData.getNumCols()) {
+		 * this.invalidatePca();
+		 * }
+		 */
+
+		for(int i = 0; i < obsData.length; i++) {
+			predictionData.set(sampleIndexPrediction, i, obsData[i]);
+		}
+		sampleKeysPrediction.add(sampleKey);
+		groupNamesPrediction.add(groupName);
+		classificationNamesPrediction.add(classificationName);
+		sampleIndexPrediction++;
+	}
+
 	public void setSampleData(DMatrixRMaj sampleData) {
 
 		if(sampleData.getNumRows() != this.sampleData.getNumRows() || sampleData.getNumCols() != this.sampleData.getNumCols()) {
@@ -104,6 +131,11 @@ public abstract class AbstractMultivariateCalculator implements IMultivariateCal
 	public DMatrixRMaj getScores() {
 
 		return scores;
+	}
+
+	public DMatrixRMaj getScoresPreidction() {
+
+		return scoresPrediction;
 	}
 
 	/**
@@ -227,12 +259,22 @@ public abstract class AbstractMultivariateCalculator implements IMultivariateCal
 		return sampleData;
 	}
 
+	protected DMatrixRMaj getPredictionData() {
+
+		return predictionData;
+	}
+
 	@Override
 	public double[] getScoreVector(ISample sampleId) {
 
-		int obs = sampleKeys.indexOf(sampleId);
 		DMatrixRMaj scoreVector = new DMatrixRMaj(1, numComps);
-		CommonOps_DDRM.extract(scores, obs, obs + 1, 0, numComps, scoreVector, 0, 0);
+		if(sampleId.isPredicted()) {
+			int obs = sampleKeysPrediction.indexOf(sampleId);
+			CommonOps_DDRM.extract(scoresPrediction, obs, obs + 1, 0, numComps, scoreVector, 0, 0);
+		} else {
+			int obs = sampleKeys.indexOf(sampleId);
+			CommonOps_DDRM.extract(scores, obs, obs + 1, 0, numComps, scoreVector, 0, 0);
+		}
 		return scoreVector.data;
 	}
 
@@ -254,5 +296,51 @@ public abstract class AbstractMultivariateCalculator implements IMultivariateCal
 	protected void setScores(DMatrixRMaj scores) {
 
 		this.scores = scores;
+	}
+
+	protected void setScoresPrediction(DMatrixRMaj scoresPrediction) {
+
+		this.scoresPrediction = scoresPrediction;
+	}
+
+	public void replaceZeroColsWithSmallRandom() {
+
+		DMatrixRMaj matrix = getSampleData();
+		DMatrixRMaj colSums = CommonOps_DDRM.sumCols(matrix, null);
+		DMatrixRMaj randCol = new DMatrixRMaj(matrix.numRows, 1);
+		final Random rand = new Random(SEED);
+		for(int i = 0; i < matrix.numRows; i++) {
+			randCol.set(i, 0, rand.nextDouble(1.e-20, 1.e-19));
+		}
+		for(int i = 0; i < matrix.numCols; i++) {
+			if(colSums.get(i) == 0 || Double.isNaN(colSums.get(i))) {
+				CommonOps_DDRM.insert(randCol, matrix, 0, i);
+			}
+		}
+	}
+
+	@Override
+	public void predict() {
+
+		// fix zero/NaNs
+		DMatrixRMaj predictions = getPredictionData();
+		DMatrixRMaj colSums = CommonOps_DDRM.sumCols(predictions, null);
+		DMatrixRMaj randCol = new DMatrixRMaj(predictions.numRows, 1);
+		final Random rand = new Random(SEED);
+		for(int i = 0; i < predictions.numRows; i++) {
+			randCol.set(i, 0, rand.nextDouble(1.e-20, 1.e-19));
+		}
+		for(int i = 0; i < predictions.numCols; i++) {
+			if(colSums.get(i) == 0 || Double.isNaN(colSums.get(i))) {
+				CommonOps_DDRM.insert(randCol, predictions, 0, i);
+			}
+		}
+		// prediction Score matrix
+		setScoresPrediction(new DMatrixRMaj(predictions.numRows, getNumComps()));
+		for(int i = 0; i < getNumComps(); i++) {
+			DMatrixRMaj loading_vector = new DMatrixRMaj(getLoadingVector(i + 1));
+			DMatrixRMaj predScore = CommonOps_DDRM.mult(predictions, loading_vector, null);
+			CommonOps_DDRM.insert(predScore, getScoresPreidction(), 0, i);
+		}
 	}
 }
