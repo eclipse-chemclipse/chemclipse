@@ -44,7 +44,6 @@ import org.eclipse.chemclipse.support.history.EditHistory;
 import org.eclipse.chemclipse.support.history.IEditHistory;
 import org.eclipse.chemclipse.support.model.SeparationColumnType;
 import org.eclipse.core.runtime.ISafeRunnable;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SafeRunner;
 
 public abstract class AbstractChromatogram extends AbstractMeasurementTarget implements IChromatogram {
@@ -528,13 +527,6 @@ public abstract class AbstractChromatogram extends AbstractMeasurementTarget imp
 		}
 		//
 		list.addAll(scans);
-	}
-
-	@Override
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	public Object getAdapter(Class adapter) {
-
-		return Platform.getAdapterManager().getAdapter(this, adapter);
 	}
 
 	@Override

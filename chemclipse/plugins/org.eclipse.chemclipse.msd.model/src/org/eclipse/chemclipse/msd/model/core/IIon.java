@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2024 Lablicate GmbH.
+ * Copyright (c) 2008, 2025 Lablicate GmbH.
  *
  * All rights reserved.
  * This program and the accompanying materials are made available under the
@@ -10,8 +10,6 @@
  * Dr. Philip Wenig - initial API and implementation
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core;
-
-import org.eclipse.core.runtime.IAdaptable;
 
 /**
  * This Interface declares a simple ion.<br/>
@@ -37,7 +35,7 @@ import org.eclipse.core.runtime.IAdaptable;
  * @author Philip Wenig
  * @author Alexander Kerner
  */
-public interface IIon extends IIonSerializable, IAdaptable, Comparable<IIon> {
+public interface IIon extends IIonSerializable, Comparable<IIon> {
 
 	String TIC_DESCRIPTION = "TIC";
 	double TIC_ION = 0.0d;
