@@ -81,10 +81,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.chemclipse.msd.converter.supplier.matlab.parafac.feature"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.chemclipse.chromatogram.msd.process.supplier.peakidentification.feature"
          version="0.0.0"/>
 
