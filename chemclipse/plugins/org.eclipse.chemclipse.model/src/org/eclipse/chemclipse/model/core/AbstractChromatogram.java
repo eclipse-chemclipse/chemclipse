@@ -38,6 +38,7 @@ import org.eclipse.chemclipse.model.notifier.IChromatogramSelectionUpdateNotifie
 import org.eclipse.chemclipse.model.signals.ITotalScanSignalExtractor;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignalExtractor;
+import org.eclipse.chemclipse.model.signals.TotalScanSignals;
 import org.eclipse.chemclipse.model.support.IAnalysisSegment;
 import org.eclipse.chemclipse.model.support.IScanRange;
 import org.eclipse.chemclipse.model.updates.IChromatogramUpdateListener;
@@ -52,9 +53,9 @@ public abstract class AbstractChromatogram extends AbstractMeasurementTarget imp
 
 	private static final long serialVersionUID = -2540103992883061431L;
 	private static final Logger logger = Logger.getLogger(AbstractChromatogram.class);
-	//
+
 	private static final String COLUMN_DETAILS = "Column Details";
-	//
+
 	private boolean finalized = false;
 	private String converterId = "";
 	private File file = null; // The file object of the chromatogram.
@@ -116,6 +117,7 @@ public abstract class AbstractChromatogram extends AbstractMeasurementTarget imp
 	 * Noise Calculator
 	 */
 	private INoiseCalculator noiseCalculator = null;
+	private ITotalScanSignals signals = null;
 	/*
 	 * Transient
 	 */
@@ -184,10 +186,13 @@ public abstract class AbstractChromatogram extends AbstractMeasurementTarget imp
 	@Override
 	public float getSignalToNoiseRatio(float abundance) {
 
-		if(noiseCalculator != null) {
-			return noiseCalculator.getSignalToNoiseRatio(this, abundance);
+		if(signals == null) {
+			signals = new TotalScanSignals(this);
 		}
-		//
+		if(noiseCalculator != null) {
+			return noiseCalculator.getSignalToNoiseRatio(this, signals, abundance);
+		}
+
 		return 0;
 	}
 

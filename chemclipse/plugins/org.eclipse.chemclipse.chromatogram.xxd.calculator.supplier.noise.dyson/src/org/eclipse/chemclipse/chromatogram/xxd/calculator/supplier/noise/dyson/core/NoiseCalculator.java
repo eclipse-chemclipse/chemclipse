@@ -24,7 +24,6 @@ import org.eclipse.chemclipse.model.results.ChromatogramSegmentation;
 import org.eclipse.chemclipse.model.results.NoiseSegmentMeasurementResult;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
-import org.eclipse.chemclipse.model.signals.TotalScanSignals;
 import org.eclipse.chemclipse.model.support.IAnalysisSegment;
 import org.eclipse.chemclipse.model.support.INoiseSegment;
 import org.eclipse.chemclipse.model.support.ISegmentValidator;
@@ -63,9 +62,9 @@ public class NoiseCalculator implements INoiseCalculator {
 	}
 
 	@Override
-	public float getSignalToNoiseRatio(IChromatogram chromatogram, float intensity) {
+	public float getSignalToNoiseRatio(IChromatogram chromatogram, ITotalScanSignals signals, float intensity) {
 
-		setNoiseFactor(chromatogram);
+		setNoiseFactor(chromatogram, signals);
 		if(Float.isFinite(noiseFactor) && noiseFactor > 0) {
 			return intensity / noiseFactor;
 		} else {
@@ -73,10 +72,10 @@ public class NoiseCalculator implements INoiseCalculator {
 		}
 	}
 
-	private void setNoiseFactor(IChromatogram chromatogram) {
+	private void setNoiseFactor(IChromatogram chromatogram, ITotalScanSignals signals) {
 
 		if(this.chromatogram != chromatogram) {
-			noiseFactor = calculateNoiseFactor(chromatogram);
+			noiseFactor = calculateNoiseFactor(chromatogram, signals);
 			this.chromatogram = chromatogram;
 		}
 	}
@@ -87,7 +86,7 @@ public class NoiseCalculator implements INoiseCalculator {
 	 * 
 	 * @param IChromatogram
 	 */
-	private float calculateNoiseFactor(IChromatogram chromatogram) {
+	private float calculateNoiseFactor(IChromatogram chromatogram, ITotalScanSignals signals) {
 
 		if(chromatogram != null) {
 			/*
@@ -99,7 +98,6 @@ public class NoiseCalculator implements INoiseCalculator {
 				noiseSegments = noiseSegmentMeasurementResult.getResult();
 				ISegmentValidator segmentValidatorClassic = new SegmentValidatorClassic();
 				ISegmentValidator segmentValidatorUserSelection = new SegmentValidatorUserSelection();
-				ITotalScanSignals signals = new TotalScanSignals(chromatogram);
 				for(INoiseSegment noiseSegment : noiseSegments) {
 					if(noiseSegment.getNoiseFactor() == 0) {
 						ISegmentValidator segmentValidator = noiseSegment.isUserSelection() ? segmentValidatorUserSelection : segmentValidatorClassic;
@@ -114,7 +112,7 @@ public class NoiseCalculator implements INoiseCalculator {
 			 * Empty, then reload.
 			 */
 			if(noiseSegments == null || noiseSegments.isEmpty()) {
-				noiseSegments = getNoiseSegments(chromatogram, null);
+				noiseSegments = getNoiseSegments(chromatogram, signals, null);
 			}
 			/*
 			 * Active Available (User Selection)
@@ -205,16 +203,15 @@ public class NoiseCalculator implements INoiseCalculator {
 	}
 
 	@Override
-	public List<INoiseSegment> getNoiseSegments(IChromatogram chromatogram, IProgressMonitor monitor) {
+	public List<INoiseSegment> getNoiseSegments(IChromatogram chromatogram, ITotalScanSignals signals, IProgressMonitor monitor) {
 
 		if(chromatogram != null) {
 			ChromatogramSegmentation segmentation = chromatogram.getMeasurementResult(ChromatogramSegmentation.class);
 			if(segmentation != null) {
 				ISegmentValidator segmentValidator = new SegmentValidatorClassic();
-				ITotalScanSignals signals = new TotalScanSignals(chromatogram);
 				List<INoiseSegment> noiseSegments = new ArrayList<>();
 				List<Integer> widths = new ArrayList<>();
-				//
+
 				for(IAnalysisSegment analysisSegment : segmentation.getResult()) {
 					/*
 					 * TIC (use only the total signal)
@@ -233,11 +230,11 @@ public class NoiseCalculator implements INoiseCalculator {
 				chromatogram.addMeasurementResult(chromatogramSegmentation);
 				NoiseSegmentMeasurementResult noiseSegmentMeasurementResult = new NoiseSegmentMeasurementResult(noiseSegments, chromatogramSegmentation, CALCULATOR_ID);
 				chromatogram.addMeasurementResult(noiseSegmentMeasurementResult);
-				//
+
 				return noiseSegments;
 			}
 		}
-		//
+
 		return Collections.emptyList();
 	}
 }

@@ -26,6 +26,8 @@ import org.eclipse.chemclipse.model.core.INoiseCalculator;
 import org.eclipse.chemclipse.model.results.ChromatogramSegmentation;
 import org.eclipse.chemclipse.model.results.NoiseSegmentMeasurementResult;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
+import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
+import org.eclipse.chemclipse.model.signals.TotalScanSignals;
 import org.eclipse.chemclipse.model.support.IAnalysisSegment;
 import org.eclipse.chemclipse.model.support.INoiseSegment;
 import org.eclipse.chemclipse.model.support.IScanRange;
@@ -46,26 +48,26 @@ public class NoiseChromatogramSupport {
 				return Collections.emptyList();
 			}
 		}
-		//
+
 		return noiseSegmentMeasurementResult.getSegments(range, includeBorders);
 	}
 
 	public static NoiseSegmentMeasurementResult applyNoiseSettings(IChromatogram chromatogram, NoiseChromatogramClassifierSettings settings, IProgressMonitor monitor) {
 
 		SubMonitor subMonitor = SubMonitor.convert(monitor, 100);
-		//
+
 		String noiseCalculatorId = settings.getNoiseCalculatorId();
 		INoiseCalculator noiseCalculator = settings.getNoiseCalculator();
 		if(noiseCalculator == null) {
 			throw new IllegalArgumentException("The noise calculator with the given id '" + noiseCalculatorId + "' is not available.");
 		}
-		//
+		ITotalScanSignals signals = new TotalScanSignals(chromatogram);
 		int segmentWidth = settings.getSegmentWidth();
 		do {
 			ChromatogramSegmentation chromatogramSegmentation = new ChromatogramSegmentation(chromatogram, segmentWidth);
 			chromatogram.addMeasurementResult(chromatogramSegmentation);
 			//
-			List<INoiseSegment> noiseSegments = noiseCalculator.getNoiseSegments(chromatogram, subMonitor.split(80));
+			List<INoiseSegment> noiseSegments = noiseCalculator.getNoiseSegments(chromatogram, signals, subMonitor.split(80));
 			if(noiseSegments.isEmpty()) {
 				segmentWidth = SegmentWidth.getLower(segmentWidth);
 				subMonitor.setWorkRemaining(100);

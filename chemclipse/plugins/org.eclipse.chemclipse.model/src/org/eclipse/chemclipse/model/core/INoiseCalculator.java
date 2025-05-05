@@ -15,6 +15,7 @@ package org.eclipse.chemclipse.model.core;
 
 import java.util.List;
 
+import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.support.INoiseSegment;
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -26,7 +27,7 @@ public interface INoiseCalculator {
 
 	float getNoiseFactor();
 
-	float getSignalToNoiseRatio(IChromatogram chromatogram, float intensity);
+	float getSignalToNoiseRatio(IChromatogram chromatogram, ITotalScanSignals signals, float intensity);
 
-	List<INoiseSegment> getNoiseSegments(IChromatogram chromatogram, IProgressMonitor monitor);
+	List<INoiseSegment> getNoiseSegments(IChromatogram chromatogram, ITotalScanSignals signals, IProgressMonitor monitor);
 }

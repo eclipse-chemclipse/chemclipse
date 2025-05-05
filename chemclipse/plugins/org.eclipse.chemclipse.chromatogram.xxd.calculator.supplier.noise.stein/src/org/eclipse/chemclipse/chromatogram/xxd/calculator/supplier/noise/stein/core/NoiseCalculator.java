@@ -22,7 +22,6 @@ import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.INoiseCalculator;
 import org.eclipse.chemclipse.model.results.ChromatogramSegmentation;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
-import org.eclipse.chemclipse.model.signals.TotalScanSignals;
 import org.eclipse.chemclipse.model.support.ChromatogramSegment;
 import org.eclipse.chemclipse.model.support.IAnalysisSegment;
 import org.eclipse.chemclipse.model.support.INoiseSegment;
@@ -65,9 +64,9 @@ public class NoiseCalculator implements INoiseCalculator {
 	}
 
 	@Override
-	public float getSignalToNoiseRatio(IChromatogram chromatogram, float intensity) {
+	public float getSignalToNoiseRatio(IChromatogram chromatogram, ITotalScanSignals signals, float intensity) {
 
-		setNoiseFactor(chromatogram);
+		setNoiseFactor(chromatogram, signals);
 		if(Float.isFinite(noiseFactor) && noiseFactor > 0) {
 			return (float)(Math.sqrt(intensity) * noiseFactor);
 		} else {
@@ -76,7 +75,7 @@ public class NoiseCalculator implements INoiseCalculator {
 	}
 
 	@Override
-	public List<INoiseSegment> getNoiseSegments(IChromatogram chromatogram, IProgressMonitor monitor) {
+	public List<INoiseSegment> getNoiseSegments(IChromatogram chromatogram, ITotalScanSignals signals, IProgressMonitor monitor) {
 
 		if(chromatogram instanceof IChromatogramMSD) {
 			return getNoiseSegments(chromatogram, IIon.TIC_ION, monitor);
@@ -86,7 +85,6 @@ public class NoiseCalculator implements INoiseCalculator {
 			ChromatogramSegmentation segmentation = chromatogram.getMeasurementResult(ChromatogramSegmentation.class);
 			if(segmentation != null) {
 				ISegmentValidator segmentValidator = new SegmentValidatorClassic();
-				ITotalScanSignals signals = new TotalScanSignals(chromatogram);
 				List<ChromatogramSegment> segments = segmentation.getResult();
 				SubMonitor subMonitor = SubMonitor.convert(monitor, segments.size());
 				List<INoiseSegment> result = new ArrayList<>();
@@ -104,10 +102,10 @@ public class NoiseCalculator implements INoiseCalculator {
 		return Collections.emptyList();
 	}
 
-	private void setNoiseFactor(IChromatogram chromatogram) {
+	private void setNoiseFactor(IChromatogram chromatogram, ITotalScanSignals signals) {
 
 		if(this.chromatogram != chromatogram) {
-			noiseFactor = calculateNoiseFactor(chromatogram);
+			noiseFactor = calculateNoiseFactor(chromatogram, signals);
 			this.chromatogram = chromatogram;
 		}
 	}
@@ -118,12 +116,12 @@ public class NoiseCalculator implements INoiseCalculator {
 	 * 
 	 * @param IChromatogram
 	 */
-	private float calculateNoiseFactor(IChromatogram chromatogram) {
+	private float calculateNoiseFactor(IChromatogram chromatogram, ITotalScanSignals signals) {
 
 		if(chromatogram != null) {
 			List<Double> noiseFactors = new ArrayList<>();
 			Consumer<INoiseSegment> consumer = segment -> noiseFactors.add(segment.getNoiseFactor());
-			getNoiseSegments(chromatogram, null).forEach(consumer);
+			getNoiseSegments(chromatogram, signals, null).forEach(consumer);
 			if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
 				ISegmentValidator segmentValidator = new SegmentValidatorClassic();
 				IExtractedIonSignalExtractor extractedIonSignalExtractor = new ExtractedIonSignalExtractor(chromatogramMSD);
