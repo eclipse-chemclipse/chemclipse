@@ -44,4 +44,4 @@ jobs:
         MAVEN_ARGS: "--batch-mode --no-transfer-progress -Dstyle.color=always"
       run: |
         source $HOME/.sdkman/bin/sdkman-init.sh
-        mvn -f chemclipse/releng/org.eclipse.chemclipse.aggregator/pom.xml -T 1C verify -Pci
+        mvn -f chemclipse/releng/org.eclipse.chemclipse.aggregator/pom.xml -T 1C verify
