@@ -29,7 +29,6 @@ import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -90,7 +89,7 @@ public class LibraryServiceRunnable implements IRunnableWithProgress {
 					return;
 				}
 			} catch(Exception e) {
-				Activator.getDefault().getLog().log(new Status(IStatus.ERROR, getClass().getName(), "Fetching mass spectrum failed!", e));
+				Activator.getDefault().getLog().log(Status.error("Fetching mass spectrum failed!", e));
 			}
 		}
 		libraryMassSpectrumConsumer.accept(null);

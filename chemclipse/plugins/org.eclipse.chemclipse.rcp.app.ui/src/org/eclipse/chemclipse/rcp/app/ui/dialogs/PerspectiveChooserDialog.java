@@ -16,7 +16,6 @@ import java.io.IOException;
 
 import org.eclipse.chemclipse.rcp.app.ui.Activator;
 import org.eclipse.chemclipse.rcp.app.ui.preferences.PreferenceSupplier;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -91,7 +90,7 @@ public class PerspectiveChooserDialog extends Dialog {
 					try {
 						store.save();
 					} catch(IOException e) {
-						Activator.getDefault().getLog().log(new Status(IStatus.ERROR, getClass().getName(), "Saving preferences failed", e));
+						Activator.getDefault().getLog().log(Status.error("Saving preferences failed", e));
 					}
 				}
 			}

@@ -41,7 +41,6 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.preferences.Preferenc
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageScans;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageSubtract;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.runnables.LibraryServiceRunnable;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.e4.ui.di.Focus;
@@ -291,7 +290,7 @@ public class ExtendedSubtractScanUI extends Composite implements IExtendedPartUI
 					} catch(InterruptedException ex) {
 						Thread.currentThread().interrupt();
 					} catch(ExecutionException ex) {
-						Activator.getDefault().getLog().log(new Status(IStatus.ERROR, getClass().getName(), "Fetch comparison scan failed.", ex));
+						Activator.getDefault().getLog().log(Status.error("Fetch comparison scan failed.", ex));
 					}
 				}
 			}

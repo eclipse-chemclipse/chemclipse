@@ -43,7 +43,6 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageScans;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.runnables.LibraryServiceRunnable;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ScanDataSupport;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.e4.ui.di.Focus;
@@ -249,7 +248,7 @@ public class ExtendedComparisonScanUI extends Composite implements IExtendedPart
 		} catch(InterruptedException e) {
 			Thread.currentThread().interrupt();
 		} catch(ExecutionException e) {
-			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, getClass().getName(), "Update scan failed.", e));
+			Activator.getDefault().getLog().log(Status.error("Update scan failed.", e));
 		}
 	}
 

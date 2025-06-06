@@ -146,7 +146,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 
 	private static final IStatus error(String message) {
 
-		return new Status(IStatus.ERROR, Activator.getContext().getBundle().getSymbolicName(), message);
+		return Status.error(message);
 	}
 
 	public static PeakIdentifierSettings getPeakIdentifierSettings() {

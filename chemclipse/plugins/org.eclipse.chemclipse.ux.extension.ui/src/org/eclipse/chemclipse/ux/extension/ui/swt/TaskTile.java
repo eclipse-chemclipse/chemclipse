@@ -20,7 +20,6 @@ import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.swt.ui.support.Fonts;
 import org.eclipse.chemclipse.ux.extension.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.ui.definitions.TileDefinition;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -229,7 +228,7 @@ public class TaskTile extends Composite {
 			try {
 				definitionConsumer.accept(definition);
 			} catch(RuntimeException e) {
-				Activator.getDefault().getLog().log(new Status(IStatus.ERROR, "TaskTile", "invoke of consumer failed", e)); //$NON-NLS-1$ //$NON-NLS-2$
+				Activator.getDefault().getLog().log(Status.error("Invoke of consumer failed", e)); //$NON-NLS-1$
 			}
 		}
 	}
