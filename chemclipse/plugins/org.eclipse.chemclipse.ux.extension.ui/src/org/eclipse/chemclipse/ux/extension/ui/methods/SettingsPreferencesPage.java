@@ -50,7 +50,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
@@ -278,31 +277,27 @@ public class SettingsPreferencesPage<T> extends WizardPage {
 
 	private Listener createValidationListener() {
 
-		return new Listener() {
+		return event -> {
 
-			@Override
-			public void handleEvent(Event event) {
+			IStatus validate = settingsUI.get().getControl().validate();
+			if(validate.isOK()) {
+				setErrorMessage(null);
+				setPageComplete(true);
+			} else {
+				setErrorMessage(validate.getMessage());
+				setPageComplete(false);
+			}
 
-				IStatus validate = settingsUI.get().getControl().validate();
-				if(validate.isOK()) {
-					setErrorMessage(null);
-					setPageComplete(true);
-				} else {
-					setErrorMessage(validate.getMessage());
-					setPageComplete(false);
-				}
-
-				/*
-				 * User Specific Settings
-				 */
-				try {
-					jsonSettings = settingsUI.get().getControl().getSettings();
-				} catch(Exception e) {
-					logger.warn("Error while fetching the settings.");
-					logger.warn(e);
-					setErrorMessage(e.toString());
-					setPageComplete(false);
-				}
+			/*
+			 * User Specific Settings
+			 */
+			try {
+				jsonSettings = settingsUI.get().getControl().getSettings();
+			} catch(Exception e) {
+				logger.warn("Error while fetching the settings.");
+				logger.warn(e);
+				setErrorMessage(e.toString());
+				setPageComplete(false);
 			}
 		};
 	}

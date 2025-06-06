@@ -42,8 +42,6 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -220,16 +218,12 @@ public class NamedTracesUI extends Composite {
 		TraceValidator traceValidator = new TraceValidator();
 		ControlDecoration controlDecoration = new ControlDecoration(text, SWT.LEFT | SWT.TOP);
 		//
-		text.addModifyListener(new ModifyListener() {
+		text.addModifyListener(event -> {
 
-			@Override
-			public void modifyText(ModifyEvent event) {
-
-				if(namedTrace != null) {
-					if(validate(traceValidator, controlDecoration, text)) {
-						namedTrace.setTraces(traceValidator.getTracesAsString());
-						fireUpdate();
-					}
+			if(namedTrace != null) {
+				if(validate(traceValidator, controlDecoration, text)) {
+					namedTrace.setTraces(traceValidator.getTracesAsString());
+					fireUpdate();
 				}
 			}
 		});
@@ -479,14 +473,7 @@ public class NamedTracesUI extends Composite {
 	private void fireUpdate() {
 
 		if(updateListener != null) {
-			getDisplay().asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-
-					updateListener.update();
-				}
-			});
+			getDisplay().asyncExec(() -> updateListener.update());
 		}
 	}
 }

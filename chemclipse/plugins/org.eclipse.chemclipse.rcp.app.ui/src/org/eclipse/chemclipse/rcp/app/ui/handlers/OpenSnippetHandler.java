@@ -181,54 +181,46 @@ public class OpenSnippetHandler {
 			throw new IllegalArgumentException("IEclipseContext can't be null.");
 		}
 		//
-		return new Consumer<MUIElement>() {
+		return element -> {
 
-			@Override
-			public void accept(MUIElement element) {
+			IEclipseContext context = parent.createChild(element.getElementId() + ".composite");
+			if(element instanceof MPart part) {
+				part.setContext(context);
+				context.set(MPart.class, part);
+				Runnable runnable;
+				if(contextInitializer != null) {
+					runnable = contextInitializer.apply(context, part);
+				} else {
+					runnable = null;
+				}
+				/*
+				 * Handle Close Event
+				 */
+				onClose(parent.get(IEventBroker.class), () -> {
 
-				IEclipseContext context = parent.createChild(element.getElementId() + ".composite");
-				if(element instanceof MPart part) {
-					part.setContext(context);
-					context.set(MPart.class, part);
-					Runnable runnable;
-					if(contextInitializer != null) {
-						runnable = contextInitializer.apply(context, part);
-					} else {
-						runnable = null;
-					}
-					/*
-					 * Handle Close Event
-					 */
-					onClose(parent.get(IEventBroker.class), new Runnable() {
-
-						@Override
-						public void run() {
-
-							try {
-								/*
-								 * Remove the part.
-								 */
-								if(part != null) {
-									EModelService modelService = context.get(EModelService.class);
-									MApplication application = context.get(MApplication.class);
-									if(modelService != null && application != null) {
-										MPartStack partStack = (MPartStack)modelService.find(IPerspectiveAndViewIds.EDITOR_PART_STACK_ID, application);
-										if(partStack != null) {
-											logger.info("Remove part from part stack: " + part.getElementId());
-											partStack.getChildren().remove(part);
-										}
-									}
+					try {
+						/*
+						 * Remove the part.
+						 */
+						if(part != null) {
+							EModelService modelService = context.get(EModelService.class);
+							MApplication application = context.get(MApplication.class);
+							if(modelService != null && application != null) {
+								MPartStack partStack = (MPartStack)modelService.find(IPerspectiveAndViewIds.EDITOR_PART_STACK_ID, application);
+								if(partStack != null) {
+									logger.info("Remove part from part stack: " + part.getElementId());
+									partStack.getChildren().remove(part);
 								}
-								//
-								if(runnable != null) {
-									runnable.run();
-								}
-							} finally {
-								context.dispose();
 							}
 						}
-					});
-				}
+						//
+						if(runnable != null) {
+							runnable.run();
+						}
+					} finally {
+						context.dispose();
+					}
+				});
 			}
 		};
 	}
@@ -277,31 +269,27 @@ public class OpenSnippetHandler {
 
 	public static Consumer<MUIElement> onClose(IEventBroker eventBroker, Runnable runnable) {
 
-		return new Consumer<MUIElement>() {
+		return element -> {
 
-			@Override
-			public void accept(MUIElement element) {
+			if(element instanceof MPart) {
+				final EventHandler handler = new EventHandler() {
 
-				if(element instanceof MPart) {
-					final EventHandler handler = new EventHandler() {
+					@Override
+					public void handleEvent(final Event event) {
 
-						@Override
-						public void handleEvent(final Event event) {
-
-							final Object part = event.getProperty(UIEvents.EventTags.ELEMENT);
-							if(part instanceof MPart) {
-								if(part == element) {
-									final Boolean val = (Boolean)event.getProperty(UIEvents.EventTags.NEW_VALUE);
-									if(val != null && !val.booleanValue()) {
-										eventBroker.unsubscribe(this);
-										runnable.run();
-									}
+						final Object part = event.getProperty(UIEvents.EventTags.ELEMENT);
+						if(part instanceof MPart) {
+							if(part == element) {
+								final Boolean val = (Boolean)event.getProperty(UIEvents.EventTags.NEW_VALUE);
+								if(val != null && !val.booleanValue()) {
+									eventBroker.unsubscribe(this);
+									runnable.run();
 								}
 							}
 						}
-					};
-					eventBroker.subscribe(UIEvents.UIElement.TOPIC_TOBERENDERED, handler);
-				}
+					}
+				};
+				eventBroker.subscribe(UIEvents.UIElement.TOPIC_TOBERENDERED, handler);
 			}
 		};
 	}
@@ -311,14 +299,7 @@ public class OpenSnippetHandler {
 		return element -> {
 			if(element instanceof MPart part) {
 				if(partService != null) {
-					Display.getDefault().asyncExec(new Runnable() {
-
-						@Override
-						public void run() {
-
-							partService.activate(part, true);
-						}
-					});
+					Display.getDefault().asyncExec(() -> partService.activate(part, true));
 				}
 			}
 		};

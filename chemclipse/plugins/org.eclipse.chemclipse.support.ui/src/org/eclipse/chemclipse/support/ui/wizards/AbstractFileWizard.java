@@ -103,17 +103,13 @@ public abstract class AbstractFileWizard extends AbstractWizard {
 		 * Open the editor
 		 */
 		monitor.subTask(SupportMessages.taskOpenEditor);
-		getShell().getDisplay().asyncExec(new Runnable() {
+		getShell().getDisplay().asyncExec(() -> {
 
-			@Override
-			public void run() {
-
-				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-				try {
-					IDE.openEditor(page, file, true);
-				} catch(PartInitException e) {
-					logger.warn(e);
-				}
+			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+			try {
+				IDE.openEditor(page, file, true);
+			} catch(PartInitException e) {
+				logger.warn(e);
 			}
 		});
 	}

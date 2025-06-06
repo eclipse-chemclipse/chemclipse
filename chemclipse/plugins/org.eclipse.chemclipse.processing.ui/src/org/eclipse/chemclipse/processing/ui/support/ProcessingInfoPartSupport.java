@@ -92,27 +92,23 @@ public class ProcessingInfoPartSupport {
 		 */
 		if(messageProvider.hasErrorMessages()) {
 			if(displayDialogOnError) {
-				getUISynchronize().asyncExec(new Runnable() {
+				getUISynchronize().asyncExec(() -> {
 
-					@Override
-					public void run() {
-
-						Shell shell = DisplayUtils.getShell();
-						if(shell != null) {
-							MessageBox messageBox = new MessageBox(shell, SWT.ICON_ERROR);
-							messageBox.setText(TITLE);
-							messageBox.setMessage(MESSAGE);
-							messageBox.open();
-						}
-						/*
-						 * Focus the view if requested, this will open the feedback view if required.
-						 */
-						if(focusProcessingInfoPart) {
-							try {
-								PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(IPerspectiveAndViewIds.VIEW_FEEDBACK);
-							} catch(PartInitException e) {
-								logger.warn(e);
-							}
+					Shell shell = DisplayUtils.getShell();
+					if(shell != null) {
+						MessageBox messageBox = new MessageBox(shell, SWT.ICON_ERROR);
+						messageBox.setText(TITLE);
+						messageBox.setMessage(MESSAGE);
+						messageBox.open();
+					}
+					/*
+					 * Focus the view if requested, this will open the feedback view if required.
+					 */
+					if(focusProcessingInfoPart) {
+						try {
+							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(IPerspectiveAndViewIds.VIEW_FEEDBACK);
+						} catch(PartInitException e) {
+							logger.warn(e);
 						}
 					}
 				});

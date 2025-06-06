@@ -26,7 +26,6 @@ import org.eclipse.chemclipse.model.types.DataType;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.exceptions.TypeCastException;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.wizards.RawFileSelectionWizardPage;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
@@ -92,37 +91,33 @@ public class ChromatogramImportWizard extends Wizard implements IImportWizard {
 		/*
 		 * Import the chromatograms.
 		 */
-		IRunnableWithProgress runnableWithProgress = new IRunnableWithProgress() {
+		IRunnableWithProgress runnableWithProgress = monitor -> {
 
-			@Override
-			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
+			/*
+			 * Process the chromatograms
+			 */
+			for(File inputFile : inputFiles) {
 				/*
-				 * Process the chromatograms
+				 * Convert each chromatogram
 				 */
-				for(File inputFile : inputFiles) {
+				try {
 					/*
-					 * Convert each chromatogram
+					 * Import
 					 */
-					try {
-						/*
-						 * Import
-						 */
-						IProcessingInfo<IChromatogramCSD> processingInfo = ChromatogramConverterCSD.getInstance().convert(inputFile, monitor);
-						IChromatogramCSD chromatogram = processingInfo.getProcessingResult();
-						//
-						String directory = importDirectory;
-						if(!importDirectory.endsWith(File.separator)) {
-							directory += File.separator;
-						}
-						/*
-						 * Export
-						 */
-						File outputFile = new File(directory + chromatogram.getName());
-						ChromatogramConverterCSD.getInstance().convert(outputFile, chromatogram, converterId, monitor);
-					} catch(TypeCastException e) {
-						logger.warn(e);
+					IProcessingInfo<IChromatogramCSD> processingInfo = ChromatogramConverterCSD.getInstance().convert(inputFile, monitor);
+					IChromatogramCSD chromatogram = processingInfo.getProcessingResult();
+					//
+					String directory = importDirectory;
+					if(!importDirectory.endsWith(File.separator)) {
+						directory += File.separator;
 					}
+					/*
+					 * Export
+					 */
+					File outputFile = new File(directory + chromatogram.getName());
+					ChromatogramConverterCSD.getInstance().convert(outputFile, chromatogram, converterId, monitor);
+				} catch(TypeCastException e) {
+					logger.warn(e);
 				}
 			}
 		};

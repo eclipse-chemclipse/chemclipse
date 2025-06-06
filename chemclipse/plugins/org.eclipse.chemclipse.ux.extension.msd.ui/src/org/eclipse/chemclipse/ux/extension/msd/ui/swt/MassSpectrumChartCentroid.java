@@ -52,7 +52,6 @@ import org.eclipse.chemclipse.xxd.process.comparators.CategoryNameComparator;
 import org.eclipse.chemclipse.xxd.process.support.ProcessTypeSupport;
 import org.eclipse.core.commands.Category;
 import org.eclipse.core.commands.Command;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
@@ -215,23 +214,12 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 			/*
 			 * Apply
 			 */
-			processMassSpectrum(new IRunnableWithProgress() {
+			processMassSpectrum(monitor -> executeMethod(massSpectrum, scanMSD -> {
 
-				@Override
-				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
-					executeMethod(massSpectrum, new Consumer<IScanMSD>() {
-
-						@Override
-						public void accept(IScanMSD scanMSD) {
-
-							DefaultProcessingResult<Object> processingInfo = new DefaultProcessingResult<>();
-							IProcessSupplier.applyProcessor(settings, IScanProcessSupplier.createConsumer(scanMSD), new ProcessExecutionContext(monitor, processingInfo, processSupplierContext));
-							updateResult(processingInfo);
-						}
-					});
-				}
-			}, shell);
+				DefaultProcessingResult<Object> processingInfo = new DefaultProcessingResult<>();
+				IProcessSupplier.applyProcessor(settings, IScanProcessSupplier.createConsumer(scanMSD), new ProcessExecutionContext(monitor, processingInfo, processSupplierContext));
+				updateResult(processingInfo);
+			}), shell);
 		} catch(IOException e) {
 			DefaultProcessingResult<Object> processingInfo = new DefaultProcessingResult<>();
 			processingInfo.addErrorMessage(processSupplier.getName(), "The process method can't be applied.", e);
@@ -257,14 +245,7 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 
 	public void updateResult(IMessageProvider processingInfo) {
 
-		getDisplay().asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-
-				ProcessingInfoPartSupport.getInstance().update(processingInfo, true);
-			}
-		});
+		getDisplay().asyncExec(() -> ProcessingInfoPartSupport.getInstance().update(processingInfo, true));
 	}
 
 	private void executeMethod(IScanMSD scanMSD, Consumer<IScanMSD> consumer) {
@@ -365,14 +346,10 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 						File file = new File(pathname);
 						ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);
 						try {
-							dialog.run(true, true, new IRunnableWithProgress() {
+							dialog.run(true, true, monitor -> {
 
-								@Override
-								public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
-									IProcessingInfo<File> convert = MassSpectrumConverter.convert(file, massSpectrum, false, supplier.getId(), monitor);
-									ProcessingInfoPartSupport.getInstance().update(convert);
-								}
+								IProcessingInfo<File> convert = MassSpectrumConverter.convert(file, massSpectrum, false, supplier.getId(), monitor);
+								ProcessingInfoPartSupport.getInstance().update(convert);
 							});
 						} catch(InvocationTargetException e) {
 							IProcessingInfo<?> processingInfo = new ProcessingInfo<>();

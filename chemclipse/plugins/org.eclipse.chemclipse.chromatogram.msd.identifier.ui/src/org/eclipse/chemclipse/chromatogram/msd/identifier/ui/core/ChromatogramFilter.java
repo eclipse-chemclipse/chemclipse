@@ -44,23 +44,19 @@ public class ChromatogramFilter extends AbstractChromatogramFilter {
 			if(shell != null) {
 				identifyScanMaxima(shell, chromatogramSelection, Display.getDefault(), monitor);
 			} else {
-				DisplayUtils.getDisplay().syncExec(new Runnable() {
+				DisplayUtils.getDisplay().syncExec(() -> {
 
-					@Override
-					public void run() {
-
-						/*
-						 * Create a new shell and set
-						 * the size to 0 cause only the wizard
-						 * will be shown.
-						 */
-						Shell shell = new Shell();
-						shell.setSize(0, 0);
-						shell.open();
-						//
-						identifyScanMaxima(shell, chromatogramSelection, Display.getDefault(), monitor);
-						shell.close();
-					}
+					/*
+					 * Create a new shell and set
+					 * the size to 0 cause only the wizard
+					 * will be shown.
+					 */
+					Shell temporaryShell = new Shell();
+					temporaryShell.setSize(0, 0);
+					temporaryShell.open();
+					//
+					identifyScanMaxima(temporaryShell, chromatogramSelection, Display.getDefault(), monitor);
+					temporaryShell.close();
 				});
 			}
 			chromatogramSelection.getChromatogram().setDirty(true);
@@ -100,14 +96,10 @@ public class ChromatogramFilter extends AbstractChromatogramFilter {
 				 * Identification
 				 * TODO - service settings could be displayed dynamically via JsonAnnotations in the dialog page.
 				 */
-				display.asyncExec(new Runnable() {
+				display.asyncExec(() -> {
 
-					@Override
-					public void run() {
-
-						MassSpectrumIdentifier.identify(massSpectra, massSpectrumIdentifierSupplier.getId(), monitor);
-						chromatogram.setDirty(true);
-					}
+					MassSpectrumIdentifier.identify(massSpectra, massSpectrumIdentifierSupplier.getId(), monitor);
+					chromatogram.setDirty(true);
 				});
 			}
 		}

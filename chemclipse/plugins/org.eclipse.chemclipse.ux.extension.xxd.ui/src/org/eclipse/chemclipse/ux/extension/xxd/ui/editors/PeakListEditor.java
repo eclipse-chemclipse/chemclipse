@@ -25,9 +25,7 @@ import org.eclipse.chemclipse.processing.ui.support.ProcessingInfoPartSupport;
 import org.eclipse.chemclipse.progress.core.InfoType;
 import org.eclipse.chemclipse.progress.core.StatusLineLogger;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.PeakScanListUI;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -42,26 +40,18 @@ public class PeakListEditor {
 		PeakScanListUI scanListUI = new PeakScanListUI(parent, SWT.NONE);
 		ProgressMonitorDialog dialog = new ProgressMonitorDialog(parent.getShell());
 		try {
-			dialog.run(true, true, new IRunnableWithProgress() {
+			dialog.run(true, true, monitor -> {
 
-				@Override
-				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+				IProcessingInfo<IPeaksMSD> convert = PeakConverterMSD.convert(file, supplier.getId(), monitor);
+				Display.getDefault().asyncExec(() -> {
 
-					IProcessingInfo<IPeaksMSD> convert = PeakConverterMSD.convert(file, supplier.getId(), monitor);
-					Display.getDefault().asyncExec(new Runnable() {
-
-						@Override
-						public void run() {
-
-							IPeaksMSD result = convert.getProcessingResult();
-							if(convert.hasErrorMessages() || result == null) {
-								ProcessingInfoPartSupport.getInstance().update(convert);
-							} else {
-								scanListUI.setInput(result);
-							}
-						}
-					});
-				}
+					IPeaksMSD result = convert.getProcessingResult();
+					if(convert.hasErrorMessages() || result == null) {
+						ProcessingInfoPartSupport.getInstance().update(convert);
+					} else {
+						scanListUI.setInput(result);
+					}
+				});
 			});
 		} catch(InvocationTargetException e) {
 			IProcessingInfo<?> processingInfo = new ProcessingInfo<>();

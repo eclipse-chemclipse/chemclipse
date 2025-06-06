@@ -25,8 +25,6 @@ import org.eclipse.chemclipse.support.ui.swt.EnhancedComboViewer;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.editors.EditorExtension;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
@@ -104,17 +102,13 @@ public class PhaseCorrectionSettingsEditorExtension implements EditorExtension {
 			GridData layoutData = new GridData(SWT.CENTER, SWT.CENTER, false, false);
 			layoutData.widthHint = 80;
 			textField.setLayoutData(layoutData);
-			pivotCombo.addSelectionChangedListener(new ISelectionChangedListener() {
+			pivotCombo.addSelectionChangedListener(event -> {
 
-				@Override
-				public void selectionChanged(SelectionChangedEvent event) {
-
-					PivotPointSelection selection = (PivotPointSelection)pivotCombo.getStructuredSelection().getFirstElement();
-					if(selection != settings.getPivotPointSelection()) {
-						settings.setPivotPointSelection(selection);
-					}
-					textField.setEnabled(selection == PivotPointSelection.USER_DEFINED);
+				PivotPointSelection selection = (PivotPointSelection)pivotCombo.getStructuredSelection().getFirstElement();
+				if(selection != settings.getPivotPointSelection()) {
+					settings.setPivotPointSelection(selection);
 				}
+				textField.setEnabled(selection == PivotPointSelection.USER_DEFINED);
 			});
 			//
 			DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish();

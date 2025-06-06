@@ -78,14 +78,10 @@ public class UserLocationsEditor extends Composite {
 
 		UserLocationsUI userLocationsUI = new UserLocationsUI(parent, SWT.NONE);
 		userLocationsUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		userLocationsUI.setUpdateListener(new IUpdateListener() {
+		userLocationsUI.setUpdateListener(() -> {
 
-			@Override
-			public void update() {
-
-				updateUserLocationsTable();
-				fireUpdate();
-			}
+			updateUserLocationsTable();
+			fireUpdate();
 		});
 		//
 		return userLocationsUI;
@@ -189,14 +185,7 @@ public class UserLocationsEditor extends Composite {
 	private void fireUpdate() {
 
 		if(updateListener != null) {
-			getDisplay().asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-
-					updateListener.update();
-				}
-			});
+			getDisplay().asyncExec(() -> updateListener.update());
 		}
 	}
 }

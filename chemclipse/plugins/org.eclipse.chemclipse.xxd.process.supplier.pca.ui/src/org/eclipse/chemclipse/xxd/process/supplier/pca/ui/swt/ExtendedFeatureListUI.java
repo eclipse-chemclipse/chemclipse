@@ -370,14 +370,10 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 		listControl.get().clear();
 		toolbarInfo.get().setText("Loading...");
 		//
-		getDisplay().asyncExec(new Runnable() {
+		getDisplay().asyncExec(() -> {
 
-			@Override
-			public void run() {
-
-				updateWidgets();
-				updateInfoLabel();
-			}
+			updateWidgets();
+			updateInfoLabel();
 		});
 	}
 

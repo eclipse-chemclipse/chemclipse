@@ -37,8 +37,6 @@ import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jface.window.ToolTip;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -135,14 +133,10 @@ public class ControlBuilder {
 
 	public static Text onEditUpdate(Text text, Consumer<String> consumer) {
 
-		text.addModifyListener(new ModifyListener() {
+		text.addModifyListener(me -> {
 
-			@Override
-			public void modifyText(ModifyEvent me) {
-
-				if(!text.isDisposed()) {
-					consumer.accept(text.getText());
-				}
+			if(!text.isDisposed()) {
+				consumer.accept(text.getText());
 			}
 		});
 		return text;

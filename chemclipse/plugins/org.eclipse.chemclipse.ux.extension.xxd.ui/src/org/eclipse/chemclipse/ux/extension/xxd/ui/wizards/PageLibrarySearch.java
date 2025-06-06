@@ -27,7 +27,6 @@ import org.eclipse.chemclipse.model.library.LibrarySearchSettings;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.support.text.ValueFormat;
 import org.eclipse.chemclipse.support.ui.wizards.AbstractExtendedWizardPage;
-import org.eclipse.chemclipse.swt.ui.components.ISearchListener;
 import org.eclipse.chemclipse.swt.ui.components.InformationUI;
 import org.eclipse.chemclipse.swt.ui.components.SearchSupportUI;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
@@ -37,8 +36,6 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedLiteratureUI;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedMoleculeUI;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedSynonymsUI;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.TargetsListUI;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.MouseAdapter;
@@ -175,14 +172,10 @@ public class PageLibrarySearch extends AbstractExtendedWizardPage implements IEx
 
 		SearchSupportUI searchSupportUI = new SearchSupportUI(parent, SWT.NONE);
 		searchSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		searchSupportUI.setSearchListener(new ISearchListener() {
+		searchSupportUI.setSearchListener((searchText, caseSensitive) -> {
 
-			@Override
-			public void performSearch(String searchText, boolean caseSensitive) {
-
-				targetListControl.get().setSearchText(searchText, caseSensitive);
-				updateInfoToolbarBottom();
-			}
+			targetListControl.get().setSearchText(searchText, caseSensitive);
+			updateInfoToolbarBottom();
 		});
 		//
 		toolbarSearch.set(searchSupportUI);
@@ -237,19 +230,15 @@ public class PageLibrarySearch extends AbstractExtendedWizardPage implements IEx
 			}
 		});
 		//
-		targetListUI.addSelectionChangedListener(new ISelectionChangedListener() {
+		targetListUI.addSelectionChangedListener(event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				IIdentificationTarget identificationTarget = getIdentificationTarget();
-				ILibraryInformation libraryInformation = (identificationTarget != null) ? identificationTarget.getLibraryInformation() : null;
-				flavorMarkerControl.get().setInput(libraryInformation);
-				columnIndicesControl.get().setInput(libraryInformation);
-				synonymsControl.get().setInput(libraryInformation);
-				moleculeControl.get().setInput(libraryInformation);
-				updateLiterature(libraryInformation);
-			}
+			IIdentificationTarget identificationTarget = getIdentificationTarget();
+			ILibraryInformation libraryInformation = (identificationTarget != null) ? identificationTarget.getLibraryInformation() : null;
+			flavorMarkerControl.get().setInput(libraryInformation);
+			columnIndicesControl.get().setInput(libraryInformation);
+			synonymsControl.get().setInput(libraryInformation);
+			moleculeControl.get().setInput(libraryInformation);
+			updateLiterature(libraryInformation);
 		});
 		//
 		targetListControl.set(targetListUI);

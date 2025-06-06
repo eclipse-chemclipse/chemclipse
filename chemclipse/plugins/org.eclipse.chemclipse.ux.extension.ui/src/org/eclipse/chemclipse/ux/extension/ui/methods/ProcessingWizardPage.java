@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.function.Consumer;
 
 import org.eclipse.chemclipse.processing.DataCategory;
 import org.eclipse.chemclipse.processing.methods.IProcessEntry;
@@ -40,9 +39,7 @@ import org.eclipse.chemclipse.xxd.process.comparators.NameComparator;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -144,14 +141,10 @@ public class ProcessingWizardPage extends WizardPage {
 		//
 		comboViewer.setInput(processSupplierContextMap.keySet());
 		comboViewer.setSelection(new StructuredSelection(getProcessSupplierContext()));
-		comboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+		comboViewer.addSelectionChangedListener(event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				processContext = (IProcessSupplierContext)comboViewer.getStructuredSelection().getFirstElement();
-				updateComboDataCategoryItems();
-			}
+			processContext = (IProcessSupplierContext)comboViewer.getStructuredSelection().getFirstElement();
+			updateComboDataCategoryItems();
 		});
 	}
 
@@ -216,16 +209,12 @@ public class ProcessingWizardPage extends WizardPage {
 		}
 		//
 		Set<IProcessSupplier<?>> processTypeSuppliers = new LinkedHashSet<>();
-		getProcessSupplierContext().visitSupplier(new Consumer<IProcessSupplier<?>>() {
+		getProcessSupplierContext().visitSupplier(supplier -> {
 
-			@Override
-			public void accept(IProcessSupplier<?> supplier) {
-
-				for(DataCategory category : supplier.getSupportedDataTypes()) {
-					if(selectedDataTypes.contains(category)) {
-						processTypeSuppliers.add(supplier);
-						return;
-					}
+			for(DataCategory category : supplier.getSupportedDataTypes()) {
+				if(selectedDataTypes.contains(category)) {
+					processTypeSuppliers.add(supplier);
+					return;
 				}
 			}
 		});

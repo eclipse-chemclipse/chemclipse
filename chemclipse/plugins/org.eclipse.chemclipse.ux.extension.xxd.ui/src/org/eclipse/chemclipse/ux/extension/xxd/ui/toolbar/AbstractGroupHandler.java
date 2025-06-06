@@ -79,15 +79,11 @@ public abstract class AbstractGroupHandler implements IGroupHandler {
 			 */
 			MDirectToolItem directToolItem = getDirectToolItem();
 			Display display = Display.getDefault();
-			display.asyncExec(new Runnable() {
+			display.asyncExec(() -> {
 
-				@Override
-				public void run() {
-
-					GroupHandler.setShow(getName(), visible);
-					setPartStatus(directToolItem, visible);
-					updateMenu();
-				}
+				GroupHandler.setShow(getName(), visible);
+				setPartStatus(directToolItem, visible);
+				updateMenu();
 			});
 		}
 	}
@@ -102,14 +98,10 @@ public abstract class AbstractGroupHandler implements IGroupHandler {
 			 */
 			MDirectToolItem directToolItem = getDirectToolItem();
 			Display display = Display.getDefault();
-			display.asyncExec(new Runnable() {
+			display.asyncExec(() -> {
 
-				@Override
-				public void run() {
-
-					updateMenuItems(directToolItem.getMenu(), modelService);
-					updateMenuItems(getSubMenuFromMainMenu(), modelService);
-				}
+				updateMenuItems(directToolItem.getMenu(), modelService);
+				updateMenuItems(getSubMenuFromMainMenu(), modelService);
 			});
 		}
 	}

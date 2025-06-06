@@ -28,7 +28,6 @@ import org.eclipse.chemclipse.model.types.DataType;
 import org.eclipse.chemclipse.processing.core.IMessageProvider;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
-import org.eclipse.chemclipse.processing.methods.IProcessMethod;
 import org.eclipse.chemclipse.processing.methods.ProcessEntryContainer;
 import org.eclipse.chemclipse.processing.supplier.IProcessSupplierContext;
 import org.eclipse.chemclipse.processing.supplier.ProcessExecutionContext;
@@ -37,13 +36,10 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
-import org.eclipse.chemclipse.swt.ui.components.IMethodListener;
-import org.eclipse.chemclipse.swt.ui.components.ISearchListener;
 import org.eclipse.chemclipse.swt.ui.components.SearchSupportUI;
 import org.eclipse.chemclipse.ux.extension.ui.methods.MethodSupportUI;
 import org.eclipse.chemclipse.ux.extension.ui.support.PartSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
-import org.eclipse.chemclipse.ux.extension.ui.swt.ISettingsHandler;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogram;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageSequences;
@@ -51,7 +47,6 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.ChromatogramTypeSupportUI;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.SequenceListUI;
 import org.eclipse.chemclipse.xxd.process.support.ProcessTypeSupport;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
@@ -64,7 +59,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
@@ -141,14 +135,7 @@ public class ExtendedSequenceListUI extends Composite implements IExtendedPartUI
 
 		searchSupportUI = new SearchSupportUI(parent, SWT.NONE);
 		searchSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		searchSupportUI.setSearchListener(new ISearchListener() {
-
-			@Override
-			public void performSearch(String searchText, boolean caseSensitive) {
-
-				sequenceListUI.setSearchText(searchText, caseSensitive);
-			}
-		});
+		searchSupportUI.setSearchListener((searchText, caseSensitive) -> sequenceListUI.setSearchText(searchText, caseSensitive));
 		//
 		return searchSupportUI;
 	}
@@ -171,41 +158,37 @@ public class ExtendedSequenceListUI extends Composite implements IExtendedPartUI
 
 		methodSupportUI = new MethodSupportUI(parent, SWT.NONE);
 		methodSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		methodSupportUI.setMethodListener(new IMethodListener() {
+		methodSupportUI.setMethodListener((processMethod, monitor) -> {
 
-			@Override
-			public void execute(IProcessMethod processMethod, IProgressMonitor monitor) {
-
-				IProcessingInfo<IChromatogramSelection> processingInfo = new ProcessingInfo<>();
-				TableItem[] tableItems = sequenceListUI.getTable().getItems();
-				//
-				for(TableItem tableItem : tableItems) {
-					Object object = tableItem.getData();
-					if(object instanceof ISequenceRecord sequenceRecord) {
-						/*
-						 * Get the file.
-						 */
-						String pathChromatogram = sequence.getDataPath() + File.separator + sequenceRecord.getDataFile();
-						IProcessingInfo<IChromatogramSelection> processingInfoChromatogram = chromatogramTypeSupport.getChromatogramSelection(pathChromatogram, monitor);
-						if(!processingInfoChromatogram.hasErrorMessages()) {
-							IChromatogramSelection chromatogramSelection = processingInfoChromatogram.getProcessingResult();
-							addSequenceRecordInformation(sequenceRecord, chromatogramSelection.getChromatogram());
-							ProcessingInfo<?> processorInfo = new ProcessingInfo<>();
-							ProcessEntryContainer.applyProcessEntries(processMethod, new ProcessExecutionContext(monitor, processorInfo, processSupplierContext), IChromatogramSelectionProcessSupplier.createConsumer(chromatogramSelection));
-							chromatogramSelection.getChromatogram().setDirty(true); // TODO: check each entry
-							if(processorInfo.hasErrorMessages()) {
-								processingInfo.addMessages(processorInfo);
-							} else {
-								processingInfo.addInfoMessage(DESCRIPTION, "Success processing file: " + pathChromatogram);
-							}
+			IProcessingInfo<IChromatogramSelection> processingInfo = new ProcessingInfo<>();
+			TableItem[] tableItems = sequenceListUI.getTable().getItems();
+			//
+			for(TableItem tableItem : tableItems) {
+				Object object = tableItem.getData();
+				if(object instanceof ISequenceRecord sequenceRecord) {
+					/*
+					 * Get the file.
+					 */
+					String pathChromatogram = sequence.getDataPath() + File.separator + sequenceRecord.getDataFile();
+					IProcessingInfo<IChromatogramSelection> processingInfoChromatogram = chromatogramTypeSupport.getChromatogramSelection(pathChromatogram, monitor);
+					if(!processingInfoChromatogram.hasErrorMessages()) {
+						IChromatogramSelection chromatogramSelection = processingInfoChromatogram.getProcessingResult();
+						addSequenceRecordInformation(sequenceRecord, chromatogramSelection.getChromatogram());
+						ProcessingInfo<?> processorInfo = new ProcessingInfo<>();
+						ProcessEntryContainer.applyProcessEntries(processMethod, new ProcessExecutionContext(monitor, processorInfo, processSupplierContext), IChromatogramSelectionProcessSupplier.createConsumer(chromatogramSelection));
+						chromatogramSelection.getChromatogram().setDirty(true); // TODO: check each entry
+						if(processorInfo.hasErrorMessages()) {
+							processingInfo.addMessages(processorInfo);
 						} else {
-							processingInfo.addErrorMessage(DESCRIPTION, "Failed to process the file: " + pathChromatogram);
+							processingInfo.addInfoMessage(DESCRIPTION, "Success processing file: " + pathChromatogram);
 						}
+					} else {
+						processingInfo.addErrorMessage(DESCRIPTION, "Failed to process the file: " + pathChromatogram);
 					}
 				}
-				//
-				updateResult(processingInfo);
 			}
+			//
+			updateResult(processingInfo);
 		});
 		//
 		return methodSupportUI;
@@ -213,14 +196,7 @@ public class ExtendedSequenceListUI extends Composite implements IExtendedPartUI
 
 	public void updateResult(IMessageProvider processingInfo) {
 
-		getDisplay().asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-
-				ProcessingInfoPartSupport.getInstance().update(processingInfo, true);
-			}
-		});
+		getDisplay().asyncExec(() -> ProcessingInfoPartSupport.getInstance().update(processingInfo, true));
 	}
 
 	private void addSequenceRecordInformation(ISequenceRecord sequenceRecord, IMeasurement measurement) {
@@ -424,14 +400,7 @@ public class ExtendedSequenceListUI extends Composite implements IExtendedPartUI
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePageSequences.class, PreferencePageChromatogram.class), new ISettingsHandler() {
-
-			@Override
-			public void apply(Display display) {
-
-				applySettings();
-			}
-		});
+		createSettingsButton(parent, Arrays.asList(PreferencePageSequences.class, PreferencePageChromatogram.class), display -> applySettings());
 	}
 
 	private void applySettings() {

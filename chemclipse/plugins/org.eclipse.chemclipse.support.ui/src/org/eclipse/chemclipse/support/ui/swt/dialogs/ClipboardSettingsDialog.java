@@ -151,14 +151,7 @@ public class ClipboardSettingsDialog extends Dialog {
 
 	private void createButtonCopyHeader(Composite parent) {
 
-		createButtonCheck(parent, SupportMessages.copyHeaderToClipboard, SupportMessages.copyHeaderToolTip, copyHeader, new Consumer<Boolean>() {
-
-			@Override
-			public void accept(Boolean selection) {
-
-				copyHeader = selection;
-			}
-		});
+		createButtonCheck(parent, SupportMessages.copyHeaderToClipboard, SupportMessages.copyHeaderToolTip, copyHeader, selection -> copyHeader = selection);
 	}
 
 	private void createToolbarMain(Composite parent) {
@@ -195,16 +188,12 @@ public class ClipboardSettingsDialog extends Dialog {
 				columnSelections.add(i);
 			}
 			//
-			Button button = createButtonCheck(parent, title, tooltip, selected, new Consumer<Boolean>() {
+			Button button = createButtonCheck(parent, title, tooltip, selected, selection -> {
 
-				@Override
-				public void accept(Boolean selection) {
-
-					if(selection) {
-						columnSelections.add(index);
-					} else {
-						columnSelections.remove(index);
-					}
+				if(selection) {
+					columnSelections.add(index);
+				} else {
+					columnSelections.remove(index);
 				}
 			});
 			columnCheckBoxes.add(button);

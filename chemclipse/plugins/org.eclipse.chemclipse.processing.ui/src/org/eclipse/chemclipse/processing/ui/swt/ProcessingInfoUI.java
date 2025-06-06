@@ -21,9 +21,7 @@ import org.eclipse.chemclipse.processing.ui.internal.provider.ProcessingInfoLabe
 import org.eclipse.chemclipse.processing.ui.internal.provider.ProcessingInfoTableComparator;
 import org.eclipse.chemclipse.support.settings.OperatingSystemUtils;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
@@ -111,24 +109,20 @@ public class ProcessingInfoUI {
 		});
 		Text infoTextControl = new Text(expandBar, SWT.MULTI | SWT.READ_ONLY);
 		item.setControl(infoTextControl);
-		tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+		tableViewer.addSelectionChangedListener(event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				ISelection selection = event.getSelection();
-				if(selection instanceof IStructuredSelection structuredSelection) {
-					Object element = structuredSelection.getFirstElement();
-					if(element instanceof IProcessingMessage message) {
-						String details = message.getDetails();
-						if(details != null) {
-							infoTextControl.setText(details);
-							return;
-						}
+			ISelection selection = event.getSelection();
+			if(selection instanceof IStructuredSelection structuredSelection) {
+				Object element = structuredSelection.getFirstElement();
+				if(element instanceof IProcessingMessage message) {
+					String details = message.getDetails();
+					if(details != null) {
+						infoTextControl.setText(details);
+						return;
 					}
 				}
-				infoTextControl.setText("");
 			}
+			infoTextControl.setText("");
 		});
 		expandBar.setLayoutData(data);
 	}

@@ -49,14 +49,7 @@ public class ChromatogramTypeSupportUI extends ChromatogramTypeSupport {
 					exitloop:
 					for(ISupplierEditorSupport supplierEditorSupport : supplierEditorSupportList) {
 						if(isSupplierFile(supplierEditorSupport, file)) {
-							display.asyncExec(new Runnable() {
-
-								@Override
-								public void run() {
-
-									supplierEditorSupport.openEditor(file);
-								}
-							});
+							display.asyncExec(() -> supplierEditorSupport.openEditor(file));
 							break exitloop;
 						}
 					}

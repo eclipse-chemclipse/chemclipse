@@ -140,21 +140,17 @@ public class UVVisSpectrumFileSupport {
 			return;
 		}
 		ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);
-		IRunnableWithProgress runnable = new IRunnableWithProgress() {
+		IRunnableWithProgress runnable = monitor -> {
 
-			@Override
-			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
-				try {
-					monitor.beginTask(UltravioletVisibleSpectroscopy.saveUVVis, IProgressMonitor.UNKNOWN);
-					IProcessingInfo<File> processingInfo = ScanConverterWSD.convert(file, spectrum, supplier.getId(), monitor);
-					ProcessingInfoPartSupport.getInstance().update(processingInfo);
-					processingInfo.getProcessingResult();
-				} catch(TypeCastException e) {
-					logger.warn(e);
-				} finally {
-					monitor.done();
-				}
+			try {
+				monitor.beginTask(UltravioletVisibleSpectroscopy.saveUVVis, IProgressMonitor.UNKNOWN);
+				IProcessingInfo<File> processingInfo = ScanConverterWSD.convert(file, spectrum, supplier.getId(), monitor);
+				ProcessingInfoPartSupport.getInstance().update(processingInfo);
+				processingInfo.getProcessingResult();
+			} catch(TypeCastException e) {
+				logger.warn(e);
+			} finally {
+				monitor.done();
 			}
 		};
 		try {

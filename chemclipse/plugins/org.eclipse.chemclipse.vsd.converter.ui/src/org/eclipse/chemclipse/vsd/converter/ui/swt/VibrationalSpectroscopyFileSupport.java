@@ -141,25 +141,21 @@ public class VibrationalSpectroscopyFileSupport {
 			return;
 		}
 		ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);
-		IRunnableWithProgress runnable = new IRunnableWithProgress() {
+		IRunnableWithProgress runnable = monitor -> {
 
-			@Override
-			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
-				try {
-					if(spectrum.getScanVSD().getSignalType() == SignalType.FTIR) {
-						monitor.beginTask(VibrationalSpectroscopyMessages.saveIR, IProgressMonitor.UNKNOWN);
-					} else if(spectrum.getScanVSD().getSignalType() == SignalType.RAMAN) {
-						monitor.beginTask(VibrationalSpectroscopyMessages.saveRaman, IProgressMonitor.UNKNOWN);
-					}
-					IProcessingInfo<File> processingInfo = ScanConverterVSD.convert(file, spectrum, supplier.getId(), monitor);
-					ProcessingInfoPartSupport.getInstance().update(processingInfo);
-					processingInfo.getProcessingResult();
-				} catch(TypeCastException e) {
-					logger.warn(e);
-				} finally {
-					monitor.done();
+			try {
+				if(spectrum.getScanVSD().getSignalType() == SignalType.FTIR) {
+					monitor.beginTask(VibrationalSpectroscopyMessages.saveIR, IProgressMonitor.UNKNOWN);
+				} else if(spectrum.getScanVSD().getSignalType() == SignalType.RAMAN) {
+					monitor.beginTask(VibrationalSpectroscopyMessages.saveRaman, IProgressMonitor.UNKNOWN);
 				}
+				IProcessingInfo<File> processingInfo = ScanConverterVSD.convert(file, spectrum, supplier.getId(), monitor);
+				ProcessingInfoPartSupport.getInstance().update(processingInfo);
+				processingInfo.getProcessingResult();
+			} catch(TypeCastException e) {
+				logger.warn(e);
+			} finally {
+				monitor.done();
 			}
 		};
 		try {

@@ -78,8 +78,6 @@ import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.support.text.ValueFormat;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.chemclipse.support.ui.workbench.PreferencesSupport;
-import org.eclipse.chemclipse.support.updates.IUpdateListener;
-import org.eclipse.chemclipse.swt.ui.components.IMethodListener;
 import org.eclipse.chemclipse.swt.ui.components.InformationUI;
 import org.eclipse.chemclipse.swt.ui.marker.PositionMarker;
 import org.eclipse.chemclipse.swt.ui.marker.RetentionIndexMarker;
@@ -95,7 +93,6 @@ import org.eclipse.chemclipse.ux.extension.ui.methods.ResumeMethodSupport;
 import org.eclipse.chemclipse.ux.extension.ui.methods.SettingsWizard;
 import org.eclipse.chemclipse.ux.extension.ui.support.PartSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.ChartGridSupport;
-import org.eclipse.chemclipse.ux.extension.ui.swt.IColumnUpdateListener;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.chemclipse.ux.extension.ui.swt.ISettingsHandler;
 import org.eclipse.chemclipse.ux.extension.ui.swt.SeparationColumnUI;
@@ -150,7 +147,6 @@ import org.eclipse.chemclipse.xxd.process.ui.preferences.PreferencePageReportExp
 import org.eclipse.core.commands.Category;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.common.NotDefinedException;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.commands.MCommand;
@@ -756,26 +752,15 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 			/*
 			 * Apply
 			 */
-			processChromatogram(new IRunnableWithProgress() {
+			processChromatogram(monitor -> executeMethod(getChromatogramSelection(), chromatogramSelection -> {
 
-				@Override
-				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
-					executeMethod(getChromatogramSelection(), new Consumer<IChromatogramSelection>() {
-
-						@Override
-						public void accept(IChromatogramSelection chromatogramSelection) {
-
-							DefaultProcessingResult<Object> processingInfo = new DefaultProcessingResult<>();
-							IProcessSupplier.applyProcessor(settings, IChromatogramSelectionProcessSupplier.createConsumer(chromatogramSelection), new ProcessExecutionContext(monitor, processingInfo, processSupplierContext));
-							IChromatogram chromatogram = chromatogramSelection.getChromatogram();
-							updateResult(processingInfo);
-							AuditTrailSupport.updateAuditTrail(chromatogram, processingInfo, processSupplier);
-							NoiseFactorSupport.updateNoiseFactor(chromatogram, processSupplier);
-						}
-					});
-				}
-			}, shell);
+				DefaultProcessingResult<Object> processingInfo = new DefaultProcessingResult<>();
+				IProcessSupplier.applyProcessor(settings, IChromatogramSelectionProcessSupplier.createConsumer(chromatogramSelection), new ProcessExecutionContext(monitor, processingInfo, processSupplierContext));
+				IChromatogram chromatogram = chromatogramSelection.getChromatogram();
+				updateResult(processingInfo);
+				AuditTrailSupport.updateAuditTrail(chromatogram, processingInfo, processSupplier);
+				NoiseFactorSupport.updateNoiseFactor(chromatogram, processSupplier);
+			}), shell);
 		} catch(IOException e) {
 			DefaultProcessingResult<Object> processingInfo = new DefaultProcessingResult<>();
 			processingInfo.addErrorMessage(processSupplier.getName(), "The process method can't be applied.", e);
@@ -789,26 +774,12 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 
 	private void forceReset(boolean resetRange) {
 
-		getDisplay().asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-
-				reset(resetRange);
-			}
-		});
+		getDisplay().asyncExec(() -> reset(resetRange));
 	}
 
 	public void updateResult(IMessageProvider processingInfo) {
 
-		getDisplay().asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-
-				ProcessingInfoPartSupport.getInstance().update(processingInfo, true);
-			}
-		});
+		getDisplay().asyncExec(() -> ProcessingInfoPartSupport.getInstance().update(processingInfo, true));
 	}
 
 	private boolean isValidSupplier(IProcessSupplier<?> supplier) {
@@ -1234,28 +1205,17 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 
 		MethodSupportUI methodSupportUI = new MethodSupportUI(parent, SWT.NONE);
 		methodSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		methodSupportUI.setMethodListener(new IMethodListener() {
+		methodSupportUI.setMethodListener((processMethod, monitor) -> executeMethod(chromatogramSelection, chromatogramSelection -> {
 
-			@Override
-			public void execute(IProcessMethod processMethod, IProgressMonitor monitor) {
-
-				executeMethod(chromatogramSelection, new Consumer<IChromatogramSelection>() {
-
-					@Override
-					public void accept(IChromatogramSelection chromatogramSelection) {
-
-						IProcessingInfo<?> processingInfo = new ProcessingInfo<>();
-						ProcessEntryContainer.applyProcessEntries(processMethod, new ProcessExecutionContext(monitor, processingInfo, processTypeSupport), IChromatogramSelectionProcessSupplier.createConsumer(chromatogramSelection));
-						IChromatogram chromatogram = chromatogramSelection.getChromatogram();
-						updateResult(processingInfo);
-						AuditTrailSupport.updateAuditTrail(chromatogram, processingInfo, processMethod, processTypeSupport);
-						NoiseFactorSupport.updateNoiseFactor(chromatogram, processMethod, processTypeSupport);
-						forceReset(true);
-						UpdateNotifierUI.update(getDisplay(), chromatogramSelection.getSelectedScan());
-					}
-				});
-			}
-		});
+			IProcessingInfo<?> processingInfo = new ProcessingInfo<>();
+			ProcessEntryContainer.applyProcessEntries(processMethod, new ProcessExecutionContext(monitor, processingInfo, processTypeSupport), IChromatogramSelectionProcessSupplier.createConsumer(chromatogramSelection));
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
+			updateResult(processingInfo);
+			AuditTrailSupport.updateAuditTrail(chromatogram, processingInfo, processMethod, processTypeSupport);
+			NoiseFactorSupport.updateNoiseFactor(chromatogram, processMethod, processTypeSupport);
+			forceReset(true);
+			UpdateNotifierUI.update(getDisplay(), chromatogramSelection.getSelectedScan());
+		}));
 
 		toolbarMethodControl.set(methodSupportUI);
 	}
@@ -1388,28 +1348,24 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 	private void createSeparationColumnUI(Composite parent) {
 
 		SeparationColumnUI separationColumnUI = new SeparationColumnUI(parent, SWT.NONE);
-		separationColumnUI.setColumnUpdateListener(new IColumnUpdateListener() {
+		separationColumnUI.setColumnUpdateListener((shell, separationColumn) -> {
 
-			@Override
-			public void update(Shell shell, ISeparationColumn separationColumn) {
+			if(separationColumn != null) {
+				if(chromatogramSelection != null) {
+					/*
+					 * Set the column and transfer to references on demand
+					 */
+					IChromatogram chromatogram = chromatogramSelection.getChromatogram();
+					chromatogram.getSeparationColumnIndices().setSeparationColumn(separationColumn);
+					chromatogram.setDirty(true);
 
-				if(separationColumn != null) {
-					if(chromatogramSelection != null) {
-						/*
-						 * Set the column and transfer to references on demand
-						 */
-						IChromatogram chromatogram = chromatogramSelection.getChromatogram();
-						chromatogram.getSeparationColumnIndices().setSeparationColumn(separationColumn);
-						chromatogram.setDirty(true);
-
-						if(preferenceStore.getBoolean(PreferenceSupplier.P_CHROMATOGRAM_TRANSFER_COLUMN_TYPE_TO_REFERENCES)) {
-							for(IChromatogram chromatogramReference : chromatogram.getReferencedChromatograms()) {
-								chromatogramReference.getSeparationColumnIndices().setSeparationColumn(separationColumn);
-							}
+					if(preferenceStore.getBoolean(PreferenceSupplier.P_CHROMATOGRAM_TRANSFER_COLUMN_TYPE_TO_REFERENCES)) {
+						for(IChromatogram chromatogramReference : chromatogram.getReferencedChromatograms()) {
+							chromatogramReference.getSeparationColumnIndices().setSeparationColumn(separationColumn);
 						}
-
-						updateLabel();
 					}
+
+					updateLabel();
 				}
 			}
 		});
@@ -1480,65 +1436,54 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 
 	private void createButtonSettings(Composite parent) {
 
-		createSettingsButton(parent, getPreferencePagesSupplier(), new ISettingsHandler() {
-
-			@Override
-			public void apply(Display display) {
-
-				applySettings(display);
-			}
-		}, false);
+		createSettingsButton(parent, getPreferencePagesSupplier(), (ISettingsHandler) display -> applySettings(display), false);
 	}
 
 	private Supplier<List<Class<? extends IPreferencePage>>> getPreferencePagesSupplier() {
 
-		return new Supplier<List<Class<? extends IPreferencePage>>>() {
+		return () -> {
 
-			@Override
-			public List<Class<? extends IPreferencePage>> get() {
-
-				List<Class<? extends IPreferencePage>> preferencePages = new ArrayList<>();
-				/*
-				 * Specific Pages
-				 */
-				DataCategory dataCategory = getDataCategory();
-				switch(dataCategory) {
-					case CSD:
-						preferencePages.add(PreferencePageProcessorToolbarCSD.class);
-						break;
-					case MSD:
-						preferencePages.add(PreferencePageProcessorToolbarMSD.class);
-						break;
-					case WSD:
-						preferencePages.add(PreferencePageProcessorToolbarWSD.class);
-						break;
-					case VSD:
-						preferencePages.add(PreferencePageProcessorToolbarVSD.class);
-						break;
-					default:
-						break;
-				}
-				/*
-				 * Standard Pages
-				 */
-				preferencePages.add(PreferencePageProcessors.class);
-				preferencePages.add(PreferencePageChromatogram.class);
-				preferencePages.add(ChromatogramAxisMilliseconds.class);
-				preferencePages.add(ChromatogramAxisRetentionIndex.class);
-				preferencePages.add(ChromatogramAxisIntensity.class);
-				preferencePages.add(ChromatogramAxisSeconds.class);
-				preferencePages.add(ChromatogramAxisScans.class);
-				preferencePages.add(ChromatogramAxisMinutes.class);
-				preferencePages.add(ChromatogramAxisRelativeIntensity.class);
-				preferencePages.add(PreferencePageChromatogramPeaks.class);
-				preferencePages.add(PreferencePageChromatogramScans.class);
-				preferencePages.add(PreferencePageSystem.class);
-				preferencePages.add(PreferencePage.class);
-				preferencePages.add(PreferencePageReportExport.class);
-				preferencePages.add(PreferencePageChromatogramExport.class);
-
-				return preferencePages;
+			List<Class<? extends IPreferencePage>> preferencePages = new ArrayList<>();
+			/*
+			 * Specific Pages
+			 */
+			DataCategory dataCategory = getDataCategory();
+			switch(dataCategory) {
+				case CSD:
+					preferencePages.add(PreferencePageProcessorToolbarCSD.class);
+					break;
+				case MSD:
+					preferencePages.add(PreferencePageProcessorToolbarMSD.class);
+					break;
+				case WSD:
+					preferencePages.add(PreferencePageProcessorToolbarWSD.class);
+					break;
+				case VSD:
+					preferencePages.add(PreferencePageProcessorToolbarVSD.class);
+					break;
+				default:
+					break;
 			}
+			/*
+			 * Standard Pages
+			 */
+			preferencePages.add(PreferencePageProcessors.class);
+			preferencePages.add(PreferencePageChromatogram.class);
+			preferencePages.add(ChromatogramAxisMilliseconds.class);
+			preferencePages.add(ChromatogramAxisRetentionIndex.class);
+			preferencePages.add(ChromatogramAxisIntensity.class);
+			preferencePages.add(ChromatogramAxisSeconds.class);
+			preferencePages.add(ChromatogramAxisScans.class);
+			preferencePages.add(ChromatogramAxisMinutes.class);
+			preferencePages.add(ChromatogramAxisRelativeIntensity.class);
+			preferencePages.add(PreferencePageChromatogramPeaks.class);
+			preferencePages.add(PreferencePageChromatogramScans.class);
+			preferencePages.add(PreferencePageSystem.class);
+			preferencePages.add(PreferencePage.class);
+			preferencePages.add(PreferencePageReportExport.class);
+			preferencePages.add(PreferencePageChromatogramExport.class);
+
+			return preferencePages;
 		};
 	}
 
@@ -1564,16 +1509,12 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 		 */
 		boolean markAnalysisSegments = preferenceStore.getBoolean(PreferenceSupplier.P_CHROMATOGRAM_MARK_ANALYSIS_SEGMENTS);
 		if(markAnalysisSegments) {
-			AnalysisSegmentPaintListener<IAnalysisSegment> listener = new AnalysisSegmentPaintListener<>(AnalysisSegmentColorScheme.CHROMATOGRAM, new Supplier<Collection<IAnalysisSegment>>() {
+			AnalysisSegmentPaintListener<IAnalysisSegment> listener = new AnalysisSegmentPaintListener<>(AnalysisSegmentColorScheme.CHROMATOGRAM, () -> {
 
-				@Override
-				public Collection<IAnalysisSegment> get() {
-
-					if(chromatogramSelection != null) {
-						return chromatogramSelection.getChromatogram().getAnalysisSegments();
-					}
-					return Collections.emptyList();
+				if(chromatogramSelection != null) {
+					return chromatogramSelection.getChromatogram().getAnalysisSegments();
 				}
+				return Collections.emptyList();
 			}, always -> false);
 			listener.setPaintArea(true);
 			listener.setPaintLines(true);
@@ -1631,14 +1572,7 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 
 		ChromatogramBaselinesUI chromatogramBaselinesUI = new ChromatogramBaselinesUI(parent, SWT.NONE);
 		chromatogramBaselinesUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		chromatogramBaselinesUI.setUpdateListener(new IUpdateListener() {
-
-			@Override
-			public void update() {
-
-				updateChromatogram();
-			}
-		});
+		chromatogramBaselinesUI.setUpdateListener(() -> updateChromatogram());
 
 		chromatogramBaselinesControl.set(chromatogramBaselinesUI);
 	}
@@ -1879,17 +1813,13 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 			int sizeReferencesAfter = chromatogramSelection.getChromatogram().getReferencedChromatograms().size();
 
 			if(sizeReferencesBefore != sizeReferencesAfter) {
-				Display.getDefault().asyncExec(new Runnable() {
+				Display.getDefault().asyncExec(() -> {
 
-					@Override
-					public void run() {
-
-						/*
-						 * Update the references and alignment toolbars.
-						 */
-						toolbarReferencesControl.get().update();
-						toolbarAlignmentControl.get().update(toolbarReferencesControl.get().getChromatogramSelections());
-					}
+					/*
+					 * Update the references and alignment toolbars.
+					 */
+					toolbarReferencesControl.get().update();
+					toolbarAlignmentControl.get().update(toolbarReferencesControl.get().getChromatogramSelections());
 				});
 			}
 		}

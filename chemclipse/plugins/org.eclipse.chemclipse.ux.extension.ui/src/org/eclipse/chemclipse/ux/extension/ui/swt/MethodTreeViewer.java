@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 
 import org.eclipse.chemclipse.processing.methods.IProcessEntry;
 import org.eclipse.chemclipse.processing.methods.ProcessEntry;
@@ -30,8 +29,6 @@ import org.eclipse.chemclipse.processing.supplier.IProcessorPreferences;
 import org.eclipse.chemclipse.support.updates.IUpdateListener;
 import org.eclipse.chemclipse.ux.extension.ui.internal.provider.MethodListLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
@@ -148,14 +145,7 @@ public class MethodTreeViewer extends TreeViewer {
 
 				List<Object> list = new ArrayList<>();
 				if(detatch) {
-					iterable.forEach(new Consumer<IProcessEntry>() {
-
-						@Override
-						public void accept(IProcessEntry entry) {
-
-							list.add(new ProcessEntry(entry, null));
-						}
-					});
+					iterable.forEach(entry -> list.add(new ProcessEntry(entry, null)));
 				} else {
 					iterable.forEach(list::add);
 				}
@@ -185,20 +175,16 @@ public class MethodTreeViewer extends TreeViewer {
 
 		addSelectionChangedListener(event -> toolbarButtons.get().updateTableButtons());
 		//
-		addDoubleClickListener(new IDoubleClickListener() {
+		addDoubleClickListener(event -> {
 
-			@Override
-			public void doubleClick(DoubleClickEvent event) {
-
-				if(preferencesSupplier == null) {
-					return;
-				}
-				//
-				Object firstElement = getStructuredSelection().getFirstElement();
-				if(firstElement instanceof IProcessEntry entry) {
-					if(toolbarButtons.get().modifyProcessEntry(getControl().getShell(), entry, IProcessEntry.getContext(entry, processingSupport), true)) {
-						fireUpdate();
-					}
+			if(preferencesSupplier == null) {
+				return;
+			}
+			//
+			Object firstElement = getStructuredSelection().getFirstElement();
+			if(firstElement instanceof IProcessEntry entry) {
+				if(toolbarButtons.get().modifyProcessEntry(getControl().getShell(), entry, IProcessEntry.getContext(entry, processingSupport), true)) {
+					fireUpdate();
 				}
 			}
 		});

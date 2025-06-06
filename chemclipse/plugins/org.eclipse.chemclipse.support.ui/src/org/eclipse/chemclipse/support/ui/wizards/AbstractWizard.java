@@ -20,7 +20,6 @@ import java.util.Set;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.support.l10n.SupportMessages;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
@@ -101,16 +100,12 @@ public abstract class AbstractWizard extends Wizard implements IFileWizard {
 		/*
 		 * Creates the runnable.
 		 */
-		IRunnableWithProgress runnable = new IRunnableWithProgress() {
+		IRunnableWithProgress runnable = monitor -> {
 
-			@Override
-			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
-				try {
-					doFinish(monitor);
-				} catch(CoreException e) {
-					logger.warn(e);
-				}
+			try {
+				doFinish(monitor);
+			} catch(CoreException e) {
+				logger.warn(e);
 			}
 		};
 		/*

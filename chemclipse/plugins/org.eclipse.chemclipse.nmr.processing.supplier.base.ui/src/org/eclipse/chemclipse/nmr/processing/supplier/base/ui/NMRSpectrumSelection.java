@@ -31,8 +31,6 @@ import org.eclipse.chemclipse.processing.ProcessorFactory;
 import org.eclipse.chemclipse.processing.filter.Filtered;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.actions.MeasurementFilterAction;
 import org.eclipse.chemclipse.xxd.process.support.ProcessTypeSupport;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
@@ -182,59 +180,44 @@ public class NMRSpectrumSelection {
 
 		MenuManager contextMenu = new MenuManager("ViewerContextMenu"); //$NON-NLS-1$
 		contextMenu.setRemoveAllWhenShown(true);
-		contextMenu.addMenuListener(new IMenuListener() {
+		contextMenu.addMenuListener(mgr -> {
 
-			@Override
-			public void menuAboutToShow(IMenuManager mgr) {
-
-				Iterator<?> iterator = viewer.getStructuredSelection().iterator();
-				Map<ISpectrumMeasurement, IDataNMRSelection> items = new LinkedHashMap<>();
-				while(iterator.hasNext()) {
-					Object object = iterator.next();
-					if(object instanceof IDataNMRSelection selection) {
-						IComplexSignalMeasurement<?> measurement = selection.getMeasurement();
-						if(measurement instanceof ISpectrumMeasurement spectrumMeasurement) {
-							items.put(spectrumMeasurement, selection);
-						}
+			Iterator<?> iterator = viewer.getStructuredSelection().iterator();
+			Map<ISpectrumMeasurement, IDataNMRSelection> items = new LinkedHashMap<>();
+			while(iterator.hasNext()) {
+				Object object = iterator.next();
+				if(object instanceof IDataNMRSelection selection) {
+					IComplexSignalMeasurement<?> measurement = selection.getMeasurement();
+					if(measurement instanceof ISpectrumMeasurement spectrumMeasurement) {
+						items.put(spectrumMeasurement, selection);
 					}
 				}
-				if(!items.isEmpty()) {
-					Set<ISpectrumMeasurement> measurements = items.keySet();
-					BiPredicate<IMeasurementFilter<?>, Map<String, ?>> acceptor = new BiPredicate<IMeasurementFilter<?>, Map<String, ?>>() {
+			}
+			if(!items.isEmpty()) {
+				Set<ISpectrumMeasurement> measurements = items.keySet();
+				BiPredicate<IMeasurementFilter<?>, Map<String, ?>> acceptor = (filter, properties) -> filter.acceptsIMeasurements(measurements);
+				Collection<IMeasurementFilter<?>> filters = filterFactory.getProcessors(ProcessorFactory.genericClass(IMeasurementFilter.class), acceptor);
+				Consumer<Collection<? extends IMeasurement>> consumer = t -> {
 
-						@Override
-						public boolean test(IMeasurementFilter<?> filter, Map<String, ?> properties) {
-
-							return filter.acceptsIMeasurements(measurements);
-						}
-					};
-					Collection<IMeasurementFilter<?>> filters = filterFactory.getProcessors(ProcessorFactory.genericClass(IMeasurementFilter.class), acceptor);
-					Consumer<Collection<? extends IMeasurement>> consumer = new Consumer<Collection<? extends IMeasurement>>() {
-
-						@Override
-						public void accept(Collection<? extends IMeasurement> t) {
-
-							for(IMeasurement measurement : t) {
-								if(items.get(measurement) == null && measurement instanceof Filtered<?, ?> filtered) {
-									Object filteredObject = filtered.getFilterContext().getFilteredObject();
-									IDataNMRSelection dataNMRSelection = items.get(filteredObject);
-									if(dataNMRSelection != null) {
-										if(measurement instanceof IComplexSignalMeasurement<?>) {
-											try {
-												dataNMRSelection.addMeasurement((IComplexSignalMeasurement<?>)measurement);
-											} catch(UnsupportedOperationException e) {
-												// optional operation not supported... ignore then
-											}
-										}
+					for(IMeasurement measurement : t) {
+						if(items.get(measurement) == null && measurement instanceof Filtered<?, ?> filtered) {
+							Object filteredObject = filtered.getFilterContext().getFilteredObject();
+							IDataNMRSelection dataNMRSelection = items.get(filteredObject);
+							if(dataNMRSelection != null) {
+								if(measurement instanceof IComplexSignalMeasurement<?>) {
+									try {
+										dataNMRSelection.addMeasurement((IComplexSignalMeasurement<?>)measurement);
+									} catch(UnsupportedOperationException e) {
+										// optional operation not supported... ignore then
 									}
 								}
 							}
-							Display.getDefault().asyncExec(viewer::refresh);
 						}
-					};
-					for(IMeasurementFilter<?> filter : filters) {
-						mgr.add(new MeasurementFilterAction(filter, measurements, consumer, processTypeSupport));
 					}
+					Display.getDefault().asyncExec(viewer::refresh);
+				};
+				for(IMeasurementFilter<?> filter : filters) {
+					mgr.add(new MeasurementFilterAction(filter, measurements, consumer, processTypeSupport));
 				}
 			}
 		});

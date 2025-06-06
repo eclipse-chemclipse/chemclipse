@@ -140,21 +140,17 @@ public class FluorescenceSpectrumFileSupport {
 			return;
 		}
 		ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);
-		IRunnableWithProgress runnable = new IRunnableWithProgress() {
+		IRunnableWithProgress runnable = monitor -> {
 
-			@Override
-			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
-				try {
-					monitor.beginTask(FluorescenceSpectroscopy.saveFluorescence, IProgressMonitor.UNKNOWN);
-					IProcessingInfo<File> processingInfo = ScanConverterFSD.convert(file, spectrum, supplier.getId(), monitor);
-					ProcessingInfoPartSupport.getInstance().update(processingInfo);
-					processingInfo.getProcessingResult();
-				} catch(TypeCastException e) {
-					logger.warn(e);
-				} finally {
-					monitor.done();
-				}
+			try {
+				monitor.beginTask(FluorescenceSpectroscopy.saveFluorescence, IProgressMonitor.UNKNOWN);
+				IProcessingInfo<File> processingInfo = ScanConverterFSD.convert(file, spectrum, supplier.getId(), monitor);
+				ProcessingInfoPartSupport.getInstance().update(processingInfo);
+				processingInfo.getProcessingResult();
+			} catch(TypeCastException e) {
+				logger.warn(e);
+			} finally {
+				monitor.done();
 			}
 		};
 		try {

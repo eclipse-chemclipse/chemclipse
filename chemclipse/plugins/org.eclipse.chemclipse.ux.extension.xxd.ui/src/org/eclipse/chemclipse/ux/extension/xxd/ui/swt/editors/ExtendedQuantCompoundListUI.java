@@ -23,17 +23,14 @@ import org.eclipse.chemclipse.model.quantitation.IQuantitationDatabase;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
-import org.eclipse.chemclipse.support.ui.events.IKeyEventProcessor;
 import org.eclipse.chemclipse.support.ui.menu.ITableMenuEntry;
 import org.eclipse.chemclipse.support.ui.swt.ExtendedTableViewer;
 import org.eclipse.chemclipse.support.ui.swt.ITableSettings;
-import org.eclipse.chemclipse.swt.ui.components.ISearchListener;
 import org.eclipse.chemclipse.swt.ui.components.SearchSupportUI;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
 import org.eclipse.chemclipse.ux.extension.ui.support.PartSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
-import org.eclipse.chemclipse.ux.extension.ui.swt.ISettingsHandler;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.validation.QuantitationCompoundValidator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageQuantitation;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageQuantitationAxes;
@@ -43,21 +40,16 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -294,15 +286,11 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 		text.setText("");
 		text.setToolTipText("Operator");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		text.addModifyListener(new ModifyListener() {
+		text.addModifyListener(e -> {
 
-			@Override
-			public void modifyText(ModifyEvent e) {
-
-				if(quantitationDatabase != null) {
-					quantitationDatabase.setOperator(text.getText().trim());
-					setDirty(true);
-				}
+			if(quantitationDatabase != null) {
+				quantitationDatabase.setOperator(text.getText().trim());
+				setDirty(true);
 			}
 		});
 		//
@@ -318,15 +306,11 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 		text.setText("");
 		text.setToolTipText("Description");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		text.addModifyListener(new ModifyListener() {
+		text.addModifyListener(e -> {
 
-			@Override
-			public void modifyText(ModifyEvent e) {
-
-				if(quantitationDatabase != null) {
-					quantitationDatabase.setDescription(text.getText().trim());
-					setDirty(true);
-				}
+			if(quantitationDatabase != null) {
+				quantitationDatabase.setDescription(text.getText().trim());
+				setDirty(true);
 			}
 		});
 		//
@@ -424,14 +408,7 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 
 		searchSupportUI = new SearchSupportUI(parent, SWT.NONE);
 		searchSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		searchSupportUI.setSearchListener(new ISearchListener() {
-
-			@Override
-			public void performSearch(String searchText, boolean caseSensitive) {
-
-				quantCompoundListUI.setSearchText(searchText, caseSensitive);
-			}
-		});
+		searchSupportUI.setSearchListener((searchText, caseSensitive) -> quantCompoundListUI.setSearchText(searchText, caseSensitive));
 		//
 		return searchSupportUI;
 	}
@@ -514,14 +491,7 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePageQuantitation.class, PreferencePageQuantitationAxes.class), new ISettingsHandler() {
-
-			@Override
-			public void apply(Display display) {
-
-				applySettings();
-			}
-		});
+		createSettingsButton(parent, Arrays.asList(PreferencePageQuantitation.class, PreferencePageQuantitationAxes.class), display -> applySettings());
 	}
 
 	private void deleteCompounds(Shell shell) {
@@ -585,15 +555,11 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 		QuantCompoundListUI listUI = new QuantCompoundListUI(parent, SWT.VIRTUAL | SWT.BORDER | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
 		Table table = listUI.getTable();
 		table.setLayoutData(new GridData(GridData.FILL_BOTH));
-		listUI.addSelectionChangedListener(new ISelectionChangedListener() {
+		listUI.addSelectionChangedListener(event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				Object object = listUI.getStructuredSelection().getFirstElement();
-				if(object instanceof IQuantitationCompound quantitationCompound) {
-					UpdateNotifierUI.update(getDisplay(), quantitationCompound);
-				}
+			Object object = listUI.getStructuredSelection().getFirstElement();
+			if(object instanceof IQuantitationCompound quantitationCompound) {
+				UpdateNotifierUI.update(getDisplay(), quantitationCompound);
 			}
 		});
 		/*
@@ -634,14 +600,10 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 
 	private void addKeyEventProcessors(Shell shell, ITableSettings tableSettings) {
 
-		tableSettings.addKeyEventProcessor(new IKeyEventProcessor() {
+		tableSettings.addKeyEventProcessor((extendedTableViewer, e) -> {
 
-			@Override
-			public void handleEvent(ExtendedTableViewer extendedTableViewer, KeyEvent e) {
-
-				if(e.keyCode == SWT.DEL) {
-					deleteCompounds(shell);
-				}
+			if(e.keyCode == SWT.DEL) {
+				deleteCompounds(shell);
 			}
 		});
 	}

@@ -23,9 +23,7 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.MeasurementResultNotification;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedMeasurementResultUI;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
@@ -49,20 +47,16 @@ public class MeasurementResultsPart extends AbstractPart<ExtendedMeasurementResu
 
 		ExtendedMeasurementResultUI extendedMeasurementResultUI = new ExtendedMeasurementResultUI(parent, SWT.NONE);
 		ComboViewer comboViewer = extendedMeasurementResultUI.getComboMeasurementResults();
-		comboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+		comboViewer.addSelectionChangedListener(event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				IMeasurementResult<?> measurementResult = null;
-				if(event.getSelection() instanceof IStructuredSelection structuredSelection) {
-					if(structuredSelection.getFirstElement() instanceof IMeasurementResult<?> measurementResultSelection) {
-						measurementResult = measurementResultSelection;
-					}
+			IMeasurementResult<?> measurementResult = null;
+			if(event.getSelection() instanceof IStructuredSelection structuredSelection) {
+				if(structuredSelection.getFirstElement() instanceof IMeasurementResult<?> measurementResultSelection) {
+					measurementResult = measurementResultSelection;
 				}
-				//
-				measurementResultNotification.select(measurementResult);
 			}
+			//
+			measurementResultNotification.select(measurementResult);
 		});
 		//
 		return extendedMeasurementResultUI;

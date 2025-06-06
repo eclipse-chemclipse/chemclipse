@@ -19,11 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.function.Consumer;
 
 import org.eclipse.chemclipse.model.handler.IModificationHandler;
 import org.eclipse.chemclipse.processing.methods.ProcessMethod;
-import org.eclipse.chemclipse.processing.supplier.IProcessSupplier;
 import org.eclipse.chemclipse.processing.supplier.IProcessSupplierContext;
 import org.eclipse.chemclipse.support.updates.IUpdateListener;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -240,15 +238,11 @@ public class ProcessMethodHeader extends Composite {
 
 				if(knownCategories == null && processingSupport != null) {
 					Set<String> categories = new TreeSet<>();
-					processingSupport.visitSupplier(new Consumer<IProcessSupplier<?>>() {
+					processingSupport.visitSupplier(supplier -> {
 
-						@Override
-						public void accept(IProcessSupplier<?> supplier) {
-
-							String category = supplier.getCategory();
-							if(category != null && !category.isEmpty()) {
-								categories.add(category);
-							}
+						String category = supplier.getCategory();
+						if(category != null && !category.isEmpty()) {
+							categories.add(category);
 						}
 					});
 					knownCategories = categories.toArray(new String[0]);

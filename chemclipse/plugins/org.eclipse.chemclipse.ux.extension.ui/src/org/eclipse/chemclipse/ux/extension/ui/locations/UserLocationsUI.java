@@ -38,8 +38,6 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -190,16 +188,12 @@ public class UserLocationsUI extends Composite {
 		PathValidator pathValidator = new PathValidator(true);
 		ControlDecoration controlDecoration = new ControlDecoration(text, SWT.LEFT | SWT.TOP);
 		//
-		text.addModifyListener(new ModifyListener() {
+		text.addModifyListener(event -> {
 
-			@Override
-			public void modifyText(ModifyEvent event) {
-
-				if(userLocation != null) {
-					if(validate(pathValidator, controlDecoration, text)) {
-						userLocation.setPath(pathValidator.getPath());
-						fireUpdate();
-					}
+			if(userLocation != null) {
+				if(validate(pathValidator, controlDecoration, text)) {
+					userLocation.setPath(pathValidator.getPath());
+					fireUpdate();
 				}
 			}
 		});
@@ -393,14 +387,7 @@ public class UserLocationsUI extends Composite {
 	private void fireUpdate() {
 
 		if(updateListener != null) {
-			getDisplay().asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-
-					updateListener.update();
-				}
-			});
+			getDisplay().asyncExec(() -> updateListener.update());
 		}
 	}
 }

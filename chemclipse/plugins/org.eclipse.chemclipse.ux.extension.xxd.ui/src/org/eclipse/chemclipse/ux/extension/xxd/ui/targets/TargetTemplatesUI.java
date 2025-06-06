@@ -40,8 +40,6 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -204,20 +202,16 @@ public class TargetTemplatesUI extends Composite {
 		TargetValidator targetValidator = new TargetValidator();
 		ControlDecoration controlDecoration = new ControlDecoration(text, SWT.LEFT | SWT.TOP);
 		//
-		text.addModifyListener(new ModifyListener() {
+		text.addModifyListener(event -> {
 
-			@Override
-			public void modifyText(ModifyEvent event) {
-
-				if(targetTemplate != null) {
-					if(validate(targetValidator, controlDecoration, text)) {
-						targetTemplate.setName(targetValidator.getName());
-						targetTemplate.setCasNumber(targetValidator.getCasNumber());
-						targetTemplate.setComments(targetValidator.getComments());
-						targetTemplate.setContributor(targetValidator.getContributor());
-						targetTemplate.setReferenceId(targetValidator.getReferenceId());
-						fireUpdate();
-					}
+			if(targetTemplate != null) {
+				if(validate(targetValidator, controlDecoration, text)) {
+					targetTemplate.setName(targetValidator.getName());
+					targetTemplate.setCasNumber(targetValidator.getCasNumber());
+					targetTemplate.setComments(targetValidator.getComments());
+					targetTemplate.setContributor(targetValidator.getContributor());
+					targetTemplate.setReferenceId(targetValidator.getReferenceId());
+					fireUpdate();
 				}
 			}
 		});
@@ -434,14 +428,7 @@ public class TargetTemplatesUI extends Composite {
 	private void fireUpdate() {
 
 		if(updateListener != null) {
-			getDisplay().asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-
-					updateListener.update();
-				}
-			});
+			getDisplay().asyncExec(() -> updateListener.update());
 		}
 	}
 }

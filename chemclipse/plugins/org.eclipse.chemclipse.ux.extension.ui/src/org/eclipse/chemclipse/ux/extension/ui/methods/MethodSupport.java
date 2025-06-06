@@ -25,9 +25,7 @@ import org.eclipse.chemclipse.progress.core.InfoType;
 import org.eclipse.chemclipse.progress.core.StatusLineLogger;
 import org.eclipse.chemclipse.swt.ui.components.IMethodListener;
 import org.eclipse.chemclipse.ux.extension.ui.l10n.ExtensionMessages;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Shell;
 
 public class MethodSupport {
@@ -62,14 +60,7 @@ public class MethodSupport {
 				processMethod.setResumeIndex(methodParameters.getResumeIndex());
 				//
 				ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);
-				dialog.run(true, false, new IRunnableWithProgress() {
-
-					@Override
-					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
-						methodListener.execute(processMethod, monitor);
-					}
-				});
+				dialog.run(true, false, monitor -> methodListener.execute(processMethod, monitor));
 			} catch(InvocationTargetException e) {
 				IProcessingInfo<?> processingInfo = new ProcessingInfo<>();
 				processingInfo.addErrorMessage(processMethod.getName(), "Execution failed", e.getCause());

@@ -498,14 +498,7 @@ public class ChromatogramReferencesUI extends Composite {
 					//
 					if(dataType != null) {
 						ISupplierEditorSupport supplierEditorSupport = new SupplierEditorSupport(dataType, () -> Activator.getDefault().getEclipseContext());
-						e.display.asyncExec(new Runnable() {
-
-							@Override
-							public void run() {
-
-								supplierEditorSupport.openEditor(chromatogram);
-							}
-						});
+						e.display.asyncExec(() -> supplierEditorSupport.openEditor(chromatogram));
 					}
 				}
 			}

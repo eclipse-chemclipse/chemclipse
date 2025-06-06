@@ -25,16 +25,10 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -130,23 +124,15 @@ public class SelectProjectWizardPage extends AbstractExtendedWizardPage {
 		treeViewerProject.setContentProvider(new ProjectContentProvider());
 		treeViewerProject.setLabelProvider(new ProjectLabelProvider());
 		treeViewerProject.getControl().setLayoutData(gridDataTreeViewer);
-		treeViewerProject.addSelectionChangedListener(new ISelectionChangedListener() {
+		treeViewerProject.addSelectionChangedListener(event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				Object object = ((IStructuredSelection)event.getSelection()).getFirstElement();
-				validateTreeViewSelection(object);
-			}
+			Object object = ((IStructuredSelection)event.getSelection()).getFirstElement();
+			validateTreeViewSelection(object);
 		});
-		treeViewerProject.addDoubleClickListener(new IDoubleClickListener() {
+		treeViewerProject.addDoubleClickListener(event -> {
 
-			@Override
-			public void doubleClick(DoubleClickEvent event) {
-
-				Object object = ((IStructuredSelection)event.getSelection()).getFirstElement();
-				validateTreeViewSelection(object);
-			}
+			Object object = ((IStructuredSelection)event.getSelection()).getFirstElement();
+			validateTreeViewSelection(object);
 		});
 		/*
 		 * Radio: New project -------------------------------------------------------------------------
@@ -169,14 +155,7 @@ public class SelectProjectWizardPage extends AbstractExtendedWizardPage {
 		projectNameText = new Text(composite, SWT.BORDER);
 		projectNameText.setText("");
 		projectNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		projectNameText.addModifyListener(new ModifyListener() {
-
-			@Override
-			public void modifyText(ModifyEvent e) {
-
-				validateTextSelection();
-			}
-		});
+		projectNameText.addModifyListener(e -> validateTextSelection());
 		/*
 		 * Set default choice
 		 */

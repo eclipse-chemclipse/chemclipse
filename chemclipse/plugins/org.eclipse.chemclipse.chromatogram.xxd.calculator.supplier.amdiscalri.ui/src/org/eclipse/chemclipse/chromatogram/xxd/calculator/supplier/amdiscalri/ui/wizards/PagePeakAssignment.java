@@ -42,13 +42,9 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.PeakTargetsViewerUI;
 import org.eclipse.jface.fieldassist.ContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -194,14 +190,7 @@ public class PagePeakAssignment extends AbstractExtendedWizardPage {
 		combo.setItems(availableStandards);
 		combo.setToolTipText("Start Index");
 
-		combo.addModifyListener(new ModifyListener() {
-
-			@Override
-			public void modifyText(ModifyEvent arg0) {
-
-				setStartIndexName(combo);
-			}
-		});
+		combo.addModifyListener(arg0 -> setStartIndexName(combo));
 
 		return combo;
 	}
@@ -219,14 +208,7 @@ public class PagePeakAssignment extends AbstractExtendedWizardPage {
 		combo.setItems(availableStandards);
 		combo.setToolTipText("Stop Index");
 
-		combo.addModifyListener(new ModifyListener() {
-
-			@Override
-			public void modifyText(ModifyEvent arg0) {
-
-				setStopIndexName(combo);
-			}
-		});
+		combo.addModifyListener(arg0 -> setStopIndexName(combo));
 
 		return combo;
 	}
@@ -307,16 +289,12 @@ public class PagePeakAssignment extends AbstractExtendedWizardPage {
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.heightHint = 100;
 		peakTableViewerUI.getTable().setLayoutData(gridData);
-		peakTableViewerUI.addSelectionChangedListener(new ISelectionChangedListener() {
+		peakTableViewerUI.addSelectionChangedListener(event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				IPeak selectedPeak = getSelectedPeak();
-				if(selectedPeak != null) {
-					targetsViewerUI.setInput(selectedPeak.getTargets());
-					targetsViewerUI.getTable().setSelection(0);
-				}
+			IPeak selectedPeak = getSelectedPeak();
+			if(selectedPeak != null) {
+				targetsViewerUI.setInput(selectedPeak.getTargets());
+				targetsViewerUI.getTable().setSelection(0);
 			}
 		});
 	}
@@ -576,22 +554,18 @@ public class PagePeakAssignment extends AbstractExtendedWizardPage {
 
 	private void enableAutoComplete(Combo combo) {
 
-		IContentProposalProvider proposalProvider = new IContentProposalProvider() {
+		IContentProposalProvider proposalProvider = (contents, position) -> {
 
-			@Override
-			public IContentProposal[] getProposals(String contents, int position) {
-
-				List<ContentProposal> list = new ArrayList<>();
-				if(contents != null) {
-					String[] items = combo.getItems();
-					for(String item : items) {
-						if(item.toLowerCase().contains(contents.toLowerCase())) {
-							list.add(new ContentProposal(item));
-						}
+			List<ContentProposal> list = new ArrayList<>();
+			if(contents != null) {
+				String[] items = combo.getItems();
+				for(String item : items) {
+					if(item.toLowerCase().contains(contents.toLowerCase())) {
+						list.add(new ContentProposal(item));
 					}
 				}
-				return list.toArray(new IContentProposal[0]);
 			}
+			return list.toArray(new IContentProposal[0]);
 		};
 
 		autoComplete(combo, proposalProvider);

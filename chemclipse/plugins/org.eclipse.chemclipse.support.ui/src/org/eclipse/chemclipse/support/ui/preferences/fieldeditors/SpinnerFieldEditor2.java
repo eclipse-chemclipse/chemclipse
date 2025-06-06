@@ -21,8 +21,6 @@ import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Spinner;
@@ -276,14 +274,7 @@ public class SpinnerFieldEditor2 extends FieldEditor {
 			spinner.setFont(parent.getFont());
 			switch(validateStrategy) {
 				case VALIDATE_ON_VALUE_MODIFICATION:
-					spinner.addModifyListener(new ModifyListener() {
-
-						@Override
-						public void modifyText(ModifyEvent e) {
-
-							valueChanged();
-						}
-					});
+					spinner.addModifyListener(e -> valueChanged());
 					break;
 				case VALIDATE_ON_FOCUS_LOST:
 					spinner.addKeyListener(new KeyAdapter() {

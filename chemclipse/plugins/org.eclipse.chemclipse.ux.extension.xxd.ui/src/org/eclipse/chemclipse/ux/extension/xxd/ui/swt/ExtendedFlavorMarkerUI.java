@@ -19,13 +19,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.eclipse.chemclipse.model.identifier.IFlavorMarker;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
-import org.eclipse.chemclipse.swt.ui.components.ISearchListener;
 import org.eclipse.chemclipse.swt.ui.components.SearchSupportUI;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
-import org.eclipse.chemclipse.ux.extension.ui.swt.ISettingsHandler;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePage;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -108,14 +104,7 @@ public class ExtendedFlavorMarkerUI extends LibraryInformationComposite {
 
 		SearchSupportUI searchSupportUI = new SearchSupportUI(parent, SWT.NONE);
 		searchSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		searchSupportUI.setSearchListener(new ISearchListener() {
-
-			@Override
-			public void performSearch(String searchText, boolean caseSensitive) {
-
-				listControl.get().setSearchText(searchText, caseSensitive);
-			}
-		});
+		searchSupportUI.setSearchListener((searchText, caseSensitive) -> listControl.get().setSearchText(searchText, caseSensitive));
 		//
 		toolbarSearch.set(searchSupportUI);
 	}
@@ -126,17 +115,13 @@ public class ExtendedFlavorMarkerUI extends LibraryInformationComposite {
 		Table table = listUI.getTable();
 		table.setLayoutData(new GridData(GridData.FILL_BOTH));
 		//
-		listUI.addSelectionChangedListener(new ISelectionChangedListener() {
+		listUI.addSelectionChangedListener(event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				Object object = listUI.getStructuredSelection().getFirstElement();
-				if(object instanceof IFlavorMarker flavorMarker) {
-					updateLiterature(flavorMarker);
-				} else {
-					updateLiterature(null);
-				}
+			Object object = listUI.getStructuredSelection().getFirstElement();
+			if(object instanceof IFlavorMarker flavorMarker) {
+				updateLiterature(flavorMarker);
+			} else {
+				updateLiterature(null);
 			}
 		});
 		//
@@ -155,14 +140,7 @@ public class ExtendedFlavorMarkerUI extends LibraryInformationComposite {
 
 	private void createButtonSettings(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePage.class), new ISettingsHandler() {
-
-			@Override
-			public void apply(Display display) {
-
-				applySettings();
-			}
-		});
+		createSettingsButton(parent, Arrays.asList(PreferencePage.class), display -> applySettings());
 	}
 
 	private void applySettings() {

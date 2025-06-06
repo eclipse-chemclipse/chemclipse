@@ -30,10 +30,8 @@ import org.eclipse.chemclipse.processing.core.ProcessingInfo;
 import org.eclipse.chemclipse.processing.ui.support.ProcessingInfoPartSupport;
 import org.eclipse.chemclipse.support.ui.swt.ExtendedTableViewer;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.DataListUI;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
@@ -140,21 +138,17 @@ public class NMRDataListUI extends DataListUI {
 
 		ProgressMonitorDialog dialog = new ProgressMonitorDialog(getTableViewer().getControl().getShell());
 		try {
-			dialog.run(true, true, new IRunnableWithProgress() {
+			dialog.run(true, true, monitor -> {
 
-				@Override
-				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
-					SubMonitor subMonitor = SubMonitor.convert(monitor, "Loading Files", newFiles.size() * 100);
-					for(File file : newFiles) {
-						IProcessingInfo<Collection<IComplexSignalMeasurement<?>>> convert = ScanConverterNMR.convert(file, subMonitor.split(100));
-						Collection<IComplexSignalMeasurement<?>> result = convert.getProcessingResult();
-						filesMap.put(file, new MeasurementLoadResult(file, result));
-						if(subMonitor.isCanceled()) {
-							throw new InterruptedException("canceled");
-						}
+				SubMonitor subMonitor = SubMonitor.convert(monitor, "Loading Files", newFiles.size() * 100);
+				for(File file : newFiles) {
+					IProcessingInfo<Collection<IComplexSignalMeasurement<?>>> convert = ScanConverterNMR.convert(file, subMonitor.split(100));
+					Collection<IComplexSignalMeasurement<?>> result = convert.getProcessingResult();
+					filesMap.put(file, new MeasurementLoadResult(file, result));
+					if(subMonitor.isCanceled()) {
+						throw new InterruptedException("canceled");
 					}
-				};
+				}
 			});
 			super.addFiles(newFiles);
 		} catch(InvocationTargetException e) {

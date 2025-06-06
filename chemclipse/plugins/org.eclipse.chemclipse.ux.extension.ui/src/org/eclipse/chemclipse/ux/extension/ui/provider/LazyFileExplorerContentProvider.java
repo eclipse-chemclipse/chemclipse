@@ -150,19 +150,15 @@ public class LazyFileExplorerContentProvider implements ILazyTreeContentProvider
 		}
 		if(file.isDirectory()) {
 			Display display = viewer.getControl().getDisplay();
-			BusyIndicator.showWhile(display, new Runnable() {
+			BusyIndicator.showWhile(display, () -> {
 
-				@Override
-				public void run() {
-
-					File[] childs = file.listFiles(LazyFileExplorerContentProvider.this);
-					// null check is required here, e.g. if the directory can't be read/accessed list returns null
-					if(childs != null) {
-						Arrays.sort(childs);
-						cache.put(file, childs);
-					} else {
-						cache.put(file, NO_CHILD);
-					}
+				File[] childs = file.listFiles(LazyFileExplorerContentProvider.this);
+				// null check is required here, e.g. if the directory can't be read/accessed list returns null
+				if(childs != null) {
+					Arrays.sort(childs);
+					cache.put(file, childs);
+				} else {
+					cache.put(file, NO_CHILD);
 				}
 			});
 			return cache.get(file);

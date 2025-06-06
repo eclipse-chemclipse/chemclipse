@@ -30,8 +30,6 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
@@ -222,13 +220,7 @@ public class SelectViewDialog extends Dialog implements ISelectionChangedListene
 		/*
 		 * Select the perspective in double click.
 		 */
-		tableViewer.addDoubleClickListener(new IDoubleClickListener() {
-
-			public void doubleClick(DoubleClickEvent event) {
-
-				okPressed();
-			}
-		});
+		tableViewer.addDoubleClickListener(event -> okPressed());
 	}
 
 	/**

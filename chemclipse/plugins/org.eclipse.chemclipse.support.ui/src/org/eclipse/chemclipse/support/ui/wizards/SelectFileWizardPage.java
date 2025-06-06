@@ -18,8 +18,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -102,14 +100,7 @@ public class SelectFileWizardPage extends AbstractExtendedWizardPage {
 		reportNameText = new Text(composite, SWT.BORDER);
 		reportNameText.setText(defaultReportName);
 		reportNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		reportNameText.addModifyListener(new ModifyListener() {
-
-			@Override
-			public void modifyText(ModifyEvent e) {
-
-				validateReportName();
-			}
-		});
+		reportNameText.addModifyListener(e -> validateReportName());
 		//
 		validateReportName();
 		setControl(composite);

@@ -30,8 +30,6 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -151,37 +149,29 @@ public class FileHeaderDataEditor extends Composite {
 		text.setToolTipText("Regular Expression");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		//
-		IValidator<String> validator = new IValidator<>() {
+		IValidator<String> validator = value -> {
 
-			@Override
-			public IStatus validate(String value) {
-
-				String message = null;
-				if(value.isBlank()) {
-					message = "The regular expression must not be empty.";
-				} else {
-					String delimiter = FileHeaderDataSupport.VALUE_DELIMITER;
-					if(value.contains(delimiter)) {
-						message = "The regular expression must not contain: '" + delimiter + "'.";
-					}
+			String message = null;
+			if(value.isBlank()) {
+				message = "The regular expression must not be empty.";
+			} else {
+				String delimiter = FileHeaderDataSupport.VALUE_DELIMITER;
+				if(value.contains(delimiter)) {
+					message = "The regular expression must not contain: '" + delimiter + "'.";
 				}
-				//
-				if(message != null) {
-					return ValidationStatus.error(message);
-				} else {
-					return ValidationStatus.ok();
-				}
+			}
+			//
+			if(message != null) {
+				return ValidationStatus.error(message);
+			} else {
+				return ValidationStatus.ok();
 			}
 		};
 		ControlDecoration controlDecoration = new ControlDecoration(text, SWT.LEFT | SWT.TOP);
-		text.addModifyListener(new ModifyListener() {
+		text.addModifyListener(e -> {
 
-			@Override
-			public void modifyText(ModifyEvent e) {
-
-				if(validate(validator, controlDecoration, text)) {
-					fileHeaderData.setRegularExpression(text.getText().trim());
-				}
+			if(validate(validator, controlDecoration, text)) {
+				fileHeaderData.setRegularExpression(text.getText().trim());
 			}
 		});
 		//
@@ -200,14 +190,7 @@ public class FileHeaderDataEditor extends Composite {
 		gridData.widthHint = 80;
 		spinner.setLayoutData(gridData);
 		//
-		spinner.addModifyListener(new ModifyListener() {
-
-			@Override
-			public void modifyText(ModifyEvent e) {
-
-				fileHeaderData.setGroupIndex(spinner.getSelection());
-			}
-		});
+		spinner.addModifyListener(e -> fileHeaderData.setGroupIndex(spinner.getSelection()));
 		//
 		spinnerControl.set(spinner);
 	}

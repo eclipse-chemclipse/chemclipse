@@ -191,21 +191,7 @@ public class IntensityScaleUI extends Composite {
 		//
 		if(updateListener != null) {
 			try {
-				executorService.execute(new Runnable() {
-
-					@Override
-					public void run() {
-
-						display.asyncExec(new Runnable() {
-
-							@Override
-							public void run() {
-
-								updateListener.update(selection);
-							}
-						});
-					}
-				});
+				executorService.execute(() -> display.asyncExec(() -> updateListener.update(selection)));
 			} catch(RejectedExecutionException e) {
 				/*
 				 * Updates are already waiting for execution.

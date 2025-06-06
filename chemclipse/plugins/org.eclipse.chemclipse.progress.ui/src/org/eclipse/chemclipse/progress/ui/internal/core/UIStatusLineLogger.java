@@ -44,24 +44,20 @@ public class UIStatusLineLogger implements IStatusLineMessageListener {
 	public void setInfo(final InfoType infoType, final String message) {
 
 		Display display = DisplayUtils.getDisplay();
-		display.asyncExec(new Runnable() {
+		display.asyncExec(() -> {
 
-			@Override
-			public void run() {
-
-				try {
-					IStatusLineManager statusLineManager = getStatusLineManager();
-					switch(infoType) {
-						case MESSAGE:
-							statusLineManager.setMessage(message);
-							break;
-						case ERROR_MESSAGE:
-							statusLineManager.setErrorMessage(message);
-							break;
-					}
-				} catch(StatusLineManagerException e) {
-					logger.warn(e);
+			try {
+				IStatusLineManager statusLineManager = getStatusLineManager();
+				switch(infoType) {
+					case MESSAGE:
+						statusLineManager.setMessage(message);
+						break;
+					case ERROR_MESSAGE:
+						statusLineManager.setErrorMessage(message);
+						break;
 				}
+			} catch(StatusLineManagerException e) {
+				logger.warn(e);
 			}
 		});
 	}

@@ -87,14 +87,7 @@ public class ChromatogramEditorTSD implements IChemClipseEditor {
 			MPartStack partStack = (MPartStack)modelService.find(IPerspectiveAndViewIds.EDITOR_PART_STACK_ID, application);
 			part.setToBeRendered(false);
 			part.setVisible(false);
-			DisplayUtils.getDisplay().asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-
-					partStack.getChildren().remove(part);
-				}
-			});
+			DisplayUtils.getDisplay().asyncExec(() -> partStack.getChildren().remove(part));
 		}
 	}
 

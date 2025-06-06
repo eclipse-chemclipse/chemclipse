@@ -48,29 +48,25 @@ public class UndoOperationHandler {
 	@Execute
 	public void execute(UISynchronize uiSynchronize, final @Named(IServiceConstants.ACTIVE_SHELL) Shell shell, @Named(IServiceConstants.ACTIVE_PART) MPart part) {
 
-		uiSynchronize.syncExec(new Runnable() {
+		uiSynchronize.syncExec(() -> {
 
-			@Override
-			public void run() {
-
-				Cursor cursor = shell.getCursor();
-				try {
-					Cursor cursorNew = DisplayUtils.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
-					shell.setCursor(cursorNew);
-					/*
-					 * Undo the operation.
-					 */
-					IOperationHistory operationHistory = OperationHistoryFactory.getOperationHistory();
-					IUndoContext undoContext = UndoContextFactory.getUndoContext();
-					operationHistory.undo(undoContext, null, null);
-				} catch(ExecutionException e) {
-					logger.warn(e);
-					StatusLineLogger.setInfo(InfoType.ERROR_MESSAGE, ExtensionMessages.undoOperationFailed);
-				} finally {
-					shell.setCursor(cursor);
-					StatusLineLogger.setInfo(InfoType.MESSAGE, ExtensionMessages.undoOperationFinished);
-					MessageConsoleAppender.printDone(ExtensionMessages.undoOperationFinished);
-				}
+			Cursor cursor = shell.getCursor();
+			try {
+				Cursor cursorNew = DisplayUtils.getDisplay().getSystemCursor(SWT.CURSOR_WAIT);
+				shell.setCursor(cursorNew);
+				/*
+				 * Undo the operation.
+				 */
+				IOperationHistory operationHistory = OperationHistoryFactory.getOperationHistory();
+				IUndoContext undoContext = UndoContextFactory.getUndoContext();
+				operationHistory.undo(undoContext, null, null);
+			} catch(ExecutionException e) {
+				logger.warn(e);
+				StatusLineLogger.setInfo(InfoType.ERROR_MESSAGE, ExtensionMessages.undoOperationFailed);
+			} finally {
+				shell.setCursor(cursor);
+				StatusLineLogger.setInfo(InfoType.MESSAGE, ExtensionMessages.undoOperationFinished);
+				MessageConsoleAppender.printDone(ExtensionMessages.undoOperationFinished);
 			}
 		});
 	}

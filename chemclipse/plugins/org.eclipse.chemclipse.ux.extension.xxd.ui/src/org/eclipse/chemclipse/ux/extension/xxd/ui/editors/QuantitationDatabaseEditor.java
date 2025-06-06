@@ -18,8 +18,6 @@ import java.util.Map;
 
 import org.eclipse.chemclipse.converter.quantitation.QuantDBConverter;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.handler.IModificationHandler;
-import org.eclipse.chemclipse.model.handler.ISaveHandler;
 import org.eclipse.chemclipse.model.quantitation.IQuantitationDatabase;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
@@ -92,14 +90,7 @@ public class QuantitationDatabaseEditor implements IQuantitationDatabaseEditor {
 			MPartStack partStack = (MPartStack)modelService.find(IPerspectiveAndViewIds.EDITOR_PART_STACK_ID, application);
 			part.setToBeRendered(false);
 			part.setVisible(false);
-			DisplayUtils.getDisplay().asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-
-					partStack.getChildren().remove(part);
-				}
-			});
+			DisplayUtils.getDisplay().asyncExec(() -> partStack.getChildren().remove(part));
 		}
 	}
 
@@ -139,22 +130,8 @@ public class QuantitationDatabaseEditor implements IQuantitationDatabaseEditor {
 	private void createPage(Composite parent) {
 
 		extendedQuantCompoundListUI = new ExtendedQuantCompoundListUI(parent, SWT.NONE);
-		extendedQuantCompoundListUI.setModificationHandler(new IModificationHandler() {
-
-			@Override
-			public void setDirty(boolean dirty) {
-
-				dirtyable.setDirty(dirty);
-			}
-		});
-		extendedQuantCompoundListUI.setSaveHandler(new ISaveHandler() {
-
-			@Override
-			public void doSave() {
-
-				save();
-			}
-		});
+		extendedQuantCompoundListUI.setModificationHandler(dirty -> dirtyable.setDirty(dirty));
+		extendedQuantCompoundListUI.setSaveHandler(() -> save());
 	}
 
 	private synchronized IQuantitationDatabase loadQuantitationDatabase() {

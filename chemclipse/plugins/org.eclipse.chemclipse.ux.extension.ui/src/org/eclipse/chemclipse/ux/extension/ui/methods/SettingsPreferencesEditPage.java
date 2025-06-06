@@ -30,11 +30,7 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.ux.extension.ui.l10n.ExtensionMessages;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ITreeSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeNode;
 import org.eclipse.jface.viewers.TreeNodeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -98,33 +94,22 @@ public class SettingsPreferencesEditPage extends WizardPage {
 		createColumnAskSettings(treeViewer);
 		createColumnOptions(treeViewer);
 		//
-		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+		treeViewer.addSelectionChangedListener(event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				ITreeSelection selection = treeViewer.getStructuredSelection();
-				Object[] array = selection.toArray();
-				boolean buttonsEnabled = array.length > 0;
-				for(Object object : array) {
-					if(getEntry(object) == null) {
-						buttonsEnabled = false;
-						break;
-					}
+			ITreeSelection selection = treeViewer.getStructuredSelection();
+			Object[] array = selection.toArray();
+			boolean buttonsEnabled = array.length > 0;
+			for(Object object : array) {
+				if(getEntry(object) == null) {
+					buttonsEnabled = false;
+					break;
 				}
-				toolItemEditControl.get().setEnabled(buttonsEnabled && array.length == 1);
-				toolItemDeleteControl.get().setEnabled(buttonsEnabled);
 			}
+			toolItemEditControl.get().setEnabled(buttonsEnabled && array.length == 1);
+			toolItemDeleteControl.get().setEnabled(buttonsEnabled);
 		});
 		//
-		treeViewer.addDoubleClickListener(new IDoubleClickListener() {
-
-			@Override
-			public void doubleClick(DoubleClickEvent event) {
-
-				doEdit();
-			}
-		});
+		treeViewer.addDoubleClickListener(event -> doEdit());
 		//
 		treeViewer.getControl().addKeyListener(new KeyAdapter() {
 

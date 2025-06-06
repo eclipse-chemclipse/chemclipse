@@ -50,18 +50,14 @@ public class E4ProcessSupplierContext implements IProcessSupplierContext {
 	@Override
 	public void visitSupplier(Consumer<? super IProcessSupplier<?>> consumer) {
 
-		processSupplierContext.visitSupplier(new Consumer<IProcessSupplier<?>>() {
+		processSupplierContext.visitSupplier(supplier -> {
 
-			@Override
-			public void accept(IProcessSupplier<?> supplier) {
-
-				Object factorySupplier = ContextInjectionFactory.invoke(supplier, ProcessSupplierFactory.class, eclipseContext, null);
-				if(factorySupplier instanceof IProcessSupplier<?> processSupplier) {
-					ContextInjectionFactory.inject(factorySupplier, eclipseContext);
-					consumer.accept(processSupplier);
-				} else {
-					consumer.accept(supplier);
-				}
+			Object factorySupplier = ContextInjectionFactory.invoke(supplier, ProcessSupplierFactory.class, eclipseContext, null);
+			if(factorySupplier instanceof IProcessSupplier<?> processSupplier) {
+				ContextInjectionFactory.inject(factorySupplier, eclipseContext);
+				consumer.accept(processSupplier);
+			} else {
+				consumer.accept(supplier);
 			}
 		});
 	}

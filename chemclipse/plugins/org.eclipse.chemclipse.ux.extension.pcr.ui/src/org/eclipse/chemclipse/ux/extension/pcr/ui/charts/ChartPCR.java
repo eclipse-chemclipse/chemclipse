@@ -36,10 +36,8 @@ import org.eclipse.chemclipse.xxd.process.ui.menu.IMenuIcon;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
@@ -185,14 +183,10 @@ public class ChartPCR extends LineChart {
 						File file = new File(pathname);
 						ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);
 						try {
-							dialog.run(true, true, new IRunnableWithProgress() {
+							dialog.run(true, true, monitor -> {
 
-								@Override
-								public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
-									IProcessingInfo<File> convert = PlateConverterPCR.convert(file, plate, supplier.getId(), monitor);
-									ProcessingInfoPartSupport.getInstance().update(convert);
-								}
+								IProcessingInfo<File> convert = PlateConverterPCR.convert(file, plate, supplier.getId(), monitor);
+								ProcessingInfoPartSupport.getInstance().update(convert);
 							});
 						} catch(InvocationTargetException e) {
 							IProcessingInfo<?> processingInfo = new ProcessingInfo<>();

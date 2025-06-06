@@ -66,21 +66,15 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.l10n.ExtensionMessages;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.DynamicSettingsUI;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.NMRMeasurementsUI;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedNMRScanUI;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.Persist;
 import org.eclipse.e4.ui.model.application.ui.MDirtyable;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -117,14 +111,7 @@ public class ScanEditorNMR implements IScanEditorNMR {
 
 		this.partSupport = partSupport;
 		this.processSupplierContext = context;
-		parent.addDisposeListener(new DisposeListener() {
-
-			@Override
-			public void widgetDisposed(DisposeEvent e) {
-
-				executorService.shutdownNow();
-			}
-		});
+		parent.addDisposeListener(e -> executorService.shutdownNow());
 		//
 		this.part = part;
 		this.dirtyable = dirtyable;
@@ -187,36 +174,28 @@ public class ScanEditorNMR implements IScanEditorNMR {
 			File file = new File((String)map.get(EditorSupport.MAP_FILE));
 			ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);
 			try {
-				dialog.run(true, false, new IRunnableWithProgress() {
+				dialog.run(true, false, monitor -> {
 
-					@Override
-					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
-						IProcessingInfo<Collection<IComplexSignalMeasurement<?>>> convert = ScanConverterNMR.convert(file, monitor);
-						Collection<IComplexSignalMeasurement<?>> result = convert.getProcessingResult();
-						if(result != null) {
-							selection = new DataNMRSelection();
-							for(IComplexSignalMeasurement<?> measurement : result) {
-								selection.addMeasurement(measurement);
-							}
-							for(IComplexSignalMeasurement<?> measurement : result) {
-								if(measurement instanceof IMeasurementFID) {
-									selection.setActiveMeasurement(measurement);
-									break;
-								}
-							}
-							Display.getDefault().asyncExec(ScanEditorNMR.this::updateSelection);
-						} else {
-							Display.getDefault().asyncExec(new Runnable() {
-
-								@Override
-								public void run() {
-
-									ProcessingInfoPartSupport.getInstance().update(convert);
-									partSupport.closePart(part);
-								}
-							});
+					IProcessingInfo<Collection<IComplexSignalMeasurement<?>>> convert = ScanConverterNMR.convert(file, monitor);
+					Collection<IComplexSignalMeasurement<?>> result = convert.getProcessingResult();
+					if(result != null) {
+						selection = new DataNMRSelection();
+						for(IComplexSignalMeasurement<?> measurement : result) {
+							selection.addMeasurement(measurement);
 						}
+						for(IComplexSignalMeasurement<?> measurement : result) {
+							if(measurement instanceof IMeasurementFID) {
+								selection.setActiveMeasurement(measurement);
+								break;
+							}
+						}
+						Display.getDefault().asyncExec(ScanEditorNMR.this::updateSelection);
+					} else {
+						Display.getDefault().asyncExec(() -> {
+
+							ProcessingInfoPartSupport.getInstance().update(convert);
+							partSupport.closePart(part);
+						});
 					}
 				});
 			} catch(InvocationTargetException e) {
@@ -270,23 +249,19 @@ public class ScanEditorNMR implements IScanEditorNMR {
 		TreeViewer treeViewer = measurementsUI.getTreeViewer();
 		treeViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		DynamicSettingsUI settingsUI = new DynamicSettingsUI(composite, new GridData(SWT.FILL, SWT.FILL, true, false));
-		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+		treeViewer.addSelectionChangedListener(event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				IComplexSignalMeasurement<?> measurement = measurementsUI.getSelection();
-				if(measurement instanceof Filtered) {
-					FilterContext<?, ?> context = ((Filtered<?, ?>)measurement).getFilterContext();
-					Object filteredObject = context.getFilteredObject();
-					if(filteredObject instanceof IComplexSignalMeasurement<?> original) {
-						settingsUI.setActiveContext(context, new UpdatingObserver<>(context, measurement, original));
-						composite.layout();
-						return;
-					}
+			IComplexSignalMeasurement<?> measurement = measurementsUI.getSelection();
+			if(measurement instanceof Filtered) {
+				FilterContext<?, ?> context = ((Filtered<?, ?>)measurement).getFilterContext();
+				Object filteredObject = context.getFilteredObject();
+				if(filteredObject instanceof IComplexSignalMeasurement<?> original) {
+					settingsUI.setActiveContext(context, new UpdatingObserver<>(context, measurement, original));
+					composite.layout();
+					return;
 				}
-				settingsUI.setActiveContext(null, null);
 			}
+			settingsUI.setActiveContext(null, null);
 		});
 	}
 
@@ -314,37 +289,33 @@ public class ScanEditorNMR implements IScanEditorNMR {
 			if(filter instanceof IMeasurementFilter<?>) {
 				IMeasurementFilter<ConfigType> measurementFilter = (IMeasurementFilter<ConfigType>)filter;
 				try {
-					executorService.submit(new Runnable() {
+					executorService.submit(() -> {
 
-						@Override
-						public void run() {
-
-							try {
-								DefaultProcessingResult<Object> result = new DefaultProcessingResult<>();
-								ConfigType config = context.getFilterConfig();
-								Collection<? extends IMeasurement> filterIMeasurements = measurementFilter.filterIMeasurements(Collections.singleton(originalMeasurement), config, Function.identity(), result, null);
-								if(!filterIMeasurements.isEmpty() && !result.hasErrorMessages()) {
-									for(IMeasurement measurement : filterIMeasurements) {
-										if(measurement instanceof IComplexSignalMeasurement<?> signalMeasurement) {
-											if(measurement instanceof Filtered<?, ?> filtered) {
-												if(filtered.getFilterContext().getFilteredObject() == originalMeasurement) {
-													copySignals(signalMeasurement, currentMeasurement);
-												}
+						try {
+							DefaultProcessingResult<Object> result = new DefaultProcessingResult<>();
+							ConfigType config = context.getFilterConfig();
+							Collection<? extends IMeasurement> filterIMeasurements = measurementFilter.filterIMeasurements(Collections.singleton(originalMeasurement), config, Function.identity(), result, null);
+							if(!filterIMeasurements.isEmpty() && !result.hasErrorMessages()) {
+								for(IMeasurement measurement : filterIMeasurements) {
+									if(measurement instanceof IComplexSignalMeasurement<?> signalMeasurement) {
+										if(measurement instanceof Filtered<?, ?> filtered) {
+											if(filtered.getFilterContext().getFilteredObject() == originalMeasurement) {
+												copySignals(signalMeasurement, currentMeasurement);
 											}
 										}
 									}
-									Display.getDefault().asyncExec(ScanEditorNMR.this.extendedNMRScanUI::updateScan);
-								} else {
-									for(IProcessingMessage message : result.getMessages()) {
-										if(message.getMessageType() == MessageType.ERROR) {
-											StatusLineLogger.setInfo(InfoType.ERROR_MESSAGE, message.getMessage());
-											MessageConsoleAppender.printError(message.getMessage());
-										}
+								}
+								Display.getDefault().asyncExec(ScanEditorNMR.this.extendedNMRScanUI::updateScan);
+							} else {
+								for(IProcessingMessage message : result.getMessages()) {
+									if(message.getMessageType() == MessageType.ERROR) {
+										StatusLineLogger.setInfo(InfoType.ERROR_MESSAGE, message.getMessage());
+										MessageConsoleAppender.printError(message.getMessage());
 									}
 								}
-							} catch(Exception e) {
-								e.printStackTrace();
 							}
+						} catch(Exception e) {
+							e.printStackTrace();
 						}
 					});
 				} catch(RejectedExecutionException e) {

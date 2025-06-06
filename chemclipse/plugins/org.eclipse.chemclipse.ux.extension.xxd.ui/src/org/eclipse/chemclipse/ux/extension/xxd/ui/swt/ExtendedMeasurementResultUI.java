@@ -34,9 +34,7 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ChromatogramDat
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
@@ -178,17 +176,13 @@ public class ExtendedMeasurementResultUI extends Composite implements IExtendedP
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.grabExcessHorizontalSpace = true;
 		combo.setLayoutData(gridData);
-		comboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+		comboViewer.addSelectionChangedListener(event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				Object object = comboViewer.getStructuredSelection().getFirstElement();
-				if(object instanceof IMeasurementResult<?> measurementResult) {
-					update(measurementResult);
-				} else {
-					update(null);
-				}
+			Object object = comboViewer.getStructuredSelection().getFirstElement();
+			if(object instanceof IMeasurementResult<?> measurementResult) {
+				update(measurementResult);
+			} else {
+				update(null);
 			}
 		});
 		//

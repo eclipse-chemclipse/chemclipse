@@ -21,8 +21,6 @@ import org.eclipse.chemclipse.support.model.SeparationColumnType;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -89,14 +87,7 @@ public class ColumnDetailsDialog extends TitleAreaDialog {
 		text.setText(nameMap.getOrDefault(separationColumnType, ""));
 		text.setToolTipText("Column Name");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		text.addModifyListener(new ModifyListener() {
-
-			@Override
-			public void modifyText(ModifyEvent e) {
-
-				nameMap.put(separationColumnType, text.getText().trim());
-			}
-		});
+		text.addModifyListener(e -> nameMap.put(separationColumnType, text.getText().trim()));
 	}
 
 	@Override

@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -54,21 +53,15 @@ import org.eclipse.chemclipse.ux.extension.ui.provider.ISupplierFileEditorSuppor
 import org.eclipse.chemclipse.ux.extension.ui.provider.LazyFileExplorerContentProvider;
 import org.eclipse.chemclipse.xxd.process.files.SupplierFileIdentifierCache;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.preference.IPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
@@ -301,14 +294,10 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, getPreferencePages(), new ISettingsHandler() {
+		createSettingsButton(parent, getPreferencePages(), (ISettingsHandler) display -> {
 
-			@Override
-			public void apply(Display display) {
-
-				updateUserLocations();
-				setSupplierFileEditorSupport();
-			}
+			updateUserLocations();
+			setSupplierFileEditorSupport();
 		}, true);
 	}
 
@@ -450,29 +439,21 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 		TreeViewer treeViewer = dataExplorerTreeUI.getTreeViewer();
 		treeViewer.getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
 		//
-		ISelectionChangedListener selectionChangedListener = new ISelectionChangedListener() {
+		ISelectionChangedListener selectionChangedListener = event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				Object[] array = treeViewer.getStructuredSelection().toArray();
-				File[] files = new File[array.length];
-				for(int i = 0; i < files.length; i++) {
-					files[i] = (File)array[i];
-				}
-				handleSelection(files, dataExplorerTreeUI);
+			Object[] array = treeViewer.getStructuredSelection().toArray();
+			File[] files = new File[array.length];
+			for(int i = 0; i < files.length; i++) {
+				files[i] = (File)array[i];
 			}
+			handleSelection(files, dataExplorerTreeUI);
 		};
 		//
 		treeViewer.addSelectionChangedListener(selectionChangedListener);
-		treeViewer.addDoubleClickListener(new IDoubleClickListener() {
+		treeViewer.addDoubleClickListener(event -> {
 
-			@Override
-			public void doubleClick(DoubleClickEvent event) {
-
-				if(dataExplorerTreeUI.getTreeViewer().getStructuredSelection().getFirstElement() instanceof File file) {
-					handleDoubleClick(file);
-				}
+			if(dataExplorerTreeUI.getTreeViewer().getStructuredSelection().getFirstElement() instanceof File file) {
+				handleDoubleClick(file);
 			}
 		});
 		//
@@ -500,22 +481,18 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 		TreeViewer treeViewer = dataExplorerTreeUI.getTreeViewer();
 		MenuManager menuManager = new MenuManager("#ViewerMenu"); //$NON-NLS-1$
 		menuManager.setRemoveAllWhenShown(true);
-		menuManager.addMenuListener(new IMenuListener() {
+		menuManager.addMenuListener(mgr -> {
 
-			@Override
-			public void menuAboutToShow(IMenuManager mgr) {
-
-				/*
-				 * Menu Entries
-				 */
-				Object[] selection = treeViewer.getStructuredSelection().toArray();
-				updateFileAndFolders(dataExplorerTreeUI, menuManager);
-				selectUserLocationDirectory(menuManager, selection);
-				selectMethodDirectory(menuManager, selection);
-				selectMethodFile(menuManager, selection);
-				openFileAs(menuManager, selection);
-				openFiles(dataExplorerTreeUI, menuManager, selection);
-			}
+			/*
+			 * Menu Entries
+			 */
+			Object[] selection = treeViewer.getStructuredSelection().toArray();
+			updateFileAndFolders(dataExplorerTreeUI, menuManager);
+			selectUserLocationDirectory(menuManager, selection);
+			selectMethodDirectory(menuManager, selection);
+			selectMethodFile(menuManager, selection);
+			openFileAs(menuManager, selection);
+			openFiles(dataExplorerTreeUI, menuManager, selection);
 		});
 		//
 		Menu menu = menuManager.createContextMenu(treeViewer.getControl());
@@ -561,19 +538,15 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 						@Override
 						public void run() {
 
-							InputDialog inputDialog = new InputDialog(Display.getDefault().getActiveShell(), "User Location", "Bookmark the user location.", file.getName(), new IInputValidator() {
+							InputDialog inputDialog = new InputDialog(Display.getDefault().getActiveShell(), "User Location", "Bookmark the user location.", file.getName(), name -> {
 
-								@Override
-								public String isValid(String name) {
-
-									if(name.isBlank()) {
-										return "Please select a name.";
-									} else if(userLocations.get(name) != null) {
-										return "The name exists already.";
-									}
-									//
-									return null;
+								if(name.isBlank()) {
+									return "Please select a name.";
+								} else if(userLocations.get(name) != null) {
+									return "The name exists already.";
 								}
+								//
+								return null;
 							});
 							/*
 							 * User Location
@@ -640,14 +613,7 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 
 	private void openFileAs(MenuManager menuManager, Object[] files) {
 
-		Set<ISupplier> supplierSet = new TreeSet<>(new Comparator<ISupplier>() {
-
-			@Override
-			public int compare(ISupplier supplier1, ISupplier supplier2) {
-
-				return supplier1.getId().compareTo(supplier2.getId());
-			}
-		});
+		Set<ISupplier> supplierSet = new TreeSet<>((supplier1, supplier2) -> supplier1.getId().compareTo(supplier2.getId()));
 		//
 		for(Object object : files) {
 			if(object instanceof File file) {
@@ -756,14 +722,7 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 				while(iterator.hasNext()) {
 					Object object = iterator.next();
 					if(object instanceof File file) {
-						e.display.asyncExec(new Runnable() {
-
-							@Override
-							public void run() {
-
-								openEditor(file);
-							}
-						});
+						e.display.asyncExec(() -> openEditor(file));
 					}
 				}
 			}

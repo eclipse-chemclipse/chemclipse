@@ -37,7 +37,6 @@ import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.support.events.IPerspectiveAndViewIds;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.chemclipse.support.ui.workbench.EditorSupport;
-import org.eclipse.chemclipse.support.updates.IUpdateListener;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.ux.extension.msd.ui.support.DatabaseImportRunnable;
 import org.eclipse.chemclipse.ux.extension.msd.ui.swt.MassSpectrumLibraryUI;
@@ -65,7 +64,6 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IURIEditorInput;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.EditorPart;
-import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
 import jakarta.annotation.PostConstruct;
@@ -126,21 +124,17 @@ public class DatabaseEditor extends EditorPart implements IChemClipseEditor {
 
 		Shell shell = DisplayUtils.getShell();
 		ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);
-		IRunnableWithProgress runnable = new IRunnableWithProgress() {
+		IRunnableWithProgress runnable = monitor -> {
 
-			@Override
-			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
+			try {
+				monitor.beginTask("Save Mass Spectra", IProgressMonitor.UNKNOWN);
 				try {
-					monitor.beginTask("Save Mass Spectra", IProgressMonitor.UNKNOWN);
-					try {
-						saveMassSpectra(monitor, shell);
-					} catch(NoMassSpectrumConverterAvailableException e) {
-						throw new InvocationTargetException(e);
-					}
-				} finally {
-					monitor.done();
+					saveMassSpectra(monitor, shell);
+				} catch(NoMassSpectrumConverterAvailableException e) {
+					throw new InvocationTargetException(e);
 				}
+			} finally {
+				monitor.done();
 			}
 		};
 		/*
@@ -319,14 +313,7 @@ public class DatabaseEditor extends EditorPart implements IChemClipseEditor {
 		 */
 		massSpectra = runnable.getMassSpectra();
 		massSpectrumFile = file;
-		massSpectra.addUpdateListener(new IUpdateListener() {
-
-			@Override
-			public void update() {
-
-				updateMassSpectrumListUI();
-			}
-		});
+		massSpectra.addUpdateListener(() -> updateMassSpectrumListUI());
 	}
 
 	private void loadMassSpectra() {
@@ -376,21 +363,17 @@ public class DatabaseEditor extends EditorPart implements IChemClipseEditor {
 
 	private EventHandler registerEventHandler(IEventBroker eventBroker, String topic, String[] properties) {
 
-		EventHandler eventHandler = new EventHandler() {
+		EventHandler eventHandler = event -> {
 
-			@Override
-			public void handleEvent(Event event) {
-
-				try {
-					objects.clear();
-					for(String property : properties) {
-						Object object = event.getProperty(property);
-						objects.add(object);
-					}
-					update(topic);
-				} catch(Exception e) {
-					logger.warn(e + "\t" + event);
+			try {
+				objects.clear();
+				for(String property : properties) {
+					Object object = event.getProperty(property);
+					objects.add(object);
 				}
+				update(topic);
+			} catch(Exception e) {
+				logger.warn(e + "\t" + event);
 			}
 		};
 		eventBroker.subscribe(topic, eventHandler);

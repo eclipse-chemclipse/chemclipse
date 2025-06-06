@@ -31,8 +31,6 @@ import org.eclipse.chemclipse.support.ui.wizards.AbstractExtendedWizardPage;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.custom.ChromatogramPeakChart;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedScanChartUI;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.PeakTableRetentionIndexViewerUI;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
@@ -154,14 +152,10 @@ public class PagePeakSelection extends AbstractExtendedWizardPage {
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.heightHint = 100;
 		peakTableViewerUI.getTable().setLayoutData(gridData);
-		peakTableViewerUI.addSelectionChangedListener(new ISelectionChangedListener() {
+		peakTableViewerUI.addSelectionChangedListener(event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				propagateChange(PEAK_SHOW);
-				updateSelectedPeaksInChart(getSelectionChromatogramPeakList());
-			}
+			propagateChange(PEAK_SHOW);
+			updateSelectedPeaksInChart(getSelectionChromatogramPeakList());
 		});
 
 		peakTableViewerUI.getControl().addKeyListener(new KeyAdapter() {

@@ -130,14 +130,7 @@ public interface ProcessEntryContainer extends Iterable<IProcessEntry> {
 
 	static <X, T> T applyProcessEntries(ProcessEntryContainer container, ProcessExecutionContext context, IProcessExecutionConsumer<T> consumer) {
 
-		return applyProcessEntries(container, context, new BiFunction<IProcessEntry, IProcessSupplier<X>, IProcessorPreferences<X>>() {
-
-			@Override
-			public IProcessorPreferences<X> apply(IProcessEntry processEntry, IProcessSupplier<X> processSupplier) {
-
-				return processEntry.getPreferences(processSupplier);
-			}
-		}, consumer);
+		return applyProcessEntries(container, context, (processEntry, processSupplier) -> processEntry.getPreferences(processSupplier), consumer);
 	}
 
 	static <X, T> T applyProcessEntries(ProcessEntryContainer container, ProcessExecutionContext context, BiFunction<IProcessEntry, IProcessSupplier<X>, IProcessorPreferences<X>> preferenceSupplier, IProcessExecutionConsumer<T> consumer) {

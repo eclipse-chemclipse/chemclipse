@@ -26,12 +26,10 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.ISamplesPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.handlers.CreatePcaEvaluation;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.internal.wizards.BatchProcessWizardDialog;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.internal.wizards.IInputWizard;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
@@ -66,17 +64,13 @@ public abstract class WizardTile implements TileDefinition {
 				if(extractionData != null) {
 					ProgressMonitorDialog monitorDialog = new ProgressMonitorDialog(wizardDialog.getShell());
 					monitorDialog.setCancelable(true);
-					monitorDialog.run(true, true, new IRunnableWithProgress() {
+					monitorDialog.run(true, true, monitor -> {
 
-						@Override
-						public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
-							ISamplesPCA<?, ?> samples = extractionData.process(monitor);
-							TreeMap<Integer, Integer> filterDisribution = samples.getAnalysisSettings().getFilterDistribution();
-							analysisSettings.setFilterDistribution(filterDisribution);
-							samples.setAnalysisSettings(analysisSettings);
-							evaluation.set(samples);
-						}
+						ISamplesPCA<?, ?> samples = extractionData.process(monitor);
+						TreeMap<Integer, Integer> filterDisribution = samples.getAnalysisSettings().getFilterDistribution();
+						analysisSettings.setFilterDistribution(filterDisribution);
+						samples.setAnalysisSettings(analysisSettings);
+						evaluation.set(samples);
 					});
 				}
 			}

@@ -66,23 +66,19 @@ public class ChromatogramFilter extends AbstractChromatogramFilter {
 			if(shell != null) {
 				detectScanMaxima(shell, chromatogramSelection, filterSettings);
 			} else {
-				DisplayUtils.getDisplay().syncExec(new Runnable() {
+				DisplayUtils.getDisplay().syncExec(() -> {
 
-					@Override
-					public void run() {
-
-						/*
-						 * Create a new shell and set
-						 * the size to 0 cause only the wizard
-						 * will be shown.
-						 */
-						Shell shell = new Shell();
-						shell.setSize(0, 0);
-						shell.open();
-						//
-						detectScanMaxima(shell, chromatogramSelection, filterSettings);
-						shell.close();
-					}
+					/*
+					 * Create a new shell and set
+					 * the size to 0 cause only the wizard
+					 * will be shown.
+					 */
+					Shell temporaryShell = new Shell();
+					temporaryShell.setSize(0, 0);
+					temporaryShell.open();
+					//
+					detectScanMaxima(temporaryShell, chromatogramSelection, filterSettings);
+					temporaryShell.close();
 				});
 			}
 			processingInfo.setProcessingResult(new ChromatogramFilterResult(ResultStatus.OK, Messages.scanMaximaDetectionSuccessful));

@@ -46,52 +46,44 @@ public class DemoWelcomeTile implements TileDefinition {
 	public void handleEvent(EModelService modelService, MApplication application, EPartService partService, PerspectiveSupport perspectiveSupport) {
 
 		perspectiveSupport.changePerspective(WelcomeView.PERSPECTIVE_DATA_ANALYSIS);
-		Executors.defaultThreadFactory().newThread(new Runnable() {
+		Executors.defaultThreadFactory().newThread(() -> {
 
-			@Override
-			public void run() {
-
-				synchronized(DemoWelcomeTile.this) {
-					/*
-					 * Try to create the chromatogram.
-					 */
-					if(chromatogramFile == null) {
-						try {
-							File tempFile = File.createTempFile("DemoChromatogram", ".ocb");
-							tempFile.deleteOnExit();
-							copyChromatogram(tempFile);
-							chromatogramFile = tempFile;
-						} catch(Exception e) {
-							e.printStackTrace();
-							return;
-						}
+			synchronized(DemoWelcomeTile.this) {
+				/*
+				 * Try to create the chromatogram.
+				 */
+				if(chromatogramFile == null) {
+					try {
+						File tempFile = File.createTempFile("DemoChromatogram", ".ocb");
+						tempFile.deleteOnExit();
+						copyChromatogram(tempFile);
+						chromatogramFile = tempFile;
+					} catch(Exception e) {
+						e.printStackTrace();
+						return;
 					}
-					/*
-					 * Open the chromatogram Editor.
-					 */
-					DisplayUtils.getDisplay().syncExec(new Runnable() {
-
-						@Override
-						public void run() {
-
-							try {
-								if(chromatogramFile != null && chromatogramFile.exists()) {
-									MPart part = createChromatogramPart();
-									part.setLabel("DemoChromatogram.ocb");
-									Map<String, Object> map = new HashMap<String, Object>();
-									map.put(EditorSupport.MAP_FILE, chromatogramFile.getAbsolutePath());
-									map.put(EditorSupport.MAP_BATCH, false);
-									part.setObject(map);
-									part.setTooltip("Demo Chromatogram (MSD)");
-									showEditorPart(part, modelService, application, partService);
-								}
-							} catch(Exception e) {
-								e.printStackTrace();
-								return;
-							}
-						}
-					});
 				}
+				/*
+				 * Open the chromatogram Editor.
+				 */
+				DisplayUtils.getDisplay().syncExec(() -> {
+
+					try {
+						if(chromatogramFile != null && chromatogramFile.exists()) {
+							MPart part = createChromatogramPart();
+							part.setLabel("DemoChromatogram.ocb");
+							Map<String, Object> map = new HashMap<String, Object>();
+							map.put(EditorSupport.MAP_FILE, chromatogramFile.getAbsolutePath());
+							map.put(EditorSupport.MAP_BATCH, false);
+							part.setObject(map);
+							part.setTooltip("Demo Chromatogram (MSD)");
+							showEditorPart(part, modelService, application, partService);
+						}
+					} catch(Exception e) {
+						e.printStackTrace();
+						return;
+					}
+				});
 			}
 		}).start();
 	}

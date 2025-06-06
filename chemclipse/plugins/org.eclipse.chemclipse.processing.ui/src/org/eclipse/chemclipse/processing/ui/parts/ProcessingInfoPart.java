@@ -29,8 +29,6 @@ import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.di.UIEventTopic;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.events.KeyAdapter;
@@ -98,23 +96,19 @@ public class ProcessingInfoPart {
 
 		MenuManager menuManager = new MenuManager(POPUP_MENU_ID, getClass().getName() + POPUP_MENU_POSTFIX);
 		menuManager.setRemoveAllWhenShown(true);
-		menuManager.addMenuListener(new IMenuListener() {
+		menuManager.addMenuListener(manager -> {
 
-			@Override
-			public void menuAboutToShow(IMenuManager manager) {
+			IAction action = new Action() {
 
-				IAction action = new Action() {
+				@Override
+				public void run() {
 
-					@Override
-					public void run() {
-
-						super.run();
-						processingInfoUI.copyToClipboard();
-					}
-				};
-				action.setText("Copy selection to clipboard");
-				manager.add(action);
-			}
+					super.run();
+					processingInfoUI.copyToClipboard();
+				}
+			};
+			action.setText("Copy selection to clipboard");
+			manager.add(action);
 		});
 		TableViewer tableViewer = processingInfoUI.getTableViewer();
 		Menu menu = menuManager.createContextMenu(tableViewer.getTable());

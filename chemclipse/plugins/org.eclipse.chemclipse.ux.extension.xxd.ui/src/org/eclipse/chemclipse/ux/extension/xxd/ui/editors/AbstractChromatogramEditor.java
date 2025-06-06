@@ -119,15 +119,11 @@ public abstract class AbstractChromatogramEditor extends AbstractUpdater<Extende
 	private final ObjectChangedListener<IMeasurementResult<?>> updateMeasurementResult = new MeasurementResultListener();
 	private final IProcessSupplierContext processSupplierContext;
 	//
-	private final ObjectChangedListener<Object> updateMenuListener = new ObjectChangedListener<>() {
+	private final ObjectChangedListener<Object> updateMenuListener = (type, newObject, oldObject) -> {
 
-		@Override
-		public void objectChanged(ChangeType type, Object newObject, Object oldObject) {
-
-			if(extendedChromatogramUI != null) {
-				extendedChromatogramUI.updateMenu();
-				extendedChromatogramUI.updateMethods();
-			}
+		if(extendedChromatogramUI != null) {
+			extendedChromatogramUI.updateMenu();
+			extendedChromatogramUI.updateMethods();
 		}
 	};
 
@@ -160,15 +156,11 @@ public abstract class AbstractChromatogramEditor extends AbstractUpdater<Extende
 		if(shell != null) {
 			Display display = shell.getDisplay();
 			extendedChromatogramUI.fireUpdate(display);
-			shell.getDisplay().asyncExec(new Runnable() {
+			shell.getDisplay().asyncExec(() -> {
 
-				@Override
-				public void run() {
-
-					if(chromatogramFile != null) {
-						extendedChromatogramUI.updateToolbar();
-						extendedChromatogramUI.updateCommands();
-					}
+				if(chromatogramFile != null) {
+					extendedChromatogramUI.updateToolbar();
+					extendedChromatogramUI.updateCommands();
 				}
 			});
 		}
@@ -201,21 +193,17 @@ public abstract class AbstractChromatogramEditor extends AbstractUpdater<Extende
 	public void save() {
 
 		ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);
-		IRunnableWithProgress runnable = new IRunnableWithProgress() {
+		IRunnableWithProgress runnable = monitor -> {
 
-			@Override
-			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
+			try {
+				monitor.beginTask(ExtensionMessages.saveChromatogram, IProgressMonitor.UNKNOWN);
 				try {
-					monitor.beginTask(ExtensionMessages.saveChromatogram, IProgressMonitor.UNKNOWN);
-					try {
-						saveChromatogram(monitor);
-					} catch(NoChromatogramConverterAvailableException e) {
-						throw new InvocationTargetException(e);
-					}
-				} finally {
-					monitor.done();
+					saveChromatogram(monitor);
+				} catch(NoChromatogramConverterAvailableException e) {
+					throw new InvocationTargetException(e);
 				}
+			} finally {
+				monitor.done();
 			}
 		};
 		/*
@@ -341,15 +329,11 @@ public abstract class AbstractChromatogramEditor extends AbstractUpdater<Extende
 		if(chromatogramSelection != null) {
 			try {
 				ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);
-				dialog.run(false, false, new IRunnableWithProgress() {
+				dialog.run(false, false, monitor -> {
 
-					@Override
-					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
-						IProcessMethod processMethod = Adapters.adapt(file, IProcessMethod.class);
-						if(processMethod != null) {
-							ProcessEntryContainer.applyProcessEntries(processMethod, new ProcessExecutionContext(monitor, new ProcessingInfo<>(), processSupplierContext), IChromatogramSelectionProcessSupplier.createConsumer(chromatogramSelection));
-						}
+					IProcessMethod processMethod = Adapters.adapt(file, IProcessMethod.class);
+					if(processMethod != null) {
+						ProcessEntryContainer.applyProcessEntries(processMethod, new ProcessExecutionContext(monitor, new ProcessingInfo<>(), processSupplierContext), IChromatogramSelectionProcessSupplier.createConsumer(chromatogramSelection));
 					}
 				});
 			} catch(InvocationTargetException e) {

@@ -25,9 +25,7 @@ import org.eclipse.chemclipse.support.ui.swt.ControlBuilder;
 import org.eclipse.chemclipse.support.ui.swt.columns.ColumnDefinitionProvider;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ToolBarManager;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -116,14 +114,7 @@ public class ListEdit<V> extends EditValue<List<V>> {
 		toolbar.add(editAction);
 		toolbar.add(deleteAction);
 		ControlBuilder.gridData(toolbar.createControl(container)).verticalAlignment = SWT.TOP;
-		tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-
-			@Override
-			public void selectionChanged(SelectionChangedEvent sce) {
-
-				deleteAction.setEnabled(!tableViewer.getStructuredSelection().isEmpty());
-			}
-		});
+		tableViewer.addSelectionChangedListener(sce -> deleteAction.setEnabled(!tableViewer.getStructuredSelection().isEmpty()));
 	}
 
 	@SuppressWarnings("unchecked")

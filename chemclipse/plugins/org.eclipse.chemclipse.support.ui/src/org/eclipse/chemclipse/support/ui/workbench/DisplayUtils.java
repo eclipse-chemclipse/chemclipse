@@ -97,14 +97,10 @@ public class DisplayUtils {
 
 	public static void executeInUserInterfaceThread(Runnable action) throws InterruptedException, ExecutionException {
 
-		executeInUserInterfaceThread(DEFAULT_DISPLAY, new Callable<Void>() {
+		executeInUserInterfaceThread(DEFAULT_DISPLAY, () -> {
 
-			@Override
-			public Void call() throws Exception {
-
-				action.run();
-				return null;
-			}
+			action.run();
+			return null;
 		});
 	}
 
@@ -146,16 +142,12 @@ public class DisplayUtils {
 			task.run();
 		} else {
 			// we can't use the ui syncronize here... but maybe sometimes later...
-			BusyIndicator.showWhile(display, new Runnable() {
+			BusyIndicator.showWhile(display, () -> {
 
-				@Override
-				public void run() {
-
-					Future<?> future = BACKGROUND_EXECUTOR.submit(task);
-					while(!future.isDone() && !display.isDisposed()) {
-						if(!display.readAndDispatch()) {
-							display.sleep();
-						}
+				Future<?> future = BACKGROUND_EXECUTOR.submit(task);
+				while(!future.isDone() && !display.isDisposed()) {
+					if(!display.readAndDispatch()) {
+						display.sleep();
 					}
 				}
 			});
@@ -165,14 +157,10 @@ public class DisplayUtils {
 
 	public static void executeBusy(Runnable action) throws InterruptedException, ExecutionException {
 
-		executeBusy(new Callable<Void>() {
+		executeBusy(() -> {
 
-			@Override
-			public Void call() throws Exception {
-
-				action.run();
-				return null;
-			}
+			action.run();
+			return null;
 		});
 	}
 

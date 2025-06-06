@@ -17,8 +17,6 @@ import org.eclipse.jface.preference.FieldEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 
 public class FileHeaderDataFieldEditor extends FieldEditor {
 
@@ -54,17 +52,13 @@ public class FileHeaderDataFieldEditor extends FieldEditor {
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		fileHeaderDataEditor.setLayoutData(gridData);
 		//
-		fileHeaderDataEditor.addChangeListener(new Listener() {
+		fileHeaderDataEditor.addChangeListener(event -> {
 
-			@Override
-			public void handleEvent(Event event) {
-
-				String message = fileHeaderDataEditor.getMessage();
-				if(message != null) {
-					showErrorMessage(message);
-				} else {
-					clearErrorMessage();
-				}
+			String message = fileHeaderDataEditor.getMessage();
+			if(message != null) {
+				showErrorMessage(message);
+			} else {
+				clearErrorMessage();
 			}
 		});
 	}

@@ -29,7 +29,6 @@ import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.exceptions.TypeCastException;
 import org.eclipse.chemclipse.ux.extension.msd.ui.wizards.ChromatogramSelectionWizardPage;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.versions.VersionConstants;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -71,61 +70,57 @@ public class ChromatogramReportExportWizard extends Wizard implements IExportWiz
 
 		final List<String> inputFiles = getInputFiles();
 		final Map<String, String> reportSupplier = getReportSupplier();
-		IRunnableWithProgress runnableWithProgress = new IRunnableWithProgress() {
+		IRunnableWithProgress runnableWithProgress = monitor -> {
 
-			@Override
-			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
-				try {
+			try {
+				/*
+				 * Append reports to one file?
+				 */
+				Set<String> reportSupplierIds = reportSupplier.keySet();
+				for(String reportSupplierId : reportSupplierIds) {
 					/*
-					 * Append reports to one file?
+					 * Process the chromatograms
 					 */
-					Set<String> reportSupplierIds = reportSupplier.keySet();
-					for(String reportSupplierId : reportSupplierIds) {
+					for(String inputFile : inputFiles) {
 						/*
-						 * Process the chromatograms
+						 * Load each chromatogram
 						 */
-						for(String inputFile : inputFiles) {
-							/*
-							 * Load each chromatogram
-							 */
-							File chromatogramFile = new File(inputFile);
-							IProcessingInfo<IChromatogramMSD> processingInfo = ChromatogramConverterMSD.getInstance().convert(chromatogramFile, VersionConstants.CONVERTER_ID_CHROMATOGRAM, monitor);
-							try {
-								IChromatogramMSD chromatogram = processingInfo.getProcessingResult();
-								if(chromatogram != null) {
-									/*
-									 * Report: Append the reports or use distinct files?
-									 */
-									boolean appendReport;
-									String reportFolderOrFile = reportSupplier.get(reportSupplierId);
-									File chromatogramReportFile = new File(reportFolderOrFile);
-									/*
-									 * If it's a directory, then prepare the file name. Otherwise, the stored selection is the file name.
-									 */
-									if(chromatogramReportFile.isDirectory()) {
-										appendReport = false;
-										//
-										if(!reportFolderOrFile.endsWith(File.separator)) {
-											reportFolderOrFile += File.separator;
-										}
-										chromatogramReportFile = new File(reportFolderOrFile + chromatogram.getName());
-									} else {
-										appendReport = true;
+						File chromatogramFile = new File(inputFile);
+						IProcessingInfo<IChromatogramMSD> processingInfo = ChromatogramConverterMSD.getInstance().convert(chromatogramFile, VersionConstants.CONVERTER_ID_CHROMATOGRAM, monitor);
+						try {
+							IChromatogramMSD chromatogram = processingInfo.getProcessingResult();
+							if(chromatogram != null) {
+								/*
+								 * Report: Append the reports or use distinct files?
+								 */
+								boolean appendReport;
+								String reportFolderOrFile = reportSupplier.get(reportSupplierId);
+								File chromatogramReportFile = new File(reportFolderOrFile);
+								/*
+								 * If it's a directory, then prepare the file name. Otherwise, the stored selection is the file name.
+								 */
+								if(chromatogramReportFile.isDirectory()) {
+									appendReport = false;
+									//
+									if(!reportFolderOrFile.endsWith(File.separator)) {
+										reportFolderOrFile += File.separator;
 									}
-									/*
-									 * Report the chromatogram.
-									 */
-									ChromatogramReports.generate(chromatogramReportFile, appendReport, chromatogram, reportSupplierId, monitor);
+									chromatogramReportFile = new File(reportFolderOrFile + chromatogram.getName());
+								} else {
+									appendReport = true;
 								}
-							} catch(TypeCastException e) {
-								logger.warn(e);
+								/*
+								 * Report the chromatogram.
+								 */
+								ChromatogramReports.generate(chromatogramReportFile, appendReport, chromatogram, reportSupplierId, monitor);
 							}
+						} catch(TypeCastException e) {
+							logger.warn(e);
 						}
 					}
-				} finally {
-					monitor.done();
 				}
+			} finally {
+				monitor.done();
 			}
 		};
 		try {

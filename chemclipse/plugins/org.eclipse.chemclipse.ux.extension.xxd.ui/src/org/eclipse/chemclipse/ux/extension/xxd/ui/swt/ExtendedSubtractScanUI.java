@@ -15,7 +15,6 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Consumer;
 
 import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException;
 import org.eclipse.chemclipse.logging.core.Logger;
@@ -35,7 +34,6 @@ import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
-import org.eclipse.chemclipse.ux.extension.ui.swt.ISettingsHandler;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.preferences.PreferenceSupplierModelMSD;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageScans;
@@ -190,14 +188,7 @@ public class ExtendedSubtractScanUI extends Composite implements IExtendedPartUI
 		extendedScanTableUI.forceEnableEditModus(true);
 		extendedScanTableUI.setFireUpdate(false);
 
-		extendedScanTableUI.addEditListener(new EditListener() {
-
-			@Override
-			public void modify() {
-
-				saveSessionMassSpectrum(null, scanMSD);
-			}
-		});
+		extendedScanTableUI.addEditListener(() -> saveSessionMassSpectrum(null, scanMSD));
 	}
 
 	private void createAddSelectedScanButton(Composite parent) {
@@ -265,14 +256,7 @@ public class ExtendedSubtractScanUI extends Composite implements IExtendedPartUI
 				if(peakMSD != null && !peakMSD.getTargets().isEmpty()) {
 
 					IIdentificationTarget identificationTarget = TargetSupport.getBestIdentificationTarget(peakMSD);
-					LibraryServiceRunnable runnable = new LibraryServiceRunnable(identificationTarget, new Consumer<IScanMSD>() {
-
-						@Override
-						public void accept(IScanMSD referenceMassSpectrum) {
-
-							saveSessionMassSpectrum(e.display, referenceMassSpectrum);
-						}
-					});
+					LibraryServiceRunnable runnable = new LibraryServiceRunnable(identificationTarget, referenceMassSpectrum -> saveSessionMassSpectrum(e.display, referenceMassSpectrum));
 
 					try {
 						if(runnable.requireProgressMonitor()) {
@@ -370,14 +354,7 @@ public class ExtendedSubtractScanUI extends Composite implements IExtendedPartUI
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePageScans.class, PreferencePageSubtract.class), new ISettingsHandler() {
-
-			@Override
-			public void apply(Display display) {
-
-				applySettings();
-			}
-		});
+		createSettingsButton(parent, Arrays.asList(PreferencePageScans.class, PreferencePageSubtract.class), display -> applySettings());
 	}
 
 	private void applySettings() {

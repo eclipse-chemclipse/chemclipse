@@ -19,9 +19,7 @@ import org.eclipse.chemclipse.msd.swt.ui.components.peak.PeakListUI;
 import org.eclipse.chemclipse.support.ui.swt.ExtendedTableViewer;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -105,21 +103,17 @@ public class ResultsPage implements IMultiEditorPage {
 		/*
 		 * Add a selection listener, to update peaks on click.
 		 */
-		tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+		tableViewer.addSelectionChangedListener(event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				/*
-				 * Is the selection a structured selection?
-				 */
-				ISelection selection = event.getSelection();
-				if(selection instanceof IStructuredSelection structuredSelection) {
-					Object element = structuredSelection.getFirstElement();
-					//
-					if(element instanceof IPeakMSD peakMSD) {
-						UpdateNotifierUI.update(Display.getDefault(), peakMSD);
-					}
+			/*
+			 * Is the selection a structured selection?
+			 */
+			ISelection selection = event.getSelection();
+			if(selection instanceof IStructuredSelection structuredSelection) {
+				Object element = structuredSelection.getFirstElement();
+				//
+				if(element instanceof IPeakMSD peakMSD) {
+					UpdateNotifierUI.update(Display.getDefault(), peakMSD);
 				}
 			}
 		});

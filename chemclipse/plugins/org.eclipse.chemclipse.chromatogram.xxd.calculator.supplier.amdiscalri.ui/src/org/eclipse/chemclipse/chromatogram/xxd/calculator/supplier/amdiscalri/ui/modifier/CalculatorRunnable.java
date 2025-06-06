@@ -50,13 +50,6 @@ public class CalculatorRunnable implements IRunnableWithProgress {
 	 */
 	private void updateSelection() {
 
-		Display.getDefault().asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-
-				chromatogramSelection.update(true);
-			}
-		});
+		Display.getDefault().asyncExec(() -> chromatogramSelection.update(true));
 	}
 }

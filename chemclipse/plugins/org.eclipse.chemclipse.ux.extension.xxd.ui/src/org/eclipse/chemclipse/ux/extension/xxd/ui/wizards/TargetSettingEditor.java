@@ -28,16 +28,11 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.support.settings.OperatingSystemUtils;
 import org.eclipse.chemclipse.support.ui.provider.AbstractLabelProvider;
 import org.eclipse.chemclipse.support.ui.swt.EnhancedComboViewer;
-import org.eclipse.chemclipse.swt.ui.components.ISearchListener;
 import org.eclipse.chemclipse.swt.ui.components.SearchSupportUI;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -155,14 +150,10 @@ public class TargetSettingEditor {
 		//
 		comboViewer.setInput(DisplayOption.values());
 		comboViewer.setSelection(new StructuredSelection(targetDisplaySettings.getDisplayOption()));
-		comboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+		comboViewer.addSelectionChangedListener(event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				targetDisplaySettings.setDisplayOption((DisplayOption)comboViewer.getStructuredSelection().getFirstElement());
-				fireUpdate();
-			}
+			targetDisplaySettings.setDisplayOption((DisplayOption)comboViewer.getStructuredSelection().getFirstElement());
+			fireUpdate();
 		});
 		/*
 		 * https://bugs.eclipse.org/bugs/show_bug.cgi?id=567652
@@ -204,15 +195,11 @@ public class TargetSettingEditor {
 		//
 		comboViewer.setInput(LibraryField.values());
 		comboViewer.setSelection(new StructuredSelection(targetDisplaySettings.getLibraryField()));
-		comboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+		comboViewer.addSelectionChangedListener(event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				targetDisplaySettings.setLibraryField((LibraryField)comboViewer.getStructuredSelection().getFirstElement());
-				listControl.get().refresh();
-				fireUpdate();
-			}
+			targetDisplaySettings.setLibraryField((LibraryField)comboViewer.getStructuredSelection().getFirstElement());
+			listControl.get().refresh();
+			fireUpdate();
 		});
 		//
 		return comboViewer;
@@ -224,14 +211,10 @@ public class TargetSettingEditor {
 		comboViewer.setContentProvider(ArrayContentProvider.getInstance());
 		comboViewer.setInput(new Object[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
 		comboViewer.setSelection(new StructuredSelection(targetDisplaySettings.getCollisionDetectionDepth()));
-		comboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+		comboViewer.addSelectionChangedListener(event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				targetDisplaySettings.setCollisionDetectionDepth(((Integer)comboViewer.getStructuredSelection().getFirstElement()));
-				fireUpdate();
-			}
+			targetDisplaySettings.setCollisionDetectionDepth(((Integer)comboViewer.getStructuredSelection().getFirstElement()));
+			fireUpdate();
 		});
 		//
 		return comboViewer;
@@ -289,14 +272,7 @@ public class TargetSettingEditor {
 
 		SearchSupportUI searchSupportUI = new SearchSupportUI(parent, SWT.NONE);
 		searchSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		searchSupportUI.setSearchListener(new ISearchListener() {
-
-			@Override
-			public void performSearch(String searchText, boolean caseSensitive) {
-
-				listControl.get().setSearchText(searchText, caseSensitive);
-			}
-		});
+		searchSupportUI.setSearchListener((searchText, caseSensitive) -> listControl.get().setSearchText(searchText, caseSensitive));
 		//
 		return searchSupportUI;
 	}
@@ -333,15 +309,11 @@ public class TargetSettingEditor {
 		gridData.widthHint = 80;
 		spinner.setLayoutData(gridData);
 		//
-		spinner.addModifyListener(new ModifyListener() {
+		spinner.addModifyListener(e -> {
 
-			@Override
-			public void modifyText(ModifyEvent e) {
-
-				selectHighestTargets(spinner.getSelection());
-				listControl.get().refresh();
-				fireUpdate();
-			}
+			selectHighestTargets(spinner.getSelection());
+			listControl.get().refresh();
+			fireUpdate();
 		});
 		//
 		return spinner;

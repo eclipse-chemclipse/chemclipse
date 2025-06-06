@@ -34,12 +34,8 @@ import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -379,14 +375,7 @@ public class WidgetItem {
 			currentSelection = currentValue;
 		}
 		//
-		comboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				currentSelection = comboViewer.getStructuredSelection().getFirstElement();
-			}
-		});
+		comboViewer.addSelectionChangedListener(event -> currentSelection = comboViewer.getStructuredSelection().getFirstElement());
 		//
 		return comboViewer;
 	}
@@ -405,14 +394,7 @@ public class WidgetItem {
 		text.setToolTipText(inputValue.getDescription());
 		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		text.setText(AbstractProcessSettings.getCleanedFileValue(getValueAsString()));
-		text.addModifyListener(new ModifyListener() {
-
-			@Override
-			public void modifyText(ModifyEvent e) {
-
-				currentSelection = new File(text.getText());
-			}
-		});
+		text.addModifyListener(e -> currentSelection = new File(text.getText()));
 
 		Button button = new Button(composite, SWT.PUSH);
 		button.setText(" ... ");
@@ -571,14 +553,7 @@ public class WidgetItem {
 		Enum<?> initialSelection = Enum.valueOf(input[0].getDeclaringClass(), getValueAsString());
 		comboViewer.setSelection(new StructuredSelection(initialSelection));
 		//
-		comboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				currentSelection = comboViewer.getStructuredSelection().getFirstElement();
-			}
-		});
+		comboViewer.addSelectionChangedListener(event -> currentSelection = comboViewer.getStructuredSelection().getFirstElement());
 		//
 		return comboViewer;
 	}

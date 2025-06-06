@@ -79,14 +79,10 @@ public class NamedTracesEditor extends Composite {
 
 		NamedTracesUI namedTracesUI = new NamedTracesUI(parent, SWT.NONE);
 		namedTracesUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		namedTracesUI.setUpdateListener(new IUpdateListener() {
+		namedTracesUI.setUpdateListener(() -> {
 
-			@Override
-			public void update() {
-
-				updateNamedTracesTable();
-				fireUpdate();
-			}
+			updateNamedTracesTable();
+			fireUpdate();
 		});
 		return namedTracesUI;
 	}
@@ -189,14 +185,7 @@ public class NamedTracesEditor extends Composite {
 	private void fireUpdate() {
 
 		if(updateListener != null) {
-			getDisplay().asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-
-					updateListener.update();
-				}
-			});
+			getDisplay().asyncExec(() -> updateListener.update());
 		}
 	}
 }

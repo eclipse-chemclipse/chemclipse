@@ -25,9 +25,7 @@ import org.eclipse.chemclipse.support.ui.menu.ITableMenuEntry;
 import org.eclipse.chemclipse.support.ui.swt.ExtendedTableViewer;
 import org.eclipse.chemclipse.support.ui.swt.ITableSettings;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
-import org.eclipse.chemclipse.support.updates.IUpdateListener;
 import org.eclipse.chemclipse.swt.ui.components.DataMapSupportUI;
-import org.eclipse.chemclipse.swt.ui.components.ISearchListener;
 import org.eclipse.chemclipse.swt.ui.components.InformationUI;
 import org.eclipse.chemclipse.swt.ui.components.SearchSupportUI;
 import org.eclipse.chemclipse.swt.ui.support.RichTextSupport;
@@ -35,8 +33,6 @@ import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.nebula.widgets.richtext.RichTextEditor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -149,14 +145,10 @@ public class ExtendedHeaderDataUI extends Composite implements IExtendedPartUI {
 
 		SearchSupportUI searchSupportUI = new SearchSupportUI(parent, SWT.NONE);
 		searchSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		searchSupportUI.setSearchListener(new ISearchListener() {
+		searchSupportUI.setSearchListener((searchText, caseSensitive) -> {
 
-			@Override
-			public void performSearch(String searchText, boolean caseSensitive) {
-
-				tableViewer.get().setSearchText(searchText, caseSensitive);
-				updateInfoToolbar();
-			}
+			tableViewer.get().setSearchText(searchText, caseSensitive);
+			updateInfoToolbar();
 		});
 		//
 		toolbarSearch.set(searchSupportUI);
@@ -166,14 +158,7 @@ public class ExtendedHeaderDataUI extends Composite implements IExtendedPartUI {
 
 		DataMapSupportUI headerMapSupportUI = new DataMapSupportUI(parent, SWT.NONE);
 		headerMapSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		headerMapSupportUI.setUpdateListener(new IUpdateListener() {
-
-			@Override
-			public void update() {
-
-				updateInput();
-			}
-		});
+		headerMapSupportUI.setUpdateListener(() -> updateInput());
 		//
 		toolbarEdit.set(headerMapSupportUI);
 	}
@@ -233,14 +218,7 @@ public class ExtendedHeaderDataUI extends Composite implements IExtendedPartUI {
 		/*
 		 * Update Content
 		 */
-		headerDataListUI.setUpdateListener(new IUpdateListener() {
-
-			@Override
-			public void update() {
-
-				updateInput();
-			}
-		});
+		headerDataListUI.setUpdateListener(() -> updateInput());
 		/*
 		 * Add the delete support.
 		 */
@@ -259,14 +237,10 @@ public class ExtendedHeaderDataUI extends Composite implements IExtendedPartUI {
 		tabItem.setText("Miscellaneous");
 		//
 		Text text = new Text(tabFolder, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP);
-		text.addModifyListener(new ModifyListener() {
+		text.addModifyListener(e -> {
 
-			@Override
-			public void modifyText(ModifyEvent e) {
-
-				if(measurementInfo != null) {
-					measurementInfo.setMiscInfo(text.getText().trim());
-				}
+			if(measurementInfo != null) {
+				measurementInfo.setMiscInfo(text.getText().trim());
 			}
 		});
 		//
@@ -281,25 +255,17 @@ public class ExtendedHeaderDataUI extends Composite implements IExtendedPartUI {
 		//
 		Control editor = RichTextSupport.createEditor(tabFolder, SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP);
 		if(editor instanceof RichTextEditor richTextEditor) {
-			richTextEditor.addModifyListener(new ModifyListener() {
+			richTextEditor.addModifyListener(e -> {
 
-				@Override
-				public void modifyText(ModifyEvent e) {
-
-					if(measurementInfo != null) {
-						measurementInfo.setFindings(richTextEditor.getText().trim());
-					}
+				if(measurementInfo != null) {
+					measurementInfo.setFindings(richTextEditor.getText().trim());
 				}
 			});
 		} else if(editor instanceof Text plainTextEditor) {
-			plainTextEditor.addModifyListener(new ModifyListener() {
+			plainTextEditor.addModifyListener(e -> {
 
-				@Override
-				public void modifyText(ModifyEvent e) {
-
-					if(measurementInfo != null) {
-						measurementInfo.setFindings(plainTextEditor.getText().trim());
-					}
+				if(measurementInfo != null) {
+					measurementInfo.setFindings(plainTextEditor.getText().trim());
 				}
 			});
 		}

@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.function.BiFunction;
 
 import org.eclipse.chemclipse.converter.methods.MetaProcessorSettings;
 import org.eclipse.chemclipse.converter.methods.MethodConverter;
@@ -30,9 +29,7 @@ import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.handler.IModificationHandler;
 import org.eclipse.chemclipse.processing.DataCategory;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
-import org.eclipse.chemclipse.processing.methods.IProcessEntry;
 import org.eclipse.chemclipse.processing.methods.IProcessMethod;
-import org.eclipse.chemclipse.processing.supplier.IProcessSupplierContext;
 import org.eclipse.chemclipse.processing.supplier.IProcessorPreferences;
 import org.eclipse.chemclipse.rcp.app.ui.console.MessageConsoleAppender;
 import org.eclipse.chemclipse.ux.extension.ui.editors.ExtendedMethodUI;
@@ -68,14 +65,10 @@ public class MetaProcessorSettingsAdapterFactory implements IAdapterFactory, Set
 			this.preferences = preferences;
 			//
 			processorSettings = preferences.getSettings();
-			extendedMethodUI = new ExtendedMethodUI(parent, SWT.READ_ONLY, Activator.getProcessSupplierContext(), new BiFunction<IProcessEntry, IProcessSupplierContext, IProcessorPreferences<?>>() {
-
-				@Override
-				public IProcessorPreferences<?> apply(IProcessEntry processEntry, IProcessSupplierContext supplierContext) {
-
-					return processorSettings.getProcessorPreferences(processEntry, processEntry.getPreferences(supplierContext));
-				}
-			}, processorSettings.getProcessMethod().getDataCategories().toArray(new DataCategory[0]));
+			extendedMethodUI = new ExtendedMethodUI(parent, SWT.READ_ONLY, Activator.getProcessSupplierContext(),
+					(processEntry, supplierContext) -> processorSettings.getProcessorPreferences(processEntry,
+							processEntry.getPreferences(supplierContext)),
+					processorSettings.getProcessMethod().getDataCategories().toArray(new DataCategory[0]));
 			/*
 			 * Process Method and Settings
 			 */

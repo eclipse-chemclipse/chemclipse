@@ -38,8 +38,6 @@ import org.eclipse.chemclipse.support.ui.swt.columns.ColumnDefinition;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -61,7 +59,6 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -377,14 +374,7 @@ public class ExtendedTableViewer extends TableViewer implements IExtendedTableVi
 
 		TableViewerColumn tableViewerColumn = createColumn(this, definition, editEnabled);
 		tableViewerColumn.getColumn().setMoveable(true);
-		tableViewerColumn.getColumn().addListener(SWT.Move, new Listener() {
-
-			@Override
-			public void handleEvent(Event event) {
-
-				fireColumnMoved();
-			}
-		});
+		tableViewerColumn.getColumn().addListener(SWT.Move, event -> fireColumnMoved());
 		//
 		tableViewerColumns.add(tableViewerColumn);
 		Comparator<C> comparator = definition.getComparator();
@@ -581,28 +571,24 @@ public class ExtendedTableViewer extends TableViewer implements IExtendedTableVi
 		Collections.sort(menuEntries, new TableMenuEntryComparator());
 		//
 		for(ITableMenuEntry menuEntry : menuEntries) {
-			menuManager.addMenuListener(new IMenuListener() {
+			menuManager.addMenuListener(manager -> {
 
-				@Override
-				public void menuAboutToShow(IMenuManager manager) {
-
-					if(category.isEmpty()) {
-						/*
-						 * Top level
-						 */
-						manager.add(getAction(menuEntry));
-					} else {
-						/*
-						 * Sub menu
-						 */
-						MenuManager subMenu = menuManagerMap.get(category);
-						if(subMenu == null) {
-							subMenu = new MenuManager(category, null);
-							menuManagerMap.put(category, subMenu);
-							manager.add(subMenu);
-						}
-						subMenu.add(getAction(menuEntry));
+				if(category.isEmpty()) {
+					/*
+					 * Top level
+					 */
+					manager.add(getAction(menuEntry));
+				} else {
+					/*
+					 * Sub menu
+					 */
+					MenuManager subMenu = menuManagerMap.get(category);
+					if(subMenu == null) {
+						subMenu = new MenuManager(category, null);
+						menuManagerMap.put(category, subMenu);
+						manager.add(subMenu);
 					}
+					subMenu.add(getAction(menuEntry));
 				}
 			});
 		}
@@ -625,22 +611,18 @@ public class ExtendedTableViewer extends TableViewer implements IExtendedTableVi
 
 	private void registerMenuListener() {
 
-		getTable().addListener(SWT.MenuDetect, new Listener() {
+		getTable().addListener(SWT.MenuDetect, event -> {
 
-			@Override
-			public void handleEvent(Event event) {
-
-				/*
-				 * Create the menu if requested.
-				 */
-				if(tableSettings.isCreateMenu()) {
-					createPopupMenu();
-				} else {
-					Menu menu = getTable().getMenu();
-					if(menu != null) {
-						getTable().setMenu(null);
-						menu.dispose();
-					}
+			/*
+			 * Create the menu if requested.
+			 */
+			if(tableSettings.isCreateMenu()) {
+				createPopupMenu();
+			} else {
+				Menu menu = getTable().getMenu();
+				if(menu != null) {
+					getTable().setMenu(null);
+					menu.dispose();
 				}
 			}
 		});
@@ -692,14 +674,7 @@ public class ExtendedTableViewer extends TableViewer implements IExtendedTableVi
 		tableColumn.setWidth(width);
 		tableColumn.setResizable(true);
 		tableColumn.setMoveable(true);
-		tableColumn.addListener(SWT.Move, new Listener() {
-
-			@Override
-			public void handleEvent(Event event) {
-
-				fireColumnMoved();
-			}
-		});
+		tableColumn.addListener(SWT.Move, event -> fireColumnMoved());
 		return tableViewerColumn;
 	}
 

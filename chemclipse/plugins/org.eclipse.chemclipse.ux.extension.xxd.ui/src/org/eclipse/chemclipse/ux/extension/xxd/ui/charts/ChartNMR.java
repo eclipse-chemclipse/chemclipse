@@ -38,9 +38,7 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.chemclipse.support.ui.workbench.PreferencesSupport;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
@@ -113,14 +111,10 @@ public class ChartNMR extends LineChart {
 							File file = new File(pathname);
 							ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);
 							try {
-								dialog.run(true, true, new IRunnableWithProgress() {
+								dialog.run(true, true, monitor -> {
 
-									@Override
-									public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
-										IProcessingInfo<Void> export = ScanConverterNMR.export(file, measurementSupplier.get(), supplier.getId(), monitor);
-										ProcessingInfoPartSupport.getInstance().update(export);
-									}
+									IProcessingInfo<Void> export = ScanConverterNMR.export(file, measurementSupplier.get(), supplier.getId(), monitor);
+									ProcessingInfoPartSupport.getInstance().update(export);
 								});
 							} catch(InvocationTargetException e) {
 								IProcessingInfo<?> processingInfo = new ProcessingInfo<>();

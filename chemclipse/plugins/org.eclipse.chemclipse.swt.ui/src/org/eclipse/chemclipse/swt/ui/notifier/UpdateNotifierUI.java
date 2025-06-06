@@ -27,154 +27,77 @@ public class UpdateNotifierUI {
 	public static void update(Display display, String topic, Object object) {
 
 		if(display != null) {
-			display.asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-
-					UpdateNotifier.update(topic, object);
-				}
-			});
+			display.asyncExec(() -> UpdateNotifier.update(topic, object));
 		}
 	}
 
 	public static void update(Display display, IChromatogramSelection chromatogramSelection) {
 
 		if(display != null) {
-			display.asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-
-					UpdateNotifier.update(chromatogramSelection);
-				}
-			});
+			display.asyncExec(() -> UpdateNotifier.update(chromatogramSelection));
 		}
 	}
 
 	public static void update(Display display, IPeak peak) {
 
 		if(display != null) {
-			display.asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-
-					UpdateNotifier.update(peak);
-				}
-			});
+			display.asyncExec(() -> UpdateNotifier.update(peak));
 		}
 	}
 
 	public static void update(Display display, IScan scan) {
 
 		if(display != null) {
-			display.asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-
-					UpdateNotifier.update(scan);
-				}
-			});
+			display.asyncExec(() -> UpdateNotifier.update(scan));
 		}
 	}
 
 	public static void update(Display display, IIdentificationTarget identificationTarget) {
 
 		if(display != null) {
-			display.asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-
-					UpdateNotifier.update(identificationTarget);
-				}
-			});
+			display.asyncExec(() -> UpdateNotifier.update(identificationTarget));
 		}
 	}
 
 	public static void update(Display display, IScan scan1, IIdentificationTarget identificationTarget) {
 
 		if(display != null) {
-			display.asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-
-					UpdateNotifier.update(scan1, identificationTarget);
-				}
-			});
+			display.asyncExec(() -> UpdateNotifier.update(scan1, identificationTarget));
 		}
 	}
 
 	public static void update(Display display, IScan scan1, IScan scan2) {
 
 		if(display != null) {
-			display.asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-
-					UpdateNotifier.update(scan1, scan2);
-				}
-			});
+			display.asyncExec(() -> UpdateNotifier.update(scan1, scan2));
 		}
 	}
 
 	public static void update(Display display, IEditHistory editHistory) {
 
 		if(display != null) {
-			display.asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-
-					UpdateNotifier.update(editHistory);
-				}
-			});
+			display.asyncExec(() -> UpdateNotifier.update(editHistory));
 		}
 	}
 
 	public static void update(Display display, IQuantitationCompound quantitationCompound) {
 
 		if(display != null) {
-			display.asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-
-					UpdateNotifier.update(quantitationCompound);
-				}
-			});
+			display.asyncExec(() -> UpdateNotifier.update(quantitationCompound));
 		}
 	}
 
 	public static void update(Display display, ITargetSupplier targetSupplier) {
 
 		if(display != null) {
-			display.asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-
-					UpdateNotifier.update(targetSupplier);
-				}
-			});
+			display.asyncExec(() -> UpdateNotifier.update(targetSupplier));
 		}
 	}
 
 	public static void updateParts(Display display) {
 
 		if(display != null) {
-			display.asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-
-					UpdateNotifier.updateParts();
-				}
-			});
+			display.asyncExec(() -> UpdateNotifier.updateParts());
 		}
 	}
 }

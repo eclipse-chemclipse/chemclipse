@@ -17,9 +17,7 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
@@ -55,19 +53,15 @@ public class TileSelectionDialog extends Dialog {
 		tableViewer.setInput(elements);
 		Control control = tableViewer.getControl();
 		control.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
-		tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+		tableViewer.addSelectionChangedListener(event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				ISelection selection = event.getSelection();
-				if(selection instanceof IStructuredSelection structuredSelection) {
-					Object selected = structuredSelection.getFirstElement();
-					if(selected instanceof TileDefinition tileDefinition) {
-						selectedElement = tileDefinition;
-					} else {
-						selectedElement = null;
-					}
+			ISelection selection = event.getSelection();
+			if(selection instanceof IStructuredSelection structuredSelection) {
+				Object selected = structuredSelection.getFirstElement();
+				if(selected instanceof TileDefinition tileDefinition) {
+					selectedElement = tileDefinition;
+				} else {
+					selectedElement = null;
 				}
 			}
 		});

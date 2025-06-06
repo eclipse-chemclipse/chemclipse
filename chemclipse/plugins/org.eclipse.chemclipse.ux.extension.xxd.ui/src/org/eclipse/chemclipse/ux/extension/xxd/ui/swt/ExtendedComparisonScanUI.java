@@ -18,7 +18,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Consumer;
 
 import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException;
 import org.eclipse.chemclipse.logging.core.Logger;
@@ -38,7 +37,6 @@ import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.chemclipse.swt.ui.components.InformationUI;
 import org.eclipse.chemclipse.ux.extension.ui.support.DataUpdateSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
-import org.eclipse.chemclipse.ux.extension.ui.swt.ISettingsHandler;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageScans;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.runnables.LibraryServiceRunnable;
@@ -212,22 +210,14 @@ public class ExtendedComparisonScanUI extends Composite implements IExtendedPart
 
 		scan1Optimized = null;
 		scan2Optimized = null;
-		LibraryServiceRunnable runnable = new LibraryServiceRunnable(identificationTarget, new Consumer<IScanMSD>() {
+		LibraryServiceRunnable runnable = new LibraryServiceRunnable(identificationTarget, referenceMassSpectrum -> {
 
-			@Override
-			public void accept(IScanMSD referenceMassSpectrum) {
+			scan2 = copyScan(referenceMassSpectrum);
+			Display.getDefault().asyncExec(() -> {
 
-				scan2 = copyScan(referenceMassSpectrum);
-				Display.getDefault().asyncExec(new Runnable() {
-
-					@Override
-					public void run() {
-
-						buttonOptimizedScan.get().setEnabled(true);
-						updateChart();
-					}
-				});
-			}
+				buttonOptimizedScan.get().setEnabled(true);
+				updateChart();
+			});
 		});
 		/*
 		 * 
@@ -651,14 +641,7 @@ public class ExtendedComparisonScanUI extends Composite implements IExtendedPart
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePageScans.class), new ISettingsHandler() {
-
-			@Override
-			public void apply(Display display) {
-
-				applySettings();
-			}
-		});
+		createSettingsButton(parent, Arrays.asList(PreferencePageScans.class), display -> applySettings());
 	}
 
 	private void reset() {

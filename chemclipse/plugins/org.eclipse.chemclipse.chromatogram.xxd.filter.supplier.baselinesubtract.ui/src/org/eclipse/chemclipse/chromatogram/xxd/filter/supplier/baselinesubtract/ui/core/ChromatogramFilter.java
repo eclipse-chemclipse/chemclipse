@@ -41,23 +41,19 @@ public class ChromatogramFilter extends AbstractChromatogramFilter {
 			if(shell != null) {
 				subtractChromatogram(shell, chromatogramSelection);
 			} else {
-				DisplayUtils.getDisplay().syncExec(new Runnable() {
+				DisplayUtils.getDisplay().syncExec(() -> {
 
-					@Override
-					public void run() {
-
-						/*
-						 * Create a new shell and set
-						 * the size to 0 cause only the wizard
-						 * will be shown.
-						 */
-						Shell shell = new Shell();
-						shell.setSize(0, 0);
-						shell.open();
-						//
-						subtractChromatogram(shell, chromatogramSelection);
-						shell.close();
-					}
+					/*
+					 * Create a new shell and set
+					 * the size to 0 cause only the wizard
+					 * will be shown.
+					 */
+					Shell temporaryShell = new Shell();
+					temporaryShell.setSize(0, 0);
+					temporaryShell.open();
+					//
+					subtractChromatogram(temporaryShell, chromatogramSelection);
+					temporaryShell.close();
 				});
 			}
 			chromatogramSelection.getChromatogram().setDirty(true);

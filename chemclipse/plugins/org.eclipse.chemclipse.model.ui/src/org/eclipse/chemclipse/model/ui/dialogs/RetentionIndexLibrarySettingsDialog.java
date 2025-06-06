@@ -27,8 +27,6 @@ import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -175,14 +173,7 @@ public class RetentionIndexLibrarySettingsDialog extends TitleAreaDialog {
 		text.setText("");
 		text.setToolTipText(ColumnIndexSupport.COLUMN_TYPES);
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		text.addModifyListener(new ModifyListener() {
-
-			@Override
-			public void modifyText(ModifyEvent e) {
-
-				retentionIndexLibrarySettings.setSearchColumn(text.getText().trim());
-			}
-		});
+		text.addModifyListener(e -> retentionIndexLibrarySettings.setSearchColumn(text.getText().trim()));
 		//
 		textSearchColumnControl.set(text);
 	}
@@ -263,14 +254,7 @@ public class RetentionIndexLibrarySettingsDialog extends TitleAreaDialog {
 		text.setText("");
 		text.setToolTipText("If set, the name of the database to search must match. Otherwise, take all available into account.");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		text.addModifyListener(new ModifyListener() {
-
-			@Override
-			public void modifyText(ModifyEvent e) {
-
-				retentionIndexLibrarySettings.setSpecificDatabase(text.getText().trim());
-			}
-		});
+		text.addModifyListener(e -> retentionIndexLibrarySettings.setSpecificDatabase(text.getText().trim()));
 		//
 		textSpecificDatabaseControl.set(text);
 	}

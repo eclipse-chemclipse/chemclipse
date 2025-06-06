@@ -26,7 +26,6 @@ import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -70,15 +69,11 @@ public abstract class AbstractFilterAction<FilterType extends Filter<?>, ResultT
 		ProgressMonitorDialog monitorDialog = new ProgressMonitorDialog(shell);
 		monitorDialog.setCancelable(true);
 		try {
-			monitorDialog.run(true, true, new IRunnableWithProgress() {
+			monitorDialog.run(true, true, monitor -> {
 
-				@Override
-				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
-					ResultType result = computeResult(consumer, monitor);
-					if(result != null) {
-						resultConsumer.accept(result);
-					}
+				ResultType result = computeResult(consumer, monitor);
+				if(result != null) {
+					resultConsumer.accept(result);
 				}
 			});
 			ProcessingInfoPartSupport.getInstance().update(consumer);

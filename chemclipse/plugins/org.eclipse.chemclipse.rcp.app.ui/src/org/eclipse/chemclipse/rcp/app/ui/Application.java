@@ -37,14 +37,10 @@ public class Application implements IApplication {
 		//
 		final IWorkbench workbench = PlatformUI.getWorkbench();
 		final Display display = workbench.getDisplay();
-		display.syncExec(new Runnable() {
+		display.syncExec(() -> {
 
-			@Override
-			public void run() {
-
-				if(!display.isDisposed()) {
-					workbench.close();
-				}
+			if(!display.isDisposed()) {
+				workbench.close();
 			}
 		});
 	}

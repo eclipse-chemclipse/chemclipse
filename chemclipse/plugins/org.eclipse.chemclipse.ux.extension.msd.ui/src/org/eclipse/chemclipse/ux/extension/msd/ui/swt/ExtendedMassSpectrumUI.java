@@ -28,7 +28,6 @@ import org.eclipse.chemclipse.msd.swt.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.processing.core.IMessageProvider;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
-import org.eclipse.chemclipse.processing.methods.IProcessMethod;
 import org.eclipse.chemclipse.processing.methods.ProcessEntryContainer;
 import org.eclipse.chemclipse.processing.supplier.IProcessSupplierContext;
 import org.eclipse.chemclipse.processing.supplier.ProcessExecutionContext;
@@ -37,7 +36,6 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
-import org.eclipse.chemclipse.swt.ui.components.IMethodListener;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.ux.extension.msd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.ui.methods.MethodSupportUI;
@@ -45,12 +43,10 @@ import org.eclipse.chemclipse.ux.extension.ui.swt.ChartGridSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.chemclipse.ux.extension.ui.swt.ISettingsHandler;
 import org.eclipse.chemclipse.xxd.process.support.ProcessTypeSupport;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.preference.IPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -59,7 +55,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swtchart.extensions.core.IChartSettings;
 import org.eclipse.swtchart.extensions.core.ScrollableChart;
@@ -189,36 +184,18 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 		MethodSupportUI methodSupportUI = new MethodSupportUI(parent, SWT.NONE);
 		methodSupportUI.setVisible(PreferenceSupplier.isMethodToolbarVisible());
 		methodSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		methodSupportUI.setMethodListener(new IMethodListener() {
+		methodSupportUI.setMethodListener((processMethod, monitor) -> executeMethod(massSpectrum, scanMSD -> {
 
-			@Override
-			public void execute(IProcessMethod processMethod, IProgressMonitor monitor) {
+			IProcessingInfo<?> processingInfo = new ProcessingInfo<>();
+			ProcessEntryContainer.applyProcessEntries(processMethod, new ProcessExecutionContext(monitor, processingInfo, processTypeSupport), IScanProcessSupplier.createConsumer(scanMSD));
+			scanMSD.setDirty(true);
+			update(scanMSD);
+			UpdateNotifier.update(scanMSD);
+			UpdateNotifierUI.update(getDisplay(), scanMSD);
+			updateResult(processingInfo);
 
-				executeMethod(massSpectrum, new Consumer<IScanMSD>() {
-
-					@Override
-					public void accept(IScanMSD scanMSD) {
-
-						IProcessingInfo<?> processingInfo = new ProcessingInfo<>();
-						ProcessEntryContainer.applyProcessEntries(processMethod, new ProcessExecutionContext(monitor, processingInfo, processTypeSupport), IScanProcessSupplier.createConsumer(scanMSD));
-						scanMSD.setDirty(true);
-						update(scanMSD);
-						UpdateNotifier.update(scanMSD);
-						UpdateNotifierUI.update(getDisplay(), scanMSD);
-						updateResult(processingInfo);
-
-						DisplayUtils.getDisplay().syncExec(new Runnable() {
-
-							@Override
-							public void run() {
-
-								massSpectrumChart.update();
-							}
-						});
-					}
-				});
-			}
-		});
+			DisplayUtils.getDisplay().syncExec(() -> massSpectrumChart.update());
+		}));
 
 		toolbarMethodControl.set(methodSupportUI);
 	}
@@ -232,14 +209,7 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 
 	private void updateResult(IMessageProvider processingInfo) {
 
-		getDisplay().asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-
-				ProcessingInfoPartSupport.getInstance().update(processingInfo, true);
-			}
-		});
+		getDisplay().asyncExec(() -> ProcessingInfoPartSupport.getInstance().update(processingInfo, true));
 	}
 
 	private void createErrorMessagePage(Composite parent) {
@@ -282,17 +252,13 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 
 	private ISelectionChangedListener createSelectionChangedListener() {
 
-		return new ISelectionChangedListener() {
+		return event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				if(event.getSelection() instanceof IStructuredSelection selection) {
-					if(selection.getFirstElement() instanceof IScanMSD scanMSD) {
-						massSpectrum = scanMSD;
-						massSpectrumChart.update(massSpectrum);
-						UpdateNotifier.update(massSpectrum);
-					}
+			if(event.getSelection() instanceof IStructuredSelection selection) {
+				if(selection.getFirstElement() instanceof IScanMSD scanMSD) {
+					massSpectrum = scanMSD;
+					massSpectrumChart.update(massSpectrum);
+					UpdateNotifier.update(massSpectrum);
 				}
 			}
 		};
@@ -339,28 +305,16 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 
 	private void createButtonSettings(Composite parent) {
 
-		createSettingsButton(parent, getPreferencePagesSupplier(), new ISettingsHandler() {
-
-			@Override
-			public void apply(Display display) {
-
-				massSpectrumChart.update();
-			}
-
-		}, false);
+		createSettingsButton(parent, getPreferencePagesSupplier(), (ISettingsHandler) display -> massSpectrumChart.update(), false);
 	}
 
 	private Supplier<List<Class<? extends IPreferencePage>>> getPreferencePagesSupplier() {
 
-		return new Supplier<List<Class<? extends IPreferencePage>>>() {
+		return () -> {
 
-			@Override
-			public List<Class<? extends IPreferencePage>> get() {
-
-				List<Class<? extends IPreferencePage>> preferencePages = new ArrayList<>();
-				preferencePages.add(org.eclipse.chemclipse.msd.swt.ui.preferences.PreferencePage.class);
-				return preferencePages;
-			}
+			List<Class<? extends IPreferencePage>> preferencePages = new ArrayList<>();
+			preferencePages.add(org.eclipse.chemclipse.msd.swt.ui.preferences.PreferencePage.class);
+			return preferencePages;
 		};
 	}
 

@@ -15,7 +15,6 @@ package org.eclipse.chemclipse.xxd.converter.supplier.ocx.ui.processors;
 import java.io.File;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.concurrent.Callable;
 
 import org.eclipse.chemclipse.csd.converter.supplier.ocx.io.ChromatogramWriterCSD;
 import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
@@ -76,85 +75,77 @@ public class ChromatogramFileExportProcessSupplier implements IProcessTypeSuppli
 		public IChromatogramSelection apply(IChromatogramSelection chromatogramSelection, ChromatogramExportSettings processSettings, ProcessExecutionContext context) throws InterruptedException {
 
 			try {
-				DisplayUtils.executeBusy(new Callable<Void>() {
+				DisplayUtils.executeBusy(() -> {
 
-					@Override
-					public Void call() throws Exception {
+					Display display = Display.getDefault();
+					if(display != null) {
+						display.syncExec(() -> {
 
-						Display display = Display.getDefault();
-						if(display != null) {
-							display.syncExec(new Runnable() {
-
-								@Override
-								public void run() {
-
-									IChromatogram chromatogram = chromatogramSelection.getChromatogram();
-									String fileName = chromatogram.getName().isEmpty() ? VersionConstants.FILE_NAME_CHROMATOGRAM : chromatogram.getName() + VersionConstants.FILE_EXTENSION_CHROMATOGRAM;
+							IChromatogram chromatogram = chromatogramSelection.getChromatogram();
+							String fileName = chromatogram.getName().isEmpty() ? VersionConstants.FILE_NAME_CHROMATOGRAM : chromatogram.getName() + VersionConstants.FILE_EXTENSION_CHROMATOGRAM;
+							/*
+							 * Sometimes the shell is null.
+							 */
+							boolean disposeShell = false;
+							Shell shell = display.getActiveShell();
+							if(shell == null) {
+								shell = new Shell(display);
+								disposeShell = true;
+							}
+							//
+							FileDialog fileDialog = new FileDialog(display.getActiveShell(), SWT.SAVE);
+							fileDialog.setOverwrite(true);
+							fileDialog.setText(VersionConstants.DESCRIPTION_CHROMATOGRAM);
+							fileDialog.setFilterExtensions(new String[]{VersionConstants.FILTER_EXTENSION_CHROMATOGRAM});
+							fileDialog.setFilterNames(new String[]{VersionConstants.FILTER_NAME_CHROMATOGRAM});
+							fileDialog.setFileName(fileName);
+							fileDialog.setFilterPath(PreferenceSupplier.getListPathExport());
+							String path = fileDialog.open();
+							if(path != null) {
+								try {
 									/*
-									 * Sometimes the shell is null.
+									 * Save the chromatogram in a specific version.
 									 */
-									boolean disposeShell = false;
-									Shell shell = display.getActiveShell();
-									if(shell == null) {
-										shell = new Shell(display);
-										disposeShell = true;
-									}
+									PreferenceSupplier.setListPathExport(fileDialog.getFilterPath());
+									ChromatogramVersion chromatogramVersion = processSettings.getChromatogramVersion();
+									String version = chromatogramVersion.getVersion();
 									//
-									FileDialog fileDialog = new FileDialog(display.getActiveShell(), SWT.SAVE);
-									fileDialog.setOverwrite(true);
-									fileDialog.setText(VersionConstants.DESCRIPTION_CHROMATOGRAM);
-									fileDialog.setFilterExtensions(new String[]{VersionConstants.FILTER_EXTENSION_CHROMATOGRAM});
-									fileDialog.setFilterNames(new String[]{VersionConstants.FILTER_NAME_CHROMATOGRAM});
-									fileDialog.setFileName(fileName);
-									fileDialog.setFilterPath(PreferenceSupplier.getListPathExport());
-									String path = fileDialog.open();
-									if(path != null) {
-										try {
-											/*
-											 * Save the chromatogram in a specific version.
-											 */
-											PreferenceSupplier.setListPathExport(fileDialog.getFilterPath());
-											ChromatogramVersion chromatogramVersion = processSettings.getChromatogramVersion();
-											String version = chromatogramVersion.getVersion();
-											//
-											File file = new File(path);
-											if(chromatogram instanceof IChromatogramCSD chromatogramCSD) {
-												/*
-												 * CSD
-												 */
-												ChromatogramWriterCSD writer = new ChromatogramWriterCSD();
-												writer.writeChromatogram(file, version, chromatogramCSD, context.getProgressMonitor());
-											} else if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
-												/*
-												 * MSD
-												 */
-												ChromatogramWriterMSD writer = new ChromatogramWriterMSD();
-												writer.writeChromatogram(file, version, chromatogramMSD, context.getProgressMonitor());
-											} else if(chromatogram instanceof IChromatogramWSD chromatogramWSD) {
-												/*
-												 * WSD
-												 */
-												ChromatogramWriterWSD writer = new ChromatogramWriterWSD();
-												writer.writeChromatogram(file, version, chromatogramWSD, context.getProgressMonitor());
-											}
-										} catch(Exception e) {
-											logger.warn(e);
-										}
+									File file = new File(path);
+									if(chromatogram instanceof IChromatogramCSD chromatogramCSD) {
+										/*
+										 * CSD
+										 */
+										ChromatogramWriterCSD writer = new ChromatogramWriterCSD();
+										writer.writeChromatogram(file, version, chromatogramCSD, context.getProgressMonitor());
+									} else if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
+										/*
+										 * MSD
+										 */
+										ChromatogramWriterMSD writer = new ChromatogramWriterMSD();
+										writer.writeChromatogram(file, version, chromatogramMSD, context.getProgressMonitor());
+									} else if(chromatogram instanceof IChromatogramWSD chromatogramWSD) {
+										/*
+										 * WSD
+										 */
+										ChromatogramWriterWSD writer = new ChromatogramWriterWSD();
+										writer.writeChromatogram(file, version, chromatogramWSD, context.getProgressMonitor());
 									}
-									/*
-									 * Dispose the shell on demand.
-									 */
-									if(disposeShell) {
-										if(!shell.isDisposed()) {
-											shell.dispose();
-										}
-									}
+								} catch(Exception e) {
+									logger.warn(e);
 								}
-							});
-						}
-						//
-						return null;
+							}
+							/*
+							 * Dispose the shell on demand.
+							 */
+							if(disposeShell) {
+								if(!shell.isDisposed()) {
+									shell.dispose();
+								}
+							}
+						});
 					}
+					//
+					return null;
 				});
 			} catch(Exception e) {
 				logger.warn(e);

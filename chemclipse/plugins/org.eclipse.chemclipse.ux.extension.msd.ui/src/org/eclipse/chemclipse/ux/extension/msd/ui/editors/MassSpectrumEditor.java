@@ -59,7 +59,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
 import jakarta.annotation.PostConstruct;
@@ -145,21 +144,17 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 
 		Shell shell = DisplayUtils.getShell();
 		ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);
-		IRunnableWithProgress runnable = new IRunnableWithProgress() {
+		IRunnableWithProgress runnable = monitor -> {
 
-			@Override
-			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
+			try {
+				monitor.beginTask("Save Mass Spectra", IProgressMonitor.UNKNOWN);
 				try {
-					monitor.beginTask("Save Mass Spectra", IProgressMonitor.UNKNOWN);
-					try {
-						saveMassSpectra(monitor, shell);
-					} catch(NoMassSpectrumConverterAvailableException e) {
-						throw new InvocationTargetException(e);
-					}
-				} finally {
-					monitor.done();
+					saveMassSpectra(monitor, shell);
+				} catch(NoMassSpectrumConverterAvailableException e) {
+					throw new InvocationTargetException(e);
 				}
+			} finally {
+				monitor.done();
 			}
 		};
 		/*
@@ -313,21 +308,17 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 
 	private EventHandler registerEventHandler(IEventBroker eventBroker, String topic, String[] properties) {
 
-		EventHandler eventHandler = new EventHandler() {
+		EventHandler eventHandler = event -> {
 
-			@Override
-			public void handleEvent(Event event) {
-
-				try {
-					objects.clear();
-					for(String property : properties) {
-						Object object = event.getProperty(property);
-						objects.add(object);
-					}
-					update(topic);
-				} catch(Exception e) {
-					logger.warn(e + "\t" + event);
+			try {
+				objects.clear();
+				for(String property : properties) {
+					Object object = event.getProperty(property);
+					objects.add(object);
 				}
+				update(topic);
+			} catch(Exception e) {
+				logger.warn(e + "\t" + event);
 			}
 		};
 		eventBroker.subscribe(topic, eventHandler);

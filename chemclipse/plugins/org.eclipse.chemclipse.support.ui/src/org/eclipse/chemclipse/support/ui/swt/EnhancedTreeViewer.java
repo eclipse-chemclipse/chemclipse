@@ -19,8 +19,6 @@ import org.eclipse.chemclipse.support.l10n.SupportMessages;
 import org.eclipse.chemclipse.support.settings.OperatingSystemUtils;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
@@ -122,22 +120,18 @@ public class EnhancedTreeViewer extends Composite {
 		/*
 		 * Copy to clipboard
 		 */
-		menuManager.addMenuListener(new IMenuListener() {
+		menuManager.addMenuListener(manager -> {
 
-			@Override
-			public void menuAboutToShow(IMenuManager manager) {
+			IAction action = new Action() {
 
-				IAction action = new Action() {
+				@Override
+				public void run() {
 
-					@Override
-					public void run() {
-
-						copyToClipboard();
-					}
-				};
-				action.setText(SupportMessages.labelCopySelectionClipboard);
-				manager.add(action);
-			}
+					copyToClipboard();
+				}
+			};
+			action.setText(SupportMessages.labelCopySelectionClipboard);
+			manager.add(action);
 		});
 		//
 		Menu menu = menuManager.createContextMenu(treeViewer.getTree());

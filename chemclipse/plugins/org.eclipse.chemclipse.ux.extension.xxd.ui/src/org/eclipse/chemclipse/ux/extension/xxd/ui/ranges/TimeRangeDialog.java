@@ -27,8 +27,6 @@ import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Combo;
@@ -101,14 +99,7 @@ public class TimeRangeDialog extends Dialog {
 		combo.setToolTipText("Select or type in a new name.");
 		combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		//
-		combo.addModifyListener(new ModifyListener() {
-
-			@Override
-			public void modifyText(ModifyEvent e) {
-
-				assignIdentifier();
-			}
-		});
+		combo.addModifyListener(e -> assignIdentifier());
 		//
 		combo.setItems(timeRangeLabels.getProposals());
 		combo.setText(timeRangeLabels.getInitialValue());
@@ -129,21 +120,17 @@ public class TimeRangeDialog extends Dialog {
 
 	private void enableProposals(Combo combo) {
 
-		IContentProposalProvider contentProposalProvider = new IContentProposalProvider() {
+		IContentProposalProvider contentProposalProvider = (contents, position) -> {
 
-			@Override
-			public IContentProposal[] getProposals(String contents, int position) {
-
-				List<ContentProposal> contentProposals = new ArrayList<>();
-				if(contents != null) {
-					for(String proposal : timeRangeLabels.getProposals()) {
-						if(proposal.toLowerCase().contains(contents.toLowerCase())) {
-							contentProposals.add(new ContentProposal(proposal));
-						}
+			List<ContentProposal> contentProposals = new ArrayList<>();
+			if(contents != null) {
+				for(String proposal : timeRangeLabels.getProposals()) {
+					if(proposal.toLowerCase().contains(contents.toLowerCase())) {
+						contentProposals.add(new ContentProposal(proposal));
 					}
 				}
-				return contentProposals.toArray(new IContentProposal[0]);
 			}
+			return contentProposals.toArray(new IContentProposal[0]);
 		};
 		//
 		enableProposals(combo, contentProposalProvider);

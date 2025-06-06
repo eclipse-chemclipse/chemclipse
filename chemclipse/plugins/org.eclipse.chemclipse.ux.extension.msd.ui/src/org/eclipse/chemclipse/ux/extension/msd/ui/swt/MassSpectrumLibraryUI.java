@@ -32,7 +32,6 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
-import org.eclipse.chemclipse.swt.ui.components.ISearchListener;
 import org.eclipse.chemclipse.swt.ui.components.SearchSupportUI;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.swt.ui.preferences.PreferencePageSystem;
@@ -42,8 +41,6 @@ import org.eclipse.jface.preference.IPreferencePage;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jface.preference.PreferenceNode;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -305,14 +302,10 @@ public class MassSpectrumLibraryUI extends Composite {
 		searchSupportUI = new SearchSupportUI(parent, SWT.NONE);
 		searchSupportUI.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 		searchSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		searchSupportUI.setSearchListener(new ISearchListener() {
+		searchSupportUI.setSearchListener((searchText, caseSensitive) -> {
 
-			@Override
-			public void performSearch(String searchText, boolean caseSensitive) {
-
-				massSpectrumListUI.setSearchText(searchText, caseSensitive);
-				updateLabel();
-			}
+			massSpectrumListUI.setSearchText(searchText, caseSensitive);
+			updateLabel();
 		});
 		//
 		return searchSupportUI;
@@ -331,27 +324,23 @@ public class MassSpectrumLibraryUI extends Composite {
 
 		MassSpectrumListUI massSpectrumListUI = new MassSpectrumListUI(parent, SWT.BORDER | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.VIRTUAL);
 		massSpectrumListUI.getTable().setLayoutData(new GridData(GridData.FILL_BOTH));
-		massSpectrumListUI.addSelectionChangedListener(new ISelectionChangedListener() {
+		massSpectrumListUI.addSelectionChangedListener(event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				if(event.getStructuredSelection().getFirstElement() instanceof IScanMSD massSpectrum) {
-					/*
-					 * Fire an update if an identified scan has been selected.
-					 */
-					IIdentificationTarget identificationTarget = getIdentificationTarget(massSpectrum);
-					massSpectrum.getTargets().add(identificationTarget);
-					UpdateNotifier.update(massSpectrum);
-					UpdateNotifier.update(identificationTarget);
-					/*
-					 * It's important to set the focus here.
-					 * The PerspectiveSwitchHandler.focusPerspectiveAndView activates other views and sets the
-					 * focus there. But when trying to press "DEL", the focus would be on the other views.
-					 * Hence, it needs to be set back to this list.
-					 */
-					massSpectrumListUI.getTable().setFocus();
-				}
+			if(event.getStructuredSelection().getFirstElement() instanceof IScanMSD massSpectrum) {
+				/*
+				 * Fire an update if an identified scan has been selected.
+				 */
+				IIdentificationTarget identificationTarget = getIdentificationTarget(massSpectrum);
+				massSpectrum.getTargets().add(identificationTarget);
+				UpdateNotifier.update(massSpectrum);
+				UpdateNotifier.update(identificationTarget);
+				/*
+				 * It's important to set the focus here.
+				 * The PerspectiveSwitchHandler.focusPerspectiveAndView activates other views and sets the
+				 * focus there. But when trying to press "DEL", the focus would be on the other views.
+				 * Hence, it needs to be set back to this list.
+				 */
+				massSpectrumListUI.getTable().setFocus();
 			}
 		});
 		/*

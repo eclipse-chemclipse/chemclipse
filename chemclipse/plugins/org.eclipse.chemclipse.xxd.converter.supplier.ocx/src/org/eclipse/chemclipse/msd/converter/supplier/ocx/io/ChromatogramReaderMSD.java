@@ -127,14 +127,7 @@ public class ChromatogramReaderMSD extends AbstractChromatogramMSDReader impleme
 				 * We should find a way to handle this.
 				 */
 				final IChromatogramMSD chromatogram = chromatogramMSD;
-				Thread t = new Thread(new Runnable() {
-
-					@Override
-					public void run() {
-
-						chromatogram.enforceLoadScanProxies(new NullProgressMonitor());
-					}
-				});
+				Thread t = new Thread(() -> chromatogram.enforceLoadScanProxies(new NullProgressMonitor()));
 				t.start();
 			}
 		}

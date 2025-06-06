@@ -21,14 +21,10 @@ public class PluginStartup implements IStartup {
 	@Override
 	public void earlyStartup() {
 
-		Display.getDefault().asyncExec(new Runnable() {
+		Display.getDefault().asyncExec(() -> {
 
-			@Override
-			public void run() {
-
-				MessageConsoleSupport consoleSupport = new MessageConsoleSupport();
-				consoleSupport.printConfiguration();
-			}
+			MessageConsoleSupport consoleSupport = new MessageConsoleSupport();
+			consoleSupport.printConfiguration();
 		});
 	}
 }

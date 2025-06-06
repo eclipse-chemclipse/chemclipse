@@ -17,8 +17,6 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.AnalysisSettings;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IAnalysisSettings;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
@@ -47,14 +45,7 @@ public abstract class AbstractAnalysisWizardPage extends WizardPage {
 		gridData.horizontalSpan = horizontalSpan;
 		text.setLayoutData(gridData);
 		//
-		text.addModifyListener(new ModifyListener() {
-
-			@Override
-			public void modifyText(ModifyEvent e) {
-
-				analysisSettings.setTitle(text.getText().trim());
-			}
-		});
+		text.addModifyListener(e -> analysisSettings.setTitle(text.getText().trim()));
 		//
 		return text;
 	}

@@ -12,12 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.addons;
 
-import java.util.List;
-
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.support.ui.activator.ContextAddon;
-import org.eclipse.chemclipse.ux.extension.ui.model.IDataUpdateListener;
 import org.eclipse.chemclipse.ux.extension.ui.support.DataUpdateSupport;
 import org.eclipse.chemclipse.ux.extension.ui.support.PartSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
@@ -49,44 +46,40 @@ public class PerspectiveSupport {
 
 	private void handleToolbarUpdates(DataUpdateSupport dataUpdateSupport) {
 
-		dataUpdateSupport.add(new IDataUpdateListener() {
+		dataUpdateSupport.add((topic, objects) -> {
 
-			@Override
-			public void update(String topic, List<Object> objects) {
-
-				if(topic.equals(IChemClipseEvents.TOPIC_APPLICATION_SELECT_PERSPECTIVE)) {
-					Object object = objects.get(0);
-					if(object instanceof String label) {
-						if(DATA_ANALYSIS_PERSPECTIVE_LABEL.equals(label)) {
-							/*
-							 * Show parts initially.
-							 */
-							enableToolBar(true);
-							if(activatePartsInitially) {
-								GroupHandler.activateReferencedParts();
-								activatePartsInitially = false;
-							}
-						} else {
-							enableToolBar(false);
-						}
-						GroupHandler.updateGroupHandlerMenu();
-					}
-				} else if(topic.equals(IChemClipseEvents.TOPIC_APPLICATION_RESET_PERSPECTIVE)) {
-					Object object = objects.get(0);
-					if(object instanceof String label) {
-						if(DATA_ANALYSIS_PERSPECTIVE_LABEL.equals(label)) {
-							enableToolBar(true);
+			if(topic.equals(IChemClipseEvents.TOPIC_APPLICATION_SELECT_PERSPECTIVE)) {
+				Object object = objects.get(0);
+				if(object instanceof String label) {
+					if(DATA_ANALYSIS_PERSPECTIVE_LABEL.equals(label)) {
+						/*
+						 * Show parts initially.
+						 */
+						enableToolBar(true);
+						if(activatePartsInitially) {
 							GroupHandler.activateReferencedParts();
-						} else {
-							enableToolBar(false);
+							activatePartsInitially = false;
 						}
-						GroupHandler.updateGroupHandlerMenu();
+					} else {
+						enableToolBar(false);
 					}
-				} else if(topic.equals(IChemClipseEvents.TOPIC_PART_CLOSED)) {
-					Object object = objects.get(0);
-					logger.info("Part has been closed: " + object);
 					GroupHandler.updateGroupHandlerMenu();
 				}
+			} else if(topic.equals(IChemClipseEvents.TOPIC_APPLICATION_RESET_PERSPECTIVE)) {
+				Object object = objects.get(0);
+				if(object instanceof String label) {
+					if(DATA_ANALYSIS_PERSPECTIVE_LABEL.equals(label)) {
+						enableToolBar(true);
+						GroupHandler.activateReferencedParts();
+					} else {
+						enableToolBar(false);
+					}
+					GroupHandler.updateGroupHandlerMenu();
+				}
+			} else if(topic.equals(IChemClipseEvents.TOPIC_PART_CLOSED)) {
+				Object object = objects.get(0);
+				logger.info("Part has been closed: " + object);
+				GroupHandler.updateGroupHandlerMenu();
 			}
 		});
 	}
@@ -98,15 +91,11 @@ public class PerspectiveSupport {
 		//
 		if(modelService != null && application != null) {
 			Display display = Display.getDefault();
-			display.asyncExec(new Runnable() {
+			display.asyncExec(() -> {
 
-				@Override
-				public void run() {
-
-					MToolBar toolBar = PartSupport.getToolBar(TOOLBAR_ID, modelService, application);
-					toolBar.setToBeRendered(show);
-					toolBar.setVisible(show);
-				}
+				MToolBar toolBar = PartSupport.getToolBar(TOOLBAR_ID, modelService, application);
+				toolBar.setToBeRendered(show);
+				toolBar.setVisible(show);
 			});
 		}
 	}

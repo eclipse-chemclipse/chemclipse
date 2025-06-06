@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 
 import org.eclipse.chemclipse.model.core.IComplexSignalMeasurement;
@@ -53,9 +52,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.IElementComparer;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ITreeSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeNode;
 import org.eclipse.jface.viewers.TreeNodeContentProvider;
@@ -138,15 +135,11 @@ public class NMRMeasurementsUI implements PropertyChangeListener {
 			}
 		});
 		treeViewer.setContentProvider(new TreeNodeContentProvider());
-		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+		treeViewer.addSelectionChangedListener(event -> {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				IComplexSignalMeasurement<?> measurement = getMeasurement(treeViewer.getStructuredSelection().getFirstElement());
-				if(selection != null) {
-					selection.setActiveMeasurement(measurement);
-				}
+			IComplexSignalMeasurement<?> measurement = getMeasurement(treeViewer.getStructuredSelection().getFirstElement());
+			if(selection != null) {
+				selection.setActiveMeasurement(measurement);
 			}
 		});
 		createContextMenu();
@@ -177,14 +170,7 @@ public class NMRMeasurementsUI implements PropertyChangeListener {
 
 			private void addDetectors(IMenuManager mgr, Set<IComplexSignalMeasurement<?>> measurements) {
 
-				Collection<IMeasurementPeakDetector<?>> detectors = filterFactory.getProcessors(ProcessorFactory.genericClass(IMeasurementPeakDetector.class), new BiPredicate<IMeasurementPeakDetector<?>, Map<String, ?>>() {
-
-					@Override
-					public boolean test(IMeasurementPeakDetector<?> detector, Map<String, ?> u) {
-
-						return detector.acceptsIMeasurements(measurements);
-					}
-				});
+				Collection<IMeasurementPeakDetector<?>> detectors = filterFactory.getProcessors(ProcessorFactory.genericClass(IMeasurementPeakDetector.class), (detector, u) -> detector.acceptsIMeasurements(measurements));
 				for(IMeasurementPeakDetector<?> peakDetector : detectors) {
 					mgr.add(new Action() {
 
@@ -210,16 +196,12 @@ public class NMRMeasurementsUI implements PropertyChangeListener {
 			private void addFilter(IMenuManager mgr, Set<IComplexSignalMeasurement<?>> measurements) {
 
 				Collection<IMeasurementFilter<?>> filters = filterFactory.getProcessors(ProcessorFactory.genericClass(IMeasurementFilter.class), (filter, properties) -> filter.acceptsIMeasurements(measurements));
-				Consumer<Collection<? extends IMeasurement>> consumer = new Consumer<Collection<? extends IMeasurement>>() {
+				Consumer<Collection<? extends IMeasurement>> consumer = filtered -> {
 
-					@Override
-					public void accept(Collection<? extends IMeasurement> filtered) {
-
-						for(IMeasurement item : filtered) {
-							if(item instanceof IComplexSignalMeasurement<?>) {
-								if(selection != null) {
-									selection.addMeasurement((IComplexSignalMeasurement<?>)item);
-								}
+					for(IMeasurement item : filtered) {
+						if(item instanceof IComplexSignalMeasurement<?>) {
+							if(selection != null) {
+								selection.addMeasurement((IComplexSignalMeasurement<?>)item);
 							}
 						}
 					}

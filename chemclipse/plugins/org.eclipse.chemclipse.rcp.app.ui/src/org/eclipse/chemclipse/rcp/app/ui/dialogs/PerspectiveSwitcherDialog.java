@@ -36,8 +36,6 @@ import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
@@ -167,15 +165,11 @@ public class PerspectiveSwitcherDialog extends Dialog implements ISelectionChang
 	private void switchPerspective() {
 
 		if(selectedPerspective != null) {
-			Display.getDefault().asyncExec(new Runnable() {
+			Display.getDefault().asyncExec(() -> {
 
-				@Override
-				public void run() {
-
-					partService.switchPerspective(selectedPerspective);
-					if(eventBroker != null) {
-						eventBroker.send(IChemClipseEvents.TOPIC_APPLICATION_SELECT_PERSPECTIVE, selectedPerspective.getLabel());
-					}
+				partService.switchPerspective(selectedPerspective);
+				if(eventBroker != null) {
+					eventBroker.send(IChemClipseEvents.TOPIC_APPLICATION_SELECT_PERSPECTIVE, selectedPerspective.getLabel());
 				}
 			});
 		}
@@ -241,13 +235,7 @@ public class PerspectiveSwitcherDialog extends Dialog implements ISelectionChang
 		/*
 		 * Select the perspective in double click.
 		 */
-		tableViewer.addDoubleClickListener(new IDoubleClickListener() {
-
-			public void doubleClick(DoubleClickEvent event) {
-
-				okPressed();
-			}
-		});
+		tableViewer.addDoubleClickListener(event -> okPressed());
 		//
 		tableViewerControl.set(tableViewer);
 	}

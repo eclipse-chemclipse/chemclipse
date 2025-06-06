@@ -26,8 +26,6 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.wizards.InputEntriesWizard;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.wizards.InputWizardSettings;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -125,14 +123,10 @@ public class PageCalibrationSettings extends AbstractExtendedWizardPage {
 		textPathRetentionIndexFile = new Text(composite, SWT.BORDER);
 		textPathRetentionIndexFile.setText("");
 		textPathRetentionIndexFile.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		textPathRetentionIndexFile.addModifyListener(new ModifyListener() {
+		textPathRetentionIndexFile.addModifyListener(e -> {
 
-			@Override
-			public void modifyText(ModifyEvent e) {
-
-				wizardElements.setPathRetentionIndexFile(textPathRetentionIndexFile.getText().trim());
-				validateSelection();
-			}
+			wizardElements.setPathRetentionIndexFile(textPathRetentionIndexFile.getText().trim());
+			validateSelection();
 		});
 		//
 		buttonSelectCalibrationFile = new Button(composite, SWT.PUSH);

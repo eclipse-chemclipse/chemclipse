@@ -96,14 +96,7 @@ public class DataExplorerTreeUI {
 			treeViewer.expandToLevel(selection, 1);
 			treeViewer.setSelection(new StructuredSelection(selection), true);
 			//
-			Display.getDefault().asyncExec(new Runnable() {
-
-				@Override
-				public void run() {
-
-					treeViewer.setSelection(StructuredSelection.EMPTY);
-				}
-			});
+			Display.getDefault().asyncExec(() -> treeViewer.setSelection(StructuredSelection.EMPTY));
 		}
 	}
 

@@ -72,23 +72,19 @@ public class EditorProcessTypeSupplier implements IProcessTypeSupplier {
 			if(eclipseContext == null) {
 				context.addErrorMessage(getName(), "This supplier requires ContextInjection to work properly");
 			} else {
-				ui.asyncExec(new Runnable() {
+				ui.asyncExec(() -> {
 
-					@Override
-					public void run() {
-
-						IChromatogram chromatogram = chromatogramSelection.getChromatogram();
-						if(chromatogram instanceof IChromatogramMSD) {
-							new SupplierEditorSupport(DataType.MSD, () -> eclipseContext).openEditor(chromatogram);
-						} else if(chromatogram instanceof IChromatogramWSD) {
-							new SupplierEditorSupport(DataType.WSD, () -> eclipseContext).openEditor(chromatogram);
-						} else if(chromatogram instanceof IChromatogramCSD) {
-							new SupplierEditorSupport(DataType.CSD, () -> eclipseContext).openEditor(chromatogram);
-						} else if(chromatogram instanceof IChromatogramVSD) {
-							new SupplierEditorSupport(DataType.VSD, () -> eclipseContext).openEditor(chromatogram);
-						} else if(chromatogram instanceof IChromatogramFSD) {
-							new SupplierEditorSupport(DataType.FSD, () -> eclipseContext).openEditor(chromatogram);
-						}
+					IChromatogram chromatogram = chromatogramSelection.getChromatogram();
+					if(chromatogram instanceof IChromatogramMSD) {
+						new SupplierEditorSupport(DataType.MSD, () -> eclipseContext).openEditor(chromatogram);
+					} else if(chromatogram instanceof IChromatogramWSD) {
+						new SupplierEditorSupport(DataType.WSD, () -> eclipseContext).openEditor(chromatogram);
+					} else if(chromatogram instanceof IChromatogramCSD) {
+						new SupplierEditorSupport(DataType.CSD, () -> eclipseContext).openEditor(chromatogram);
+					} else if(chromatogram instanceof IChromatogramVSD) {
+						new SupplierEditorSupport(DataType.VSD, () -> eclipseContext).openEditor(chromatogram);
+					} else if(chromatogram instanceof IChromatogramFSD) {
+						new SupplierEditorSupport(DataType.FSD, () -> eclipseContext).openEditor(chromatogram);
 					}
 				});
 			}
