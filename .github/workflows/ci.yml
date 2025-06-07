@@ -37,6 +37,7 @@ jobs:
       id: maven
       with:
         candidate: maven
+        version: 3.9.10
 
     - name: Build with Maven
       env:
