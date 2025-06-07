@@ -26,12 +26,11 @@ jobs:
     - name: Checkout ChemClipse
       uses: actions/checkout@v4
 
-    - uses: sdkman/sdkman-action@main
-      name: Setup Temurin
-      id: temurin
+    - uses: actions/setup-java@v4
+      name: Setup Java
       with:
-        candidate: java
-        version: 21.0.7-tem
+        distribution: 'temurin'
+        java-version: '21'
 
     - uses: sdkman/sdkman-action@main
       name: Setup Maven
