@@ -15,6 +15,9 @@
 	<unit id="org.glassfish.hk2.osgi-resource-locator"/>
 	<unit id="com.sun.xml.bind.jaxb-osgi"/>
 	<unit id="jakarta.xml.bind-api"/>
+	<unit id="bcprov"/>
+	<unit id="bcpg"/>
+	<unit id="bcutil"/>
 	<unit id="org.apache.commons.codec"/>
 	<unit id="org.apache.commons.commons-collections4"/>
 	<unit id="org.apache.commons.commons-compress"/>

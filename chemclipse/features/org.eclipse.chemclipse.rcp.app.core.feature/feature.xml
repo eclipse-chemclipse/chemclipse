@@ -649,11 +649,15 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.bouncycastle.bcpg"
+         id="bcpg"
          version="0.0.0"/>
 
    <plugin
-         id="org.bouncycastle.bcprov"
+         id="bcprov"
+         version="0.0.0"/>
+         
+   <plugin
+         id="bcutil"
          version="0.0.0"/>
 
    <plugin
