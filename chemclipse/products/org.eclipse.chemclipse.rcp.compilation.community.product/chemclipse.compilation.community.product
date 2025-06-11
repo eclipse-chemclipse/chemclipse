@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="ChemClipse" uid="org.eclipse.chemclipse.rcp.compilation.community.product.id" id="org.eclipse.chemclipse.rcp.compilation.community.ui.product" application="org.eclipse.chemclipse.rcp.app.ui.org.eclipse.chemclipse.rcp.application" version="0.9.0.qualifier" type="features" includeLaunchers="true" autoIncludeRequirements="false">
+<product name="ChemClipse" uid="org.eclipse.chemclipse.rcp.compilation.community.product.id" id="org.eclipse.chemclipse.rcp.compilation.community.ui.product" application="org.eclipse.chemclipse.rcp.app.ui.org.eclipse.chemclipse.rcp.application" version="0.9.0.qualifier" type="features" includeLaunchers="true" autoIncludeRequirements="true">
 
    <aboutInfo>
       <image path="/org.eclipse.chemclipse.rcp.compilation.community.ui/icons/about_250x330.png"/>
@@ -75,7 +75,6 @@ Contributors:
    <configurations>
       <plugin id="org.apache.felix.scr" autoStart="true" startLevel="1" />
       <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4" />
-      <plugin id="org.eclipse.equinox.cm" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.p2.reconciler.dropins" autoStart="true" startLevel="4" />
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
