@@ -27,4 +27,8 @@
          id="org.eclipse.chemclipse.assets.ui"
          version="0.0.0"/>
 
+   <plugin
+         id="jakarta.inject.jakarta.inject-api"
+         version="0.0.0"/>
+
 </feature>

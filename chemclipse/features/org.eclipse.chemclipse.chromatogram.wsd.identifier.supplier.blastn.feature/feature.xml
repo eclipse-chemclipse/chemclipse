@@ -24,4 +24,12 @@
          id="org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn"
          version="0.0.0"/>
 
+   <plugin
+         id="jakarta.annotation-api"
+         version="0.0.0"/>
+
+   <plugin
+         id="jakarta.xml.bind-api"
+         version="0.0.0"/>
+
 </feature>

@@ -21,44 +21,34 @@
 
    <plugin
          id="org.eclipse.chemclipse.pcr.report.supplier.tabular.csv"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.chemclipse.pcr.report.supplier.tabular.excel"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.chemclipse.pcr.report.supplier.tabular.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.chemclipse.pcr.report.supplier.tabular"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.chemclipse.pcr.report.supplier.tabular.csv.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.chemclipse.pcr.report.supplier.tabular.excel.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.commons.commons-csv"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.commons.commons-collections4"
+         version="0.0.0"/>
 
 </feature>

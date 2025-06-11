@@ -173,18 +173,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.eclipse.e4.ui.css.core"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.e4.ui.css.swt"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.e4.ui.css.swt.theme"
-         version="0.0.0"/>
-
-   <plugin
          id="org.eclipse.e4.ui.di"
          version="0.0.0"/>
 
@@ -357,10 +345,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.eclipse.help.base"
-         version="0.0.0"/>
-
-   <plugin
          id="org.eclipse.help.ui"
          version="0.0.0"/>
 
@@ -469,10 +453,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.junit"
-         version="0.0.0"/>
-
-   <plugin
          id="org.sat4j.core"
          version="0.0.0"/>
 
@@ -573,10 +553,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.eclipse.equinox.cm"
-         version="0.0.0"/>
-
-   <plugin
          id="org.eclipse.jdt.core.compiler.batch"
          version="0.0.0"/>
 
@@ -613,10 +589,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.eclipse.e4.ui.css.swt.theme"
-         version="0.0.0"/>
-
-   <plugin
          id="org.apache.commons.commons-codec"
          version="0.0.0"/>
 
@@ -626,6 +598,114 @@
 
    <plugin
          id="com.github.weisj.jsvg"
+         version="0.0.0"/>
+
+   <plugin
+         id="slf4j.api"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.ltk.core.refactoring"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.ltk.ui.refactoring"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.ui.intro"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.e4.ui.ide"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.debug.core"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.search.core"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.equinox.http.service.api"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.osgi.service.http.whiteboard"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.jetty.servlet-api"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.lucene.analysis-common"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.lucene.analysis-smartcn"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.bouncycastle.bcpg"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.bouncycastle.bcprov"
+         version="0.0.0"/>
+
+   <plugin
+         id="com.sun.el.javax.el"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.mortbay.jasper.apache-jsp"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.mortbay.jasper.apache-el"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.jetty.ee8.security"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.jetty.ee8.server"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.jetty.ee8.servlet"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.jetty.session"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.osgi.service.coordinator"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.orbit.xml-apis-ext"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.batik.css"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.batik.constants"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.batik.i18n"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.batik.util"
          version="0.0.0"/>
 
 </feature>

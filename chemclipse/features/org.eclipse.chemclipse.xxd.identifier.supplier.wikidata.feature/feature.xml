@@ -22,16 +22,50 @@
 
    <plugin
          id="org.eclipse.chemclipse.xxd.identifier.supplier.wikidata"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.chemclipse.xxd.identifier.supplier.wikidata.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.commons.commons-compress"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.httpcomponents.httpclient"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.httpcomponents.httpcore"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.thrift"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.slf4j.api"
+         version="0.0.0"/>
+
+   <plugin
+         id="wrapped.org.apache.jena.jena-arq"
+         version="0.0.0"/>
+
+   <plugin
+         id="wrapped.org.apache.jena.jena-base"
+         version="0.0.0"/>
+
+   <plugin
+         id="wrapped.org.apache.jena.jena-core"
+         version="0.0.0"/>
+
+   <plugin
+         id="wrapped.org.apache.jena.jena-iri"
+         version="0.0.0"/>
+
+   <plugin
+         id="wrapped.org.apache.jena.jena-shaded-guava"
+         version="0.0.0"/>
 
 </feature>
