@@ -25,7 +25,8 @@
 	<unit id="org.apache.commons.lang3"/>
 	<unit id="org.apache.httpcomponents.httpclient"/>
 	<unit id="org.apache.httpcomponents.httpcore"/>
-	<repository location="https://download.eclipse.org/releases/2025-06/"/>
+	<unit id="org.apache.xerces"/>
+	<repository location="https://download.eclipse.org/releases/2025-03/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 	<unit id="org.slf4j.api"/>
@@ -140,41 +141,19 @@
 			<dependency>
 				<groupId>org.apache.jena</groupId>
 				<artifactId>jena-arq</artifactId>
-				<version>3.16.0</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.jena</groupId>
-				<artifactId>jena-base</artifactId>
-				<version>3.16.0</version>
+				<version>2.13.0</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.jena</groupId>
 				<artifactId>jena-core</artifactId>
-				<version>3.16.0</version>
+				<version>2.13.0</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.jena</groupId>
 				<artifactId>jena-iri</artifactId>
-				<version>3.16.0</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.jena</groupId>
-				<artifactId>jena-shaded-guava</artifactId>
-				<version>3.16.0</version>
-				<type>jar</type>
-			</dependency>
-		</dependencies>
-	</location>
-	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
-		<dependencies>
-			<dependency>
-				<groupId>org.apache.thrift</groupId>
-				<artifactId>libthrift</artifactId>
-				<version>0.12.0</version>
+				<version>1.1.2</version>
 				<type>jar</type>
 			</dependency>
 		</dependencies>

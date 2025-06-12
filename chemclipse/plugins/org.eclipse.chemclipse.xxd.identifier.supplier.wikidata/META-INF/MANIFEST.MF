@@ -11,19 +11,13 @@ Bundle-Activator: org.eclipse.chemclipse.xxd.identifier.supplier.wikidata.Activa
 Bundle-Vendor: ChemClipse
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.chemclipse.support;bundle-version="0.9.0",
- wrapped.org.apache.jena.jena-base;bundle-version="3.16.0",
- wrapped.org.apache.jena.jena-core;bundle-version="3.16.0",
- wrapped.org.apache.jena.jena-iri;bundle-version="3.16.0",
- wrapped.org.apache.jena.jena-arq;bundle-version="3.16.0",
- wrapped.org.apache.jena.jena-shaded-guava;bundle-version="3.16.0",
- org.apache.commons.lang3;bundle-version="3.12.0",
- org.apache.thrift;bundle-version="0.12.0",
- org.apache.commons.commons-compress;bundle-version="1.22.0",
  org.slf4j.api;bundle-version="1.7.30",
  org.eclipse.chemclipse.logging;bundle-version="0.9.0",
  org.eclipse.chemclipse.model;bundle-version="0.9.0",
  org.eclipse.chemclipse.chromatogram.xxd.identifier;bundle-version="0.9.0",
- org.apache.httpcomponents.httpclient;bundle-version="4.5.14",
- org.apache.httpcomponents.httpcore;bundle-version="4.4.16"
+ wrapped.org.apache.jena.jena-arq;bundle-version="2.13.0",
+ wrapped.org.apache.jena.jena-core;bundle-version="2.13.0",
+ wrapped.org.apache.jena.jena-iri;bundle-version="1.1.2",
+ org.apache.xerces;bundle-version="2.12.2"
 Bundle-RequiredExecutionEnvironment: JavaSE-21
 Bundle-ActivationPolicy: lazy

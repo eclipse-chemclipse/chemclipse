@@ -12,9 +12,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.identifier.supplier.wikidata;
 
-import org.apache.jena.query.ARQ;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+
+import com.hp.hpl.jena.query.ARQ;
 
 public class Activator implements BundleActivator {
 
