@@ -18,6 +18,7 @@
 	<unit id="bcprov"/>
 	<unit id="bcpg"/>
 	<unit id="bcutil"/>
+	<unit id="slf4j.api"/>
 	<unit id="org.apache.commons.codec"/>
 	<unit id="org.apache.commons.commons-collections4"/>
 	<unit id="org.apache.commons.commons-compress"/>
@@ -26,10 +27,6 @@
 	<unit id="org.apache.httpcomponents.httpclient"/>
 	<unit id="org.apache.httpcomponents.httpcore"/>
 	<repository location="https://download.eclipse.org/releases/2025-03/"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-	<unit id="org.slf4j.api"/>
-	<repository location="https://download.eclipse.org/releases/2022-12/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 	<repository location="https://download.eclipse.org/cbi/updates/license/"/>
