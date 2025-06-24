@@ -4,7 +4,7 @@
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 	<unit id="org.eclipse.equinox.sdk.feature.group"/>
-	<unit id="org.eclipse.sdk.feature.group"/>
+	<unit id="org.eclipse.platform.feature.group"/>
 	<unit id="ch.qos.logback.classic"/>
 	<unit id="ch.qos.logback.core"/>
 	<unit id="com.fasterxml.jackson.core.jackson-annotations"/>
@@ -19,7 +19,8 @@
 	<unit id="bcpg"/>
 	<unit id="bcutil"/>
 	<unit id="slf4j.api"/>
-	<unit id="org.apache.commons.codec"/>
+	<unit id="org.junit"/>
+	<unit id="org.apache.commons.commons-codec"/>
 	<unit id="org.apache.commons.commons-collections4"/>
 	<unit id="org.apache.commons.commons-compress"/>
 	<unit id="org.apache.commons.commons-io"/>
