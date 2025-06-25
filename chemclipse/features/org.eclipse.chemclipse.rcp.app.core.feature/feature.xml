@@ -64,6 +64,10 @@
          id="org.eclipse.license"
          version="0.0.0"/>
 
+   <requires>
+      <import plugin="org.eclipse.ui.views.log"/>
+   </requires>
+
    <plugin
          id="com.ibm.icu"
          version="0.0.0"/>
@@ -556,7 +560,6 @@
          id="org.eclipse.ui.intro.quicklinks"
          version="0.0.0"/>
 
-
    <plugin
          id="org.eclipse.jdt.core.compiler.batch"
          version="0.0.0"/>
@@ -568,6 +571,7 @@
    <plugin
          id="org.eclipse.ui.themes"
          version="0.0.0"/>
+
    <plugin
          id="org.eclipse.ltk.core.refactoring"
          version="0.0.0"/>
@@ -591,4 +595,5 @@
    <plugin
          id="org.eclipse.search.core"
          version="0.0.0"/>
+
 </feature>
