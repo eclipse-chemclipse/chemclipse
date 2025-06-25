@@ -19,6 +19,7 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.zip.DataFormatException;
@@ -28,7 +29,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.commons.codec.binary.Base64;
 import org.eclipse.chemclipse.converter.l10n.ConverterMessages;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IMassSpectrumPeak;
@@ -148,13 +148,13 @@ public class MassSpectrumReaderVersion22 extends AbstractMassSpectraReader imple
 			monitor.beginTask(ConverterMessages.importScan, points);
 			Node mzArray = spectrum.getElementsByTagName("mzArray").item(0);
 			checkArray(mzArray.getAttributes());
-			mzs = decodeFloatArray(decompress(Base64.decodeBase64(mzArray.getTextContent())));
+			mzs = decodeFloatArray(decompress(Base64.getDecoder().decode(mzArray.getTextContent())));
 			if(mzs.length != points) {
 				throw new IllegalArgumentException("Spectrum points does not match uncompressed mz array.");
 			}
 			Node intArray = spectrum.getElementsByTagName("intArray").item(0);
 			checkArray(intArray.getAttributes());
-			intensities = decodeFloatArray(decompress(Base64.decodeBase64(intArray.getTextContent())));
+			intensities = decodeFloatArray(decompress(Base64.getDecoder().decode(intArray.getTextContent())));
 			if(intensities.length != points) {
 				throw new IllegalArgumentException("Spectrum points does not match uncompressed intensities array.");
 			}
