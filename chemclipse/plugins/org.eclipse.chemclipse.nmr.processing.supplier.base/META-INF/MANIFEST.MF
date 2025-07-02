@@ -17,8 +17,7 @@ Require-Bundle: org.eclipse.core.runtime,
  wrapped.org.ejml.ejml-core;bundle-version="0.43.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-21
 Bundle-ActivationPolicy: lazy
-Import-Package: com.fasterxml.jackson.annotation;version="[2.18.0,3.0.0)",
- org.osgi.service.component.annotations;version="1.2.0"
+Import-Package: com.fasterxml.jackson.annotation;version="[2.18.0,3.0.0)"
 Export-Package: org.eclipse.chemclipse.nmr.processing.apodization,
  org.eclipse.chemclipse.nmr.processing.digitalfilter,
  org.eclipse.chemclipse.nmr.processing.ft,

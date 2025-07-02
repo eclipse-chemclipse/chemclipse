@@ -36,6 +36,5 @@ Export-Package: org.eclipse.chemclipse.msd.model.core,
  org.eclipse.chemclipse.msd.model.support,
  org.eclipse.chemclipse.msd.model.util,
  org.eclipse.chemclipse.msd.model.xic
-Import-Package: org.osgi.service.component.annotations;version="1.2.0"
 Automatic-Module-Name: org.eclipse.chemclipse.msd.model
 Service-Component: OSGI-INF/org.eclipse.chemclipse.msd.model.system.ModelProcessorMSD.xml

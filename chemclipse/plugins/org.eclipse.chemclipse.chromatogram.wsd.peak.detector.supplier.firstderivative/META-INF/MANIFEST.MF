@@ -26,5 +26,4 @@ Export-Package: org.eclipse.chemclipse.chromatogram.wsd.peak.detector.supplier.f
  org.eclipse.chemclipse.chromatogram.wsd.peak.detector.supplier.firstderivative.settings
 Bundle-Vendor: ChemClipse
 Import-Package: com.fasterxml.jackson.databind.annotation;version="2.9.93",
- org.apache.commons.lang3;version="3.1.0",
- org.osgi.service.component.annotations;version="1.2.0"
+ org.apache.commons.lang3;version="3.1.0"

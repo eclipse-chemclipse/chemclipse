@@ -47,8 +47,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.help
 Bundle-RequiredExecutionEnvironment: JavaSE-21
 Import-Package: jakarta.annotation;version="2.1.1",
- jakarta.inject;version="2.0.1",
- org.osgi.service.component.annotations;version="1.2.0"
+ jakarta.inject;version="2.0.1"
 Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/org.eclipse.chemclipse.xxd.process.supplier.pca.ui.quickstart.FileTileDefinition.xml,
  OSGI-INF/org.eclipse.chemclipse.xxd.process.supplier.pca.ui.quickstart.FilesLongFormatTileDefinition.xml,

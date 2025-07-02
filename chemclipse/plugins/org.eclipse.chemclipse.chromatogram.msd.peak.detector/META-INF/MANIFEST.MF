@@ -21,6 +21,5 @@ Import-Package: com.fasterxml.jackson.annotation;version="2.9.2",
  org.eclipse.chemclipse.model.types,
  org.eclipse.chemclipse.numeric.statistics,
  org.eclipse.chemclipse.support.settings,
- org.eclipse.chemclipse.support.settings.parser,
- org.osgi.service.component.annotations;version="1.2.0"
+ org.eclipse.chemclipse.support.settings.parser
 Service-Component: OSGI-INF/org.eclipse.chemclipse.chromatogram.msd.peak.detector.core.PeakDetectorMSDProcessTypeSupplier.xml

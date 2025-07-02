@@ -18,5 +18,4 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-21
 Bundle-Vendor: ChemClipse
-Import-Package: org.osgi.service.component.annotations;version="1.2.0"
 Service-Component: OSGI-INF/org.eclipse.chemclipse.chromatogram.xxd.identifier.chromatogram.ChromatogramIdentifierProcessTypeSupplier.xml

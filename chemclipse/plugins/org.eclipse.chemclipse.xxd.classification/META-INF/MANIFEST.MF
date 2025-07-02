@@ -17,8 +17,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-21
 Bundle-ActivationPolicy: lazy
 Import-Package: com.fasterxml.jackson.annotation;version="2.12.1",
  com.fasterxml.jackson.core;version="2.12.1",
- com.fasterxml.jackson.databind;version="2.12.1",
- org.osgi.service.component.annotations;version="1.2.0"
+ com.fasterxml.jackson.databind;version="2.12.1"
 Service-Component: OSGI-INF/org.eclipse.chemclipse.xxd.classification.filter.ClassificationAddFilter.xml,
  OSGI-INF/org.eclipse.chemclipse.xxd.classification.filter.ClassificationAssignFilter.xml,
  OSGI-INF/org.eclipse.chemclipse.xxd.classification.filter.ClassificationRemoveFilter.xml,

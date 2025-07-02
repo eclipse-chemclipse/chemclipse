@@ -16,6 +16,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-21
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.chemclipse.fsd.converter.chromatogram,
  org.eclipse.chemclipse.fsd.converter.core
-Import-Package: org.eclipse.chemclipse.support.settings.parser,
- org.osgi.service.component.annotations;version="1.2.0"
+Import-Package: org.eclipse.chemclipse.support.settings.parser
 Service-Component: OSGI-INF/org.eclipse.chemclipse.fsd.converter.chromatogram.ChromatogramConverterFSDProcessTypeSupplier.xml

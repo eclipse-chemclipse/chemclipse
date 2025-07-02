@@ -35,7 +35,6 @@ Export-Package: org.eclipse.chemclipse.converter.chromatogram,
  org.eclipse.chemclipse.converter.support
 Import-Package: com.fasterxml.jackson.annotation;version="2.9.2",
  jakarta.xml.bind,
- jakarta.xml.bind.annotation,
- org.osgi.service.component.annotations;version="1.2.0"
+ jakarta.xml.bind.annotation
 Service-Component: OSGI-INF/org.eclipse.chemclipse.converter.methods.MethodProcessTypeSupplier.xml
 
