@@ -47,13 +47,16 @@
 		<unit id="org.eclipse.nebula.widgets.richtext.feature.feature.group"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2025-06"/>
+		<repository location="https://download.eclipse.org/oomph/simrel-orbit/release/4.28.0"/>
 		<unit id="org.apache.poi"/>
-		<unit id="org.apache.poi.ooxml"/>
-		<unit id="org.apache.poi.ooxml.schemas"/>
+		<unit id="org.apache.poi.ooxml" />
+		<unit id="org.apache.poi.ooxml.schemas" />
+		<unit id="org.apache.xmlbeans"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2025-06"/>
 		<unit id="org.apache.commons.commons-csv"/>
 		<unit id="org.apache.commons.math3"/>
-		<unit id="org.apache.xmlbeans"/>
 	</location>
 	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
 		<dependencies>
