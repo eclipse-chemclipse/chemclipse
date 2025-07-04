@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.chemclipse.office.feature"
+      label="ChemClipse"
+      version="0.9.0.qualifier"
+      provider-name="ChemClipse"
+      plugin="org.eclipse.chemclipse.feature.branding"
+      license-feature="org.eclipse.license"
+      license-feature-version="2.0.2.qualifier">
+
+   <description url="https://www.chemclipse.net">
+      Essential packages for Microsoft Office formats.
+   </description>
+
+   <copyright url="https://www.chemclipse.net">
+      Copyright (c) 2025 Lablicate GmbH.
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.apache.poi"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.poi.ooxml"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.poi.ooxml.schemas"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.xmlbeans"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.commons.commons-compress"
+         version="0.0.0"/>
+
+</feature>

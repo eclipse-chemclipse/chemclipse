@@ -28,6 +28,10 @@
          id="org.eclipse.chemclipse.xml.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.chemclipse.office.feature"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.chemclipse.keystore"
          version="0.0.0"/>
