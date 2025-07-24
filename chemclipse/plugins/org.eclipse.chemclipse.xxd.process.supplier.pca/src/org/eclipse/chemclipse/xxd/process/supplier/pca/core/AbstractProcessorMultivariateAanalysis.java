@@ -64,32 +64,24 @@ public abstract class AbstractProcessorMultivariateAanalysis {
 		List<String> sampleNames = new ArrayList<>();
 		List<String> groupNames = new ArrayList<>();
 		for(ISample sample : samples) {
-			sampleNames.add(sample.getSampleName());
-			groupNames.add(sample.getGroupName());
+			if(sample.isSelected()) {
+				sampleNames.add(sample.getSampleName());
+				groupNames.add(sample.getGroupName());
+			}
 		}
-		/*
-		 * variable.getClassification() //
-		 * variable.getDescription() //
-		 * variable.getType() // Retention time (min)
-		 * variable.getValue() // 3.466
-		 */
 		List<Feature> features = new ArrayList<>();
 		for(IVariable variable : variables) {
 			features.add(new Feature(variable));
 		}
 		//
 		for(int i = 0; i < samples.size(); i++) {
-			/*
-			 * sampleData.getData() // 50327.8
-			 * sampleData.getModifiedData() // 0.524298283655198
-			 * sampleData.isEmpty() // false
-			 * sampleData.getDataObject() // e.g. PeakMSD
-			 */
-			ISample sample = samples.get(i);
-			List<? extends ISampleData<?>> sampleDataList = sample.getSampleData();
-			for(int j = 0; j < sampleDataList.size(); j++) {
-				ISampleData<?> sampleData = sampleDataList.get(j);
-				features.get(j).getSampleData().add(sampleData);
+			if(samples.get(i).isSelected()) {
+				ISample sample = samples.get(i);
+				List<? extends ISampleData<?>> sampleDataList = sample.getSampleData();
+				for(int j = 0; j < sampleDataList.size(); j++) {
+					ISampleData<?> sampleData = sampleDataList.get(j);
+					features.get(j).getSampleData().add(sampleData);
+				}
 			}
 		}
 		//
