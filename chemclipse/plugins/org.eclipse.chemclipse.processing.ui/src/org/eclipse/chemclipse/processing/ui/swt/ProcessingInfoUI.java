@@ -28,8 +28,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.ExpandEvent;
 import org.eclipse.swt.events.ExpandListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -73,14 +71,7 @@ public class ProcessingInfoUI {
 		tableViewer = new TableViewer(container, SWT.BORDER | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		createColumns(tableViewer);
 		setTableProvider();
-		parent.addDisposeListener(new DisposeListener() {
-
-			@Override
-			public void widgetDisposed(DisposeEvent e) {
-
-				clipboard.dispose();
-			}
-		});
+		parent.addDisposeListener(e -> clipboard.dispose());
 		tableViewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
 		ExpandBar expandBar = new ExpandBar(container, SWT.V_SCROLL);
 		expandBar.setLayout(new FillLayout());

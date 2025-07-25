@@ -50,8 +50,6 @@ import org.eclipse.swt.dnd.DropTargetAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -210,14 +208,7 @@ public class DataListUI implements ConfigurableUI<DataListUIConfig> {
 	private void addFileSelectionMenu(ToolBar toolBar, ToolItem item) {
 
 		final Menu menu = new Menu(toolBar.getShell(), SWT.POP_UP);
-		toolBar.addDisposeListener(new DisposeListener() {
-
-			@Override
-			public void widgetDisposed(DisposeEvent e) {
-
-				menu.dispose();
-			}
-		});
+		toolBar.addDisposeListener(e -> menu.dispose());
 		//
 		item.addListener(SWT.Selection, event -> {
 			if(event.detail == SWT.ARROW) {
@@ -284,14 +275,7 @@ public class DataListUI implements ConfigurableUI<DataListUIConfig> {
 		tableViewer.setInput(files);
 		//
 		DataExplorerLabelProvider dataExplorerLabelProvider = new DataExplorerLabelProvider(inputWizardSettings.getSupplierFileEditorSupportList());
-		composite.addDisposeListener(new DisposeListener() {
-
-			@Override
-			public void widgetDisposed(DisposeEvent e) {
-
-				dataExplorerLabelProvider.dispose();
-			}
-		});
+		composite.addDisposeListener(e -> dataExplorerLabelProvider.dispose());
 		//
 		tableViewer.addColumn(new SimpleColumnDefinition<>("Name", 250, new ColumnLabelProvider() {
 

@@ -20,8 +20,6 @@ import org.eclipse.chemclipse.processing.filter.FilterContext;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.editors.EditorExtension;
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
@@ -35,14 +33,7 @@ public class DynamicSettingsUI {
 
 		this.parent = parent;
 		this.layoutData = layoutData;
-		parent.addDisposeListener(new DisposeListener() {
-
-			@Override
-			public void widgetDisposed(DisposeEvent e) {
-
-				disposeCurrent();
-			}
-		});
+		parent.addDisposeListener(e -> disposeCurrent());
 	}
 
 	public <T, C> void setActiveContext(FilterContext<T, C> context, PropertyChangeListener observer) {
@@ -58,14 +49,7 @@ public class DynamicSettingsUI {
 					composite.setLayoutData(layoutData);
 					PropertyChangeSupport extension = editorExtension.createExtension(composite);
 					if(observer != null) {
-						composite.addDisposeListener(new DisposeListener() {
-
-							@Override
-							public void widgetDisposed(DisposeEvent e) {
-
-								extension.removePropertyChangeListener(observer);
-							}
-						});
+						composite.addDisposeListener(e -> extension.removePropertyChangeListener(observer));
 						extension.addPropertyChangeListener(observer);
 					}
 				}

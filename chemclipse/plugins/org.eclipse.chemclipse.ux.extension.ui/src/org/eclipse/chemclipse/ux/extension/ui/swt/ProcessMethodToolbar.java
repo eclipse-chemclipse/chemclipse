@@ -44,7 +44,6 @@ import org.eclipse.chemclipse.ux.extension.ui.methods.MethodSupport;
 import org.eclipse.chemclipse.ux.extension.ui.methods.ProcessingWizard;
 import org.eclipse.chemclipse.ux.extension.ui.methods.SettingsWizard;
 import org.eclipse.core.runtime.Adapters;
-import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -55,8 +54,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
@@ -308,14 +305,7 @@ public class ProcessMethodToolbar extends ToolBar {
 		item.setToolTipText("Add a process method.");
 		final Menu menu = new Menu(toolBar.getShell(), SWT.POP_UP);
 		//
-		toolBar.addDisposeListener(new DisposeListener() {
-
-			@Override
-			public void widgetDisposed(DisposeEvent e) {
-
-				menu.dispose();
-			}
-		});
+		toolBar.addDisposeListener(e -> menu.dispose());
 		//
 		item.addListener(SWT.Selection, event -> {
 			if(event.detail == SWT.ARROW) {
@@ -544,16 +534,12 @@ public class ProcessMethodToolbar extends ToolBar {
 						/*
 						 * Ask the user for a specific description.
 						 */
-						InputDialog inputDialog = new InputDialog(e.display.getActiveShell(), "Description", "Set a specific process entry description.", processEntry.getDescription(), new IInputValidator() {
+						InputDialog inputDialog = new InputDialog(e.display.getActiveShell(), "Description", "Set a specific process entry description.", processEntry.getDescription(), value -> {
 
-							@Override
-							public String isValid(String value) {
-
-								if(value.trim().isEmpty()) {
-									return "Please enter a description.";
-								}
-								return null;
+							if(value.trim().isEmpty()) {
+								return "Please enter a description.";
 							}
+							return null;
 						});
 						//
 						if(inputDialog.open() == Window.OK) {
