@@ -85,15 +85,14 @@ public class ExtendedChromatogramIndicesUI extends Composite implements IExtende
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.horizontalAlignment = SWT.END;
 		composite.setLayoutData(gridData);
-		composite.setLayout(new GridLayout(6, false));
-		//
+		composite.setLayout(new GridLayout(5, false));
+
 		createButtonToggleToolbarInfo(composite);
 		createButtonToggleToolbarSearch(composite);
 		createButtonToggleToolbarEdit(composite);
 		createButtonSave(composite);
-		createButtonHelp(composite);
 		createButtonSettings(composite);
-		//
+
 		return composite;
 	}
 
