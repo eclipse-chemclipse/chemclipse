@@ -68,7 +68,7 @@ public class AssetInstallPage extends WizardPage {
 
 		super(AssetInstallPage.class.getName());
 		setTitle("Manage Assets");
-		setDescription("Manage additional assets of the installation, for example new configurations, globally available methods and plugins.");
+		setDescription("Manage additional assets of the installation of methods and plugins.");
 	}
 
 	public List<AssetItem> getDeletedItems() {

@@ -38,7 +38,7 @@ import jakarta.inject.Named;
 public class InstallAssetsHandler {
 
 	@Execute
-	public void execute(IWorkbench workbench, @Named(IServiceConstants.ACTIVE_SHELL) Shell shell, @Service(filterExpression = "(action=ConfigReader)") Runnable configReader, @Service(filterExpression = "(action=BundleReader)") Runnable bundleReader, IEventBroker eventBroker) throws IOException {
+	public void execute(IWorkbench workbench, @Named(IServiceConstants.ACTIVE_SHELL) Shell shell, @Service(filterExpression = "(action=BundleReader)") Runnable bundleReader, IEventBroker eventBroker) throws IOException {
 
 		AssetInstallPage assetInstallPage = new AssetInstallPage();
 		SinglePageWizard wizard = new SinglePageWizard("Install / Manage Assets", true, assetInstallPage);
@@ -68,7 +68,6 @@ public class InstallAssetsHandler {
 			 * Scan the plugins.
 			 */
 			eventBroker.post(IChemClipseEvents.TOPIC_METHOD_UPDATE, null);
-			configReader.run();
 			bundleReader.run();
 			//
 			MessageBox messageBox = new MessageBox(shell, SWT.YES | SWT.NO);
@@ -81,8 +80,8 @@ public class InstallAssetsHandler {
 	}
 
 	@CanExecute
-	public boolean canExecute(@Optional @Service(filterExpression = "(action=ConfigReader)") Runnable configReader, @Optional @Service(filterExpression = "(action=BundleReader)") Runnable bundleReader, @Optional IEventBroker eventBroker) {
+	public boolean canExecute(@Optional @Service(filterExpression = "(action=BundleReader)") Runnable bundleReader, @Optional IEventBroker eventBroker) {
 
-		return configReader != null && bundleReader != null && eventBroker != null;
+		return bundleReader != null && eventBroker != null;
 	}
 }
