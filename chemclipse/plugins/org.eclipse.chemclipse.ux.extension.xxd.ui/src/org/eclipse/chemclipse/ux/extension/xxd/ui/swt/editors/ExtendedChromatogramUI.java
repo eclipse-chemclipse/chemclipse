@@ -1278,7 +1278,7 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 		createButtonToggleChartGrid(composite);
 		createToggleChartSeriesLegendButton(composite);
 		createButtonReset(composite);
-		createButtonHelp(composite);
+		createButtonHelp(composite, HelpContext.CHROMATOGRAM_EDITOR);
 		createButtonSettings(composite);
 
 		toolbarMainControl.set(composite);
@@ -1436,7 +1436,7 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 
 	private void createButtonSettings(Composite parent) {
 
-		createSettingsButton(parent, getPreferencePagesSupplier(), (ISettingsHandler) display -> applySettings(display), false);
+		createSettingsButton(parent, getPreferencePagesSupplier(), (ISettingsHandler)display -> applySettings(display), false);
 	}
 
 	private Supplier<List<Class<? extends IPreferencePage>>> getPreferencePagesSupplier() {

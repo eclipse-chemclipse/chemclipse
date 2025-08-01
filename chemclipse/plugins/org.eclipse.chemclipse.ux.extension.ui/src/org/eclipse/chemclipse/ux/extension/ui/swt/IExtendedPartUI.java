@@ -119,7 +119,7 @@ public interface IExtendedPartUI {
 		return button;
 	}
 
-	default Button createButtonHelp(Composite parent) {
+	default Button createButtonHelp(Composite parent, String context) {
 
 		/*
 		 * Validated SWT.PUSH - no toggle
@@ -132,10 +132,10 @@ public interface IExtendedPartUI {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
-				PlatformUI.getWorkbench().getHelpSystem().displayDynamicHelp();
+				PlatformUI.getWorkbench().getHelpSystem().displayHelp(context);
 			}
 		});
-		//
+
 		return button;
 	}
 

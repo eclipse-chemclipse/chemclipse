@@ -234,7 +234,7 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 		createButtonToggleToolbarSearch(composite);
 		createButtonToggleToolbarEdit(composite);
 		createButtonDeleteAll(composite);
-		createButtonHelp(composite);
+		createButtonHelp(composite, HelpContext.TARGETS);
 		createButtonSettings(composite);
 	}
 

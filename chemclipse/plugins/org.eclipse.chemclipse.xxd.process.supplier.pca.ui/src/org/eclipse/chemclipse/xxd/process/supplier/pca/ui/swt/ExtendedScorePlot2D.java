@@ -143,7 +143,7 @@ public class ExtendedScorePlot2D extends Composite implements IExtendedPartUI {
 		createPrincipalComponentUI(composite);
 		createButtonReset(composite);
 		createSettingsButton(composite);
-		createButtonHelp(composite);
+		createButtonHelp(composite, HelpContext.SCORE_PLOT);
 	}
 
 	private void createScorePlot(Composite parent) {

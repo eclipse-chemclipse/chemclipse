@@ -241,7 +241,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		createResetButton(composite);
 		createNewOverlayPartButton(composite);
 		createToggleGridButton(composite);
-		createButtonHelp(composite);
+		createButtonHelp(composite, HelpContext.CHROMATOGRAM_OVERLAY);
 		createSettingsButton(composite);
 
 		return composite;
