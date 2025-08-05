@@ -65,6 +65,8 @@ import org.eclipse.chemclipse.vsd.model.core.IScanVSD;
 import org.eclipse.chemclipse.wsd.model.core.IScanWSD;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.e4.core.contexts.EclipseContextFactory;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.preference.IPreferencePage;
@@ -99,6 +101,7 @@ import org.eclipse.swtchart.extensions.core.IExtendedChart;
 import org.eclipse.swtchart.extensions.core.ISecondaryAxisSettings;
 import org.eclipse.swtchart.extensions.core.RangeRestriction;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.osgi.framework.FrameworkUtil;
 
 import jakarta.inject.Inject;
 
@@ -681,7 +684,8 @@ public class ExtendedComparisonScanUI extends Composite implements IExtendedPart
 		MassSpectrumFilterSettings settings = new MassSpectrumFilterSettings();
 		settings.setUseNominalMasses(PreferenceSupplierModelMSD.isUseNominalMZ());
 		settings.setUseNormalize(PreferenceSupplierModelMSD.isUseNormalizedScan());
-		settings.setSubtractMassSpectrum(PreferenceSupplierModelMSD.getMassSpectrum(scanReference));
+		IEclipseContext context = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(SubtractCalculator.class).getBundleContext());
+		context.set("SessionSubtractMassSpectrum", scanReference);
 		/*
 		 * Subtract
 		 */

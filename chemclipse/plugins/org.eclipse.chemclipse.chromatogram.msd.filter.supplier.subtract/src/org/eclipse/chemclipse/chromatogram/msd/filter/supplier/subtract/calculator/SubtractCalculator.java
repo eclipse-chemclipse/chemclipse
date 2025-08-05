@@ -26,10 +26,13 @@ import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.msd.model.core.AbstractIon;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
-import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
+import org.eclipse.e4.core.contexts.EclipseContextFactory;
+import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.osgi.framework.FrameworkUtil;
 
 public class SubtractCalculator {
 
@@ -44,16 +47,10 @@ public class SubtractCalculator {
 	 */
 	public void subtractPeakMassSpectraFromChromatogramSelection(IChromatogramSelectionMSD chromatogramSelection, ChromatogramFilterSettings filterSettings) {
 
-		/*
-		 * Test if null.
-		 */
 		if(chromatogramSelection == null || chromatogramSelection.getChromatogram() == null || filterSettings == null) {
 			return;
 		}
-		/*
-		 * The mass spectrum must be not null.
-		 */
-		IScanMSD massSpectrum = filterSettings.getSubtractMassSpectrum();
+		IScanMSD massSpectrum = getContextSubtractMassSpectrum();
 		if(massSpectrum == null) {
 			logger.warn("The mass spectrum must be not null.");
 			return;
@@ -96,16 +93,10 @@ public class SubtractCalculator {
 	 */
 	public void subtractPeakMassSpectra(List<IPeakMSD> peaks, PeakFilterSettings peakFilterSettings) {
 
-		/*
-		 * Test if null.
-		 */
 		if(peaks == null || peaks.isEmpty() || peakFilterSettings == null) {
 			return;
 		}
-		/*
-		 * The mass spectrum must be not null.
-		 */
-		IScanMSD massSpectrum = peakFilterSettings.getSubtractMassSpectrum();
+		IScanMSD massSpectrum = getContextSubtractMassSpectrum();
 		if(massSpectrum == null) {
 			logger.warn("The mass spectrum must be not null.");
 			return;
@@ -131,20 +122,10 @@ public class SubtractCalculator {
 
 	public void subtractMassSpectra(List<IScanMSD> massSpectra, MassSpectrumFilterSettings massSpectrumFilterSettings) {
 
-		/*
-		 * Test if null.
-		 */
 		if(massSpectra == null || massSpectra.isEmpty() || massSpectrumFilterSettings == null) {
 			return;
 		}
-		/*
-		 * The mass spectrum must be not null.
-		 */
-		IScanMSD massSpectrum = massSpectrumFilterSettings.getSubtractMassSpectrum();
-		if(massSpectrum == null) {
-			logger.warn("The mass spectrum must be not null.");
-			return;
-		}
+		IScanMSD massSpectrum = getContextSubtractMassSpectrum();
 		boolean useNominalMasses = massSpectrumFilterSettings.isUseNominalMasses();
 		boolean useNormalize = massSpectrumFilterSettings.isNormalize();
 		Map<Double, Float> subtractMassSpectrumMap = getMassSpectrumMap(massSpectrum, useNominalMasses, useNormalize);
@@ -154,6 +135,15 @@ public class SubtractCalculator {
 		for(IScanMSD targetMassSpectrum : massSpectra) {
 			adjustIntensityValues(targetMassSpectrum, subtractMassSpectrumMap, useNominalMasses, useNormalize);
 		}
+	}
+
+	private IScanMSD getContextSubtractMassSpectrum() {
+
+		IEclipseContext context = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(this.getClass()).getBundleContext());
+		if(context.get("SessionSubtractMassSpectrum") instanceof IScanMSD scanMSD) {
+			return scanMSD;
+		}
+		return null;
 	}
 
 	/**

@@ -26,9 +26,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 
 	public static final int MIN_TRACES = 1;
 	public static final int MAX_TRACES = Integer.MAX_VALUE;
-	//
-	public static final String P_SUBTRACT_MASS_SPECTRUM = "subtractMassSpectrum";
-	public static final String DEF_SUBTRACT_MASS_SPECTRUM = "18:200;28:1000;32:500";
+
 	public static final String P_USE_NOMINAL_MZ = "useNominalMZ";
 	public static final boolean DEF_USE_NOMINAL_MZ = true;
 	public static final String P_USE_NORMALIZED_SCAN = "useNormalizedScan";
@@ -41,13 +39,9 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static final int DEF_COPY_TRACES_CLIPBOARD = 5;
 	public static final String P_DELETE_TARGETS_OPTIMIZE_SCAN = "deleteTargetsOptimizeScan";
 	public static final boolean DEF_DELETE_TARGETS_OPTIMIZE_SCAN = true;
-	//
+
 	private static final String DELIMITER_ION_ABUNDANCE = ":";
 	private static final String DELIMITER_IONS = ";";
-	/*
-	 * It is the mass spectrum that is used only by the session.
-	 */
-	private static IScanMSD sessionSubtractMassSpectrum;
 
 	public static IPreferenceSupplier INSTANCE() {
 
@@ -63,44 +57,12 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	@Override
 	public void initializeDefaults() {
 
-		putDefault(P_SUBTRACT_MASS_SPECTRUM, DEF_SUBTRACT_MASS_SPECTRUM);
 		putDefault(P_USE_NOMINAL_MZ, Boolean.toString(DEF_USE_NOMINAL_MZ));
 		putDefault(P_USE_NORMALIZED_SCAN, Boolean.toString(DEF_USE_NORMALIZED_SCAN));
 		putDefault(P_CALCULATION_TYPE, DEF_CALCULATION_TYPE);
 		putDefault(P_USE_PEAKS_INSTEAD_OF_SCANS, Boolean.toString(DEF_USE_PEAKS_INSTEAD_OF_SCANS));
 		putDefault(P_COPY_TRACES_CLIPBOARD, Integer.toString(DEF_COPY_TRACES_CLIPBOARD));
 		putDefault(P_DELETE_TARGETS_OPTIMIZE_SCAN, DEF_DELETE_TARGETS_OPTIMIZE_SCAN);
-	}
-
-	public static void loadSessionSubtractMassSpectrum() {
-
-		IScanMSD subtractMassSpectrum = getSubtractMassSpectrum();
-		setSessionSubtractMassSpectrum(subtractMassSpectrum);
-	}
-
-	public static void storeSessionSubtractMassSpectrum() {
-
-		setSubtractMassSpectrum(sessionSubtractMassSpectrum);
-	}
-
-	/**
-	 * Returns the session subtract mass spectrum, which is used by the filter.
-	 * 
-	 * @return {@link IScanMSD}
-	 */
-	public static IScanMSD getSessionSubtractMassSpectrum() {
-
-		return sessionSubtractMassSpectrum;
-	}
-
-	/**
-	 * Sets the session mass spectrum, which is used by the filter.
-	 * 
-	 * @param subtractMassSpectrum
-	 */
-	public static void setSessionSubtractMassSpectrum(IScanMSD subtractMassSpectrum) {
-
-		sessionSubtractMassSpectrum = subtractMassSpectrum;
 	}
 
 	public static boolean isUseNominalMZ() {
@@ -121,11 +83,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static void setUseNormalizedScan(boolean useNormalizedScan) {
 
 		INSTANCE().putBoolean(P_USE_NORMALIZED_SCAN, useNormalizedScan);
-	}
-
-	public static String getSessionSubtractMassSpectrumAsString() {
-
-		return INSTANCE().get(P_SUBTRACT_MASS_SPECTRUM, DEF_SUBTRACT_MASS_SPECTRUM);
 	}
 
 	public static void setCalculationType(CalculationType calculationType) {
@@ -201,15 +158,5 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static boolean isDeleteTargetsOptimizeScan() {
 
 		return INSTANCE().getBoolean(P_DELETE_TARGETS_OPTIMIZE_SCAN);
-	}
-
-	private static IScanMSD getSubtractMassSpectrum() {
-
-		return getMassSpectrum(INSTANCE().get(P_SUBTRACT_MASS_SPECTRUM, DEF_SUBTRACT_MASS_SPECTRUM));
-	}
-
-	private static void setSubtractMassSpectrum(IScanMSD massSpectrum) {
-
-		INSTANCE().put(P_SUBTRACT_MASS_SPECTRUM, getMassSpectrum(massSpectrum));
 	}
 }

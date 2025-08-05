@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.calculator.SubtractCalculator;
 import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IChromatogram;
@@ -46,10 +47,13 @@ import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.chemclipse.ux.extension.ui.swt.ISettingsHandler;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.preferences.PreferenceSupplierModelMSD;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.support.SubtractSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageScans;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageSubtract;
 import org.eclipse.chemclipse.vsd.model.core.selection.IChromatogramSelectionVSD;
 import org.eclipse.chemclipse.vsd.model.support.FilterSupportVSD;
+import org.eclipse.e4.core.contexts.EclipseContextFactory;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.jface.preference.IPreferencePage;
 import org.eclipse.swt.SWT;
@@ -68,6 +72,7 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.osgi.framework.FrameworkUtil;
 
 public class ExtendedCombinedScanUI extends Composite implements IExtendedPartUI {
 
@@ -372,7 +377,7 @@ public class ExtendedCombinedScanUI extends Composite implements IExtendedPartUI
 				if(combinedScan instanceof ICombinedMassSpectrum combinedMassSpectrum) {
 					boolean useNormalize = PreferenceSupplierModelMSD.isUseNormalizedScan();
 					CalculationType calculationType = PreferenceSupplierModelMSD.getCalculationType();
-					IScanMSD massSpectrum1 = PreferenceSupplierModelMSD.getSessionSubtractMassSpectrum();
+					IScanMSD massSpectrum1 = SubtractSupport.getSessionSubtractMassSpectrum();
 					IScanMSD massSpectrum2 = combinedMassSpectrum;
 					IScanMSD subtractMassSpectrum = FilterSupport.getCombinedMassSpectrum(massSpectrum1, massSpectrum2, null, useNormalize, calculationType);
 					saveSessionMassSpectrum(e.display, subtractMassSpectrum);
@@ -389,9 +394,9 @@ public class ExtendedCombinedScanUI extends Composite implements IExtendedPartUI
 	 */
 	private void saveSessionMassSpectrum(Display display, IScanMSD scanMSD) {
 
-		PreferenceSupplierModelMSD.setSessionSubtractMassSpectrum(scanMSD);
-		PreferenceSupplierModelMSD.storeSessionSubtractMassSpectrum();
-		//
+		IEclipseContext context = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(SubtractCalculator.class).getBundleContext());
+		context.set("SessionSubtractMassSpectrum", scanMSD);
+
 		if(display != null) {
 			fireUpdateEvent(display);
 		}

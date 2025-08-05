@@ -47,30 +47,27 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static ChromatogramFilterSettings getFilterSettings() {
 
 		ChromatogramFilterSettings subtractFilterSettingsChromatogram = new ChromatogramFilterSettings();
-		subtractFilterSettingsChromatogram.setSubtractMassSpectrum(PreferenceSupplierMSD.getSessionSubtractMassSpectrumAsString());
 		subtractFilterSettingsChromatogram.setUseNominalMasses(PreferenceSupplierMSD.isUseNominalMZ());
 		subtractFilterSettingsChromatogram.setUseNormalize(PreferenceSupplierMSD.isUseNormalizedScan());
-		//
+
 		return subtractFilterSettingsChromatogram;
 	}
 
 	public static PeakFilterSettings getPeakFilterSettings() {
 
 		PeakFilterSettings peakFilterSettings = new PeakFilterSettings();
-		peakFilterSettings.setSubtractMassSpectrum(PreferenceSupplierMSD.getSessionSubtractMassSpectrumAsString());
 		peakFilterSettings.setUseNominalMasses(PreferenceSupplierMSD.isUseNominalMZ());
 		peakFilterSettings.setUseNormalize(PreferenceSupplierMSD.isUseNormalizedScan());
-		//
+
 		return peakFilterSettings;
 	}
 
 	public static MassSpectrumFilterSettings getMassSpectrumFilterSettings() {
 
 		MassSpectrumFilterSettings massSpectrumFilterSettings = new MassSpectrumFilterSettings();
-		massSpectrumFilterSettings.setSubtractMassSpectrum(PreferenceSupplierMSD.getSessionSubtractMassSpectrumAsString());
 		massSpectrumFilterSettings.setUseNominalMasses(PreferenceSupplierMSD.isUseNominalMZ());
 		massSpectrumFilterSettings.setUseNormalize(PreferenceSupplierMSD.isUseNormalizedScan());
-		//
+
 		return massSpectrumFilterSettings;
 	}
 }

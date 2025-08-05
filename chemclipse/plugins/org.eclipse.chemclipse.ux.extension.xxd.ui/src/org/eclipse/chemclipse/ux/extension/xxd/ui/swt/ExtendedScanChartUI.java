@@ -55,6 +55,8 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ScanDataSupport
 import org.eclipse.chemclipse.ux.extension.xxd.ui.wizards.SubtractScanWizard;
 import org.eclipse.chemclipse.vsd.model.core.IScanVSD;
 import org.eclipse.chemclipse.wsd.model.core.IScanWSD;
+import org.eclipse.e4.core.contexts.EclipseContextFactory;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferencePage;
@@ -76,6 +78,7 @@ import org.eclipse.swtchart.IAxis;
 import org.eclipse.swtchart.Range;
 import org.eclipse.swtchart.extensions.core.BaseChart;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.osgi.framework.FrameworkUtil;
 
 public class ExtendedScanChartUI extends Composite implements IExtendedPartUI {
 
@@ -524,7 +527,8 @@ public class ExtendedScanChartUI extends Composite implements IExtendedPartUI {
 		MassSpectrumFilterSettings settings = new MassSpectrumFilterSettings();
 		settings.setUseNominalMasses(PreferenceSupplierModelMSD.isUseNominalMZ());
 		settings.setUseNormalize(PreferenceSupplierModelMSD.isUseNormalizedScan());
-		settings.setSubtractMassSpectrum(PreferenceSupplierModelMSD.getMassSpectrum(scanSubtract));
+		IEclipseContext context = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(SubtractCalculator.class).getBundleContext());
+		context.set("SessionSubtractMassSpectrum", scanSubtract);
 		/*
 		 * Subtract
 		 */
@@ -544,7 +548,7 @@ public class ExtendedScanChartUI extends Composite implements IExtendedPartUI {
 				logger.warn(e);
 			}
 		}
-		//
+
 		return optimizedMassSpectrum;
 	}
 

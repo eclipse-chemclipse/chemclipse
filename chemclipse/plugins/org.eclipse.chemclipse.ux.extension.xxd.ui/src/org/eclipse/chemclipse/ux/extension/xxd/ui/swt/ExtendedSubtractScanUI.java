@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.calculator.SubtractCalculator;
 import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
@@ -36,11 +37,14 @@ import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.preferences.PreferenceSupplierModelMSD;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.support.SubtractSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageScans;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageSubtract;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.runnables.LibraryServiceRunnable;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.e4.core.contexts.EclipseContextFactory;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.swt.SWT;
@@ -58,6 +62,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
+import org.osgi.framework.FrameworkUtil;
 
 import jakarta.inject.Inject;
 
@@ -121,7 +126,6 @@ public class ExtendedSubtractScanUI extends Composite implements IExtendedPartUI
 		createToolbarMain(composite);
 		createScanTabFolderSection(composite);
 
-		loadSessionMassSpectrum(composite.getDisplay());
 		updateWidgets();
 	}
 
@@ -207,7 +211,7 @@ public class ExtendedSubtractScanUI extends Composite implements IExtendedPartUI
 					/*
 					 * Add the selected scan to the session MS.
 					 */
-					IScanMSD massSpectrum1 = PreferenceSupplierModelMSD.getSessionSubtractMassSpectrum();
+					IScanMSD massSpectrum1 = SubtractSupport.getSessionSubtractMassSpectrum();
 					CalculationType calculationType = PreferenceSupplierModelMSD.getCalculationType();
 					IRegularMassSpectrum massSpectrum2 = chromatogramSelectionMSD.getSelectedScan();
 					boolean useNormalize = PreferenceSupplierModelMSD.isUseNormalizedScan();
@@ -234,7 +238,7 @@ public class ExtendedSubtractScanUI extends Composite implements IExtendedPartUI
 					boolean useNormalize = PreferenceSupplierModelMSD.isUseNormalizedScan();
 					CalculationType calculationType = PreferenceSupplierModelMSD.getCalculationType();
 					boolean usePeaksInsteadOfScans = PreferenceSupplierModelMSD.isUsePeaksInsteadOfScans();
-					IScanMSD massSpectrum1 = PreferenceSupplierModelMSD.getSessionSubtractMassSpectrum();
+					IScanMSD massSpectrum1 = SubtractSupport.getSessionSubtractMassSpectrum();
 					IScanMSD massSpectrum2 = FilterSupport.getCombinedMassSpectrum(chromatogramSelectionMSD, null, useNormalize, calculationType, usePeaksInsteadOfScans);
 					IScanMSD subtractMassSpectrum = FilterSupport.getCombinedMassSpectrum(massSpectrum1, massSpectrum2, null, useNormalize, calculationType);
 					saveSessionMassSpectrum(e.display, subtractMassSpectrum);
@@ -388,12 +392,6 @@ public class ExtendedSubtractScanUI extends Composite implements IExtendedPartUI
 		updateWidgets();
 	}
 
-	private void loadSessionMassSpectrum(Display display) {
-
-		PreferenceSupplierModelMSD.loadSessionSubtractMassSpectrum();
-		fireUpdateEvent(display);
-	}
-
 	/**
 	 * If the display is set to null, no event is fired.
 	 * 
@@ -402,8 +400,8 @@ public class ExtendedSubtractScanUI extends Composite implements IExtendedPartUI
 	 */
 	private void saveSessionMassSpectrum(Display display, IScanMSD scanMSD) {
 
-		PreferenceSupplierModelMSD.setSessionSubtractMassSpectrum(scanMSD);
-		PreferenceSupplierModelMSD.storeSessionSubtractMassSpectrum();
+		IEclipseContext context = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(SubtractCalculator.class).getBundleContext());
+		context.set("SessionSubtractMassSpectrum", scanMSD);
 
 		if(display != null) {
 			fireUpdateEvent(display);
