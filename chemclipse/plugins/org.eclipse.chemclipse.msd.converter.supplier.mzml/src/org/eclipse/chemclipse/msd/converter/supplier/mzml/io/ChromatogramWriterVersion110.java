@@ -26,7 +26,6 @@ import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.msd.converter.io.IChromatogramMSDWriter;
-import org.eclipse.chemclipse.msd.converter.supplier.mzml.Activator;
 import org.eclipse.chemclipse.msd.converter.supplier.mzml.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
@@ -55,6 +54,7 @@ import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SourceFileT
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SpectrumListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SpectrumType;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.osgi.framework.FrameworkUtil;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
@@ -376,7 +376,7 @@ public class ChromatogramWriterVersion110 extends AbstractChromatogramWriter imp
 	private DataProcessingType createDataProcessing(SoftwareType software) {
 
 		DataProcessingType dataProcessing = new DataProcessingType();
-		dataProcessing.setId(Activator.getContext().getBundle().getSymbolicName());
+		dataProcessing.setId(FrameworkUtil.getBundle(ChromatogramWriterVersion110.class).getSymbolicName());
 		dataProcessing.getProcessingMethod().add(XmlWriter110.createExportProcessingMethod(software));
 		return dataProcessing;
 	}

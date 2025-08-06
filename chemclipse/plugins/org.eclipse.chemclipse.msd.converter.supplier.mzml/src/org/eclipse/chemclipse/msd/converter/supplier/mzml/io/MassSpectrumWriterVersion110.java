@@ -22,7 +22,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.eclipse.chemclipse.converter.exceptions.FileIsNotWriteableException;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.msd.converter.io.IMassSpectraWriter;
-import org.eclipse.chemclipse.msd.converter.supplier.mzml.Activator;
 import org.eclipse.chemclipse.msd.converter.supplier.mzml.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
@@ -47,6 +46,7 @@ import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SourceFileT
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SpectrumListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SpectrumType;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.osgi.framework.FrameworkUtil;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
@@ -185,7 +185,7 @@ public class MassSpectrumWriterVersion110 implements IMassSpectraWriter {
 	private DataProcessingType createDataProcessing(SoftwareType software) {
 
 		DataProcessingType dataProcessing = new DataProcessingType();
-		dataProcessing.setId(Activator.getContext().getBundle().getSymbolicName());
+		dataProcessing.setId(FrameworkUtil.getBundle(MassSpectrumWriterVersion110.class).getSymbolicName());
 		dataProcessing.getProcessingMethod().add(XmlWriter110.createExportProcessingMethod(software));
 		return dataProcessing;
 	}

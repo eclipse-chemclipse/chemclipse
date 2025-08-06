@@ -12,7 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.identifier.supplier.nist;
 
+import org.eclipse.chemclipse.msd.identifier.supplier.nist.runtime.INistSupport;
 import org.eclipse.chemclipse.rcp.app.test.TestAssembler;
+import org.osgi.framework.FrameworkUtil;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -21,7 +23,7 @@ public class AllTests {
 
 	public static Test suite() {
 
-		TestAssembler testAssembler = new TestAssembler(Activator.getContext().getBundle().getBundleContext().getBundles());
+		TestAssembler testAssembler = new TestAssembler(FrameworkUtil.getBundle(INistSupport.class).getBundleContext().getBundles());
 		TestSuite suite = new TestSuite("Run all tests.");
 		String bundleAndPackageName = "org.eclipse.chemclipse.msd.identifier.supplier.nist";
 		testAssembler.assembleTests(suite, bundleAndPackageName, bundleAndPackageName, "*_Test"); // Unit

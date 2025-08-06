@@ -5,7 +5,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Parafac
 Bundle-SymbolicName: org.eclipse.chemclipse.msd.converter.supplier.matlab.parafac;singleton:=true
 Bundle-Version: 0.9.0.qualifier
-Bundle-Activator: org.eclipse.chemclipse.msd.converter.supplier.matlab.parafac.Activator
 Bundle-Vendor: ChemClipse
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.chemclipse.msd.converter,

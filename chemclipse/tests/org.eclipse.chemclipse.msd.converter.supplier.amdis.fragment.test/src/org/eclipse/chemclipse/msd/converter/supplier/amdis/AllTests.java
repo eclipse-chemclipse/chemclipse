@@ -15,13 +15,15 @@ package org.eclipse.chemclipse.msd.converter.supplier.amdis;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.eclipse.chemclipse.msd.converter.supplier.amdis.format.MSL;
 import org.eclipse.chemclipse.rcp.app.test.TestAssembler;
+import org.osgi.framework.FrameworkUtil;
 
 public class AllTests {
 
 	public static Test suite() {
 
-		TestAssembler testAssembler = new TestAssembler(Activator.getContext().getBundle().getBundleContext().getBundles());
+		TestAssembler testAssembler = new TestAssembler(FrameworkUtil.getBundle(MSL.class).getBundleContext().getBundles());
 		TestSuite suite = new TestSuite("Run all tests.");
 		String bundleAndPackageName = "org.eclipse.chemclipse.msd.converter.supplier.amdis";
 		testAssembler.assembleTests(suite, bundleAndPackageName, bundleAndPackageName, "*_Test"); // Unit

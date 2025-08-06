@@ -15,7 +15,9 @@ package org.eclipse.chemclipse.msd.converter;
 import java.io.File;
 import java.io.IOException;
 
+import org.eclipse.chemclipse.msd.converter.chromatogram.ChromatogramConverterMSD;
 import org.junit.Ignore;
+import org.osgi.framework.FrameworkUtil;
 
 import junit.framework.TestCase;
 
@@ -25,7 +27,7 @@ public class PathResolver_1_Test extends TestCase {
 	public void testGetAbsolutePath_1() {
 
 		try {
-			String location = Activator.getContext().getBundle().getLocation();
+			String location = FrameworkUtil.getBundle(ChromatogramConverterMSD.class).getLocation();
 			location = location.replace("reference:file:", "");
 			if(location.endsWith("/")) {
 				location = location.substring(0, location.length() - 1);
