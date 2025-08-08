@@ -21,33 +21,22 @@ import org.eclipse.chemclipse.msd.model.core.selection.ChromatogramSelectionMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
 import org.junit.Ignore;
 
-import junit.framework.TestCase;
-
 @Ignore
-public class ChromatogramImportTestCase extends TestCase {
+public class ChromatogramImportTestCase {
 
 	private IChromatogramMSD chromatogram;
 	protected IChromatogramSelectionMSD chromatogramSelection;
 	protected String chromatogramRelativePath;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		File fileImport = new File(TestPathHelper.getAbsolutePath(chromatogramRelativePath));
 		IProcessingInfo<IChromatogramMSD> processingInfo = ChromatogramConverterMSD.getInstance().convert(fileImport, new NullProgressMonitor());
 		chromatogram = processingInfo.getProcessingResult();
 		chromatogramSelection = new ChromatogramSelectionMSD(chromatogram);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogramSelection = null;
-		chromatogram = null;
-
-		super.tearDown();
 	}
 }

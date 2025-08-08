@@ -12,30 +12,30 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.internal.core;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.TestPathHelper;
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.processor.ChromatogramIntegrator;
+import org.junit.Before;
+import org.junit.Test;
 
 public class TrapezoidChromatogramIntegrator_2_ITest extends ChromatogramImportTestCase {
 
 	private ChromatogramIntegrator integrator;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		chromatogramRelativePath = TestPathHelper.TESTFILE_IMPORT_CHROMATOGRAM_1;
 		super.setUp();
 		integrator = new ChromatogramIntegrator();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testIntegrate_1() {
 
 		double area = integrator.integrate(chromatogramSelection);
-		assertEquals("", 7.893094987865009E9, area);
+		assertEquals("", 7.893094987865009E9, area, 0);
 	}
 }

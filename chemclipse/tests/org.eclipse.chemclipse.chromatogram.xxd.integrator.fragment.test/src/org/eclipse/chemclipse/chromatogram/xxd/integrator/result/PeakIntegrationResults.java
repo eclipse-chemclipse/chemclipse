@@ -14,8 +14,6 @@ package org.eclipse.chemclipse.chromatogram.xxd.integrator.result;
 
 /**
  * THIS IS A TEST CLASS! DO NOT USE EXCEPT FOR TESTS!
- * 
- * @author eselmeister
  */
 public class PeakIntegrationResults extends AbstractPeakIntegrationResults implements IPeakIntegrationResults {
 }

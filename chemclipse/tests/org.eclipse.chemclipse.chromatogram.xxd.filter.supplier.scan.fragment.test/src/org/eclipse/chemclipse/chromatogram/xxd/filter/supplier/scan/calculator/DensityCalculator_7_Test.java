@@ -12,15 +12,17 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.scan.calculator;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.scan.core.DensityOperation;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class DensityCalculator_7_Test extends TestCase {
+public class DensityCalculator_7_Test {
 
 	private DensityCalculator densityCalculator = new DensityCalculator();
 	private int[] retentionTimes = new int[]{0, 1070, 2010, 2950, 3890, 4860};
 
+	@Test
 	public void test00() {
 
 		int scanInterval = densityCalculator.calculateScanInterval(retentionTimes);
@@ -28,6 +30,7 @@ public class DensityCalculator_7_Test extends TestCase {
 		assertEquals(1000, densityCalculator.adjustScanInterval(scanInterval, 1000));
 	}
 
+	@Test
 	public void test01() {
 
 		DensityOperation densityOperation = densityCalculator.calculateScanModification(2, 1000);
@@ -35,6 +38,7 @@ public class DensityCalculator_7_Test extends TestCase {
 		assertEquals(1, densityOperation.getModifications());
 	}
 
+	@Test
 	public void test02() {
 
 		int[] retentionTimesAdjusted = densityCalculator.adjustRetentionTimes(retentionTimes, 2);

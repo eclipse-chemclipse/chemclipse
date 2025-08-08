@@ -12,11 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.rtshifter.core.internal.support;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.rtshifter.settings.FilterSettingsGapFiller;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.selection.ChromatogramSelectionMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
+import org.junit.Before;
+import org.junit.Test;
 
 public class ChromatogramFilterGapFilller_1_Test extends ChromatogramTestCase {
 
@@ -24,7 +28,8 @@ public class ChromatogramFilterGapFilller_1_Test extends ChromatogramTestCase {
 	private IChromatogramSelectionMSD chromatogramSelection;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		chromatogram = getChromatogram();
@@ -32,12 +37,7 @@ public class ChromatogramFilterGapFilller_1_Test extends ChromatogramTestCase {
 		chromatogramSelection = new ChromatogramSelectionMSD(chromatogram);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
 		IRegularMassSpectrum scan;
@@ -52,12 +52,13 @@ public class ChromatogramFilterGapFilller_1_Test extends ChromatogramTestCase {
 		assertEquals(10500, scan.getRetentionTime());
 	}
 
+	@Test
 	public void test_2() {
 
 		IRegularMassSpectrum scan;
 		FilterSettingsGapFiller settings = new FilterSettingsGapFiller();
 		settings.setLimitFactor(4);
-		//
+
 		GapFiller.autofillScans(chromatogramSelection, settings);
 		assertEquals(1003, chromatogram.getNumberOfScans());
 		assertEquals(1500, chromatogram.getScanDelay());

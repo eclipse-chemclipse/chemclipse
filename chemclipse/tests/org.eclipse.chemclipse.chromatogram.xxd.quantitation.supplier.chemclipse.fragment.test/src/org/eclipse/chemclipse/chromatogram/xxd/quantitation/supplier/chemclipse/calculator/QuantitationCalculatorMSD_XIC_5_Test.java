@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.quantitation.supplier.chemclipse.calculator;
 
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.chromatogram.xxd.quantitation.supplier.chemclipse.internal.calculator.IQuantitationCalculatorMSD;
 import org.eclipse.chemclipse.chromatogram.xxd.quantitation.supplier.chemclipse.internal.calculator.QuantitationCalculatorMSD;
 import org.eclipse.chemclipse.model.quantitation.CalibrationMethod;
@@ -21,6 +23,8 @@ import org.eclipse.chemclipse.model.quantitation.IResponseSignals;
 import org.eclipse.chemclipse.model.quantitation.QuantitationSignal;
 import org.eclipse.chemclipse.model.quantitation.ResponseSignal;
 import org.eclipse.chemclipse.msd.model.exceptions.EvaluationException;
+import org.junit.Before;
+import org.junit.Test;
 
 public class QuantitationCalculatorMSD_XIC_5_Test extends QuantitationCalculator_XIC_TestCase {
 
@@ -35,29 +39,21 @@ public class QuantitationCalculatorMSD_XIC_5_Test extends QuantitationCalculator
 	private IResponseSignals concentrationResponseEntries;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
-		//
+
 		quantitationCompound = getQuantitationCompound();
 		quantitationCompound.setUseTIC(false);
 		quantitationCompound.setCalibrationMethod(CalibrationMethod.LINEAR);
 		quantitationSignals = quantitationCompound.getQuantitationSignals();
 		concentrationResponseEntries = quantitationCompound.getResponseSignals();
-		//
+
 		calculator = new QuantitationCalculatorMSD();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-		calculator = null;
-		quantitationCompound = null;
-		quantitationSignals = null;
-		concentrationResponseEntries = null;
-	}
-
+	@Test
 	public void testCalculateConcentration_1() {
 
 		quantitationSignals.add(new QuantitationSignal(108.0d, 0.25f));

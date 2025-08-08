@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.quantitation.supplier.chemclipse.calculator;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.xxd.quantitation.supplier.chemclipse.internal.calculator.IQuantitationCalculatorMSD;
@@ -20,6 +23,7 @@ import org.eclipse.chemclipse.model.core.ISignal;
 import org.eclipse.chemclipse.model.quantitation.CalibrationMethod;
 import org.eclipse.chemclipse.model.quantitation.IQuantitationCompound;
 import org.eclipse.chemclipse.model.quantitation.IQuantitationEntry;
+import org.junit.Before;
 
 public class QuantitationCalculatorMSD_TIC_2_Test extends QuantitationCalculator_TIC_TestCase {
 
@@ -28,35 +32,26 @@ public class QuantitationCalculatorMSD_TIC_2_Test extends QuantitationCalculator
 	 * CalibrationMethod: LINEAR
 	 * isZeroCrossing: false
 	 */
-	private IQuantitationCalculatorMSD calculator;
 	private List<IQuantitationEntry> quantitationEntries;
 	private IQuantitationEntry quantitationEntry;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
-		//
+
 		IQuantitationCompound quantitationCompound = getQuantitationCompound();
 		quantitationCompound.getQuantitationPeaks().addAll(getQuantitationPeaks());
-		//
+
 		quantitationCompound.setUseTIC(true);
 		quantitationCompound.setCalibrationMethod(CalibrationMethod.LINEAR);
 		quantitationCompound.calculateSignalTablesFromPeaks();
-		//
-		calculator = new QuantitationCalculatorMSD();
+
+		IQuantitationCalculatorMSD calculator = new QuantitationCalculatorMSD();
 		quantitationCompound.setUseCrossZero(false);
 		quantitationEntries = calculator.calculateQuantitationResults(getReferencePeakMSD_TIC_X(), quantitationCompound);
 		quantitationEntry = quantitationEntries.get(0);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-		calculator = null;
-		quantitationEntries = null;
-		quantitationEntry = null;
 	}
 
 	public void testCalculateConcentration_1() {
@@ -81,7 +76,7 @@ public class QuantitationCalculatorMSD_TIC_2_Test extends QuantitationCalculator
 
 	public void testCalculateConcentration_5() {
 
-		assertEquals(0.029999999999999992d, quantitationEntry.getConcentration());
+		assertEquals(0.029999999999999992d, quantitationEntry.getConcentration(), 0);
 	}
 
 	public void testCalculateConcentration_6() {
@@ -96,6 +91,6 @@ public class QuantitationCalculatorMSD_TIC_2_Test extends QuantitationCalculator
 
 	public void testCalculateConcentration_8() {
 
-		assertEquals(ISignal.TOTAL_INTENSITY, quantitationEntry.getSignal());
+		assertEquals(ISignal.TOTAL_INTENSITY, quantitationEntry.getSignal(), 0);
 	}
 }

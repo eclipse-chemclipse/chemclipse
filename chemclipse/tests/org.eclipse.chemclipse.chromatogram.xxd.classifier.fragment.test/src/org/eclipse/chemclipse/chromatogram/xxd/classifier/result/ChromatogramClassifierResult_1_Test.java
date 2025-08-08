@@ -12,57 +12,49 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.classifier.result;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class AbstractChromatogramClassifierResult_1_Test extends TestCase {
+import org.junit.Test;
 
-	private IChromatogramClassifierResult chromatogramClassifierResult;
+public class ChromatogramClassifierResult_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogramClassifierResult = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetResultStatus_1() {
 
 		ResultStatus status = ResultStatus.EXCEPTION;
-		chromatogramClassifierResult = new TestChromatogramClassifierResult(status, "");
+		TestChromatogramClassifierResult chromatogramClassifierResult = new TestChromatogramClassifierResult(status, "");
 		assertEquals("ResultStatus", ResultStatus.EXCEPTION, chromatogramClassifierResult.getResultStatus());
 	}
 
+	@Test
 	public void testGetResultStatus_2() {
 
 		ResultStatus status = ResultStatus.OK;
-		chromatogramClassifierResult = new TestChromatogramClassifierResult(status, "");
+		TestChromatogramClassifierResult chromatogramClassifierResult = new TestChromatogramClassifierResult(status, "");
 		assertEquals("ResultStatus", ResultStatus.OK, chromatogramClassifierResult.getResultStatus());
 	}
 
+	@Test
 	public void testGetResultStatus_3() {
 
 		ResultStatus status = ResultStatus.UNDEFINED;
-		chromatogramClassifierResult = new TestChromatogramClassifierResult(status, "");
+		TestChromatogramClassifierResult chromatogramClassifierResult = new TestChromatogramClassifierResult(status, "");
 		assertEquals("ResultStatus", ResultStatus.UNDEFINED, chromatogramClassifierResult.getResultStatus());
 	}
 
+	@Test
 	public void testGetDescription_3() {
 
 		ResultStatus status = ResultStatus.UNDEFINED;
-		chromatogramClassifierResult = new TestChromatogramClassifierResult(status, "My test description.");
+		TestChromatogramClassifierResult chromatogramClassifierResult = new TestChromatogramClassifierResult(status, "My test description.");
 		assertEquals("Description", "My test description.", chromatogramClassifierResult.getDescription());
 	}
 
+	@Test
 	public void testGetDescription_4() {
 
 		ResultStatus status = ResultStatus.UNDEFINED;
-		chromatogramClassifierResult = new TestChromatogramClassifierResult(status, "");
+		TestChromatogramClassifierResult chromatogramClassifierResult = new TestChromatogramClassifierResult(status, "");
 		assertEquals("Description", "", chromatogramClassifierResult.getDescription());
 	}
 }

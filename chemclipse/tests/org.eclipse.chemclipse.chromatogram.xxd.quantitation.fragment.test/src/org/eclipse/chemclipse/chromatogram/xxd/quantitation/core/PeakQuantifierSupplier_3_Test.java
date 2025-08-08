@@ -12,57 +12,57 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.quantitation.core;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
-public class PeakQuantifierSupplier_3_Test extends TestCase {
+public class PeakQuantifierSupplier_3_Test {
 
 	private PeakQuantifierSupplier supplier1;
 	private PeakQuantifierSupplier supplier2;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		supplier1 = new PeakQuantifierSupplier();
 		supplier1.setId("id");
 		supplier1.setDescription("description");
 		supplier1.setPeakQuantifierName("detectorName");
+
 		supplier2 = new PeakQuantifierSupplier();
 		supplier2.setId("id");
 		supplier2.setDescription("description");
 		supplier2.setPeakQuantifierName("detectorName");
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		supplier1 = null;
-		supplier2 = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testEquals_1() {
 
 		assertEquals("equals", supplier1, supplier2);
 	}
 
+	@Test
 	public void testEquals_2() {
 
 		assertEquals("equals", supplier2, supplier1);
 	}
 
+	@Test
 	public void testEquals_3() {
 
 		assertNotNull("equals", supplier1);
 	}
 
+	@Test
 	public void testEquals_4() {
 
 		assertNotEquals("equals", supplier1, new Object());
 	}
 
+	@Test
 	public void testHashCode_1() {
 
 		assertEquals("hashCode", supplier1.hashCode(), supplier2.hashCode());

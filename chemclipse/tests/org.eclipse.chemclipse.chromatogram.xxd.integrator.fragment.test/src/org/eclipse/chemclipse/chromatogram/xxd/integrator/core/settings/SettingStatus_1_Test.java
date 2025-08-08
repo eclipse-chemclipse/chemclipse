@@ -12,26 +12,17 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings.peaks.ISettingStatus;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class SettingStatus_1_Test extends TestCase {
+public class SettingStatus_1_Test {
 
 	private ISettingStatus settingStatus;
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testStatus_1() {
 
 		settingStatus = new SettingStatus(true, true);
@@ -39,6 +30,7 @@ public class SettingStatus_1_Test extends TestCase {
 		assertTrue("SumOn", settingStatus.sumOn());
 	}
 
+	@Test
 	public void testStatus_2() {
 
 		settingStatus = new SettingStatus(true, false);
@@ -46,6 +38,7 @@ public class SettingStatus_1_Test extends TestCase {
 		assertFalse("SumOn", settingStatus.sumOn());
 	}
 
+	@Test
 	public void testStatus_3() {
 
 		settingStatus = new SettingStatus(false, true);
@@ -53,6 +46,7 @@ public class SettingStatus_1_Test extends TestCase {
 		assertTrue("SumOn", settingStatus.sumOn());
 	}
 
+	@Test
 	public void testStatus_4() {
 
 		settingStatus = new SettingStatus(false, false);

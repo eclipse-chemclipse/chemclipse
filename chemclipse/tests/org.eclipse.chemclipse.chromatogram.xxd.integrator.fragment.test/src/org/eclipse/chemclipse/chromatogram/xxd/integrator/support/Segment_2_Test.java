@@ -12,41 +12,33 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.support;
 
+import org.junit.Test;
+
 import junit.framework.TestCase;
 
 public class Segment_2_Test extends TestCase {
 
-	private ISegment segment;
+	private ISegment segment = new Segment(null, null, null, null);
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		segment = new Segment(null, null, null, null);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		segment = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testPoint_1() {
 
 		assertNotNull("ChromatogramBaselinePoint1", segment.getChromatogramBaselinePoint1());
 	}
 
+	@Test
 	public void testPoint_2() {
 
 		assertNotNull("ChromatogramBaselinePoint2", segment.getChromatogramBaselinePoint2());
 	}
 
+	@Test
 	public void testPoint_3() {
 
 		assertNotNull("PeakBaselinePoint1", segment.getPeakBaselinePoint1());
 	}
 
+	@Test
 	public void testPoint_4() {
 
 		assertNotNull("PeakBaselinePoint2", segment.getPeakBaselinePoint2());

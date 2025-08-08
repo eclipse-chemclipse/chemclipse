@@ -12,31 +12,20 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.quantitation.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.xxd.quantitation.exceptions.NoPeakQuantifierAvailableException;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class PeakQuantifier_1_Test {
 
-public class PeakQuantifier_1_Test extends TestCase {
+	private IPeakQuantifierSupport support = PeakQuantifier.getPeakQuantifierSupport();
 
-	private IPeakQuantifierSupport support;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		support = PeakQuantifier.getPeakQuantifierSupport();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		support = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetMassSpectrumComparatorSupport_3() throws NoPeakQuantifierAvailableException {
 
 		List<String> ids = support.getAvailablePeakQuantifierIds();
@@ -51,6 +40,7 @@ public class PeakQuantifier_1_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testGetMassSpectrumComparisonSupplier_1() {
 
 		try {
@@ -60,6 +50,7 @@ public class PeakQuantifier_1_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testGetMassSpectrumComparisonSupplier_2() {
 
 		try {

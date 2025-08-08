@@ -31,23 +31,22 @@ import org.eclipse.chemclipse.msd.model.implementation.PeakIon;
 import org.eclipse.chemclipse.msd.model.implementation.PeakMSD;
 import org.eclipse.chemclipse.msd.model.implementation.PeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.implementation.PeakModelMSD;
+import org.junit.Before;
 import org.junit.Ignore;
 
-import junit.framework.TestCase;
-
 @Ignore
-public class ReferencePeakMSDTestCase extends TestCase {
+public class ReferencePeakMSDTestCase {
 
 	private IPeakMSD referencePeakMSD_TIC_1; // 1x Concentration
 	private IPeakMSD referencePeakMSD_TIC_2; // 5x Concentration
 	private IPeakMSD referencePeakMSD_TIC_3; // 10x Concentration
 	private IPeakMSD referencePeakMSD_TIC_X; // 3x Concentration
-	//
+
 	private IPeakMSD referencePeakMSD_XIC_1; // 8x Concentration
 	private IPeakMSD referencePeakMSD_XIC_2; // 9x Concentration
 	private IPeakMSD referencePeakMSD_XIC_3; // 6x Concentration
 	private IPeakMSD referencePeakMSD_XIC_X; // 2x Concentration
-	//
+
 	private IPeakModelMSD peakModel;
 	private IPeakMassSpectrum peakMaximum;
 	private IPeakIon peakIon;
@@ -56,18 +55,17 @@ public class ReferencePeakMSDTestCase extends TestCase {
 	private TreeMap<Integer, Float> scanValues;
 	private float startBackgroundAbundance = 0.0f;
 	private float stopBackgroundAbundance = 0.0f;
-	//
+
 	private double baseArea = 750220.0d;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		referencePeakMSD_TIC_1 = createPeak(1, false);
 		referencePeakMSD_TIC_2 = createPeak(5, false);
 		referencePeakMSD_TIC_3 = createPeak(10, false);
 		referencePeakMSD_TIC_X = createPeak(3, false);
-		//
+
 		referencePeakMSD_XIC_1 = createPeak(8, true);
 		referencePeakMSD_XIC_2 = createPeak(9, true);
 		referencePeakMSD_XIC_3 = createPeak(6, true);
@@ -142,23 +140,8 @@ public class ReferencePeakMSDTestCase extends TestCase {
 			integrationEntries.add(integrationEntry);
 			referencePeakMSD.setIntegratedArea(integrationEntries, "Test Integrator TIC");
 		}
-		//
+
 		return referencePeakMSD;
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-		peakIon = null;
-		peakMaximum = null;
-		peakModel = null;
-		intensityValues = null;
-		fragmentValues = null;
-		//
-		referencePeakMSD_TIC_1 = null;
-		referencePeakMSD_TIC_2 = null;
-		referencePeakMSD_TIC_3 = null;
 	}
 
 	/*

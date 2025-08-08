@@ -12,36 +12,27 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.baseline.detector.core;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class BaselineDetectorSupplier_1_Test extends TestCase {
+import org.junit.Test;
 
-	private BaselineDetectorSupplier supplier;
+public class BaselineDetectorSupplier_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private BaselineDetectorSupplier supplier = new BaselineDetectorSupplier();
 
-		super.setUp();
-		supplier = new BaselineDetectorSupplier();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		supplier = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetId_1() {
 
 		assertEquals("id", "", supplier.getId());
 	}
 
+	@Test
 	public void testGetDescription_1() {
 
 		assertEquals("description", "", supplier.getDescription());
 	}
 
+	@Test
 	public void testGetDetectorName_1() {
 
 		assertEquals("detectorName", "", supplier.getDetectorName());

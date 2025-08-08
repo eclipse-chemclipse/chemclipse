@@ -12,75 +12,75 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.result;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class PeakIntegrationResult_4_Test extends TestCase {
+import org.junit.Test;
 
-	private IPeakIntegrationResult result;
+public class PeakIntegrationResult_4_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private IPeakIntegrationResult result = new PeakIntegrationResult();
 
-		super.setUp();
-		result = new PeakIntegrationResult();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetIntegratedArea_1() {
 
-		assertEquals(0.0d, result.getIntegratedArea());
+		assertEquals(0.0d, result.getIntegratedArea(), 0);
 	}
 
+	@Test
 	public void testGetIntegratedIons_1() {
 
 		assertEquals(0, result.getIntegratedTraces().size());
 	}
 
+	@Test
 	public void testGetIntegratorType_1() {
 
 		assertEquals("", result.getIntegratorType());
 	}
 
+	@Test
 	public void testGetModelDescription_1() {
 
 		assertEquals("", result.getModelDescription());
 	}
 
+	@Test
 	public void testGetPeakType_1() {
 
 		assertEquals("", result.getPeakType());
 	}
 
+	@Test
 	public void testGetPurity_1() {
 
-		assertEquals(0.0f, result.getPurity());
+		assertEquals(0.0f, result.getPurity(), 0);
 	}
 
+	@Test
 	public void testGetSN_1() {
 
-		assertEquals(0.0f, result.getSN());
+		assertEquals(0.0f, result.getSN(), 0);
 	}
 
+	@Test
 	public void testGetStartRetentionTime_1() {
 
 		assertEquals(0, result.getStartRetentionTime());
 	}
 
+	@Test
 	public void testGetStopRetentionTime_1() {
 
 		assertEquals(0, result.getStopRetentionTime());
 	}
 
+	@Test
 	public void testGetTailing_1() {
 
-		assertEquals(0.0f, result.getTailing());
+		assertEquals(0.0f, result.getTailing(), 0);
 	}
 
+	@Test
 	public void testGetWidth_1() {
 
 		assertEquals(0, result.getWidth());

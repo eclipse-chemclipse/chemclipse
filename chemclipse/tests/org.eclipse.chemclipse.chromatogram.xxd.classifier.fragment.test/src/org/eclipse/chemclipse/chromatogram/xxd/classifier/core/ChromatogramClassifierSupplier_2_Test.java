@@ -12,36 +12,27 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.classifier.core;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class ChromatogramClassifierSupplier_2_Test extends TestCase {
+import org.junit.Test;
 
-	private ChromatogramClassifierSupplier supplier;
+public class ChromatogramClassifierSupplier_2_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private ChromatogramClassifierSupplier supplier = new ChromatogramClassifierSupplier();
 
-		super.setUp();
-		supplier = new ChromatogramClassifierSupplier();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		supplier = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetId_1() {
 
 		assertEquals("Id", "", supplier.getId());
 	}
 
+	@Test
 	public void testGetDescription_1() {
 
 		assertEquals("Description", "", supplier.getDescription());
 	}
 
+	@Test
 	public void testGetClassifierName_1() {
 
 		assertEquals("Classifier Name", "", supplier.getClassifierName());

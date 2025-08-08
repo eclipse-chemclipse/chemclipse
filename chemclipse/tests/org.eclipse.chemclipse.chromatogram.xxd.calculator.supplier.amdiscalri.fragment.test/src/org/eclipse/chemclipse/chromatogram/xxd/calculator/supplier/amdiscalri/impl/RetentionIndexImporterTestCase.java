@@ -24,10 +24,9 @@ import org.eclipse.chemclipse.model.implementation.Chromatogram;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.junit.Ignore;
 
-import junit.framework.TestCase;
-
 @Ignore
-public class RetentionIndexImporterTestCase extends TestCase {
+
+public class RetentionIndexImporterTestCase {
 
 	public static final String CHROMATOGRAM_1 = "data/retentionindex/importer/01/chromatogram1.cdf";
 
@@ -37,7 +36,7 @@ public class RetentionIndexImporterTestCase extends TestCase {
 		chromatogram.setFile(new File(PathResolver.getAbsolutePath(relativePath)));
 		Chromatogram chromatogramReference = new Chromatogram();
 		chromatogram.addReferencedChromatogram(chromatogramReference);
-		//
+
 		return chromatogram;
 	}
 
@@ -48,7 +47,7 @@ public class RetentionIndexImporterTestCase extends TestCase {
 		settings.setFileNamePattern("");
 		settings.setCaseSensitive(true);
 		settings.setProcessReferenceChromatograms(true);
-		//
+
 		return settings;
 	}
 

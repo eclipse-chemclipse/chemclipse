@@ -12,18 +12,21 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.result;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Set;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
-public class PeakIntegrationResult_5_Test extends TestCase {
+public class PeakIntegrationResult_5_Test {
 
 	private IPeakIntegrationResult result;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		result = new PeakIntegrationResult();
 		result.setIntegratedArea(500325.0d);
 		result.addIntegratedTrace(55);
@@ -41,17 +44,13 @@ public class PeakIntegrationResult_5_Test extends TestCase {
 		result.setWidth(4000);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetIntegratedArea_1() {
 
-		assertEquals(500325.0d, result.getIntegratedArea());
+		assertEquals(500325.0d, result.getIntegratedArea(), 0);
 	}
 
+	@Test
 	public void testGetIntegratedIons_1() {
 
 		Set<Integer> ions = result.getIntegratedTraces();
@@ -62,46 +61,55 @@ public class PeakIntegrationResult_5_Test extends TestCase {
 		assertTrue(ions.contains(48));
 	}
 
+	@Test
 	public void testGetIntegratorType_1() {
 
 		assertEquals("FirstDerivative", result.getIntegratorType());
 	}
 
+	@Test
 	public void testGetModelDescription_1() {
 
 		assertEquals("TIC", result.getModelDescription());
 	}
 
+	@Test
 	public void testGetPeakType_1() {
 
 		assertEquals("VV", result.getPeakType());
 	}
 
+	@Test
 	public void testGetPurity_1() {
 
-		assertEquals(0.85f, result.getPurity());
+		assertEquals(0.85f, result.getPurity(), 0);
 	}
 
+	@Test
 	public void testGetSN_1() {
 
-		assertEquals(159.5f, result.getSN());
+		assertEquals(159.5f, result.getSN(), 0);
 	}
 
+	@Test
 	public void testGetStartRetentionTime_1() {
 
 		assertEquals(1500, result.getStartRetentionTime());
 	}
 
+	@Test
 	public void testGetStopRetentionTime_1() {
 
 		assertEquals(5500, result.getStopRetentionTime());
 	}
 
+	@Test
 	public void testGetTailing_1() {
 
-		assertEquals(1.56f, result.getTailing());
+		assertEquals(1.56f, result.getTailing(), 0);
 	}
 
+	@Test
 	public void testGetWidth_1() {
 
 		assertEquals(4000, result.getWidth());

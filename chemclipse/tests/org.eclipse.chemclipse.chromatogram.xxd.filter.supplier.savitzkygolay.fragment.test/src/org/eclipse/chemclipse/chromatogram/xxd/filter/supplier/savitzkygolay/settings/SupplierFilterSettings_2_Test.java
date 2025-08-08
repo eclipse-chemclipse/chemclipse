@@ -12,37 +12,29 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.savitzkygolay.settings;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class SupplierFilterSettings_2_Test extends TestCase {
+import org.junit.Test;
 
-	private ChromatogramFilterSettings settings;
+public class SupplierFilterSettings_2_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private ChromatogramFilterSettings settings = new ChromatogramFilterSettings();;
 
-		super.setUp();
-		settings = new ChromatogramFilterSettings();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		settings.setDerivative(5); // Other than 0 not supported
 		assertEquals(5, settings.getDerivative());
 	}
 
+	@Test
 	public void test2() {
 
 		settings.setOrder(3);
 		assertEquals(3, settings.getOrder());
 	}
 
+	@Test
 	public void test3() {
 
 		settings.setWidth(7);

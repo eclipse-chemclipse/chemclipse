@@ -12,32 +12,23 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.result;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class ChromatogramIntegrationResults_3_Test extends TestCase {
+import org.junit.Test;
 
-	private IChromatogramIntegrationResults results;
+public class ChromatogramIntegrationResults_3_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private IChromatogramIntegrationResults results = new ChromatogramIntegrationResults();
 
-		super.setUp();
-		results = new ChromatogramIntegrationResults();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetBackgroundArea_1() {
 
-		assertEquals("BackgroundArea", 0.0d, results.getTotalBackgroundArea());
+		assertEquals("BackgroundArea", 0.0d, results.getTotalBackgroundArea(), 0);
 	}
 
+	@Test
 	public void testGetChromatogramArea_1() {
 
-		assertEquals("ChromatogramArea", 0.0d, results.getTotalChromatogramArea());
+		assertEquals("ChromatogramArea", 0.0d, results.getTotalChromatogramArea(), 0);
 	}
 }

@@ -19,6 +19,7 @@ import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
@@ -27,22 +28,9 @@ import junit.framework.TestCase;
  */
 public class BaselineDetector_2_Test extends TestCase {
 
-	IBaselineDetectorSupport support;
+	IBaselineDetectorSupport support = BaselineDetector.getBaselineDetectorSupport();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		support = BaselineDetector.getBaselineDetectorSupport();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		support = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testBaselineDetector_1() throws BaselineDetectorSettingsException {
 
 		try {
@@ -54,6 +42,7 @@ public class BaselineDetector_2_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testBaselineDetector_2() throws org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException {
 
 		String detectorId = "";

@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.internal.core;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,24 +21,22 @@ import org.eclipse.chemclipse.chromatogram.xxd.integrator.exceptions.ValueMustNo
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.processor.PeakIntegrator;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Test;
 
 public class TrapezoidPeakIntegrator_2_Test extends DefaultPeakTestCase {
 
 	private PeakIntegrator integrator;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		integrator = new PeakIntegrator();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testIntegrate_1() {
 
 		try {
@@ -46,6 +46,7 @@ public class TrapezoidPeakIntegrator_2_Test extends DefaultPeakTestCase {
 		}
 	}
 
+	@Test
 	public void testIntegrate_2() {
 
 		List<IPeakMSD> peaks = new ArrayList<>();

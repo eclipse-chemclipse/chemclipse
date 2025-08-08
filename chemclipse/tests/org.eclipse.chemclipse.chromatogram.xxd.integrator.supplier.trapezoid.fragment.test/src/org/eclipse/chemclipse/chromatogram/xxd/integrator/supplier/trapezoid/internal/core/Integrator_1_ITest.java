@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.internal.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +28,8 @@ import org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.set
 import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Test;
 
 public class Integrator_1_ITest extends ChromatogramImportOCBTestCase {
 
@@ -34,7 +39,8 @@ public class Integrator_1_ITest extends ChromatogramImportOCBTestCase {
 	private PeakIntegrationSettings peakIntegrationSettings;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		chromatogramRelativePath = TestPathHelper.TESTFILE_IMPORT_CHROMATOGRAM_2;
 		super.setUp();
@@ -44,24 +50,21 @@ public class Integrator_1_ITest extends ChromatogramImportOCBTestCase {
 		peakIntegrationSettings = new PeakIntegrationSettings();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testChromatogramIntegrate_1() {
 
 		double area = chromatogramIntegrator.integrate(chromatogramSelection);
-		assertEquals("", 2.5891749759277344E8, area);
+		assertEquals("", 2.5891749759277344E8, area, 0);
 	}
 
+	@Test
 	public void testBackgroundIntegrate_1() {
 
 		double area = backgroundIntegrator.integrate(chromatogramSelection);
-		assertEquals("", 2.391494172607422E8, area);
+		assertEquals("", 2.391494172607422E8, area, 0);
 	}
 
+	@Test
 	public void testPeakIntegrate_1() {
 
 		List<IChromatogramPeakMSD> peaksChromatogram = chromatogramSelection.getChromatogram().getPeaks();
@@ -72,7 +75,7 @@ public class Integrator_1_ITest extends ChromatogramImportOCBTestCase {
 		IPeakIntegrationResults results;
 		try {
 			results = peakIntegrator.integrate(peaks, peakIntegrationSettings, new NullProgressMonitor());
-			assertEquals("", 1.6943660149129305E7, results.getTotalPeakArea());
+			assertEquals("", 1.6943660149129305E7, results.getTotalPeakArea(), 0);
 		} catch(ValueMustNotBeNullException e) {
 			assertTrue(false);
 		}

@@ -12,36 +12,26 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.baseline.detector.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.xxd.baseline.detector.exceptions.NoBaselineDetectorAvailableException;
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Test the IBaselineDetectorSupport.
  * 
- * @author eselmeister
+ * @author Philip Wenig
  */
-public class BaselineDetector_1_Test extends TestCase {
+public class BaselineDetector_1_Test {
 
-	IBaselineDetectorSupport support;
+	IBaselineDetectorSupport support = BaselineDetector.getBaselineDetectorSupport();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		support = BaselineDetector.getBaselineDetectorSupport();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		support = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetMassSpectrumComparatorSupport_1() throws NoBaselineDetectorAvailableException {
 
 		int count = 0;
@@ -58,6 +48,7 @@ public class BaselineDetector_1_Test extends TestCase {
 		assertEquals("Registered Detector Names", 0, count);
 	}
 
+	@Test
 	public void testGetMassSpectrumComparatorSupport_2() throws NoBaselineDetectorAvailableException {
 
 		int count = 0;
@@ -74,6 +65,7 @@ public class BaselineDetector_1_Test extends TestCase {
 		assertEquals("Registered Detector Ids", 0, count);
 	}
 
+	@Test
 	public void testGetMassSpectrumComparatorSupport_3() throws NoBaselineDetectorAvailableException {
 
 		List<String> ids = support.getAvailableDetectorIds();
@@ -88,6 +80,7 @@ public class BaselineDetector_1_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testGetMassSpectrumComparisonSupplier_1() {
 
 		try {
@@ -97,6 +90,7 @@ public class BaselineDetector_1_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testGetMassSpectrumComparisonSupplier_2() {
 
 		try {
@@ -106,6 +100,7 @@ public class BaselineDetector_1_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testGetMassSpectrumComparisonSupplier_3() throws NoBaselineDetectorAvailableException {
 
 		String id = "org.eclipse.chemclipse.chromatogram.xxd.baseline.detector.supplier.tic";

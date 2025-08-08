@@ -12,28 +12,20 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.result;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class PeakIntegrationResult_7_Test extends TestCase {
+public class PeakIntegrationResult_7_Test {
 
-	private IPeakIntegrationResult result;
+	private IPeakIntegrationResult result = new PeakIntegrationResult();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		result = new PeakIntegrationResult();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetIntegratedIons_1() {
 
 		result.addIntegratedTrace(55);
@@ -45,6 +37,7 @@ public class PeakIntegrationResult_7_Test extends TestCase {
 		assertFalse(ions.contains(48));
 	}
 
+	@Test
 	public void testGetIntegratedIons_2() {
 
 		result.addIntegratedTrace(55);
@@ -62,6 +55,7 @@ public class PeakIntegrationResult_7_Test extends TestCase {
 		assertFalse(ions.contains(48));
 	}
 
+	@Test
 	public void testGetIntegratedIons_3() {
 
 		Set<Integer> ions = new HashSet<Integer>();
@@ -78,6 +72,7 @@ public class PeakIntegrationResult_7_Test extends TestCase {
 		assertTrue(ions2.contains(48));
 	}
 
+	@Test
 	public void testGetIntegratedIons_4() {
 
 		result.addIntegratedTrace(55);

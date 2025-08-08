@@ -12,12 +12,6 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.noise.stein;
 
-/**
- * THIS CLASS IS NOT SUITED FOR PRODUCTIVE USE!<br/>
- * IT IS A TESTCLASS!
- * 
- * @author eselmeister
- */
 public class TestPathHelper extends PathResolver {
 
 	/*

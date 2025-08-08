@@ -17,12 +17,11 @@ import org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings.peaks.IS
 
 /**
  * THIS IS A TEST CLASS! DO NOT USE EXCEPT FOR TESTS!
- * 
- * @author eselmeister
  */
 public class SettingStatus extends AbstractSettingStatus implements ISettingStatus {
 
 	public SettingStatus(boolean report, boolean sumOn) {
+
 		super(report, sumOn);
 	}
 }

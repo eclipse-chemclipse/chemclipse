@@ -12,12 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class TestLibrary_ITest extends TestCase {
+public class TestLibrary_ITest {
 
+	@Test
 	public void test1() {
 
 		File file = new File(PathResolver.getAbsolutePath(PathResolver.ALKANES));

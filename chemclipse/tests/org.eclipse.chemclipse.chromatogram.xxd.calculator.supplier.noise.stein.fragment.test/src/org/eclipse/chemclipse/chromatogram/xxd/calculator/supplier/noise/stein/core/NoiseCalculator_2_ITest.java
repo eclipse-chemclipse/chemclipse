@@ -13,30 +13,29 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.noise.stein.core;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.noise.stein.TestPathHelper;
 import org.eclipse.chemclipse.model.results.ChromatogramSegmentation;
+import org.junit.Before;
+import org.junit.Test;
 
 public class NoiseCalculator_2_ITest extends ChromatogramReaderTestCase {
 
-	private NoiseCalculator noiseCalculator;
+	private NoiseCalculator noiseCalculator = new NoiseCalculator();
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		pathImport = TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_CHROMATOGRAM_2);
 		super.setUp();
-		noiseCalculator = new NoiseCalculator();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testReader_1() {
 
 		chromatogram.addMeasurementResult(new ChromatogramSegmentation(chromatogram, 9));
-		assertEquals(9.437958f, noiseCalculator.getSignalToNoiseRatio(chromatogram, 500));
+		assertEquals(9.437958f, noiseCalculator.getSignalToNoiseRatio(chromatogram, 500), 0);
 	}
 }

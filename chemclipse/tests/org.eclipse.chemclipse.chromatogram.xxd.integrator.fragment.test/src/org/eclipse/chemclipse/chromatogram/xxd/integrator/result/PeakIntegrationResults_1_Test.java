@@ -12,44 +12,38 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.result;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class PeakIntegrationResults_1_Test extends TestCase {
+public class PeakIntegrationResults_1_Test {
 
-	private IPeakIntegrationResults results;
+	private IPeakIntegrationResults results = new PeakIntegrationResults();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		results = new PeakIntegrationResults();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetPeakIntegrationResult_1() {
 
 		assertNull(results.getPeakIntegrationResult(0));
 	}
 
+	@Test
 	public void testGetPeakIntegrationResultList_1() {
 
 		List<IPeakIntegrationResult> presults = results.getPeakIntegrationResultList(55);
 		assertEquals("size", 0, presults.size());
 	}
 
+	@Test
 	public void testGetPeakIntegrationResultThatContains_1() {
 
 		List<IPeakIntegrationResult> presults = results.getPeakIntegrationResultThatContains(55);
 		assertEquals("size", 0, presults.size());
 	}
 
+	@Test
 	public void testGetSize_1() {
 
 		assertEquals("size", 0, results.size());

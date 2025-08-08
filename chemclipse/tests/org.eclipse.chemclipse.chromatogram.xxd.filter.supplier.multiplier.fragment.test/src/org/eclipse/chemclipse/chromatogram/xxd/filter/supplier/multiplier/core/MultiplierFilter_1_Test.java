@@ -12,9 +12,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.multiplier.core;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.chromatogram.filter.core.chromatogram.IChromatogramFilter;
 import org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.multiplier.settings.MultiplierSettings;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Test;
 
 public class MultiplierFilter_1_Test extends ChromatogramImporterTestCase {
 
@@ -22,7 +26,8 @@ public class MultiplierFilter_1_Test extends ChromatogramImporterTestCase {
 	private MultiplierSettings multiplierFilterSettings;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		chromatogramFilter = new MultiplierChromatogramFilter();
@@ -30,29 +35,22 @@ public class MultiplierFilter_1_Test extends ChromatogramImporterTestCase {
 		multiplierFilterSettings.setMultiplier(0.01f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogramFilter = null;
-		multiplierFilterSettings = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testApplyFilter_1() {
 
 		float totalSignal;
-		//
+
 		totalSignal = chromatogram.getScan(1).getTotalSignal();
-		assertEquals("scan totalSignal", 67864.0f, totalSignal);
+		assertEquals("scan totalSignal", 67864.0f, totalSignal, 0);
 		totalSignal = chromatogram.getScan(5726).getTotalSignal();
-		assertEquals("scan totalSignal", 152824.0f, totalSignal);
+		assertEquals("scan totalSignal", 152824.0f, totalSignal, 0);
 		totalSignal = chromatogram.getScan(238).getTotalSignal();
-		assertEquals("scan totalSignal", 94184.0f, totalSignal);
+		assertEquals("scan totalSignal", 94184.0f, totalSignal, 0);
 		totalSignal = chromatogram.getScan(628).getTotalSignal();
-		assertEquals("scan totalSignal", 2747568.0f, totalSignal);
-		//
+		assertEquals("scan totalSignal", 2747568.0f, totalSignal, 0);
+
 		chromatogramFilter.applyFilter(chromatogramSelection, multiplierFilterSettings, new NullProgressMonitor());
-		//
+
 		totalSignal = chromatogram.getScan(1).getTotalSignal();
 		assertEquals("scan totalSignal", 678.640f, totalSignal, 10E-2);
 		totalSignal = chromatogram.getScan(5726).getTotalSignal();

@@ -12,49 +12,42 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.result;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class PeakIntegrationResult_1_Test extends TestCase {
+public class PeakIntegrationResult_1_Test {
 
-	private IPeakIntegrationResult result1;
-	private IPeakIntegrationResult result2;
+	private IPeakIntegrationResult result1 = new PeakIntegrationResult();
+	private IPeakIntegrationResult result2 = new PeakIntegrationResult();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		result1 = new PeakIntegrationResult();
-		result2 = new PeakIntegrationResult();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testEquals_1() {
 
 		assertEquals("equals", result1, result2);
 	}
 
+	@Test
 	public void testEquals_2() {
 
 		assertEquals("equals", result2, result1);
 	}
 
+	@Test
 	public void testEquals_3() {
 
 		assertEquals("equals", result1, result1);
 	}
 
+	@Test
 	public void testEquals_4() {
 
 		assertNotNull("equals", result1);
 	}
 
+	@Test
 	public void testEquals_5() {
 
 		assertNotEquals("equals", result2, new Object());

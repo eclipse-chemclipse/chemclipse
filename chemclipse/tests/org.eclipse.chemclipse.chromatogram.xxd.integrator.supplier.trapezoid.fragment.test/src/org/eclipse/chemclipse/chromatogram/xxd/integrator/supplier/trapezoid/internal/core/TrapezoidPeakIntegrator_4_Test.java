@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.internal.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +26,9 @@ import org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.set
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Test;
 
-/**
- * @author eselmeister
- */
 public class TrapezoidPeakIntegrator_4_Test extends DefaultPeakTestCase {
 
 	private PeakIntegrator integrator;
@@ -36,7 +38,8 @@ public class TrapezoidPeakIntegrator_4_Test extends DefaultPeakTestCase {
 	private List<IPeakMSD> peaks;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		integrator = new PeakIntegrator();
@@ -47,71 +50,73 @@ public class TrapezoidPeakIntegrator_4_Test extends DefaultPeakTestCase {
 		}
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testPeak_1() {
 
 		IPeakMassSpectrum ms = super.getPeak().getPeakModel().getPeakMassSpectrum();
-		assertEquals("TotalSignal", 5231.0f, ms.getTotalSignal());
+		assertEquals("TotalSignal", 5231.0f, ms.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testPeak_2() {
 
 		float abundance = super.getPeak().getPeakModel().getBackgroundAbundance(1500);
-		assertEquals("Background", 1760.0f, abundance);
+		assertEquals("Background", 1760.0f, abundance, 0);
 	}
 
+	@Test
 	public void testPeak_3() {
 
 		float abundance = super.getPeak().getPeakModel().getBackgroundAbundance(15500);
-		assertEquals("Background", 1760.0f, abundance);
+		assertEquals("Background", 1760.0f, abundance, 0);
 	}
 
+	@Test
 	public void testPeakList_1() {
 
 		assertEquals("Size", 100, peaks.size());
 	}
 
+	@Test
 	public void testIntegrate_1() {
 
 		// No chromatogram baseline.
 		try {
 			results = integrator.integrate(peaks, peakIntegrationSettings, new NullProgressMonitor());
-			assertEquals("Total Integrated Peak Area", 2.85326990546264E7d, results.getTotalPeakArea());
+			assertEquals("Total Integrated Peak Area", 2.85326990546264E7d, results.getTotalPeakArea(), 0);
 		} catch(ValueMustNotBeNullException e) {
 			assertTrue("ValueMustNotBeNullException", false);
 		}
 	}
 
+	@Test
 	public void testIntegrate_2() {
 
 		// No chromatogram baseline.
 		try {
 			peakIntegrationSettings.setIncludeBackground(true);
 			results = integrator.integrate(peaks, peakIntegrationSettings, new NullProgressMonitor());
-			assertEquals("Total Integrated Peak Area", 5.314805905462652E7d, results.getTotalPeakArea());
+			assertEquals("Total Integrated Peak Area", 5.314805905462652E7d, results.getTotalPeakArea(), 0);
 		} catch(ValueMustNotBeNullException e) {
 			assertTrue("ValueMustNotBeNullException", false);
 		}
 	}
 
+	@Test
 	public void testIntegrate_3() {
 
 		// No chromatogram baseline.
 		try {
 			results = integrator.integrate(peaks, peakIntegrationSettings, new NullProgressMonitor());
 			result = results.getPeakIntegrationResult(0);
-			assertEquals("Integrated Peak Area", 285326.9905462646d, result.getIntegratedArea());
+			assertEquals("Integrated Peak Area", 285326.9905462646d, result.getIntegratedArea(), 0);
 			assertTrue(result.getIntegratedTraces().containsAll(peakIntegrationSettings.getMarkedTraces().getTraces()));
 		} catch(ValueMustNotBeNullException e) {
 			assertTrue("ValueMustNotBeNullException", false);
 		}
 	}
 
+	@Test
 	public void testIntegrate_4() {
 
 		// No chromatogram baseline.
@@ -119,7 +124,7 @@ public class TrapezoidPeakIntegrator_4_Test extends DefaultPeakTestCase {
 			peakIntegrationSettings.setIncludeBackground(true);
 			results = integrator.integrate(peaks, peakIntegrationSettings, new NullProgressMonitor());
 			result = results.getPeakIntegrationResult(0);
-			assertEquals("Integrated Peak Area", 531480.5905462648d, result.getIntegratedArea());
+			assertEquals("Integrated Peak Area", 531480.5905462648d, result.getIntegratedArea(), 0);
 			assertTrue(result.getIntegratedTraces().containsAll(peakIntegrationSettings.getMarkedTraces().getTraces()));
 		} catch(ValueMustNotBeNullException e) {
 			assertTrue("ValueMustNotBeNullException", false);

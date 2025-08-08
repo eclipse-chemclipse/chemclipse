@@ -13,27 +13,27 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.noise.dyson.core;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.noise.dyson.TestPathHelper;
 import org.eclipse.chemclipse.model.results.ChromatogramSegmentation;
+import org.junit.Before;
+import org.junit.Test;
 
 public class NoiseCalculator_1_ITest extends ChromatogramReaderTestCase {
 
 	private NoiseCalculator noiseCalculator;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		pathImport = TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_CHROMATOGRAM_1);
 		super.setUp();
 		noiseCalculator = new NoiseCalculator();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testReader_1() {
 
 		/*
@@ -41,9 +41,9 @@ public class NoiseCalculator_1_ITest extends ChromatogramReaderTestCase {
 		 * That's why several tests are made here.
 		 */
 		chromatogram.addMeasurementResult(new ChromatogramSegmentation(chromatogram, 13));
-		assertEquals(0.0f, noiseCalculator.getSignalToNoiseRatio(chromatogram, 0));
-		assertEquals(0.4935501963f, noiseCalculator.getSignalToNoiseRatio(chromatogram, 2200));
-		assertEquals(1.0f, noiseCalculator.getSignalToNoiseRatio(chromatogram, 4457.5f));
-		assertEquals(17.9472798654f, noiseCalculator.getSignalToNoiseRatio(chromatogram, 80000));
+		assertEquals(0.0f, noiseCalculator.getSignalToNoiseRatio(chromatogram, 0), 0);
+		assertEquals(0.4935501963f, noiseCalculator.getSignalToNoiseRatio(chromatogram, 2200), 0);
+		assertEquals(1.0f, noiseCalculator.getSignalToNoiseRatio(chromatogram, 4457.5f), 0);
+		assertEquals(17.9472798654f, noiseCalculator.getSignalToNoiseRatio(chromatogram, 80000), 0);
 	}
 }

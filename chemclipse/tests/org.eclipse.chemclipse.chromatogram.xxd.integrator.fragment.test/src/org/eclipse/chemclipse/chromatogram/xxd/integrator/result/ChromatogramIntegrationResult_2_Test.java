@@ -12,43 +12,42 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.result;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class ChromatogramIntegrationResult_2_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class ChromatogramIntegrationResult_2_Test {
 
 	private IChromatogramIntegrationResult result;
 	private float ion;
 	private double backgroundArea;
 	private double chromatogramArea;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		ion = 5.6f;
 		backgroundArea = 0.0d;
 		chromatogramArea = 0.0d;
 		result = new ChromatogramIntegrationResult(ion, chromatogramArea, backgroundArea);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetBackgroundArea_1() {
 
-		assertEquals("BackgroundArea", backgroundArea, result.getBackgroundArea());
+		assertEquals("BackgroundArea", backgroundArea, result.getBackgroundArea(), 0);
 	}
 
+	@Test
 	public void testGetChromatogramArea_1() {
 
-		assertEquals("ChromatogramArea", chromatogramArea, result.getChromatogramArea());
+		assertEquals("ChromatogramArea", chromatogramArea, result.getChromatogramArea(), 0);
 	}
 
+	@Test
 	public void testGetIon_1() {
 
-		assertEquals("Ion", 5.599999904632568d, result.getIon());
+		assertEquals("Ion", 5.599999904632568d, result.getIon(), 0);
 	}
 }

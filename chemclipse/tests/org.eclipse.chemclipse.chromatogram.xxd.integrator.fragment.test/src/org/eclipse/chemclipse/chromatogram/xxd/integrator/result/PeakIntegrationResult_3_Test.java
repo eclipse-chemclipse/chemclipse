@@ -12,37 +12,27 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.result;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
-public class PeakIntegrationResult_3_Test extends TestCase {
+import org.junit.Test;
 
-	private IPeakIntegrationResult result1;
-	private IPeakIntegrationResult result2;
+public class PeakIntegrationResult_3_Test {
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testEquals_1() {
 
-		result1 = new PeakIntegrationResult();
-		result2 = new PeakIntegrationResult();
+		PeakIntegrationResult result1 = new PeakIntegrationResult();
+		PeakIntegrationResult result2 = new PeakIntegrationResult();
 		assertEquals("equals", result1.hashCode(), result2.hashCode());
 	}
 
+	@Test
 	public void testEquals_2() {
 
-		result1 = new PeakIntegrationResult();
+		PeakIntegrationResult result1 = new PeakIntegrationResult();
 		result1.setStartRetentionTime(1500);
-		result2 = new PeakIntegrationResult();
+		PeakIntegrationResult result2 = new PeakIntegrationResult();
 		assertFalse("equals", result1.hashCode() == result2.hashCode());
 	}
 }

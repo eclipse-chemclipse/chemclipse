@@ -12,10 +12,6 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.calculator;
 
-/**
- * THIS CLASS IS NOT SUITED FOR PRODUCTIVE USE!<br/>
- * IT IS A TESTCLASS!
- */
 public class TestPathHelper extends PathResolver {
 
 	/*

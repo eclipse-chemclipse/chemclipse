@@ -12,52 +12,52 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.easymock.EasyMock;
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings.peaks.IPeakIntegrationSettings;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class IntegrationSettings_1_Test extends TestCase {
+public class IntegrationSettings_1_Test {
 
 	private IPeakIntegrationSettings settings;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		settings = new PeakIntegrationSettings();
 		// settings.addReportDecider(null);
 		// settings.removeReportDecider(null);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetAreaSupport_1() {
 
 		assertNotNull(settings.getAreaSupport());
 	}
 
+	@Test
 	public void testGetBaselineSupport_1() {
 
 		assertNotNull(settings.getBaselineSupport());
 	}
 
+	@Test
 	public void testGetIntegrationSupport_1() {
 
 		assertNotNull(settings.getIntegrationSupport());
 	}
 
+	@Test
 	public void testGetSelectedIons_1() {
 
 		assertNotNull(settings.getMarkedTraces());
 	}
 
+	@Test
 	public void testGetSettingStatus_1() {
 
 		/*

@@ -12,42 +12,37 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.core.chromatogram;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-/**
- * @author eselmeister
- */
-public class IntegratorSupplier_1_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class IntegratorSupplier_1_Test {
 
 	private ChromatogramIntegratorSupplier supplier;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		supplier = new ChromatogramIntegratorSupplier();
 		supplier.setId("org.eclipse.chemclipse.test");
 		supplier.setDescription("This is a description.");
 		supplier.setIntegratorName("Integrator Name");
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		supplier = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetId_1() {
 
 		assertEquals("Id", "org.eclipse.chemclipse.test", supplier.getId());
 	}
 
+	@Test
 	public void testGetDescription_1() {
 
 		assertEquals("Description", "This is a description.", supplier.getDescription());
 	}
 
+	@Test
 	public void testGetFilterName_1() {
 
 		assertEquals("Integrator Name", "Integrator Name", supplier.getIntegratorName());

@@ -12,24 +12,14 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.calculator.noise;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.NoiseCalculator;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class NoiseCalculator_1_Test {
 
-public class NoiseCalculator_1_Test extends TestCase {
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertNotNull(NoiseCalculator.getAvailableCalculatorIds());

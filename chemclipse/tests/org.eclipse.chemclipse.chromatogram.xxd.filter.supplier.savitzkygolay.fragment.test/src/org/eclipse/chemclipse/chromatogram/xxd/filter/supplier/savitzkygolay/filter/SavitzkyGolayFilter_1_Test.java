@@ -15,11 +15,11 @@ package org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.savitzkygolay.fi
 import static org.junit.Assert.assertArrayEquals;
 
 import org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.savitzkygolay.processor.SavitzkyGolayFilter;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class SavitzkyGolayFilter_1_Test {
 
-public class SavitzkyGolayFilter_1_Test extends TestCase {
-
+	@Test
 	public void test1() {
 
 		// Reference value for filter length = 5, filter order = 2, derivative = 0
@@ -30,6 +30,7 @@ public class SavitzkyGolayFilter_1_Test extends TestCase {
 		assertArrayEquals(null, filterCoefficients, reference, 0.0001);
 	}
 
+	@Test
 	public void test2() {
 
 		// Reference value for filter length = 5, filter order = 3, derivative = 0
@@ -40,6 +41,7 @@ public class SavitzkyGolayFilter_1_Test extends TestCase {
 		assertArrayEquals(null, filterCoefficients, reference, 0.0001);
 	}
 
+	@Test
 	public void test3() {
 
 		// Reference value for filter length = 7, filter order = 3, derivative = 0
@@ -50,6 +52,7 @@ public class SavitzkyGolayFilter_1_Test extends TestCase {
 		assertArrayEquals(null, filterCoefficients, reference, 0.0001);
 	}
 
+	@Test
 	public void test4() {
 
 		// Reference value for filter length = 7, filter order = 3, derivative = 0
@@ -60,6 +63,7 @@ public class SavitzkyGolayFilter_1_Test extends TestCase {
 		assertArrayEquals(null, filterCoefficients, reference, 0.0001);
 	}
 
+	@Test
 	public void test5() {
 
 		// Reference value for filter length = 9, filter order = 5, derivative = 0
@@ -70,6 +74,7 @@ public class SavitzkyGolayFilter_1_Test extends TestCase {
 		assertArrayEquals(null, filterCoefficients, reference, 0.0001);
 	}
 
+	@Test
 	public void test6() {
 
 		// Reference value for filter length = 5, filter order = 2, derivative = 1
@@ -80,6 +85,7 @@ public class SavitzkyGolayFilter_1_Test extends TestCase {
 		assertArrayEquals(null, filterCoefficients, reference, 0.0001);
 	}
 
+	@Test
 	public void test7() {
 
 		// Reference value for filter length = 5, filter order = 3, derivative = 1
@@ -90,6 +96,7 @@ public class SavitzkyGolayFilter_1_Test extends TestCase {
 		assertArrayEquals(null, filterCoefficients, reference, 0.0001);
 	}
 
+	@Test
 	public void test8() {
 
 		// Reference value for filter length = 5, filter order = 3, derivative = 1
@@ -100,6 +107,7 @@ public class SavitzkyGolayFilter_1_Test extends TestCase {
 		assertArrayEquals(null, filterCoefficients, reference, 0.0001);
 	}
 
+	@Test
 	public void test9() {
 
 		// Reference value for filter length = 5, filter order = 2, derivative = 2
@@ -110,6 +118,7 @@ public class SavitzkyGolayFilter_1_Test extends TestCase {
 		assertArrayEquals(null, filterCoefficients, reference, 0.0001);
 	}
 
+	@Test
 	public void test10() {
 
 		// Reference value for filter length = 5, filter order = 4, derivative = 2
@@ -120,6 +129,7 @@ public class SavitzkyGolayFilter_1_Test extends TestCase {
 		assertArrayEquals(null, filterCoefficients, reference, 0.0001);
 	}
 
+	@Test
 	public void test11() {
 
 		// Reference value for filter length = 5, filter order = 2, derivative = 2

@@ -16,26 +16,15 @@ import org.eclipse.chemclipse.model.baseline.BaselineModel;
 import org.eclipse.chemclipse.model.baseline.IBaselineModel;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
 public class BaselineSupport_1_Test extends TestCase {
 
-	private IBaselineSupport baselineSupport;
+	private IBaselineSupport baselineSupport = new BaselineSupport();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		baselineSupport = new BaselineSupport();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testBaselineBack_1() {
 
 		float actual;
@@ -46,6 +35,7 @@ public class BaselineSupport_1_Test extends TestCase {
 		assertEquals(0.0f, actual);
 	}
 
+	@Test
 	public void testBaselineHoldOn_1() {
 
 		float actual;
@@ -56,6 +46,7 @@ public class BaselineSupport_1_Test extends TestCase {
 		assertEquals(0.0f, actual);
 	}
 
+	@Test
 	public void testBaselineNow_1() {
 
 		float actual;
@@ -66,6 +57,7 @@ public class BaselineSupport_1_Test extends TestCase {
 		assertEquals(0.0f, actual);
 	}
 
+	@Test
 	public void testSetBaselineModel_1() {
 
 		float actual;
@@ -78,6 +70,7 @@ public class BaselineSupport_1_Test extends TestCase {
 		assertEquals(0.0f, actual);
 	}
 
+	@Test
 	public void testReset_1() {
 
 		float actual;

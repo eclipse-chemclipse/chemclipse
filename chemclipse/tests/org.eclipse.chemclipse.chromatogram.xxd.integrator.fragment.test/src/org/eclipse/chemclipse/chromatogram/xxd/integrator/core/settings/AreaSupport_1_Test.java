@@ -12,56 +12,52 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings.peaks.AreaSupport;
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings.peaks.IAreaSupport;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class AreaSupport_1_Test {
 
-public class AreaSupport_1_Test extends TestCase {
+	private IAreaSupport areaSupport = new AreaSupport();
 
-	private IAreaSupport areaSupport;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		areaSupport = new AreaSupport();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetMinimumArea_1() {
 
-		assertEquals(0.0d, areaSupport.getMinimumArea());
+		assertEquals(0.0d, areaSupport.getMinimumArea(), 0);
 	}
 
+	@Test
 	public void testIsAreaSumOn_1() {
 
 		assertFalse(areaSupport.isAreaSumOn(1500));
 	}
 
+	@Test
 	public void testReport_1() {
 
 		assertFalse(areaSupport.report(null));
 	}
 
+	@Test
 	public void testReset_1() {
 
 		areaSupport.reset();
-		assertEquals(IAreaSupport.INITIAL_AREA_REJECT, areaSupport.getMinimumArea());
+		assertEquals(IAreaSupport.INITIAL_AREA_REJECT, areaSupport.getMinimumArea(), 0);
 		assertFalse(areaSupport.isAreaSumOn(1500));
 	}
 
+	@Test
 	public void testResetAreaSumOn_1() {
 
 		areaSupport.resetAreaSumOn();
 		assertFalse(areaSupport.isAreaSumOn(1500));
 	}
 
+	@Test
 	public void testSetAreaSumOn_1() {
 
 		areaSupport.setAreaSumOn(1500, 2500);
@@ -71,9 +67,10 @@ public class AreaSupport_1_Test extends TestCase {
 		assertFalse(areaSupport.isAreaSumOn(2501));
 	}
 
+	@Test
 	public void testSetMinimumArea_1() {
 
 		areaSupport.setMinimumArea(1522);
-		assertEquals(1522.0d, areaSupport.getMinimumArea());
+		assertEquals(1522.0d, areaSupport.getMinimumArea(), 0);
 	}
 }

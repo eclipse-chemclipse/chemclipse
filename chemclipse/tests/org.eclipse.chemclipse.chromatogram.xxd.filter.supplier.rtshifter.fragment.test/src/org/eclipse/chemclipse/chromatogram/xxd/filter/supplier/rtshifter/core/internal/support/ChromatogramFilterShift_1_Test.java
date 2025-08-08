@@ -12,12 +12,17 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.rtshifter.core.internal.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.rtshifter.exceptions.FilterException;
 import org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.rtshifter.settings.FilterSettingsShift;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.selection.ChromatogramSelectionMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
+import org.junit.Before;
+import org.junit.Test;
 
 public class ChromatogramFilterShift_1_Test extends ChromatogramTestCase {
 
@@ -25,19 +30,15 @@ public class ChromatogramFilterShift_1_Test extends ChromatogramTestCase {
 	private IChromatogramSelectionMSD chromatogramSelection;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		chromatogram = getChromatogram();
 		chromatogramSelection = new ChromatogramSelectionMSD(chromatogram);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testShiftBackward_1() {
 
 		IRegularMassSpectrum scan;
@@ -52,6 +53,7 @@ public class ChromatogramFilterShift_1_Test extends ChromatogramTestCase {
 		assertEquals(10500, scan.getRetentionTime());
 	}
 
+	@Test
 	public void testShiftBackward_2() {
 
 		IRegularMassSpectrum scan;
@@ -69,6 +71,7 @@ public class ChromatogramFilterShift_1_Test extends ChromatogramTestCase {
 		}
 	}
 
+	@Test
 	public void testShiftBackward_3() {
 
 		IRegularMassSpectrum scan;
@@ -86,6 +89,7 @@ public class ChromatogramFilterShift_1_Test extends ChromatogramTestCase {
 		}
 	}
 
+	@Test
 	public void testShiftBackward_4() {
 
 		IRegularMassSpectrum scan;
@@ -103,6 +107,7 @@ public class ChromatogramFilterShift_1_Test extends ChromatogramTestCase {
 		}
 	}
 
+	@Test
 	public void testShiftBackward_5() {
 
 		IRegularMassSpectrum scan;
@@ -120,6 +125,7 @@ public class ChromatogramFilterShift_1_Test extends ChromatogramTestCase {
 		}
 	}
 
+	@Test
 	public void testShiftBackward_6() {
 
 		IRegularMassSpectrum scan;

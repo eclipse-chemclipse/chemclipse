@@ -12,36 +12,35 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings.peaks.AreaSupport;
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings.peaks.IAreaSupport;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class AreaSupport_2_Test extends TestCase {
+public class AreaSupport_2_Test {
 
 	private IAreaSupport areaSupport;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		areaSupport = new AreaSupport();
 		areaSupport.setMinimumArea(4500.0d);
 		areaSupport.setAreaSumOn(1500, 5500);
 		areaSupport.setAreaSumOn(8500, 10500);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetMinimumArea_1() {
 
-		assertEquals(4500.0d, areaSupport.getMinimumArea());
+		assertEquals(4500.0d, areaSupport.getMinimumArea(), 0);
 	}
 
+	@Test
 	public void testIsAreaSumOn_1() {
 
 		assertFalse(areaSupport.isAreaSumOn(1499));
@@ -54,20 +53,23 @@ public class AreaSupport_2_Test extends TestCase {
 		assertFalse(areaSupport.isAreaSumOn(10501));
 	}
 
+	@Test
 	public void testReset_1() {
 
 		areaSupport.reset();
-		assertEquals(IAreaSupport.INITIAL_AREA_REJECT, areaSupport.getMinimumArea());
+		assertEquals(IAreaSupport.INITIAL_AREA_REJECT, areaSupport.getMinimumArea(), 0);
 		assertFalse(areaSupport.isAreaSumOn(1500));
 		assertFalse(areaSupport.isAreaSumOn(8500));
 	}
 
+	@Test
 	public void testResetAreaSumOn_1() {
 
 		areaSupport.resetAreaSumOn();
 		assertFalse(areaSupport.isAreaSumOn(1500));
 	}
 
+	@Test
 	public void testSetAreaSumOn_1() {
 
 		areaSupport.setAreaSumOn(1500, 5600);
@@ -77,9 +79,10 @@ public class AreaSupport_2_Test extends TestCase {
 		assertFalse(areaSupport.isAreaSumOn(5601));
 	}
 
+	@Test
 	public void testSetMinimumArea_1() {
 
 		areaSupport.setMinimumArea(1522);
-		assertEquals(1522.0d, areaSupport.getMinimumArea());
+		assertEquals(1522.0d, areaSupport.getMinimumArea(), 0);
 	}
 }

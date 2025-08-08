@@ -12,10 +12,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.impl;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class RetentionIndexCalculator_1_Test extends TestCase {
+import org.junit.Test;
 
+public class RetentionIndexCalculator_1_Test {
+
+	@Test
 	public void test1() {
 
 		String[] standards = RetentionIndexCalculator.getStandards();

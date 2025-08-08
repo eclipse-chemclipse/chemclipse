@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.classifier.core;
 
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.chromatogram.xxd.classifier.result.IChromatogramClassifierResult;
 import org.eclipse.chemclipse.chromatogram.xxd.classifier.settings.IChromatogramClassifierSettings;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
@@ -22,28 +24,16 @@ import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class AbstractChromatogramClassifier_1_Test extends TestCase {
+public class ChromatogramClassifier_1_Test {
 
 	private IChromatogramClassifier classifier;
 	private IChromatogramSelectionMSD chromatogramSelection;
 	private IChromatogramMSD chromatogram;
 	private IChromatogramClassifierSettings chromatogramClassifierSettings;
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testConstructor_1() {
 
 		chromatogramSelection = null;
@@ -53,6 +43,7 @@ public class AbstractChromatogramClassifier_1_Test extends TestCase {
 		assertTrue(processingInfo.hasErrorMessages());
 	}
 
+	@Test
 	public void testConstructor_2() {
 
 		chromatogram = new ChromatogramMSD();

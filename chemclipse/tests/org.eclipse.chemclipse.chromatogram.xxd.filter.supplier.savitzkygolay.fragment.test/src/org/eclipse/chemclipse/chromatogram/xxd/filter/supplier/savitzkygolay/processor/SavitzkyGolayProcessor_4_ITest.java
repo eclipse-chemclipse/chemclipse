@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.savitzkygolay.processor;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -23,18 +25,17 @@ import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignal;
 import org.eclipse.chemclipse.model.signals.TotalScanSignals;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class SavitzkyGolayProcessor_4_ITest extends TestCase {
+public class SavitzkyGolayProcessor_4_ITest {
 
 	private ITotalScanSignals totalScanSignals;
 	private ChromatogramFilterSettings supplierFilterSettings;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		/*
 		 * Signals
 		 */
@@ -56,111 +57,122 @@ public class SavitzkyGolayProcessor_4_ITest extends TestCase {
 		supplierFilterSettings.setDerivative(2);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		double[] sgTic = SavitzkyGolayProcessor.smooth(totalScanSignals, supplierFilterSettings, new NullProgressMonitor());
 		assertEquals(5726, sgTic.length);
 	}
 
+	@Test
 	public void test2() {
 
 		double[] sgTic = SavitzkyGolayProcessor.smooth(totalScanSignals, supplierFilterSettings, new NullProgressMonitor());
-		assertEquals(550.2866545969985d, sgTic[0]);
+		assertEquals(550.2866545969985d, sgTic[0], 0);
 	}
 
+	@Test
 	public void test3() {
 
 		double[] sgTic = SavitzkyGolayProcessor.smooth(totalScanSignals, supplierFilterSettings, new NullProgressMonitor());
-		assertEquals(515.5611805818696d, sgTic[1]);
+		assertEquals(515.5611805818696d, sgTic[1], 0);
 	}
 
+	@Test
 	public void test4() {
 
 		double[] sgTic = SavitzkyGolayProcessor.smooth(totalScanSignals, supplierFilterSettings, new NullProgressMonitor());
-		assertEquals(480.83570656673993d, sgTic[2]);
+		assertEquals(480.83570656673993d, sgTic[2], 0);
 	}
 
+	@Test
 	public void test5() {
 
 		double[] sgTic = SavitzkyGolayProcessor.smooth(totalScanSignals, supplierFilterSettings, new NullProgressMonitor());
-		assertEquals(446.11023255161064d, sgTic[3]);
+		assertEquals(446.11023255161064d, sgTic[3], 0);
 	}
 
+	@Test
 	public void test6() {
 
 		double[] sgTic = SavitzkyGolayProcessor.smooth(totalScanSignals, supplierFilterSettings, new NullProgressMonitor());
-		assertEquals(-20.495566502463177d, sgTic[289]);
+		assertEquals(-20.495566502463177d, sgTic[289], 0);
 	}
 
+	@Test
 	public void test7() {
 
 		double[] sgTic = SavitzkyGolayProcessor.smooth(totalScanSignals, supplierFilterSettings, new NullProgressMonitor());
-		assertEquals(237.78110395351771d, sgTic[892]);
+		assertEquals(237.78110395351771d, sgTic[892], 0);
 	}
 
+	@Test
 	public void test8() {
 
 		double[] sgTic = SavitzkyGolayProcessor.smooth(totalScanSignals, supplierFilterSettings, new NullProgressMonitor());
-		assertEquals(-286.8311144793903d, sgTic[1293]);
+		assertEquals(-286.8311144793903d, sgTic[1293], 0);
 	}
 
+	@Test
 	public void test9() {
 
 		double[] sgTic = SavitzkyGolayProcessor.smooth(totalScanSignals, supplierFilterSettings, new NullProgressMonitor());
-		assertEquals(306.2930150309456d, sgTic[1474]);
+		assertEquals(306.2930150309456d, sgTic[1474], 0);
 	}
 
+	@Test
 	public void test10() {
 
 		double[] sgTic = SavitzkyGolayProcessor.smooth(totalScanSignals, supplierFilterSettings, new NullProgressMonitor());
-		assertEquals(351.933013346806d, sgTic[2970]);
+		assertEquals(351.933013346806d, sgTic[2970], 0);
 	}
 
+	@Test
 	public void test11() {
 
 		double[] sgTic = SavitzkyGolayProcessor.smooth(totalScanSignals, supplierFilterSettings, new NullProgressMonitor());
-		assertEquals(-17.08777735674346d, sgTic[3766]);
+		assertEquals(-17.08777735674346d, sgTic[3766], 0);
 	}
 
+	@Test
 	public void test12() {
 
 		double[] sgTic = SavitzkyGolayProcessor.smooth(totalScanSignals, supplierFilterSettings, new NullProgressMonitor());
-		assertEquals(-1.5633699633704055d, sgTic[4180]);
+		assertEquals(-1.5633699633704055d, sgTic[4180], 0);
 	}
 
+	@Test
 	public void test13() {
 
 		double[] sgTic = SavitzkyGolayProcessor.smooth(totalScanSignals, supplierFilterSettings, new NullProgressMonitor());
-		assertEquals(-34.820799124248765d, sgTic[4993]);
+		assertEquals(-34.820799124248765d, sgTic[4993], 0);
 	}
 
+	@Test
 	public void test14() {
 
 		double[] sgTic = SavitzkyGolayProcessor.smooth(totalScanSignals, supplierFilterSettings, new NullProgressMonitor());
-		assertEquals(-41.467699605628695d, sgTic[5722]);
+		assertEquals(-41.467699605628695d, sgTic[5722], 0);
 	}
 
+	@Test
 	public void test15() {
 
 		double[] sgTic = SavitzkyGolayProcessor.smooth(totalScanSignals, supplierFilterSettings, new NullProgressMonitor());
-		assertEquals(-49.37024405989632d, sgTic[5723]);
+		assertEquals(-49.37024405989632d, sgTic[5723], 0);
 	}
 
+	@Test
 	public void test16() {
 
 		double[] sgTic = SavitzkyGolayProcessor.smooth(totalScanSignals, supplierFilterSettings, new NullProgressMonitor());
-		assertEquals(-57.27278851416531d, sgTic[5724]);
+		assertEquals(-57.27278851416531d, sgTic[5724], 0);
 	}
 
+	@Test
 	public void test17() {
 
 		double[] sgTic = SavitzkyGolayProcessor.smooth(totalScanSignals, supplierFilterSettings, new NullProgressMonitor());
-		assertEquals(-65.17533296843476d, sgTic[5725]);
+		assertEquals(-65.17533296843476d, sgTic[5725], 0);
 	}
 }

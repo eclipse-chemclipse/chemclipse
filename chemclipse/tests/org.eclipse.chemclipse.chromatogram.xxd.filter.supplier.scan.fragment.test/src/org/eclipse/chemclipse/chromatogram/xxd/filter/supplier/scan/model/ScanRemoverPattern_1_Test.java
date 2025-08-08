@@ -12,29 +12,19 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.scan.model;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.scan.preferences.PreferenceSupplier;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ScanRemoverPattern_1_Test extends TestCase {
+public class ScanRemoverPattern_1_Test {
 
 	private ScanRemoverPattern scanRemoverPattern;
 	private String PRESERVE = PreferenceSupplier.PRESERVE_SIGN.toString();
 	private String REMOVE = PreferenceSupplier.REMOVE_SIGN.toString();
 	private String pattern;
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testConstruct_1() {
 
 		scanRemoverPattern = new ScanRemoverPattern("");
@@ -42,6 +32,7 @@ public class ScanRemoverPattern_1_Test extends TestCase {
 		assertEquals(false, scanRemoverPattern.remove());
 	}
 
+	@Test
 	public void testConstruct_2() {
 
 		scanRemoverPattern = new ScanRemoverPattern(null);
@@ -49,6 +40,7 @@ public class ScanRemoverPattern_1_Test extends TestCase {
 		assertEquals(false, scanRemoverPattern.remove());
 	}
 
+	@Test
 	public void testConstruct_3() {
 
 		scanRemoverPattern = new ScanRemoverPattern("aldpp" + PRESERVE + "asfw" + REMOVE);
@@ -58,6 +50,7 @@ public class ScanRemoverPattern_1_Test extends TestCase {
 		assertEquals(true, scanRemoverPattern.remove());
 	}
 
+	@Test
 	public void testConstruct_4() {
 
 		scanRemoverPattern = new ScanRemoverPattern("aldpp" + REMOVE + "asfw" + PRESERVE);
@@ -67,6 +60,7 @@ public class ScanRemoverPattern_1_Test extends TestCase {
 		assertEquals(false, scanRemoverPattern.remove());
 	}
 
+	@Test
 	public void testConstruct_5() {
 
 		pattern = PRESERVE + REMOVE;
@@ -77,6 +71,7 @@ public class ScanRemoverPattern_1_Test extends TestCase {
 		assertEquals(true, scanRemoverPattern.remove());
 	}
 
+	@Test
 	public void testConstruct_6() {
 
 		pattern = REMOVE + PRESERVE;
@@ -87,6 +82,7 @@ public class ScanRemoverPattern_1_Test extends TestCase {
 		assertEquals(false, scanRemoverPattern.remove());
 	}
 
+	@Test
 	public void testConstruct_7() {
 
 		StringBuilder builder = new StringBuilder();

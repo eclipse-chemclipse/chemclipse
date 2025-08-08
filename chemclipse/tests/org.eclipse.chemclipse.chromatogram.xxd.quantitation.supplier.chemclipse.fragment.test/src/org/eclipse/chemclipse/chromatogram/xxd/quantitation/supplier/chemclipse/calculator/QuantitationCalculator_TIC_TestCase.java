@@ -19,6 +19,7 @@ import org.eclipse.chemclipse.model.quantitation.IQuantitationCompound;
 import org.eclipse.chemclipse.model.quantitation.IQuantitationPeak;
 import org.eclipse.chemclipse.msd.model.implementation.QuantitationPeakMSD;
 import org.eclipse.chemclipse.xxd.model.quantitation.QuantitationCompound;
+import org.junit.Before;
 import org.junit.Ignore;
 
 @Ignore
@@ -28,12 +29,13 @@ public class QuantitationCalculator_TIC_TestCase extends ReferencePeakMSDTestCas
 	private List<IQuantitationPeak> quantitationPeaks;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		quantitationCompound = new QuantitationCompound("Styrene", "mg/ml", 5500);
 		quantitationCompound.setChemicalClass("Styrene-Butadiene");
-		//
+
 		quantitationPeaks = new ArrayList<IQuantitationPeak>();
 		IQuantitationPeak quantitationPeak1 = new QuantitationPeakMSD(getReferencePeakMSD_TIC_1(), 0.01d, "mg/ml");
 		quantitationPeaks.add(quantitationPeak1);
@@ -41,14 +43,6 @@ public class QuantitationCalculator_TIC_TestCase extends ReferencePeakMSDTestCas
 		quantitationPeaks.add(quantitationPeak2);
 		IQuantitationPeak quantitationPeak3 = new QuantitationPeakMSD(getReferencePeakMSD_TIC_3(), 0.1d, "mg/ml");
 		quantitationPeaks.add(quantitationPeak3);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-		quantitationCompound = null;
-		quantitationPeaks = null;
 	}
 
 	public IQuantitationCompound getQuantitationCompound() {

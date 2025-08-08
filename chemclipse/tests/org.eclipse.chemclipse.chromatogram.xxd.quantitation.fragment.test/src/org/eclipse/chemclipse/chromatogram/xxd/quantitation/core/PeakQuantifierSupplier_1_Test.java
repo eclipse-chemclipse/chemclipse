@@ -12,36 +12,27 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.quantitation.core;
 
+import org.junit.Test;
+
 import junit.framework.TestCase;
 
 public class PeakQuantifierSupplier_1_Test extends TestCase {
 
-	private PeakQuantifierSupplier supplier;
+	private PeakQuantifierSupplier supplier = new PeakQuantifierSupplier();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		supplier = new PeakQuantifierSupplier();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		supplier = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetId_1() {
 
 		assertEquals("id", "", supplier.getId());
 	}
 
+	@Test
 	public void testGetDescription_1() {
 
 		assertEquals("description", "", supplier.getDescription());
 	}
 
+	@Test
 	public void testGetDetectorName_1() {
 
 		assertEquals("detectorName", "", supplier.getPeakQuantifierName());

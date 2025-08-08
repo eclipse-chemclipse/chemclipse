@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.impl;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,19 +22,18 @@ import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.mo
 import org.eclipse.chemclipse.model.columns.IRetentionIndexEntry;
 import org.eclipse.chemclipse.model.columns.RetentionIndexEntry;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class RetentionIndexExtrapolator_1_Test extends TestCase {
+public class RetentionIndexExtrapolator_1_Test {
 
 	private RetentionIndexExtrapolator extrapolator = new RetentionIndexExtrapolator();
 	private RetentionIndexMarker retentionIndexMarker = new RetentionIndexMarker();
 	private List<IRetentionIndexEntry> retentionIndexEntries = new ArrayList<>();
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		/*
 		 * 7.333 1000.0 100 999 C10 (Decane)
 		 * 8.85 1100.0 100 999 C11 (Undecane)
@@ -54,62 +55,63 @@ public class RetentionIndexExtrapolator_1_Test extends TestCase {
 		Collections.sort(retentionIndexEntries, (e1, e2) -> Integer.compare(e1.getRetentionTime(), e2.getRetentionTime()));
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals(94, retentionIndexMarker.size());
 	}
 
+	@Test
 	public void test2() {
 
 		IRetentionIndexEntry entry = retentionIndexEntries.get(0);
 		assertEquals(getRetentionTimeMilliseconds(1.265d), entry.getRetentionTime());
-		assertEquals(600.0f, entry.getRetentionIndex());
+		assertEquals(600.0f, entry.getRetentionIndex(), 0);
 		assertEquals("C6 (Hexane) -> Extrapolated", entry.getName());
 	}
 
+	@Test
 	public void test3() {
 
 		IRetentionIndexEntry entry = retentionIndexEntries.get(3);
 		assertEquals(getRetentionTimeMilliseconds(5.816d), entry.getRetentionTime());
-		assertEquals(900.0f, entry.getRetentionIndex());
+		assertEquals(900.0f, entry.getRetentionIndex(), 0);
 		assertEquals("C9 (Nonane) -> Extrapolated", entry.getName());
 	}
 
+	@Test
 	public void test4() {
 
 		IRetentionIndexEntry entry = retentionIndexEntries.get(4);
 		assertEquals(getRetentionTimeMilliseconds(7.333d), entry.getRetentionTime());
-		assertEquals(1000.0f, entry.getRetentionIndex());
+		assertEquals(1000.0f, entry.getRetentionIndex(), 0);
 		assertEquals("C10 (Decane)", entry.getName());
 	}
 
+	@Test
 	public void test5() {
 
 		IRetentionIndexEntry entry = retentionIndexEntries.get(8);
 		assertEquals(getRetentionTimeMilliseconds(12.983d), entry.getRetentionTime());
-		assertEquals(1400.0f, entry.getRetentionIndex());
+		assertEquals(1400.0f, entry.getRetentionIndex(), 0);
 		assertEquals("C14 (Tetradecane)", entry.getName());
 	}
 
+	@Test
 	public void test6() {
 
 		IRetentionIndexEntry entry = retentionIndexEntries.get(9);
 		assertEquals(getRetentionTimeMilliseconds(14.291d), entry.getRetentionTime());
-		assertEquals(1500.0f, entry.getRetentionIndex());
+		assertEquals(1500.0f, entry.getRetentionIndex(), 0);
 		assertEquals("C15 (Pentadecane) -> Extrapolated", entry.getName());
 	}
 
+	@Test
 	public void test7() {
 
 		IRetentionIndexEntry entry = retentionIndexEntries.get(93);
 		assertEquals(getRetentionTimeMilliseconds(124.163d), entry.getRetentionTime());
-		assertEquals(9900.0f, entry.getRetentionIndex());
+		assertEquals(9900.0f, entry.getRetentionIndex(), 0);
 		assertEquals("C99 (Nonanonacontane) -> Extrapolated", entry.getName());
 	}
 

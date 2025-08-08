@@ -16,9 +16,8 @@ import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.implementation.VendorMassSpectrum;
+import org.junit.Before;
 import org.junit.Ignore;
-
-import junit.framework.TestCase;
 
 /*
  * Chromatogram
@@ -35,21 +34,14 @@ import junit.framework.TestCase;
  * Scan 10 10500
  */
 @Ignore
-public class ChromatogramTestCase extends TestCase {
+public class ChromatogramTestCase {
 
 	private IChromatogramMSD chromatogram;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		chromatogram = createChromatogram();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
 	}
 
 	public IChromatogramMSD getChromatogram() {
