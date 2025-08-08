@@ -15,77 +15,74 @@ package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.denoising.settin
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
 import org.eclipse.chemclipse.support.util.TraceSettingUtil;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
 public class DenoisingFilterSettings_1_Test extends TestCase {
 
-	private FilterSettings settings;
+	private FilterSettings settings = new FilterSettings();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		settings = new FilterSettings();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		settings = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetIonsToRemove_1() {
 
 		assertNotNull(settings.getIonsToRemove());
 	}
 
+	@Test
 	public void testGetIonsToRemove_2() {
 
 		TraceSettingUtil settingIon = new TraceSettingUtil();
 		assertEquals("IonsToRemove Size", 4, new MarkedIons(settingIon.extractTraces(settingIon.deserialize(settings.getIonsToRemove())), MarkedTraceModus.INCLUDE).getIonsNominal().size());
 	}
 
+	@Test
 	public void testGetIonsToPreserve_1() {
 
 		assertNotNull(settings.getIonsToPreserve());
 	}
 
+	@Test
 	public void testGetIonsToPreserve_2() {
 
 		TraceSettingUtil settingIon = new TraceSettingUtil();
 		assertEquals("IonsToPreserve Size", 2, new MarkedIons(settingIon.extractTraces(settingIon.deserialize(settings.getIonsToPreserve())), MarkedTraceModus.INCLUDE).getIonsNominal().size());
 	}
 
+	@Test
 	public void testGetAdjustThresholdTransitions_1() {
 
 		assertTrue(settings.isAdjustThresholdTransitions());
 	}
 
+	@Test
 	public void testGetAdjustThresholdTransitions_2() {
 
 		settings.setAdjustThresholdTransitions(false);
 		assertFalse(settings.isAdjustThresholdTransitions());
 	}
 
+	@Test
 	public void testGetNumberOfUsedIonsForCoefficient_1() {
 
 		assertEquals("NumberOfUsedIonsForCoefficient", 1, settings.getNumberOfUsedIonsForCoefficient());
 	}
 
+	@Test
 	public void testGetNumberOfUsedIonsForCoefficient_2() {
 
 		settings.setNumberOfUsedIonsForCoefficient(5);
 		assertEquals("NumberOfUsedIonsForCoefficient", 5, settings.getNumberOfUsedIonsForCoefficient());
 	}
 
+	@Test
 	public void testGetNumberOfUsedIonsForCoefficient_3() {
 
 		settings.setNumberOfUsedIonsForCoefficient(0);
 		assertEquals("NumberOfUsedIonsForCoefficient", 1, settings.getNumberOfUsedIonsForCoefficient());
 	}
 
+	@Test
 	public void testGetNumberOfUsedIonsForCoefficient_4() {
 
 		settings.setNumberOfUsedIonsForCoefficient(-1);

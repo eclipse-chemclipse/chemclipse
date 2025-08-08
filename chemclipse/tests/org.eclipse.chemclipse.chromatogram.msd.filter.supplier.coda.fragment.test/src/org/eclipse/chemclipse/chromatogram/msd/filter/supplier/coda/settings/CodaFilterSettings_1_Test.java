@@ -12,26 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.coda.settings;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertNotNull;
 
-public class CodaFilterSettings_1_Test extends TestCase {
+import org.junit.Test;
 
-	private FilterSettings settings;
+public class CodaFilterSettings_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private FilterSettings settings = new FilterSettings();;
 
-		super.setUp();
-		settings = new FilterSettings();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		settings = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetCodaSettings_1() {
 
 		assertNotNull(settings);

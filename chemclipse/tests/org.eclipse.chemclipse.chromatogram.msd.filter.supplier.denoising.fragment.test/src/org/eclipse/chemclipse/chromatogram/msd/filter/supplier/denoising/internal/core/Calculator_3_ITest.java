@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.denoising.internal.core;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.denoising.internal.core.support.ChromatogramImporterTestCase;
@@ -25,20 +27,22 @@ import org.eclipse.chemclipse.msd.model.xic.ExtractedIonSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignals;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Test;
 
 public class Calculator_3_ITest extends ChromatogramImporterTestCase {
 
-	private Calculator calculator;
+	private Calculator calculator = new Calculator();;
 	private IExtractedIonSignals extractedIonSignals;
 	private IMarkedIons ionsToPreserve;
 	private List<INoiseSegmentMSD> noiseSegments;
 	private IExtractedIonSignalExtractor extractedIonSignalExtractor;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
-		calculator = new Calculator();
 		ionsToPreserve = new MarkedIons(MarkedTraceModus.INCLUDE);
 		ionsToPreserve.add(new MarkedIon(103));
 		ionsToPreserve.add(new MarkedIon(104));
@@ -47,12 +51,7 @@ public class Calculator_3_ITest extends ChromatogramImporterTestCase {
 		noiseSegments = calculator.getNoiseSegments(extractedIonSignals, ionsToPreserve, 13, new NullProgressMonitor());
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetSize_1() {
 
 		assertEquals("Size", 9, noiseSegments.size());

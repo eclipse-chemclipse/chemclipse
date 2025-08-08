@@ -13,28 +13,28 @@
 package org.eclipse.chemclipse.chromatogram.msd.peak.support;
 
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.eclipse.chemclipse.chromatogram.peak.detector.support.IRawPeak;
 import org.eclipse.chemclipse.chromatogram.peak.detector.support.RawPeak;
-
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests the raw peak.
  * 
  * @author Philip Wenig
  */
-public class RawPeak_5_Test extends TestCase {
+public class RawPeak_5_Test {
 
 	IRawPeak rawPeak1, rawPeak2;
 	int startScan;
 	int maximumScan;
 	int stopScan;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		startScan = 5;
 		stopScan = 20;
 		maximumScan = 15;
@@ -42,28 +42,25 @@ public class RawPeak_5_Test extends TestCase {
 		rawPeak2 = new RawPeak(startScan, maximumScan, 21);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		rawPeak1 = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testEquals_1() {
 
 		assertNotEquals("equals", rawPeak1, rawPeak2);
 	}
 
+	@Test
 	public void testEquals_2() {
 
 		assertNotEquals("equals", rawPeak2, rawPeak1);
 	}
 
+	@Test
 	public void testEquals_3() {
 
 		assertNotNull("equals", rawPeak1);
 	}
 
+	@Test
 	public void testEquals_4() {
 
 		assertNotEquals("equals", rawPeak1, new Object());

@@ -24,6 +24,7 @@ public class IonNoiseAbundanceComparator implements Comparator<IonNoise> {
 	 * The sort order is per default value ascending.
 	 */
 	public IonNoiseAbundanceComparator() {
+
 		sortOrder = SortOrder.ASC;
 	}
 
@@ -34,6 +35,7 @@ public class IonNoiseAbundanceComparator implements Comparator<IonNoise> {
 	 * @param sortOrder
 	 */
 	public IonNoiseAbundanceComparator(SortOrder sortOrder) {
+
 		this.sortOrder = sortOrder;
 	}
 

@@ -21,8 +21,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * THIS IS A TEST CLASS. DO NOT USE IT BUT ONLY FOR TESTING PURPOSE.
- * 
- * @author eselmeister
  */
 public class TestChromatogramFilter extends AbstractChromatogramFilterMSD {
 

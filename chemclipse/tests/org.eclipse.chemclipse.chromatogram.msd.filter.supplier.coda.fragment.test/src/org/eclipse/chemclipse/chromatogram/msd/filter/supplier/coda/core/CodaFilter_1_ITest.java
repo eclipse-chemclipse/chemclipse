@@ -12,36 +12,29 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.coda.core;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.chromatogram.msd.filter.core.chromatogram.IChromatogramFilterMSD;
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.coda.settings.FilterSettings;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
 
 public class CodaFilter_1_ITest extends ChromatogramImporterTestCase {
 
-	private IChromatogramFilterMSD chromatogramFilter;
-	private FilterSettings chromatogramFilterSettings;
+	private IChromatogramFilterMSD chromatogramFilter = new ChromatogramFilterMSD();
+	private FilterSettings chromatogramFilterSettings = new FilterSettings();
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
-		chromatogramFilter = new ChromatogramFilterMSD();
-		chromatogramFilterSettings = new FilterSettings();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogramFilter = null;
-		chromatogramFilterSettings = null;
-
-		super.tearDown();
 	}
 
 	public void testApplyFilter_1() {
 
 		int scan = 1;
 		chromatogramFilter.applyFilter(chromatogramSelection, chromatogramFilterSettings, new NullProgressMonitor());
-		assertEquals("total signal", 180262.0f, chromatogram.getScan(scan).getTotalSignal());
+		assertEquals("total signal", 180262.0f, chromatogram.getScan(scan).getTotalSignal(), 0);
 	}
 }

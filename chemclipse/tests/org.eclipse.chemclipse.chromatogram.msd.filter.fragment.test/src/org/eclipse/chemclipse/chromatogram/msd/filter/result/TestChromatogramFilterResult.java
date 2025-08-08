@@ -17,12 +17,11 @@ import org.eclipse.chemclipse.chromatogram.filter.result.ResultStatus;
 
 /**
  * THIS IS A TEST CLASS. DO NOT USE IT BUT ONLY FOR TESTING PURPOSE.
- * 
- * @author eselmeister
  */
 public class TestChromatogramFilterResult extends AbstractChromatogramFilterResult {
 
 	public TestChromatogramFilterResult(ResultStatus resultStatus, String description) {
+
 		super(resultStatus, description);
 	}
 }

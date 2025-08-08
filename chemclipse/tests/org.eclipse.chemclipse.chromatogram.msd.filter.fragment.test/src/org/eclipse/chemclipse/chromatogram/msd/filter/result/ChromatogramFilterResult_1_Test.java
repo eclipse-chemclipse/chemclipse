@@ -12,31 +12,17 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.result;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.chromatogram.filter.result.IChromatogramFilterResult;
 import org.eclipse.chemclipse.chromatogram.filter.result.ResultStatus;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-/**
- * @author eselmeister
- */
-public class AbstractChromatogramFilterResult_1_Test extends TestCase {
+public class ChromatogramFilterResult_1_Test {
 
 	private IChromatogramFilterResult chromatogramFilterResult;
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogramFilterResult = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetResultStatus_1() {
 
 		ResultStatus status = ResultStatus.EXCEPTION;
@@ -44,6 +30,7 @@ public class AbstractChromatogramFilterResult_1_Test extends TestCase {
 		assertEquals("ResultStatus", ResultStatus.EXCEPTION, chromatogramFilterResult.getResultStatus());
 	}
 
+	@Test
 	public void testGetResultStatus_2() {
 
 		ResultStatus status = ResultStatus.OK;
@@ -51,6 +38,7 @@ public class AbstractChromatogramFilterResult_1_Test extends TestCase {
 		assertEquals("ResultStatus", ResultStatus.OK, chromatogramFilterResult.getResultStatus());
 	}
 
+	@Test
 	public void testGetResultStatus_3() {
 
 		ResultStatus status = ResultStatus.UNDEFINED;
@@ -58,6 +46,7 @@ public class AbstractChromatogramFilterResult_1_Test extends TestCase {
 		assertEquals("ResultStatus", ResultStatus.UNDEFINED, chromatogramFilterResult.getResultStatus());
 	}
 
+	@Test
 	public void testGetDescription_3() {
 
 		ResultStatus status = ResultStatus.UNDEFINED;
@@ -65,6 +54,7 @@ public class AbstractChromatogramFilterResult_1_Test extends TestCase {
 		assertEquals("Description", "My test description.", chromatogramFilterResult.getDescription());
 	}
 
+	@Test
 	public void testGetDescription_4() {
 
 		ResultStatus status = ResultStatus.UNDEFINED;

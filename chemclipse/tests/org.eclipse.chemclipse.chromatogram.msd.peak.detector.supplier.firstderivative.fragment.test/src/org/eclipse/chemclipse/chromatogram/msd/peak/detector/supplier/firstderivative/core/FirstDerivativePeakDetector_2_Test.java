@@ -12,12 +12,16 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.peak.detector.supplier.firstderivative.core;
 
+import static org.junit.Assert.assertEquals;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.eclipse.chemclipse.chromatogram.msd.peak.detector.core.IPeakDetectorMSD;
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.core.BasePeakDetector;
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.support.IFirstDerivativeDetectorSlopes;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * peakDetectorSettings.getThreshold() is MEDIUM > threshold = 0.05d;
@@ -31,7 +35,8 @@ public class FirstDerivativePeakDetector_2_Test extends FirstDerivativeSlopesTes
 	private Method method;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		firstDerivativePeakDetector = new PeakDetectorMSD();
@@ -40,20 +45,13 @@ public class FirstDerivativePeakDetector_2_Test extends FirstDerivativeSlopesTes
 		slopes.calculateMovingAverage(5);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		firstDerivativePeakDetector = null;
-		firstDerivativePeakDetectorClass = null;
-		slopes = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testSize_1() {
 
 		assertEquals("Size", 39, slopes.size());
 	}
 
+	@Test
 	public void testDetectPeakStart_1() throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 
 		Integer result;
@@ -67,6 +65,7 @@ public class FirstDerivativePeakDetector_2_Test extends FirstDerivativeSlopesTes
 		assertEquals("detectPeakStart", Integer.valueOf(4), result);
 	}
 
+	@Test
 	public void testDetectPeakMaximum_1() throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 
 		Integer result;
@@ -83,6 +82,7 @@ public class FirstDerivativePeakDetector_2_Test extends FirstDerivativeSlopesTes
 		assertEquals("detectPeakMaximum", Integer.valueOf(12), result);
 	}
 
+	@Test
 	public void testDetectPeakStop_1() throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 
 		Integer result;

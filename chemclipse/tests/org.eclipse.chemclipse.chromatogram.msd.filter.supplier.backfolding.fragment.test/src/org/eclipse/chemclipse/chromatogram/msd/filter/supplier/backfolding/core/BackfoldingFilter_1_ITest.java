@@ -12,35 +12,23 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.backfolding.core;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.chromatogram.msd.filter.core.chromatogram.IChromatogramFilterMSD;
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.backfolding.settings.ChromatogramFilterSettings;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Test;
 
 public class BackfoldingFilter_1_ITest extends ChromatogramImporterTestCase {
 
-	private IChromatogramFilterMSD chromatogramFilter;
-	private ChromatogramFilterSettings chromatogramFilterSettings;
+	private IChromatogramFilterMSD chromatogramFilter = new ChromatogramFilterMSD();
+	private ChromatogramFilterSettings chromatogramFilterSettings = new ChromatogramFilterSettings();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		chromatogramFilter = new ChromatogramFilterMSD();
-		chromatogramFilterSettings = new ChromatogramFilterSettings();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogramFilter = null;
-		chromatogramFilterSettings = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testApplyFilter_1() {
 
 		int scan = 1;
 		chromatogramFilter.applyFilter(chromatogramSelection, chromatogramFilterSettings, new NullProgressMonitor());
-		assertEquals("total signal", 1934.0f, chromatogram.getScan(scan).getTotalSignal());
+		assertEquals("total signal", 1934.0f, chromatogram.getScan(scan).getTotalSignal(), 0);
 	}
 }

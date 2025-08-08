@@ -12,38 +12,29 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.peak.detector.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.peak.detector.core.IPeakDetectorSupplier;
 import org.eclipse.chemclipse.chromatogram.peak.detector.exceptions.NoPeakDetectorAvailableException;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class PeakDetectorSupport_1_Test {
 
-/**
- * @author eselmeister
- */
-public class PeakDetectorSupport_1_Test extends TestCase {
+	private PeakDetectorMSDSupport support = new PeakDetectorMSDSupport();
 
-	private PeakDetectorMSDSupport support;
-	private PeakDetectorMSDSupplier supplier;
+	@Before
+	public void setUp() throws Exception {
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		support = new PeakDetectorMSDSupport();
-		supplier = new PeakDetectorMSDSupplier("net.first.supplier", "Integrator Description", "Peak Detector Name");
+		PeakDetectorMSDSupplier supplier = new PeakDetectorMSDSupplier("net.first.supplier", "Integrator Description", "Peak Detector Name");
 		support.add(supplier);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		support = null;
-		supplier = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetAvailableIntegratorIds_1() {
 
 		List<String> ids;
@@ -55,6 +46,7 @@ public class PeakDetectorSupport_1_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testGetIntegratorId_1() {
 
 		try {
@@ -65,6 +57,7 @@ public class PeakDetectorSupport_1_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testGetIntegratorSupplier_1() {
 
 		IPeakDetectorSupplier supplier;
@@ -77,6 +70,7 @@ public class PeakDetectorSupport_1_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testGetIntegratorNames_1() {
 
 		try {

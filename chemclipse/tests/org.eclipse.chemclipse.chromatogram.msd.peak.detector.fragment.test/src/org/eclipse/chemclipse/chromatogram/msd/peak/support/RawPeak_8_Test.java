@@ -12,57 +12,55 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.peak.support;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.chromatogram.peak.detector.support.IRawPeak;
 import org.eclipse.chemclipse.chromatogram.peak.detector.support.RawPeak;
-
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests the raw peak.
  * 
- * @author eselmeister
+ * @author Philip Wenig
  */
-public class RawPeak_8_Test extends TestCase {
+public class RawPeak_8_Test {
 
 	IRawPeak rawPeak;
 	int startScan;
 	int maximumScan;
 	int stopScan;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		startScan = 14;
 		stopScan = 20;
 		maximumScan = 21;
 		rawPeak = new RawPeak(startScan, maximumScan, stopScan);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		rawPeak = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetRetentionTimeAtMaximum_1() {
 
 		assertEquals("RetentionTimeAtMaximum", 0, rawPeak.getRetentionTimeAtMaximum());
 	}
 
+	@Test
 	public void testGetRetentionTimeAtMaximum_2() {
 
 		rawPeak.setRetentionTimeAtMaximum(2562);
 		assertEquals("RetentionTimeAtMaximum", 2562, rawPeak.getRetentionTimeAtMaximum());
 	}
 
+	@Test
 	public void testGetRetentionTimeAtMaximum_3() {
 
 		rawPeak.setRetentionTimeAtMaximum(-1);
 		assertEquals("RetentionTimeAtMaximum", 0, rawPeak.getRetentionTimeAtMaximum());
 	}
 
+	@Test
 	public void testGetRetentionTimeAtMaximum_4() {
 
 		rawPeak.setRetentionTimeAtMaximum(2562);

@@ -12,39 +12,27 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.peak.detector.core;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-/**
- * @author eselmeister
- */
-public class PeakDetectorSupplier_1_Test extends TestCase {
+import org.junit.Test;
 
-	private PeakDetectorMSDSupplier supplier;
+public class PeakDetectorSupplier_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private PeakDetectorMSDSupplier supplier = new PeakDetectorMSDSupplier("org.eclipse.chemclipse.test", "This is a description.", "Peak Detector Name");;
 
-		super.setUp();
-		supplier = new PeakDetectorMSDSupplier("org.eclipse.chemclipse.test", "This is a description.", "Peak Detector Name");
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		supplier = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetId_1() {
 
 		assertEquals("Id", "org.eclipse.chemclipse.test", supplier.getId());
 	}
 
+	@Test
 	public void testGetDescription_1() {
 
 		assertEquals("Description", "This is a description.", supplier.getDescription());
 	}
 
+	@Test
 	public void testGetFilterName_1() {
 
 		assertEquals("Name", "Peak Detector Name", supplier.getPeakDetectorName());

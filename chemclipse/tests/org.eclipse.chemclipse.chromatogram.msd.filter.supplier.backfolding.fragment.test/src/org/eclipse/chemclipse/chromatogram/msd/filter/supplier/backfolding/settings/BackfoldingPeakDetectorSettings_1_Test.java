@@ -13,39 +13,29 @@
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.backfolding.settings;
 
 import org.eclipse.chemclipse.chromatogram.peak.detector.model.Threshold;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
 public class BackfoldingPeakDetectorSettings_1_Test extends TestCase {
 
-	private PeakDetectorSettings settings;
+	private PeakDetectorSettings settings = new PeakDetectorSettings();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		settings = new PeakDetectorSettings();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		settings = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetBackfoldingSettings_1() {
 
 		IBackfoldingSettings backfoldingSettings = settings.getBackfoldingSettings();
 		assertNotNull(backfoldingSettings);
 	}
 
+	@Test
 	public void testGetThreshold_1() {
 
 		Threshold threshold = settings.getThreshold();
 		assertEquals("Threshold", Threshold.MEDIUM, threshold);
 	}
 
+	@Test
 	public void testSetThreshold_1() {
 
 		settings.setThreshold(Threshold.HIGH);

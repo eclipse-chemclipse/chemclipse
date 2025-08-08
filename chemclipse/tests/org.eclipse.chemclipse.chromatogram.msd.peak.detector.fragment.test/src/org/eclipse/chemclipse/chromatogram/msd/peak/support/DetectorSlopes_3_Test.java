@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.peak.support;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,15 +25,15 @@ import org.eclipse.chemclipse.chromatogram.peak.detector.support.IDetectorSlopes
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.numeric.core.IPoint;
 import org.eclipse.chemclipse.numeric.core.Point;
-
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Testing calculateMovingAverage
  * 
  * @author Philip Wenig
  */
-public class DetectorSlopes_3_Test extends TestCase {
+public class DetectorSlopes_3_Test {
 
 	private IDetectorSlope slope;
 	private IDetectorSlopes slopes;
@@ -40,10 +42,9 @@ public class DetectorSlopes_3_Test extends TestCase {
 	private List<Float> abundances;
 	private ITotalScanSignals signals;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		abundances = new ArrayList<Float>();
 		abundances.add(21563.38028f);
 		abundances.add(21718.30986f);
@@ -61,28 +62,19 @@ public class DetectorSlopes_3_Test extends TestCase {
 		}
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		abundances = null;
-		p1 = null;
-		p2 = null;
-		slope = null;
-		slopes = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testSize_1() {
 
 		assertEquals("Size", 1, slopes.size());
 	}
 
 	// -----------------------------------------------WindowSize.SCANS_3
+	@Test
 	public void testCalculateMovingAverage_1() {
 
 		slopes.calculateMovingAverage(3);
 		slope = slopes.getDetectorSlope(1);
-		assertEquals("scan 1 slope", 0.1549296875, slope.getSlope());
+		assertEquals("scan 1 slope", 0.1549296875, slope.getSlope(), 0);
 		assertEquals("scan 1 retention time", 1000, slope.getRetentionTime());
 	}
 }

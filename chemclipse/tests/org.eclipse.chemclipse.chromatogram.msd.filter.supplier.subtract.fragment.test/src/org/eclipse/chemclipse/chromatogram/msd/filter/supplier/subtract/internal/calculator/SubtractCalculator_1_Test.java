@@ -12,41 +12,28 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.internal.calculator;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Map;
 
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.calculator.SubtractCalculator;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class SubtractCalculator_1_Test {
 
-public class SubtractCalculator_1_Test extends TestCase {
+	private SubtractCalculator subtractCalculator = new SubtractCalculator();
 
-	private SubtractCalculator subtractCalculator;
-	private Map<Double, Float> subtractMassSpectrumMap;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		//
-		subtractCalculator = new SubtractCalculator();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		subtractCalculator = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testMassSpectrumMap_1() {
 
-		subtractMassSpectrumMap = subtractCalculator.getMassSpectrumMap(null, true, true);
+		Map<Double, Float> subtractMassSpectrumMap = subtractCalculator.getMassSpectrumMap(null, true, true);
 		assertEquals(0, subtractMassSpectrumMap.size());
 	}
 
+	@Test
 	public void testMassSpectrumMap_2() {
 
-		subtractMassSpectrumMap = subtractCalculator.getMassSpectrumMap(null, true, false);
+		Map<Double, Float> subtractMassSpectrumMap = subtractCalculator.getMassSpectrumMap(null, true, false);
 		assertEquals(0, subtractMassSpectrumMap.size());
 	}
 }

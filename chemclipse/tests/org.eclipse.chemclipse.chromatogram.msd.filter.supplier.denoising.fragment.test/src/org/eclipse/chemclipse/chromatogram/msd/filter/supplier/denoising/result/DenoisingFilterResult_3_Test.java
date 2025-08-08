@@ -13,32 +13,21 @@
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.denoising.result;
 
 import org.eclipse.chemclipse.chromatogram.filter.result.ResultStatus;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
 public class DenoisingFilterResult_3_Test extends TestCase {
 
-	private IDenoisingFilterResult result;
+	private IDenoisingFilterResult result = new DenoisingFilterResult(ResultStatus.OK, "The result status is ok.", null);
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		result = new DenoisingFilterResult(ResultStatus.OK, "The result status is ok.", null);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		result = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetNoiseMassSpectra_1() {
 
 		assertNotNull(result.getNoiseMassSpectra());
 	}
 
+	@Test
 	public void testGetNoiseMassSpectra_2() {
 
 		assertEquals("Size", 0, result.getNoiseMassSpectra().size());

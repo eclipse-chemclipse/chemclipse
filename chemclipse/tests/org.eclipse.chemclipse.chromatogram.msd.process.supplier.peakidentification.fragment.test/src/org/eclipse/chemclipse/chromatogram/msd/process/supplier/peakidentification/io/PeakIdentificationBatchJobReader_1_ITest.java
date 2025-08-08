@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.process.supplier.peakidentification.io;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.chromatogram.msd.process.supplier.peakidentification.TestPathHelper;
@@ -20,41 +22,34 @@ import org.eclipse.chemclipse.chromatogram.msd.process.supplier.peakidentificati
 import org.eclipse.chemclipse.chromatogram.msd.process.supplier.peakidentification.model.IPeakInputEntry;
 import org.eclipse.chemclipse.chromatogram.msd.process.supplier.peakidentification.model.IPeakIntegrationEntry;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class PeakIdentificationBatchJobReader_1_ITest {
 
-public class PeakIdentificationBatchJobReader_1_ITest extends TestCase {
-
+	private IPeakIdentificationBatchJobReader reader = new PeakIdentificationBatchJobReader();
 	private IPeakIdentificationBatchJob batchProcessJob;
-	private IPeakIdentificationBatchJobReader reader;
-	private File file;
 	private IPeakInputEntry inputEntry;
 	private IPeakIntegrationEntry integrationEntry;
 	private IPeakIdentificationEntry identificationEntry;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
-		reader = new PeakIdentificationBatchJobReader();
-		file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_BATCH_PROCESS_JOB));
+		File file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_BATCH_PROCESS_JOB));
 		batchProcessJob = reader.read(file, new NullProgressMonitor());
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
 	}
 
 	/*
 	 * HEADER
 	 */
+	@Test
 	public void testGetReportFolder_1() {
 
 		assertEquals("/org.eclipse.chemclipse.chromatogram.msd.process.supplier.peakidentification.fragment.test/testData/files/import", batchProcessJob.getReportFolder());
 	}
 
+	@Test
 	public void testIsOverrideReport_1() {
 
 		assertEquals(false, batchProcessJob.isOverrideReport());
@@ -63,17 +58,20 @@ public class PeakIdentificationBatchJobReader_1_ITest extends TestCase {
 	/*
 	 * INPUT
 	 */
+	@Test
 	public void testGetInputEntries_1() {
 
 		assertEquals(131, batchProcessJob.getPeakInputEntries().size());
 	}
 
+	@Test
 	public void testGetInputEntries_2() {
 
 		String inputFile = batchProcessJob.getPeakInputEntries().get(0).getInputFile();
 		assertEquals("/org.eclipse.chemclipse.chromatogram.msd.process.supplier.peakidentification.fragment.test/testData/files/import/snip40_P1.mpl", inputFile);
 	}
 
+	@Test
 	public void testGetInputEntries_3() {
 
 		inputEntry = batchProcessJob.getPeakInputEntries().get(0);
@@ -83,12 +81,14 @@ public class PeakIdentificationBatchJobReader_1_ITest extends TestCase {
 	/*
 	 * PROCESS
 	 */
+	@Test
 	public void testGetIntegrationEntry_1() {
 
 		integrationEntry = batchProcessJob.getPeakIntegrationEntry();
 		assertEquals("org.eclipse.chemclipse.chromatogram.msd.integrator.supplier.chemstation.peakIntegrator", integrationEntry.getProcessorId());
 	}
 
+	@Test
 	public void testGetIdentificationEntry_1() {
 
 		identificationEntry = batchProcessJob.getPeakIdentificationEntry();
@@ -98,17 +98,20 @@ public class PeakIdentificationBatchJobReader_1_ITest extends TestCase {
 	/*
 	 * OUTPUT
 	 */
+	@Test
 	public void testGetOutputEntries_1() {
 
 		assertEquals(3, batchProcessJob.getPeakOutputEntries().size());
 	}
 
+	@Test
 	public void testGetOutputEntries_2() {
 
 		String inputFile = batchProcessJob.getPeakOutputEntries().get(0).getOutputFolder();
 		assertEquals("/org.eclipse.chemclipse.chromatogram.msd.process.supplier.peakidentification.fragment.test/testData/files/import", inputFile);
 	}
 
+	@Test
 	public void testGetOutputEntries_3() {
 
 		String converterId = batchProcessJob.getPeakOutputEntries().get(0).getConverterId();

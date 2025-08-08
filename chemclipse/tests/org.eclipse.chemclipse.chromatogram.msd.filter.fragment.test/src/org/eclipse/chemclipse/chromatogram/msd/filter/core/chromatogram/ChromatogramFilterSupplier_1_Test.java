@@ -12,42 +12,37 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.core.chromatogram;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-/**
- * @author eselmeister
- */
-public class ChromatogramFilterSupplier_1_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class ChromatogramFilterSupplier_1_Test {
 
 	private ChromatogramFilterSupplierMSD supplier;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		supplier = new ChromatogramFilterSupplierMSD();
 		supplier.setId("org.eclipse.chemclipse.test");
 		supplier.setDescription("This is a description.");
 		supplier.setFilterName("Filter Name");
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		supplier = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetId_1() {
 
 		assertEquals("Id", "org.eclipse.chemclipse.test", supplier.getId());
 	}
 
+	@Test
 	public void testGetDescription_1() {
 
 		assertEquals("Description", "This is a description.", supplier.getDescription());
 	}
 
+	@Test
 	public void testGetFilterName_1() {
 
 		assertEquals("Filter Name", "Filter Name", supplier.getFilterName());

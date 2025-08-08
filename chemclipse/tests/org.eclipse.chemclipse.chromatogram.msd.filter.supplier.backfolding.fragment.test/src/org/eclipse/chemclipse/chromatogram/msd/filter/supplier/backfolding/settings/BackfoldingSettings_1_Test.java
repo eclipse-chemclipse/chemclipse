@@ -12,38 +12,29 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.backfolding.settings;
 
+import org.junit.Test;
+
 import junit.framework.TestCase;
 
 public class BackfoldingSettings_1_Test extends TestCase {
 
-	private IBackfoldingSettings settings;
+	private IBackfoldingSettings settings = new BackfoldingSettings();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		settings = new BackfoldingSettings();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		settings = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetMaximumRetentionTimeShift_1() {
 
 		int shift = settings.getMaximumRetentionTimeShift();
 		assertEquals("RetentionTimeShift", 5000, shift);
 	}
 
+	@Test
 	public void testGetNumberOfBackfoldingRuns_1() {
 
 		int runs = settings.getNumberOfBackfoldingRuns();
 		assertEquals("Backfolding Runs", 3, runs);
 	}
 
+	@Test
 	public void testSetMaximumRetentionTimeShift_1() {
 
 		settings.setMaximumRetentionTimeShift(1000);
@@ -51,6 +42,7 @@ public class BackfoldingSettings_1_Test extends TestCase {
 		assertEquals("RetentionTimeShift", 1000, shift);
 	}
 
+	@Test
 	public void testSetMaximumRetentionTimeShift_2() {
 
 		settings.setMaximumRetentionTimeShift(500);
@@ -58,6 +50,7 @@ public class BackfoldingSettings_1_Test extends TestCase {
 		assertEquals("RetentionTimeShift", 500, shift);
 	}
 
+	@Test
 	public void testSetMaximumRetentionTimeShift_3() {
 
 		settings.setMaximumRetentionTimeShift(25000);
@@ -65,6 +58,7 @@ public class BackfoldingSettings_1_Test extends TestCase {
 		assertEquals("RetentionTimeShift", 25000, shift);
 	}
 
+	@Test
 	public void testSetMaximumRetentionTimeShift_4() {
 
 		settings.setMaximumRetentionTimeShift(499);
@@ -72,6 +66,7 @@ public class BackfoldingSettings_1_Test extends TestCase {
 		assertEquals("RetentionTimeShift", 5000, shift);
 	}
 
+	@Test
 	public void testSetMaximumRetentionTimeShift_5() {
 
 		settings.setMaximumRetentionTimeShift(25001);
@@ -79,6 +74,7 @@ public class BackfoldingSettings_1_Test extends TestCase {
 		assertEquals("RetentionTimeShift", 5000, shift);
 	}
 
+	@Test
 	public void testSetNumberOfBackfoldingRuns_1() {
 
 		settings.setNumberOfBackfoldingRuns(5);
@@ -86,6 +82,7 @@ public class BackfoldingSettings_1_Test extends TestCase {
 		assertEquals("Backfolding Runs", 5, runs);
 	}
 
+	@Test
 	public void testSetNumberOfBackfoldingRuns_2() {
 
 		settings.setNumberOfBackfoldingRuns(1);
@@ -93,6 +90,7 @@ public class BackfoldingSettings_1_Test extends TestCase {
 		assertEquals("Backfolding Runs", 1, runs);
 	}
 
+	@Test
 	public void testSetNumberOfBackfoldingRuns_3() {
 
 		settings.setNumberOfBackfoldingRuns(10);
@@ -100,6 +98,7 @@ public class BackfoldingSettings_1_Test extends TestCase {
 		assertEquals("Backfolding Runs", 10, runs);
 	}
 
+	@Test
 	public void testSetNumberOfBackfoldingRuns_4() {
 
 		settings.setNumberOfBackfoldingRuns(0);
@@ -107,6 +106,7 @@ public class BackfoldingSettings_1_Test extends TestCase {
 		assertEquals("Backfolding Runs", 3, runs);
 	}
 
+	@Test
 	public void testSetNumberOfBackfoldingRuns_5() {
 
 		settings.setNumberOfBackfoldingRuns(11);

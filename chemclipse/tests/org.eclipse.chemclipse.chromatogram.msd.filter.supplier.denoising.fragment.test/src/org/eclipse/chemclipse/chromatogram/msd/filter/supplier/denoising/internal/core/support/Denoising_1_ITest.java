@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.denoising.internal.core.support;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.List;
 
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
@@ -20,6 +22,8 @@ import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.chemclipse.msd.model.core.support.MarkedIon;
 import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Test;
 
 public class Denoising_1_ITest extends ChromatogramImporterTestCase {
 
@@ -28,7 +32,8 @@ public class Denoising_1_ITest extends ChromatogramImporterTestCase {
 	private List<ICombinedMassSpectrum> noiseMassSpectra;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		ionsToRemove = new MarkedIons(MarkedTraceModus.INCLUDE);
@@ -43,12 +48,7 @@ public class Denoising_1_ITest extends ChromatogramImporterTestCase {
 		noiseMassSpectra = Denoising.applyDenoisingFilter(chromatogramSelection, ionsToRemove, ionsToPreserve, true, 1, 13, new NullProgressMonitor());
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetSize_1() {
 
 		assertEquals("Size", 11, noiseMassSpectra.size());

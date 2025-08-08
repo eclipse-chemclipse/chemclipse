@@ -9,14 +9,11 @@
  * 
  * Contributors:
  * Philip Wenig - initial API and implementation
- * Dr. Alexander Kerner - implementation
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.peak.detector.settings;
 
 /**
  * THIS IS A TESTCLASS! ONLY USE IT FOR TEST CASES! IT'S NOT FOR PRODUCTIVE USE!
- * 
- * @author eselmeister
  */
 public class PeakDetectorSettings extends AbstractPeakDetectorSettingsMSD {
 }

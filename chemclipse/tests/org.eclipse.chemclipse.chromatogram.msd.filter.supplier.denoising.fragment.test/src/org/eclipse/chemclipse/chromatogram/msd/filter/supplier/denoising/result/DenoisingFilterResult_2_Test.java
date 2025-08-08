@@ -12,41 +12,38 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.denoising.result;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.filter.result.ResultStatus;
 import org.eclipse.chemclipse.msd.model.core.ICombinedMassSpectrum;
 import org.eclipse.chemclipse.msd.model.implementation.CombinedMassSpectrum;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class DenoisingFilterResult_2_Test extends TestCase {
+public class DenoisingFilterResult_2_Test {
 
 	private IDenoisingFilterResult result;
 	private List<ICombinedMassSpectrum> noiseMassSpectra;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		noiseMassSpectra = new ArrayList<ICombinedMassSpectrum>();
 		noiseMassSpectra.add(new CombinedMassSpectrum());
 		result = new DenoisingFilterResult(ResultStatus.OK, "The result status is ok.", noiseMassSpectra);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		result = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetNoiseMassSpectra_1() {
 
 		assertNotNull(result.getNoiseMassSpectra());
 	}
 
+	@Test
 	public void testGetNoiseMassSpectra_2() {
 
 		assertEquals("Size", 1, result.getNoiseMassSpectra().size());

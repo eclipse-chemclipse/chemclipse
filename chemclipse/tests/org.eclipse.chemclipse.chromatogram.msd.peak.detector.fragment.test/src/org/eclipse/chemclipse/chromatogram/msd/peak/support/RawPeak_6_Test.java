@@ -12,50 +12,47 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.peak.support;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.chromatogram.peak.detector.support.IRawPeak;
 import org.eclipse.chemclipse.chromatogram.peak.detector.support.RawPeak;
-
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests the raw peak.
  * 
- * @author eselmeister
+ * @author Philip Wenig
  */
-public class RawPeak_6_Test extends TestCase {
+public class RawPeak_6_Test {
 
 	IRawPeak rawPeak;
 	int startScan;
 	int maximumScan;
 	int stopScan;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		startScan = 16;
 		stopScan = 20;
 		maximumScan = 15;
 		rawPeak = new RawPeak(startScan, maximumScan, stopScan);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		rawPeak = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetStartScan_1() {
 
 		assertEquals("StartScan", 0, rawPeak.getStartScan());
 	}
 
+	@Test
 	public void testGetMaximumScan_1() {
 
 		assertEquals("MaximumScan", 0, rawPeak.getMaximumScan());
 	}
 
+	@Test
 	public void testGetStopScan_1() {
 
 		assertEquals("StopScan", 0, rawPeak.getStopScan());
