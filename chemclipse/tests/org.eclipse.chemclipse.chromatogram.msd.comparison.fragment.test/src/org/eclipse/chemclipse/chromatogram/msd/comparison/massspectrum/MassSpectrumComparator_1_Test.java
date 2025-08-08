@@ -12,36 +12,20 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.msd.comparison.exceptions.NoMassSpectrumComparatorAvailableException;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class MassSpectrumComparator_1_Test {
 
-/**
- * Test the IMassSpectrumComparatorSupport.
- * 
- * @author eselmeister
- */
-public class MassSpectrumComparator_1_Test extends TestCase {
+	IMassSpectrumComparatorSupport support = MassSpectrumComparator.getMassSpectrumComparatorSupport();
 
-	IMassSpectrumComparatorSupport support;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		support = MassSpectrumComparator.getMassSpectrumComparatorSupport();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		support = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetMassSpectrumComparatorSupport_1() throws NoMassSpectrumComparatorAvailableException {
 
 		int count = 0;
@@ -59,6 +43,7 @@ public class MassSpectrumComparator_1_Test extends TestCase {
 		assertTrue(count >= 2);
 	}
 
+	@Test
 	public void testGetMassSpectrumComparatorSupport_2() throws NoMassSpectrumComparatorAvailableException {
 
 		int count = 0;
@@ -76,6 +61,7 @@ public class MassSpectrumComparator_1_Test extends TestCase {
 		assertTrue(count >= 2);
 	}
 
+	@Test
 	public void testGetMassSpectrumComparatorSupport_3() throws NoMassSpectrumComparatorAvailableException {
 
 		List<String> ids = support.getAvailableComparatorIds();
@@ -90,6 +76,7 @@ public class MassSpectrumComparator_1_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testGetMassSpectrumComparisonSupplier_1() {
 
 		try {
@@ -99,6 +86,7 @@ public class MassSpectrumComparator_1_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testGetMassSpectrumComparisonSupplier_2() {
 
 		try {
@@ -108,6 +96,7 @@ public class MassSpectrumComparator_1_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testGetMassSpectrumComparisonSupplier_4() throws NoMassSpectrumComparatorAvailableException {
 
 		String comparatorName = "Alfassi Geometric Distance";

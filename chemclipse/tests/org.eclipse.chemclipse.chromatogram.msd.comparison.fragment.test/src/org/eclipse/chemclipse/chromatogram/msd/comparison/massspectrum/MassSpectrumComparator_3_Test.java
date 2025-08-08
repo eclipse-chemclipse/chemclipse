@@ -13,63 +13,49 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.purity.IMassSpectrumPurityResult;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.implementation.ScanMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class MassSpectrumComparator_3_Test {
 
-/**
- * Test the MassSpectrumComparator
- *
- * @author eselmeister
- */
-public class MassSpectrumComparator_3_Test extends TestCase {
+	private IScanMSD massSpectrum1 = new ScanMSD();
+	private IScanMSD massSpectrum2 = new ScanMSD();
 
-	private IScanMSD massSpectrum1;
-	private IScanMSD massSpectrum2;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		massSpectrum1 = new ScanMSD();
-		massSpectrum2 = new ScanMSD();
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectrum1 = null;
-		massSpectrum2 = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testMassSpectrumComparatorCompare_1() {
 
 		IProcessingInfo<IMassSpectrumPurityResult> processingInfo = MassSpectrumComparator.getPurityResult(null, null);
 		assertTrue(processingInfo.hasErrorMessages());
 	}
 
+	@Test
 	public void testMassSpectrumComparatorCompare_2() {
 
 		IProcessingInfo<IMassSpectrumPurityResult> processingInfo = MassSpectrumComparator.getPurityResult(massSpectrum1, null);
 		assertTrue(processingInfo.hasErrorMessages());
 	}
 
+	@Test
 	public void testMassSpectrumComparatorCompare_3() {
 
 		IProcessingInfo<IMassSpectrumPurityResult> processingInfo = MassSpectrumComparator.getPurityResult(null, massSpectrum2);
 		assertTrue(processingInfo.hasErrorMessages());
 	}
 
+	@Test
 	public void testMassSpectrumComparatorCompare_4() {
 
 		IProcessingInfo<IMassSpectrumPurityResult> processingInfo = MassSpectrumComparator.getPurityResult(massSpectrum1, massSpectrum2);
 		assertFalse(processingInfo.hasErrorMessages());
 		IMassSpectrumPurityResult result = processingInfo.getProcessingResult();
-		assertEquals(0.0f, result.getFitValue());
-		assertEquals(0.0f, result.getReverseFitValue());
+		assertEquals(0.0f, result.getFitValue(), 0);
+		assertEquals(0.0f, result.getReverseFitValue(), 0);
 	}
 }

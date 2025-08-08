@@ -12,21 +12,24 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.csd.filter.core.chromatogram;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.filter.exceptions.NoChromatogramFilterSupplierAvailableException;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ChromatogramFilterSupport_1_Test extends TestCase {
+public class ChromatogramFilterSupport_1_Test {
 
 	private ChromatogramFilterSupportCSD support;
 	private ChromatogramFilterSupplierCSD supplier;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		support = new ChromatogramFilterSupportCSD();
 		supplier = new ChromatogramFilterSupplierCSD();
 		supplier.setId("net.first.supplier");
@@ -35,14 +38,7 @@ public class ChromatogramFilterSupport_1_Test extends TestCase {
 		support.add(supplier);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		support = null;
-		supplier = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetAvailableFilterIds_1() {
 
 		try {
@@ -53,6 +49,7 @@ public class ChromatogramFilterSupport_1_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testGetIntegratorId_1() {
 
 		try {
@@ -63,6 +60,7 @@ public class ChromatogramFilterSupport_1_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testGetIntegratorSupplier_1() {
 
 		IChromatogramFilterSupplierCSD supplier;
@@ -75,6 +73,7 @@ public class ChromatogramFilterSupport_1_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testGetIntegratorNames_1() {
 
 		try {

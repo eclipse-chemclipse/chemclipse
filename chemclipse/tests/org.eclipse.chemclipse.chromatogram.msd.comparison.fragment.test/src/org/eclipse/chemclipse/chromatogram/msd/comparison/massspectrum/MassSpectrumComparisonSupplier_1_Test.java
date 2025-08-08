@@ -12,36 +12,27 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum;
 
+import org.junit.Test;
+
 import junit.framework.TestCase;
 
 public class MassSpectrumComparisonSupplier_1_Test extends TestCase {
 
-	private MassSpectrumComparisonSupplier supplier;
+	private MassSpectrumComparisonSupplier supplier = new MassSpectrumComparisonSupplier();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		supplier = new MassSpectrumComparisonSupplier();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		supplier = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetId_1() {
 
 		assertEquals("id", "", supplier.getId());
 	}
 
+	@Test
 	public void testGetDescription_1() {
 
 		assertEquals("description", "", supplier.getDescription());
 	}
 
+	@Test
 	public void testGetComparatorName_1() {
 
 		assertEquals("detectorName", "", supplier.getComparatorName());

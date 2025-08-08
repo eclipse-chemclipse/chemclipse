@@ -12,35 +12,19 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.alignment.model.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.chromatogram.alignment.model.exceptions.NoRetentionIndexAvailableException;
 import org.eclipse.chemclipse.chromatogram.alignment.model.exceptions.RetentionIndexExistsException;
 import org.eclipse.chemclipse.chromatogram.alignment.model.exceptions.RetentionIndexValueException;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class RetentionIndices_2_Test {
 
-/**
- * Testing RetentionIndex
- * 
- * @author eselmeister
- */
-public class RetentionIndices_2_Test extends TestCase {
+	private RetentionIndices retentionIndices = new RetentionIndices();
 
-	private RetentionIndices retentionIndices;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		retentionIndices = new RetentionIndices();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		retentionIndices = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testPreviousNextByTime_1() {
 
 		try {
@@ -58,6 +42,7 @@ public class RetentionIndices_2_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testPreviousNextByTime_2() {
 
 		try {
@@ -75,6 +60,7 @@ public class RetentionIndices_2_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testPreviousNextByIndex_1() {
 
 		try {
@@ -92,6 +78,7 @@ public class RetentionIndices_2_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testPreviousNextByIndex_2() {
 
 		try {

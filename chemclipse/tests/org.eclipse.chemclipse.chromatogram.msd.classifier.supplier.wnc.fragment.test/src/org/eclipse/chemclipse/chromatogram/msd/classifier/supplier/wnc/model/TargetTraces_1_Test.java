@@ -12,15 +12,19 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.classifier.supplier.wnc.model;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
-public class TargetTraces_1_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class TargetTraces_1_Test {
 
 	private TargetTrace targetTrace;
 	private TargetTraces targetTraces;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		targetTraces = new TargetTraces();
 		targetTrace = new TargetTrace(18, "Water");
@@ -29,21 +33,15 @@ public class TargetTraces_1_Test extends TestCase {
 		targetTraces.add(targetTrace);
 		targetTrace = new TargetTrace(44, "Carbon dioxide");
 		targetTraces.add(targetTrace);
-		super.setUp();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		targetTraces = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testWNCIons_1() {
 
 		assertEquals(3, targetTraces.getKeys().size());
 	}
 
+	@Test
 	public void testWNCIons_2() {
 
 		targetTrace = targetTraces.getTargetTrace(18);
@@ -51,6 +49,7 @@ public class TargetTraces_1_Test extends TestCase {
 		assertEquals("Water", targetTrace.getName());
 	}
 
+	@Test
 	public void testWNCIons_3() {
 
 		targetTrace = targetTraces.getTargetTrace(28);
@@ -58,6 +57,7 @@ public class TargetTraces_1_Test extends TestCase {
 		assertEquals("Nitrogen", targetTrace.getName());
 	}
 
+	@Test
 	public void testWNCIons_4() {
 
 		targetTrace = targetTraces.getTargetTrace(44);
@@ -65,12 +65,14 @@ public class TargetTraces_1_Test extends TestCase {
 		assertEquals("Carbon dioxide", targetTrace.getName());
 	}
 
+	@Test
 	public void testWNCIons_5() {
 
 		targetTrace = targetTraces.getTargetTrace(45);
 		assertNull(targetTrace);
 	}
 
+	@Test
 	public void testWNCIons_6() {
 
 		targetTraces.remove(18);
@@ -81,6 +83,7 @@ public class TargetTraces_1_Test extends TestCase {
 		assertEquals("Carbon dioxide", targetTrace.getName());
 	}
 
+	@Test
 	public void testWNCIons_7() {
 
 		targetTraces.remove(18);
@@ -92,6 +95,7 @@ public class TargetTraces_1_Test extends TestCase {
 		assertNull(targetTrace);
 	}
 
+	@Test
 	public void testWNCIons_8() {
 
 		targetTraces.remove(18);

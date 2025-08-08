@@ -12,32 +12,28 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class MassSpectrumComparisonSupplier_2_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class MassSpectrumComparisonSupplier_2_Test {
 
 	private MassSpectrumComparisonSupplier supplier;
 	private String id = "id";
 	private String description = "description";
 	private String comparatorName = "comparatorName";
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		supplier = new MassSpectrumComparisonSupplier();
 		supplier.setId(id);
 		supplier.setDescription(description);
 		supplier.setComparatorName(comparatorName);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		supplier = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetId_1() {
 
 		assertEquals("id", id, supplier.getId());
@@ -46,6 +42,7 @@ public class MassSpectrumComparisonSupplier_2_Test extends TestCase {
 		assertEquals("id", id, supplier.getId());
 	}
 
+	@Test
 	public void testGetDescription_1() {
 
 		assertEquals("description", description, supplier.getDescription());
@@ -54,6 +51,7 @@ public class MassSpectrumComparisonSupplier_2_Test extends TestCase {
 		assertEquals("description", description, supplier.getDescription());
 	}
 
+	@Test
 	public void testGetDetectorName_1() {
 
 		assertEquals("comparatorName", comparatorName, supplier.getComparatorName());

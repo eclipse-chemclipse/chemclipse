@@ -12,9 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.csd.filter.core.chromatogram;
 
-import junit.framework.TestCase;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
+import static org.junit.Assert.assertTrue;
 
 import org.eclipse.chemclipse.chromatogram.filter.settings.IChromatogramFilterSettings;
 import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
@@ -22,26 +20,17 @@ import org.eclipse.chemclipse.csd.model.core.selection.ChromatogramSelectionCSD;
 import org.eclipse.chemclipse.csd.model.core.selection.IChromatogramSelectionCSD;
 import org.eclipse.chemclipse.csd.model.implementation.ChromatogramCSD;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Test;
 
-public class AbstractChromatogramFilter_1_Test extends TestCase {
+public class ChromatogramFilter_1_Test {
 
 	private IChromatogramFilterCSD filter;
 	private IChromatogramSelectionCSD chromatogramSelection;
 	private IChromatogramCSD chromatogram;
 	private IChromatogramFilterSettings chromatogramFilterSettings;
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testConstructor_1() {
 
 		chromatogramSelection = null;
@@ -50,6 +39,7 @@ public class AbstractChromatogramFilter_1_Test extends TestCase {
 		filter.applyFilter(chromatogramSelection, chromatogramFilterSettings, new NullProgressMonitor());
 	}
 
+	@Test
 	public void testConstructor_2() {
 
 		chromatogram = new ChromatogramCSD();

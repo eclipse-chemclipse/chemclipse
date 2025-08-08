@@ -12,24 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.classifier.supplier.wnc.model;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class TargetTrace_1_Test extends TestCase {
+import org.junit.Test;
+
+public class TargetTrace_1_Test {
 
 	private TargetTrace targetTrace;
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testCreateWNCIon_1() {
 
 		String name = "Water";
@@ -39,6 +30,7 @@ public class TargetTrace_1_Test extends TestCase {
 		assertEquals(name, targetTrace.getName());
 	}
 
+	@Test
 	public void testCreateWNCIon_2() {
 
 		String name = "Nitrogen";
@@ -48,6 +40,7 @@ public class TargetTrace_1_Test extends TestCase {
 		assertEquals(name, targetTrace.getName());
 	}
 
+	@Test
 	public void testCreateWNCIon_3() {
 
 		String name = "Nitro;gen";
@@ -57,6 +50,7 @@ public class TargetTrace_1_Test extends TestCase {
 		assertEquals("Nitrogen", targetTrace.getName());
 	}
 
+	@Test
 	public void testCreateWNCIon_4() {
 
 		String name = "Nitro:gen";
@@ -66,6 +60,7 @@ public class TargetTrace_1_Test extends TestCase {
 		assertEquals("Nitrogen", targetTrace.getName());
 	}
 
+	@Test
 	public void testCreateWNCIon_5() {
 
 		String name = "    Ni;tro:gen";
@@ -75,6 +70,7 @@ public class TargetTrace_1_Test extends TestCase {
 		assertEquals("Nitrogen", targetTrace.getName());
 	}
 
+	@Test
 	public void testCreateWNCIon_6() {
 
 		String name = "    Ni;tro:  gen    ";

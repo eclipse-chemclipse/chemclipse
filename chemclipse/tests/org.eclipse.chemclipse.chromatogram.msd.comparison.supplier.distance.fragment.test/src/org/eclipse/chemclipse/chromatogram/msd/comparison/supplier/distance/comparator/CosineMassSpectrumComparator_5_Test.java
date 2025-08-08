@@ -13,10 +13,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.distance.comparator;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.MatchConstraints;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
+import org.junit.Before;
+import org.junit.Test;
 
 public class CosineMassSpectrumComparator_5_Test extends MassSpectrumSetTestCase {
 
@@ -25,36 +30,34 @@ public class CosineMassSpectrumComparator_5_Test extends MassSpectrumSetTestCase
 	private IComparisonResult result;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
-		//
+
 		IScanMSD unknown = noMatchA1.getMassSpectrum();
 		IScanMSD reference = noMatchA2.getMassSpectrum();
-		//
+
 		comparator = new CosineComparator();
 		processingInfo = comparator.compare(unknown, reference, new MatchConstraints());
 		result = processingInfo.getProcessingResult();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertFalse(processingInfo.hasErrorMessages());
 	}
 
+	@Test
 	public void test2() {
 
-		assertEquals(0.0f, result.getMatchFactor());
+		assertEquals(0.0f, result.getMatchFactor(), 0);
 	}
 
+	@Test
 	public void test3() {
 
-		assertEquals(0.0f, result.getReverseMatchFactor());
+		assertEquals(0.0f, result.getReverseMatchFactor(), 0);
 	}
 }

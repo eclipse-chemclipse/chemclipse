@@ -28,21 +28,20 @@ import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.xxd.converter.supplier.csv.preferences.PreferenceSupplier;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Ignore;
 
-import junit.framework.TestCase;
-
 @Ignore
-public class ChromatogramTestCase extends TestCase {
+public class ChromatogramTestCase {
 
 	protected IChromatogramMSD chromatogram;
 	protected IChromatogramSelectionMSD chromatogramSelection;
 	protected File chromatogramFile;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		PreferenceSupplier.setImportDelimiter(Delimiter.SEMICOLON);
 		ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_CHROMATOGRAM_1_ZIP))));
 		zipInputStream.getNextEntry();
@@ -71,16 +70,12 @@ public class ChromatogramTestCase extends TestCase {
 		chromatogramSelection = new ChromatogramSelectionMSD(chromatogram);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 
 		PreferenceSupplier.setImportDelimiter(Delimiter.COMMA);
 
-		chromatogram = null;
-		chromatogramSelection = null;
 		chromatogramFile.delete();
-
-		super.tearDown();
 	}
 
 	public IChromatogramSelectionMSD getChromatogramSelection() {

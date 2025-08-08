@@ -12,26 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.classifier.supplier.wnc.internal.core.support;
 
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.chromatogram.msd.classifier.supplier.wnc.exceptions.ClassifierException;
 import org.eclipse.chemclipse.chromatogram.msd.classifier.supplier.wnc.settings.ClassifierSettings;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 
 public class Calculator_1_ITest extends ChromatogramTestCase {
 
-	private Calculator calculator;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		calculator = new Calculator();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
+	private Calculator calculator = new Calculator();
 
 	public void testCalculator_1() {
 

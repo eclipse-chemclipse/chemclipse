@@ -13,10 +13,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.distance.comparator;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.MatchConstraints;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
+import org.junit.Before;
+import org.junit.Test;
 
 public class EuclideanMassSpectrumComparator_3_Test extends MassSpectrumSetTestCase {
 
@@ -25,36 +30,34 @@ public class EuclideanMassSpectrumComparator_3_Test extends MassSpectrumSetTestC
 	private IComparisonResult result;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
-		//
+
 		IScanMSD unknown = sinapylAclohol.getMassSpectrum();
 		IScanMSD reference = syringylAcetone.getMassSpectrum();
-		//
+
 		comparator = new EuclideanComparator();
 		processingInfo = comparator.compare(unknown, reference, new MatchConstraints());
 		result = processingInfo.getProcessingResult();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertFalse(processingInfo.hasErrorMessages());
 	}
 
+	@Test
 	public void test2() {
 
-		assertEquals(60.704758f, result.getMatchFactor());
+		assertEquals(60.704758f, result.getMatchFactor(), 0);
 	}
 
+	@Test
 	public void test3() {
 
-		assertEquals(60.706413f, result.getReverseMatchFactor());
+		assertEquals(60.706413f, result.getReverseMatchFactor(), 0);
 	}
 }

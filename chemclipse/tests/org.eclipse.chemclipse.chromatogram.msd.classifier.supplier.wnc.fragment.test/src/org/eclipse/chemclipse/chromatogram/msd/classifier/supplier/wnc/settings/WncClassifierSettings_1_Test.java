@@ -12,26 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.classifier.supplier.wnc.settings;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertNotNull;
 
-public class WncClassifierSettings_1_Test extends TestCase {
+import org.junit.Test;
 
-	private ClassifierSettings classifierSettings;
+public class WncClassifierSettings_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private ClassifierSettings classifierSettings = new ClassifierSettings();
 
-		classifierSettings = new ClassifierSettings();
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		classifierSettings = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetWncIons_1() {
 
 		assertNotNull(classifierSettings.getTargetTraces());

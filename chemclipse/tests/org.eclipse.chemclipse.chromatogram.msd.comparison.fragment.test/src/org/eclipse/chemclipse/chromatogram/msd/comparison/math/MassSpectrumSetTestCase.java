@@ -26,9 +26,8 @@ import org.eclipse.chemclipse.chromatogram.msd.comparison.spectra.ProblemC2;
 import org.eclipse.chemclipse.chromatogram.msd.comparison.spectra.SinapylAlcohol;
 import org.eclipse.chemclipse.chromatogram.msd.comparison.spectra.SinapylAlcoholCis;
 import org.eclipse.chemclipse.chromatogram.msd.comparison.spectra.Syringylacetone;
+import org.junit.Before;
 import org.junit.Ignore;
-
-import junit.framework.TestCase;
 
 /**
  * Comparison NIST-DB 12 (MF, RMF):
@@ -39,14 +38,14 @@ import junit.framework.TestCase;
  * 
  */
 @Ignore
-public class MassSpectrumSetTestCase extends TestCase {
+public class MassSpectrumSetTestCase {
 
 	protected ITestMassSpectrum sinapylAclohol;
 	protected ITestMassSpectrum sinapylAcloholCis;
 	protected ITestMassSpectrum benzenepropanoicAcid;
 	protected ITestMassSpectrum syringylAcetone;
 	protected ITestMassSpectrum phenolBenzimidazolyl;
-	//
+
 	protected ITestMassSpectrum noMatchA1;
 	protected ITestMassSpectrum noMatchA2;
 	protected ITestMassSpectrum problemA1;
@@ -56,17 +55,15 @@ public class MassSpectrumSetTestCase extends TestCase {
 	protected ITestMassSpectrum problemC1;
 	protected ITestMassSpectrum problemC2;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
-		//
 		sinapylAclohol = new SinapylAlcohol();
 		sinapylAcloholCis = new SinapylAlcoholCis();
 		benzenepropanoicAcid = new BenzenepropanoicAcid();
 		syringylAcetone = new Syringylacetone();
 		phenolBenzimidazolyl = new PhenolBenzimidazolyl();
-		//
+
 		noMatchA1 = new NoMatchA1();
 		noMatchA2 = new NoMatchA2();
 		problemA1 = new ProblemA1();
@@ -75,11 +72,5 @@ public class MassSpectrumSetTestCase extends TestCase {
 		problemB2 = new ProblemB2();
 		problemC1 = new ProblemC1();
 		problemC2 = new ProblemC2();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
 	}
 }

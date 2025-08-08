@@ -12,35 +12,19 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.alignment.model.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.chromatogram.alignment.model.exceptions.NoRetentionIndexAvailableException;
 import org.eclipse.chemclipse.chromatogram.alignment.model.exceptions.RetentionIndexExistsException;
 import org.eclipse.chemclipse.chromatogram.alignment.model.exceptions.RetentionIndexValueException;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class RetentionIndices_1_Test {
 
-/**
- * Testing RetentionIndex
- * 
- * @author eselmeister
- */
-public class RetentionIndices_1_Test extends TestCase {
+	private RetentionIndices retentionIndices = new RetentionIndices();
 
-	private RetentionIndices retentionIndices;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		retentionIndices = new RetentionIndices();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		retentionIndices = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testList_1() {
 
 		try {
@@ -50,6 +34,7 @@ public class RetentionIndices_1_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testList_2() {
 
 		try {
@@ -70,6 +55,7 @@ public class RetentionIndices_1_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testList_3() {
 
 		try {
@@ -89,6 +75,7 @@ public class RetentionIndices_1_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testList_4() {
 
 		try {
@@ -105,6 +92,7 @@ public class RetentionIndices_1_Test extends TestCase {
 		}
 	}
 
+	@Test
 	public void testList_5() {
 
 		try {

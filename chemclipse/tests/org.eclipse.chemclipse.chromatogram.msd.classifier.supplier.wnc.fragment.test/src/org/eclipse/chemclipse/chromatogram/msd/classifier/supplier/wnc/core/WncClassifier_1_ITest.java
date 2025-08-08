@@ -13,18 +13,21 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.classifier.supplier.wnc.core;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.eclipse.chemclipse.chromatogram.msd.classifier.supplier.wnc.internal.core.support.ChromatogramTestCase;
 import org.eclipse.chemclipse.chromatogram.xxd.classifier.result.IChromatogramClassifierResult;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Test;
 
 public class WncClassifier_1_ITest extends ChromatogramTestCase {
 
 	private IChromatogramClassifierResult result;
 
 	@Override
-	protected void setUp() throws Exception {
+	public void setUp() throws Exception {
 
 		super.setUp();
 		Classifier wncClassifier = new Classifier();
@@ -33,12 +36,7 @@ public class WncClassifier_1_ITest extends ChromatogramTestCase {
 		result = processingInfo.getProcessingResult();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetClassifierResult_1() {
 
 		assertNotNull(result);

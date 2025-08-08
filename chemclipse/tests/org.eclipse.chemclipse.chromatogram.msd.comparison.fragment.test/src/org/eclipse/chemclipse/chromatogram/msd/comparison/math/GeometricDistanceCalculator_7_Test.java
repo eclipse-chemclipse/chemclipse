@@ -12,43 +12,44 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.comparison.math;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
+import org.junit.Before;
+import org.junit.Test;
 
 public class GeometricDistanceCalculator_7_Test extends MassSpectrumSetTestCase {
 
-	private GeometricDistanceCalculator calculator;
+	private GeometricDistanceCalculator calculator = new GeometricDistanceCalculator();
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
-		calculator = new GeometricDistanceCalculator();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		IScanMSD unknown = problemB1.getMassSpectrum();
 		IScanMSD reference = problemB2.getMassSpectrum();
-		assertEquals(0.9513092f, calculator.calculate(unknown, reference, unknown.getExtractedIonSignal().getIonRange()));
+		assertEquals(0.9513092f, calculator.calculate(unknown, reference, unknown.getExtractedIonSignal().getIonRange()), 0);
 	}
 
+	@Test
 	public void test2() {
 
 		IScanMSD unknown = problemB2.getMassSpectrum();
 		IScanMSD reference = problemB1.getMassSpectrum();
-		assertEquals(0.94751626f, calculator.calculate(unknown, reference, unknown.getExtractedIonSignal().getIonRange()));
+		assertEquals(0.94751626f, calculator.calculate(unknown, reference, unknown.getExtractedIonSignal().getIonRange()), 0);
 	}
 
+	@Test
 	public void test3() {
 
 		IScanMSD unknown = problemB2.getMassSpectrum();
 		IScanMSD reference = problemB2.getMassSpectrum();
-		assertEquals(1.0f, calculator.calculate(unknown, reference, unknown.getExtractedIonSignal().getIonRange()));
+		assertEquals(1.0f, calculator.calculate(unknown, reference, unknown.getExtractedIonSignal().getIonRange()), 0);
 	}
 }

@@ -12,12 +12,16 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.assets.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class AssetItem_1_Test extends TestCase {
+public class AssetItem_1_Test {
 
+	@Test
 	public void test1() {
 
 		AssetItem assetItem = new AssetItem(new File(""), AssetType.CONFIGURATION);

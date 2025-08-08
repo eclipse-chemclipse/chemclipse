@@ -12,62 +12,67 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-public class MassSpectrumComparator_4_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class MassSpectrumComparator_4_Test {
 
 	private IMassSpectrumComparator comparator;
 	private IMassSpectrumComparisonSupplier supplier;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		comparator = MassSpectrumComparator.getMassSpectrumComparator("org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.distance.cosine");
 		supplier = comparator.getMassSpectrumComparisonSupplier();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
 		assertNotNull(comparator);
 	}
 
+	@Test
 	public void test_2() {
 
 		assertNotNull(supplier);
 	}
 
+	@Test
 	public void test_3() {
 
 		assertEquals("org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.distance.cosine", supplier.getId());
 	}
 
+	@Test
 	public void test_4() {
 
 		assertEquals("Cosine", supplier.getComparatorName());
 	}
 
+	@Test
 	public void test_5() {
 
 		assertEquals("The comparator uses the cosine match.", supplier.getDescription());
 	}
 
+	@Test
 	public void test_6() {
 
 		assertEquals(true, supplier.supportsNominalMS());
 	}
 
+	@Test
 	public void test_7() {
 
 		assertEquals(false, supplier.supportsTandemMS());
 	}
 
+	@Test
 	public void test_8() {
 
 		assertEquals(false, supplier.supportsHighResolutionMS());

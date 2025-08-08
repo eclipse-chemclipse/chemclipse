@@ -12,25 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.alignment.converter.retentionindices;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class RetentionIndicesSupplier_1_Test extends TestCase {
+import org.junit.Test;
 
-	private IRetentionIndicesSupplier supplier;
+public class RetentionIndicesSupplier_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private IRetentionIndicesSupplier supplier = new RetentionIndicesSupplier();
 
-		super.setUp();
-		supplier = new RetentionIndicesSupplier();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testSupplier_1() {
 
 		assertEquals("Description", "", supplier.getDescription());

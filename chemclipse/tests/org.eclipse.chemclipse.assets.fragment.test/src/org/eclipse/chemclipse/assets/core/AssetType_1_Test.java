@@ -12,10 +12,14 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.assets.core;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-public class AssetType_1_Test extends TestCase {
+import org.junit.Test;
 
+public class AssetType_1_Test {
+
+	@Test
 	public void test1() {
 
 		AssetType assetType = AssetType.CONFIGURATION;
@@ -25,6 +29,7 @@ public class AssetType_1_Test extends TestCase {
 		assertEquals("Service Configuration File", assetType.description());
 	}
 
+	@Test
 	public void test2() {
 
 		AssetType assetType = AssetType.METHOD;
@@ -34,6 +39,7 @@ public class AssetType_1_Test extends TestCase {
 		assertEquals("Process Method File", assetType.description());
 	}
 
+	@Test
 	public void test3() {
 
 		AssetType assetType = AssetType.PLUGIN;
