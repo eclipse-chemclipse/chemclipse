@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.mzdata.converter;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.TestPathHelper;
@@ -21,18 +23,16 @@ import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
 import org.eclipse.chemclipse.msd.model.implementation.StandaloneMassSpectrum;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ChromatogramImportConverterMaldiAxima_ITest extends TestCase {
+public class ChromatogramImportConverterMaldiAxima_ITest {
 
 	private IStandaloneMassSpectrum standaloneMassSpectrum;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		File importFile = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_MALDI_AXIMA_CFR));
 		MassSpectrumImportConverter converter = new MassSpectrumImportConverter();
 		IProcessingInfo<IMassSpectra> processingInfo = converter.convert(importFile, new NullProgressMonitor());

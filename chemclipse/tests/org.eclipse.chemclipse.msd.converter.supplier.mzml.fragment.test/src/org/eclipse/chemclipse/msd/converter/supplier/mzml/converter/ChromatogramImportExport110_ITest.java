@@ -13,6 +13,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.mzml.converter;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.msd.converter.chromatogram.ChromatogramConverterMSD;
@@ -21,10 +24,11 @@ import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.versions.VersionConstants;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ChromatogramImportExport110_ITest extends TestCase {
+public class ChromatogramImportExport110_ITest {
 
 	protected IChromatogramMSD chromatogramImport;
 	protected IChromatogramMSD chromatogram;
@@ -35,8 +39,8 @@ public class ChromatogramImportExport110_ITest extends TestCase {
 	protected String extensionPointImport;
 	protected String extensionPointExportReimport;
 
-	@Override
-	protected void setUp() {
+	@Before
+	public void setUp() {
 
 		/*
 		 * Import
@@ -70,24 +74,19 @@ public class ChromatogramImportExport110_ITest extends TestCase {
 		chromatogram = processingInfo.getProcessingResult();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 
-		pathImport = null;
-		pathExport = null;
-		fileImport = null;
 		fileExport.delete();
-		fileExport = null;
-		chromatogramImport = null;
-		chromatogram = null;
-		super.tearDown();
 	}
 
+	@Test
 	public void testReimport_1() {
 
 		assertNotNull(chromatogram);
 	}
 
+	@Test
 	public void testReimport_2() {
 
 		assertEquals(5726, chromatogram.getNumberOfScans());

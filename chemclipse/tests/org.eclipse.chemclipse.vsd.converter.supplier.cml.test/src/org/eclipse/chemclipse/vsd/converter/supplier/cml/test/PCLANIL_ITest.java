@@ -13,6 +13,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.vsd.converter.supplier.cml.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
@@ -21,29 +24,20 @@ import org.eclipse.chemclipse.vsd.converter.supplier.cml.converter.ScanImportCon
 import org.eclipse.chemclipse.vsd.converter.supplier.cml.model.IVendorSpectrumVSD;
 import org.eclipse.chemclipse.vsd.model.core.ISpectrumVSD;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class PCLANIL_ITest extends TestCase {
+public class PCLANIL_ITest {
 
 	private ISpectrumVSD spectrumVSD;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		File file = new File(PathResolver.getAbsolutePath(TestPathHelper.PCLANIL));
 		ScanImportConverter importConverter = new ScanImportConverter();
 		IProcessingInfo<ISpectrumVSD> processingInfo = importConverter.convert(file, new NullProgressMonitor());
 		spectrumVSD = processingInfo.getProcessingResult();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		spectrumVSD = null;
-		super.tearDown();
 	}
 
 	@Test

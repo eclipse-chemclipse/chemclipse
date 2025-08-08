@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.cml.converter;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
@@ -22,29 +25,20 @@ import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class MassSpectrumImportConverterSP03_ITest extends TestCase {
+public class MassSpectrumImportConverterSP03_ITest {
 
 	private IScanMSD massSpectrum;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		File file = new File(PathResolver.getAbsolutePath(TestPathHelper.TESTFILE_SP03));
 		DatabaseImportConverter importConverter = new DatabaseImportConverter();
 		IProcessingInfo<IMassSpectra> processingInfo = importConverter.convert(file, new NullProgressMonitor());
 		massSpectrum = processingInfo.getProcessingResult().getMassSpectrum(1);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectrum = null;
-		super.tearDown();
 	}
 
 	@Test
@@ -68,6 +62,6 @@ public class MassSpectrumImportConverterSP03_ITest extends TestCase {
 	public void testSignals() {
 
 		assertEquals(32, massSpectrum.getNumberOfIons());
-		assertEquals(73d, massSpectrum.getHighestIon().getIon());
+		assertEquals(73d, massSpectrum.getHighestIon().getIon(), 0);
 	}
 }

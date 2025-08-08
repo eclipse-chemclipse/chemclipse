@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.mmass.converter;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 import java.util.List;
 
@@ -24,18 +26,16 @@ import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ProteinIdentification_ITest extends TestCase {
+public class ProteinIdentification_ITest {
 
 	private IStandaloneMassSpectrum massSpectrum;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		File importFile = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_PROTEIN_IDENTIFICATION));
 		MassSpectrumImportConverter converter = new MassSpectrumImportConverter();
 		IProcessingInfo<IMassSpectra> processingInfo = converter.convert(importFile, new NullProgressMonitor());
@@ -55,8 +55,8 @@ public class ProteinIdentification_ITest extends TestCase {
 
 		assertEquals(MassSpectrumType.PROFILE, massSpectrum.getMassSpectrumType());
 		assertEquals(71561, massSpectrum.getNumberOfIons());
-		assertEquals(993.4036865234375d, massSpectrum.getBasePeak());
-		assertEquals(3634.0f, massSpectrum.getBasePeakAbundance());
+		assertEquals(993.4036865234375d, massSpectrum.getBasePeak(), 0);
+		assertEquals(3634.0f, massSpectrum.getBasePeakAbundance(), 0);
 	}
 
 	@Test
@@ -65,9 +65,9 @@ public class ProteinIdentification_ITest extends TestCase {
 		List<IMassSpectrumPeak> peaks = massSpectrum.getPeaks();
 		assertEquals(38, peaks.size());
 		IMassSpectrumPeak firstPeak = peaks.get(0);
-		assertEquals(568.274371d, firstPeak.getIon());
-		assertEquals(261.089388d, firstPeak.getAbundance());
-		assertEquals(11.571d, firstPeak.getSignalToNoise());
+		assertEquals(568.274371d, firstPeak.getIon(), 0);
+		assertEquals(261.089388d, firstPeak.getAbundance(), 0);
+		assertEquals(11.571d, firstPeak.getSignalToNoise(), 0);
 	}
 
 	@Test
@@ -79,6 +79,6 @@ public class ProteinIdentification_ITest extends TestCase {
 		assertEquals("mMass annotation", firstEntry.getIdentifier());
 		ILibraryInformation info = firstEntry.getLibraryInformation();
 		assertEquals("My BasePeak", info.getName());
-		assertEquals(993.010000d, info.getMolWeight());
+		assertEquals(993.010000d, info.getMolWeight(), 0);
 	}
 }

@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.mzdata.converter;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.TestPathHelper;
@@ -23,18 +25,16 @@ import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.Polarity;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ChromatogramImportConverterMyoDta104_ITest extends TestCase {
+public class ChromatogramImportConverterMyoDta104_ITest {
 
 	private IVendorChromatogram chromatogram;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		File importFile = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_MYO_DTA_104));
 		ChromatogramImportConverter converter = new ChromatogramImportConverter();
 		IProcessingInfo<IChromatogramMSD> processingInfo = converter.convert(importFile, new NullProgressMonitor());
@@ -77,13 +77,13 @@ public class ChromatogramImportConverterMyoDta104_ITest extends TestCase {
 	@Test
 	public void testTotalSignal() {
 
-		assertEquals("Total Signal", 4.4378344E7f, chromatogram.getTotalSignal());
+		assertEquals("Total Signal", 4.4378344E7f, chromatogram.getTotalSignal(), 0);
 	}
 
 	@Test
 	public void testMaxIonAbundance() {
 
-		assertEquals("Max Signal", 2383616.0f, chromatogram.getMaxIonAbundance());
+		assertEquals("Max Signal", 2383616.0f, chromatogram.getMaxIonAbundance(), 0);
 	}
 
 	@Test
@@ -92,7 +92,7 @@ public class ChromatogramImportConverterMyoDta104_ITest extends TestCase {
 		IVendorScan massSpectrum = (VendorScan)chromatogram.getScan(1);
 		assertEquals("Ions", 331, massSpectrum.getNumberOfIons());
 		assertEquals(Polarity.POSITIVE, massSpectrum.getPolarity());
-		assertEquals(661.65d, massSpectrum.getPrecursorIon());
-		assertEquals(28d, massSpectrum.getIons().get(0).getIonTransition().getCollisionEnergy());
+		assertEquals(661.65d, massSpectrum.getPrecursorIon(), 0);
+		assertEquals(28d, massSpectrum.getIons().get(0).getIonTransition().getCollisionEnergy(), 0);
 	}
 }

@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.mzxml.converter;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.TestPathHelper;
@@ -22,18 +24,16 @@ import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.Polarity;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ChromatogramImportConverterTinyMzXML20_ITest extends TestCase {
+public class ChromatogramImportConverterTinyMzXML20_ITest {
 
 	private IVendorChromatogram chromatogram;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		File importFile = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_TINY1_MZXML20));
 		ChromatogramImportConverter converter = new ChromatogramImportConverter();
 		IProcessingInfo<IChromatogramMSD> processingInfo = converter.convert(importFile, new NullProgressMonitor());
@@ -66,13 +66,13 @@ public class ChromatogramImportConverterTinyMzXML20_ITest extends TestCase {
 	@Test
 	public void testTotalSignal() {
 
-		assertEquals("Total Signal", 1.66755259E7f, chromatogram.getTotalSignal());
+		assertEquals("Total Signal", 1.66755259E7f, chromatogram.getTotalSignal(), 0);
 	}
 
 	@Test
 	public void testMaxIonAbundance() {
 
-		assertEquals("Max Signal", 120053.0f, chromatogram.getMaxIonAbundance());
+		assertEquals("Max Signal", 120053.0f, chromatogram.getMaxIonAbundance(), 0);
 	}
 
 	@Test

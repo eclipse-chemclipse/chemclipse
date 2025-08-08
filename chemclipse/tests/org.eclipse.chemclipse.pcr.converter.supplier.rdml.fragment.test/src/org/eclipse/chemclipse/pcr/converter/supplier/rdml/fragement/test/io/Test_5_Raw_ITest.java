@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.pcr.converter.supplier.rdml.fragement.test.io;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -27,28 +29,22 @@ import org.eclipse.chemclipse.pcr.model.core.IPlate;
 import org.eclipse.chemclipse.pcr.model.core.IWell;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class Test_5_Raw_ITest extends TestCase {
+public class Test_5_Raw_ITest {
 
 	private IPlate plate;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		File importFile = new File(PathResolver.getAbsolutePath(TestPathHelper.TESTFILE_RAW_5));
 		IProcessingInfo<IPlate> importProcessingInfo = PCRImportConverter.getInstance().convert(importFile, new NullProgressMonitor());
 		plate = importProcessingInfo.getProcessingResult();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testDate() {
 
 		LocalDateTime localDateTime = LocalDateTime.of(2019, Month.DECEMBER, 1, 5, 32, 51);
@@ -57,6 +53,7 @@ public class Test_5_Raw_ITest extends TestCase {
 		assertEquals(date, plate.getDate());
 	}
 
+	@Test
 	public void testWells() {
 
 		assertEquals(28, plate.getWells().size());
@@ -65,6 +62,6 @@ public class Test_5_Raw_ITest extends TestCase {
 		IChannel channel = well.getChannels().get(0);
 		assertEquals(1, channel.getId());
 		assertEquals("dye1", channel.getDetectionName());
-		assertEquals(0.10410682111978531, channel.getFluorescence().get(0));
+		assertEquals(0.10410682111978531, channel.getFluorescence().get(0), 0);
 	}
 }

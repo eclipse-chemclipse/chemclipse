@@ -19,6 +19,7 @@ import org.eclipse.chemclipse.model.core.IComplexSignalMeasurement;
 import org.eclipse.chemclipse.nmr.converter.supplier.nmrml.converter.ScanImportConverter;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
 import org.junit.Test;
 
 import junit.framework.TestCase;
@@ -28,20 +29,13 @@ public class MMBBI_10M12_CE01_1a_ITest extends TestCase {
 	private Collection<IComplexSignalMeasurement<?>> spectrumNMR;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		File file = new File(PathResolver.getAbsolutePath(TestPathHelper.MMBBI_10M12_CE01_1a));
 		ScanImportConverter importConverter = new ScanImportConverter();
 		IProcessingInfo<Collection<IComplexSignalMeasurement<?>>> processingInfo = importConverter.convert(file, new NullProgressMonitor());
 		spectrumNMR = processingInfo.getProcessingResult();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		spectrumNMR = null;
-		super.tearDown();
 	}
 
 	@Test
