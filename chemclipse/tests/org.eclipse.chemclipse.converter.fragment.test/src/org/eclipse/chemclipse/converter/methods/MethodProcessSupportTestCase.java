@@ -22,10 +22,8 @@ import org.eclipse.chemclipse.processing.methods.ProcessEntry;
 import org.eclipse.chemclipse.processing.methods.ProcessMethod;
 import org.junit.Ignore;
 
-import junit.framework.TestCase;
-
 @Ignore
-public class MethodProcessSupportTestCase extends TestCase {
+public class MethodProcessSupportTestCase {
 
 	protected IProcessMethod getProcessMethod(DataCategory[] methodCategories, List<DataCategory[]> processCategories) {
 
@@ -33,7 +31,7 @@ public class MethodProcessSupportTestCase extends TestCase {
 		for(DataCategory[] categories : processCategories) {
 			processMethod.addProcessEntry(getProcessEntry(processMethod, categories));
 		}
-		//
+
 		return processMethod;
 	}
 
@@ -48,7 +46,7 @@ public class MethodProcessSupportTestCase extends TestCase {
 		for(DataCategory dataCategory : dataCategories) {
 			processEntry.addDataCategory(dataCategory);
 		}
-		//
+
 		return processEntry;
 	}
 }

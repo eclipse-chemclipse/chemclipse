@@ -12,28 +12,17 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.converter.io.support;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class ArrayWriter_1_ITest extends TestCase {
+import org.junit.Test;
 
-	private IArrayWriter arrayWriter;
+public class ArrayWriter_1_ITest {
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testRead1BUShortBE_1() {
 
 		byte[] data = new byte[8];
-		arrayWriter = new ArrayWriterTestImplementation(data);
+		IArrayWriter arrayWriter = new ArrayWriterTestImplementation(data);
 		long value = Double.doubleToRawLongBits(0.0168d);
 		arrayWriter.write8BytesUnsignedLittleEndian(value);
 		assertEquals(21, data[0]); // 0x15

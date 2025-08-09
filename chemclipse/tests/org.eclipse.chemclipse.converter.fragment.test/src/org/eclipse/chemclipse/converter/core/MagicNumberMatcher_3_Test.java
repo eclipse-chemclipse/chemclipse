@@ -12,11 +12,14 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.converter.core;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class MagicNumberMatcher_3_Test extends TestCase {
+public class MagicNumberMatcher_3_Test {
 
 	private class MagicNumberMatcher extends AbstractMagicNumberMatcher implements IMagicNumberMatcher {
 
@@ -27,39 +30,30 @@ public class MagicNumberMatcher_3_Test extends TestCase {
 		}
 	}
 
-	private IMagicNumberMatcher magicNumberMatcher;
+	private IMagicNumberMatcher magicNumberMatcher = new MagicNumberMatcher();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		magicNumberMatcher = new MagicNumberMatcher();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		File file = new File("HelloWorld.txt");
 		assertTrue(magicNumberMatcher.checkFileFormat(file));
 	}
 
+	@Test
 	public void test2() {
 
 		File file = new File("HelloWorld.TXT");
 		assertFalse(magicNumberMatcher.checkFileFormat(file));
 	}
 
+	@Test
 	public void test3() {
 
 		File file = new File("HelloWorld.png");
 		assertFalse(magicNumberMatcher.checkFileFormat(file));
 	}
 
+	@Test
 	public void test4() {
 
 		File file = new File("HelloWorld.PNG");

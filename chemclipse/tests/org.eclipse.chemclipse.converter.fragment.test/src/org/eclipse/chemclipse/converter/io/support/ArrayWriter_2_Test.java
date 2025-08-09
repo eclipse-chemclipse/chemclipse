@@ -12,37 +12,29 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.converter.io.support;
 
+import org.junit.Test;
+
 import junit.framework.TestCase;
 
 public class ArrayWriter_2_Test extends TestCase {
 
-	private ArrayWriterTestImplementation arrayWriter;
+	private ArrayWriterTestImplementation arrayWriter = new ArrayWriterTestImplementation(new byte[1000]);
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		arrayWriter = new ArrayWriterTestImplementation(new byte[1000]);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		byte[] bytes = arrayWriter.getBytesStringNullTerminated(11, "Hello World");
 		assertEquals(22, bytes.length);
 	}
 
+	@Test
 	public void test2() {
 
 		byte[] bytes = arrayWriter.getBytesStringNullTerminated(5, "Hello World");
 		assertEquals(10, bytes.length);
 	}
 
+	@Test
 	public void test3() {
 
 		byte[] bytes = arrayWriter.getBytesStringNullTerminated(5, "Hello World");

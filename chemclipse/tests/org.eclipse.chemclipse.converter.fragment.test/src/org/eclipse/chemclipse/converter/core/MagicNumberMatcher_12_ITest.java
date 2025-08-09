@@ -12,12 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.converter.core;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class MagicNumberMatcher_12_ITest extends TestCase {
+public class MagicNumberMatcher_12_ITest {
 
 	private class MagicNumberMatcher extends AbstractMagicNumberMatcher implements IMagicNumberMatcher {
 
@@ -28,21 +31,9 @@ public class MagicNumberMatcher_12_ITest extends TestCase {
 		}
 	}
 
-	private IMagicNumberMatcher magicNumberMatcher;
+	private IMagicNumberMatcher magicNumberMatcher = new MagicNumberMatcher();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		magicNumberMatcher = new MagicNumberMatcher();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() throws IOException {
 
 		File file = new File("test.R01");
@@ -51,6 +42,7 @@ public class MagicNumberMatcher_12_ITest extends TestCase {
 		file.delete();
 	}
 
+	@Test
 	public void test2() throws IOException {
 
 		File file = new File("test.R02");
@@ -59,6 +51,7 @@ public class MagicNumberMatcher_12_ITest extends TestCase {
 		file.delete();
 	}
 
+	@Test
 	public void test3() throws IOException {
 
 		File file = new File("test.r01");
@@ -67,6 +60,7 @@ public class MagicNumberMatcher_12_ITest extends TestCase {
 		file.delete();
 	}
 
+	@Test
 	public void test4() throws IOException {
 
 		File file = new File("test.r02");
@@ -75,6 +69,7 @@ public class MagicNumberMatcher_12_ITest extends TestCase {
 		file.delete();
 	}
 
+	@Test
 	public void test5() throws IOException {
 
 		File file = new File("test.R0");
@@ -83,6 +78,7 @@ public class MagicNumberMatcher_12_ITest extends TestCase {
 		file.delete();
 	}
 
+	@Test
 	public void test6() throws IOException {
 
 		File file = new File("test.r0");

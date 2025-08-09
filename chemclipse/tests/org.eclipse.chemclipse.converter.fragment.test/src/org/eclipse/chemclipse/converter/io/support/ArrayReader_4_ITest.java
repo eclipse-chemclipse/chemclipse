@@ -12,21 +12,23 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.converter.io.support;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.converter.TestPathHelper;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ArrayReader_4_ITest extends TestCase {
+public class ArrayReader_4_ITest {
 
 	/*
 	 * Little Endian
 	 */
 	private IArrayReader arrayReader;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		/*
 		 * IMPORT_BIN_TEST:
@@ -35,15 +37,9 @@ public class ArrayReader_4_ITest extends TestCase {
 		 */
 		File file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_BIN_TEST));
 		arrayReader = new ArrayReaderTestImplementation(file);
-		super.setUp();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetLength_1() {
 
 		assertEquals(9, arrayReader.getLength());

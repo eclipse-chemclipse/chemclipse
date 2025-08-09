@@ -12,13 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.converter.io.support;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.converter.TestPathHelper;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ArrayReader_5_ITest extends TestCase {
+public class ArrayReader_5_ITest {
 
 	/*
 	 * Little Endian
@@ -27,8 +29,8 @@ public class ArrayReader_5_ITest extends TestCase {
 	private byte[] prefix = new byte[]{31, -117, 8, 0, 0, 0, 0, 0, 4, 0};
 	private byte[] tmp;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		/*
 		 * IMPORT_BIN_TEST:
@@ -36,47 +38,47 @@ public class ArrayReader_5_ITest extends TestCase {
 		 * 11110000 10100111 11000001 00001011 00000100 10011111 00000001 00111011
 		 */
 		File file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_BIN_TEST));
-		super.setUp();
 		arrayReader = new ArrayReaderTestImplementation(file);
 		tmp = arrayReader.readBytes(prefix, 4);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
 		assertEquals(14, tmp.length);
 	}
 
+	@Test
 	public void test_2() {
 
 		assertEquals(31, tmp[0]);
 	}
 
+	@Test
 	public void test_3() {
 
 		assertEquals(-117, tmp[1]);
 	}
 
+	@Test
 	public void test_4() {
 
 		assertEquals(4, tmp[8]);
 	}
 
+	@Test
 	public void test_5() {
 
 		assertEquals(0, tmp[9]);
 	}
 
+	@Test
 	public void test_6() {
 
 		assertEquals(-16, tmp[10]);
 	}
 
+	@Test
 	public void test_7() {
 
 		assertEquals(11, tmp[13]);

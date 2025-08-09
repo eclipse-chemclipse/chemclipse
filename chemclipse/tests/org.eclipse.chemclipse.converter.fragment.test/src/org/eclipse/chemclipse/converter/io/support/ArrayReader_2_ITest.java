@@ -12,21 +12,23 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.converter.io.support;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.converter.TestPathHelper;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ArrayReader_2_ITest extends TestCase {
+public class ArrayReader_2_ITest {
 
 	/*
 	 * Little Endian
 	 */
 	private IArrayReader arrayReader;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		/*
 		 * IMPORT_BIN_TEST:
@@ -35,92 +37,101 @@ public class ArrayReader_2_ITest extends TestCase {
 		 */
 		File file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_BIN_TEST));
 		arrayReader = new ArrayReaderTestImplementation(file);
-		super.setUp();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testRead1BUShortLE_1() {
 
 		assertEquals(240, arrayReader.read1BUShortLE());
 	}
 
+	@Test
 	public void testRead1BShortLE_1() {
 
 		assertEquals(-16, arrayReader.read1BShortLE());
 	}
 
+	@Test
 	public void testRead2BShortLE_1() {
 
 		assertEquals(-22544, arrayReader.read2BShortLE());
 	}
 
+	@Test
 	public void testRead2BUIntegerLE_1() {
 
 		assertEquals(42992, arrayReader.read2BUIntegerLE());
 	}
 
+	@Test
 	public void testRead2BIntegerLE_1() {
 
 		assertEquals(-22544, arrayReader.read2BIntegerLE());
 	}
 
+	@Test
 	public void testRead4BIntegerLE_1() {
 
 		assertEquals(197240816, arrayReader.read4BIntegerLE());
 	}
 
+	@Test
 	public void testRead4BULongLE_1() {
 
 		assertEquals(197240816, arrayReader.read4BULongLE());
 	}
 
+	@Test
 	public void testRead4BLongLE_1() {
 
 		assertEquals(197240816, arrayReader.read4BLongLE());
 	}
 
+	@Test
 	public void testRead8BULongLE_1() {
 
 		assertEquals(4251854362940385264L, arrayReader.read8BULongLE());
 	}
 
+	@Test
 	public void testRead8BLongLE_1() {
 
 		assertEquals(4251854362940385264L, arrayReader.read8BLongLE());
 	}
 
 	// ---------------------------------------------------------------
+	@Test
 	public void testRead8BUDoubleLE_1() {
 
-		assertEquals(1.8219847735894905E-24, arrayReader.read8BUDoubleLE());
+		assertEquals(1.8219847735894905E-24, arrayReader.read8BUDoubleLE(), 0);
 	}
 
+	@Test
 	public void testRead8BDoubleLE_1() {
 
-		assertEquals(1.8219847735894905E-24, arrayReader.read8BDoubleLE());
+		assertEquals(1.8219847735894905E-24, arrayReader.read8BDoubleLE(), 0);
 	}
 
 	// ---------------------------------------------------------------
+	@Test
 	public void testReadULongLE_1() {
 
 		assertEquals(240, arrayReader.readULongLE(1));
 	}
 
+	@Test
 	public void testReadLongLE_1() {
 
 		assertEquals(240, arrayReader.readLongLE(1));
 	}
 
+	@Test
 	public void testReadULongLE_2() {
 
 		assertEquals(42992, arrayReader.readULongLE(2));
 	}
 
+	@Test
 	public void testReadLongLE_2() {
 
 		assertEquals(42992, arrayReader.readLongLE(2));
@@ -131,46 +142,55 @@ public class ArrayReader_2_ITest extends TestCase {
 		assertEquals(197240816, arrayReader.readULongLE(4));
 	}
 
+	@Test
 	public void testReadLongLE_3() {
 
 		assertEquals(197240816, arrayReader.readLongLE(4));
 	}
 
+	@Test
 	public void testReadULongLE_4() {
 
 		assertEquals(4251854362940385264L, arrayReader.readULongLE(8));
 	}
 
+	@Test
 	public void testReadLongLE_4() {
 
 		assertEquals(4251854362940385264L, arrayReader.readLongLE(8));
 	}
 
+	@Test
 	public void testReadULongLE_5() {
 
 		assertEquals(0, arrayReader.readULongLE(-1));
 	}
 
+	@Test
 	public void testReadLongLE_5() {
 
 		assertEquals(0, arrayReader.readLongLE(-1));
 	}
 
+	@Test
 	public void testReadULongLE_6() {
 
 		assertEquals(0, arrayReader.readULongLE(0));
 	}
 
+	@Test
 	public void testReadLongLE_6() {
 
 		assertEquals(0, arrayReader.readLongLE(0));
 	}
 
+	@Test
 	public void testReadULongLE_7() {
 
 		assertEquals(0, arrayReader.readULongLE(9));
 	}
 
+	@Test
 	public void testReadLongLE_7() {
 
 		assertEquals(0, arrayReader.readLongLE(9));

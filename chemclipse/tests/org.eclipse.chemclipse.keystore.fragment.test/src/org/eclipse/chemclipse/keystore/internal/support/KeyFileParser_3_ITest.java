@@ -12,41 +12,41 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.keystore.internal.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+
 import java.io.File;
 import java.util.Map;
 
 import org.eclipse.chemclipse.keystore.TestPathHelper;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class KeyFileParser_3_ITest extends TestCase {
+public class KeyFileParser_3_ITest {
 
 	private Map<String, String> keyStore;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		File file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_KEYSTORE_I_TEST) + "-non-existant");
 		keyStore = KeyFileParser.readKeysFromFile(file);
-		super.setUp();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testAmount() {
 
 		assertEquals(0, keyStore.size());
 	}
 
+	@Test
 	public void testContainsKey_1() {
 
 		assertFalse(keyStore.containsKey("mykeyid"));
 	}
 
+	@Test
 	public void testGetKey_1() {
 
 		assertNull(keyStore.get("mykeyid"));

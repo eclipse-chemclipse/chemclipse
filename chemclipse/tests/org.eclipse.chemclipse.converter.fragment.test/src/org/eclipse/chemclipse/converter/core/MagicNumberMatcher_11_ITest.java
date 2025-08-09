@@ -12,16 +12,17 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.converter.core;
 
+import static org.junit.Assert.assertFalse;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.chemclipse.converter.TestPathHelper;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class MagicNumberMatcher_11_ITest extends TestCase {
+public class MagicNumberMatcher_11_ITest {
 
 	private static final Map<Integer, Byte> INDEX_MAP = new HashMap<>();
 	static {
@@ -39,21 +40,9 @@ public class MagicNumberMatcher_11_ITest extends TestCase {
 		}
 	}
 
-	private IMagicNumberMatcher magicNumberMatcher;
+	private IMagicNumberMatcher magicNumberMatcher = new MagicNumberMatcher();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		magicNumberMatcher = new MagicNumberMatcher();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() throws IOException {
 
 		File file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_BIN_TEST));
