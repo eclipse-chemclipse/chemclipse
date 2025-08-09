@@ -12,10 +12,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.columns;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class SeparationColumnFactory_2_Test extends TestCase {
+import org.junit.Test;
 
+public class SeparationColumnFactory_2_Test {
+
+	@Test
 	public void test1() {
 
 		assertEquals(4, SeparationColumnFactory.getSeparationColumns().size());

@@ -12,59 +12,57 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests the class IonRange concerning equals, hashCode and toString.
- * 
- * @author eselmeister
  */
-public class ScanRange_3_Test extends TestCase {
+public class ScanRange_3_Test {
 
 	private IScanRange scanRange1;
 	private IScanRange scanRange2;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		scanRange1 = new ScanRange(3, 5);
 		scanRange2 = new ScanRange(1, 5);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		scanRange1 = null;
-		scanRange2 = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testEquals_1() {
 
 		assertFalse(scanRange1.equals(scanRange2));
 	}
 
+	@Test
 	public void testEquals_2() {
 
 		assertFalse(scanRange2.equals(scanRange1));
 	}
 
+	@Test
 	public void testHashCode_1() {
 
 		assertFalse(scanRange1.hashCode() == scanRange2.hashCode());
 	}
 
+	@Test
 	public void testHashCode_2() {
 
 		assertFalse(scanRange2.hashCode() == scanRange1.hashCode());
 	}
 
+	@Test
 	public void testToString_1() {
 
 		assertFalse(scanRange1.toString().equals(scanRange2.toString()));
 	}
 
+	@Test
 	public void testToString_2() {
 
 		assertFalse(scanRange2.toString().equals(scanRange1.toString()));

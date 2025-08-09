@@ -12,21 +12,23 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.implementation.Chromatogram;
 import org.eclipse.chemclipse.model.implementation.Scan;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class RetentionIndexMap_2_Test extends TestCase {
+public class RetentionIndexMap_2_Test {
 
 	private RetentionIndexMap retentionIndexMap = new RetentionIndexMap();
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		/*
 		 * Start
 		 * C5 - C54
@@ -42,57 +44,61 @@ public class RetentionIndexMap_2_Test extends TestCase {
 		retentionIndexMap.update(chromatogram);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals(52, retentionIndexMap.getSeparationColumnIndices().size());
 	}
 
+	@Test
 	public void test2() {
 
-		assertEquals(500.0f, retentionIndexMap.getRetentionIndex(1500)); // C5
+		assertEquals(500.0f, retentionIndexMap.getRetentionIndex(1500), 0); // C5
 	}
 
+	@Test
 	public void test3() {
 
-		assertEquals(1500, retentionIndexMap.getRetentionTime(500)); // C5
+		assertEquals(1500, retentionIndexMap.getRetentionTime(500), 0); // C5
 	}
 
+	@Test
 	public void test4() {
 
-		assertEquals(3600.0f, retentionIndexMap.getRetentionIndex(2326500)); // C36
+		assertEquals(3600.0f, retentionIndexMap.getRetentionIndex(2326500), 0); // C36
 	}
 
+	@Test
 	public void test5() {
 
 		assertEquals(2326500, retentionIndexMap.getRetentionTime(3600)); // C36
 	}
 
+	@Test
 	public void test6() {
 
-		assertEquals(5400.0f, retentionIndexMap.getRetentionIndex(3676500)); // C54
+		assertEquals(5400.0f, retentionIndexMap.getRetentionIndex(3676500), 0); // C54
 	}
 
+	@Test
 	public void test7() {
 
 		assertEquals(3676500, retentionIndexMap.getRetentionTime(5400)); // C54
 	}
 
+	@Test
 	public void test8() {
 
 		assertFalse(retentionIndexMap.isEmpty());
 	}
 
+	@Test
 	public void test9() {
 
 		assertEquals(499, retentionIndexMap.getRetentionIndexStart());
 	}
 
+	@Test
 	public void test10() {
 
 		assertEquals(5497, retentionIndexMap.getRetentionIndexStop());

@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.methods;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,36 +21,30 @@ import org.eclipse.chemclipse.processing.DataCategory;
 import org.eclipse.chemclipse.processing.methods.ProcessEntry;
 import org.eclipse.chemclipse.processing.methods.ProcessEntryContainer;
 import org.eclipse.chemclipse.processing.methods.ProcessMethod;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ProcessEntry_3_Test extends TestCase {
+public class ProcessEntry_3_Test {
 
 	private ProcessEntry processEntry;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		Set<DataCategory> dataCategories = new HashSet<>();
 		dataCategories.add(DataCategory.MSD);
 		ProcessEntryContainer processEntryContainer = new ProcessMethod(dataCategories);
 		processEntry = new ProcessEntry(processEntryContainer);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		processEntry.setActiveProfile("Test");
 		processEntry.setSettings("Hello World");
 		processEntry.setActiveProfile("My");
 		processEntry.setActiveProfile("Entry");
-		//
+
 		processEntry.setActiveProfile(ProcessEntryContainer.DEFAULT_PROFILE);
 		assertEquals("", processEntry.getSettings());
 		assertEquals("Hello World", processEntry.getSettings("Test"));
@@ -56,6 +52,7 @@ public class ProcessEntry_3_Test extends TestCase {
 		assertEquals("", processEntry.getSettings("Entry"));
 	}
 
+	@Test
 	public void test2() {
 
 		processEntry.setActiveProfile("Test");
@@ -66,7 +63,7 @@ public class ProcessEntry_3_Test extends TestCase {
 		processEntry.copySettings("");
 		processEntry.setActiveProfile("Extended");
 		processEntry.copySettings("Testx");
-		//
+
 		processEntry.setActiveProfile(ProcessEntryContainer.DEFAULT_PROFILE);
 		assertEquals("", processEntry.getSettings());
 		assertEquals("Hello World", processEntry.getSettings("Test"));
@@ -75,6 +72,7 @@ public class ProcessEntry_3_Test extends TestCase {
 		assertEquals("", processEntry.getSettings("Extended"));
 	}
 
+	@Test
 	public void test3() {
 
 		processEntry.setActiveProfile("Test");
@@ -83,7 +81,7 @@ public class ProcessEntry_3_Test extends TestCase {
 		processEntry.copySettings("Test");
 		processEntry.setActiveProfile("Entry");
 		processEntry.copySettings("Test");
-		//
+
 		processEntry.setActiveProfile(ProcessEntryContainer.DEFAULT_PROFILE);
 		assertEquals("", processEntry.getSettings());
 		assertEquals("Hello World", processEntry.getSettings("Test"));

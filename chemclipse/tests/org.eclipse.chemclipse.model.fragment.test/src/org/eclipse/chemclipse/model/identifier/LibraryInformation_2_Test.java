@@ -12,51 +12,45 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.identifier;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class LibraryInformation_2_Test extends TestCase {
+public class LibraryInformation_2_Test {
 
-	private ILibraryInformation libraryInformation;
+	private ILibraryInformation libraryInformation = new LibraryInformation();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		libraryInformation = new LibraryInformation();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		libraryInformation = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetSynonyms_1() {
 
 		assertNotNull(libraryInformation.getSynonyms());
 	}
 
+	@Test
 	public void testGetSynonyms_2() {
 
 		libraryInformation.setSynonyms(null);
 		assertNotNull(libraryInformation.getSynonyms());
 	}
 
+	@Test
 	public void testGetSynonyms_3() {
 
 		assertEquals(0, libraryInformation.getSynonyms().size());
 	}
 
+	@Test
 	public void testGetSynonyms_4() {
 
 		libraryInformation.setSynonyms(null);
 		assertEquals(0, libraryInformation.getSynonyms().size());
 	}
 
+	@Test
 	public void testGetSynonyms_5() {
 
 		Set<String> synonyms = new HashSet<>();

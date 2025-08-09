@@ -12,42 +12,36 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.history;
 
-import java.util.Date;
+import static org.junit.Assert.assertEquals;
 
-import junit.framework.TestCase;
+import java.util.Date;
 
 import org.eclipse.chemclipse.support.history.EditInformation;
 import org.eclipse.chemclipse.support.history.IEditInformation;
+import org.junit.Before;
+import org.junit.Test;
 
-public class EditInformation_2_Test extends TestCase {
+public class EditInformation_2_Test {
 
 	private IEditInformation editInformation;
-	private Date date;
+	private Date date = new Date();
 	private final String entry = "I have modified the chromatogram.";
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
-		date = new Date();
 		editInformation = new EditInformation(entry);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		editInformation = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetEditHistory_1() {
 
 		long millisecondsEdit = editInformation.getDate().getTime();
 		long millisecondsCheck = date.getTime();
-		long delta = millisecondsCheck - millisecondsEdit;
-		assertTrue("getDate", delta > -100 && delta < 100); // Sometimes the time deviates in the check by 100 ms
+		assertEquals("getDate", millisecondsCheck, millisecondsEdit, 100L); // Sometimes the time deviates in the check by 100 ms
 	}
 
+	@Test
 	public void testGetEditHistory_2() {
 
 		assertEquals("getDescription", entry, editInformation.getDescription());

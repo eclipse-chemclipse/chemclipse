@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.methods;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,18 +22,17 @@ import org.eclipse.chemclipse.processing.methods.IProcessEntry;
 import org.eclipse.chemclipse.processing.methods.ProcessEntry;
 import org.eclipse.chemclipse.processing.methods.ProcessEntryContainer;
 import org.eclipse.chemclipse.processing.methods.ProcessMethod;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ProcessMethod_2_Test extends TestCase {
+public class ProcessMethod_2_Test {
 
 	private ProcessMethod processMethod;
 	private IProcessEntry processEntry;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		Set<DataCategory> dataCategories = new HashSet<>();
 		dataCategories.add(DataCategory.MSD);
 		processMethod = new ProcessMethod(dataCategories);
@@ -39,12 +40,7 @@ public class ProcessMethod_2_Test extends TestCase {
 		processMethod.getEntries().add(processEntry);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		String profile = "Test";
@@ -54,6 +50,7 @@ public class ProcessMethod_2_Test extends TestCase {
 		assertEquals(2, processMethod.getProfiles().size());
 	}
 
+	@Test
 	public void test2() {
 
 		String profile = "Test";
@@ -61,7 +58,7 @@ public class ProcessMethod_2_Test extends TestCase {
 		assertEquals(profile, processMethod.getActiveProfile());
 		assertEquals(profile, processEntry.getActiveProfile());
 		assertEquals(2, processMethod.getProfiles().size());
-		//
+
 		processMethod.deleteProfile(profile);
 		assertEquals(ProcessEntryContainer.DEFAULT_PROFILE, processMethod.getActiveProfile());
 		assertEquals(ProcessEntryContainer.DEFAULT_PROFILE, processEntry.getActiveProfile());

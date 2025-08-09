@@ -12,57 +12,69 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.math;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class IonRoundMethod_MINUS_02_1_Test extends TestCase {
+import org.junit.Test;
+
+public class IonRoundMethod_MINUS_02_1_Test {
 
 	private IonRoundMethod ionRoundMethod = IonRoundMethod.MINUS_02;
 
+	@Test
 	public void test1() {
 
 		assertEquals(0, ionRoundMethod.round(Double.NaN));
 	}
 
+	@Test
 	public void test2() {
 
 		assertEquals(0, ionRoundMethod.round(Double.NEGATIVE_INFINITY));
 	}
 
+	@Test
 	public void test3() {
 
 		assertEquals(0, ionRoundMethod.round(Double.POSITIVE_INFINITY));
 	}
 
+	@Test
 	public void test4() {
 
 		assertEquals(0, ionRoundMethod.round(-Double.MIN_NORMAL));
 	}
 
+	@Test
 	public void test5() {
 
 		assertEquals(17, ionRoundMethod.round(17.7d));
 	}
 
+	@Test
 	public void test6() {
 
 		assertEquals(18, ionRoundMethod.round(17.8d));
 	}
 
+	@Test
 	public void test7() {
 
 		assertEquals(18, ionRoundMethod.round(17.9d));
 	}
 
+	@Test
 	public void test8() {
 
 		assertEquals(18, ionRoundMethod.round(18.7d));
 	}
 
+	@Test
 	public void test9() {
 
 		assertEquals(19, ionRoundMethod.round(18.8d));
 	}
 
+	@Test
 	public void test10() {
 
 		assertEquals("Round m/z from -0.2 (incl.) to +0.8 (excl.)", ionRoundMethod.label());

@@ -12,9 +12,12 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.baseline;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class BaselineSegment_1_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class BaselineSegment_1_Test {
 
 	private IBaselineSegment segment;
 	private int startRetentionTime;
@@ -22,10 +25,9 @@ public class BaselineSegment_1_Test extends TestCase {
 	private float startBackgroundAbundance;
 	private float stopBackgroundAbundance;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		startRetentionTime = 4500;
 		stopRetentionTime = 10500;
 		startBackgroundAbundance = 500.0f;
@@ -35,30 +37,27 @@ public class BaselineSegment_1_Test extends TestCase {
 		segment.setStopBackgroundAbundance(stopBackgroundAbundance);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		segment = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetStartRetentionTime_1() {
 
 		assertEquals("StartRetentionTime", startRetentionTime, segment.getStartRetentionTime());
 	}
 
+	@Test
 	public void testGetStopRetentionTime_1() {
 
 		assertEquals("StopRetentionTime", stopRetentionTime, segment.getStopRetentionTime());
 	}
 
+	@Test
 	public void testGetStartBackgroundAbundance_1() {
 
-		assertEquals("StartBackgroundAbundance", startBackgroundAbundance, segment.getStartBackgroundAbundance());
+		assertEquals("StartBackgroundAbundance", startBackgroundAbundance, segment.getStartBackgroundAbundance(), 0);
 	}
 
+	@Test
 	public void testGetStopBackgroundAbundance_1() {
 
-		assertEquals("StopBackgroundAbundance", stopBackgroundAbundance, segment.getStopBackgroundAbundance());
+		assertEquals("StopBackgroundAbundance", stopBackgroundAbundance, segment.getStopBackgroundAbundance(), 0);
 	}
 }

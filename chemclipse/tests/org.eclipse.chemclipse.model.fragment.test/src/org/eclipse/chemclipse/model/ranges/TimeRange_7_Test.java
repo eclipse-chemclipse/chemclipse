@@ -12,45 +12,39 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.ranges;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class TimeRange_7_Test extends TestCase {
+import org.junit.Test;
 
-	private TimeRange timeRange;
+public class TimeRange_7_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private TimeRange timeRange = new TimeRange("Test", 500, 350, 200);
 
-		super.setUp();
-		timeRange = new TimeRange("Test", 500, 350, 200);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test0() {
 
 		assertEquals("Test", timeRange.getIdentifier());
 	}
 
+	@Test
 	public void test1() {
 
 		assertEquals(200, timeRange.getStart());
 	}
 
+	@Test
 	public void test2() {
 
 		assertEquals(350, timeRange.getMaximum());
 	}
 
+	@Test
 	public void test3() {
 
 		assertEquals(500, timeRange.getStop());
 	}
 
+	@Test
 	public void test4() {
 
 		timeRange.updateStart(501);
@@ -59,6 +53,7 @@ public class TimeRange_7_Test extends TestCase {
 		assertEquals(500, timeRange.getStop());
 	}
 
+	@Test
 	public void test5() {
 
 		timeRange.updateStop(199);
@@ -67,28 +62,31 @@ public class TimeRange_7_Test extends TestCase {
 		assertEquals(500, timeRange.getStop());
 	}
 
+	@Test
 	public void test6() {
 
 		timeRange.updateStart(250);
 		assertEquals(250, timeRange.getStart());
 		assertEquals(350, timeRange.getMaximum());
 		assertEquals(500, timeRange.getStop());
-		//
+
 		timeRange.updateMaximum();
 		assertEquals(375, timeRange.getMaximum());
 	}
 
+	@Test
 	public void test7() {
 
 		timeRange.updateStop(550);
 		assertEquals(200, timeRange.getStart());
 		assertEquals(350, timeRange.getMaximum());
 		assertEquals(550, timeRange.getStop());
-		//
+
 		timeRange.updateMaximum();
 		assertEquals(375, timeRange.getMaximum());
 	}
 
+	@Test
 	public void test8() {
 
 		timeRange.updateStart(250);
@@ -96,7 +94,7 @@ public class TimeRange_7_Test extends TestCase {
 		assertEquals(250, timeRange.getStart());
 		assertEquals(350, timeRange.getMaximum());
 		assertEquals(550, timeRange.getStop());
-		//
+
 		timeRange.updateMaximum();
 		assertEquals(400, timeRange.getMaximum());
 	}

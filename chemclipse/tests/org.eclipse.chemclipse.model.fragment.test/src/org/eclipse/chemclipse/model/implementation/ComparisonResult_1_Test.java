@@ -12,70 +12,74 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.identifier.ComparisonResult;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ComparisonResult_1_Test extends TestCase {
+public class ComparisonResult_1_Test {
 
 	private static final float DEFAULT_VALUE = 100.0f;
 	private ComparisonResult comparisonResult;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		comparisonResult = new ComparisonResult(DEFAULT_VALUE, DEFAULT_VALUE, DEFAULT_VALUE, DEFAULT_VALUE, DEFAULT_VALUE);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
-		assertEquals(DEFAULT_VALUE, comparisonResult.getMatchFactor());
+		assertEquals(DEFAULT_VALUE, comparisonResult.getMatchFactor(), 0);
 	}
 
+	@Test
 	public void test2() {
 
-		assertEquals(DEFAULT_VALUE, comparisonResult.getReverseMatchFactor());
+		assertEquals(DEFAULT_VALUE, comparisonResult.getReverseMatchFactor(), 0);
 	}
 
+	@Test
 	public void test3() {
 
-		assertEquals(DEFAULT_VALUE, comparisonResult.getMatchFactorDirect());
+		assertEquals(DEFAULT_VALUE, comparisonResult.getMatchFactorDirect(), 0);
 	}
 
+	@Test
 	public void test4() {
 
-		assertEquals(DEFAULT_VALUE, comparisonResult.getReverseMatchFactorDirect());
+		assertEquals(DEFAULT_VALUE, comparisonResult.getReverseMatchFactorDirect(), 0);
 	}
 
+	@Test
 	public void test5() {
 
-		assertEquals(DEFAULT_VALUE, comparisonResult.getProbability());
+		assertEquals(DEFAULT_VALUE, comparisonResult.getProbability(), 0);
 	}
 
+	@Test
 	public void test6() {
 
-		assertEquals(DEFAULT_VALUE, comparisonResult.getMatchFactorNotAdjusted());
+		assertEquals(DEFAULT_VALUE, comparisonResult.getMatchFactorNotAdjusted(), 0);
 	}
 
+	@Test
 	public void test7() {
 
-		assertEquals(DEFAULT_VALUE, comparisonResult.getReverseMatchFactorNotAdjusted());
+		assertEquals(DEFAULT_VALUE, comparisonResult.getReverseMatchFactorNotAdjusted(), 0);
 	}
 
+	@Test
 	public void test8() {
 
-		assertEquals(DEFAULT_VALUE, comparisonResult.getMatchFactorDirectNotAdjusted());
+		assertEquals(DEFAULT_VALUE, comparisonResult.getMatchFactorDirectNotAdjusted(), 0);
 	}
 
+	@Test
 	public void test9() {
 
-		assertEquals(DEFAULT_VALUE, comparisonResult.getReverseMatchFactorDirectNotAdjusted());
+		assertEquals(DEFAULT_VALUE, comparisonResult.getReverseMatchFactorDirectNotAdjusted(), 0);
 	}
 }

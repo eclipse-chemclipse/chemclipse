@@ -12,35 +12,27 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.instruments;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class Instrument_1_Test extends TestCase {
+import org.junit.Test;
 
-	private Instrument instrument;
+public class Instrument_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private Instrument instrument = new Instrument();
 
-		super.setUp();
-		instrument = new Instrument();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals("", instrument.getIdentifier());
 	}
 
+	@Test
 	public void test2() {
 
 		assertEquals("Default", instrument.getName());
 	}
 
+	@Test
 	public void test3() {
 
 		assertEquals("This is the default instrument.", instrument.getDescription());

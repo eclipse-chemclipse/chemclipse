@@ -12,25 +12,31 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class ColumnIndexSupport_2_Test extends TestCase {
+import org.junit.Test;
 
+public class ColumnIndexSupport_2_Test {
+
+	@Test
 	public void test1() {
 
 		assertEquals("db 5", ColumnIndexSupport.adjustValue("DB 5", false, false));
 	}
 
+	@Test
 	public void test2() {
 
 		assertEquals("DB 5", ColumnIndexSupport.adjustValue("DB 5", true, false));
 	}
 
+	@Test
 	public void test3() {
 
 		assertEquals("db5", ColumnIndexSupport.adjustValue("DB 5", false, true));
 	}
 
+	@Test
 	public void test4() {
 
 		assertEquals("DB5", ColumnIndexSupport.adjustValue("DB 5", true, true));

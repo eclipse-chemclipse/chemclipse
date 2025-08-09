@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,22 +24,24 @@ import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.identifier.LibraryInformation;
 import org.eclipse.chemclipse.model.implementation.IdentificationTarget;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class LimitSupport_1_Test {
 
-public class LimitSupport_1_Test extends TestCase {
-
+	@Test
 	public void test1() {
 
 		assertFalse(LimitSupport.doIdentify(null, 90.0f));
 	}
 
+	@Test
 	public void test2() {
 
 		Set<IIdentificationTarget> identificationTargets = new HashSet<>();
 		assertTrue(LimitSupport.doIdentify(identificationTargets, 90.0f));
 	}
 
+	@Test
 	public void test3() {
 
 		Set<IIdentificationTarget> identificationTargets = new HashSet<>();
@@ -44,6 +49,7 @@ public class LimitSupport_1_Test extends TestCase {
 		assertFalse(LimitSupport.doIdentify(identificationTargets, 90.0f));
 	}
 
+	@Test
 	public void test4() {
 
 		Set<IIdentificationTarget> identificationTargets = new HashSet<>();

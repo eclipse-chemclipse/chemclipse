@@ -12,21 +12,22 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.identifier;
 
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.implementation.Scan;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class DeltaCalculationSupport_2_Test extends TestCase {
+public class DeltaCalculationSupport_2_Test {
 
 	private IScan unknown;
 	private IScan reference;
 	private IDeltaCalculationSettings identifierSettings;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		unknown = new Scan(1000.0f);
 		reference = new Scan(1000.0f);
 		identifierSettings = new AbstractIdentifierDeltaPenaltyCalculationSettings();
@@ -34,12 +35,7 @@ public class DeltaCalculationSupport_2_Test extends TestCase {
 		identifierSettings.setDeltaWindow(0.0f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		unknown.setRetentionTime(6000);
@@ -49,6 +45,7 @@ public class DeltaCalculationSupport_2_Test extends TestCase {
 		assertTrue(DeltaCalculationSupport.useTarget(unknown, reference, identifierSettings));
 	}
 
+	@Test
 	public void test2() {
 
 		unknown.setRetentionTime(6000);
@@ -58,6 +55,7 @@ public class DeltaCalculationSupport_2_Test extends TestCase {
 		assertTrue(DeltaCalculationSupport.useTarget(unknown, reference, identifierSettings));
 	}
 
+	@Test
 	public void test3() {
 
 		unknown.setRetentionTime(6000);
@@ -67,6 +65,7 @@ public class DeltaCalculationSupport_2_Test extends TestCase {
 		assertTrue(DeltaCalculationSupport.useTarget(unknown, reference, identifierSettings));
 	}
 
+	@Test
 	public void test4() {
 
 		unknown.setRetentionTime(6000);
@@ -76,6 +75,7 @@ public class DeltaCalculationSupport_2_Test extends TestCase {
 		assertTrue(DeltaCalculationSupport.useTarget(unknown, reference, identifierSettings));
 	}
 
+	@Test
 	public void test5() {
 
 		unknown.setRetentionTime(6000);

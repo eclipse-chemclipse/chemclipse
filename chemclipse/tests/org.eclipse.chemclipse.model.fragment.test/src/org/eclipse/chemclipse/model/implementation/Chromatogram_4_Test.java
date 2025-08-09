@@ -12,31 +12,19 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.List;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IScan;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class Chromatogram_4_Test {
 
-public class Chromatogram_4_Test extends TestCase {
+	private IChromatogram chromatogram = new Chromatogram();
 
-	private IChromatogram chromatogram;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		chromatogram = new Chromatogram();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
 		addScan(chromatogram, 500, 2898.2f, 1);
@@ -45,11 +33,12 @@ public class Chromatogram_4_Test extends TestCase {
 		addScan(chromatogram, 2000, 289830.65f, 1);
 		addScan(chromatogram, 2500, 3983.0f, 1);
 		assertEquals(false, chromatogram.containsScanCycles());
-		//
+
 		assertEquals(0, chromatogram.getScanCycleScans(0).size());
 		assertEquals(5, chromatogram.getScanCycleScans(1).size());
 	}
 
+	@Test
 	public void test_2() {
 
 		addScan(chromatogram, 500, 2898.2f, 1);
@@ -58,13 +47,14 @@ public class Chromatogram_4_Test extends TestCase {
 		addScan(chromatogram, 2000, 289830.65f, 1);
 		addScan(chromatogram, 2500, 3983.0f, 1);
 		assertEquals(false, chromatogram.containsScanCycles());
-		//
-		assertEquals(0.0f, getIntensity(chromatogram.getScanCycleScans(0)));
-		assertEquals(433449.53f, getIntensity(chromatogram.getScanCycleScans(1)));
-		assertEquals(0.0f, getIntensity(chromatogram.getScanCycleScans(2)));
-		assertEquals(0.0f, getIntensity(chromatogram.getScanCycleScans(3)));
+
+		assertEquals(0.0f, getIntensity(chromatogram.getScanCycleScans(0)), 0);
+		assertEquals(433449.53f, getIntensity(chromatogram.getScanCycleScans(1)), 0);
+		assertEquals(0.0f, getIntensity(chromatogram.getScanCycleScans(2)), 0);
+		assertEquals(0.0f, getIntensity(chromatogram.getScanCycleScans(3)), 0);
 	}
 
+	@Test
 	public void test_3() {
 
 		addScan(chromatogram, 500, 2898.2f, 1);
@@ -73,13 +63,14 @@ public class Chromatogram_4_Test extends TestCase {
 		addScan(chromatogram, 2000, 289830.65f, 2);
 		addScan(chromatogram, 2500, 3983.0f, 3);
 		assertEquals(true, chromatogram.containsScanCycles());
-		//
+
 		assertEquals(0, chromatogram.getScanCycleScans(0).size());
 		assertEquals(2, chromatogram.getScanCycleScans(1).size());
 		assertEquals(2, chromatogram.getScanCycleScans(2).size());
 		assertEquals(1, chromatogram.getScanCycleScans(3).size());
 	}
 
+	@Test
 	public void test_4() {
 
 		addScan(chromatogram, 500, 2898.2f, 1);
@@ -88,11 +79,11 @@ public class Chromatogram_4_Test extends TestCase {
 		addScan(chromatogram, 2000, 289830.65f, 2);
 		addScan(chromatogram, 2500, 3983.0f, 3);
 		assertEquals(true, chromatogram.containsScanCycles());
-		//
-		assertEquals(0.0f, getIntensity(chromatogram.getScanCycleScans(0)));
-		assertEquals(10735.4f, getIntensity(chromatogram.getScanCycleScans(1)));
-		assertEquals(418731.13f, getIntensity(chromatogram.getScanCycleScans(2)));
-		assertEquals(3983.0f, getIntensity(chromatogram.getScanCycleScans(3)));
+
+		assertEquals(0.0f, getIntensity(chromatogram.getScanCycleScans(0)), 0);
+		assertEquals(10735.4f, getIntensity(chromatogram.getScanCycleScans(1)), 0);
+		assertEquals(418731.13f, getIntensity(chromatogram.getScanCycleScans(2)), 0);
+		assertEquals(3983.0f, getIntensity(chromatogram.getScanCycleScans(3)), 0);
 	}
 
 	private float getIntensity(List<IScan> scans) {

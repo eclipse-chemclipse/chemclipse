@@ -12,64 +12,62 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.implementation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-public class Chromatogram_7_Test extends TestCase {
+import org.junit.Test;
 
-	private Chromatogram chromatogram;
+public class Chromatogram_7_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private Chromatogram chromatogram = new Chromatogram();
 
-		super.setUp();
-		chromatogram = new Chromatogram();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertNotNull(chromatogram.getBaselineModel());
 	}
 
+	@Test
 	public void test2() {
 
 		assertEquals("Default", chromatogram.getActiveBaseline());
 	}
 
+	@Test
 	public void test3() {
 
 		assertEquals(1, chromatogram.getBaselineIds().size());
 	}
 
+	@Test
 	public void test4() {
 
 		assertTrue(chromatogram.getBaselineIds().contains("Default"));
 	}
 
+	@Test
 	public void test5() {
 
 		chromatogram.setActiveBaseline(null);
 		assertEquals("Default", chromatogram.getActiveBaseline());
 	}
 
+	@Test
 	public void test6() {
 
 		chromatogram.setActiveBaseline("");
 		assertEquals("Default", chromatogram.getActiveBaseline());
 	}
 
+	@Test
 	public void test7() {
 
 		chromatogram.removeBaseline("");
 		assertEquals("Default", chromatogram.getActiveBaseline());
 	}
 
+	@Test
 	public void test8() {
 
 		chromatogram.removeBaseline(null);

@@ -12,35 +12,52 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.quantitation.IInternalStandard;
+import org.junit.Before;
+import org.junit.Test;
 
 public class PeakQuantifierSupport_1_Test extends PeakQuantifierSupportTestCase {
 
+	@Override
+	@Before
+	public void setUp() throws Exception {
+
+		super.setUp();
+	}
+
+	@Test
 	public void test1() {
 
 		IPeak peak = getPeak();
 		assertEquals("", PeakQuantifierSupport.getInternalStandardConcentrations(peak));
 	}
 
+	@Test
 	public void test2() {
 
 		IPeak peak = getPeak();
 		assertEquals("", PeakQuantifierSupport.getPeakConcentrations(peak));
 	}
 
+	@Test
 	public void test3() {
 
 		IInternalStandard internalStandard = PeakQuantifierSupport.getInternalStandard(null, null);
 		assertNull(internalStandard);
 	}
 
+	@Test
 	public void test4() {
 
 		IInternalStandard internalStandard = PeakQuantifierSupport.getInternalStandard("", "");
 		assertNull(internalStandard);
 	}
 
+	@Test
 	public void test5() {
 
 		IInternalStandard internalStandard = PeakQuantifierSupport.getInternalStandard("Test", "");

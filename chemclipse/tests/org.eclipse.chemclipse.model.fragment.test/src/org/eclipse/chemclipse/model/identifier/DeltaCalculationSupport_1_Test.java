@@ -12,22 +12,14 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.identifier;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-public class DeltaCalculationSupport_1_Test extends TestCase {
+import org.junit.Test;
 
-	@Override
-	protected void setUp() throws Exception {
+public class DeltaCalculationSupport_1_Test {
 
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		double unknown = 2000.0d;
@@ -36,6 +28,7 @@ public class DeltaCalculationSupport_1_Test extends TestCase {
 		assertTrue(DeltaCalculationSupport.useTarget(unknown, reference, delta));
 	}
 
+	@Test
 	public void test2() {
 
 		double unknown = 2000.0d;
@@ -44,6 +37,7 @@ public class DeltaCalculationSupport_1_Test extends TestCase {
 		assertTrue(DeltaCalculationSupport.useTarget(unknown, reference, delta));
 	}
 
+	@Test
 	public void test3() {
 
 		double unknown = 2000.0d;
@@ -52,6 +46,7 @@ public class DeltaCalculationSupport_1_Test extends TestCase {
 		assertTrue(DeltaCalculationSupport.useTarget(unknown, reference, delta));
 	}
 
+	@Test
 	public void test4() {
 
 		double unknown = 2000.0d;
@@ -60,6 +55,7 @@ public class DeltaCalculationSupport_1_Test extends TestCase {
 		assertFalse(DeltaCalculationSupport.useTarget(unknown, reference, delta));
 	}
 
+	@Test
 	public void test5() {
 
 		double unknown = 2000.0d;

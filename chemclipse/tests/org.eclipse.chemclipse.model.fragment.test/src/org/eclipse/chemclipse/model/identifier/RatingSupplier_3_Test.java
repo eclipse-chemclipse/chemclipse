@@ -12,34 +12,27 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.identifier;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class RatingSupplier_3_Test extends TestCase {
+import org.junit.Test;
+
+public class RatingSupplier_3_Test {
 
 	private IRatingSupplier ratingSupplier = new RatingSupplier(new ComparisonResult(20.0f, 80.0f, 0, 0));
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals("Convoluted Target (Impurities)", ratingSupplier.getAdvise());
 	}
 
+	@Test
 	public void test2() {
 
-		assertEquals(50.0f, ratingSupplier.getScore());
+		assertEquals(50.0f, ratingSupplier.getScore(), 0);
 	}
 
+	@Test
 	public void test3() {
 
 		assertEquals(RatingStatus.VERY_BAD, ratingSupplier.getStatus());

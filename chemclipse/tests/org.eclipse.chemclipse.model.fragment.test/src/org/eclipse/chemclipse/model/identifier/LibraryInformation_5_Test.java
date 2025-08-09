@@ -12,48 +12,41 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.identifier;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class LibraryInformation_5_Test extends TestCase {
+import org.junit.Test;
 
-	private ILibraryInformation libraryInformation;
+public class LibraryInformation_5_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private ILibraryInformation libraryInformation = new LibraryInformation();
 
-		super.setUp();
-		libraryInformation = new LibraryInformation();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		libraryInformation = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
 		assertEquals("", libraryInformation.getCasNumber());
 	}
 
+	@Test
 	public void test_2() {
 
 		assertEquals(0, libraryInformation.getCasNumbers().size());
 	}
 
+	@Test
 	public void test_3() {
 
 		libraryInformation.setCasNumber("100–52-7");
 		assertEquals("100–52-7", libraryInformation.getCasNumber());
 	}
 
+	@Test
 	public void test_4() {
 
 		libraryInformation.addCasNumber("100–52-7");
 		assertEquals("100–52-7", libraryInformation.getCasNumber());
 	}
 
+	@Test
 	public void test_5() {
 
 		libraryInformation.setCasNumber("100–52-7");
@@ -62,6 +55,7 @@ public class LibraryInformation_5_Test extends TestCase {
 		assertEquals("100–52-7", libraryInformation.getCasNumber());
 	}
 
+	@Test
 	public void test_6() {
 
 		libraryInformation.setCasNumber("100–52-7");
@@ -71,6 +65,7 @@ public class LibraryInformation_5_Test extends TestCase {
 		assertEquals("103-36-6", libraryInformation.getCasNumber());
 	}
 
+	@Test
 	public void test_7() {
 
 		libraryInformation.addCasNumber("103-36-6");
@@ -79,6 +74,7 @@ public class LibraryInformation_5_Test extends TestCase {
 		assertEquals("100–52-7", libraryInformation.getCasNumber());
 	}
 
+	@Test
 	public void test_8() {
 
 		libraryInformation.addCasNumber(null);

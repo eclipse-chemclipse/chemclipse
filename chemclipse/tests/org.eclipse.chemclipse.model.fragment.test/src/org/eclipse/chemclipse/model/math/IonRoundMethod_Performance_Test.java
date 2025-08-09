@@ -12,32 +12,32 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.math;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class IonRoundMethod_Performance_Test extends TestCase {
+public class IonRoundMethod_Performance_Test {
 
+	@Test
 	public void testActive() {
 
 		executeActive();
-		assertTrue(true);
 	}
 
+	@Test
 	public void testDefault() {
 
 		execute(IonRoundMethod.DEFAULT);
-		assertTrue(true);
 	}
 
+	@Test
 	public void testMinus00() {
 
 		execute(IonRoundMethod.MINUS_00);
-		assertTrue(true);
 	}
 
+	@Test
 	public void testMinus01() {
 
 		execute(IonRoundMethod.MINUS_01);
-		assertTrue(true);
 	}
 
 	private void execute(IonRoundMethod method) {

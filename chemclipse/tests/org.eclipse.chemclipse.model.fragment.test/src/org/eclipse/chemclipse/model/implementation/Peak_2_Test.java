@@ -12,38 +12,29 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.core.IPeak;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class Peak_2_Test {
 
-public class Peak_2_Test extends TestCase {
+	private IPeak peak = new Peak();
 
-	private IPeak peak;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		peak = new Peak();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals(false, peak.isMarkedAsDeleted());
 	}
 
+	@Test
 	public void test2() {
 
 		peak.setMarkedAsDeleted(true);
 		assertEquals(true, peak.isMarkedAsDeleted());
 	}
 
+	@Test
 	public void test3() {
 
 		peak.setMarkedAsDeleted(false);

@@ -12,30 +12,26 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.settings;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.implementation.Chromatogram;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ProcessSettings_3_Test extends TestCase {
+public class ProcessSettings_3_Test {
 
 	private ProcessSettingsTest processSettings = new ProcessSettingsTest();
 	private IChromatogram chromatogram;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		chromatogram = new Chromatogram();
 		chromatogram.putHeaderData("Data Name", "Py-GC/MS");
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		String fileNamePattern = "{chromatogram_dataname}{extension}";

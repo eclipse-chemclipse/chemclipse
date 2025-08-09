@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,45 +21,42 @@ import org.eclipse.chemclipse.model.columns.SeparationColumn;
 import org.eclipse.chemclipse.model.identifier.ColumnIndexMarker;
 import org.eclipse.chemclipse.model.identifier.IColumnIndexMarker;
 import org.eclipse.chemclipse.support.model.SeparationColumnType;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ColumnIndexSupport_1_Test extends TestCase {
+public class ColumnIndexSupport_1_Test {
 
 	private List<IColumnIndexMarker> columnIndexMarkers = new ArrayList<>();
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		columnIndexMarkers.add(new ColumnIndexMarker(new SeparationColumn("DB 1701", SeparationColumnType.SEMI_POLAR), 1230.8f));
 		columnIndexMarkers.add(new ColumnIndexMarker(new SeparationColumn("FFAP X", SeparationColumnType.POLAR), 1456.7f));
 		columnIndexMarkers.add(new ColumnIndexMarker(new SeparationColumn("DB 1", SeparationColumnType.NON_POLAR), 1302.8f));
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
-		assertEquals(1456.7f, ColumnIndexSupport.getRetentionIndex(columnIndexMarkers, "ffap x", false, false));
+		assertEquals(1456.7f, ColumnIndexSupport.getRetentionIndex(columnIndexMarkers, "ffap x", false, false), 0);
 	}
 
+	@Test
 	public void test2() {
 
-		assertEquals(1456.7f, ColumnIndexSupport.getRetentionIndex(columnIndexMarkers, "FFAP X", true, false));
+		assertEquals(1456.7f, ColumnIndexSupport.getRetentionIndex(columnIndexMarkers, "FFAP X", true, false), 0);
 	}
 
+	@Test
 	public void test3() {
 
-		assertEquals(1456.7f, ColumnIndexSupport.getRetentionIndex(columnIndexMarkers, "ffapx", false, true));
+		assertEquals(1456.7f, ColumnIndexSupport.getRetentionIndex(columnIndexMarkers, "ffapx", false, true), 0);
 	}
 
+	@Test
 	public void test4() {
 
-		assertEquals(1456.7f, ColumnIndexSupport.getRetentionIndex(columnIndexMarkers, "FFAPX", true, true));
+		assertEquals(1456.7f, ColumnIndexSupport.getRetentionIndex(columnIndexMarkers, "FFAPX", true, true), 0);
 	}
 }

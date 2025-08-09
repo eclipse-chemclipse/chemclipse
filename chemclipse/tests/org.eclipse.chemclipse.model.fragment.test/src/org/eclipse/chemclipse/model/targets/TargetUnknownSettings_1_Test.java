@@ -12,55 +12,51 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.targets;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class TargetUnknownSettings_1_Test extends TestCase {
+import org.junit.Test;
 
-	private TargetUnknownSettings settings;
+public class TargetUnknownSettings_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private TargetUnknownSettings settings = new TargetUnknownSettings();
 
-		super.setUp();
-		settings = new TargetUnknownSettings();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals("[", settings.getMarkerStart());
 	}
 
+	@Test
 	public void test2() {
 
 		assertEquals("]", settings.getMarkerStop());
 	}
 
+	@Test
 	public void test3() {
 
 		assertEquals(5, settings.getNumberTraces());
 	}
 
+	@Test
 	public void test4() {
 
 		assertEquals("Unknown", settings.getTargetName());
 	}
 
+	@Test
 	public void test5() {
 
 		assertEquals(false, settings.isIncludeIntensityPercent());
 	}
 
+	@Test
 	public void test6() {
 
 		assertEquals(false, settings.isIncludeRetentionIndex());
 	}
 
+	@Test
 	public void test7() {
 
 		assertEquals(false, settings.isIncludeRetentionTime());

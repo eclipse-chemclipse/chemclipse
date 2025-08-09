@@ -12,40 +12,33 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.ranges;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class TimeRange_1_Test extends TestCase {
+import org.junit.Test;
 
-	private TimeRange timeRange;
+public class TimeRange_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private TimeRange timeRange = new TimeRange("", 0, 0);
 
-		super.setUp();
-		timeRange = new TimeRange("", 0, 0);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test0() {
 
 		assertEquals("", timeRange.getIdentifier());
 	}
 
+	@Test
 	public void test1() {
 
 		assertEquals(0, timeRange.getStart());
 	}
 
+	@Test
 	public void test2() {
 
 		assertEquals(0, timeRange.getMaximum());
 	}
 
+	@Test
 	public void test3() {
 
 		assertEquals(0, timeRange.getStop());

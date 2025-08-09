@@ -12,37 +12,28 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.identifier;
 
+import org.junit.Test;
+
 import junit.framework.TestCase;
 
 public class LibraryInformation_4_Test extends TestCase {
 
-	private ILibraryInformation libraryInformation;
+	private ILibraryInformation libraryInformation = new LibraryInformation();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		libraryInformation = new LibraryInformation();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		libraryInformation = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
 		assertEquals("", libraryInformation.getContributor());
 	}
 
+	@Test
 	public void test_2() {
 
 		libraryInformation.setContributor(null);
 		assertEquals("", libraryInformation.getContributor());
 	}
 
+	@Test
 	public void test_3() {
 
 		libraryInformation.setContributor("ChemClipse");

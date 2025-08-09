@@ -12,44 +12,36 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.eclipse.chemclipse.model.core.IChromatogram;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class Chromatogram_6_Test {
 
-public class Chromatogram_6_Test extends TestCase {
+	private IChromatogram chromatogram = new Chromatogram();
 
-	private IChromatogram chromatogram;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		chromatogram = new Chromatogram();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
 		assertNotNull(chromatogram.getHeaderDataMap());
 	}
 
+	@Test
 	public void test_2() {
 
 		assertEquals(17, chromatogram.getHeaderDataMap().size());
 	}
 
+	@Test
 	public void test_3() {
 
 		chromatogram.putHeaderData("Test", "This is a test case.");
 		assertEquals("This is a test case.", chromatogram.getHeaderData("Test"));
 	}
 
+	@Test
 	public void test_4() {
 
 		chromatogram.putHeaderData("Test", "This is a test case.");

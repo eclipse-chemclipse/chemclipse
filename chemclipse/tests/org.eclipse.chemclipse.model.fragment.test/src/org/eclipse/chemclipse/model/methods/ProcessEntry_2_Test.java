@@ -12,6 +12,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.methods;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -20,29 +24,23 @@ import org.eclipse.chemclipse.processing.DataCategory;
 import org.eclipse.chemclipse.processing.methods.ProcessEntry;
 import org.eclipse.chemclipse.processing.methods.ProcessEntryContainer;
 import org.eclipse.chemclipse.processing.methods.ProcessMethod;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ProcessEntry_2_Test extends TestCase {
+public class ProcessEntry_2_Test {
 
 	private ProcessEntry processEntry;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		Set<DataCategory> dataCategories = new HashSet<>();
 		dataCategories.add(DataCategory.MSD);
 		ProcessEntryContainer processEntryContainer = new ProcessMethod(dataCategories);
 		processEntry = new ProcessEntry(processEntryContainer);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals(ProcessEntryContainer.DEFAULT_PROFILE, processEntry.getActiveProfile());
@@ -50,6 +48,7 @@ public class ProcessEntry_2_Test extends TestCase {
 		assertEquals(0, settingsMap.size()); // Settings are created on-the-fly
 	}
 
+	@Test
 	public void test2() {
 
 		processEntry.setActiveProfile("Test");
@@ -58,6 +57,7 @@ public class ProcessEntry_2_Test extends TestCase {
 		assertEquals(0, settingsMap.size()); // Settings are created on-the-fly
 	}
 
+	@Test
 	public void test3() {
 
 		processEntry.setActiveProfile("Test");
@@ -66,7 +66,7 @@ public class ProcessEntry_2_Test extends TestCase {
 		Map<String, String> settingsMap1 = processEntry.getSettingsMap();
 		assertEquals(1, settingsMap1.size());
 		assertTrue(settingsMap1.containsKey("Test"));
-		//
+
 		processEntry.setActiveProfile(ProcessEntryContainer.DEFAULT_PROFILE);
 		processEntry.setSettings("");
 		assertEquals("", processEntry.getSettings());
@@ -76,6 +76,7 @@ public class ProcessEntry_2_Test extends TestCase {
 		assertTrue(settingsMap2.containsKey(ProcessEntryContainer.DEFAULT_PROFILE));
 	}
 
+	@Test
 	public void test4() {
 
 		processEntry.setActiveProfile("Test");
@@ -86,7 +87,7 @@ public class ProcessEntry_2_Test extends TestCase {
 		assertTrue(settingsMap1.containsKey("Test"));
 		processEntry.deleteProfile("Test");
 		assertEquals(ProcessEntryContainer.DEFAULT_PROFILE, processEntry.getActiveProfile());
-		//
+
 		processEntry.setActiveProfile(ProcessEntryContainer.DEFAULT_PROFILE);
 		processEntry.setSettings("");
 		assertEquals("", processEntry.getSettings());
@@ -96,6 +97,7 @@ public class ProcessEntry_2_Test extends TestCase {
 		assertTrue(settingsMap2.containsKey(ProcessEntryContainer.DEFAULT_PROFILE));
 	}
 
+	@Test
 	public void test5() {
 
 		processEntry.setActiveProfile("Test");
@@ -104,7 +106,7 @@ public class ProcessEntry_2_Test extends TestCase {
 		processEntry.setSettings("how ya'");
 		processEntry.setActiveProfile("Entry");
 		processEntry.setSettings("doing?");
-		//
+
 		processEntry.setActiveProfile(ProcessEntryContainer.DEFAULT_PROFILE);
 		assertEquals("", processEntry.getSettings());
 		assertEquals("Hello World", processEntry.getSettings("Test"));

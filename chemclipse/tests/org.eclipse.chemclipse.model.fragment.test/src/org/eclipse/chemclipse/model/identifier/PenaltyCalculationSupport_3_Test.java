@@ -12,22 +12,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.identifier;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class PenaltyCalculationSupport_3_Test extends TestCase {
+import org.junit.Test;
 
-	@Override
-	protected void setUp() throws Exception {
+public class PenaltyCalculationSupport_3_Test {
 
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		float unknown = 1397.0f;
@@ -36,9 +27,10 @@ public class PenaltyCalculationSupport_3_Test extends TestCase {
 		float penaltyCalculationLevelFactor = 5.0f;
 		float maxValue = 30.0f;
 		float value = (float)PenaltyCalculationSupport.calculatePenalty(unknown, reference, window, penaltyCalculationLevelFactor, maxValue);
-		assertEquals(0.0f, value); // windowRangeCount is < 1
+		assertEquals(0.0f, value, 0); // windowRangeCount is < 1
 	}
 
+	@Test
 	public void test2() {
 
 		float unknown = 1397.0f;
@@ -47,9 +39,10 @@ public class PenaltyCalculationSupport_3_Test extends TestCase {
 		float penaltyCalculationLevelFactor = 5.0f;
 		float maxValue = 30.0f;
 		float value = (float)PenaltyCalculationSupport.calculatePenalty(unknown, reference, window, penaltyCalculationLevelFactor, maxValue);
-		assertEquals(0.0f, value); // windowRangeCount is 1
+		assertEquals(0.0f, value, 0); // windowRangeCount is 1
 	}
 
+	@Test
 	public void test3() {
 
 		float unknown = 1397.0f;
@@ -58,9 +51,10 @@ public class PenaltyCalculationSupport_3_Test extends TestCase {
 		float penaltyCalculationLevelFactor = 5.0f;
 		float maxValue = 30.0f;
 		float value = (float)PenaltyCalculationSupport.calculatePenalty(unknown, reference, window, penaltyCalculationLevelFactor, maxValue);
-		assertEquals(0.5f, value); // windowRangeCount is 1.1
+		assertEquals(0.5f, value, 0); // windowRangeCount is 1.1
 	}
 
+	@Test
 	public void test4() {
 
 		float unknown = 1397.0f;
@@ -69,9 +63,10 @@ public class PenaltyCalculationSupport_3_Test extends TestCase {
 		float penaltyCalculationLevelFactor = 5.0f;
 		float maxValue = 30.0f;
 		float value = (float)PenaltyCalculationSupport.calculatePenalty(unknown, reference, window, penaltyCalculationLevelFactor, maxValue);
-		assertEquals(1.0f, value); // windowRangeCount is 1.2
+		assertEquals(1.0f, value, 0); // windowRangeCount is 1.2
 	}
 
+	@Test
 	public void test5() {
 
 		float unknown = 1397.0f;
@@ -80,6 +75,6 @@ public class PenaltyCalculationSupport_3_Test extends TestCase {
 		float penaltyCalculationLevelFactor = 5.0f;
 		float maxValue = 30.0f;
 		float value = (float)PenaltyCalculationSupport.calculatePenalty(unknown, reference, window, penaltyCalculationLevelFactor, maxValue);
-		assertEquals(1.5f, value); // windowRangeCount is 1.3
+		assertEquals(1.5f, value, 0); // windowRangeCount is 1.3
 	}
 }

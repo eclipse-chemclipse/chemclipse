@@ -12,36 +12,33 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.implementation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.eclipse.chemclipse.model.core.IScan;
+import org.junit.Before;
+import org.junit.Test;
 
-public class Chromatogram_3_Test extends TestCase {
+public class Chromatogram_3_Test {
 
 	private Chromatogram chromatogram;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		chromatogram = new Chromatogram();
 		chromatogram.addScan(new Scan(1000.0f));
 		chromatogram.addScan(new Scan(1000.0f));
 		chromatogram.addScan(new Scan(1000.0f));
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testChromatogram_1() {
 
 		assertFalse(chromatogram.containsScanCycles());
 	}
 
+	@Test
 	public void testChromatogram_2() {
 
 		IScan scan = new Scan(1000.0f);
@@ -50,6 +47,7 @@ public class Chromatogram_3_Test extends TestCase {
 		assertFalse(chromatogram.containsScanCycles());
 	}
 
+	@Test
 	public void testChromatogram_3() {
 
 		IScan scan = new Scan(1000.0f);
@@ -58,6 +56,7 @@ public class Chromatogram_3_Test extends TestCase {
 		assertTrue(chromatogram.containsScanCycles());
 	}
 
+	@Test
 	public void testChromatogram_4() {
 
 		IScan scan = new Scan(1000.0f);

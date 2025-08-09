@@ -12,59 +12,57 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.identifier;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-public class ComparisonResult_1_Test extends TestCase {
+import org.junit.Test;
+
+public class ComparisonResult_1_Test {
 
 	private IComparisonResult comparisonResult = new ComparisonResult(80.0f);
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertNotNull(comparisonResult.getRatingSupplier());
 	}
 
+	@Test
 	public void test2() {
 
 		assertNotNull(ComparisonResult.COMPARISON_RESULT_NO_MATCH);
 	}
 
+	@Test
 	public void test3() {
 
 		IComparisonResult comparisonResult = ComparisonResult.COMPARISON_RESULT_NO_MATCH;
-		assertEquals(0.0f, comparisonResult.getMatchFactor());
+		assertEquals(0.0f, comparisonResult.getMatchFactor(), 0);
 		assertFalse(comparisonResult.isMatch());
-		//
+
 		comparisonResult.setMatch(true);
-		assertEquals(0.0f, comparisonResult.getMatchFactor());
+		assertEquals(0.0f, comparisonResult.getMatchFactor(), 0);
 		assertFalse(comparisonResult.isMatch());
 	}
 
+	@Test
 	public void test4() {
 
 		assertNotNull(ComparisonResult.COMPARISON_RESULT_BEST_MATCH);
 	}
 
+	@Test
 	public void test5() {
 
 		IComparisonResult comparisonResult = ComparisonResult.COMPARISON_RESULT_BEST_MATCH;
-		assertEquals(100.0f, comparisonResult.getMatchFactor());
+		assertEquals(100.0f, comparisonResult.getMatchFactor(), 0);
 		assertTrue(comparisonResult.isMatch());
-		//
+
 		comparisonResult.setPenalty(20.0f);
 		comparisonResult.setMatch(false);
-		assertEquals(100.0f, comparisonResult.getMatchFactor());
+		assertEquals(100.0f, comparisonResult.getMatchFactor(), 0);
 		assertTrue(comparisonResult.isMatch());
 	}
 }

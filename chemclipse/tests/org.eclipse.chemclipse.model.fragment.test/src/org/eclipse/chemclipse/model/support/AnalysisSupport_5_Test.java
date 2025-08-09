@@ -12,18 +12,18 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
 
+import static org.junit.Assert.assertThrows;
+
 import org.eclipse.chemclipse.model.exceptions.AnalysisSupportException;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class AnalysisSupport_5_Test {
 
-public class AnalysisSupport_5_Test extends TestCase {
-
+	@Test
 	public void testConstruct_1() {
 
-		try {
+		assertThrows(AnalysisSupportException.class, () -> {
 			new AnalysisSupport(null, 10);
-		} catch(AnalysisSupportException e) {
-			assertTrue("AnalysisSupportException", true);
-		}
+		});
 	}
 }

@@ -12,38 +12,44 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.support.ColumnField;
 import org.eclipse.chemclipse.model.implementation.Chromatogram;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ColumnUtil_1_Test extends TestCase {
+public class ColumnUtil_1_Test {
 
 	private IChromatogram chromatogram = new Chromatogram();
 
+	@Test
 	public void test1() {
 
 		assertEquals("", ColumnUtil.getColumnData(null, null, ""));
 	}
 
+	@Test
 	public void test2() {
 
 		assertEquals("", ColumnUtil.getColumnData(chromatogram, null, ""));
 	}
 
+	@Test
 	public void test3() {
 
 		assertEquals("", ColumnUtil.getColumnData(chromatogram, ColumnField.DATA_NAME, ""));
 	}
 
+	@Test
 	public void test4() {
 
 		assertEquals("DefaultData", ColumnUtil.getColumnData(chromatogram, ColumnField.DATA_NAME, "DefaultData"));
 	}
 
+	@Test
 	public void test5() {
 
 		ColumnField columnField = ColumnField.NAME;
@@ -52,6 +58,7 @@ public class ColumnUtil_1_Test extends TestCase {
 		assertEquals("Demo.ocb", ColumnUtil.getColumnData(chromatogram, columnField, ""));
 	}
 
+	@Test
 	public void test6() {
 
 		ColumnField columnField = ColumnField.DATA_NAME;
@@ -60,6 +67,7 @@ public class ColumnUtil_1_Test extends TestCase {
 		assertEquals("Test", ColumnUtil.getColumnData(chromatogram, columnField, ""));
 	}
 
+	@Test
 	public void test7() {
 
 		ColumnField columnField = ColumnField.SAMPLE_NAME;
@@ -68,6 +76,7 @@ public class ColumnUtil_1_Test extends TestCase {
 		assertEquals("Test", ColumnUtil.getColumnData(chromatogram, columnField, ""));
 	}
 
+	@Test
 	public void test8() {
 
 		ColumnField columnField = ColumnField.SAMPLE_GROUP;
@@ -76,6 +85,7 @@ public class ColumnUtil_1_Test extends TestCase {
 		assertEquals("Test", ColumnUtil.getColumnData(chromatogram, columnField, ""));
 	}
 
+	@Test
 	public void test9() {
 
 		ColumnField columnField = ColumnField.SHORT_INFO;
@@ -84,6 +94,7 @@ public class ColumnUtil_1_Test extends TestCase {
 		assertEquals("Test", ColumnUtil.getColumnData(chromatogram, columnField, ""));
 	}
 
+	@Test
 	public void test10() {
 
 		ColumnField columnField = ColumnField.MISC_INFO;
@@ -92,6 +103,7 @@ public class ColumnUtil_1_Test extends TestCase {
 		assertEquals("Test", ColumnUtil.getColumnData(chromatogram, columnField, ""));
 	}
 
+	@Test
 	public void test11() {
 
 		ColumnField columnField = ColumnField.TAGS;
@@ -100,12 +112,14 @@ public class ColumnUtil_1_Test extends TestCase {
 		assertEquals("Test", ColumnUtil.getColumnData(chromatogram, columnField, ""));
 	}
 
+	@Test
 	public void test12() {
 
 		ColumnField columnField = ColumnField.DEFAULT;
 		assertEquals("", ColumnUtil.getColumnData(chromatogram, columnField, ""));
 	}
 
+	@Test
 	public void test13() {
 
 		ColumnField columnField = ColumnField.COLUMN_DETAILS;

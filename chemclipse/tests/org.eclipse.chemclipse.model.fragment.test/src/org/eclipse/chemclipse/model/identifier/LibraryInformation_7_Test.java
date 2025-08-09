@@ -12,63 +12,53 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.identifier;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.columns.ISeparationColumn;
 import org.eclipse.chemclipse.model.columns.SeparationColumn;
 import org.eclipse.chemclipse.model.columns.SeparationColumnFactory;
 import org.eclipse.chemclipse.support.model.SeparationColumnType;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class LibraryInformation_7_Test {
 
-public class LibraryInformation_7_Test extends TestCase {
+	private ILibraryInformation libraryInformation = new LibraryInformation();;
 
-	private ILibraryInformation libraryInformation;
-	//
 	private ISeparationColumn separationColumn = SeparationColumnFactory.getSeparationColumn(SeparationColumnType.DEFAULT);
 	private ColumnIndexMarker columnIndexMarkerDefault = new ColumnIndexMarker(separationColumn);
-	//
+
 	private ISeparationColumn db5 = new SeparationColumn("DB-5", SeparationColumnType.NON_POLAR);
 	private ColumnIndexMarker columnIndexMarkerDB5 = new ColumnIndexMarker(db5);
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		libraryInformation = new LibraryInformation();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		libraryInformation = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
-		assertEquals(0.0f, libraryInformation.getRetentionIndex());
+		assertEquals(0.0f, libraryInformation.getRetentionIndex(), 0);
 		columnIndexMarkerDefault.setRetentionIndex(20.5f);
 		libraryInformation.add(columnIndexMarkerDefault);
 		assertEquals(1, libraryInformation.getColumnIndexMarkers().size());
-		assertEquals(20.5f, libraryInformation.getRetentionIndex());
+		assertEquals(20.5f, libraryInformation.getRetentionIndex(), 0);
 	}
 
+	@Test
 	public void test_2() {
 
 		libraryInformation.setRetentionIndex(12.1f);
-		assertEquals(12.1f, libraryInformation.getRetentionIndex());
+		assertEquals(12.1f, libraryInformation.getRetentionIndex(), 0);
 		columnIndexMarkerDefault.setRetentionIndex(0.0f);
 		libraryInformation.add(columnIndexMarkerDefault);
 		assertEquals(1, libraryInformation.getColumnIndexMarkers().size());
-		assertEquals(0.0f, libraryInformation.getRetentionIndex());
+		assertEquals(0.0f, libraryInformation.getRetentionIndex(), 0);
 	}
 
+	@Test
 	public void test_3() {
 
-		assertEquals(0.0f, libraryInformation.getRetentionIndex());
+		assertEquals(0.0f, libraryInformation.getRetentionIndex(), 0);
 		columnIndexMarkerDB5.setRetentionIndex(20.5f);
 		libraryInformation.add(columnIndexMarkerDB5);
 		assertEquals(2, libraryInformation.getColumnIndexMarkers().size());
-		assertEquals(0.0f, libraryInformation.getRetentionIndex());
-		assertEquals(20.5f, libraryInformation.getColumnIndexMarkers().get(1).getRetentionIndex());
+		assertEquals(0.0f, libraryInformation.getRetentionIndex(), 0);
+		assertEquals(20.5f, libraryInformation.getColumnIndexMarkers().get(1).getRetentionIndex(), 0);
 	}
 }

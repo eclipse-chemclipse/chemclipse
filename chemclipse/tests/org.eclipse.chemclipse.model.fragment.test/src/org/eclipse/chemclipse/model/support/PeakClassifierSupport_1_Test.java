@@ -12,26 +12,30 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.implementation.Peak;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class PeakClassifierSupport_1_Test extends TestCase {
+public class PeakClassifierSupport_1_Test {
 
 	private IPeak peak = new Peak();
 
+	@Test
 	public void test1() {
 
 		assertEquals("", PeakClassifierSupport.getClassifier(peak));
 	}
 
+	@Test
 	public void test2() {
 
 		peak.addClassifier("Validated");
 		assertEquals("Validated", PeakClassifierSupport.getClassifier(peak));
 	}
 
+	@Test
 	public void test3() {
 
 		peak.addClassifier("Validated");
@@ -39,6 +43,7 @@ public class PeakClassifierSupport_1_Test extends TestCase {
 		assertEquals("OK | Validated", PeakClassifierSupport.getClassifier(peak));
 	}
 
+	@Test
 	public void test4() {
 
 		peak.addClassifier("Validated");
@@ -47,6 +52,7 @@ public class PeakClassifierSupport_1_Test extends TestCase {
 		assertEquals("OK | Validated", PeakClassifierSupport.getClassifier(peak));
 	}
 
+	@Test
 	public void test5() {
 
 		peak.addClassifier("Validated");
@@ -55,6 +61,7 @@ public class PeakClassifierSupport_1_Test extends TestCase {
 		assertEquals("OK | Validated", PeakClassifierSupport.getClassifier(peak));
 	}
 
+	@Test
 	public void test6() {
 
 		peak.addClassifier("Validated");
@@ -63,6 +70,7 @@ public class PeakClassifierSupport_1_Test extends TestCase {
 		assertEquals("", PeakClassifierSupport.getClassifier(peak));
 	}
 
+	@Test
 	public void test7() {
 
 		peak.addClassifier("Validated");
@@ -71,6 +79,7 @@ public class PeakClassifierSupport_1_Test extends TestCase {
 		assertEquals("", PeakClassifierSupport.getClassifier(peak));
 	}
 
+	@Test
 	public void test8() {
 
 		peak.addClassifier("Validated");

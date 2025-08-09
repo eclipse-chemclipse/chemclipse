@@ -12,41 +12,35 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.history;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Date;
 
 import org.eclipse.chemclipse.support.history.EditInformation;
 import org.eclipse.chemclipse.support.history.IEditInformation;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class EditInformation_4_Test extends TestCase {
+public class EditInformation_4_Test {
 
 	private IEditInformation editInformation;
-	private Date date;
+	private Date date = new Date();
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
-		date = new Date();
 		editInformation = new EditInformation(date, null);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		editInformation = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetEditHistory_1() {
 
 		long millisecondsEdit = editInformation.getDate().getTime();
 		long millisecondsCheck = date.getTime();
-		long delta = millisecondsCheck - millisecondsEdit;
-		assertTrue("getDate", delta > -5 && delta < 5); // Sometimes the time deviates in the check by 1 ms
+		assertEquals("getDate", millisecondsCheck, millisecondsEdit, 5L); // Sometimes the time deviates in the check by 1 ms
 	}
 
+	@Test
 	public void testGetEditHistory_2() {
 
 		assertEquals("getDescription", EditInformation.NO_DESCRIPTION, editInformation.getDescription());

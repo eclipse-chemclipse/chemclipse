@@ -13,10 +13,12 @@
 package org.eclipse.chemclipse.model.baseline;
 
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
-public class BaselineSegment_5_Test extends TestCase {
+public class BaselineSegment_5_Test {
 
 	private IBaselineSegment segmentI;
 	private IBaselineSegment segmentII;
@@ -25,10 +27,9 @@ public class BaselineSegment_5_Test extends TestCase {
 	private float startBackgroundAbundance;
 	private float stopBackgroundAbundance;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		startRetentionTime = 4500;
 		stopRetentionTime = 10500;
 		startBackgroundAbundance = 500.0f;
@@ -41,39 +42,37 @@ public class BaselineSegment_5_Test extends TestCase {
 		segmentII.setStopBackgroundAbundance(stopBackgroundAbundance);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		segmentI = null;
-		segmentII = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testEquals_1() {
 
 		assertNotEquals("Equals", segmentI, segmentII);
 	}
 
+	@Test
 	public void testEquals_2() {
 
 		assertNotEquals("Equals", segmentII, segmentI);
 	}
 
+	@Test
 	public void testEquals_3() {
 
 		assertNotNull("Equals", segmentI);
 	}
 
+	@Test
 	public void testEquals_4() {
 
 		assertNotNull("Equals", segmentII);
 	}
 
+	@Test
 	public void testEquals_5() {
 
 		assertNotEquals("Equals", segmentI, new Object());
 	}
 
+	@Test
 	public void testEquals_6() {
 
 		assertNotEquals("Equals", segmentII, new Object());

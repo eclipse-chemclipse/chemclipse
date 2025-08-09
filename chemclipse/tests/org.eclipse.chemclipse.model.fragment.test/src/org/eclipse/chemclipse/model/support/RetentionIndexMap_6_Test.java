@@ -12,49 +12,50 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.implementation.Chromatogram;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class RetentionIndexMap_6_Test extends TestCase {
+public class RetentionIndexMap_6_Test {
 
 	private RetentionIndexMap retentionIndexMap = new RetentionIndexMap();
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		IChromatogram chromatogram = new Chromatogram();
 		retentionIndexMap.update(chromatogram);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals(-1, retentionIndexMap.getRetentionTime(1000));
 	}
 
+	@Test
 	public void test2() {
 
-		assertEquals(0.0f, retentionIndexMap.getRetentionIndex(1000));
+		assertEquals(0.0f, retentionIndexMap.getRetentionIndex(1000), 0);
 	}
 
+	@Test
 	public void test3() {
 
 		assertTrue(retentionIndexMap.isEmpty());
 	}
 
+	@Test
 	public void test4() {
 
 		assertEquals(-1, retentionIndexMap.getRetentionIndexStart());
 	}
 
+	@Test
 	public void test5() {
 
 		assertEquals(-1, retentionIndexMap.getRetentionIndexStop());

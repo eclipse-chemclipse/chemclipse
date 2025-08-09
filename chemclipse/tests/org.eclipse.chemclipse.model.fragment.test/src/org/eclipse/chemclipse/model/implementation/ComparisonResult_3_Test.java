@@ -13,6 +13,8 @@
 package org.eclipse.chemclipse.model.implementation;
 
 import org.eclipse.chemclipse.model.identifier.ComparisonResult;
+import org.junit.Before;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
@@ -22,59 +24,63 @@ public class ComparisonResult_3_Test extends TestCase {
 	private ComparisonResult comparisonResult;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		comparisonResult = new ComparisonResult(DEFAULT_VALUE, DEFAULT_VALUE, DEFAULT_VALUE, DEFAULT_VALUE, DEFAULT_VALUE);
 		comparisonResult.setPenalty(22.0f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals(78.0f, comparisonResult.getMatchFactor());
 	}
 
+	@Test
 	public void test2() {
 
 		assertEquals(78.0f, comparisonResult.getReverseMatchFactor());
 	}
 
+	@Test
 	public void test3() {
 
 		assertEquals(78.0f, comparisonResult.getMatchFactorDirect());
 	}
 
+	@Test
 	public void test4() {
 
 		assertEquals(78.0f, comparisonResult.getReverseMatchFactorDirect());
 	}
 
+	@Test
 	public void test5() {
 
 		assertEquals(DEFAULT_VALUE, comparisonResult.getProbability());
 	}
 
+	@Test
 	public void test6() {
 
 		assertEquals(DEFAULT_VALUE, comparisonResult.getMatchFactorNotAdjusted());
 	}
 
+	@Test
 	public void test7() {
 
 		assertEquals(DEFAULT_VALUE, comparisonResult.getReverseMatchFactorNotAdjusted());
 	}
 
+	@Test
 	public void test8() {
 
 		assertEquals(DEFAULT_VALUE, comparisonResult.getMatchFactorDirectNotAdjusted());
 	}
 
+	@Test
 	public void test9() {
 
 		assertEquals(DEFAULT_VALUE, comparisonResult.getReverseMatchFactorDirectNotAdjusted());

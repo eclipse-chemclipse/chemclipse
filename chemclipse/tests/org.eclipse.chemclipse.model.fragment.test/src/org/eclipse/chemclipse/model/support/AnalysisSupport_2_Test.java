@@ -12,64 +12,41 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+
 import org.eclipse.chemclipse.model.exceptions.AnalysisSupportException;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-/**
- * @author eselmeister
- */
-public class AnalysisSupport_2_Test extends TestCase {
+public class AnalysisSupport_2_Test {
 
 	private IAnalysisSupport support;
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		support = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testConstructor_1() {
 
-		try {
+		assertThrows(AnalysisSupportException.class, () -> {
 			support = new AnalysisSupport(0, 0);
-		} catch(AnalysisSupportException e) {
-			assertTrue("AnalysisSupportException", true);
-		}
+		});
 	}
 
+	@Test
 	public void testConstructor_2() {
 
-		try {
+		assertThrows(AnalysisSupportException.class, () -> {
 			support = new AnalysisSupport(-1, -1);
-		} catch(AnalysisSupportException e) {
-			assertTrue("AnalysisSupportException", true);
-		}
+		});
 	}
 
+	@Test
 	public void testConstructor_3() {
 
-		try {
-			support = new AnalysisSupport(3, 3);
-		} catch(AnalysisSupportException e) {
-			assertTrue("AnalysisSupportException", true);
-		}
+		support = new AnalysisSupport(3, 3);
 	}
 
 	public void testConstructor_4() {
 
-		try {
-			support = new AnalysisSupport(4, 3);
-		} catch(AnalysisSupportException e) {
-			assertFalse("AnalysisSupportException", true);
-		}
+		support = new AnalysisSupport(4, 3);
 		assertEquals("NumberOfAnalysisSegments", 2, support.getNumberOfAnalysisSegments());
 	}
 }

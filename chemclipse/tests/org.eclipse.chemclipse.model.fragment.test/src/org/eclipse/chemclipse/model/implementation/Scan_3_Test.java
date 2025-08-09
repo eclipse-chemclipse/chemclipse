@@ -12,34 +12,30 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.implementation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
 import org.eclipse.chemclipse.model.core.IScan;
+import org.junit.Before;
+import org.junit.Test;
 
-public class Scan_3_Test extends TestCase {
+public class Scan_3_Test {
 
 	private IScan scan;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		scan = new Scan(1000.0f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		scan = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
 		scan.setTimeSegmentId(3);
 		assertEquals(3, scan.getTimeSegmentId());
 	}
 
+	@Test
 	public void test_2() {
 
 		scan.setCycleNumber(3);

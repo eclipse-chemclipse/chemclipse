@@ -12,38 +12,35 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author eselmeister
  */
-public class AnalysisSupport_4_Test extends TestCase {
+public class AnalysisSupport_4_Test {
 
 	private IAnalysisSupport support;
 	private IScanRange scanRange;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		scanRange = new ScanRange(1, 100);
 		support = new AnalysisSupport(scanRange, 10);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-		support = null;
-	}
-
+	@Test
 	public void testGetNumberOfAnalysisSegments_1() {
 
 		assertEquals("NumberOfAnalysisSegments", 10, support.getNumberOfAnalysisSegments());
 	}
 
+	@Test
 	public void testSegment_1() {
 
 		List<IAnalysisSegment> segments = support.getAnalysisSegments();
@@ -53,6 +50,7 @@ public class AnalysisSupport_4_Test extends TestCase {
 		assertEquals("SegmentWidth", 10, segment.getWidth());
 	}
 
+	@Test
 	public void testSegment_2() {
 
 		List<IAnalysisSegment> segments = support.getAnalysisSegments();

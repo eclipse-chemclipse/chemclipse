@@ -12,58 +12,58 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.identifier;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.implementation.IdentificationTarget;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class IdentificationTarget_1_Test extends TestCase {
+public class IdentificationTarget_1_Test {
 
 	private IdentificationTarget identificationTarget;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		ILibraryInformation libraryInformation = new LibraryInformation();
 		IComparisonResult comparisonResult = new ComparisonResult(100.0f, 100.0f, 0.0f, 0.0f);
 		identificationTarget = new IdentificationTarget(libraryInformation, comparisonResult);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		identificationTarget = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals("", identificationTarget.getIdentifier());
 	}
 
+	@Test
 	public void test2() {
 
 		identificationTarget.setIdentifier("");
 		assertEquals("", identificationTarget.getIdentifier());
 	}
 
+	@Test
 	public void test3() {
 
 		identificationTarget.setIdentifier("ChemClipse");
 		assertEquals("ChemClipse", identificationTarget.getIdentifier());
 	}
 
+	@Test
 	public void test4() {
 
 		assertEquals(false, identificationTarget.isVerified());
 	}
 
+	@Test
 	public void test5() {
 
 		identificationTarget.setVerified(false);
 		assertEquals(false, identificationTarget.isVerified());
 	}
 
+	@Test
 	public void test6() {
 
 		identificationTarget.setVerified(true);

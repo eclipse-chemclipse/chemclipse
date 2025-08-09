@@ -12,72 +12,56 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
+
 import org.eclipse.chemclipse.numeric.core.IPoint;
 import org.eclipse.chemclipse.numeric.core.Point;
 import org.eclipse.chemclipse.numeric.exceptions.PointIsNullException;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class TwoPoints_2_Test extends TestCase {
+public class TwoPoints_2_Test {
 
 	private IPoint p1;
 	private IPoint p2;
 	private ITwoPoints points;
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
-	public void testConstructor_1() {
+	@Test
+	public void testConstructor_1() throws PointIsNullException {
 
 		p1 = new Point(5.0d, 10.0d);
 		p2 = new Point(7.0d, 3.0d);
-		try {
-			points = new TwoPoints(p1, p2);
-		} catch(PointIsNullException e) {
-			assertTrue("Constructor", false);
-		}
+		points = new TwoPoints(p1, p2);
 		assertNotNull(points);
 	}
 
+	@Test
 	public void testConstructor_2() {
 
-		p1 = null;
-		p2 = new Point(7.0d, 3.0d);
-		try {
+		assertThrows(PointIsNullException.class, () -> {
+			p1 = null;
+			p2 = new Point(7.0d, 3.0d);
 			points = new TwoPoints(p1, p2);
-		} catch(PointIsNullException e) {
-			assertTrue("Constructor", true);
-		}
+		});
 	}
 
+	@Test
 	public void testConstructor_3() {
 
-		p1 = new Point(5.0d, 10.0d);
-		p2 = null;
-		try {
+		assertThrows(PointIsNullException.class, () -> {
+			p1 = new Point(5.0d, 10.0d);
+			p2 = null;
 			points = new TwoPoints(p1, p2);
-		} catch(PointIsNullException e) {
-			assertTrue("Constructor", true);
-		}
+		});
 	}
 
+	@Test
 	public void testConstructor_4() {
 
-		p1 = null;
-		p2 = null;
-		try {
+		assertThrows(PointIsNullException.class, () -> {
+			p1 = null;
+			p2 = null;
 			points = new TwoPoints(p1, p2);
-		} catch(PointIsNullException e) {
-			assertTrue("Constructor", true);
-		}
+		});
 	}
 }

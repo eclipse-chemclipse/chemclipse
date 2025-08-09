@@ -12,20 +12,21 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.settings;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.implementation.Chromatogram;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ProcessSettings_2_Test extends TestCase {
+public class ProcessSettings_2_Test {
 
 	private ProcessSettingsTest processSettings = new ProcessSettingsTest();
 	private IChromatogram chromatogram;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		chromatogram = new Chromatogram();
 		chromatogram.setFile(null);
 		chromatogram.putHeaderData("Data Name", null);
@@ -33,12 +34,7 @@ public class ProcessSettings_2_Test extends TestCase {
 		chromatogram.putHeaderData("Short Info", null);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		String fileNamePattern = "{chromatogram_name}{extension}";
@@ -46,6 +42,7 @@ public class ProcessSettings_2_Test extends TestCase {
 		assertEquals("Chromatogram.ocb", fileName);
 	}
 
+	@Test
 	public void test2() {
 
 		String fileNamePattern = "{chromatogram_dataname}{extension}";
@@ -53,6 +50,7 @@ public class ProcessSettings_2_Test extends TestCase {
 		assertEquals("DataName.ocb", fileName);
 	}
 
+	@Test
 	public void test3() {
 
 		String fileNamePattern = "{chromatogram_samplegroup}{extension}";
@@ -60,6 +58,7 @@ public class ProcessSettings_2_Test extends TestCase {
 		assertEquals("SampleGroup.ocb", fileName);
 	}
 
+	@Test
 	public void test4() {
 
 		String fileNamePattern = "{chromatogram_shortinfo}{extension}";
@@ -67,6 +66,7 @@ public class ProcessSettings_2_Test extends TestCase {
 		assertEquals("ShortInfo.ocb", fileName);
 	}
 
+	@Test
 	public void test5() {
 
 		String fileNamePattern = "{chromatogram_dataname} {chromatogram_samplegroup} {chromatogram_shortinfo}{extension}";

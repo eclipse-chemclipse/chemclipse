@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.methods;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,24 +22,23 @@ import org.eclipse.chemclipse.processing.methods.IProcessEntry;
 import org.eclipse.chemclipse.processing.methods.ProcessEntry;
 import org.eclipse.chemclipse.processing.methods.ProcessEntryContainer;
 import org.eclipse.chemclipse.processing.methods.ProcessMethod;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ProcessMethod_4_Test extends TestCase {
+public class ProcessMethod_4_Test {
 
 	private ProcessMethod processMethod;
 	private IProcessEntry processEntry;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		Set<DataCategory> dataCategories = new HashSet<>();
 		dataCategories.add(DataCategory.MSD);
 		processMethod = new ProcessMethod(dataCategories);
 		processMethod.addProfile("Test");
 		processMethod.setActiveProfile("Test");
-		//
+
 		processEntry = new ProcessEntry(processMethod);
 		processEntry.setActiveProfile(ProcessEntryContainer.DEFAULT_PROFILE);
 		processEntry.setSettings("Hello World");
@@ -45,22 +46,18 @@ public class ProcessMethod_4_Test extends TestCase {
 		processEntry.setSettings("This is another setting");
 		processEntry.setActiveProfile(ProcessEntryContainer.DEFAULT_PROFILE);
 		processMethod.getEntries().add(processEntry);
-		//
+
 		processMethod.setActiveProfile("Test");
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals("Test", processMethod.getActiveProfile());
 		assertEquals("This is another setting", processEntry.getSettings());
 	}
 
+	@Test
 	public void test2() {
 
 		ProcessMethod processMethodNew = new ProcessMethod(processMethod);

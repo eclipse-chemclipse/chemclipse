@@ -21,10 +21,8 @@ import org.eclipse.chemclipse.model.implementation.PeakModel;
 import org.eclipse.chemclipse.model.implementation.Scan;
 import org.junit.Ignore;
 
-import junit.framework.TestCase;
-
 @Ignore
-public class AbstractPeakTestCase extends TestCase {
+public class AbstractPeakTestCase {
 
 	protected IPeak createPeak(float totalSignal, TreeMap<Integer, Float> retentionTimeIntensityMap, float startBackgroundAbundance, float stopBackgroundAbundance, boolean strictModel) {
 
@@ -32,7 +30,7 @@ public class AbstractPeakTestCase extends TestCase {
 		IPeakIntensityValues peakIntensityValues = create(retentionTimeIntensityMap);
 		IPeakModel peakModel = new PeakModel(peakMaximum, peakIntensityValues, startBackgroundAbundance, stopBackgroundAbundance);
 		peakModel.setStrictModel(strictModel);
-		//
+
 		return new Peak(peakModel);
 	}
 
@@ -44,7 +42,7 @@ public class AbstractPeakTestCase extends TestCase {
 			peakIntensityValues.addIntensityValue(entry.getKey(), entry.getValue());
 		}
 		peakIntensityValues.normalize();
-		//
+
 		return peakIntensityValues;
 	}
 }

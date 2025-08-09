@@ -12,39 +12,30 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.identifier.LibraryInformation;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class LibraryInformation_1_Test {
 
-public class LibraryInformation_1_Test extends TestCase {
+	private ILibraryInformation libraryInformation = new LibraryInformation();
 
-	private ILibraryInformation libraryInformation;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		libraryInformation = new LibraryInformation();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals("", libraryInformation.getReferenceIdentifier());
 	}
 
+	@Test
 	public void test2() {
 
 		libraryInformation.setReferenceIdentifier(null);
 		assertEquals("", libraryInformation.getReferenceIdentifier());
 	}
 
+	@Test
 	public void test3() {
 
 		libraryInformation.setReferenceIdentifier("ChemClipse");

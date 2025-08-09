@@ -12,27 +12,30 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.targets;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.implementation.Scan;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class UnknownTargetBuilder_1_Test {
 
-public class UnknownTargetBuilder_1_Test extends TestCase {
-
+	@Test
 	public void test1() {
 
 		TargetUnknownSettings settings = new TargetUnknownSettings();
 		settings.setTargetName("Toluene");
-		//
+
 		IScan scan = new Scan(42);
 		scan.setRetentionTime(5000);
 		scan.setRetentionIndex(100);
 		ILibraryInformation libraryInformation = UnknownTargetBuilder.getLibraryInformationUnknown(scan, settings, "");
-		//
+
 		assertEquals("Toluene []", libraryInformation.getName());
 	}
 
+	@Test
 	public void test2() {
 
 		TargetUnknownSettings settings = new TargetUnknownSettings();
@@ -43,12 +46,12 @@ public class UnknownTargetBuilder_1_Test extends TestCase {
 		settings.setMarkerStop("");
 		settings.setMatchQuality(85.0f);
 		settings.setTargetName("Toluene");
-		//
+
 		IScan scan = new Scan(42);
 		scan.setRetentionTime(5000);
 		scan.setRetentionIndex(100);
 		ILibraryInformation libraryInformation = UnknownTargetBuilder.getLibraryInformationUnknown(scan, settings, "");
-		//
+
 		assertEquals("Toluene", libraryInformation.getName());
 	}
 }

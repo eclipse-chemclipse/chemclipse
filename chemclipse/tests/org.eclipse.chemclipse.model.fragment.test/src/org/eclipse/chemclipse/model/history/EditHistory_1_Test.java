@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.history;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,10 +24,10 @@ import org.eclipse.chemclipse.support.history.EditInformation;
 import org.eclipse.chemclipse.support.history.EditInformationComparator;
 import org.eclipse.chemclipse.support.history.IEditHistory;
 import org.eclipse.chemclipse.support.history.IEditInformation;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class EditHistory_1_Test extends TestCase {
+public class EditHistory_1_Test {
 
 	private IEditHistory editHistory;
 	private IEditInformation editInformation;
@@ -34,10 +36,9 @@ public class EditHistory_1_Test extends TestCase {
 	private final String entry3 = "What are we doing now?";
 	private int sleepTime = 100;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		editHistory = new EditHistory();
 		/*
 		 * Why do we need a Thread.sleep() here? If the EditInformation objects
@@ -56,14 +57,7 @@ public class EditHistory_1_Test extends TestCase {
 		Thread.sleep(sleepTime);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		editHistory = null;
-		editInformation = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetEditHistory_1() {
 
 		List<IEditInformation> history = new ArrayList<>(editHistory);
@@ -72,6 +66,7 @@ public class EditHistory_1_Test extends TestCase {
 		assertEquals("3rd entry", entry3, history.get(2).getDescription());
 	}
 
+	@Test
 	public void testGetEditHistory_2() {
 
 		List<IEditInformation> history = new ArrayList<>(editHistory);
@@ -81,6 +76,7 @@ public class EditHistory_1_Test extends TestCase {
 		assertEquals("3rd entry", entry3, history.get(2).getDescription());
 	}
 
+	@Test
 	public void testGetEditHistory_3() {
 
 		List<IEditInformation> history = new ArrayList<>(editHistory);

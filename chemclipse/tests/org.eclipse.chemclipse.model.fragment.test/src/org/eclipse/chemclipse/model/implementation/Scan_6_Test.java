@@ -12,45 +12,43 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.core.IScan;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class Scan_6_Test extends TestCase {
+public class Scan_6_Test {
 
 	private IScan scan;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		scan = new Scan(1000.0f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		scan = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
 		assertEquals(0, scan.getRelativeRetentionTime());
 	}
 
+	@Test
 	public void test_2() {
 
 		scan.setRelativeRetentionTime(-1);
 		assertEquals(0, scan.getRelativeRetentionTime());
 	}
 
+	@Test
 	public void test_3() {
 
 		scan.setRelativeRetentionTime(0);
 		assertEquals(0, scan.getRelativeRetentionTime());
 	}
 
+	@Test
 	public void test_4() {
 
 		scan.setRelativeRetentionTime(1);

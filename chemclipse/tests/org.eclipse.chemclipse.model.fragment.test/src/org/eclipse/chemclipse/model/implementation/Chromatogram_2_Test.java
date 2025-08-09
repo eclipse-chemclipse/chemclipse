@@ -12,31 +12,22 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.implementation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-public class Chromatogram_2_Test extends TestCase {
+import org.junit.Test;
 
-	private Chromatogram chromatogram;
+public class Chromatogram_2_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private Chromatogram chromatogram = new Chromatogram();
 
-		super.setUp();
-		chromatogram = new Chromatogram();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testChromatogram_1() {
 
 		assertFalse(chromatogram.isUnloaded());
 	}
 
+	@Test
 	public void testChromatogram_2() {
 
 		chromatogram.setUnloaded();

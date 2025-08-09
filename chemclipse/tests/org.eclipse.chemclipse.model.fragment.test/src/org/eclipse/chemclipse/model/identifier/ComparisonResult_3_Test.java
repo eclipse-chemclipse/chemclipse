@@ -12,35 +12,28 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.identifier;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class ComparisonResult_3_Test extends TestCase {
+import org.junit.Test;
+
+public class ComparisonResult_3_Test {
 
 	private IComparisonResult comparisonResult = new ComparisonResult(80.0f, 70.0f, 0.0f, 0.0f);
 	private IRatingSupplier ratingSupplier = comparisonResult.getRatingSupplier();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals("", ratingSupplier.getAdvise());
 	}
 
+	@Test
 	public void test2() {
 
-		assertEquals(75.0f, ratingSupplier.getScore());
+		assertEquals(75.0f, ratingSupplier.getScore(), 0);
 	}
 
+	@Test
 	public void test3() {
 
 		assertEquals(RatingStatus.AVERAGE, ratingSupplier.getStatus());

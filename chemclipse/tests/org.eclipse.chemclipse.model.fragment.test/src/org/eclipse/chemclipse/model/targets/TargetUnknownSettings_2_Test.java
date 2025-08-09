@@ -12,25 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.targets;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class TargetUnknownSettings_2_Test extends TestCase {
+import org.junit.Test;
 
-	private TargetUnknownSettings settings;
+public class TargetUnknownSettings_2_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private TargetUnknownSettings settings = new TargetUnknownSettings();
 
-		super.setUp();
-		settings = new TargetUnknownSettings();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		settings.setMarkerStart(null);
@@ -41,6 +31,7 @@ public class TargetUnknownSettings_2_Test extends TestCase {
 		assertEquals("(", settings.getMarkerStart());
 	}
 
+	@Test
 	public void test2() {
 
 		settings.setMarkerStop(null);
@@ -51,6 +42,7 @@ public class TargetUnknownSettings_2_Test extends TestCase {
 		assertEquals(")", settings.getMarkerStop());
 	}
 
+	@Test
 	public void test3() {
 
 		settings.setNumberTraces(-1);
@@ -61,6 +53,7 @@ public class TargetUnknownSettings_2_Test extends TestCase {
 		assertEquals(1, settings.getNumberTraces());
 	}
 
+	@Test
 	public void test4() {
 
 		settings.setTargetName(null);
@@ -71,6 +64,7 @@ public class TargetUnknownSettings_2_Test extends TestCase {
 		assertEquals("unknown", settings.getTargetName());
 	}
 
+	@Test
 	public void test5() {
 
 		settings.setIncludeIntensityPercent(true);
@@ -79,6 +73,7 @@ public class TargetUnknownSettings_2_Test extends TestCase {
 		assertEquals(false, settings.isIncludeIntensityPercent());
 	}
 
+	@Test
 	public void test6() {
 
 		settings.setIncludeRetentionIndex(true);
@@ -87,6 +82,7 @@ public class TargetUnknownSettings_2_Test extends TestCase {
 		assertEquals(false, settings.isIncludeRetentionIndex());
 	}
 
+	@Test
 	public void test7() {
 
 		settings.setIncludeRetentionTime(true);

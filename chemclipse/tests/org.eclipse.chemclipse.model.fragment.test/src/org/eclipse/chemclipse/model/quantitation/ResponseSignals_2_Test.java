@@ -12,18 +12,19 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.quantitation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.core.ISignal;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ResponseSignals_2_Test extends TestCase {
+public class ResponseSignals_2_Test {
 
 	IResponseSignals responseSignals = new ResponseSignals();
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		responseSignals.add(new ResponseSignal(ISignal.TOTAL_INTENSITY, 0.5d, 500));
 		responseSignals.add(new ResponseSignal(ISignal.TOTAL_INTENSITY, 1.0d, 1000));
 		responseSignals.add(new ResponseSignal(ISignal.TOTAL_INTENSITY, 2.5d, 2500));
@@ -32,39 +33,39 @@ public class ResponseSignals_2_Test extends TestCase {
 		responseSignals.add(new ResponseSignal(ISignal.TOTAL_INTENSITY, 10.0d, 10000));
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
-		assertEquals(500.0d, responseSignals.getMinResponseValue());
+		assertEquals(500.0d, responseSignals.getMinResponseValue(), 0);
 	}
 
+	@Test
 	public void test2() {
 
-		assertEquals(10000.0d, responseSignals.getMaxResponseValue());
+		assertEquals(10000.0d, responseSignals.getMaxResponseValue(), 0);
 	}
 
+	@Test
 	public void test3() {
 
-		assertEquals(0.0d, responseSignals.getMinResponseValue(103));
+		assertEquals(0.0d, responseSignals.getMinResponseValue(103), 0);
 	}
 
+	@Test
 	public void test4() {
 
-		assertEquals(0.0d, responseSignals.getMaxResponseValue(103));
+		assertEquals(0.0d, responseSignals.getMaxResponseValue(103), 0);
 	}
 
+	@Test
 	public void test5() {
 
-		assertEquals(0.0d, responseSignals.getMinResponseValue(104));
+		assertEquals(0.0d, responseSignals.getMinResponseValue(104), 0);
 	}
 
+	@Test
 	public void test6() {
 
-		assertEquals(0.0d, responseSignals.getMaxResponseValue(104));
+		assertEquals(0.0d, responseSignals.getMaxResponseValue(104), 0);
 	}
 }

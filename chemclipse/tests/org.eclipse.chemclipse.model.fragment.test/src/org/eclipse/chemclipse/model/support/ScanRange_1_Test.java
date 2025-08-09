@@ -12,83 +12,75 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 /**
  * Tests the class IonRange.
- * 
- * @author eselmeister
  */
-public class ScanRange_1_Test extends TestCase {
+public class ScanRange_1_Test {
 
-	private IScanRange scanRange;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		scanRange = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testSetup_1() {
 
-		scanRange = new ScanRange(1, 5);
+		IScanRange scanRange = new ScanRange(1, 5);
 		assertEquals("startScan", 1, scanRange.getStartScan());
 		assertEquals("stopScan", 5, scanRange.getStopScan());
 	}
 
+	@Test
 	public void testSetup_2() {
 
-		scanRange = new ScanRange(5, 1);
+		IScanRange scanRange = new ScanRange(5, 1);
 		assertEquals("startScan", 1, scanRange.getStartScan());
 		assertEquals("stopScan", 5, scanRange.getStopScan());
 		assertEquals("width", 5, scanRange.getWidth());
 	}
 
+	@Test
 	public void testSetup_3() {
 
-		scanRange = new ScanRange(0, 5);
+		IScanRange scanRange = new ScanRange(0, 5);
 		assertEquals("startScan", IScanRange.MIN_SCAN, scanRange.getStartScan());
 		assertEquals("stopScan", 5, scanRange.getStopScan());
 		assertEquals("width", 5, scanRange.getWidth());
 	}
 
+	@Test
 	public void testSetup_4() {
 
-		scanRange = new ScanRange(1, 0);
+		IScanRange scanRange = new ScanRange(1, 0);
 		assertEquals("startScan", 1, scanRange.getStartScan());
 		assertEquals("stopScan", IScanRange.MIN_SCAN, scanRange.getStopScan());
 		assertEquals("width", 1, scanRange.getWidth());
 	}
 
+	@Test
 	public void testSetup_5() {
 
 		// Because IScanRange.MAX_SCAN+1 is negative.
-		scanRange = new ScanRange(IScanRange.MAX_SCAN + 1, 5);
+		IScanRange scanRange = new ScanRange(IScanRange.MAX_SCAN + 1, 5);
 		assertEquals("startScan", 1, scanRange.getStartScan());
 		assertEquals("stopScan", 5, scanRange.getStopScan());
 		assertEquals("width", 5, scanRange.getWidth());
 	}
 
+	@Test
 	public void testSetup_6() {
 
 		// Because IScanRange.MAX_SCAN+1 is negative.
-		scanRange = new ScanRange(1, IScanRange.MAX_SCAN + 1);
+		IScanRange scanRange = new ScanRange(1, IScanRange.MAX_SCAN + 1);
 		assertEquals("startScan", 1, scanRange.getStartScan());
 		assertEquals("stopScan", 1, scanRange.getStopScan());
 		assertEquals("width", 1, scanRange.getWidth());
 	}
 
+	@Test
 	public void testSetup_7() {
 
 		// Because IScanRange.MAX_SCAN+1 is negative.
-		scanRange = new ScanRange(-1, IScanRange.MAX_SCAN + 1);
+		IScanRange scanRange = new ScanRange(-1, IScanRange.MAX_SCAN + 1);
 		assertEquals("startScan", 1, scanRange.getStartScan());
 		assertEquals("stopScan", IScanRange.MAX_SCAN, scanRange.getStopScan());
 		assertEquals("width", IScanRange.MAX_SCAN, scanRange.getWidth());

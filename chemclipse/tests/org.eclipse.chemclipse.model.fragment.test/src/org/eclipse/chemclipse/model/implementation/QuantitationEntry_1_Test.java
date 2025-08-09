@@ -12,49 +12,43 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.quantitation.IQuantitationEntry;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class QuantitationEntry_1_Test extends TestCase {
+public class QuantitationEntry_1_Test {
 
 	private IQuantitationEntry quantitationEntry = new QuantitationEntry("Styrene", 10.0d, "mg/kg", 5000.8d);
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals("", quantitationEntry.getDescription());
 	}
 
+	@Test
 	public void test2() {
 
 		quantitationEntry.appendDescription(null);
 		assertEquals("", quantitationEntry.getDescription());
 	}
 
+	@Test
 	public void test3() {
 
 		quantitationEntry.appendDescription("");
 		assertEquals("", quantitationEntry.getDescription());
 	}
 
+	@Test
 	public void test4() {
 
 		quantitationEntry.appendDescription("Test");
 		assertEquals("Test", quantitationEntry.getDescription());
 	}
 
+	@Test
 	public void test5() {
 
 		quantitationEntry.appendDescription("Test");
@@ -62,6 +56,7 @@ public class QuantitationEntry_1_Test extends TestCase {
 		assertEquals("Test", quantitationEntry.getDescription());
 	}
 
+	@Test
 	public void test6() {
 
 		quantitationEntry.appendDescription("Test");
@@ -69,6 +64,7 @@ public class QuantitationEntry_1_Test extends TestCase {
 		assertEquals("Test | Demo", quantitationEntry.getDescription());
 	}
 
+	@Test
 	public void test7() {
 
 		quantitationEntry.appendDescription("Test");

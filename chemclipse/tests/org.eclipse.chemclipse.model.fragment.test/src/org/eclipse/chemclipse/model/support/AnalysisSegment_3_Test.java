@@ -12,18 +12,20 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class AnalysisSegment_3_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class AnalysisSegment_3_Test {
 
 	private IAnalysisSegment segment;
 	private final int startScan = -5;
 	private final int segmentWidth = -5;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		segment = new AnalysisSegment(startScan, segmentWidth) {
 
 			@Override
@@ -40,23 +42,19 @@ public class AnalysisSegment_3_Test extends TestCase {
 		};
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		segment = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetStartScan_1() {
 
 		assertEquals("StartScan", 0, segment.getStartScan());
 	}
 
+	@Test
 	public void testGetStopScan_1() {
 
 		assertEquals("StopScan", 0, segment.getStopScan());
 	}
 
+	@Test
 	public void testGetSegmentWidth_1() {
 
 		assertEquals("SegmentWidth", 0, segment.getWidth());

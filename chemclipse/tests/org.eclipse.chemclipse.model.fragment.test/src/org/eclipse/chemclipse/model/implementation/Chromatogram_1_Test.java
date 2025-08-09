@@ -12,33 +12,23 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.model.core.IMeasurementResult;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class Chromatogram_1_Test {
 
-public class Chromatogram_1_Test extends TestCase {
+	private Chromatogram chromatogram = new Chromatogram();
 
-	private Chromatogram chromatogram;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		chromatogram = new Chromatogram();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testChromatogram_1() {
 
 		assertEquals(0, chromatogram.getMeasurementResults().size());
 	}
 
+	@Test
 	public void testChromatogram_2() {
 
 		String name = "test1.name";

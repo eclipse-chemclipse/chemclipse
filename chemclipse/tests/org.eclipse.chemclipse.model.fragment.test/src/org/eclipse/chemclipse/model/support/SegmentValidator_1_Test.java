@@ -12,25 +12,16 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-public class SegmentValidator_1_Test extends TestCase {
+import org.junit.Test;
 
-	private SegmentValidatorClassic validator;
+public class SegmentValidator_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private SegmentValidatorClassic validator = new SegmentValidatorClassic();
 
-		super.setUp();
-		validator = new SegmentValidatorClassic();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		/*
@@ -44,6 +35,7 @@ public class SegmentValidator_1_Test extends TestCase {
 		assertFalse(validator.acceptSegment(values, mean));
 	}
 
+	@Test
 	public void test2() {
 
 		/*
@@ -57,6 +49,7 @@ public class SegmentValidator_1_Test extends TestCase {
 		assertTrue(validator.acceptSegment(values, mean));
 	}
 
+	@Test
 	public void test3() {
 
 		/*
@@ -70,6 +63,7 @@ public class SegmentValidator_1_Test extends TestCase {
 		assertFalse(validator.acceptSegment(values, mean));
 	}
 
+	@Test
 	public void test4() {
 
 		/*

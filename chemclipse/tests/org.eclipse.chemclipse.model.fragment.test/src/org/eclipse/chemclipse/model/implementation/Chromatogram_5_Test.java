@@ -12,34 +12,23 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.core.IChromatogram;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class Chromatogram_5_Test {
 
-public class Chromatogram_5_Test extends TestCase {
+	private IChromatogram chromatogram = new Chromatogram();
 
-	private IChromatogram chromatogram;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		chromatogram = new Chromatogram();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
 		assertEquals("", chromatogram.getMiscInfo());
 		assertEquals("", chromatogram.getMiscInfoSeparated());
 	}
 
+	@Test
 	public void test_2() {
 
 		chromatogram.setMiscInfo("Hello World");
@@ -48,6 +37,7 @@ public class Chromatogram_5_Test extends TestCase {
 		assertEquals("", chromatogram.getMiscInfoSeparated());
 	}
 
+	@Test
 	public void test_3() {
 
 		chromatogram.setMiscInfo("Hello World");
@@ -55,6 +45,7 @@ public class Chromatogram_5_Test extends TestCase {
 		assertEquals("", chromatogram.getMiscInfoSeparated());
 	}
 
+	@Test
 	public void test_4() {
 
 		chromatogram.setMiscInfo("Hello World!How ya doing?");
@@ -62,6 +53,7 @@ public class Chromatogram_5_Test extends TestCase {
 		assertEquals("How ya doing?", chromatogram.getMiscInfoSeparated());
 	}
 
+	@Test
 	public void test_5() {
 
 		chromatogram.setMiscInfo("Hello World!How ya doing?!What a day");
@@ -69,6 +61,7 @@ public class Chromatogram_5_Test extends TestCase {
 		assertEquals("How ya doing? What a day", chromatogram.getMiscInfoSeparated());
 	}
 
+	@Test
 	public void test_6() {
 
 		chromatogram.setMiscInfo("Hello World!How ya doing?!What a day!");

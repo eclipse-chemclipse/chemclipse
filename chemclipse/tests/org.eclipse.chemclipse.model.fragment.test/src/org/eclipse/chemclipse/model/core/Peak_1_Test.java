@@ -12,24 +12,31 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.TreeMap;
+
+import org.junit.Test;
 
 public class Peak_1_Test extends AbstractPeakTestCase {
 
 	private IPeak peak = createPeak();
 
+	@Test
 	public void test1() {
 
 		assertNotNull(peak);
 	}
 
+	@Test
 	public void test2() {
 
 		/*
 		 * 0.9992192 - strictModel: true
 		 * 1.0 - strictModel: false
 		 */
-		assertEquals(0.9992192f, peak.getPeakModel().getTailing());
+		assertEquals(0.9992192f, peak.getPeakModel().getTailing(), 0);
 	}
 
 	private IPeak createPeak() {
@@ -37,12 +44,12 @@ public class Peak_1_Test extends AbstractPeakTestCase {
 		float totalSignal = 239;
 		float startBackgroundAbundance = 0;
 		float stopBackgroundAbundance = 0;
-		//
+
 		TreeMap<Integer, Float> retentionTimeIntensityMap = new TreeMap<>();
 		retentionTimeIntensityMap.put(3032172, 0.0f);
 		retentionTimeIntensityMap.put(3033595, 118.0f);
 		retentionTimeIntensityMap.put(3035017, 0.0f);
-		//
+
 		return createPeak(totalSignal, retentionTimeIntensityMap, startBackgroundAbundance, stopBackgroundAbundance, true);
 	}
 }

@@ -12,40 +12,49 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.columns;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class SeparationColumnFactory_1_Test extends TestCase {
+import org.junit.Test;
 
+public class SeparationColumnFactory_1_Test {
+
+	@Test
 	public void test1() {
 
 		assertEquals("DEFAULT", SeparationColumnFactory.getSeparationColumnType(null).name());
 	}
 
+	@Test
 	public void test2() {
 
 		assertEquals("DEFAULT", SeparationColumnFactory.getSeparationColumnType("").name());
 	}
 
+	@Test
 	public void test3() {
 
 		assertEquals("POLAR", SeparationColumnFactory.getSeparationColumnType("POLAR").name());
 	}
 
+	@Test
 	public void test4() {
 
 		assertEquals("SEMI_POLAR", SeparationColumnFactory.getSeparationColumnType("SEMI_POLAR").name());
 	}
 
+	@Test
 	public void test5() {
 
 		assertEquals("SEMI_POLAR", SeparationColumnFactory.getSeparationColumnType("SEMIPOLAR").name());
 	}
 
+	@Test
 	public void test6() {
 
 		assertEquals("NON_POLAR", SeparationColumnFactory.getSeparationColumnType("NON_POLAR").name());
 	}
 
+	@Test
 	public void test7() {
 
 		assertEquals("NON_POLAR", SeparationColumnFactory.getSeparationColumnType("APOLAR").name());

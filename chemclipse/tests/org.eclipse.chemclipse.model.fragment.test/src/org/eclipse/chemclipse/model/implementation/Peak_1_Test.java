@@ -12,38 +12,29 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.core.IPeak;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class Peak_1_Test {
 
-public class Peak_1_Test extends TestCase {
+	private IPeak peak = new Peak();
 
-	private IPeak peak;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		peak = new Peak();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals(true, peak.isActiveForAnalysis());
 	}
 
+	@Test
 	public void test2() {
 
 		peak.setActiveForAnalysis(false);
 		assertEquals(false, peak.isActiveForAnalysis());
 	}
 
+	@Test
 	public void test3() {
 
 		peak.setActiveForAnalysis(true);

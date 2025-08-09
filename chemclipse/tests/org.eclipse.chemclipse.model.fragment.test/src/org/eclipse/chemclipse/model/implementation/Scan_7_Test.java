@@ -12,126 +12,136 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.support.model.SeparationColumnType;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class Scan_7_Test extends TestCase {
+public class Scan_7_Test {
 
 	private IScan scan;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		scan = new Scan(1000.0f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		scan = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
-		assertEquals(0.0f, scan.getRetentionIndex());
+		assertEquals(0.0f, scan.getRetentionIndex(), 0);
 	}
 
+	@Test
 	public void test_2() {
 
-		assertEquals(0.0f, scan.getRetentionIndex(SeparationColumnType.NON_POLAR));
+		assertEquals(0.0f, scan.getRetentionIndex(SeparationColumnType.NON_POLAR), 0);
 	}
 
+	@Test
 	public void test_3() {
 
-		assertEquals(0.0f, scan.getRetentionIndex(SeparationColumnType.POLAR));
+		assertEquals(0.0f, scan.getRetentionIndex(SeparationColumnType.POLAR), 0);
 	}
 
+	@Test
 	public void test_4() {
 
-		assertEquals(0.0f, scan.getRetentionIndex(SeparationColumnType.SEMI_POLAR));
+		assertEquals(0.0f, scan.getRetentionIndex(SeparationColumnType.SEMI_POLAR), 0);
 	}
 
+	@Test
 	public void test_5() {
 
 		scan.setRetentionIndex(0.1f);
-		assertEquals(0.1f, scan.getRetentionIndex());
+		assertEquals(0.1f, scan.getRetentionIndex(), 0);
 	}
 
+	@Test
 	public void test_6() {
 
 		scan.setRetentionIndex(SeparationColumnType.NON_POLAR, 0.1f);
-		assertEquals(0.1f, scan.getRetentionIndex(SeparationColumnType.NON_POLAR));
+		assertEquals(0.1f, scan.getRetentionIndex(SeparationColumnType.NON_POLAR), 0);
 	}
 
+	@Test
 	public void test_7() {
 
 		scan.setRetentionIndex(SeparationColumnType.POLAR, 0.1f);
-		assertEquals(0.1f, scan.getRetentionIndex(SeparationColumnType.POLAR));
+		assertEquals(0.1f, scan.getRetentionIndex(SeparationColumnType.POLAR), 0);
 	}
 
+	@Test
 	public void test_8() {
 
 		scan.setRetentionIndex(SeparationColumnType.SEMI_POLAR, 0.1f);
-		assertEquals(0.1f, scan.getRetentionIndex(SeparationColumnType.SEMI_POLAR));
+		assertEquals(0.1f, scan.getRetentionIndex(SeparationColumnType.SEMI_POLAR), 0);
 	}
 
+	@Test
 	public void test_9() {
 
 		scan.setRetentionIndex(0.1f);
 		scan.setRetentionIndex(0.0f);
-		assertEquals(0.0f, scan.getRetentionIndex());
+		assertEquals(0.0f, scan.getRetentionIndex(), 0);
 	}
 
+	@Test
 	public void test_10() {
 
 		scan.setRetentionIndex(SeparationColumnType.NON_POLAR, 0.1f);
 		scan.setRetentionIndex(SeparationColumnType.NON_POLAR, 0.0f);
-		assertEquals(0.0f, scan.getRetentionIndex(SeparationColumnType.NON_POLAR));
+		assertEquals(0.0f, scan.getRetentionIndex(SeparationColumnType.NON_POLAR), 0);
 	}
 
+	@Test
 	public void test_11() {
 
 		scan.setRetentionIndex(SeparationColumnType.POLAR, 0.1f);
 		scan.setRetentionIndex(SeparationColumnType.POLAR, 0.0f);
-		assertEquals(0.0f, scan.getRetentionIndex(SeparationColumnType.POLAR));
+		assertEquals(0.0f, scan.getRetentionIndex(SeparationColumnType.POLAR), 0);
 	}
 
+	@Test
 	public void test_12() {
 
 		scan.setRetentionIndex(SeparationColumnType.SEMI_POLAR, 0.1f);
 		scan.setRetentionIndex(SeparationColumnType.SEMI_POLAR, 0.0f);
-		assertEquals(0.0f, scan.getRetentionIndex(SeparationColumnType.SEMI_POLAR));
+		assertEquals(0.0f, scan.getRetentionIndex(SeparationColumnType.SEMI_POLAR), 0);
 	}
 
+	@Test
 	public void test_13() {
 
 		scan.setRetentionIndex(0.1f);
 		scan.setRetentionIndex(-0.1f);
-		assertEquals(0.0f, scan.getRetentionIndex());
+		assertEquals(0.0f, scan.getRetentionIndex(), 0);
 	}
 
+	@Test
 	public void test_14() {
 
 		scan.setRetentionIndex(SeparationColumnType.NON_POLAR, 0.1f);
 		scan.setRetentionIndex(SeparationColumnType.NON_POLAR, -0.1f);
-		assertEquals(0.0f, scan.getRetentionIndex(SeparationColumnType.NON_POLAR));
+		assertEquals(0.0f, scan.getRetentionIndex(SeparationColumnType.NON_POLAR), 0);
 	}
 
+	@Test
 	public void test_15() {
 
 		scan.setRetentionIndex(SeparationColumnType.POLAR, 0.1f);
 		scan.setRetentionIndex(SeparationColumnType.POLAR, -0.1f);
-		assertEquals(0.0f, scan.getRetentionIndex(SeparationColumnType.POLAR));
+		assertEquals(0.0f, scan.getRetentionIndex(SeparationColumnType.POLAR), 0);
 	}
 
+	@Test
 	public void test_16() {
 
 		scan.setRetentionIndex(SeparationColumnType.SEMI_POLAR, 0.1f);
 		scan.setRetentionIndex(SeparationColumnType.SEMI_POLAR, -0.1f);
-		assertEquals(0.0f, scan.getRetentionIndex(SeparationColumnType.SEMI_POLAR));
+		assertEquals(0.0f, scan.getRetentionIndex(SeparationColumnType.SEMI_POLAR), 0);
 	}
 }

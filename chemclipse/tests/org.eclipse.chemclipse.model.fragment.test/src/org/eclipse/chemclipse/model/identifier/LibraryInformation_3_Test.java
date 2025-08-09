@@ -12,37 +12,28 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.identifier;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class LibraryInformation_3_Test extends TestCase {
+import org.junit.Test;
 
-	private ILibraryInformation libraryInformation;
+public class LibraryInformation_3_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private ILibraryInformation libraryInformation = new LibraryInformation();
 
-		super.setUp();
-		libraryInformation = new LibraryInformation();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		libraryInformation = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
 		assertEquals("", libraryInformation.getDatabase());
 	}
 
+	@Test
 	public void test_2() {
 
 		libraryInformation.setDatabase(null);
 		assertEquals("", libraryInformation.getDatabase());
 	}
 
+	@Test
 	public void test_3() {
 
 		libraryInformation.setDatabase("ChemClipse");

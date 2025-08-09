@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.support;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IPeakIntensityValues;
 import org.eclipse.chemclipse.model.core.IPeakModel;
@@ -20,25 +22,17 @@ import org.eclipse.chemclipse.model.implementation.Peak;
 import org.eclipse.chemclipse.model.implementation.PeakIntensityValues;
 import org.eclipse.chemclipse.model.implementation.PeakModel;
 import org.eclipse.chemclipse.model.implementation.Scan;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class PeakQuantifierSupportTestCase extends TestCase {
+public class PeakQuantifierSupportTestCase {
 
 	private IPeak peak = null;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		peak = createPeak();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		peak = null;
-		super.tearDown();
 	}
 
 	public IPeak getPeak() {
@@ -46,7 +40,8 @@ public class PeakQuantifierSupportTestCase extends TestCase {
 		return peak;
 	}
 
-	public void test1() {
+	@Test
+	public void test0() {
 
 		assertNotNull(peak);
 	}
@@ -63,7 +58,7 @@ public class PeakQuantifierSupportTestCase extends TestCase {
 		peakIntensityValues.addIntensityValue(600, 40.f);
 		IPeakModel peakModel = new PeakModel(peakMaximum, peakIntensityValues, 0.0f, 0.0f);
 		peakModel.setStrictModel(true);
-		//
+
 		return new Peak(peakModel);
 	}
 }

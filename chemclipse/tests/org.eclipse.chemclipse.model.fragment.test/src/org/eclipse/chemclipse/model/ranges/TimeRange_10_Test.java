@@ -12,40 +12,30 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.ranges;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
-public class TimeRange_10_Test extends TestCase {
+import org.junit.Test;
 
-	@Override
-	protected void setUp() throws Exception {
+public class TimeRange_10_Test {
 
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test0a() {
 
-		try {
+		assertThrows(IllegalArgumentException.class, () -> {
 			new TimeRange("Test", -1, -1);
-		} catch(IllegalArgumentException e) {
-			assertTrue(true);
-		}
+		});
 	}
 
+	@Test
 	public void test0b() {
 
-		try {
+		assertThrows(IllegalArgumentException.class, () -> {
 			new TimeRange("Test", -1, -1, -1);
-		} catch(IllegalArgumentException e) {
-			assertTrue(true);
-		}
+		});
 	}
 
+	@Test
 	public void test1a() {
 
 		TimeRange timeRange = new TimeRange("Test", 0, 0);
@@ -54,6 +44,7 @@ public class TimeRange_10_Test extends TestCase {
 		assertEquals(0, timeRange.getStop());
 	}
 
+	@Test
 	public void test1b() {
 
 		TimeRange timeRange = new TimeRange("Test", 0, 0, 0);
@@ -62,6 +53,7 @@ public class TimeRange_10_Test extends TestCase {
 		assertEquals(0, timeRange.getStop());
 	}
 
+	@Test
 	public void test2a() {
 
 		TimeRange timeRange = new TimeRange("Test", 1, 1);
@@ -70,6 +62,7 @@ public class TimeRange_10_Test extends TestCase {
 		assertEquals(1, timeRange.getStop());
 	}
 
+	@Test
 	public void test2b() {
 
 		TimeRange timeRange = new TimeRange("Test", 1, 1, 1);

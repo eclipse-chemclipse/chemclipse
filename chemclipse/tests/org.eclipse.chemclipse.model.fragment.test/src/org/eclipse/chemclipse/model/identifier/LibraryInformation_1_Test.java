@@ -12,71 +12,68 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.identifier;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class LibraryInformation_1_Test extends TestCase {
+import org.junit.Test;
 
-	private ILibraryInformation libraryInformation;
+public class LibraryInformation_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private ILibraryInformation libraryInformation = new LibraryInformation();
 
-		super.setUp();
-		libraryInformation = new LibraryInformation();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		libraryInformation = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetName_1() {
 
 		assertEquals("Name", "", libraryInformation.getName());
 	}
 
+	@Test
 	public void testGetName_2() {
 
 		libraryInformation.setName("Philip");
 		assertEquals("Name", "Philip", libraryInformation.getName());
 	}
 
+	@Test
 	public void testGetName_3() {
 
 		libraryInformation.setName(null);
 		assertEquals("Name", "", libraryInformation.getName());
 	}
 
+	@Test
 	public void testGetComments_1() {
 
 		assertEquals("Comments", "", libraryInformation.getComments());
 	}
 
+	@Test
 	public void testGetComments_2() {
 
 		libraryInformation.setComments("Here are the test comments");
 		assertEquals("Comments", "Here are the test comments", libraryInformation.getComments());
 	}
 
+	@Test
 	public void testGetComments_3() {
 
 		libraryInformation.setComments(null);
 		assertEquals("Comments", "", libraryInformation.getComments());
 	}
 
+	@Test
 	public void testGetCasNumber_1() {
 
 		assertEquals("CAS Number", "", libraryInformation.getCasNumber());
 	}
 
+	@Test
 	public void testGetCasNumber_2() {
 
 		libraryInformation.setCasNumber("56-38-XX");
 		assertEquals("CAS Number", "56-38-XX", libraryInformation.getCasNumber());
 	}
 
+	@Test
 	public void testGetCasNumber_3() {
 
 		libraryInformation.setCasNumber(null);

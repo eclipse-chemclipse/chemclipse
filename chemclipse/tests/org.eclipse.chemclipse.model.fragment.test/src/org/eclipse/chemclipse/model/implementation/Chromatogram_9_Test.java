@@ -12,38 +12,36 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.implementation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class Chromatogram_9_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class Chromatogram_9_Test {
 
 	private Chromatogram chromatogram;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		chromatogram = new Chromatogram();
 		chromatogram.setConverterId("hello.world.converter");
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals("hello.world.converter", chromatogram.getConverterId());
 	}
 
+	@Test
 	public void test2() {
 
 		chromatogram.setFinalized(true);
 		assertEquals("", chromatogram.getConverterId());
 	}
 
+	@Test
 	public void test3() {
 
 		chromatogram.setFinalized(true);

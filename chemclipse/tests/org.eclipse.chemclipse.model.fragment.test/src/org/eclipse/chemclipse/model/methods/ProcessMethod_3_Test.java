@@ -12,41 +12,37 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.methods;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.chemclipse.processing.DataCategory;
 import org.eclipse.chemclipse.processing.methods.IProcessMethod;
 import org.eclipse.chemclipse.processing.methods.ProcessMethod;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ProcessMethod_3_Test extends TestCase {
+public class ProcessMethod_3_Test {
 
 	private IProcessMethod processMethod;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		Set<DataCategory> dataCategories = new HashSet<>();
 		dataCategories.add(DataCategory.MSD);
 		processMethod = new ProcessMethod(dataCategories);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		String profile = "Test";
 		processMethod.setActiveProfile(profile);
 		assertEquals(profile, processMethod.getActiveProfile());
 		assertEquals(2, processMethod.getProfiles().size());
-		//
+
 		IProcessMethod processMethod2 = new ProcessMethod(processMethod);
 		assertEquals(profile, processMethod2.getActiveProfile());
 		assertEquals(2, processMethod2.getProfiles().size());

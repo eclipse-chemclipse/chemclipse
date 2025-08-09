@@ -12,68 +12,66 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.implementation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-public class TripleQuadMethod_1_Test extends TestCase {
+import org.junit.Test;
 
-	private TripleQuadMethod tripleQuadMethod;
+public class TripleQuadMethod_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private TripleQuadMethod tripleQuadMethod = new TripleQuadMethod();
 
-		super.setUp();
-		tripleQuadMethod = new TripleQuadMethod();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		tripleQuadMethod = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals("QQQ", tripleQuadMethod.getInstrumentName());
 	}
 
+	@Test
 	public void test2() {
 
 		assertEquals("EI", tripleQuadMethod.getIonSource());
 	}
 
+	@Test
 	public void test3() {
 
 		assertEquals("ByChromatographTime", tripleQuadMethod.getStopMode());
 	}
 
+	@Test
 	public void test4() {
 
 		assertEquals(60000, tripleQuadMethod.getStopTime());
 	}
 
+	@Test
 	public void test5() {
 
 		assertEquals(360000, tripleQuadMethod.getSolventDelay());
 	}
 
+	@Test
 	public void test6() {
 
 		assertTrue(tripleQuadMethod.isCollisionGasOn());
 	}
 
+	@Test
 	public void test7() {
 
 		assertEquals(700, tripleQuadMethod.getTimeFilterPeakWidth());
 	}
 
+	@Test
 	public void test8() {
 
-		assertEquals(230.0d, tripleQuadMethod.getSourceHeater());
+		assertEquals(230.0d, tripleQuadMethod.getSourceHeater(), 0);
 	}
 
+	@Test
 	public void test9() {
 
-		assertEquals(5.0d, tripleQuadMethod.getSamplingRate());
+		assertEquals(5.0d, tripleQuadMethod.getSamplingRate(), 0);
 	}
 }

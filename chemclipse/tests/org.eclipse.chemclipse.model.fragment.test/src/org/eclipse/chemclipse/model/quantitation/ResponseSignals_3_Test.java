@@ -12,16 +12,18 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.quantitation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class ResponseSignals_3_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class ResponseSignals_3_Test {
 
 	IResponseSignals responseSignals = new ResponseSignals();
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		/*
 		 * 103
 		 */
@@ -42,39 +44,39 @@ public class ResponseSignals_3_Test extends TestCase {
 		responseSignals.add(new ResponseSignal(104, 10.0d, 1000));
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
-		assertEquals(50.0d, responseSignals.getMinResponseValue());
+		assertEquals(50.0d, responseSignals.getMinResponseValue(), 0);
 	}
 
+	@Test
 	public void test2() {
 
-		assertEquals(10000.0d, responseSignals.getMaxResponseValue());
+		assertEquals(10000.0d, responseSignals.getMaxResponseValue(), 0);
 	}
 
+	@Test
 	public void test3() {
 
-		assertEquals(500.0d, responseSignals.getMinResponseValue(103));
+		assertEquals(500.0d, responseSignals.getMinResponseValue(103), 0);
 	}
 
+	@Test
 	public void test4() {
 
-		assertEquals(10000.0d, responseSignals.getMaxResponseValue(103));
+		assertEquals(10000.0d, responseSignals.getMaxResponseValue(103), 0);
 	}
 
+	@Test
 	public void test5() {
 
-		assertEquals(50.0d, responseSignals.getMinResponseValue(104));
+		assertEquals(50.0d, responseSignals.getMinResponseValue(104), 0);
 	}
 
+	@Test
 	public void test6() {
 
-		assertEquals(1000.0d, responseSignals.getMaxResponseValue(104));
+		assertEquals(1000.0d, responseSignals.getMaxResponseValue(104), 0);
 	}
 }
