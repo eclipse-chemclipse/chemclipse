@@ -12,51 +12,36 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.amdis.converter.elu;
 
+import static org.junit.Assert.assertFalse;
+
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.chemclipse.converter.exceptions.FileIsEmptyException;
-import org.eclipse.chemclipse.converter.exceptions.FileIsNotReadableException;
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.TestPathHelper;
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.io.ELUReader;
+import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
+import org.eclipse.chemclipse.processing.core.IProcessingInfo;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ELUReader_1_ITest extends TestCase {
+public class ELUReader_1_ITest {
 
 	private ELUReader reader;
 	private File file;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		reader = new ELUReader();
 		String pathname = TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_PEAKS_1_ELU);
 		file = new File(pathname);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
+	@Test
+	public void testRead_1() throws IOException {
 
-		reader = null;
-		super.tearDown();
-	}
-
-	public void testRead_1() {
-
-		try {
-			reader.read(file, new NullProgressMonitor());
-		} catch(FileNotFoundException e) {
-			assertTrue(false);
-		} catch(FileIsNotReadableException e) {
-			assertTrue(false);
-		} catch(FileIsEmptyException e) {
-			assertTrue(false);
-		} catch(IOException e) {
-			assertTrue(false);
-		}
+		IProcessingInfo<IPeaksMSD> processingInfo = reader.read(file, new NullProgressMonitor());
+		assertFalse(processingInfo.hasErrorMessages());
 	}
 }

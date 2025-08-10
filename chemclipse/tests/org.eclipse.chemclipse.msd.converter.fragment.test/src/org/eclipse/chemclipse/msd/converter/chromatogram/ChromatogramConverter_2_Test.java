@@ -12,33 +12,22 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.chromatogram;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.converter.chromatogram.IChromatogramConverterSupport;
 import org.eclipse.chemclipse.converter.core.IConverterSupport;
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Testing the method getChromatogramConverterSupport() in
  * ChromatogramConverter.
  */
-public class ChromatogramConverter_2_Test extends TestCase {
+public class ChromatogramConverter_2_Test {
 
-	private IChromatogramConverterSupport support;
+	private IChromatogramConverterSupport support = ChromatogramConverterMSD.getInstance().getChromatogramConverterSupport();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		support = ChromatogramConverterMSD.getInstance().getChromatogramConverterSupport();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		support = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testFilterNames_1() {
 
 		String[] filterNames = support.getFilterNames(IConverterSupport.ALL_SUPPLIER);

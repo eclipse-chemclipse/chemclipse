@@ -12,100 +12,96 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.io;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
 import org.eclipse.chemclipse.support.model.SeparationColumnType;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class MassSpectraReader_2_Test {
 
-public class MassSpectraReader_2_Test extends TestCase {
+	private IMassSpectraReader massSpectraReader = new MassSpectraReader_Test_Impl();
+	private IRegularLibraryMassSpectrum massSpectrum = new RegularLibraryMassSpectrum_Test_Impl();
 
-	private IMassSpectraReader massSpectraReader;
-	private IRegularLibraryMassSpectrum massSpectrum;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		massSpectraReader = new MassSpectraReader_Test_Impl();
-		massSpectrum = new RegularLibraryMassSpectrum_Test_Impl();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		String value = null;
 		String delimiter = null;
-		//
+
 		massSpectraReader.extractRetentionIndices(massSpectrum, value, delimiter);
-		assertEquals(0.0f, massSpectrum.getRetentionIndex());
+		assertEquals(0.0f, massSpectrum.getRetentionIndex(), 0);
 		assertFalse(massSpectrum.hasAdditionalRetentionIndices());
 	}
 
+	@Test
 	public void test2() {
 
 		String value = "";
 		String delimiter = null;
-		//
+
 		massSpectraReader.extractRetentionIndices(massSpectrum, value, delimiter);
-		assertEquals(0.0f, massSpectrum.getRetentionIndex());
+		assertEquals(0.0f, massSpectrum.getRetentionIndex(), 0);
 		assertFalse(massSpectrum.hasAdditionalRetentionIndices());
 	}
 
+	@Test
 	public void test3() {
 
 		String value = null;
 		String delimiter = "";
-		//
+
 		massSpectraReader.extractRetentionIndices(massSpectrum, value, delimiter);
-		assertEquals(0.0f, massSpectrum.getRetentionIndex());
+		assertEquals(0.0f, massSpectrum.getRetentionIndex(), 0);
 		assertFalse(massSpectrum.hasAdditionalRetentionIndices());
 	}
 
+	@Test
 	public void test4() {
 
 		String value = "";
 		String delimiter = "";
-		//
+
 		massSpectraReader.extractRetentionIndices(massSpectrum, value, delimiter);
-		assertEquals(0.0f, massSpectrum.getRetentionIndex());
+		assertEquals(0.0f, massSpectrum.getRetentionIndex(), 0);
 		assertFalse(massSpectrum.hasAdditionalRetentionIndices());
 	}
 
+	@Test
 	public void test5() {
 
 		String value = "1160, 1632";
 		String delimiter = " ";
-		//
+
 		massSpectraReader.extractRetentionIndices(massSpectrum, value, delimiter);
-		assertEquals(1160.0f, massSpectrum.getRetentionIndex());
+		assertEquals(1160.0f, massSpectrum.getRetentionIndex(), 0);
 		assertTrue(massSpectrum.hasAdditionalRetentionIndices());
-		assertEquals(1160.0f, massSpectrum.getRetentionIndex(SeparationColumnType.NON_POLAR));
+		assertEquals(1160.0f, massSpectrum.getRetentionIndex(SeparationColumnType.NON_POLAR), 0);
 	}
 
+	@Test
 	public void test6() {
 
 		String value = "1160, 1632";
 		String delimiter = ", ";
-		//
+
 		massSpectraReader.extractRetentionIndices(massSpectrum, value, delimiter);
-		assertEquals(1160.0f, massSpectrum.getRetentionIndex());
+		assertEquals(1160.0f, massSpectrum.getRetentionIndex(), 0);
 		assertTrue(massSpectrum.hasAdditionalRetentionIndices());
-		assertEquals(1160.0f, massSpectrum.getRetentionIndex(SeparationColumnType.NON_POLAR));
-		assertEquals(1632.0f, massSpectrum.getRetentionIndex(SeparationColumnType.POLAR));
+		assertEquals(1160.0f, massSpectrum.getRetentionIndex(SeparationColumnType.NON_POLAR), 0);
+		assertEquals(1632.0f, massSpectrum.getRetentionIndex(SeparationColumnType.POLAR), 0);
 	}
 
+	@Test
 	public void test7() {
 
 		String value = "1160, ";
 		String delimiter = ", ";
-		//
+
 		massSpectraReader.extractRetentionIndices(massSpectrum, value, delimiter);
-		assertEquals(0.0f, massSpectrum.getRetentionIndex());
+		assertEquals(0.0f, massSpectrum.getRetentionIndex(), 0);
 		assertFalse(massSpectrum.hasAdditionalRetentionIndices());
 	}
 }

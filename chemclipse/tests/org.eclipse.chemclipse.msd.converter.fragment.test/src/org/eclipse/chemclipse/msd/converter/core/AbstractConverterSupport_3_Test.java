@@ -12,8 +12,12 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.core;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.converter.core.IConverterSupport;
 import org.eclipse.chemclipse.converter.core.IConverterSupportSetter;
+import org.junit.Before;
+import org.junit.Test;
 
 public class AbstractConverterSupport_3_Test extends AbstractConverterTestCase {
 
@@ -21,37 +25,36 @@ public class AbstractConverterSupport_3_Test extends AbstractConverterTestCase {
 	private String[] filterExtensions;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		converterSupport = getConverterSupport();
 		filterExtensions = converterSupport.getFilterExtensions(IConverterSupport.EXPORT_SUPPLIER);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetExportableFilterExtensions_1() {
 
 		int size = filterExtensions.length;
 		assertEquals(3, size); // Important ... otherwise 'Save As...' fails
 	}
 
+	@Test
 	public void testGetExportableFilterExtensions_2() {
 
 		String extension = filterExtensions[0];
 		assertEquals("*.CDF;*.cdf", extension);
 	}
 
+	@Test
 	public void testGetExportableFilterExtensions_3() {
 
 		String extension = filterExtensions[1];
 		assertEquals("*.xlsx;*.XLSX", extension);
 	}
 
+	@Test
 	public void testGetExportableFilterExtensions_4() {
 
 		String extension = filterExtensions[2];

@@ -21,10 +21,12 @@ public class NoConverterAvailableException extends Exception {
 	private static final long serialVersionUID = 629271519463581488L;
 
 	public NoConverterAvailableException() {
+
 		super();
 	}
 
 	public NoConverterAvailableException(String message) {
+
 		super(message);
 	}
 }

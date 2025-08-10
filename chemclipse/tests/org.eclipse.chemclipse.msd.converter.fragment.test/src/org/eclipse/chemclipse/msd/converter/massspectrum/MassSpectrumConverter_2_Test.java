@@ -12,49 +12,31 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.massspectrum;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException;
 import org.eclipse.chemclipse.msd.converter.database.DatabaseConverter;
 import org.eclipse.chemclipse.msd.converter.database.DatabaseConverterSupport;
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Testing the method getMassSpectrumConverterSupport() in
  * MassSpectrumConverter.
- * 
- * @author eselmeister
  */
-public class MassSpectrumConverter_2_Test extends TestCase {
+public class MassSpectrumConverter_2_Test {
 
-	private DatabaseConverterSupport support;
+	private DatabaseConverterSupport support = DatabaseConverter.getDatabaseConverterSupport();
 
-	@Override
-	protected void setUp() throws Exception {
+	@Test
+	public void testFilterNames_1() throws NoConverterAvailableException {
 
-		super.setUp();
-		support = DatabaseConverter.getDatabaseConverterSupport();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		support = null;
-		super.tearDown();
-	}
-
-	public void testFilterNames_1() {
-
-		try {
-			String[] filterNames = support.getFilterNames();
-			String result = "";
-			for(String name : filterNames) {
-				result += name + ";";
-			}
-			assertEquals("FilterName", true, result.contains("AMDIS Mass Spectra (*.msl)"));
-			assertEquals("FilterName", true, result.contains("NIST Text (*.msp)"));
-			// and others
-		} catch(NoConverterAvailableException e) {
-			assertTrue("NoConverterAvailableException", false);
+		String[] filterNames = support.getFilterNames();
+		String result = "";
+		for(String name : filterNames) {
+			result += name + ";";
 		}
+		assertEquals("FilterName", true, result.contains("AMDIS Mass Spectra (*.msl)"));
+		assertEquals("FilterName", true, result.contains("NIST Text (*.msp)"));
+		// and others
 	}
 }

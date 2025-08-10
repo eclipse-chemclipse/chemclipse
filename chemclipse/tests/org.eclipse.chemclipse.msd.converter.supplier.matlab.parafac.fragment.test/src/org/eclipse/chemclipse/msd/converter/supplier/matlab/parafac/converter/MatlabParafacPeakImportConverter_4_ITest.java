@@ -12,42 +12,31 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.matlab.parafac.converter;
 
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.msd.converter.supplier.matlab.parafac.TestPathHelper;
 import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class MatlabParafacPeakImportConverter_4_ITest {
 
-public class MatlabParafacPeakImportConverter_4_ITest extends TestCase {
+	private MatlabParafacPeakImportConverter converter = new MatlabParafacPeakImportConverter();
 
-	private MatlabParafacPeakImportConverter converter;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		converter = new MatlabParafacPeakImportConverter();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testImport_1() {
 
-		try {
+		assertThrows(NullPointerException.class, () -> {
 			File file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_EMPTY));
 			converter.convert(file, new NullProgressMonitor());
-		} catch(Exception e) {
-			assertTrue(true);
-		}
+		});
 	}
 
+	@Test
 	public void testImport_2() {
 
 		File file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_NOT_READABLE));
@@ -57,23 +46,21 @@ public class MatlabParafacPeakImportConverter_4_ITest extends TestCase {
 		file.setReadable(true);
 	}
 
+	@Test
 	public void testImport_3() {
 
-		try {
+		assertThrows(NullPointerException.class, () -> {
 			File file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_PEAKS));
 			converter.convert(file, new NullProgressMonitor());
-		} catch(Exception e) {
-			assertTrue(true);
-		}
+		});
 	}
 
+	@Test
 	public void testImport_4() {
 
-		try {
+		assertThrows(NullPointerException.class, () -> {
 			File file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_PEAKS_EXTENSION));
 			converter.convert(file, new NullProgressMonitor());
-		} catch(Exception e) {
-			assertTrue(true);
-		}
+		});
 	}
 }

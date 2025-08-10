@@ -12,8 +12,12 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.core;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.converter.core.IConverterSupport;
 import org.eclipse.chemclipse.converter.core.IConverterSupportSetter;
+import org.junit.Before;
+import org.junit.Test;
 
 public class AbstractConverterSupport_4_Test extends AbstractConverterTestCase {
 
@@ -21,37 +25,36 @@ public class AbstractConverterSupport_4_Test extends AbstractConverterTestCase {
 	private String[] filterNames;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		converterSupport = getConverterSupport();
 		filterNames = converterSupport.getFilterNames(IConverterSupport.EXPORT_SUPPLIER);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetExportableFilterNames_1() {
 
 		int size = filterNames.length;
 		assertEquals(3, size);
 	}
 
+	@Test
 	public void testGetExportableFilterNames_2() {
 
 		String extension = filterNames[0];
 		assertEquals("ANDI/AIA CDF Chromatogram (*.CDF)", extension);
 	}
 
+	@Test
 	public void testGetExportableFilterNames_3() {
 
 		String extension = filterNames[1];
 		assertEquals("Excel Chromatogram (*.xlsx)", extension);
 	}
 
+	@Test
 	public void testGetExportableFilterNames_4() {
 
 		String extension = filterNames[2];

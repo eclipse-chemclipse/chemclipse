@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.amdis.converter.msp;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
@@ -19,21 +22,17 @@ import org.eclipse.chemclipse.msd.converter.supplier.amdis.TestPathHelper;
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.io.ImportConverterMspTestCase;
 import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.Polarity;
+import org.junit.Before;
 import org.junit.Test;
 
 public class MassBankMS2ImportConverter_ITest extends ImportConverterMspTestCase {
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		importFile = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_MASSBANK_TEST_MSP));
 		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
 	}
 
 	@Test
@@ -49,8 +48,8 @@ public class MassBankMS2ImportConverter_ITest extends ImportConverterMspTestCase
 		IRegularLibraryMassSpectrum regularLibraryMassSpectrum = (IRegularLibraryMassSpectrum)massSpectra.getMassSpectrum(1);
 		assertNotNull(regularLibraryMassSpectrum);
 		assertEquals((short)2, regularLibraryMassSpectrum.getMassSpectrometer());
-		assertEquals(288.1225d, regularLibraryMassSpectrum.getPrecursorIon());
-		assertEquals(287.11575d, regularLibraryMassSpectrum.getNeutralMass());
+		assertEquals(288.1225d, regularLibraryMassSpectrum.getPrecursorIon(), 0);
+		assertEquals(287.11575d, regularLibraryMassSpectrum.getNeutralMass(), 0);
 		assertEquals("30(NCE)", regularLibraryMassSpectrum.getProperty(IRegularLibraryMassSpectrum.PROPERTY_COLLISION_ENERGY));
 		assertEquals(Polarity.POSITIVE, regularLibraryMassSpectrum.getPolarity());
 		assertEquals("[M+H]+", regularLibraryMassSpectrum.getProperty(IRegularLibraryMassSpectrum.PROPERTY_PRECURSOR_TYPE));

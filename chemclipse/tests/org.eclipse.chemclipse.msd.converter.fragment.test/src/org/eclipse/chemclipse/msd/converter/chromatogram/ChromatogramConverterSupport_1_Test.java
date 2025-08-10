@@ -13,60 +13,42 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.chromatogram;
 
+import static org.junit.Assert.assertThrows;
+
 import org.eclipse.chemclipse.converter.chromatogram.ChromatogramConverterSupport;
 import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException;
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * This TestCase analyzes if the class ChromatogramConverterSupport methods work
  * in a correct way. The behavior after initialization is especially analyzed in
  * this TestCase.
- * 
- * @author eselmeister
  */
-public class ChromatogramConverterSupport_1_Test extends TestCase {
+public class ChromatogramConverterSupport_1_Test {
 
-	private ChromatogramConverterSupport support;
+	private ChromatogramConverterSupport support = new ChromatogramConverterSupport(null);
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		support = new ChromatogramConverterSupport(null);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		support = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetConverterId_1() {
 
-		try {
+		assertThrows(NoConverterAvailableException.class, () -> {
 			support.getConverterId(1);
-		} catch(NoConverterAvailableException e) {
-			assertTrue(true);
-		}
+		});
 	}
 
+	@Test
 	public void testGetFilterExtensions_1() {
 
-		try {
+		assertThrows(NoConverterAvailableException.class, () -> {
 			support.getFilterExtensions();
-		} catch(NoConverterAvailableException e) {
-			assertTrue(true);
-		}
+		});
 	}
 
+	@Test
 	public void testGetFilterNames_1() {
 
-		try {
+		assertThrows(NoConverterAvailableException.class, () -> {
 			support.getFilterNames();
-		} catch(NoConverterAvailableException e) {
-			assertTrue(true);
-		}
+		});
 	}
 }

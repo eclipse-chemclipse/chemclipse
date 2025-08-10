@@ -14,22 +14,18 @@ package org.eclipse.chemclipse.msd.converter.core;
 
 import org.eclipse.chemclipse.converter.core.IConverterSupportSetter;
 import org.eclipse.chemclipse.converter.core.ISupplierSetter;
+import org.junit.Before;
 import org.junit.Ignore;
 
-import junit.framework.TestCase;
-
 @Ignore
-public class AbstractConverterTestCase extends TestCase {
+public class AbstractConverterTestCase {
 
-	private IConverterSupportSetter converterSupport;
-	private ISupplierSetter supplier;
+	private IConverterSupportSetter converterSupport = new DefaultConverterSupport();
+	private ISupplierSetter supplier = new DefaultSupplier();
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
-		converterSupport = new DefaultConverterSupport();
-		supplier = new DefaultSupplier();
 		// Supplier I
 		supplier.setId("org.eclipse.chemclipse.msd.converter.supplier.agilent");
 		supplier.setDescription("Reads Agilent Chromatograms.");
@@ -84,12 +80,6 @@ public class AbstractConverterTestCase extends TestCase {
 		supplier.setFileExtension(".MS");
 		supplier.setFileName("CHROM");
 		converterSupport.add(supplier);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
 	}
 
 	public IConverterSupportSetter getConverterSupport() {

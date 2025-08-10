@@ -12,11 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.core;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.List;
 
 import org.eclipse.chemclipse.converter.core.IConverterSupportSetter;
 import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
+import org.junit.Before;
+import org.junit.Test;
 
 public class AbstractConverterSupport_6_Test extends AbstractConverterTestCase {
 
@@ -25,81 +29,62 @@ public class AbstractConverterSupport_6_Test extends AbstractConverterTestCase {
 	private ISupplier actSupplier;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		converterSupport = getConverterSupport();
 		supplier = converterSupport.getSupplier();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetSupplier_1() {
 
 		assertEquals(5, supplier.size());
 	}
 
-	public void testGetSupplier_2() {
+	@Test
+	public void testGetSupplier_2() throws NoConverterAvailableException {
 
 		String id = "org.eclipse.chemclipse.msd.converter.supplier.agilent";
 		String filterName = "Agilent Chromatogram (*.D/DATA.MS)";
-		try {
-			actSupplier = converterSupport.getSupplier(id);
-		} catch(NoConverterAvailableException e) {
-			assertTrue("The failure NoConverterAvailableException should not be thrown here.", false);
-		}
+		actSupplier = converterSupport.getSupplier(id);
 		assertEquals(filterName, actSupplier.getFilterName());
 	}
 
-	public void testGetSupplier_3() {
+	@Test
+	public void testGetSupplier_3() throws NoConverterAvailableException {
 
 		String id = "org.eclipse.chemclipse.msd.converter.supplier.agilent.msd1";
 		String filterName = "Agilent Chromatogram (*.D/MSD1.MS)";
-		try {
-			actSupplier = converterSupport.getSupplier(id);
-		} catch(NoConverterAvailableException e) {
-			assertTrue("The failure NoConverterAvailableException should not be thrown here.", false);
-		}
+		actSupplier = converterSupport.getSupplier(id);
 		assertEquals(filterName, actSupplier.getFilterName());
 	}
 
-	public void testGetSupplier_4() {
+	@Test
+	public void testGetSupplier_4() throws NoConverterAvailableException {
 
 		String id = "net.openchrom.msd.converter.supplier.cdf";
 		String filterName = "ANDI/AIA CDF Chromatogram (*.CDF)";
-		try {
-			actSupplier = converterSupport.getSupplier(id);
-		} catch(NoConverterAvailableException e) {
-			assertTrue("The failure NoConverterAvailableException should not be thrown here.", false);
-		}
+		actSupplier = converterSupport.getSupplier(id);
 		assertEquals(filterName, actSupplier.getFilterName());
 	}
 
-	public void testGetSupplier_5() {
+	@Test
+	public void testGetSupplier_5() throws NoConverterAvailableException {
 
 		String id = "org.eclipse.chemclipse.msd.converter.supplier.excel";
 		String filterName = "Excel Chromatogram (*.xlsx)";
-		try {
-			actSupplier = converterSupport.getSupplier(id);
-		} catch(NoConverterAvailableException e) {
-			assertTrue("The failure NoConverterAvailableException should not be thrown here.", false);
-		}
+		actSupplier = converterSupport.getSupplier(id);
 		assertEquals(filterName, actSupplier.getFilterName());
 	}
 
-	public void testGetSupplier_6() {
+	@Test
+	public void testGetSupplier_6() throws NoConverterAvailableException {
 
 		String id = "org.eclipse.chemclipse.msd.converter.supplier.test";
 		String filterName = "Test Chromatogram (*.C/CHROM.MS)";
-		try {
-			actSupplier = converterSupport.getSupplier(id);
-		} catch(NoConverterAvailableException e) {
-			assertTrue("The failure NoConverterAvailableException should not be thrown here.", false);
-		}
+		actSupplier = converterSupport.getSupplier(id);
 		assertEquals(filterName, actSupplier.getFilterName());
 	}
 }

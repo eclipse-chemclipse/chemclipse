@@ -20,32 +20,21 @@ import org.eclipse.chemclipse.msd.converter.supplier.amdis.converter.msp.MSPData
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
 import org.junit.Ignore;
 
-import junit.framework.TestCase;
-
 @Ignore
-public class ImportConverterMspTestCase extends TestCase {
+public class ImportConverterMspTestCase {
 
 	protected File importFile;
 	protected IMassSpectra massSpectra;
 	protected IDatabaseImportConverter importConverter;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		importConverter = new MSPDatabaseImportConverter();
 		IProcessingInfo<IMassSpectra> processingInfo = importConverter.convert(importFile, new NullProgressMonitor());
 		massSpectra = processingInfo.getProcessingResult();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		importFile = null;
-		massSpectra = null;
-		importConverter = null;
-		super.tearDown();
 	}
 }

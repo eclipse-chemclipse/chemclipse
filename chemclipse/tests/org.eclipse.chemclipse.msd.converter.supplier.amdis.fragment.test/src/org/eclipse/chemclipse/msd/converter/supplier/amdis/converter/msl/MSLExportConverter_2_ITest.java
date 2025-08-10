@@ -12,6 +12,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.amdis.converter.msl;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.util.List;
 import java.util.Set;
@@ -32,6 +36,8 @@ import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.MassSpectra;
 import org.eclipse.chemclipse.support.model.SeparationColumnType;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Test;
 
 public class MSLExportConverter_2_ITest extends ImportConverterMslTestCase {
 
@@ -39,12 +45,13 @@ public class MSLExportConverter_2_ITest extends ImportConverterMslTestCase {
 	private File exportFile;
 	private IVendorLibraryMassSpectrum scanMSD;
 	private IMassSpectra scansMSD;
-	//
+
 	private IVendorLibraryMassSpectrum massSpectrum;
 	private ILibraryInformation libraryInformation;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		/*
 		 * Export
@@ -101,27 +108,20 @@ public class MSLExportConverter_2_ITest extends ImportConverterMslTestCase {
 		libraryInformation = massSpectrum.getLibraryInformation();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		exportConverter = null;
-		scansMSD = null;
-		scanMSD = null;
-		exportFile = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testImport_1() {
 
 		assertEquals(1, massSpectra.size());
 	}
 
+	@Test
 	public void testImport_2() {
 
 		assertNotNull(massSpectrum);
 		assertNotNull(libraryInformation);
 	}
 
+	@Test
 	public void testImport_3() {
 
 		assertEquals("Benzoic acid, 2-hydroxy-, ethyl ester", libraryInformation.getName());
@@ -129,32 +129,34 @@ public class MSLExportConverter_2_ITest extends ImportConverterMslTestCase {
 		assertEquals("Database", massSpectrum.getSource());
 		assertEquals(0, massSpectrum.getRetentionTime());
 		assertEquals(0, massSpectrum.getRelativeRetentionTime());
-		assertEquals(400.7f, massSpectrum.getRetentionIndex());
+		assertEquals(400.7f, massSpectrum.getRetentionIndex(), 0);
 		assertEquals(10, massSpectrum.getNumberOfIons());
-		//
-		assertEquals(120.0d, massSpectrum.getBasePeak());
-		assertEquals(1000.0f, massSpectrum.getBasePeakAbundance());
-		//
-		assertEquals(27.0d, massSpectrum.getLowestIon().getIon());
-		assertEquals(71.0f, massSpectrum.getLowestIon().getAbundance());
-		//
-		assertEquals(166.0d, massSpectrum.getHighestIon().getIon());
-		assertEquals(346.0f, massSpectrum.getHighestIon().getAbundance());
+
+		assertEquals(120.0d, massSpectrum.getBasePeak(), 0);
+		assertEquals(1000.0f, massSpectrum.getBasePeakAbundance(), 0);
+
+		assertEquals(27.0d, massSpectrum.getLowestIon().getIon(), 0);
+		assertEquals(71.0f, massSpectrum.getLowestIon().getAbundance(), 0);
+
+		assertEquals(166.0d, massSpectrum.getHighestIon().getIon(), 0);
+		assertEquals(346.0f, massSpectrum.getHighestIon().getAbundance(), 0);
 	}
 
+	@Test
 	public void testImport_4() {
 
 		List<String> casNumbers = libraryInformation.getCasNumbers();
-		//
+
 		assertEquals(2, casNumbers.size());
 		assertTrue(casNumbers.contains("118-61-6"));
 		assertTrue(casNumbers.contains("1476043-16-9"));
 	}
 
+	@Test
 	public void testImport_5() {
 
 		Set<String> synonyms = libraryInformation.getSynonyms();
-		//
+
 		assertEquals(7, synonyms.size());
 		assertTrue(synonyms.contains("o-(Ethoxycarbonyl)phenol"));
 		assertTrue(synonyms.contains("Salotan"));
@@ -165,29 +167,33 @@ public class MSLExportConverter_2_ITest extends ImportConverterMslTestCase {
 		assertTrue(synonyms.contains("Mesotol"));
 	}
 
+	@Test
 	public void testImport_6() {
 
 		assertEquals(libraryInformation.getInChI(), "1S/C9H10O3/c1-2-12-9(11)7-5-3-4-6-8(7)10/h3-6,10H,2H2,1H3");
 	}
 
+	@Test
 	public void testImport_7() {
 
 		assertEquals(libraryInformation.getInChIKey(), "GYCKQBWUSACYIF-UHFFFAOYSA-N");
 	}
 
+	@Test
 	public void testImport_8() {
 
 		List<IColumnIndexMarker> columnIndexMarkers = libraryInformation.getColumnIndexMarkers();
 		assertEquals(5, columnIndexMarkers.size()); // 1 is set by default
 	}
 
+	@Test
 	public void testImport_9() {
 
 		List<IColumnIndexMarker> columnIndexMarkers = libraryInformation.getColumnIndexMarkers();
-		//
+
 		IColumnIndexMarker columnIndexMarker = columnIndexMarkers.get(1);
 		ISeparationColumn separationColumn = columnIndexMarker.getSeparationColumn();
-		assertEquals(1832.0f, columnIndexMarker.getRetentionIndex());
+		assertEquals(1832.0f, columnIndexMarker.getRetentionIndex(), 0);
 		assertEquals("FFAP", separationColumn.getName());
 		assertEquals(SeparationColumnType.POLAR, separationColumn.getSeparationColumnType());
 		assertEquals(SeparationColumnPackaging.CAPILLARY, separationColumn.getSeparationColumnPackaging());
@@ -198,13 +204,14 @@ public class MSLExportConverter_2_ITest extends ImportConverterMslTestCase {
 		assertEquals("", separationColumn.getThickness());
 	}
 
+	@Test
 	public void testImport_10() {
 
 		List<IColumnIndexMarker> columnIndexMarkers = libraryInformation.getColumnIndexMarkers();
-		//
+
 		IColumnIndexMarker columnIndexMarker = columnIndexMarkers.get(2);
 		ISeparationColumn separationColumn = columnIndexMarker.getSeparationColumn();
-		assertEquals(1828.0f, columnIndexMarker.getRetentionIndex());
+		assertEquals(1828.0f, columnIndexMarker.getRetentionIndex(), 0);
 		assertEquals("Supelcowax 10", separationColumn.getName());
 		assertEquals(SeparationColumnType.POLAR, separationColumn.getSeparationColumnType());
 		assertEquals(SeparationColumnPackaging.CAPILLARY, separationColumn.getSeparationColumnPackaging());
@@ -215,13 +222,14 @@ public class MSLExportConverter_2_ITest extends ImportConverterMslTestCase {
 		assertEquals("", separationColumn.getThickness());
 	}
 
+	@Test
 	public void testImport11() {
 
 		List<IColumnIndexMarker> columnIndexMarkers = libraryInformation.getColumnIndexMarkers();
-		//
+
 		IColumnIndexMarker columnIndexMarker = columnIndexMarkers.get(3);
 		ISeparationColumn separationColumn = columnIndexMarker.getSeparationColumn();
-		assertEquals(1280.0f, columnIndexMarker.getRetentionIndex());
+		assertEquals(1280.0f, columnIndexMarker.getRetentionIndex(), 0);
 		assertEquals("HP-5", separationColumn.getName());
 		assertEquals(SeparationColumnType.NON_POLAR, separationColumn.getSeparationColumnType());
 		assertEquals(SeparationColumnPackaging.CAPILLARY, separationColumn.getSeparationColumnPackaging());
@@ -232,13 +240,14 @@ public class MSLExportConverter_2_ITest extends ImportConverterMslTestCase {
 		assertEquals("", separationColumn.getThickness());
 	}
 
+	@Test
 	public void testImport12() {
 
 		List<IColumnIndexMarker> columnIndexMarkers = libraryInformation.getColumnIndexMarkers();
 		//
 		IColumnIndexMarker columnIndexMarker = columnIndexMarkers.get(4);
 		ISeparationColumn separationColumn = columnIndexMarker.getSeparationColumn();
-		assertEquals(1281.0f, columnIndexMarker.getRetentionIndex());
+		assertEquals(1281.0f, columnIndexMarker.getRetentionIndex(), 0);
 		assertEquals("DB5", separationColumn.getName());
 		assertEquals(SeparationColumnType.NON_POLAR, separationColumn.getSeparationColumnType());
 		assertEquals(SeparationColumnPackaging.CAPILLARY, separationColumn.getSeparationColumnPackaging());
@@ -249,24 +258,28 @@ public class MSLExportConverter_2_ITest extends ImportConverterMslTestCase {
 		assertEquals("", separationColumn.getThickness());
 	}
 
+	@Test
 	public void testImport_11() {
 
 		assertEquals("PubChem", libraryInformation.getContributor());
 	}
 
+	@Test
 	public void testImport_12() {
 
 		assertEquals("C9H10O3", libraryInformation.getFormula());
 	}
 
+	@Test
 	public void testImport_13() {
 
-		assertEquals(166.0d, libraryInformation.getMolWeight());
+		assertEquals(166.0d, libraryInformation.getMolWeight(), 0);
 	}
 
+	@Test
 	public void testImport_14() {
 
-		assertEquals(166.17d, libraryInformation.getExactMass());
+		assertEquals(166.17d, libraryInformation.getExactMass(), 0);
 	}
 
 	private IColumnIndexMarker createColumnIndexMarker(float retentionIndex, String name, SeparationColumnType separationColumnType, SeparationColumnPackaging separationColumnPackaging, String calculationType, String length, String diameter, String phase, String thickness) {
@@ -276,7 +289,7 @@ public class MSLExportConverter_2_ITest extends ImportConverterMslTestCase {
 		separationColumn.setSeparationColumnPackaging(separationColumnPackaging);
 		separationColumn.setCalculationType(calculationType);
 		separationColumn.setThickness(thickness);
-		//
+
 		return new ColumnIndexMarker(separationColumn, retentionIndex);
 	}
 }

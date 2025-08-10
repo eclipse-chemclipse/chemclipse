@@ -12,34 +12,22 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.amdis.converter.msl;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.msd.converter.database.IDatabaseImportConverter;
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.TestPathHelper;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class MSLImportConverter_1_ITest {
 
-public class MSLImportConverter_1_ITest extends TestCase {
-
-	private IDatabaseImportConverter importConverter;
+	private IDatabaseImportConverter importConverter = new MSLDatabaseImportConverter();
 	private File importFile;
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		importConverter = new MSLDatabaseImportConverter();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		importConverter = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testExceptions_1() {
 
 		importFile = null;
@@ -47,6 +35,7 @@ public class MSLImportConverter_1_ITest extends TestCase {
 		assertTrue(processingInfo.hasErrorMessages());
 	}
 
+	@Test
 	public void testExceptions_2() {
 
 		importFile = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_EMPTY));
@@ -54,6 +43,7 @@ public class MSLImportConverter_1_ITest extends TestCase {
 		assertTrue(processingInfo.hasErrorMessages());
 	}
 
+	@Test
 	public void testExceptions_3() {
 
 		importFile = new File("nirvana");
@@ -61,6 +51,7 @@ public class MSLImportConverter_1_ITest extends TestCase {
 		assertTrue(processingInfo.hasErrorMessages());
 	}
 
+	@Test
 	public void testExceptions_4() {
 
 		importFile = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_NOT_READABLE));

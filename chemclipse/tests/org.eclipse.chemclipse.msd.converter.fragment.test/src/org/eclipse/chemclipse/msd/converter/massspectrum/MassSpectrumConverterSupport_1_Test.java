@@ -12,59 +12,41 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.massspectrum;
 
-import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException;
+import static org.junit.Assert.assertThrows;
 
-import junit.framework.TestCase;
+import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException;
+import org.junit.Test;
 
 /**
  * This TestCase analyses if the class MassSpectrumConverterSupport methods work
  * in a correct way. The behaviour after initialization is especially analysed
  * in this TestCase.
- * 
- * @author eselmeister
  */
-public class MassSpectrumConverterSupport_1_Test extends TestCase {
+public class MassSpectrumConverterSupport_1_Test {
 
-	private MassSpectrumConverterSupport support;
+	private MassSpectrumConverterSupport support = new MassSpectrumConverterSupport();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		support = new MassSpectrumConverterSupport();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		support = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetConverterId_1() {
 
-		try {
+		assertThrows(NoConverterAvailableException.class, () -> {
 			support.getConverterId(1);
-		} catch(NoConverterAvailableException e) {
-			assertTrue(true);
-		}
+		});
 	}
 
+	@Test
 	public void testGetFilterExtensions_1() {
 
-		try {
+		assertThrows(NoConverterAvailableException.class, () -> {
 			support.getFilterExtensions();
-		} catch(NoConverterAvailableException e) {
-			assertTrue(true);
-		}
+		});
 	}
 
+	@Test
 	public void testGetFilterNames_1() {
 
-		try {
+		assertThrows(NoConverterAvailableException.class, () -> {
 			support.getFilterNames();
-		} catch(NoConverterAvailableException e) {
-			assertTrue(true);
-		}
+		});
 	}
 }

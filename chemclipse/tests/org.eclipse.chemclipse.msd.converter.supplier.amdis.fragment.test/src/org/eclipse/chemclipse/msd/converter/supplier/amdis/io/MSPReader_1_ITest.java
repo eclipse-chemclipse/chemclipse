@@ -12,6 +12,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.amdis.io;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.util.Set;
 
@@ -20,54 +24,51 @@ import org.eclipse.chemclipse.msd.model.core.ILibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class MSPReader_1_ITest extends TestCase {
+public class MSPReader_1_ITest {
 
 	private MSPReader reader;
 	private File file;
 	private IMassSpectra massSpectra;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		reader = new MSPReader();
 		String pathname = TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_SYNONYMS);
 		file = new File(pathname);
 		massSpectra = reader.read(file, new NullProgressMonitor());
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		reader = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testRead_1() {
 
 		assertNotNull(massSpectra);
 	}
 
+	@Test
 	public void testRead_2() {
 
 		assertEquals(1, massSpectra.size());
 	}
 
+	@Test
 	public void testRead_3() {
 
 		IScanMSD massSpectrum = massSpectra.getMassSpectrum(1);
 		assertNotNull(massSpectrum);
 	}
 
+	@Test
 	public void testRead_4() {
 
 		IScanMSD massSpectrum = massSpectra.getMassSpectrum(1);
 		assertTrue(massSpectrum instanceof ILibraryMassSpectrum);
 	}
 
+	@Test
 	public void testRead_5() {
 
 		IScanMSD massSpectrum = massSpectra.getMassSpectrum(1);

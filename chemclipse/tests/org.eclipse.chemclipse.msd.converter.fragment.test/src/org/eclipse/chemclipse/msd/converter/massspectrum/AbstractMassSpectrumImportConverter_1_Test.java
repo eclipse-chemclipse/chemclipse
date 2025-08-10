@@ -12,16 +12,16 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.massspectrum;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.eclipse.chemclipse.msd.converter.TestPathHelper;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * This class validates the exceptions thrown by
@@ -30,59 +30,37 @@ import junit.framework.TestCase;
  * TestMassSpectrumImportConverter is instantiated which extends
  * AbstractMassSpectrumImportConverter.
  */
-public class AbstractMassSpectrumImportConverter_1_Test extends TestCase {
+public class AbstractMassSpectrumImportConverter_1_Test {
 
-	TestMassSpectrumImportConverter ic = new TestMassSpectrumImportConverter();
+	TestMassSpectrumImportConverter importConverter = new TestMassSpectrumImportConverter();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		ic = new TestMassSpectrumImportConverter();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		ic = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testFileNotFoundException_1() {
 
 		File file = new File("");
-		IProcessingInfo<IMassSpectra> processingInfo = ic.convert(file, new NullProgressMonitor());
+		IProcessingInfo<IMassSpectra> processingInfo = importConverter.convert(file, new NullProgressMonitor());
 		assertTrue(processingInfo.hasErrorMessages());
 	}
 
-	public void testFileIsNotReadableException_1() {
+	@Test
+	public void testFileIsNotReadableException_1() throws IOException {
 
 		File file = null;
-		try {
-			file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_MASSSPECTRUM_NOT_READABLE));
-			file.setReadable(false);
-			ic.convert(file, new NullProgressMonitor());
-		} catch(FileNotFoundException e) {
-			assertTrue("FileNotFoundException", false);
-		} catch(IOException e) {
-			assertTrue("IOException", false);
-		} finally {
-			if(file != null) {
-				file.setReadable(true);
-			}
+		file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_MASSSPECTRUM_NOT_READABLE));
+		file.setReadable(false);
+		IProcessingInfo<IMassSpectra> prcoessingInfo = importConverter.convert(file, new NullProgressMonitor());
+		assertTrue(prcoessingInfo.hasErrorMessages());
+		if(file != null) {
+			file.setReadable(true);
 		}
 	}
 
-	public void testFileIsEmptyException_1() {
+	@Test
+	public void testFileIsEmptyException_1() throws IOException {
 
 		File file = null;
-		try {
-			file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_MASSSPECTRUM_EMPTY));
-			ic.convert(file, new NullProgressMonitor());
-		} catch(FileNotFoundException e) {
-			assertTrue("FileNotFoundException", false);
-		} catch(IOException e) {
-			assertTrue("IOException", false);
-		}
+		file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_MASSSPECTRUM_EMPTY));
+		IProcessingInfo<IMassSpectra> prcoessingInfo = importConverter.convert(file, new NullProgressMonitor());
+		assertTrue(prcoessingInfo.hasErrorMessages());
 	}
 }

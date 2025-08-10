@@ -12,33 +12,35 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.amdis.converter.msl;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.TestPathHelper;
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.io.ImportConverterMslTestCase;
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.model.IVendorLibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
+import org.junit.Before;
+import org.junit.Test;
 
 public class Encoding_1_ITest extends ImportConverterMslTestCase {
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		importFile = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_ENCODING_MSL));
 		super.setUp();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testImport_1() {
 
 		assertEquals("MassSpectra", 2, massSpectra.size());
 	}
 
+	@Test
 	public void testImport_2() {
 
 		IScanMSD massSpectrum = massSpectra.getMassSpectrum(1);
@@ -47,6 +49,7 @@ public class Encoding_1_ITest extends ImportConverterMslTestCase {
 		assertEquals("Propylphenyl acetate te te", libraryMassSpectrum.getLibraryInformation().getName());
 	}
 
+	@Test
 	public void testImport_3() {
 
 		IScanMSD massSpectrum = massSpectra.getMassSpectrum(2);

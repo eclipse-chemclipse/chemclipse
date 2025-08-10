@@ -12,14 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.chromatogram;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 
 import org.eclipse.chemclipse.msd.converter.TestPathHelper;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * This class validates the exceptions thrown by
@@ -27,27 +28,12 @@ import junit.framework.TestCase;
  * Because AbstractChromatogramExportConverter is an abstract class,
  * TestChromatogramExportConverter is instantiated which extends
  * AbstractChromatogramExportConverter.
- * 
- * @author eselmeister
  */
-public class AbstractChromatogramExportConverter_1_Test extends TestCase {
+public class ChromatogramExportConverter_1_Test {
 
-	private TestChromatogramExportConverter ec;
+	private TestChromatogramExportConverter ec = new TestChromatogramExportConverter();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		ec = new TestChromatogramExportConverter();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		ec = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testFileNotFoundException_1() {
 
 		File file = null;
@@ -55,20 +41,16 @@ public class AbstractChromatogramExportConverter_1_Test extends TestCase {
 		assertTrue(processingInfo.hasErrorMessages());
 	}
 
-	public void testFileNotWritableException_1() {
+	@Test
+	public void testFileNotWritableException_1() throws IOException {
 
 		File file = null;
-		try {
-			file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_EXPORT_CHROMATOGRAM_NOT_WRITEABLE));
-			file.setWritable(false);
-			IProcessingInfo<File> processingInfo = ec.convert(file, null, new NullProgressMonitor());
-			assertTrue(processingInfo.hasErrorMessages());
-		} catch(IOException e) {
-			assertTrue("IOException", false);
-		} finally {
-			if(file != null) {
-				file.setWritable(true);
-			}
+		file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_EXPORT_CHROMATOGRAM_NOT_WRITEABLE));
+		file.setWritable(false);
+		IProcessingInfo<File> processingInfo = ec.convert(file, null, new NullProgressMonitor());
+		assertTrue(processingInfo.hasErrorMessages());
+		if(file != null) {
+			file.setWritable(true);
 		}
 	}
 }

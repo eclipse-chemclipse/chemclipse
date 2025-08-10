@@ -13,6 +13,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.amdis.converter.elu;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.PathResolver;
@@ -22,30 +25,21 @@ import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.exceptions.TypeCastException;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ELUReader_2_ITest extends TestCase {
+public class ELUReader_2_ITest {
 
 	private ELUReader reader;
 	private IProcessingInfo<IPeaksMSD> processingInfo;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		reader = new ELUReader();
 		String pathname = PathResolver.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_PEAKS_1_ELU);
 		File file = new File(pathname);
 		processingInfo = reader.read(file, new NullProgressMonitor());
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		reader = null;
-		super.tearDown();
 	}
 
 	@Test

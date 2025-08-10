@@ -12,37 +12,33 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.sirius.converter;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.msd.converter.supplier.sirius.TestPathHelper;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class SiriusImportConverter_1_ITest extends TestCase {
+public class SiriusImportConverter_1_ITest {
 
 	private SiriusImportConverter converter;
 	private File file;
 	private IMassSpectra massSpectra;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_BICUCULLINE));
 		converter = new SiriusImportConverter();
 		IProcessingInfo<IMassSpectra> processingInfo = converter.convert(file, new NullProgressMonitor());
 		massSpectra = processingInfo.getProcessingResult();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testSize() {
 
 		assertEquals(1, massSpectra.size());

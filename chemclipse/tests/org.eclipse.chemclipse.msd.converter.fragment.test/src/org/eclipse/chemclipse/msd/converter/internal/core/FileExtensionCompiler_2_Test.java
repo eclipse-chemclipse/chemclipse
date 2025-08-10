@@ -12,44 +12,37 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.internal.core;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.converter.support.FileExtensionCompiler;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class FileExtensionCompiler_2_Test extends TestCase {
+public class FileExtensionCompiler_2_Test {
 
 	private FileExtensionCompiler fileExtensionCompiler;
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testFileExtensionCompiler_1() {
 
 		fileExtensionCompiler = new FileExtensionCompiler("", true);
 		assertEquals("*", fileExtensionCompiler.getCompiledFileExtension());
 	}
 
+	@Test
 	public void testFileExtensionCompiler_2() {
 
 		fileExtensionCompiler = new FileExtensionCompiler("", false);
 		assertEquals("*", fileExtensionCompiler.getCompiledFileExtension());
 	}
 
+	@Test
 	public void testFileExtensionCompiler_3() {
 
 		fileExtensionCompiler = new FileExtensionCompiler(null, true);
 		assertEquals("*", fileExtensionCompiler.getCompiledFileExtension());
 	}
 
+	@Test
 	public void testFileExtensionCompiler_4() {
 
 		fileExtensionCompiler = new FileExtensionCompiler(null, false);

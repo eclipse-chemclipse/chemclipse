@@ -12,56 +12,51 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.internal.core;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.converter.support.FileExtensionCompiler;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class FileExtensionCompiler_1_Test extends TestCase {
+public class FileExtensionCompiler_1_Test {
 
 	private FileExtensionCompiler fileExtensionCompiler;
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testFileExtensionCompiler_1() {
 
 		fileExtensionCompiler = new FileExtensionCompiler(".cdf", true);
 		assertEquals("*.cdf;*.CDF", fileExtensionCompiler.getCompiledFileExtension());
 	}
 
+	@Test
 	public void testFileExtensionCompiler_2() {
 
 		fileExtensionCompiler = new FileExtensionCompiler(".cdf", false);
 		assertEquals("*.cdf", fileExtensionCompiler.getCompiledFileExtension());
 	}
 
+	@Test
 	public void testFileExtensionCompiler_3() {
 
 		fileExtensionCompiler = new FileExtensionCompiler(".XLSX", true);
 		assertEquals("*.XLSX;*.xlsx", fileExtensionCompiler.getCompiledFileExtension());
 	}
 
+	@Test
 	public void testFileExtensionCompiler_4() {
 
 		fileExtensionCompiler = new FileExtensionCompiler(".XLSX", false);
 		assertEquals("*.XLSX", fileExtensionCompiler.getCompiledFileExtension());
 	}
 
+	@Test
 	public void testFileExtensionCompiler_5() {
 
 		fileExtensionCompiler = new FileExtensionCompiler(".mzXML", true);
 		assertEquals("*.mzXML;*.mzxml;*.MZXML", fileExtensionCompiler.getCompiledFileExtension());
 	}
 
+	@Test
 	public void testFileExtensionCompiler_6() {
 
 		fileExtensionCompiler = new FileExtensionCompiler(".ionXML", false);

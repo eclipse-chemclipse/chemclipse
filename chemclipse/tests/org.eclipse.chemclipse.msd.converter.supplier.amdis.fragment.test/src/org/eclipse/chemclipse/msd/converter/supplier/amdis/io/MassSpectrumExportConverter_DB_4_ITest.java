@@ -23,13 +23,16 @@ import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.ScanMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
-import org.eclipse.chemclipse.processing.core.exceptions.TypeCastException;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 public class MassSpectrumExportConverter_DB_4_ITest extends MassSpectrumExportConverterTestCase {
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		exportFile = new File(PathResolver.getAbsolutePath(TestPathHelper.TESTDIR_EXPORT) + File.separator + TestPathHelper.TESTFILE_EXPORT_DB_1_MSL);
 		importFile = new File(PathResolver.getAbsolutePath(TestPathHelper.TESTDIR_EXPORT) + File.separator + TestPathHelper.TESTFILE_EXPORT_DB_1_MSL);
@@ -37,11 +40,13 @@ public class MassSpectrumExportConverter_DB_4_ITest extends MassSpectrumExportCo
 	}
 
 	@Override
-	protected void tearDown() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 
 		super.tearDown();
 	}
 
+	@Test
 	public void testExport_1() {
 
 		IIon ion;
@@ -54,11 +59,7 @@ public class MassSpectrumExportConverter_DB_4_ITest extends MassSpectrumExportCo
 		exportConverter.convert(exportFile, ms, false, new NullProgressMonitor());
 		exportConverter.convert(exportFile, ms, true, new NullProgressMonitor());
 		IProcessingInfo<?> processingInfo = importConverter.convert(importFile, new NullProgressMonitor());
-		try {
-			massSpectra = (IMassSpectra)processingInfo.getProcessingResult();
-		} catch(TypeCastException e) {
-			assertTrue("TypeCastException", false);
-		}
+		massSpectra = (IMassSpectra)processingInfo.getProcessingResult();
 		assertEquals("Size after", 2, massSpectra.size());
 	}
 }

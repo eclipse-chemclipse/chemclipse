@@ -12,45 +12,35 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.chromatogram;
 
-import org.eclipse.chemclipse.converter.chromatogram.ChromatogramSupplier;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import junit.framework.TestCase;
+import org.eclipse.chemclipse.converter.chromatogram.ChromatogramSupplier;
+import org.junit.Test;
 
 /**
  * Testing toString(), hashCode() and equals() of ChromatogramSupplier.
- * 
- * @author eselmeister
  */
-public class ChromatogramSupplier_2_Test extends TestCase {
+public class ChromatogramSupplier_2_Test {
 
-	private ChromatogramSupplier supplier;
+	private ChromatogramSupplier supplier = new ChromatogramSupplier();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		supplier = new ChromatogramSupplier();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		supplier = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testToString_1() {
 
 		String test = "org.eclipse.chemclipse.converter.chromatogram.ChromatogramSupplier[id=,description=,filterName=,fileExtension=,fileName=,directoryExtension=,isExportable=false,isImportable=false]";
 		assertEquals("toString", test, supplier.toString());
 	}
 
+	@Test
 	public void testEquals_1() {
 
 		ChromatogramSupplier anotherSupplier = new ChromatogramSupplier();
 		assertEquals("equals", true, supplier.equals(anotherSupplier));
 	}
 
+	@Test
 	public void testEquals_2() {
 
 		ChromatogramSupplier anotherSupplier = new ChromatogramSupplier();
@@ -80,6 +70,7 @@ public class ChromatogramSupplier_2_Test extends TestCase {
 		assertEquals("equals", true, supplier.equals(anotherSupplier));
 	}
 
+	@Test
 	public void testEquals_3() {
 
 		ChromatogramSupplier anotherSupplier = new ChromatogramSupplier();
@@ -109,35 +100,41 @@ public class ChromatogramSupplier_2_Test extends TestCase {
 		assertEquals("equals", true, anotherSupplier.equals(supplier));
 	}
 
+	@Test
 	public void testEquals_4() {
 
 		ChromatogramSupplier anotherSupplier = supplier;
 		assertEquals("equals", true, anotherSupplier.equals(supplier));
 	}
 
+	@Test
 	public void testEquals_5() {
 
 		assertEquals("equals", true, supplier.equals(supplier));
 	}
 
+	@Test
 	public void testEquals_6() {
 
 		ChromatogramSupplier anotherSupplier = null;
 		assertEquals("equals", false, supplier.equals(anotherSupplier));
 	}
 
+	@Test
 	public void testEquals_7() {
 
 		Object anotherSupplier = new Object();
 		assertEquals("equals", false, supplier.equals(anotherSupplier));
 	}
 
+	@Test
 	public void testHashCode_1() {
 
 		ChromatogramSupplier anotherSupplier = new ChromatogramSupplier();
 		assertEquals("hashCode", anotherSupplier.hashCode(), supplier.hashCode());
 	}
 
+	@Test
 	public void testHashCode_2() {
 
 		ChromatogramSupplier anotherSupplier = new ChromatogramSupplier();

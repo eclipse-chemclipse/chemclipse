@@ -12,33 +12,19 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.chromatogram;
 
-import org.eclipse.chemclipse.converter.chromatogram.ChromatogramSupplier;
+import static org.junit.Assert.assertEquals;
 
-import junit.framework.TestCase;
+import org.eclipse.chemclipse.converter.chromatogram.ChromatogramSupplier;
+import org.junit.Test;
 
 /**
  * Testing all methods of ChromatogramSupplier and its specification.
- * 
- * @author eselmeister
  */
-public class ChromatogramSupplier_1_Test extends TestCase {
+public class ChromatogramSupplier_1_Test {
 
-	private ChromatogramSupplier supplier;
+	private ChromatogramSupplier supplier = new ChromatogramSupplier();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		supplier = new ChromatogramSupplier();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		supplier = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testId_1() {
 
 		assertEquals("id", "", supplier.getId());
@@ -50,6 +36,7 @@ public class ChromatogramSupplier_1_Test extends TestCase {
 		assertEquals("id", "", supplier.getId());
 	}
 
+	@Test
 	public void testDescription_1() {
 
 		assertEquals("desciption", "", supplier.getDescription());
@@ -61,6 +48,7 @@ public class ChromatogramSupplier_1_Test extends TestCase {
 		assertEquals("desciption", "", supplier.getDescription());
 	}
 
+	@Test
 	public void testFilterName_1() {
 
 		assertEquals("desciption", "", supplier.getDescription());
@@ -72,6 +60,7 @@ public class ChromatogramSupplier_1_Test extends TestCase {
 		assertEquals("desciption", "", supplier.getDescription());
 	}
 
+	@Test
 	public void testFileExtension_1() {
 
 		assertEquals("fileExtension", "", supplier.getFileExtension());
@@ -85,6 +74,7 @@ public class ChromatogramSupplier_1_Test extends TestCase {
 		assertEquals("fileExtension", "", supplier.getFileExtension());
 	}
 
+	@Test
 	public void testFileName_1() {
 
 		assertEquals("fileName", "", supplier.getFileName());
@@ -96,6 +86,7 @@ public class ChromatogramSupplier_1_Test extends TestCase {
 		assertEquals("fileName", "", supplier.getFileName());
 	}
 
+	@Test
 	public void testDirectoryExtension_1() {
 
 		assertEquals("directoryExtension", "", supplier.getDirectoryExtension());
@@ -109,6 +100,7 @@ public class ChromatogramSupplier_1_Test extends TestCase {
 		assertEquals("directoryExtension", "", supplier.getDirectoryExtension());
 	}
 
+	@Test
 	public void testIsImportable_1() {
 
 		assertEquals("isImportable", false, supplier.isImportable());
@@ -118,6 +110,7 @@ public class ChromatogramSupplier_1_Test extends TestCase {
 		assertEquals("isImportable", true, supplier.isImportable());
 	}
 
+	@Test
 	public void testIsExportable_1() {
 
 		assertEquals("isExportable", false, supplier.isExportable());

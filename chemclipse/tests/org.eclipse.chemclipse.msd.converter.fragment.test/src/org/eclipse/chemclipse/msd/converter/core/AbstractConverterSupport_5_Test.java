@@ -12,10 +12,14 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.core;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.List;
 
 import org.eclipse.chemclipse.converter.core.IConverterSupportSetter;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
+import org.junit.Before;
+import org.junit.Test;
 
 public class AbstractConverterSupport_5_Test extends AbstractConverterTestCase {
 
@@ -23,44 +27,45 @@ public class AbstractConverterSupport_5_Test extends AbstractConverterTestCase {
 	private List<ISupplier> supplier;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		converterSupport = getConverterSupport();
 		supplier = converterSupport.getSupplier();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetSupplier_1() {
 
 		assertEquals(5, supplier.size());
 	}
 
+	@Test
 	public void testGetSupplier_2() {
 
 		assertEquals("org.eclipse.chemclipse.msd.converter.supplier.agilent", supplier.get(0).getId());
 	}
 
+	@Test
 	public void testGetSupplier_3() {
 
 		assertEquals("org.eclipse.chemclipse.msd.converter.supplier.agilent.msd1", supplier.get(1).getId());
 	}
 
+	@Test
 	public void testGetSupplier_4() {
 
 		assertEquals("net.openchrom.msd.converter.supplier.cdf", supplier.get(2).getId());
 	}
 
+	@Test
 	public void testGetSupplier_5() {
 
 		assertEquals("org.eclipse.chemclipse.msd.converter.supplier.excel", supplier.get(3).getId());
 	}
 
+	@Test
 	public void testGetSupplier_6() {
 
 		assertEquals("org.eclipse.chemclipse.msd.converter.supplier.test", supplier.get(4).getId());

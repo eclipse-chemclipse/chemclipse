@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.amdis.converter.io;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.util.Set;
 
@@ -22,34 +25,28 @@ import org.eclipse.chemclipse.msd.model.core.ILibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class AmdisMSPReader_5_ITest extends TestCase {
+public class AmdisMSPReader_5_ITest {
 
 	private IMassSpectra massSpectra;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		File file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_PEAKS_5_MSP));
 		MSPReader reader = new MSPReader();
 		massSpectra = reader.read(file, new NullProgressMonitor());
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectra = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals(1, massSpectra.size());
 	}
 
+	@Test
 	public void test2() {
 
 		IScanMSD massSpectrum = massSpectra.getMassSpectrum(1);
@@ -57,7 +54,7 @@ public class AmdisMSPReader_5_ITest extends TestCase {
 			ILibraryInformation libraryInformation = libraryMassSpectrum.getLibraryInformation();
 			assertEquals("Demo1", libraryInformation.getName());
 			assertEquals("N2", libraryInformation.getFormula());
-			assertEquals(100.0d, libraryInformation.getMolWeight());
+			assertEquals(100.0d, libraryInformation.getMolWeight(), 0);
 			assertEquals("222-111-3333", libraryInformation.getCasNumber());
 			assertEquals("Comment1", libraryInformation.getComments());
 			Set<String> synonyms = libraryInformation.getSynonyms();
@@ -72,14 +69,14 @@ public class AmdisMSPReader_5_ITest extends TestCase {
 			assertTrue(false);
 		}
 		assertEquals(2, massSpectrum.getNumberOfIons());
-		assertEquals(1.0d, massSpectrum.getLowestIon().getIon());
-		assertEquals(21.0f, massSpectrum.getLowestIon().getAbundance());
-		assertEquals(2.0d, massSpectrum.getHighestIon().getIon());
-		assertEquals(999.0f, massSpectrum.getHighestIon().getAbundance());
-		assertEquals(2.0d, massSpectrum.getHighestAbundance().getIon());
-		assertEquals(999.0f, massSpectrum.getHighestAbundance().getAbundance());
+		assertEquals(1.0d, massSpectrum.getLowestIon().getIon(), 0);
+		assertEquals(21.0f, massSpectrum.getLowestIon().getAbundance(), 0);
+		assertEquals(2.0d, massSpectrum.getHighestIon().getIon(), 0);
+		assertEquals(999.0f, massSpectrum.getHighestIon().getAbundance(), 0);
+		assertEquals(2.0d, massSpectrum.getHighestAbundance().getIon(), 0);
+		assertEquals(999.0f, massSpectrum.getHighestAbundance().getAbundance(), 0);
 		assertEquals(0, massSpectrum.getRetentionTime());
-		assertEquals(0.0f, massSpectrum.getRetentionIndex());
-		assertEquals(1020.0f, massSpectrum.getTotalSignal());
+		assertEquals(0.0f, massSpectrum.getRetentionIndex(), 0);
+		assertEquals(1020.0f, massSpectrum.getTotalSignal(), 0);
 	}
 }

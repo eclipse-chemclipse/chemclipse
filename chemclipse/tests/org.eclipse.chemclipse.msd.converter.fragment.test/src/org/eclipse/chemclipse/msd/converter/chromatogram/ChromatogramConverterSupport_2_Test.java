@@ -13,40 +13,40 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.chromatogram;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+
 import org.eclipse.chemclipse.converter.chromatogram.ChromatogramConverterSupport;
 import org.eclipse.chemclipse.converter.chromatogram.ChromatogramSupplier;
 import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException;
-
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * This TestCase analyses if the class ChromatogramConverterSupport methods work
  * in a correct way.
- * 
- * @author eselmeister
  */
-public class ChromatogramConverterSupport_2_Test extends TestCase {
+public class ChromatogramConverterSupport_2_Test {
 
-	private ChromatogramConverterSupport support;
-	private ChromatogramSupplier supplier;
+	private ChromatogramConverterSupport support = new ChromatogramConverterSupport(null);
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
-		support = new ChromatogramConverterSupport(null);
-		supplier = new ChromatogramSupplier();
+		ChromatogramSupplier supplier = new ChromatogramSupplier();
 		supplier.setId("org.eclipse.chemclipse.msd.converter.supplier.agilent");
 		supplier.setFileExtension(".MS");
 		supplier.setDirectoryExtension(".D");
 		supplier.setFilterName("Agilent Chromatogram (.D)");
 		support.add(supplier);
+
 		supplier = new ChromatogramSupplier();
 		supplier.setId("org.eclipse.chemclipse.msd.converter.supplier.netCDF");
 		supplier.setFileExtension(".netCDF");
 		supplier.setDirectoryExtension("");
 		supplier.setFilterName("ANDI/AIA (.netCDF)");
 		support.add(supplier);
+
 		supplier = new ChromatogramSupplier();
 		supplier.setId("org.eclipse.chemclipse.xxd.converter.supplier.chemclipse");
 		supplier.setFileExtension(".chrom");
@@ -55,69 +55,48 @@ public class ChromatogramConverterSupport_2_Test extends TestCase {
 		support.add(supplier);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		support = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetConverterId_1() {
 
-		try {
+		assertThrows(NoConverterAvailableException.class, () -> {
 			support.getConverterId(-1);
-		} catch(NoConverterAvailableException e) {
-			assertTrue(true);
-		}
+		});
 	}
 
+	@Test
 	public void testGetConverterId_2() {
 
-		try {
+		assertThrows(NoConverterAvailableException.class, () -> {
 			support.getConverterId(3);
-		} catch(NoConverterAvailableException e) {
-			assertTrue(true);
-		}
+		});
 	}
 
-	public void testGetConverterId_3() {
+	@Test
+	public void testGetConverterId_3() throws NoConverterAvailableException {
 
-		String id;
-		try {
-			id = support.getConverterId(0);
-			assertEquals("id#0", "org.eclipse.chemclipse.msd.converter.supplier.agilent", id);
-			id = support.getConverterId(1);
-			assertEquals("id#1", "org.eclipse.chemclipse.msd.converter.supplier.netCDF", id);
-			id = support.getConverterId(2);
-			assertEquals("id#2", "org.eclipse.chemclipse.xxd.converter.supplier.chemclipse", id);
-		} catch(NoConverterAvailableException e) {
-			assertTrue(false);
-		}
+		String id = support.getConverterId(0);
+		assertEquals("id#0", "org.eclipse.chemclipse.msd.converter.supplier.agilent", id);
+		id = support.getConverterId(1);
+		assertEquals("id#1", "org.eclipse.chemclipse.msd.converter.supplier.netCDF", id);
+		id = support.getConverterId(2);
+		assertEquals("id#2", "org.eclipse.chemclipse.xxd.converter.supplier.chemclipse", id);
 	}
 
-	public void testGetFilterExtensions_1() {
+	@Test
+	public void testGetFilterExtensions_1() throws NoConverterAvailableException {
 
-		String[] ids;
-		try {
-			ids = support.getFilterExtensions();
-			assertEquals("FilterExtension #0", "*.", ids[0]); // Important ... otherwise 'Save As...' fails
-			assertEquals("FilterExtension #1", "*.netCDF;*.netcdf;*.NETCDF", ids[1]);
-			assertEquals("FilterExtension #2", "*.chrom;*.CHROM", ids[2]);
-		} catch(NoConverterAvailableException e) {
-			assertTrue(false);
-		}
+		String[] ids = support.getFilterExtensions();
+		assertEquals("FilterExtension #0", "*.", ids[0]); // Important ... otherwise 'Save As...' fails
+		assertEquals("FilterExtension #1", "*.netCDF;*.netcdf;*.NETCDF", ids[1]);
+		assertEquals("FilterExtension #2", "*.chrom;*.CHROM", ids[2]);
 	}
 
-	public void testGetFilterNames_1() {
+	@Test
+	public void testGetFilterNames_1() throws NoConverterAvailableException {
 
-		String[] names;
-		try {
-			names = support.getFilterNames();
-			assertEquals("FilterName #0", "Agilent Chromatogram (.D)", names[0]);
-			assertEquals("FilterName #1", "ANDI/AIA (.netCDF)", names[1]);
-			assertEquals("FilterName #2", "ChemClipse Chromatogram (.chrom)", names[2]);
-		} catch(NoConverterAvailableException e) {
-			assertTrue(false);
-		}
+		String[] names = support.getFilterNames();
+		assertEquals("FilterName #0", "Agilent Chromatogram (.D)", names[0]);
+		assertEquals("FilterName #1", "ANDI/AIA (.netCDF)", names[1]);
+		assertEquals("FilterName #2", "ChemClipse Chromatogram (.chrom)", names[2]);
 	}
 }

@@ -26,8 +26,6 @@ import junit.framework.TestCase;
 
 /**
  * Imports a msl file.
- *
- * @author eselmeister
  */
 @Ignore
 public class MassSpectrumExportConverterTestCase extends TestCase {
@@ -52,10 +50,6 @@ public class MassSpectrumExportConverterTestCase extends TestCase {
 		if(exportFile.exists()) {
 			exportFile.delete();
 		}
-		exportFile = null;
-		exportConverter = null;
-		importConverter = null;
-		massSpectra = null;
 
 		super.tearDown();
 	}

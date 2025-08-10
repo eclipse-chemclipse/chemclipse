@@ -12,36 +12,28 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.amdis.model;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class AmdisMassSpectrum_1_Test extends TestCase {
+import org.junit.Test;
 
-	private IVendorLibraryMassSpectrum massSpectrum;
+public class AmdisMassSpectrum_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private IVendorLibraryMassSpectrum massSpectrum = new VendorLibraryMassSpectrum();
 
-		super.setUp();
-		massSpectrum = new VendorLibraryMassSpectrum();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetSource_1() {
 
 		assertEquals("Source", "", massSpectrum.getSource());
 	}
 
+	@Test
 	public void testGetSource_2() {
 
 		massSpectrum.setSource("file something");
 		assertEquals("Source", "file something", massSpectrum.getSource());
 	}
 
+	@Test
 	public void testGetSource_3() {
 
 		massSpectrum.setSource(null);

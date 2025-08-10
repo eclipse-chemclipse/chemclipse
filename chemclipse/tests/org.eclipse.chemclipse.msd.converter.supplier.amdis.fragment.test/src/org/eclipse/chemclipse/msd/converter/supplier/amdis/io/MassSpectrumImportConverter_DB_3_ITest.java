@@ -12,32 +12,34 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.amdis.io;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.TestPathHelper;
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.model.IVendorLibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
+import org.junit.Before;
+import org.junit.Test;
 
 public class MassSpectrumImportConverter_DB_3_ITest extends ImportConverterMslTestCase {
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		importFile = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_DB_3));
 		super.setUp();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testImport_1() {
 
 		assertEquals("MassSpectra", 2, massSpectra.size());
 	}
 
+	@Test
 	public void testImport_2() {
 
 		IScanMSD massSpectrum = massSpectra.getMassSpectrum(1);
@@ -51,14 +53,15 @@ public class MassSpectrumImportConverter_DB_3_ITest extends ImportConverterMslTe
 		assertEquals("Comments", "Converted", ms.getLibraryInformation().getComments());
 		assertEquals("Retention Time", 630000, ms.getRetentionTime());
 		assertEquals("Relative Retention Time", 1212000, ms.getRelativeRetentionTime());
-		assertEquals("Retention Index", 400.7f, ms.getRetentionIndex());
+		assertEquals("Retention Index", 400.7f, ms.getRetentionIndex(), 0);
 		assertEquals("Ion", 2, ms.getNumberOfIons());
-		assertEquals("Highest Ion", 101.0d, ms.getHighestIon().getIon());
-		assertEquals("Highest Ion Abundance", 608.0f, ms.getHighestIon().getAbundance());
-		assertEquals("Highest Abundance Ion", 100.0d, ms.getHighestAbundance().getIon());
-		assertEquals("Highest Abundance", 1000.0f, ms.getHighestAbundance().getAbundance());
+		assertEquals("Highest Ion", 101.0d, ms.getHighestIon().getIon(), 0);
+		assertEquals("Highest Ion Abundance", 608.0f, ms.getHighestIon().getAbundance(), 0);
+		assertEquals("Highest Abundance Ion", 100.0d, ms.getHighestAbundance().getIon(), 0);
+		assertEquals("Highest Abundance", 1000.0f, ms.getHighestAbundance().getAbundance(), 0);
 	}
 
+	@Test
 	public void testImport_3() {
 
 		IScanMSD massSpectrum = massSpectra.getMassSpectrum(2);
@@ -72,11 +75,11 @@ public class MassSpectrumImportConverter_DB_3_ITest extends ImportConverterMslTe
 		assertEquals("Comments", "Converted", ms.getLibraryInformation().getComments());
 		assertEquals("Retention Time", 672000, ms.getRetentionTime());
 		assertEquals("Relative Retention Time", 1218000, ms.getRelativeRetentionTime());
-		assertEquals("Retention Index", 500.5f, ms.getRetentionIndex());
+		assertEquals("Retention Index", 500.5f, ms.getRetentionIndex(), 0);
 		assertEquals("Ion", 2, ms.getNumberOfIons());
-		assertEquals("Highest Ion", 101.0d, ms.getHighestIon().getIon());
-		assertEquals("Highest Ion Abundance", 608.0f, ms.getHighestIon().getAbundance());
-		assertEquals("Highest Abundance Ion", 100.0d, ms.getHighestAbundance().getIon());
-		assertEquals("Highest Abundance", 1000.0f, ms.getHighestAbundance().getAbundance());
+		assertEquals("Highest Ion", 101.0d, ms.getHighestIon().getIon(), 0);
+		assertEquals("Highest Ion Abundance", 608.0f, ms.getHighestIon().getAbundance(), 0);
+		assertEquals("Highest Abundance Ion", 100.0d, ms.getHighestAbundance().getIon(), 0);
+		assertEquals("Highest Abundance", 1000.0f, ms.getHighestAbundance().getAbundance(), 0);
 	}
 }

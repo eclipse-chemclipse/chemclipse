@@ -12,12 +12,6 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.excel;
 
-/**
- * THIS CLASS IS NOT SUITED FOR PRODUCTIVE USE!<br/>
- * IT IS A TESTCLASS!
- * 
- * @author Matthias Mailänder
- */
 public class TestPathHelper extends PathResolver {
 
 	/*

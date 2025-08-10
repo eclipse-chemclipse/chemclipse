@@ -12,30 +12,37 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.amdis.converter.misc;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class ConverterMOL_Test extends TestCase {
+import org.junit.Test;
 
+public class ConverterMOL_Test {
+
+	@Test
 	public void test1() {
 
 		assertEquals("19906720", ConverterMOL.extractCASNumber(" CAS rn = 19906720, "));
 	}
 
+	@Test
 	public void test2() {
 
 		assertEquals("19906-72-0", ConverterMOL.extractCASNumber(" CAS rn = 19906-72-0, "));
 	}
 
+	@Test
 	public void test3() {
 
 		assertEquals("", ConverterMOL.extractCASNumber(""));
 	}
 
+	@Test
 	public void test4() {
 
 		assertEquals("", ConverterMOL.extractCASNumber(null));
 	}
 
+	@Test
 	public void test5() {
 
 		assertEquals("", ConverterMOL.extractCASNumber(" CAS rn = ABC, "));

@@ -12,26 +12,27 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.converter.core.IConverterSupportSetter;
 import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException;
+import org.junit.Before;
+import org.junit.Test;
 
 public class AbstractConverterSupport_1_Test extends AbstractConverterTestCase {
 
 	private IConverterSupportSetter converterSupport;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		converterSupport = getConverterSupport();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetConverterIdByName_1() {
 
 		String converterId = "org.eclipse.chemclipse.msd.converter.supplier.agilent";
@@ -43,6 +44,7 @@ public class AbstractConverterSupport_1_Test extends AbstractConverterTestCase {
 		}
 	}
 
+	@Test
 	public void testGetConverterIdByName_2() {
 
 		String converterId = "org.eclipse.chemclipse.msd.converter.supplier.agilent.msd1";
@@ -54,6 +56,7 @@ public class AbstractConverterSupport_1_Test extends AbstractConverterTestCase {
 		}
 	}
 
+	@Test
 	public void testGetConverterIdByName_3() {
 
 		String converterId = "net.openchrom.msd.converter.supplier.cdf";
@@ -65,6 +68,7 @@ public class AbstractConverterSupport_1_Test extends AbstractConverterTestCase {
 		}
 	}
 
+	@Test
 	public void testGetConverterIdByName_4() {
 
 		String converterId = "org.eclipse.chemclipse.msd.converter.supplier.excel";
@@ -76,6 +80,7 @@ public class AbstractConverterSupport_1_Test extends AbstractConverterTestCase {
 		}
 	}
 
+	@Test
 	public void testGetConverterIdByName_5() {
 
 		String converterId = "org.eclipse.chemclipse.msd.converter.supplier.test";
@@ -87,6 +92,7 @@ public class AbstractConverterSupport_1_Test extends AbstractConverterTestCase {
 		}
 	}
 
+	@Test
 	public void testGetConverterIdByName_6() {
 
 		String converterName = "org.eclipse.chemclipse.msd.converter";
@@ -97,6 +103,7 @@ public class AbstractConverterSupport_1_Test extends AbstractConverterTestCase {
 		}
 	}
 
+	@Test
 	public void testGetConverterIdByName_7() {
 
 		String converterName = "";
