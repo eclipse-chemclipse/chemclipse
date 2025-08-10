@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.noise;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.support.AnalysisSegment;
 import org.eclipse.chemclipse.model.support.CalculationType;
 import org.eclipse.chemclipse.msd.model.core.ICombinedMassSpectrum;
@@ -20,10 +22,10 @@ import org.eclipse.chemclipse.msd.model.xic.ExtractedIonSignal;
 import org.eclipse.chemclipse.msd.model.xic.ExtractedIonSignals;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignals;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class CalculatorSupport_2_Test extends TestCase {
+public class CalculatorSupport_2_Test {
 
 	private CalculatorSupport calculatorSupport;
 	private AnalysisSegment analysisSegment;
@@ -31,10 +33,9 @@ public class CalculatorSupport_2_Test extends TestCase {
 	private IExtractedIonSignal extractedIonSignal;
 	private CombinedMassSpectrumCalculator combinedMassSpectrumCalculator;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		calculatorSupport = new CalculatorSupport();
 		analysisSegment = new AnalysisSegment(1, 3) {
 
@@ -78,65 +79,67 @@ public class CalculatorSupport_2_Test extends TestCase {
 		combinedMassSpectrumCalculator = calculatorSupport.getCombinedMassSpectrumCalculator(analysisSegment, extractedIonSignals);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetCombinedMassSpectrumCalculator_1() {
 
 		assertEquals("Size", 6, combinedMassSpectrumCalculator.size());
 	}
 
-	public void testGetCombinedMassSpectrumCalculator_2()  {
+	@Test
+	public void testGetCombinedMassSpectrumCalculator_2() {
 
 		int ion = 18;
 		float abundance = 200.0f;
 		ICombinedMassSpectrum massSpectrum = combinedMassSpectrumCalculator.createMassSpectrum(CalculationType.SUM);
-		assertEquals("Abundance", abundance, massSpectrum.getIon(ion).getAbundance());
+		assertEquals("Abundance", abundance, massSpectrum.getIon(ion).getAbundance(), 0);
 	}
 
-	public void testGetCombinedMassSpectrumCalculator_3()  {
+	@Test
+	public void testGetCombinedMassSpectrumCalculator_3() {
 
 		int ion = 28;
 		float abundance = 320.0f;
 		ICombinedMassSpectrum massSpectrum = combinedMassSpectrumCalculator.createMassSpectrum(CalculationType.SUM);
-		assertEquals("Abundance", abundance, massSpectrum.getIon(ion).getAbundance());
+		assertEquals("Abundance", abundance, massSpectrum.getIon(ion).getAbundance(), 0);
 	}
 
-	public void testGetCombinedMassSpectrumCalculator_4()  {
+	@Test
+	public void testGetCombinedMassSpectrumCalculator_4() {
 
 		int ion = 43;
 		float abundance = 400.0f;
 		ICombinedMassSpectrum massSpectrum = combinedMassSpectrumCalculator.createMassSpectrum(CalculationType.SUM);
-		assertEquals("Abundance", abundance, massSpectrum.getIon(ion).getAbundance());
+		assertEquals("Abundance", abundance, massSpectrum.getIon(ion).getAbundance(), 0);
 	}
 
-	public void testGetCombinedMassSpectrumCalculator_5()  {
+	@Test
+	public void testGetCombinedMassSpectrumCalculator_5() {
 
 		int ion = 103;
 		float abundance = 5000.0f;
 		ICombinedMassSpectrum massSpectrum = combinedMassSpectrumCalculator.createMassSpectrum(CalculationType.SUM);
-		assertEquals("Abundance", abundance, massSpectrum.getIon(ion).getAbundance());
+		assertEquals("Abundance", abundance, massSpectrum.getIon(ion).getAbundance(), 0);
 	}
 
-	public void testGetCombinedMassSpectrumCalculator_6()  {
+	@Test
+	public void testGetCombinedMassSpectrumCalculator_6() {
 
 		int ion = 104;
 		float abundance = 20500.0f;
 		ICombinedMassSpectrum massSpectrum = combinedMassSpectrumCalculator.createMassSpectrum(CalculationType.SUM);
-		assertEquals("Abundance", abundance, massSpectrum.getIon(ion).getAbundance());
+		assertEquals("Abundance", abundance, massSpectrum.getIon(ion).getAbundance(), 0);
 	}
 
-	public void testGetCombinedMassSpectrumCalculator_7()  {
+	@Test
+	public void testGetCombinedMassSpectrumCalculator_7() {
 
 		int ion = 155;
 		float abundance = 18000.0f;
 		ICombinedMassSpectrum massSpectrum = combinedMassSpectrumCalculator.createMassSpectrum(CalculationType.SUM);
-		assertEquals("Abundance", abundance, massSpectrum.getIon(ion).getAbundance());
+		assertEquals("Abundance", abundance, massSpectrum.getIon(ion).getAbundance(), 0);
 	}
 
+	@Test
 	public void testNormalizeMassSpectrumCalculator_1() {
 
 		ICombinedMassSpectrum noiseMassSpectrum = combinedMassSpectrumCalculator.createMassSpectrum(CalculationType.SUM);
@@ -144,45 +147,51 @@ public class CalculatorSupport_2_Test extends TestCase {
 		assertEquals("Size", 6, noiseMassSpectrum.getNumberOfIons());
 	}
 
-	public void testNormalizeMassSpectrumCalculator_2()  {
+	@Test
+	public void testNormalizeMassSpectrumCalculator_2() {
 
 		ICombinedMassSpectrum noiseMassSpectrum = combinedMassSpectrumCalculator.createMassSpectrum(CalculationType.SUM);
 		noiseMassSpectrum.normalize(1000.0f);
-		assertEquals("N18", 9.756098f, noiseMassSpectrum.getIon(18).getAbundance());
+		assertEquals("N18", 9.756098f, noiseMassSpectrum.getIon(18).getAbundance(), 0);
 	}
 
-	public void testNormalizeMassSpectrumCalculator_3()  {
+	@Test
+	public void testNormalizeMassSpectrumCalculator_3() {
 
 		ICombinedMassSpectrum noiseMassSpectrum = combinedMassSpectrumCalculator.createMassSpectrum(CalculationType.SUM);
 		noiseMassSpectrum.normalize(1000.0f);
-		assertEquals("N28", 15.609756f, noiseMassSpectrum.getIon(28).getAbundance());
+		assertEquals("N28", 15.609756f, noiseMassSpectrum.getIon(28).getAbundance(), 0);
 	}
 
-	public void testNormalizeMassSpectrumCalculator_4()  {
+	@Test
+	public void testNormalizeMassSpectrumCalculator_4() {
 
 		ICombinedMassSpectrum noiseMassSpectrum = combinedMassSpectrumCalculator.createMassSpectrum(CalculationType.SUM);
 		noiseMassSpectrum.normalize(1000.0f);
-		assertEquals("N43", 19.512196f, noiseMassSpectrum.getIon(43).getAbundance());
+		assertEquals("N43", 19.512196f, noiseMassSpectrum.getIon(43).getAbundance(), 0);
 	}
 
-	public void testNormalizeMassSpectrumCalculator_5()  {
+	@Test
+	public void testNormalizeMassSpectrumCalculator_5() {
 
 		ICombinedMassSpectrum noiseMassSpectrum = combinedMassSpectrumCalculator.createMassSpectrum(CalculationType.SUM);
 		noiseMassSpectrum.normalize(1000.0f);
-		assertEquals("N103", 243.90244f, noiseMassSpectrum.getIon(103).getAbundance());
+		assertEquals("N103", 243.90244f, noiseMassSpectrum.getIon(103).getAbundance(), 0);
 	}
 
-	public void testNormalizeMassSpectrumCalculator_6()  {
+	@Test
+	public void testNormalizeMassSpectrumCalculator_6() {
 
 		ICombinedMassSpectrum noiseMassSpectrum = combinedMassSpectrumCalculator.createMassSpectrum(CalculationType.SUM);
 		noiseMassSpectrum.normalize(1000.0f);
-		assertEquals("N104", 1000.0f, noiseMassSpectrum.getIon(104).getAbundance());
+		assertEquals("N104", 1000.0f, noiseMassSpectrum.getIon(104).getAbundance(), 0);
 	}
 
-	public void testNormalizeMassSpectrumCalculator_7()  {
+	@Test
+	public void testNormalizeMassSpectrumCalculator_7() {
 
 		ICombinedMassSpectrum noiseMassSpectrum = combinedMassSpectrumCalculator.createMassSpectrum(CalculationType.SUM);
 		noiseMassSpectrum.normalize(1000.0f);
-		assertEquals("N155", 878.04877f, noiseMassSpectrum.getIon(155).getAbundance());
+		assertEquals("N155", 878.04877f, noiseMassSpectrum.getIon(155).getAbundance(), 0);
 	}
 }

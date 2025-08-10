@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.support;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,36 +22,31 @@ import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class CombinedMassSpectrumCalculator_2_Test extends TestCase {
+public class CombinedMassSpectrumCalculator_2_Test {
 
 	private CombinedMassSpectrumCalculator combinedMassSpectrumCalculator;
 	private IMarkedIons excludedIons;
 	private List<IIon> ions;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		combinedMassSpectrumCalculator = new CombinedMassSpectrumCalculator();
 		ions = new ArrayList<IIon>();
 		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testSize_1() {
 
 		combinedMassSpectrumCalculator.addIons(null, null);
 		assertEquals("Size", 0, combinedMassSpectrumCalculator.size());
 	}
 
+	@Test
 	public void testSize_2() {
 
 		ions.add(new Ion(56.5f, 500.0f));
@@ -57,6 +54,7 @@ public class CombinedMassSpectrumCalculator_2_Test extends TestCase {
 		assertEquals("Size", 1, combinedMassSpectrumCalculator.size());
 	}
 
+	@Test
 	public void testSize_3() {
 
 		ions.add(new Ion(56.5f, 500.0f));
@@ -65,6 +63,7 @@ public class CombinedMassSpectrumCalculator_2_Test extends TestCase {
 		assertEquals("Size", 2, combinedMassSpectrumCalculator.size());
 	}
 
+	@Test
 	public void testSize_4() {
 
 		ions.add(new Ion(56.5f, 500.0f));
@@ -74,6 +73,7 @@ public class CombinedMassSpectrumCalculator_2_Test extends TestCase {
 		assertEquals("Size", 3, combinedMassSpectrumCalculator.size());
 	}
 
+	@Test
 	public void testSize_5() {
 
 		/*

@@ -22,10 +22,8 @@ import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
 import org.junit.Ignore;
 
-import junit.framework.TestCase;
-
 @Ignore
-public class PeakModelTestCase extends TestCase {
+public class PeakModelTestCase {
 
 	protected IPeakModelMSD peakModel;
 	protected IPeakMassSpectrum peakMaximum;
@@ -36,9 +34,8 @@ public class PeakModelTestCase extends TestCase {
 	protected float startBackgroundAbundance = 0.0f;
 	protected float stopBackgroundAbundance = 0.0f;
 
-	protected void setUp(float startBackgroundAbundance, float stopBackgroundAbundance, IPeakMassSpectrum peakMaximum) throws Exception {
+	public void setUp(float startBackgroundAbundance, float stopBackgroundAbundance, IPeakMassSpectrum peakMaximum) {
 
-		super.setUp();
 		this.peakMaximum = peakMaximum;
 		// ----------------------IntensityValues
 		intensityValues = new PeakIntensityValues();
@@ -68,17 +65,5 @@ public class PeakModelTestCase extends TestCase {
 		// ----------------------BackgroundValues
 		peakModel = new PeakModelMSD(peakMaximum, intensityValues, startBackgroundAbundance, stopBackgroundAbundance);
 		peakModel.setStrictModel(true);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		peakModel = null;
-		peakMaximum = null;
-		ion = null;
-		fragmentValues = null;
-		intensityValues = null;
-		scanValues = null;
-		super.tearDown();
 	}
 }

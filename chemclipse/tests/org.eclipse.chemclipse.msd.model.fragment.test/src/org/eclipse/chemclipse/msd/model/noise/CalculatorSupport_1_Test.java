@@ -12,24 +12,16 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.noise;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-public class CalculatorSupport_1_Test extends TestCase {
+import org.junit.Test;
 
-	private CalculatorSupport calculatorSupport;
+public class CalculatorSupport_1_Test {
 
-	protected void setUp() throws Exception {
+	private CalculatorSupport calculatorSupport = new CalculatorSupport();
 
-		super.setUp();
-		calculatorSupport = new CalculatorSupport();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testAcceptSegment_1() {
 
 		double[] values = new double[13];
@@ -50,6 +42,7 @@ public class CalculatorSupport_1_Test extends TestCase {
 		assertTrue("9 crossings", calculatorSupport.acceptSegment(values, mean));
 	}
 
+	@Test
 	public void testAcceptSegment_2() {
 
 		double[] values = new double[13];
@@ -70,6 +63,7 @@ public class CalculatorSupport_1_Test extends TestCase {
 		assertTrue("7 crossings", calculatorSupport.acceptSegment(values, mean));
 	}
 
+	@Test
 	public void testAcceptSegment_3() {
 
 		double[] values = new double[13];
@@ -90,6 +84,7 @@ public class CalculatorSupport_1_Test extends TestCase {
 		assertFalse("6 crossings", calculatorSupport.acceptSegment(values, mean));
 	}
 
+	@Test
 	public void testAcceptSegment_4() {
 
 		double[] values = new double[13];

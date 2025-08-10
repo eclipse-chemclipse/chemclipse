@@ -12,63 +12,60 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.model.support.BackgroundAbundanceRange;
 import org.eclipse.chemclipse.model.support.IBackgroundAbundanceRange;
-
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests the class BackgroundAbundanceRange concerning equals, hashCode and
  * toString.
- * 
- * @author eselmeister
  */
-public class BackgroundAbundanceRange_2_Test extends TestCase {
+public class BackgroundAbundanceRange_2_Test {
 
 	private IBackgroundAbundanceRange backgroundAbundanceRange1;
 	private IBackgroundAbundanceRange backgroundAbundanceRange2;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		backgroundAbundanceRange1 = new BackgroundAbundanceRange(0, 5);
 		backgroundAbundanceRange2 = new BackgroundAbundanceRange(0, 5);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		backgroundAbundanceRange1 = null;
-		backgroundAbundanceRange2 = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testEquals_1() {
 
 		assertTrue(backgroundAbundanceRange1.equals(backgroundAbundanceRange2));
 	}
 
+	@Test
 	public void testEquals_2() {
 
 		assertTrue(backgroundAbundanceRange2.equals(backgroundAbundanceRange1));
 	}
 
+	@Test
 	public void testHashCode_1() {
 
 		assertTrue(backgroundAbundanceRange1.hashCode() == backgroundAbundanceRange2.hashCode());
 	}
 
+	@Test
 	public void testHashCode_2() {
 
 		assertTrue(backgroundAbundanceRange2.hashCode() == backgroundAbundanceRange1.hashCode());
 	}
 
+	@Test
 	public void testToString_1() {
 
 		assertTrue(backgroundAbundanceRange1.toString().equals(backgroundAbundanceRange2.toString()));
 	}
 
+	@Test
 	public void testToString_2() {
 
 		assertTrue(backgroundAbundanceRange2.toString().equals(backgroundAbundanceRange1.toString()));

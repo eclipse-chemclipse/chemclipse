@@ -12,19 +12,21 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.List;
-import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import org.eclipse.chemclipse.model.core.IPeakIntensityValues;
 import org.eclipse.chemclipse.model.implementation.PeakIntensityValues;
 import org.eclipse.chemclipse.msd.model.core.IPeakIon;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class PeakModel_12_Test extends TestCase {
+public class PeakModel_12_Test {
 
 	private IPeakModelMSD peakModel;
 	private IPeakMassSpectrum peakMaximum;
@@ -35,9 +37,9 @@ public class PeakModel_12_Test extends TestCase {
 	private float startBackgroundAbundance = 100.0f;
 	private float stopBackgroundAbundance = 100.0f;
 
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		// ----------------------PeakMaximum
 		peakMaximum = new PeakMassSpectrum();
 		fragmentValues = new TreeMap<Float, Float>();
@@ -72,18 +74,7 @@ public class PeakModel_12_Test extends TestCase {
 		peakModel = new PeakModelMSD(peakMaximum, intensityValues, startBackgroundAbundance, stopBackgroundAbundance);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		peakModel = null;
-		peakMaximum = null;
-		ion = null;
-		fragmentValues = null;
-		intensityValues = null;
-		scanValues = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testRetentionTimes_1() {
 
 		int rt;

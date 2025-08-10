@@ -12,30 +12,20 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.support;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class CombinedMassSpectrumCalculator_5_Test extends TestCase {
+import org.junit.Test;
 
-	private CombinedMassSpectrumCalculator combinedMassSpectrumCalculator;
+public class CombinedMassSpectrumCalculator_5_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private CombinedMassSpectrumCalculator combinedMassSpectrumCalculator = new CombinedMassSpectrumCalculator();
 
-		super.setUp();
-		combinedMassSpectrumCalculator = new CombinedMassSpectrumCalculator();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testValues_1() {
 
 		combinedMassSpectrumCalculator.addIon(56.0f, 5200.0f);
 		combinedMassSpectrumCalculator.addIon(56.0f, 6800.0f);
-		assertEquals(5200.0, combinedMassSpectrumCalculator.getValues().get(56).get(0));
-		assertEquals(6800.0, combinedMassSpectrumCalculator.getValues().get(56).get(1));
+		assertEquals(5200.0, combinedMassSpectrumCalculator.getValues().get(56).get(0), 0);
+		assertEquals(6800.0, combinedMassSpectrumCalculator.getValues().get(56).get(1), 0);
 	}
 }

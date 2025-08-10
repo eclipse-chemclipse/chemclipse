@@ -12,56 +12,39 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.noise;
 
+import static org.junit.Assert.assertThrows;
+
 import org.eclipse.chemclipse.model.support.ScanRange;
 import org.eclipse.chemclipse.msd.model.exceptions.FilterException;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class CalculatorSupport_3_Test {
 
-public class CalculatorSupport_3_Test extends TestCase {
+	private CalculatorSupport calculatorSupport = new CalculatorSupport();
 
-	private CalculatorSupport calculatorSupport;
-	private ScanRange scanRange;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		calculatorSupport = new CalculatorSupport();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetScanRange_1() {
 
-		try {
-			scanRange = null;
-			calculatorSupport.checkScanRange(scanRange, 13);
-		} catch(FilterException e) {
-			assertTrue("FilterException", true);
-		}
+		assertThrows(FilterException.class, () -> {
+			calculatorSupport.checkScanRange(null, 13);
+		});
 	}
 
-	public void testGetScanRange_2() {
+	@Test
+	public void testGetScanRange_2() throws FilterException {
 
-		try {
-			scanRange = new ScanRange(1, 13);
+		assertThrows(FilterException.class, () -> {
+			ScanRange scanRange = new ScanRange(1, 13);
 			calculatorSupport.checkScanRange(scanRange, 13);
-		} catch(FilterException e) {
-			assertFalse("A FilterException should not be thrown here.", false);
-		}
+		});
 	}
 
+	@Test
 	public void testGetScanRange_3() {
 
-		try {
-			scanRange = new ScanRange(1, 12);
+		assertThrows(FilterException.class, () -> {
+			ScanRange scanRange = new ScanRange(1, 12);
 			calculatorSupport.checkScanRange(scanRange, 13);
-		} catch(FilterException e) {
-			assertTrue("FilterException", true);
-		}
+		});
 	}
 }

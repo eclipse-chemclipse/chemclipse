@@ -12,36 +12,28 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.support;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class CombinedMassSpectrumCalculator_1_Test extends TestCase {
+import org.junit.Test;
 
-	private CombinedMassSpectrumCalculator combinedMassSpectrumCalculator;
+public class CombinedMassSpectrumCalculator_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private CombinedMassSpectrumCalculator combinedMassSpectrumCalculator = new CombinedMassSpectrumCalculator();
 
-		super.setUp();
-		combinedMassSpectrumCalculator = new CombinedMassSpectrumCalculator();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testSize_1() {
 
 		assertEquals("Size", 0, combinedMassSpectrumCalculator.size());
 	}
 
+	@Test
 	public void testSize_2() {
 
 		combinedMassSpectrumCalculator.addIon(56.5f, 500.0f);
 		assertEquals("Size", 1, combinedMassSpectrumCalculator.size());
 	}
 
+	@Test
 	public void testSize_3() {
 
 		combinedMassSpectrumCalculator.addIon(56.5f, 500.0f);
@@ -49,6 +41,7 @@ public class CombinedMassSpectrumCalculator_1_Test extends TestCase {
 		assertEquals("Size", 2, combinedMassSpectrumCalculator.size());
 	}
 
+	@Test
 	public void testSize_4() {
 
 		combinedMassSpectrumCalculator.addIon(56.5f, 500.0f);
@@ -57,6 +50,7 @@ public class CombinedMassSpectrumCalculator_1_Test extends TestCase {
 		assertEquals("Size", 3, combinedMassSpectrumCalculator.size());
 	}
 
+	@Test
 	public void testSize_5() {
 
 		/*

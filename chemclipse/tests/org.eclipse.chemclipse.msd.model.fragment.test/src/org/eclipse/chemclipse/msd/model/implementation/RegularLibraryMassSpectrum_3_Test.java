@@ -12,21 +12,22 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.identifier.LibraryInformation;
 import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class RegularLibraryMassSpectrum_3_Test extends TestCase {
+public class RegularLibraryMassSpectrum_3_Test {
 
 	private IRegularLibraryMassSpectrum massSpectrum;
 	private ILibraryInformation libraryInformation;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		massSpectrum = new RegularLibraryMassSpectrum();
 		libraryInformation = new LibraryInformation();
 		libraryInformation.setCasNumber("01-33-XX");
@@ -35,23 +36,19 @@ public class RegularLibraryMassSpectrum_3_Test extends TestCase {
 		massSpectrum.setLibraryInformation(null);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectrum = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetName_1() {
 
 		assertEquals("Name", "", massSpectrum.getLibraryInformation().getName());
 	}
 
+	@Test
 	public void testGetComments_1() {
 
 		assertEquals("Comments", "", massSpectrum.getLibraryInformation().getComments());
 	}
 
+	@Test
 	public void testGetCasNumber_1() {
 
 		assertEquals("CAS Number", "", massSpectrum.getLibraryInformation().getCasNumber());

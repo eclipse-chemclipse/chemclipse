@@ -12,33 +12,20 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.internal.xic.comparator;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
-import org.eclipse.chemclipse.model.signals.TotalScanSignalComparator;
 import org.eclipse.chemclipse.model.signals.TotalScanSignal;
+import org.eclipse.chemclipse.model.signals.TotalScanSignalComparator;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class TotalIonSignalComparator_1_Test extends TestCase {
+public class TotalIonSignalComparator_1_Test {
 
 	private ITotalScanSignal totalIonSignal1;
 	private ITotalScanSignal totalIonSignal2;
-	private TotalScanSignalComparator comparator;
+	private TotalScanSignalComparator comparator = new TotalScanSignalComparator();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		comparator = new TotalScanSignalComparator();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		totalIonSignal1 = null;
-		totalIonSignal2 = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testComaparator_1() {
 
 		totalIonSignal1 = new TotalScanSignal(0, 0.0f, 0.0f);
@@ -46,6 +33,7 @@ public class TotalIonSignalComparator_1_Test extends TestCase {
 		assertEquals(0, comparator.compare(totalIonSignal1, totalIonSignal2));
 	}
 
+	@Test
 	public void testComaparator_2() {
 
 		totalIonSignal1 = null;
@@ -53,6 +41,7 @@ public class TotalIonSignalComparator_1_Test extends TestCase {
 		assertEquals(0, comparator.compare(totalIonSignal1, totalIonSignal2));
 	}
 
+	@Test
 	public void testComaparator_3() {
 
 		totalIonSignal1 = new TotalScanSignal(0, 0.0f, 0.0f);
@@ -60,6 +49,7 @@ public class TotalIonSignalComparator_1_Test extends TestCase {
 		assertEquals(0, comparator.compare(totalIonSignal1, totalIonSignal2));
 	}
 
+	@Test
 	public void testComaparator_4() {
 
 		totalIonSignal1 = new TotalScanSignal(0, 0.0f, 0.0f);
@@ -67,6 +57,7 @@ public class TotalIonSignalComparator_1_Test extends TestCase {
 		assertEquals(-1, comparator.compare(totalIonSignal1, totalIonSignal2));
 	}
 
+	@Test
 	public void testComaparator_5() {
 
 		totalIonSignal1 = new TotalScanSignal(0, 0.0f, 1.0f);

@@ -12,18 +12,21 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Map;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
-public class CondenseMassSpectrumCalculator_2_Test extends TestCase {
+public class CondenseMassSpectrumCalculator_2_Test {
 
 	private CondenseMassSpectrumCalculator calculator;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		calculator = new CondenseMassSpectrumCalculator(false);
 		calculator.add(18.1d, 1000.0d);
 		calculator.add(18.2d, 1100.0d);
@@ -32,26 +35,20 @@ public class CondenseMassSpectrumCalculator_2_Test extends TestCase {
 		calculator.add(18.9d, 1400.0d);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		calculator = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		Map<Double, Double> mappedTraces = calculator.getMappedTraces();
 		assertEquals(5, mappedTraces.size());
 		assertTrue(mappedTraces.containsKey(18.1d));
-		assertEquals(1000.0d, mappedTraces.get(18.1d));
+		assertEquals(1000.0d, mappedTraces.get(18.1d), 0);
 		assertTrue(mappedTraces.containsKey(18.2d));
-		assertEquals(1100.0d, mappedTraces.get(18.2d));
+		assertEquals(1100.0d, mappedTraces.get(18.2d), 0);
 		assertTrue(mappedTraces.containsKey(18.4d));
-		assertEquals(1200.0d, mappedTraces.get(18.4d));
+		assertEquals(1200.0d, mappedTraces.get(18.4d), 0);
 		assertTrue(mappedTraces.containsKey(18.5d));
-		assertEquals(1300.0d, mappedTraces.get(18.5d));
+		assertEquals(1300.0d, mappedTraces.get(18.5d), 0);
 		assertTrue(mappedTraces.containsKey(18.9d));
-		assertEquals(1400.0d, mappedTraces.get(18.9d));
+		assertEquals(1400.0d, mappedTraces.get(18.9d), 0);
 	}
 }

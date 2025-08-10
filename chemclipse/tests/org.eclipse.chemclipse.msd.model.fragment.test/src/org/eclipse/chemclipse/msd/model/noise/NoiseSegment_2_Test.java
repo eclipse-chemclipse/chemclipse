@@ -12,30 +12,21 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.noise;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertNull;
 
-public class NoiseSegment_2_Test extends TestCase {
+import org.junit.Test;
 
-	private INoiseSegmentMSD noiseSegment;
+public class NoiseSegment_2_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private INoiseSegmentMSD noiseSegment = new NoiseSegmentMSD(null, null);
 
-		super.setUp();
-		noiseSegment = new NoiseSegmentMSD(null, null);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetAnalysisSegment_1() {
 
 		assertNull(noiseSegment.getAnalysisSegment());
 	}
 
+	@Test
 	public void testGetNoiseMassSpectrum_1() {
 
 		assertNull(noiseSegment.getNoiseMassSpectrum());

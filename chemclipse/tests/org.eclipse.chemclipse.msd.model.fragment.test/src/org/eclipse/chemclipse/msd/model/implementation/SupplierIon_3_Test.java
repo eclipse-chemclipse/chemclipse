@@ -12,51 +12,46 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import org.eclipse.chemclipse.msd.model.core.IIon;
+import static org.junit.Assert.assertEquals;
 
-import junit.framework.TestCase;
+import org.eclipse.chemclipse.msd.model.core.IIon;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Equals and hashCode test.
- * 
- * @author eselmeister
  */
-public class SupplierIon_3_Test extends TestCase {
+public class SupplierIon_3_Test {
 
 	private IIon ion1;
 	private IIon ion2;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		ion1 = new Ion(1.0f, 5726.4f);
 		ion2 = new Ion(1.0f, 5726.4f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		ion1 = null;
-		ion2 = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testEquals_1() {
 
 		assertEquals("equals", ion1, ion2);
 	}
 
+	@Test
 	public void testEquals_2() {
 
 		assertEquals("equals", ion2, ion1);
 	}
 
+	@Test
 	public void testHashCode_1() {
 
 		assertEquals("hashCode", ion1.hashCode(), ion2.hashCode());
 	}
 
+	@Test
 	public void testHashCode_2() {
 
 		assertEquals("hashCode", ion2.hashCode(), ion1.hashCode());
