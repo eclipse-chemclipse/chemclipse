@@ -12,62 +12,63 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import org.eclipse.chemclipse.msd.model.core.PeakIonType;
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class PeakIon_2_Test extends TestCase {
+import org.eclipse.chemclipse.msd.model.core.PeakIonType;
+import org.junit.Before;
+import org.junit.Test;
+
+public class PeakIon_2_Test {
 
 	private PeakIon peakIon;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		peakIon = new PeakIon(45.5f, 2500.4f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		peakIon = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetUncertaintyFactor_1() {
 
-		assertEquals("GetUncertaintyFactor", 1.0f, peakIon.getUncertaintyFactor());
+		assertEquals("GetUncertaintyFactor", 1.0f, peakIon.getUncertaintyFactor(), 0);
 		peakIon.setUncertaintyFactor(0.3f);
-		assertEquals("GetUncertaintyFactor", 0.3f, peakIon.getUncertaintyFactor());
+		assertEquals("GetUncertaintyFactor", 0.3f, peakIon.getUncertaintyFactor(), 0);
 	}
 
+	@Test
 	public void testGetUncertaintyFactor_2() {
 
-		assertEquals("GetUncertaintyFactor", 1.0f, peakIon.getUncertaintyFactor());
+		assertEquals("GetUncertaintyFactor", 1.0f, peakIon.getUncertaintyFactor(), 0);
 		peakIon.setUncertaintyFactor(0.0f);
-		assertEquals("GetUncertaintyFactor", 0.0f, peakIon.getUncertaintyFactor());
+		assertEquals("GetUncertaintyFactor", 0.0f, peakIon.getUncertaintyFactor(), 0);
 	}
 
+	@Test
 	public void testGetUncertaintyFactor_3() {
 
-		assertEquals("GetUncertaintyFactor", 1.0f, peakIon.getUncertaintyFactor());
+		assertEquals("GetUncertaintyFactor", 1.0f, peakIon.getUncertaintyFactor(), 0);
 		peakIon.setUncertaintyFactor(1.0f);
-		assertEquals("GetUncertaintyFactor", 1.0f, peakIon.getUncertaintyFactor());
+		assertEquals("GetUncertaintyFactor", 1.0f, peakIon.getUncertaintyFactor(), 0);
 	}
 
+	@Test
 	public void testGetUncertaintyFactor_4() {
 
-		assertEquals("GetUncertaintyFactor", 1.0f, peakIon.getUncertaintyFactor());
+		assertEquals("GetUncertaintyFactor", 1.0f, peakIon.getUncertaintyFactor(), 0);
 		peakIon.setUncertaintyFactor(-0.1f);
-		assertEquals("GetUncertaintyFactor", 1.0f, peakIon.getUncertaintyFactor());
+		assertEquals("GetUncertaintyFactor", 1.0f, peakIon.getUncertaintyFactor(), 0);
 	}
 
+	@Test
 	public void testGetUncertaintyFactor_5() {
 
-		assertEquals("GetUncertaintyFactor", 1.0f, peakIon.getUncertaintyFactor());
+		assertEquals("GetUncertaintyFactor", 1.0f, peakIon.getUncertaintyFactor(), 0);
 		peakIon.setUncertaintyFactor(1.1f);
-		assertEquals("GetUncertaintyFactor", 1.0f, peakIon.getUncertaintyFactor());
+		assertEquals("GetUncertaintyFactor", 1.0f, peakIon.getUncertaintyFactor(), 0);
 	}
 
+	@Test
 	public void testGetPeakIonType_1() {
 
 		assertEquals("GetPeakIonType", PeakIonType.NO_TYPE, peakIon.getPeakIonType());
@@ -75,6 +76,7 @@ public class PeakIon_2_Test extends TestCase {
 		assertEquals("GetPeakIonType", PeakIonType.B, peakIon.getPeakIonType());
 	}
 
+	@Test
 	public void testGetPeakIonType_2() {
 
 		assertEquals("GetPeakIonType", PeakIonType.NO_TYPE, peakIon.getPeakIonType());

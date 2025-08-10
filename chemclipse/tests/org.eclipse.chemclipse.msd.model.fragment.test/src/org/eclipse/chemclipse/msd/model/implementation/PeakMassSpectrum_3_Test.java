@@ -12,20 +12,22 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
-public class PeakMassSpectrum_3_Test extends TestCase {
+public class PeakMassSpectrum_3_Test {
 
 	private IIon ion;
 	private IPeakMassSpectrum peakMassSpectrum;
 	private IPeakMassSpectrum peakMassSpectrumShifted;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		peakMassSpectrum = new PeakMassSpectrum();
 		ion = new Ion(45.5f, 64830.4f);
 		peakMassSpectrum.addIon(ion);
@@ -38,17 +40,9 @@ public class PeakMassSpectrum_3_Test extends TestCase {
 		peakMassSpectrumShifted = new PeakMassSpectrum(peakMassSpectrum, 50);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		ion = null;
-		peakMassSpectrumShifted = null;
-		peakMassSpectrum = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetTotalSignal_1() {
 
-		assertEquals("TotalSignal", 3257071.0f, peakMassSpectrumShifted.getTotalSignal());
+		assertEquals("TotalSignal", 3257071.0f, peakMassSpectrumShifted.getTotalSignal(), 0);
 	}
 }

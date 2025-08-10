@@ -12,48 +12,39 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
+import org.junit.Test;
 
 /**
  * Tests adjustTotalSignal(float totalSignal).
- * 
- * @author eselmeister
  */
-public class MassSpectrum_26_Test extends TestCase {
+public class MassSpectrum_26_Test {
 
-	private ScanMSD massSpectrum;
+	private IScanMSD massSpectrum = new ScanMSD();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		massSpectrum = new ScanMSD();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectrum = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testIdentifier_1() {
 
 		assertEquals("Identifier", "", massSpectrum.getIdentifier());
 	}
 
+	@Test
 	public void testIdentifier_2() {
 
 		massSpectrum.setIdentifier(null);
 		assertEquals("Identifier", "", massSpectrum.getIdentifier());
 	}
 
+	@Test
 	public void testIdentifier_3() {
 
 		massSpectrum.setIdentifier("MS-I");
 		assertEquals("Identifier", "MS-I", massSpectrum.getIdentifier());
 	}
 
+	@Test
 	public void testIdentifier_4() {
 
 		massSpectrum.setIdentifier("MS-I");

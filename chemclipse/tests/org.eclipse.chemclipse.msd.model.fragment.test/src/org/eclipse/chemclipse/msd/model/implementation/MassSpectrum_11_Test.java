@@ -12,23 +12,23 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests if all ions will be removed by the method
  * removeAllMassFragements.
- * 
- * @author eselmeister
  */
-public class MassSpectrum_11_Test extends TestCase {
+public class MassSpectrum_11_Test {
 
 	private ScanMSD massSpectrum;
 	private Ion ion;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		massSpectrum = new ScanMSD();
 		ion = new Ion(45.5f, 78500.2f);
 		massSpectrum.addIon(ion);
@@ -46,14 +46,7 @@ public class MassSpectrum_11_Test extends TestCase {
 		massSpectrum.removeIon(ion);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectrum = null;
-		ion = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testRemoveAllIons_1() {
 
 		assertEquals("getIons", 5, massSpectrum.getIons().size());

@@ -12,19 +12,21 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IIonTransition;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class MassSpectrum_31_Test {
 
-public class MassSpectrum_31_Test extends TestCase {
+	private IScanMSD massSpectrum;
 
-	private ScanMSD massSpectrum;
+	@Before
+	public void setUp() throws Exception {
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
 		massSpectrum = new ScanMSD();
 		massSpectrum.addIon(new Ion(45.52d, 78500.2f));
 		massSpectrum.addIon(new Ion(85.43d, 3000.5f));
@@ -36,18 +38,13 @@ public class MassSpectrum_31_Test extends TestCase {
 		massSpectrum.addIon(new Ion(28.24d, 33000.5f));
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectrum = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
 		assertTrue(massSpectrum.isTandemMS());
 	}
 
+	@Test
 	public void test_2() {
 
 		assertTrue(massSpectrum.isHighResolutionMS());

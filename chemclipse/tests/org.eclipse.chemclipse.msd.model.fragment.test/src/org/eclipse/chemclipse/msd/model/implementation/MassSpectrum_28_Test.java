@@ -12,53 +12,45 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class MassSpectrum_28_Test {
 
-public class MassSpectrum_28_Test extends TestCase {
+	private IScanMSD massSpectrum = new ScanMSD();
 
-	private IScanMSD massSpectrum;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		massSpectrum = new ScanMSD();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectrum = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertFalse(massSpectrum.isMeasurementSIM());
 	}
 
-	public void test2()  {
+	@Test
+	public void test2() {
 
 		addIons(massSpectrum, 1);
 		assertTrue(massSpectrum.isMeasurementSIM());
 	}
 
-	public void test3()  {
+	@Test
+	public void test3() {
 
 		addIons(massSpectrum, 10);
 		assertTrue(massSpectrum.isMeasurementSIM());
 	}
 
-	public void test4()  {
+	@Test
+	public void test4() {
 
 		addIons(massSpectrum, 11);
 		assertFalse(massSpectrum.isMeasurementSIM());
 	}
 
-	private void addIons(IScanMSD massSpectrum, int amount)  {
+	private void addIons(IScanMSD massSpectrum, int amount) {
 
 		for(int i = 1; i <= amount; i++) {
 			IIon nominalIon = new Ion(i, 1000);

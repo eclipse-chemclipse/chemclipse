@@ -12,24 +12,24 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class PeakMassSpectrum_5_Test extends TestCase {
+public class PeakMassSpectrum_5_Test {
 
 	private IIon ion;
 	private IScanMSD massSpectrum;
 	private IPeakMassSpectrum peakMassSpectrum;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		/*
 		 * The total signal of the mass spectrum is 6514141.6f.
 		 */
@@ -44,41 +44,37 @@ public class PeakMassSpectrum_5_Test extends TestCase {
 		massSpectrum.addIon(ion);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		ion = null;
-		peakMassSpectrum = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetTotalSignal_1() {
 
 		/*
 		 * 70% actual: 6514141.6f -> 100% : 9305916.571f
 		 */
 		peakMassSpectrum = new PeakMassSpectrum(massSpectrum, 70.0f);
-		assertEquals("TotalSignal", 9305916.571f, peakMassSpectrum.getTotalSignal());
+		assertEquals("TotalSignal", 9305916.571f, peakMassSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalSignal_2() {
 
 		/*
 		 * 120% actual: 6514141.6f -> 100% : 5428451.333f
 		 */
 		peakMassSpectrum = new PeakMassSpectrum(massSpectrum, 120.0f);
-		assertEquals("TotalSignal", 5428451.0f, peakMassSpectrum.getTotalSignal());
+		assertEquals("TotalSignal", 5428451.0f, peakMassSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalSignal_3() {
 
 		/*
 		 * 100% actual: 6514141.6f -> 100% : 6514141.6f
 		 */
 		peakMassSpectrum = new PeakMassSpectrum(massSpectrum, 100.0f);
-		assertEquals("TotalSignal", 6514142.0f, peakMassSpectrum.getTotalSignal());
+		assertEquals("TotalSignal", 6514142.0f, peakMassSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalSignal_4() {
 
 		assertThrows(IllegalArgumentException.class, () -> {
@@ -86,6 +82,7 @@ public class PeakMassSpectrum_5_Test extends TestCase {
 		});
 	}
 
+	@Test
 	public void testGetTotalSignal_5() {
 
 		assertThrows(IllegalArgumentException.class, () -> {
@@ -93,12 +90,13 @@ public class PeakMassSpectrum_5_Test extends TestCase {
 		});
 	}
 
+	@Test
 	public void testGetTotalSignal_6() {
 
 		/*
 		 * 97.2% actual: 6514141.6f -> 100% : 6701791.77f
 		 */
 		peakMassSpectrum = new PeakMassSpectrum(massSpectrum, 97.2f);
-		assertEquals("TotalSignal", 6701792.5f, peakMassSpectrum.getTotalSignal());
+		assertEquals("TotalSignal", 6701792.5f, peakMassSpectrum.getTotalSignal(), 0);
 	}
 }
