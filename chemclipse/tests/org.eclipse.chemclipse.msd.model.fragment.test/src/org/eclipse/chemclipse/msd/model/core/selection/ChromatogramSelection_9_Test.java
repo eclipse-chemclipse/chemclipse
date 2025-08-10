@@ -12,26 +12,28 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.selection;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.VendorMassSpectrum;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ChromatogramSelection_9_Test extends TestCase {
+public class ChromatogramSelection_9_Test {
 
 	private IChromatogramMSD chromatogram;
 	private IChromatogramSelectionMSD selection;
 	private IRegularMassSpectrum massSpectrum;
 	private IIon ion;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		chromatogram = new ChromatogramMSD();
 		chromatogram.setScanDelay(500);
 		chromatogram.setScanInterval(1000);
@@ -48,16 +50,7 @@ public class ChromatogramSelection_9_Test extends TestCase {
 		selection = new ChromatogramSelectionMSD(chromatogram);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		selection = null;
-		massSpectrum = null;
-		ion = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetSelectedScan_1() {
 
 		IRegularMassSpectrum selectedScan = selection.getSelectedScan();

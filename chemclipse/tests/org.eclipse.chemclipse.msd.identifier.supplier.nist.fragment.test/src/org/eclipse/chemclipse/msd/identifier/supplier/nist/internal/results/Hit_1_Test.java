@@ -12,70 +12,69 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.identifier.supplier.nist.internal.results;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class Hit_1_Test extends TestCase {
+import org.junit.Test;
 
-	private Hit hit;
+public class Hit_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private Hit hit = new Hit();
 
-		super.setUp();
-		hit = new Hit();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetName_1() {
 
 		assertEquals("", hit.getName());
 	}
 
+	@Test
 	public void testGetFormula_1() {
 
 		assertEquals("", hit.getFormula());
 	}
 
+	@Test
 	public void testGetMF_1() {
 
-		assertEquals(0.0f, hit.getMatchFactor());
+		assertEquals(0.0f, hit.getMatchFactor(), 0);
 	}
 
+	@Test
 	public void testGetRMF_1() {
 
-		assertEquals(0.0f, hit.getReverseMatchFactor());
+		assertEquals(0.0f, hit.getReverseMatchFactor(), 0);
 	}
 
+	@Test
 	public void testGetProb_1() {
 
-		assertEquals(0.0f, hit.getProbability());
+		assertEquals(0.0f, hit.getProbability(), 0);
 	}
 
+	@Test
 	public void testGetCAS_1() {
 
 		assertEquals("", hit.getCAS());
 	}
 
+	@Test
 	public void testGetMw_1() {
 
 		assertEquals(0, hit.getMolecularWeight());
 	}
 
+	@Test
 	public void testGetLib_1() {
 
 		assertEquals("", hit.getLib());
 	}
 
+	@Test
 	public void testGetId_1() {
 
 		assertEquals(0, hit.getId());
 	}
 
+	@Test
 	public void testGetRi_1() {
 
 		assertEquals(0, hit.getRetentionIndex());

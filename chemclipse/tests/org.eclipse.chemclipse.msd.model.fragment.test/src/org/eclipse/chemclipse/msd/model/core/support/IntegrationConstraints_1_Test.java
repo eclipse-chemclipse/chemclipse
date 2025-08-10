@@ -12,47 +12,41 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.model.support.IIntegrationConstraints;
 import org.eclipse.chemclipse.model.support.IntegrationConstraint;
 import org.eclipse.chemclipse.model.support.IntegrationConstraints;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-/**
- * @author eselmeister
- */
-public class IntegrationConstraints_1_Test extends TestCase {
+public class IntegrationConstraints_1_Test {
 
 	private IIntegrationConstraints integrationConstraints;
 	private IntegrationConstraint constraint;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		integrationConstraints = new IntegrationConstraints();
 		constraint = IntegrationConstraint.LEAVE_PEAK_AS_IT_IS;
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		integrationConstraints = null;
-		constraint = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testHasIntegrationConstraint_1() {
 
 		assertFalse("hasIntegrationConstraint", integrationConstraints.hasIntegrationConstraint(constraint));
 	}
 
+	@Test
 	public void testHasIntegrationConstraint_2() {
 
 		integrationConstraints.add(constraint);
 		assertTrue("hasIntegrationConstraint", integrationConstraints.hasIntegrationConstraint(constraint));
 	}
 
+	@Test
 	public void testHasIntegrationConstraint_3() {
 
 		integrationConstraints.add(constraint);
@@ -60,6 +54,7 @@ public class IntegrationConstraints_1_Test extends TestCase {
 		assertTrue("hasIntegrationConstraint", integrationConstraints.hasIntegrationConstraint(constraint));
 	}
 
+	@Test
 	public void testHasIntegrationConstraint_4() {
 
 		integrationConstraints.add(constraint);
@@ -67,6 +62,7 @@ public class IntegrationConstraints_1_Test extends TestCase {
 		assertFalse("hasIntegrationConstraint", integrationConstraints.hasIntegrationConstraint(constraint));
 	}
 
+	@Test
 	public void testHasIntegrationConstraint_5() {
 
 		integrationConstraints.add(constraint);
@@ -75,6 +71,7 @@ public class IntegrationConstraints_1_Test extends TestCase {
 		assertFalse("hasIntegrationConstraint", integrationConstraints.hasIntegrationConstraint(constraint));
 	}
 
+	@Test
 	public void testHasIntegrationConstraint_6() {
 
 		integrationConstraints.add(constraint);

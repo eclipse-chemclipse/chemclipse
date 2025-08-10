@@ -12,53 +12,45 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class IonUniquenessValues_2_Test extends TestCase {
+import org.junit.Test;
 
-	private IIonUniquenessValues uniquenessValues;
+public class IonUniquenessValues_2_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private IIonUniquenessValues uniquenessValues = new IonUniquenessValues();
 
-		super.setUp();
-		uniquenessValues = new IonUniquenessValues();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		uniquenessValues = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testAdd_1() {
 
 		uniquenessValues.add(43, -0.1f);
 		float uv = uniquenessValues.getUniquenessValue(43);
-		assertEquals("Uniqueness Value", 1.0f, uv);
+		assertEquals("Uniqueness Value", 1.0f, uv, 0);
 		float pv = uniquenessValues.getPropabilityValue(43);
-		assertEquals("Probability Value", 0.0f, pv);
+		assertEquals("Probability Value", 0.0f, pv, 0);
 	}
 
+	@Test
 	public void testAdd_2() {
 
 		uniquenessValues.add(43, 1.1f);
 		float uv = uniquenessValues.getUniquenessValue(43);
-		assertEquals("Uniqueness Value", 1.0f, uv);
+		assertEquals("Uniqueness Value", 1.0f, uv, 0);
 		float pv = uniquenessValues.getPropabilityValue(43);
-		assertEquals("Probability Value", 0.0f, pv);
+		assertEquals("Probability Value", 0.0f, pv, 0);
 	}
 
+	@Test
 	public void testAdd_3() {
 
 		uniquenessValues.add(150, 0.1f);
 		float uv = uniquenessValues.getUniquenessValue(150);
-		assertEquals("Uniqueness Value", 0.9f, uv);
+		assertEquals("Uniqueness Value", 0.9f, uv, 0);
 		float pv = uniquenessValues.getPropabilityValue(150);
-		assertEquals("Probability Value", 0.1f, pv);
+		assertEquals("Probability Value", 0.1f, pv, 0);
 	}
 
+	@Test
 	public void testRemove_1() {
 
 		uniquenessValues.remove(56);

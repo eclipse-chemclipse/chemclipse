@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,20 +23,19 @@ import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.ScanMSD;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class IonPercentages_3_Test extends TestCase {
+public class IonPercentages_3_Test {
 
 	private IScanMSD massSpectrum;
 	private IIon defaultIon;
 	private IIonPercentages ionPercentages;
 	private Map<Integer, Float> ions;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		ions = new HashMap<Integer, Float>();
 		massSpectrum = new ScanMSD();
 		for(Integer ion : ions.keySet()) {
@@ -44,25 +45,22 @@ public class IonPercentages_3_Test extends TestCase {
 		ionPercentages = new IonPercentages(massSpectrum);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testMassSpectrum_1() {
 
-		assertEquals("TotalSignal", 0.0f, massSpectrum.getTotalSignal());
+		assertEquals("TotalSignal", 0.0f, massSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testIonPercentages_1() {
 
-		assertEquals("45", 0.0f, ionPercentages.getPercentage(45));
+		assertEquals("45", 0.0f, ionPercentages.getPercentage(45), 0);
 	}
 
+	@Test
 	public void testIonPercentages_2() {
 
 		List<Integer> ionList = new ArrayList<Integer>(ions.keySet());
-		assertEquals("All", 0.0f, ionPercentages.getPercentage(ionList));
+		assertEquals("All", 0.0f, ionPercentages.getPercentage(ionList), 0);
 	}
 }

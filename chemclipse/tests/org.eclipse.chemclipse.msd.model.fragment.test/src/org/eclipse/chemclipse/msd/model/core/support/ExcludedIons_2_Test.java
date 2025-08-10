@@ -12,42 +12,34 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Set;
 
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.msd.model.core.AbstractIon;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class ExcludedIons_2_Test {
 
-public class ExcludedIons_2_Test extends TestCase {
+	private IMarkedIons excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
 
-	private IMarkedIons excludedIons;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		excludedIons = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testContains_1() {
 
 		assertFalse("contains", excludedIons.getIonsNominal().contains(AbstractIon.getIon(4.9f)));
 	}
 
+	@Test
 	public void testContains_2() {
 
 		excludedIons.add(new MarkedIon(5));
 		assertTrue("contains", excludedIons.getIonsNominal().contains(AbstractIon.getIon(4.9f)));
 	}
 
+	@Test
 	public void testContains_3() {
 
 		excludedIons.add(new MarkedIon(5));
@@ -55,6 +47,7 @@ public class ExcludedIons_2_Test extends TestCase {
 		assertFalse("contains", excludedIons.getIonsNominal().contains(AbstractIon.getIon(5.4f)));
 	}
 
+	@Test
 	public void testContains_4() {
 
 		excludedIons.add(new MarkedIon(10));
@@ -64,6 +57,7 @@ public class ExcludedIons_2_Test extends TestCase {
 		assertTrue("contains", excludedIonsNominal.contains(AbstractIon.getIon(20.2f)));
 	}
 
+	@Test
 	public void testContains_5() {
 
 		excludedIons.add(50, 60);

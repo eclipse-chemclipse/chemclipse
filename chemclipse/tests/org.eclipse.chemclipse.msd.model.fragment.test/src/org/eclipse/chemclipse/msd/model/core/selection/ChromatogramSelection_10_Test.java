@@ -12,25 +12,27 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.selection;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.easymock.EasyMock;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ChromatogramSelection_10_Test extends TestCase {
+public class ChromatogramSelection_10_Test {
 
 	private IChromatogramMSD chromatogram;
 	private IChromatogramSelectionMSD selection;
 	private IChromatogramPeakMSD peak;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		/*
 		 * Use createNiceMock if you use void methods that are not important to
 		 * test.
@@ -56,19 +58,11 @@ public class ChromatogramSelection_10_Test extends TestCase {
 		selection = new ChromatogramSelectionMSD(chromatogram);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		selection = null;
-		peak = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetSelectedPeak_1() {
 
 		IChromatogramPeakMSD selectedPeak = (IChromatogramPeakMSD)selection.getSelectedPeak();
 		assertNotNull(selectedPeak);
-		assertEquals("IntegratedArea", 893002.3d, selectedPeak.getIntegratedArea());
+		assertEquals("IntegratedArea", 893002.3d, selectedPeak.getIntegratedArea(), 0);
 	}
 }

@@ -12,23 +12,26 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 
 import org.easymock.EasyMock;
 import org.eclipse.chemclipse.model.baseline.BaselineModel;
 import org.eclipse.chemclipse.model.baseline.IBaselineModel;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
+import org.junit.Before;
+import org.junit.Test;
 
-public class BaselineModel_6_Test extends TestCase {
+public class BaselineModel_6_Test {
 
 	private IChromatogramMSD chromatogram;
 	private IBaselineModel baselineModel;
 	private IBaselineModel baselineModelCopy;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		chromatogram = EasyMock.createMock(IChromatogramMSD.class);
 		EasyMock.expect(chromatogram.getStartRetentionTime()).andStubReturn(1000);
 		EasyMock.expect(chromatogram.getStopRetentionTime()).andStubReturn(100000);
@@ -55,23 +58,17 @@ public class BaselineModel_6_Test extends TestCase {
 		baselineModelCopy = baselineModel.makeDeepCopy();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		baselineModel = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testMakeDeepCopy_1() {
 
 		assertNotSame(baselineModelCopy, baselineModel);
 	}
 
+	@Test
 	public void testMakeDeepCopy_2() {
 
 		baselineModelCopy.removeBaseline();
-		assertEquals(0.0f, baselineModelCopy.getBackgroundAbundance(20000));
+		assertEquals(0.0f, baselineModelCopy.getBackgroundAbundance(20000), 0);
 		assertFalse(baselineModelCopy.getBackgroundAbundance(20000) == baselineModel.getBackgroundAbundance(20000));
 	}
 }

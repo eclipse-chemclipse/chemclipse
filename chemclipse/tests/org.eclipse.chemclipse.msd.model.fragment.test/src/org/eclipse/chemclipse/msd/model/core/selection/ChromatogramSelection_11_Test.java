@@ -12,24 +12,26 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.selection;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.Set;
 
 import org.easymock.EasyMock;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.chemclipse.msd.model.core.support.MarkedIon;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ChromatogramSelection_11_Test extends TestCase {
+public class ChromatogramSelection_11_Test {
 
 	private IChromatogramMSD chromatogram;
 	private IChromatogramSelectionMSD chromatogramSelection;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		/*
 		 * Use createNiceMock if you use void methods that are not important to
 		 * test.
@@ -45,20 +47,14 @@ public class ChromatogramSelection_11_Test extends TestCase {
 		chromatogramSelection = new ChromatogramSelectionMSD(chromatogram);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		chromatogramSelection = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetSelectedIons_1() {
 
 		IMarkedIons selectedIons = chromatogramSelection.getSelectedIons();
 		assertNotNull(selectedIons);
 	}
 
+	@Test
 	public void testGetSelectedIons_2() {
 
 		IMarkedIons selectedIons;
@@ -74,12 +70,14 @@ public class ChromatogramSelection_11_Test extends TestCase {
 		assertEquals("Contains", false, selectedIonsNominal.contains(105));
 	}
 
+	@Test
 	public void testGetExcludedIons_1() {
 
 		IMarkedIons excludedIons = chromatogramSelection.getExcludedIons();
 		assertNotNull(excludedIons);
 	}
 
+	@Test
 	public void testGetExcludedIons_2() {
 
 		IMarkedIons excludedIons;
