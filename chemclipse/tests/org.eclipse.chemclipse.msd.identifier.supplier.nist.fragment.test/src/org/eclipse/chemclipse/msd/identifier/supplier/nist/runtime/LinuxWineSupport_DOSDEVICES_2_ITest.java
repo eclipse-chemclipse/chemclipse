@@ -12,56 +12,49 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.identifier.supplier.nist.runtime;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 
 import org.eclipse.chemclipse.msd.identifier.supplier.nist.TestPathHelper;
+import org.junit.Before;
+import org.junit.Test;
 
 public class LinuxWineSupport_DOSDEVICES_2_ITest extends AbstractBackgroundTestCase {
 
 	private IExtendedRuntimeSupport runtimeSupport;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
-	public void testConstruct_1() {
+	@Test
+	public void testConstruct_1() throws FileNotFoundException {
 
 		String nistApp = TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_WINE_DOSDEVICES_NIST_APPLICATION);
-		try {
-			runtimeSupport = new LinuxWineSupport(new File(nistApp).getParentFile(), parameterBackground);
-			assertNotNull(runtimeSupport);
-		} catch(FileNotFoundException e) {
-			assertTrue("A file not found exception should not occur here.", false);
-		}
+		runtimeSupport = new LinuxWineSupport(new File(nistApp).getParentFile(), parameterBackground);
+		assertNotNull(runtimeSupport);
 	}
 
+	@Test
 	public void testConstruct_2() {
 
 		String nistApp = "";
-		try {
+		assertThrows(FileNotFoundException.class, () -> {
 			runtimeSupport = new LinuxWineSupport(new File(nistApp).getParentFile(), parameterBackground);
-			assertNull(runtimeSupport);
-		} catch(FileNotFoundException e) {
-			assertTrue("A file not found exception should not occur here.", true);
-		}
+		});
 	}
 
+	@Test
 	public void testConstruct_3() {
 
-		try {
+		assertThrows(FileNotFoundException.class, () -> {
 			runtimeSupport = new LinuxWineSupport(null, parameterBackground);
-			assertNull(runtimeSupport);
-		} catch(FileNotFoundException e) {
-			assertTrue("A file not found exception should not occur here.", true);
-		}
+		});
 	}
 }

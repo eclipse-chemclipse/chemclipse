@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignalExtractor;
@@ -22,11 +25,11 @@ import org.eclipse.chemclipse.numeric.core.IPoint;
 import org.eclipse.chemclipse.numeric.core.Point;
 import org.eclipse.chemclipse.numeric.equations.Equations;
 import org.eclipse.chemclipse.numeric.equations.LinearEquation;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test the peak exceptions.
- * 
- * @author eselmeister
  */
 public class PeakBuilder_18_Test extends PeakBuilderTestCase {
 
@@ -39,7 +42,8 @@ public class PeakBuilder_18_Test extends PeakBuilderTestCase {
 	private ITotalScanSignalExtractor totalIonSignalExtractor;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		totalIonSignalExtractor = new TotalScanSignalExtractor(chromatogram);
@@ -53,24 +57,13 @@ public class PeakBuilder_18_Test extends PeakBuilderTestCase {
 		peakMassSpectrum = PeakBuilderMSD.getPeakMassSpectrum(chromatogram, totalIonSignals, backgroundEquation, excludedIons);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		excludedIons = null;
-		totalIonSignals = null;
-		signal = null;
-		p1 = null;
-		p2 = null;
-		backgroundEquation = null;
-		peakMassSpectrum = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetPeakMassSpectrum_1() {
 
 		assertNotNull(peakMassSpectrum);
 	}
 
+	@Test
 	public void testGetPeakMassSpectrum_2() {
 
 		assertEquals("Ions", 11, peakMassSpectrum.getIons().size());

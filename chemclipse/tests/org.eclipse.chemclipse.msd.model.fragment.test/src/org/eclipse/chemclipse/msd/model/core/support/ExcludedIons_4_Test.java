@@ -12,40 +12,32 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.msd.model.core.AbstractIon;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class ExcludedIons_4_Test {
 
-public class ExcludedIons_4_Test extends TestCase {
+	private IMarkedIons excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
 
-	private IMarkedIons excludedIons;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		excludedIons = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testContains_1() {
 
 		assertFalse("contains", excludedIons.getIonsNominal().contains(AbstractIon.getIon(5.0f)));
 	}
 
+	@Test
 	public void testContains_2() {
 
 		excludedIons.add(new MarkedIon(5.2f));
 		assertTrue("contains", excludedIons.getIonsNominal().contains(AbstractIon.getIon(5.0f)));
 	}
 
+	@Test
 	public void testContains_3() {
 
 		excludedIons.add(new MarkedIon(5.3f));
@@ -53,6 +45,7 @@ public class ExcludedIons_4_Test extends TestCase {
 		assertTrue("contains", excludedIons.getIonsNominal().contains(AbstractIon.getIon(5.0f)));
 	}
 
+	@Test
 	public void testContains_4() {
 
 		excludedIons.add(new MarkedIon(10.4f));
@@ -61,6 +54,7 @@ public class ExcludedIons_4_Test extends TestCase {
 		assertTrue("contains", excludedIons.getIonsNominal().contains(AbstractIon.getIon(20.3f)));
 	}
 
+	@Test
 	public void testSize_9() {
 
 		excludedIons.add(new MarkedIon(58.4f));
@@ -69,6 +63,7 @@ public class ExcludedIons_4_Test extends TestCase {
 		assertEquals("size", 3, excludedIons.getIonsNominal().size());
 	}
 
+	@Test
 	public void testSize_10() {
 
 		assertEquals("size", 0, excludedIons.getIonsNominal().size());

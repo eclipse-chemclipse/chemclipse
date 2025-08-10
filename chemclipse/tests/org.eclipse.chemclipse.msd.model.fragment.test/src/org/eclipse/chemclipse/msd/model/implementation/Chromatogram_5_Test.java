@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.util.Date;
 
@@ -22,15 +25,13 @@ import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.xic.ExtractedIonSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignals;
-
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test the interface IChromatogram with 3 scans.
- * 
- * @author eselmeister
  */
-public class Chromatogram_5_Test extends TestCase {
+public class Chromatogram_5_Test {
 
 	private ChromatogramMSD chromatogram;
 	private VendorMassSpectrum supplierMassSpectrum;
@@ -39,10 +40,9 @@ public class Chromatogram_5_Test extends TestCase {
 	private ITotalScanSignalExtractor totalIonSignalExtractor;
 	private IExtractedIonSignalExtractor extractedIonSignalExtractor;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		chromatogram = new ChromatogramMSD();
 		// ------------------------------Scan 1
 		supplierMassSpectrum = new VendorMassSpectrum();
@@ -84,114 +84,116 @@ public class Chromatogram_5_Test extends TestCase {
 		chromatogram.setOperator("eselmeister");
 		chromatogram.setScanDelay(5500);
 		chromatogram.setScanInterval(1500);
-		//
+
 		totalIonSignalExtractor = new TotalScanSignalExtractor(chromatogram);
 		extractedIonSignalExtractor = new ExtractedIonSignalExtractor(chromatogram);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		supplierMassSpectrum = null;
-		ion = null;
-		date = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetScanDelay_1() {
 
 		assertEquals("scanDelay", 5500, chromatogram.getScanDelay());
 	}
 
+	@Test
 	public void testGetScanInterval_1() {
 
 		assertEquals("scanInterval", 1500, chromatogram.getScanInterval());
 	}
 
+	@Test
 	public void testGetOperator_1() {
 
 		assertEquals("operator", "eselmeister", chromatogram.getOperator());
 	}
 
+	@Test
 	public void testGetFile_1() {
 
 		assertEquals("file", new File(""), chromatogram.getFile());
 	}
 
+	@Test
 	public void testGetName_1() {
 
 		assertEquals("name", "", chromatogram.getName());
 	}
 
+	@Test
 	public void testGetDate_1() {
 
 		assertTrue("date", chromatogram.getDate() != null);
 	}
 
+	@Test
 	public void testGetDate_2() {
 
 		assertEquals("date", date.toString(), chromatogram.getDate().toString());
 	}
 
+	@Test
 	public void testGetNumberOfScans_1() {
 
 		assertEquals("numberOfScans", 3, chromatogram.getNumberOfScans());
 	}
 
+	@Test
 	public void testGetNumberOfScanIons_1() {
 
 		assertEquals("numberOfScanIons", 9, chromatogram.getNumberOfScanIons());
 	}
 
+	@Test
 	public void testGetStartRetentionTime_1() {
 
 		assertEquals("startRetentionTime", 7896, chromatogram.getStartRetentionTime());
 	}
 
+	@Test
 	public void testGetStopRetentionTime_1() {
 
 		assertEquals("stopRetentionTime", 9214, chromatogram.getStopRetentionTime());
 	}
 
+	@Test
 	public void testGetMinSignal_1() {
 
-		// Cast to int because float is not as precise as for example
-		// java.lang.Math.
-		assertEquals("minSignal", 591953, (int)chromatogram.getMinSignal());
+		assertEquals("minSignal", 591953, (int)chromatogram.getMinSignal(), 0);
 	}
 
+	@Test
 	public void testGetMaxSignal_1() {
 
-		// Cast to int because float is not as precise as for example
-		// java.lang.Math.
-		assertEquals("maxSignal", 12870746, (int)chromatogram.getMaxSignal());
+		assertEquals("maxSignal", 12870746, chromatogram.getMaxSignal(), 0);
 	}
 
+	@Test
 	public void testGetMiscInfo_1() {
 
 		assertEquals("miscInfo", "This is a test chromatogram.", chromatogram.getMiscInfo());
 	}
 
+	@Test
 	public void testGetTotalIonSignals_1() {
 
 		ITotalScanSignals signals = totalIonSignalExtractor.getTotalScanSignals();
 		assertEquals("List<ITotalIonSignal> size", 3, signals.size());
 	}
 
+	@Test
 	public void testGetTotalIonSignal_1() {
 
-		// Cast to int because float is not as precise as for example
-		// java.lang.Math.
-		assertEquals("totalIonSignal", 21141888, (int)chromatogram.getTotalSignal());
+		assertEquals("totalIonSignal", 21141888, chromatogram.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetExtractedIonSignals_1() {
 
 		IExtractedIonSignals signals = extractedIonSignalExtractor.getExtractedIonSignals();
 		assertEquals("List<IExtractedIonSignal> size", 3, signals.size());
 	}
 
+	@Test
 	public void testGetExtractedIonSignals_2() {
 
 		IExtractedIonSignals signals = extractedIonSignalExtractor.getExtractedIonSignals(14.2f, 105.6f);

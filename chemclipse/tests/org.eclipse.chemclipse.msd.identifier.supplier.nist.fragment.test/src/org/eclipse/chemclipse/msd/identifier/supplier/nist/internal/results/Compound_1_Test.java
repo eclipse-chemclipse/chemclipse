@@ -12,34 +12,32 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.identifier.supplier.nist.internal.results;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class Compound_1_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class Compound_1_Test {
 
 	private Compound compound;
 	private Hit hit;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		compound = new Compound();
 		hit = new Hit();
 		hit.setName("Styrene");
 		compound.add(hit);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testSize_1() {
 
 		assertEquals(1, compound.size());
 	}
 
+	@Test
 	public void testSize_2() {
 
 		hit = new Hit();
@@ -48,6 +46,7 @@ public class Compound_1_Test extends TestCase {
 		assertEquals(0, compound.size());
 	}
 
+	@Test
 	public void testSize_3() {
 
 		hit = new Hit();

@@ -23,23 +23,20 @@ import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.VendorMassSpectrum;
+import org.junit.Before;
 import org.junit.Ignore;
 
-import junit.framework.TestCase;
-
 @Ignore
-public class PeakBuilderTestCase extends TestCase {
+public class PeakBuilderTestCase {
 
 	protected IChromatogramMSD chromatogram;
 	private IIon ion;
 	private TreeMap<Float, Float> fragmentValues;
 	private IRegularMassSpectrum supplierMassSpectrum;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
-		// ----------------------Chromatogram
 		chromatogram = new ChromatogramMSD();
 		/*
 		 * Add some more ion values, for example as a background.<br/>
@@ -99,16 +96,5 @@ public class PeakBuilderTestCase extends TestCase {
 		chromatogram.setScanDelay(500);
 		chromatogram.setScanInterval(1000);
 		chromatogram.recalculateRetentionTimes();
-		// ----------------------Chromatogram
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		ion = null;
-		fragmentValues = null;
-		supplierMassSpectrum = null;
-		super.tearDown();
 	}
 }

@@ -12,6 +12,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,24 +26,21 @@ import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignal;
 import org.eclipse.chemclipse.model.signals.TotalScanSignals;
-
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test the peak exceptions.
- * 
- * @author eselmeister
  */
-public class PeakBuilder_27_Test extends TestCase {
+public class PeakBuilder_27_Test {
 
 	private ITotalScanSignals totalIonSignals;
 	private ITotalScanSignal totalIonSignal;
 	private IPeakIntensityValues peakIntensityValues;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		List<Float> intensities = new ArrayList<Float>();
 		intensities.add(0.0f);
 		intensities.add(54.1f);
@@ -60,37 +61,25 @@ public class PeakBuilder_27_Test extends TestCase {
 		}
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		totalIonSignal = null;
-		totalIonSignals = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetPeakIntensityValues_1() {
 
 		Map.Entry<Integer, Float> value;
-		try {
-			peakIntensityValues = PeakBuilderMSD.getPeakIntensityValues(totalIonSignals);
-			assertNotNull(peakIntensityValues);
-			value = peakIntensityValues.getIntensityValue(10);
-			assertEquals("Intensity", 0.0f, value.getValue());
-			value = peakIntensityValues.getIntensityValue(40);
-			assertEquals("Intensity", IPeakIntensityValues.MAX_INTENSITY, value.getValue());
-			value = peakIntensityValues.getIntensityValue(100);
-			assertEquals("Intensity", 0.0f, value.getValue());
-		} catch(PeakException e) {
-			assertTrue("PeakException", false);
-		}
+		peakIntensityValues = PeakBuilderMSD.getPeakIntensityValues(totalIonSignals);
+		assertNotNull(peakIntensityValues);
+		value = peakIntensityValues.getIntensityValue(10);
+		assertEquals("Intensity", 0.0f, value.getValue(), 0);
+		value = peakIntensityValues.getIntensityValue(40);
+		assertEquals("Intensity", IPeakIntensityValues.MAX_INTENSITY, value.getValue(), 0);
+		value = peakIntensityValues.getIntensityValue(100);
+		assertEquals("Intensity", 0.0f, value.getValue(), 0);
 	}
 
+	@Test
 	public void testGetPeakIntensityValues_2() {
 
-		try {
+		assertThrows(PeakException.class, () -> {
 			peakIntensityValues = PeakBuilderMSD.getPeakIntensityValues(null);
-		} catch(PeakException e) {
-			assertTrue("PeakException", true);
-		}
+		});
 	}
 }

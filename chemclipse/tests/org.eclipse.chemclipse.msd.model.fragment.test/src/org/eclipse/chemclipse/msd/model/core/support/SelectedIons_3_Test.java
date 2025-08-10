@@ -12,36 +12,25 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.msd.model.core.AbstractIon;
 import org.eclipse.chemclipse.msd.model.core.IIon;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class SelectedIons_3_Test {
 
-public class SelectedIons_3_Test extends TestCase {
+	private IMarkedIons selectedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
 
-	private IMarkedIons selectedIons;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		selectedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		selectedIons = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testContains_1() {
 
 		selectedIons.add(new MarkedIon((int)IIon.TIC_ION));
 		assertTrue("contains", selectedIons.getIonsNominal().contains(0));
 	}
 
+	@Test
 	public void testContains_2() {
 
 		selectedIons.add(new MarkedIon((int)IIon.TIC_ION));

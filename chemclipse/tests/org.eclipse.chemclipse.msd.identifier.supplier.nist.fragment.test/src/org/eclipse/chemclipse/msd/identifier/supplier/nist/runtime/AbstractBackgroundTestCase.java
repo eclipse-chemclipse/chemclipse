@@ -15,14 +15,14 @@ package org.eclipse.chemclipse.msd.identifier.supplier.nist.runtime;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.Before;
 
-public abstract class AbstractBackgroundTestCase extends TestCase {
+public abstract class AbstractBackgroundTestCase {
 
 	List<String> parameterBackground = new ArrayList<>();
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		parameterBackground.add(INistSupport.INSTRUMENT);
 		parameterBackground.add(INistSupport.PAR2);

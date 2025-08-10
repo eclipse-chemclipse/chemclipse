@@ -12,6 +12,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,15 +32,13 @@ import org.eclipse.chemclipse.msd.model.implementation.VendorMassSpectrum;
 import org.eclipse.chemclipse.msd.model.xic.ExtractedIonSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignals;
-
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test the peak exceptions.
- * 
- * @author eselmeister
  */
-public class PeakBuilder_30_Test extends TestCase {
+public class PeakBuilder_30_Test {
 
 	private IChromatogramMSD chromatogram;
 	private IRegularMassSpectrum massSpectrum;
@@ -45,10 +47,9 @@ public class PeakBuilder_30_Test extends TestCase {
 	private IScanRange scanRange;
 	private IExtractedIonSignalExtractor extractedIonSignalExtractor;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		/*
 		 * chromatogram
 		 */
@@ -86,45 +87,30 @@ public class PeakBuilder_30_Test extends TestCase {
 		extractedIonSignals = extractedIonSignalExtractor.getExtractedIonSignals();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		defaultIon = null;
-		massSpectrum = null;
-		scanRange = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetPeakIntensityValues_1() {
 
 		IChromatogramPeakMSD peak;
-		try {
-			peak = PeakBuilderMSD.createPeak(extractedIonSignals, scanRange);
-			assertNotNull(peak);
-			float totalSignal = peak.getPeakModel().getPeakMassSpectrum().getTotalSignal();
-			assertEquals("TotalSignal", 8708643.0f, totalSignal);
-		} catch(PeakException e) {
-			assertTrue("PeakException", false);
-		}
+		peak = PeakBuilderMSD.createPeak(extractedIonSignals, scanRange);
+		assertNotNull(peak);
+		float totalSignal = peak.getPeakModel().getPeakMassSpectrum().getTotalSignal();
+		assertEquals("TotalSignal", 8708643.0f, totalSignal, 0);
 	}
 
+	@Test
 	public void testGetPeakIntensityValues_2() {
 
 		extractedIonSignals = null;
-		try {
+		assertThrows(PeakException.class, () -> {
 			PeakBuilderMSD.createPeak(extractedIonSignals, scanRange);
-		} catch(PeakException e) {
-			assertTrue("PeakException", true);
-		}
+		});
 	}
 
+	@Test
 	public void testGetPeakIntensityValues_3() {
 
-		try {
+		assertThrows(PeakException.class, () -> {
 			PeakBuilderMSD.createPeak(extractedIonSignals, null);
-		} catch(PeakException e) {
-			assertTrue("PeakException", true);
-		}
+		});
 	}
 }

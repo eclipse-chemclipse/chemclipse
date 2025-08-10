@@ -12,13 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.identifier.supplier.nist.internal.results;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.msd.identifier.supplier.nist.TestPathHelper;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class NistResultFileParser_5_Test extends TestCase {
+public class NistResultFileParser_5_Test {
 
 	private NistResultFileParser nistResultFileParser;
 	private File results;
@@ -26,10 +28,9 @@ public class NistResultFileParser_5_Test extends TestCase {
 	private Compound compound;
 	private Hit hit;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		nistResultFileParser = new NistResultFileParser();
 		results = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_NIST_SRCRESLT_3));
 		compounds = nistResultFileParser.getCompounds(results);
@@ -37,62 +38,67 @@ public class NistResultFileParser_5_Test extends TestCase {
 		hit = compound.getHit(2);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetIdentifier_1() {
 
 		assertEquals("PEAK-V-NAME", compound.getIdentfier());
 	}
 
+	@Test
 	public void testGetCompoundInLibraryFactor_1() {
 
 		assertEquals("-830", compound.getCompoundInLibraryFactor());
 	}
 
+	@Test
 	public void testGetName_1() {
 
 		assertEquals("Cyclohexanol", hit.getName());
 	}
 
+	@Test
 	public void testGetFormula_1() {
 
 		assertEquals("C6H12O", hit.getFormula());
 	}
 
+	@Test
 	public void testGetMF_1() {
 
-		assertEquals(57.4f, hit.getMatchFactor());
+		assertEquals(57.4f, hit.getMatchFactor(), 0);
 	}
 
+	@Test
 	public void testGetRMF_1() {
 
-		assertEquals(65.3f, hit.getReverseMatchFactor());
+		assertEquals(65.3f, hit.getReverseMatchFactor(), 0);
 	}
 
+	@Test
 	public void testGetProb_1() {
 
-		assertEquals(9.71f, hit.getProbability());
+		assertEquals(9.71f, hit.getProbability(), 0);
 	}
 
+	@Test
 	public void testGetCAS_1() {
 
 		assertEquals("108-93-0", hit.getCAS());
 	}
 
+	@Test
 	public void testGetMw_1() {
 
 		assertEquals(100, hit.getMolecularWeight());
 	}
 
+	@Test
 	public void testGetLib_1() {
 
 		assertEquals("mainlib", hit.getLib());
 	}
 
+	@Test
 	public void testGetId_1() {
 
 		assertEquals(1222, hit.getId());

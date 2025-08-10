@@ -12,25 +12,17 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.comparator;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class IonAbundanceComparator_1_Test {
 
-public class IonAbundanceComparator_1_Test extends TestCase {
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testAbundanceComparator_1() {
 
 		IIon ion1 = new Ion(25.5f, 5000.5f);
@@ -39,30 +31,29 @@ public class IonAbundanceComparator_1_Test extends TestCase {
 		assertEquals("Comparator", 0, comparator.compare(ion1, ion2));
 	}
 
+	@Test
 	public void testAbundanceComparator_2() {
 
-		try {
+		assertThrows(NullPointerException.class, () -> {
 			IIon ion1 = null;
 			IIon ion2 = new Ion(25.5f, 5000.5f);
 			IonAbundanceComparator comparator = new IonAbundanceComparator();
 			assertEquals("Comparator", 0, comparator.compare(ion1, ion2));
-		} catch(NullPointerException e) {
-			assertTrue(true);
-		}
+		});
 	}
 
+	@Test
 	public void testAbundanceComparator_3() {
 
-		try {
+		assertThrows(NullPointerException.class, () -> {
 			IIon ion1 = new Ion(25.5f, 5000.5f);
 			IIon ion2 = null;
 			IonAbundanceComparator comparator = new IonAbundanceComparator();
 			assertEquals("Comparator", 0, comparator.compare(ion1, ion2));
-		} catch(NullPointerException e) {
-			assertTrue(true);
-		}
+		});
 	}
 
+	@Test
 	public void testAbundanceComparator_4() {
 
 		IIon ion1 = new Ion(25.5f, 4000.5f);
@@ -71,6 +62,7 @@ public class IonAbundanceComparator_1_Test extends TestCase {
 		assertTrue(-1 >= comparator.compare(ion1, ion2));
 	}
 
+	@Test
 	public void testAbundanceComparator_5() {
 
 		IIon ion1 = new Ion(25.5f, 5000.5f);

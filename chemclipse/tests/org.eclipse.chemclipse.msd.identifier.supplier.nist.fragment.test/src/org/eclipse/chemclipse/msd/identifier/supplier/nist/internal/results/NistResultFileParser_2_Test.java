@@ -12,13 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.identifier.supplier.nist.internal.results;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.msd.identifier.supplier.nist.TestPathHelper;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class NistResultFileParser_2_Test extends TestCase {
+public class NistResultFileParser_2_Test {
 
 	private NistResultFileParser nistResultFileParser;
 	private File results;
@@ -26,50 +28,49 @@ public class NistResultFileParser_2_Test extends TestCase {
 	private Compound compound;
 	private Hit hit;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		nistResultFileParser = new NistResultFileParser();
 		results = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_NIST_SRCRESLT_2));
 		compounds = nistResultFileParser.getCompounds(results);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testSize_1() {
 
 		assertEquals("Size", 4, compounds.size());
 	}
 
+	@Test
 	public void testGetCompound_1() {
 
 		compound = compounds.getCompound(1);
 		assertEquals(2, compound.size());
 	}
 
+	@Test
 	public void testGetCompound_2() {
 
 		compound = compounds.getCompound(2);
 		assertEquals(1, compound.size());
 	}
 
+	@Test
 	public void testGetCompound_3() {
 
 		compound = compounds.getCompound(3);
 		assertEquals(4, compound.size());
 	}
 
+	@Test
 	public void testGetCompound_4() {
 
 		compound = compounds.getCompound(4);
 		assertEquals(3, compound.size());
 	}
 
+	@Test
 	public void testGetHit_1() {
 
 		compound = compounds.getCompound(1);
@@ -77,6 +78,7 @@ public class NistResultFileParser_2_Test extends TestCase {
 		assertEquals("9-Tetradecen-1-ol, (E)-", hit.getName());
 	}
 
+	@Test
 	public void testGetHit_2() {
 
 		compound = compounds.getCompound(1);
@@ -84,6 +86,7 @@ public class NistResultFileParser_2_Test extends TestCase {
 		assertEquals("1,2-Benzenediol, 4-(2-amino-1-hydroxypropyl)-", hit.getName());
 	}
 
+	@Test
 	public void testGetHit_3() {
 
 		compound = compounds.getCompound(2);
@@ -91,6 +94,7 @@ public class NistResultFileParser_2_Test extends TestCase {
 		assertEquals("9-Tetradecen-1-ol, (E)-", hit.getName());
 	}
 
+	@Test
 	public void testGetHit_4() {
 
 		compound = compounds.getCompound(3);
@@ -98,6 +102,7 @@ public class NistResultFileParser_2_Test extends TestCase {
 		assertEquals("6-Methyl-6-hepten-4-yn-2-ol", hit.getName());
 	}
 
+	@Test
 	public void testGetHit_5() {
 
 		compound = compounds.getCompound(3);
@@ -105,6 +110,7 @@ public class NistResultFileParser_2_Test extends TestCase {
 		assertEquals("Ethylbenzene", hit.getName());
 	}
 
+	@Test
 	public void testGetHit_6() {
 
 		compound = compounds.getCompound(4);
@@ -112,6 +118,7 @@ public class NistResultFileParser_2_Test extends TestCase {
 		assertEquals("9-Tetradecen-1-ol, (E)-", hit.getName());
 	}
 
+	@Test
 	public void testGetHit_7() {
 
 		compound = compounds.getCompound(4);

@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.Set;
 
 import org.eclipse.chemclipse.model.identifier.ComparisonResult;
@@ -21,10 +24,10 @@ import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.identifier.LibraryInformation;
 import org.eclipse.chemclipse.model.implementation.IdentificationTarget;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class Chromatogram_19_Test extends TestCase {
+public class Chromatogram_19_Test {
 
 	private IChromatogramMSD chromatogram;
 	private IIdentificationTarget entry1;
@@ -32,10 +35,9 @@ public class Chromatogram_19_Test extends TestCase {
 	private ILibraryInformation libraryInformation;
 	private IComparisonResult comparisonResult;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		chromatogram = new ChromatogramMSD();
 		libraryInformation = new LibraryInformation();
 		comparisonResult = new ComparisonResult(0.8f, 0.95f, 0.0f, 0.0f);
@@ -45,27 +47,21 @@ public class Chromatogram_19_Test extends TestCase {
 		entry2.setIdentifier("DB-Tools");
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		entry1 = null;
-		entry2 = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetTargets_1() {
 
 		Set<IIdentificationTarget> targets = chromatogram.getTargets();
 		assertNotNull("Targets", targets);
 	}
 
+	@Test
 	public void testGetTargets_2() {
 
 		Set<IIdentificationTarget> targets = chromatogram.getTargets();
 		assertEquals("Size", 0, targets.size());
 	}
 
+	@Test
 	public void testTargets_1() {
 
 		chromatogram.getTargets().add(entry1);
@@ -74,6 +70,7 @@ public class Chromatogram_19_Test extends TestCase {
 		assertEquals("Size", 2, targets.size());
 	}
 
+	@Test
 	public void testTargets_2() {
 
 		chromatogram.getTargets().add(entry1);
@@ -83,6 +80,7 @@ public class Chromatogram_19_Test extends TestCase {
 		assertEquals("Size", 2, targets.size());
 	}
 
+	@Test
 	public void testTargets_3() {
 
 		chromatogram.getTargets().add(entry1);
@@ -93,6 +91,7 @@ public class Chromatogram_19_Test extends TestCase {
 		assertEquals("Size", 1, targets.size());
 	}
 
+	@Test
 	public void testTargets_4() {
 
 		chromatogram.getTargets().add(entry1);

@@ -12,22 +12,23 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
 import org.easymock.EasyMock;
 import org.eclipse.chemclipse.model.baseline.BaselineModel;
 import org.eclipse.chemclipse.model.baseline.IBaselineModel;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
+import org.junit.Before;
+import org.junit.Test;
 
-public class BaselineModel_3_Test extends TestCase {
+public class BaselineModel_3_Test {
 
 	private IChromatogramMSD chromatogram;
 	private IBaselineModel baselineModel;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		chromatogram = EasyMock.createMock(IChromatogramMSD.class);
 		EasyMock.expect(chromatogram.getStartRetentionTime()).andStubReturn(1000);
 		EasyMock.expect(chromatogram.getStopRetentionTime()).andStubReturn(100000);
@@ -37,33 +38,28 @@ public class BaselineModel_3_Test extends TestCase {
 		baselineModel.addBaseline(90000, 150000, 200, 200, true);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		baselineModel = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testChromatogram_1() {
 
 		assertEquals("StartRetentionTime", 1000, chromatogram.getStartRetentionTime());
 		assertEquals("StopRetentionTime", 100000, chromatogram.getStopRetentionTime());
 	}
 
+	@Test
 	public void testBaseline_1() {
 
-		assertEquals("BackgroundAbundance", 200.0f, baselineModel.getBackgroundAbundance(90000));
-		assertEquals("BackgroundAbundance", 200.0f, baselineModel.getBackgroundAbundance(100000));
-		assertEquals("BackgroundAbundance", 200.0f, baselineModel.getBackgroundAbundance(95000));
-		assertEquals("BackgroundAbundance", 0.0f, baselineModel.getBackgroundAbundance(150000));
+		assertEquals("BackgroundAbundance", 200.0f, baselineModel.getBackgroundAbundance(90000), 0);
+		assertEquals("BackgroundAbundance", 200.0f, baselineModel.getBackgroundAbundance(100000), 0);
+		assertEquals("BackgroundAbundance", 200.0f, baselineModel.getBackgroundAbundance(95000), 0);
+		assertEquals("BackgroundAbundance", 0.0f, baselineModel.getBackgroundAbundance(150000), 0);
 	}
 
+	@Test
 	public void testBaseline_2() {
 
-		assertEquals("BackgroundAbundance", 0.0f, baselineModel.getBackgroundAbundance(500));
-		assertEquals("BackgroundAbundance", 100.0f, baselineModel.getBackgroundAbundance(1000));
-		assertEquals("BackgroundAbundance", 100.0f, baselineModel.getBackgroundAbundance(50000));
-		assertEquals("BackgroundAbundance", 100.0f, baselineModel.getBackgroundAbundance(5000));
+		assertEquals("BackgroundAbundance", 0.0f, baselineModel.getBackgroundAbundance(500), 0);
+		assertEquals("BackgroundAbundance", 100.0f, baselineModel.getBackgroundAbundance(1000), 0);
+		assertEquals("BackgroundAbundance", 100.0f, baselineModel.getBackgroundAbundance(50000), 0);
+		assertEquals("BackgroundAbundance", 100.0f, baselineModel.getBackgroundAbundance(5000), 0);
 	}
 }

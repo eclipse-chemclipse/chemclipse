@@ -16,12 +16,6 @@ import java.io.File;
 
 import org.eclipse.chemclipse.logging.support.Settings;
 
-/**
- * THIS CLASS IS NOT SUITED FOR PRODUCTIVE USE!<br/>
- * IT IS A TESTCLASS!
- * 
- * @author eselmeister
- */
 public class TestPathHelper extends PathResolver {
 
 	/*

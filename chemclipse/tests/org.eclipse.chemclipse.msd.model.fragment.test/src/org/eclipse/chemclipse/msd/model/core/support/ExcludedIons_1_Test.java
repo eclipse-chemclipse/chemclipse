@@ -12,41 +12,33 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Set;
 
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class ExcludedIons_1_Test {
 
-public class ExcludedIons_1_Test extends TestCase {
+	private IMarkedIons excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
 
-	private IMarkedIons excludedIons;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		excludedIons = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testContains_1() {
 
 		assertFalse("contains", excludedIons.getIonsNominal().contains(5));
 	}
 
+	@Test
 	public void testContains_2() {
 
 		excludedIons.add(new MarkedIon(5));
 		assertTrue("contains", excludedIons.getIonsNominal().contains(5));
 	}
 
+	@Test
 	public void testContains_3() {
 
 		excludedIons.add(new MarkedIon(5));
@@ -54,6 +46,7 @@ public class ExcludedIons_1_Test extends TestCase {
 		assertFalse("contains", excludedIons.getIonsNominal().contains(5));
 	}
 
+	@Test
 	public void testContains_4() {
 
 		excludedIons.add(new MarkedIon(10));
@@ -62,6 +55,7 @@ public class ExcludedIons_1_Test extends TestCase {
 		assertTrue("contains", excludedIons.getIonsNominal().contains(20));
 	}
 
+	@Test
 	public void testContains_5() {
 
 		excludedIons.add(10, 12);
@@ -72,6 +66,7 @@ public class ExcludedIons_1_Test extends TestCase {
 		assertTrue("contains", excludedIonsNominal.contains(12));
 	}
 
+	@Test
 	public void testContains_6() {
 
 		excludedIons.add(12, 10);
@@ -82,6 +77,7 @@ public class ExcludedIons_1_Test extends TestCase {
 		assertTrue("contains", excludedIonsNominal.contains(12));
 	}
 
+	@Test
 	public void testContains_7() {
 
 		excludedIons.add(12, 12);
@@ -92,12 +88,14 @@ public class ExcludedIons_1_Test extends TestCase {
 		assertTrue("contains", excludedIonsNominal.contains(12));
 	}
 
+	@Test
 	public void testSize_8() {
 
 		excludedIons.add(12, 12);
 		assertEquals("size", 1, excludedIons.getIonsNominal().size());
 	}
 
+	@Test
 	public void testSize_9() {
 
 		excludedIons.add(new MarkedIon(58));
@@ -106,6 +104,7 @@ public class ExcludedIons_1_Test extends TestCase {
 		assertEquals("size", 3, excludedIons.getIonsNominal().size());
 	}
 
+	@Test
 	public void testSize_10() {
 
 		assertEquals("size", 0, excludedIons.getIonsNominal().size());

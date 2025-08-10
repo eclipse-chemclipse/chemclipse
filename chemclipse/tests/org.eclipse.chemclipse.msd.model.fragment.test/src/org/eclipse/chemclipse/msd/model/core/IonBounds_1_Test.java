@@ -12,36 +12,21 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-/**
- * ionBounds = new IonBounds(null, null);
- * 
- * @author eselmeister
- */
-public class IonBounds_1_Test extends TestCase {
+import org.junit.Test;
 
-	private IIonBounds ionBounds;
+public class IonBounds_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private IIonBounds ionBounds = new IonBounds(null, null);
 
-		super.setUp();
-		ionBounds = new IonBounds(null, null);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		ionBounds = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetLowestIon_1() {
 
 		assertEquals("GetLowestIon", null, ionBounds.getLowestIon());
 	}
 
+	@Test
 	public void testGetHighestIon_1() {
 
 		assertEquals("GetHighestIon", null, ionBounds.getHighestIon());

@@ -12,19 +12,18 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.chemclipse.model.core.IIntegrationEntry;
 import org.eclipse.chemclipse.model.implementation.IntegrationEntry;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-/**
- * @author eselmeister
- */
-public class Chromatogram_26_Test extends TestCase {
+public class Chromatogram_26_Test {
 
 	private IChromatogramMSD chromatogram;
 	private List<IIntegrationEntry> chromatogramIntegrationEntries;
@@ -32,10 +31,9 @@ public class Chromatogram_26_Test extends TestCase {
 	private List<IIntegrationEntry> backgroundIntegrationEntries;
 	private IIntegrationEntry backgroundIntegrationEntry;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		chromatogram = new ChromatogramMSD();
 		/*
 		 * Chromatogram Integration Entries
@@ -57,32 +55,29 @@ public class Chromatogram_26_Test extends TestCase {
 		backgroundIntegrationEntries.add(backgroundIntegrationEntry);
 		backgroundIntegrationEntry = new IntegrationEntry(56.1f, 92043074.78d);
 		backgroundIntegrationEntries.add(backgroundIntegrationEntry);
-		//
+
 		chromatogram.setIntegratedArea(chromatogramIntegrationEntries, backgroundIntegrationEntries, "Test Integrator");
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetChromatogramIntegratedArea_1() {
 
-		assertEquals(119708.5d, chromatogram.getChromatogramIntegratedArea());
+		assertEquals(119708.5d, chromatogram.getChromatogramIntegratedArea(), 0);
 	}
 
+	@Test
 	public void testGetChromatogramIntegratorDescription_1() {
 
 		assertEquals("Test Integrator", chromatogram.getIntegratorDescription());
 	}
 
+	@Test
 	public void testGetBackgroundIntegratedArea_1() {
 
-		assertEquals(92421449.56d, chromatogram.getBackgroundIntegratedArea());
+		assertEquals(92421449.56d, chromatogram.getBackgroundIntegratedArea(), 0);
 	}
 
+	@Test
 	public void testGetBackgroundIntegratorDescription_1() {
 
 		assertEquals("Test Integrator", chromatogram.getIntegratorDescription());

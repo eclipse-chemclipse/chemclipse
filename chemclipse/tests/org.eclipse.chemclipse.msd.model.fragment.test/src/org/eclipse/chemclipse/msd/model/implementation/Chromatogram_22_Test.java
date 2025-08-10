@@ -12,42 +12,29 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
+import org.junit.Test;
 
-/**
- * @author eselmeister
- */
-public class Chromatogram_22_Test extends TestCase {
+public class Chromatogram_22_Test {
 
-	private IChromatogramMSD chromatogram;
+	private IChromatogramMSD chromatogram = new ChromatogramMSD();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		chromatogram = new ChromatogramMSD();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetConverterId_1() {
 
 		assertEquals("", chromatogram.getConverterId());
 	}
 
+	@Test
 	public void testGetConverterId_2() {
 
 		chromatogram.setConverterId(null);
 		assertEquals(null, chromatogram.getConverterId());
 	}
 
+	@Test
 	public void testGetConverterId_3() {
 
 		String id = "org.eclipse.chemclipse.msd.converter.supplier.test";

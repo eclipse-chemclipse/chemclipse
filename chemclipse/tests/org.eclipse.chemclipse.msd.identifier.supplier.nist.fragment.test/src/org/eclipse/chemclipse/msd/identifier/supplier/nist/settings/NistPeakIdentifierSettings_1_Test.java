@@ -12,48 +12,42 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.identifier.supplier.nist.settings;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class NistPeakIdentifierSettings_1_Test extends TestCase {
+import org.junit.Test;
 
-	private PeakIdentifierSettings settings;
+public class NistPeakIdentifierSettings_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private PeakIdentifierSettings settings = new PeakIdentifierSettings();
 
-		super.setUp();
-		settings = new PeakIdentifierSettings();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetNumberOfTargets_1() {
 
 		assertEquals(15, settings.getNumberOfTargets());
 	}
 
+	@Test
 	public void testGetNumberOfTargets_2() {
 
 		settings.setNumberOfTargets((byte)1);
 		assertEquals(1, settings.getNumberOfTargets());
 	}
 
+	@Test
 	public void testGetNumberOfTargets_3() {
 
 		settings.setNumberOfTargets((byte)100);
 		assertEquals(100, settings.getNumberOfTargets());
 	}
 
+	@Test
 	public void testGetNumberOfTargets_4() {
 
 		settings.setNumberOfTargets((byte)0);
 		assertEquals(15, settings.getNumberOfTargets());
 	}
 
+	@Test
 	public void testGetNumberOfTargets_5() {
 
 		settings.setNumberOfTargets((byte)101);

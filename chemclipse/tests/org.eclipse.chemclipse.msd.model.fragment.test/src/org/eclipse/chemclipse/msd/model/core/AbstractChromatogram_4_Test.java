@@ -12,6 +12,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,13 +29,13 @@ import org.eclipse.chemclipse.msd.model.implementation.ChromatogramPeakMSD;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.PeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.implementation.PeakModelMSD;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class AbstractChromatogram_4_Test extends TestCase {
+public class AbstractChromatogram_4_Test {
 
 	private static final int RT_VARIANCE = 10;
 
+	@Test
 	public void testAddRemovePeak() {
 
 		/*
@@ -47,7 +51,7 @@ public class AbstractChromatogram_4_Test extends TestCase {
 		IPeakModelMSD model1 = createPeakModel(1000, 500);
 		IPeakModelMSD model2 = createPeakModel(1000, 600);
 		IPeakModelMSD model3 = createPeakModel(1500, 600);
-		//
+
 		assertFalse("Peakmodels are equal", model1.equals(model2));
 		chromatogram.getPeaks().add(createPeakForModel(chromatogram, model1));
 		assertEquals("Peak was not added", 1, chromatogram.getPeaks().size());
@@ -68,6 +72,7 @@ public class AbstractChromatogram_4_Test extends TestCase {
 		assertEquals("Peak was not removed", 4, chromatogram.getPeaks().size()); // befor 2
 	}
 
+	@Test
 	public void testGetPeaks() {
 
 		ChromatogramMSD chromatogram = new ChromatogramMSD();
@@ -113,13 +118,13 @@ public class AbstractChromatogram_4_Test extends TestCase {
 		peakIntensities.addIntensityValue(retentionTime, 1000);
 		peakIntensities.addIntensityValue(retentionTime - RT_VARIANCE, 500);
 		peakIntensities.addIntensityValue(retentionTime + RT_VARIANCE, 700);
-		//
+
 		final IPeakMassSpectrum peakMassSpectrum = new PeakMassSpectrum();
 		peakMassSpectrum.addIon(new Ion(10, 100));
 		peakMassSpectrum.addIon(new Ion(12, 1000));
 		peakMassSpectrum.addIon(new Ion(13, 100));
 		peakMassSpectrum.adjustTotalSignal(height);
-		//
+
 		return new PeakModelMSD(peakMassSpectrum, peakIntensities, 0, 0);
 	}
 }
