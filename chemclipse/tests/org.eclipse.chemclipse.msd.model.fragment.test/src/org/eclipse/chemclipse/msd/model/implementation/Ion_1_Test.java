@@ -12,38 +12,33 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Abundance and ion test.
- * 
- * @author eselmeister
  */
-public class Ion_1_Test extends TestCase {
+public class Ion_1_Test {
 
 	private Ion ion;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		ion = new Ion(0.0f, 0.0f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		ion = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetAbundance() {
 
-		assertEquals("getAbundance", 0.0f, ion.getAbundance());
+		assertEquals("getAbundance", 0.0f, ion.getAbundance(), 0);
 	}
 
+	@Test
 	public void testGetIon() {
 
-		assertEquals("getIon", 0.0d, ion.getIon());
+		assertEquals("getIon", 0.0d, ion.getIon(), 0);
 	}
 }

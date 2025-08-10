@@ -12,30 +12,29 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignalExtractor;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignalExtractor;
 import org.eclipse.chemclipse.msd.model.core.IIon;
-
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Add 100 scans and get an {@link ITotalScanSignals} object.
- * 
- * @author eselmeister
  */
-public class Chromatogram_13_Test extends TestCase {
+public class Chromatogram_13_Test {
 
 	private ChromatogramMSD chromatogram;
 	private VendorMassSpectrum supplierMassSpectrum;
 	private IIon ion;
 	private ITotalScanSignalExtractor totalIonSignalExtractor;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		chromatogram = new ChromatogramMSD();
 		// ------------------------------Scan 1
 		for(int i = 1; i <= 1; i++) {
@@ -46,34 +45,29 @@ public class Chromatogram_13_Test extends TestCase {
 			chromatogram.addScan(supplierMassSpectrum);
 		}
 		// ------------------------------Scan 1
-		//
+
 		totalIonSignalExtractor = new TotalScanSignalExtractor(chromatogram);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		supplierMassSpectrum = null;
-		ion = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetNumberOfScans_1() {
 
 		assertEquals("numberOfScans", 1, chromatogram.getNumberOfScans());
 	}
 
+	@Test
 	public void testGetStartRetentionTime_1() {
 
 		assertEquals("startRetentionTime", 1, chromatogram.getStartRetentionTime());
 	}
 
+	@Test
 	public void testGetStopRetentionTime_1() {
 
 		assertEquals("stopRetentionTime", 1, chromatogram.getStopRetentionTime());
 	}
 
+	@Test
 	public void testGetTotalIonSignals_1() {
 
 		ITotalScanSignal signal;

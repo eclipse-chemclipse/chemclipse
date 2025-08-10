@@ -12,8 +12,12 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.core.PeakType;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * The chromatogram and peak will be initialized in DefaultPeakTestCase.<br/>
@@ -21,50 +25,47 @@ import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
  * and ends at a retention time of 15500 ms.<br/>
  * The chromatogram has 17 scans, starting at a retention time of 500 ms and
  * ends at a retention time of 16500 ms. It has a background of 1750 units.
- * 
- * @author eselmeister
  */
 public class ChromatogramPeak_3_Test extends ChromatogramPeakTestCase {
 
 	private IChromatogramPeakMSD peak;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		peak = new ChromatogramPeakMSD(getPeakModel(), getChromatogram());
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		peak = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testPeakType_1() {
 
 		assertEquals("PeakType", PeakType.DEFAULT, peak.getPeakType());
 	}
 
+	@Test
 	public void testPeakType_2() {
 
 		peak.setPeakType(null);
 		assertEquals("PeakType", PeakType.DEFAULT, peak.getPeakType());
 	}
 
+	@Test
 	public void testPeakType_3() {
 
 		peak.setPeakType(PeakType.BB);
 		assertEquals("PeakType", PeakType.BB, peak.getPeakType());
 	}
 
+	@Test
 	public void testPeakType_4() {
 
 		peak.setPeakType(PeakType.DD);
 		assertEquals("PeakType", PeakType.DD, peak.getPeakType());
 	}
 
+	@Test
 	public void testPeakType_5() {
 
 		peak.setPeakType(PeakType.MM);

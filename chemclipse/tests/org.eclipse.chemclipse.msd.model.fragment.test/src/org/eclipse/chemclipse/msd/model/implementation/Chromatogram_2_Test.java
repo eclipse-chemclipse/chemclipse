@@ -12,26 +12,26 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import org.eclipse.chemclipse.msd.model.core.IIon;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import junit.framework.TestCase;
+import org.eclipse.chemclipse.msd.model.core.IIon;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests the methods equals and hashCode.
- * 
- * @author eselmeister
  */
-public class Chromatogram_2_Test extends TestCase {
+public class Chromatogram_2_Test {
 
 	private ChromatogramMSD chromatogram1;
 	private ChromatogramMSD chromatogram2;
 	private VendorMassSpectrum supplierMassSpectrum;
 	private IIon ion;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		chromatogram1 = new ChromatogramMSD();
 		chromatogram2 = new ChromatogramMSD();
 		supplierMassSpectrum = new VendorMassSpectrum();
@@ -40,29 +40,25 @@ public class Chromatogram_2_Test extends TestCase {
 		chromatogram2.addScan(supplierMassSpectrum);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram1 = null;
-		chromatogram2 = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testEquals_1() {
 
 		assertFalse(chromatogram1.equals(chromatogram2));
 	}
 
+	@Test
 	public void testEquals_2() {
 
 		assertFalse(chromatogram2.equals(chromatogram1));
 	}
 
+	@Test
 	public void testHashCode_1() {
 
 		assertTrue(chromatogram1.hashCode() != chromatogram2.hashCode());
 	}
 
+	@Test
 	public void testHashCode_2() {
 
 		assertTrue(chromatogram2.hashCode() != chromatogram1.hashCode());

@@ -12,49 +12,41 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import org.eclipse.chemclipse.msd.model.core.IIon;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
-import junit.framework.TestCase;
+import org.eclipse.chemclipse.msd.model.core.IIon;
+import org.junit.Test;
 
 /**
  * Exception test.
- * 
- * @author eselmeister
  */
-public class Ion_6_Test extends TestCase {
+public class Ion_6_Test {
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testException_1() {
 
 		IIon ion = new Ion(IIon.TIC_ION, -1.0f);
-		assertEquals(0d, ion.getIon());
-		assertEquals(0f, ion.getAbundance());
+		assertEquals(0d, ion.getIon(), 0);
+		assertEquals(0f, ion.getAbundance(), 0);
 	}
 
+	@Test
 	public void testException_2() {
 
 		IIon ion = new Ion(IIon.TIC_ION, 1.0f);
 		assertFalse(ion.setAbundance(-1.0f));
 	}
 
+	@Test
 	public void testException_3() {
 
 		IIon ion = new Ion(-1.0f, 1.0f);
-		assertEquals(0d, ion.getIon());
-		assertEquals(1.0f, ion.getAbundance());
+		assertEquals(0d, ion.getIon(), 0);
+		assertEquals(1.0f, ion.getAbundance(), 0);
 	}
 
+	@Test
 	public void testException_4() {
 
 		Ion ion = new Ion(1.0f, 1.0f);

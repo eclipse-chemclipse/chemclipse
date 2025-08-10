@@ -24,12 +24,11 @@ import org.eclipse.chemclipse.msd.model.core.IPeakIon;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
+import org.junit.Before;
 import org.junit.Ignore;
 
-import junit.framework.TestCase;
-
 @Ignore
-public class ChromatogramPeakTestCase extends TestCase {
+abstract class ChromatogramPeakTestCase {
 
 	private IPeakModelMSD peakModel;
 	private IPeakMassSpectrum peakMaximum;
@@ -44,10 +43,9 @@ public class ChromatogramPeakTestCase extends TestCase {
 	private IRegularMassSpectrum supplierMassSpectrum;
 	private IChromatogramPeakMSD peak;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		// ----------------------PeakMaximum
 		peakMaximum = new PeakMassSpectrum();
 		fragmentValues = new TreeMap<Float, Float>();
@@ -116,19 +114,6 @@ public class ChromatogramPeakTestCase extends TestCase {
 		}
 		// ----------------------IntensityValues
 		peakModel = new PeakModelMSD(peakMaximum, intensityValues, startBackgroundAbundance, stopBackgroundAbundance);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		peakModel = null;
-		peakMaximum = null;
-		peakIon = null;
-		fragmentValues = null;
-		intensityValues = null;
-		scanValues = null;
-		chromatogram = null;
-		super.tearDown();
 	}
 
 	protected IPeakModelMSD getPeakModel() {

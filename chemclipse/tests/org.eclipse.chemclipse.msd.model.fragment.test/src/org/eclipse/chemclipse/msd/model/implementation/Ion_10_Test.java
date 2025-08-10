@@ -13,40 +13,33 @@
 package org.eclipse.chemclipse.msd.model.implementation;
 
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * HashCode test.
- * 
- * @author eselmeister
  */
-public class Ion_10_Test extends TestCase {
+public class Ion_10_Test {
 
 	private Ion ion1;
 	private Ion ion2;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		ion1 = new Ion(5.2f, 4746.3f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		ion1 = null;
-		ion2 = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testConstructor_1() {
 
 		ion2 = new Ion(ion1);
 		assertTrue("hashCode", ion1.equals(ion2));
 	}
 
+	@Test
 	public void testConstructor_2() {
 
 		assertThrows(IllegalArgumentException.class, () -> ion2 = new Ion(null));

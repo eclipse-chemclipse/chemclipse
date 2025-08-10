@@ -12,46 +12,46 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.msd.model.core.IIonTransition;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class IonTransition_2_Test extends TestCase {
+public class IonTransition_2_Test {
 
 	private IIonTransition ionTransition1;
 	private IIonTransition ionTransition2;
 	private IIonTransition ionTransition3;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		ionTransition1 = new IonTransition(120.2d, 121.3d, 88.5d, 87.4d, 7.0d, 1.2, 1.3, 1);
 		ionTransition2 = new IonTransition(120.2d, 121.3d, 88.5d, 87.4d, 7.0d, 1.2, 1.3, 1);
 		ionTransition3 = new IonTransition(120.2d, 122.3d, 88.5d, 87.4d, 7.0d, 1.2, 1.3, 1);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testEquals_1() {
 
 		assertTrue(ionTransition1.equals(ionTransition2));
 	}
 
+	@Test
 	public void testEquals_2() {
 
 		assertTrue(ionTransition2.equals(ionTransition1));
 	}
 
+	@Test
 	public void testEquals_3() {
 
 		assertFalse(ionTransition1.equals(ionTransition3));
 	}
 
+	@Test
 	public void testEquals_4() {
 
 		assertFalse(ionTransition3.equals(ionTransition1));

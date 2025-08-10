@@ -12,40 +12,26 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
+import org.junit.Test;
 
-/**
- * @author eselmeister
- */
-public class Chromatogram_21_Test extends TestCase {
+public class Chromatogram_21_Test {
 
-	private IChromatogramMSD chromatogram;
+	private IChromatogramMSD chromatogram = new ChromatogramMSD();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		chromatogram = new ChromatogramMSD();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetStartIon_1() {
 
 		double startIon = chromatogram.getStartIon();
-		assertEquals("startIon", 0.0d, startIon);
+		assertEquals("startIon", 0.0d, startIon, 0);
 	}
 
+	@Test
 	public void testGetStopIon_1() {
 
 		double stopIon = chromatogram.getStopIon();
-		assertEquals("stopIon", 0.0d, stopIon);
+		assertEquals("stopIon", 0.0d, stopIon, 0);
 	}
 }

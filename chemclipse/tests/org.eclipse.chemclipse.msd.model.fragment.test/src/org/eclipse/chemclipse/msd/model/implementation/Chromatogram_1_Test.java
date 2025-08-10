@@ -12,71 +12,73 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests the methods equals and hashCode.
  * 
  * @author Philip Wenig
  */
-public class Chromatogram_1_Test extends TestCase {
+public class Chromatogram_1_Test {
 
 	private ChromatogramMSD chromatogram1;
 	private ChromatogramMSD chromatogram2;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		chromatogram1 = new ChromatogramMSD();
 		chromatogram2 = new ChromatogramMSD();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram1 = null;
-		chromatogram2 = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testEquals_1() {
 
 		assertEquals(chromatogram1, chromatogram2);
 	}
 
+	@Test
 	public void testEquals_2() {
 
 		assertEquals(chromatogram2, chromatogram1);
 	}
 
+	@Test
 	public void testEquals_3() {
 
 		assertNotNull(chromatogram1);
 	}
 
+	@Test
 	public void testEquals_4() {
 
 		assertNotNull(chromatogram2);
 	}
 
+	@Test
 	public void testEquals_5() {
 
 		assertNotEquals(chromatogram1, new Object());
 	}
 
+	@Test
 	public void testEquals_6() {
 
 		assertNotEquals(chromatogram2, new Object());
 	}
 
+	@Test
 	public void testHashCode_1() {
 
 		assertEquals(chromatogram1.hashCode(), chromatogram2.hashCode());
 	}
 
+	@Test
 	public void testHashCode_2() {
 
 		assertEquals(chromatogram2.hashCode(), chromatogram1.hashCode());

@@ -12,24 +12,23 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import org.eclipse.chemclipse.model.core.IChromatogramOverview;
+import static org.junit.Assert.assertEquals;
 
-import junit.framework.TestCase;
+import org.eclipse.chemclipse.model.core.IChromatogramOverview;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test the interface IChromatogramOverview with 1 scan.
- * 
- * @author eselmeister
  */
-public class ChromatogramOverview_4_Test extends TestCase {
+public class ChromatogramOverview_4_Test {
 
 	private ChromatogramMSD chrom;
 	private IChromatogramOverview chromatogram;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		chrom = new ChromatogramMSD();
 		chromatogram = chrom;
 		// There is no mass spectrum added to the chromatogram.
@@ -38,39 +37,37 @@ public class ChromatogramOverview_4_Test extends TestCase {
 		chromatogram.recalculateRetentionTimes();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chrom = null;
-		chromatogram = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetScanNumber_1() {
 
 		assertEquals("ScanNumber", 0, chromatogram.getScanNumber(12736));
 	}
 
+	@Test
 	public void testGetScanNumber_2() {
 
 		assertEquals("ScanNumber", 0, chromatogram.getScanNumber(5501));
 	}
 
+	@Test
 	public void testGetScanNumber_3() {
 
 		assertEquals("ScanNumber", 0, chromatogram.getScanNumber(5500));
 	}
 
+	@Test
 	public void testGetScanNumber_4() {
 
 		assertEquals("ScanNumber", 0, chromatogram.getScanNumber(5499));
 	}
 
+	@Test
 	public void testGetScanNumber_5() {
 
 		assertEquals("ScanNumber", 0, chromatogram.getScanNumber(0));
 	}
 
+	@Test
 	public void testGetScanNumber_6() {
 
 		assertEquals("ScanNumber", 0, chromatogram.getScanNumber(-1));

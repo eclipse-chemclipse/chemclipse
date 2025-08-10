@@ -12,69 +12,61 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class Chromatogram_24_Test {
 
-/**
- * @author eselmeister
- */
-public class Chromatogram_24_Test extends TestCase {
+	private IChromatogramMSD chromatogram = new ChromatogramMSD();
 
-	private IChromatogramMSD chromatogram;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		chromatogram = new ChromatogramMSD();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetChromatogramIntegratedArea_1() {
 
-		assertEquals(0.0d, chromatogram.getChromatogramIntegratedArea());
+		assertEquals(0.0d, chromatogram.getChromatogramIntegratedArea(), 0);
 	}
 
+	@Test
 	public void testGetChromatogramIntegratorDescription_1() {
 
 		assertEquals("", chromatogram.getIntegratorDescription());
 	}
 
+	@Test
 	public void testGetChromatogramIntegratorDescription_2() {
 
 		chromatogram.setIntegratorDescription(null);
 		assertEquals("", chromatogram.getIntegratorDescription());
 	}
 
+	@Test
 	public void testGetChromatogramIntegratorDescription_3() {
 
 		chromatogram.setIntegratorDescription("ChromatogramIntegrator");
 		assertEquals("ChromatogramIntegrator", chromatogram.getIntegratorDescription());
 	}
 
+	@Test
 	public void testGetBackgroundIntegratedArea_1() {
 
-		assertEquals(0.0d, chromatogram.getBackgroundIntegratedArea());
+		assertEquals(0.0d, chromatogram.getBackgroundIntegratedArea(), 0);
 	}
 
+	@Test
 	public void testGetBackgroundIntegratorDescription_1() {
 
 		assertEquals("", chromatogram.getIntegratorDescription());
 	}
 
+	@Test
 	public void testGetBackgroundIntegratorDescription_2() {
 
 		chromatogram.setIntegratorDescription(null);
 		assertEquals("", chromatogram.getIntegratorDescription());
 	}
 
+	@Test
 	public void testGetBackgroundIntegratorDescription_3() {
 
 		chromatogram.setIntegratorDescription("BackgroundIntegrator");
