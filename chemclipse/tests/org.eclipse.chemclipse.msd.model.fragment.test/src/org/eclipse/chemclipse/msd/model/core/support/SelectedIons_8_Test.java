@@ -12,18 +12,19 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class SelectedIons_8_Test extends TestCase {
+public class SelectedIons_8_Test {
 
 	private IMarkedIons selectedIons;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		selectedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
 		selectedIons.add(new MarkedIon(28.82849943f));
 		selectedIons.add(new MarkedIon(28.787f));
@@ -33,13 +34,7 @@ public class SelectedIons_8_Test extends TestCase {
 		selectedIons.add(new MarkedIon(31));
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		selectedIons = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testSize_1() {
 
 		assertEquals(6, selectedIons.size());

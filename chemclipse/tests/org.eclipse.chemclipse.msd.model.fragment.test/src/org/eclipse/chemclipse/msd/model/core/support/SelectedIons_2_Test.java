@@ -12,42 +12,34 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Set;
 
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.msd.model.core.AbstractIon;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class SelectedIons_2_Test {
 
-public class SelectedIons_2_Test extends TestCase {
+	private IMarkedIons selectedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
 
-	private IMarkedIons selectedIons;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		selectedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		selectedIons = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testContains_1() {
 
 		assertFalse("contains", selectedIons.getIonsNominal().contains(AbstractIon.getIon(4.9f)));
 	}
 
+	@Test
 	public void testContains_2() {
 
 		selectedIons.add(new MarkedIon(5));
 		assertTrue("contains", selectedIons.getIonsNominal().contains(AbstractIon.getIon(4.9f)));
 	}
 
+	@Test
 	public void testContains_3() {
 
 		selectedIons.add(new MarkedIon(5));
@@ -55,6 +47,7 @@ public class SelectedIons_2_Test extends TestCase {
 		assertFalse("contains", selectedIons.getIonsNominal().contains(AbstractIon.getIon(5.4f)));
 	}
 
+	@Test
 	public void testContains_4() {
 
 		selectedIons.add(new MarkedIon(10));
@@ -63,6 +56,7 @@ public class SelectedIons_2_Test extends TestCase {
 		assertTrue("contains", selectedIons.getIonsNominal().contains(AbstractIon.getIon(20.2f)));
 	}
 
+	@Test
 	public void testContains_5() {
 
 		selectedIons.add(50, 60);

@@ -22,6 +22,7 @@ import org.eclipse.chemclipse.msd.model.core.IPeakIon;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.implementation.PeakIon;
 import org.eclipse.chemclipse.msd.model.implementation.PeakMassSpectrum;
+import org.junit.Before;
 import org.junit.Ignore;
 
 @Ignore
@@ -33,7 +34,8 @@ public class PeakBuilderExtendedTestCase extends PeakBuilderTestCase {
 	private TreeMap<Float, Float> peakMassSpectrumValues;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		totalIonSignals = new TotalScanSignals(2, 16);
@@ -66,15 +68,5 @@ public class PeakBuilderExtendedTestCase extends PeakBuilderTestCase {
 			peakIon = new PeakIon(entry.getKey(), entry.getValue());
 			peakMassSpectrum.addIon(peakIon);
 		}
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		totalIonSignals = null;
-		peakMassSpectrum = null;
-		peakIon = null;
-		peakMassSpectrumValues = null;
-		super.tearDown();
 	}
 }

@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
+import static org.junit.Assert.assertThrows;
+
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.model.exceptions.PeakException;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignalExtractor;
@@ -19,11 +21,11 @@ import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.ExtractedIonSignals;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignals;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test the peak exceptions.
- * 
- * @author eselmeister
  */
 public class PeakBuilder_19_Test extends PeakBuilderTestCase {
 
@@ -32,7 +34,8 @@ public class PeakBuilder_19_Test extends PeakBuilderTestCase {
 	private ITotalScanSignalExtractor totalIonSignalExtractor;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		totalIonSignalExtractor = new TotalScanSignalExtractor(chromatogram);
@@ -40,84 +43,60 @@ public class PeakBuilder_19_Test extends PeakBuilderTestCase {
 		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		totalIonSignals = null;
-		excludedIons = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testValidateTotalIonSignals_1() {
 
-		try {
-			PeakBuilderMSD.validateTotalIonSignals(totalIonSignals);
-		} catch(PeakException e) {
-			assertTrue("PeakException", false);
-		}
+		PeakBuilderMSD.validateTotalIonSignals(totalIonSignals);
 	}
 
+	@Test
 	public void testValidateTotalIonSignals_2() {
 
-		try {
+		assertThrows(PeakException.class, () -> {
 			PeakBuilderMSD.validateTotalIonSignals(null);
-		} catch(PeakException e) {
-			assertTrue("PeakException", true);
-		}
+		});
 	}
 
+	@Test
 	public void testValidateExcludedIons_1() {
 
-		try {
-			PeakBuilderMSD.validateExcludedIons(excludedIons);
-		} catch(PeakException e) {
-			assertTrue("PeakException", false);
-		}
+		PeakBuilderMSD.validateExcludedIons(excludedIons);
 	}
 
+	@Test
 	public void testValidateExcludedIons_2() {
 
-		try {
+		assertThrows(PeakException.class, () -> {
 			PeakBuilderMSD.validateExcludedIons(null);
-		} catch(PeakException e) {
-			assertTrue("PeakException", true);
-		}
+		});
 	}
 
+	@Test
 	public void testValidateChromatogram_1() {
 
-		try {
-			PeakBuilderMSD.validateChromatogram(chromatogram);
-		} catch(PeakException e) {
-			assertTrue("PeakException", false);
-		}
+		PeakBuilderMSD.validateChromatogram(chromatogram);
 	}
 
+	@Test
 	public void testValidateChromatogram_2() {
 
-		try {
+		assertThrows(PeakException.class, () -> {
 			PeakBuilderMSD.validateChromatogram(null);
-		} catch(PeakException e) {
-			assertTrue("PeakException", true);
-		}
+		});
 	}
 
+	@Test
 	public void testValidateExtractedIonSignals_1() {
 
 		IExtractedIonSignals extractedIonSignals = new ExtractedIonSignals(20);
-		try {
-			PeakBuilderMSD.validateExtractedIonSignals(extractedIonSignals);
-		} catch(PeakException e) {
-			assertTrue("PeakException", false);
-		}
+		PeakBuilderMSD.validateExtractedIonSignals(extractedIonSignals);
 	}
 
+	@Test
 	public void testValidateExtractedIonSignals_2() {
 
-		try {
+		assertThrows(PeakException.class, () -> {
 			PeakBuilderMSD.validateExtractedIonSignals(null);
-		} catch(PeakException e) {
-			assertTrue("PeakException", true);
-		}
+		});
 	}
 }

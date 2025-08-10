@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.model.support.IScanRange;
 import org.eclipse.chemclipse.model.support.ScanRange;
@@ -20,6 +23,8 @@ import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * The chromatogram and peak will be initialized in DefaultPeakTestCase.<br/>
@@ -27,8 +32,6 @@ import org.eclipse.chemclipse.msd.model.core.IScanMSD;
  * and ends at a retention time of 15500 ms.<br/>
  * The chromatogram has 17 scans, starting at a retention time of 500 ms and
  * ends at a retention time of 16500 ms. It has a background of 1750 units.
- * 
- * @author eselmeister
  */
 public class PeakBuilder_8_Test extends PeakBuilderTestCase {
 
@@ -37,7 +40,8 @@ public class PeakBuilder_8_Test extends PeakBuilderTestCase {
 	private IMarkedIons excludedExcludedIons;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		scanRange = new ScanRange(2, 16);
@@ -48,45 +52,42 @@ public class PeakBuilder_8_Test extends PeakBuilderTestCase {
 		peak = PeakBuilderMSD.createPeak(chromatogram, scanRange, excludedExcludedIons);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		peak = null;
-		scanRange = null;
-		excludedExcludedIons = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetBackgroundAbundanceAtScan_1() {
 
 		float background = peak.getBackgroundAbundanceAtScan(5);
-		assertEquals("background", 145.48743f, background);
+		assertEquals("background", 145.48743f, background, 0);
 	}
 
+	@Test
 	public void testGetBackgroundAbundanceAtScan_2() {
 
 		float background = peak.getBackgroundAbundanceAtScan(1);
-		assertEquals("background", 0.0f, background);
+		assertEquals("background", 0.0f, background, 0);
 	}
 
+	@Test
 	public void testGetBackgroundAbundanceAtScan_3() {
 
 		float background = peak.getBackgroundAbundanceAtScan(17);
-		assertEquals("background", 0.0f, background);
+		assertEquals("background", 0.0f, background, 0);
 	}
 
+	@Test
 	public void testGetBackgroundAbundanceAtScan_4() {
 
 		float background = peak.getBackgroundAbundanceAtScan(0);
-		assertEquals("background", 0.0f, background);
+		assertEquals("background", 0.0f, background, 0);
 	}
 
+	@Test
 	public void testGetBackgroundAbundanceAtScan_5() {
 
 		float background = peak.getBackgroundAbundanceAtScan(200);
-		assertEquals("background", 0.0f, background);
+		assertEquals("background", 0.0f, background, 0);
 	}
 
+	@Test
 	public void testGetChromatogramMassSpectrum_1() {
 
 		IScanMSD massSpectrum = peak.getChromatogramMassSpectrum();
@@ -94,6 +95,7 @@ public class PeakBuilder_8_Test extends PeakBuilderTestCase {
 		assertEquals("NumberOfIons", 11, massSpectrum.getNumberOfIons());
 	}
 
+	@Test
 	public void testGetExctractedMassSpectrum_1() {
 
 		IPeakMassSpectrum massSpectrum = peak.getExtractedMassSpectrum();
@@ -101,12 +103,14 @@ public class PeakBuilder_8_Test extends PeakBuilderTestCase {
 		assertEquals("NumberOfIons", 8, massSpectrum.getNumberOfIons());
 	}
 
+	@Test
 	public void testGetModelDescription_1() {
 
 		String modelDescription = peak.getModelDescription();
 		assertEquals("ModelDescription", "", modelDescription);
 	}
 
+	@Test
 	public void testGetModelDescription_2() {
 
 		String md = "TIC";
@@ -115,6 +119,7 @@ public class PeakBuilder_8_Test extends PeakBuilderTestCase {
 		assertEquals("ModelDescription", md, modelDescription);
 	}
 
+	@Test
 	public void testGetModelDescription_3() {
 
 		String md = "+104 -56";
@@ -123,45 +128,52 @@ public class PeakBuilder_8_Test extends PeakBuilderTestCase {
 		assertEquals("ModelDescription", md, modelDescription);
 	}
 
+	@Test
 	public void testGetParentChromatogram_1() {
 
 		IChromatogramMSD chromatogram = peak.getChromatogram();
 		assertNotNull("Chromatogram", chromatogram);
 	}
 
+	@Test
 	public void testGetPeakAbundanceAtScan_1() {
 
 		float abundance = peak.getPeakAbundanceAtScan(1);
-		assertEquals("abundance", 0.0f, abundance);
+		assertEquals("abundance", 0.0f, abundance, 0);
 	}
 
+	@Test
 	public void testGetPeakAbundanceAtScan_2() {
 
 		// At scan 10 is the peak maximum.
 		float abundance = peak.getPeakAbundanceAtScan(10);
-		assertEquals("abundance", 5085.513f, abundance);
+		assertEquals("abundance", 5085.513f, abundance, 0);
 	}
 
+	@Test
 	public void testGetPeakAbundanceAtScan_3() {
 
 		// At scan 5 is the peak abundance at 15% of peak maximum.
 		float abundance = peak.getPeakAbundanceAtScan(5);
-		assertEquals("abundance", 762.82697f, abundance);
+		assertEquals("abundance", 762.82697f, abundance, 0);
 	}
 
+	@Test
 	public void testGetPeakAbundanceAtScan_4() {
 
 		// At scan 5 is the peak abundance at 30% of peak maximum.
 		float abundance = peak.getPeakAbundanceAtScan(14);
-		assertEquals("abundance", 1525.6539f, abundance);
+		assertEquals("abundance", 1525.6539f, abundance, 0);
 	}
 
+	@Test
 	public void testGetPeakAbundanceAtScan_5() {
 
 		float abundance = peak.getPeakAbundanceAtScan(17);
-		assertEquals("abundance", 0.0f, abundance);
+		assertEquals("abundance", 0.0f, abundance, 0);
 	}
 
+	@Test
 	public void testGetPeakModel_1() {
 
 		IPeakModelMSD peakModel = peak.getPeakModel();
@@ -170,23 +182,27 @@ public class PeakBuilder_8_Test extends PeakBuilderTestCase {
 		assertEquals("StopRetentionTime", 15500, peakModel.getStopRetentionTime());
 	}
 
+	@Test
 	public void testGetScanMax_1() {
 
 		int scanMax = peak.getScanMax();
 		assertEquals("ScanMax", 10, scanMax);
 	}
 
+	@Test
 	public void testGetWidthBaselineTotalInScans_1() {
 
 		int width = peak.getWidthBaselineTotalInScans();
 		assertEquals("Width", 15, width);
 	}
 
+	@Test
 	public void testGetIntegratorDescription_1() {
 
 		assertEquals("IntegratorDescription", "", peak.getIntegratorDescription());
 	}
 
+	@Test
 	public void testGetIntegratorDescription_2() {
 
 		String description = "Default Integrator";
@@ -196,17 +212,20 @@ public class PeakBuilder_8_Test extends PeakBuilderTestCase {
 		assertEquals("IntegratorDescription", "", peak.getIntegratorDescription());
 	}
 
+	@Test
 	public void testGetIntegratorDescription_3() {
 
 		peak.setIntegratorDescription(null);
 		assertEquals("IntegratorDescription", "", peak.getIntegratorDescription());
 	}
 
+	@Test
 	public void testGetDetectorDescription_1() {
 
 		assertEquals("DetectorDescription", "", peak.getDetectorDescription());
 	}
 
+	@Test
 	public void testGetDetectorDescription_2() {
 
 		String description = "Default Detector";
@@ -216,6 +235,7 @@ public class PeakBuilder_8_Test extends PeakBuilderTestCase {
 		assertEquals("DetectorDescription", "", peak.getDetectorDescription());
 	}
 
+	@Test
 	public void testGetDetectorDescription_3() {
 
 		peak.setDetectorDescription(null);

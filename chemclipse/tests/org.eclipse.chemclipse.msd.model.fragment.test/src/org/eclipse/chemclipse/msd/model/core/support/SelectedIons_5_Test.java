@@ -12,29 +12,24 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
+import static org.junit.Assert.assertFalse;
+
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class SelectedIons_5_Test extends TestCase {
+public class SelectedIons_5_Test {
 
 	private IMarkedIons selectedIons;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		selectedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
 		selectedIons.add(new MarkedIon(28.78749204f));
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		selectedIons = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testContains_1() {
 
 		assertFalse("contains", selectedIons.contains(new MarkedIon(28.8d)));

@@ -12,6 +12,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,15 +38,13 @@ import org.eclipse.chemclipse.numeric.core.IPoint;
 import org.eclipse.chemclipse.numeric.core.Point;
 import org.eclipse.chemclipse.numeric.equations.Equations;
 import org.eclipse.chemclipse.numeric.equations.LinearEquation;
-
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test the peak exceptions.
- * 
- * @author eselmeister
  */
-public class PeakBuilder_29_Test extends TestCase {
+public class PeakBuilder_29_Test {
 
 	private ITotalScanSignals totalIonSignals;
 	private IChromatogramMSD chromatogram;
@@ -54,10 +56,9 @@ public class PeakBuilder_29_Test extends TestCase {
 	private ITotalScanSignalExtractor totalIonSignalExtractor;
 	private IExtractedIonSignalExtractor extractedIonSignalExtractor;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		/*
 		 * chromatogram
 		 */
@@ -103,79 +104,56 @@ public class PeakBuilder_29_Test extends TestCase {
 		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		backgroundEquation = null;
-		excludedIons = null;
-		totalIonSignals = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetPeakIntensityValues_1() {
 
 		IPeakMassSpectrum peakMassSpectrum;
-		try {
-			peakMassSpectrum = PeakBuilderMSD.getPeakMassSpectrum(extractedIonSignals, chromatogram, totalIonSignals, backgroundEquation, excludedIons);
-			assertNotNull(peakMassSpectrum);
-			assertEquals("Total Signal", 9198643.0f, peakMassSpectrum.getTotalSignal());
-		} catch(PeakException e) {
-			assertTrue("PeakException", false);
-		}
+		peakMassSpectrum = PeakBuilderMSD.getPeakMassSpectrum(extractedIonSignals, chromatogram, totalIonSignals, backgroundEquation, excludedIons);
+		assertNotNull(peakMassSpectrum);
+		assertEquals("Total Signal", 9198643.0f, peakMassSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetPeakIntensityValues_2() {
 
-		try {
+		assertThrows(PeakException.class, () -> {
 			PeakBuilderMSD.getPeakMassSpectrum(null, chromatogram, totalIonSignals, backgroundEquation, excludedIons);
-		} catch(PeakException e) {
-			assertTrue("PeakException", true);
-		}
+		});
 	}
 
+	@Test
 	public void testGetPeakIntensityValues_3() {
 
-		try {
+		assertThrows(PeakException.class, () -> {
 			PeakBuilderMSD.getPeakMassSpectrum(extractedIonSignals, null, totalIonSignals, backgroundEquation, excludedIons);
-		} catch(PeakException e) {
-			assertTrue("PeakException", true);
-		}
+		});
 	}
 
+	@Test
 	public void testGetPeakIntensityValues_4() {
 
-		try {
+		assertThrows(PeakException.class, () -> {
 			PeakBuilderMSD.getPeakMassSpectrum(extractedIonSignals, chromatogram, null, backgroundEquation, excludedIons);
-		} catch(PeakException e) {
-			assertTrue("PeakException", true);
-		}
+		});
 	}
 
+	@Test
 	public void testGetPeakIntensityValues_5() {
 
-		try {
+		assertThrows(PeakException.class, () -> {
 			PeakBuilderMSD.getPeakMassSpectrum(extractedIonSignals, chromatogram, totalIonSignals, null, excludedIons);
-		} catch(PeakException e) {
-			assertTrue("PeakException", true);
-		}
+		});
 	}
 
+	@Test
 	public void testGetPeakIntensityValues_6() {
 
-		try {
-			PeakBuilderMSD.getPeakMassSpectrum(extractedIonSignals, chromatogram, totalIonSignals, backgroundEquation, excludedIons);
-		} catch(PeakException e) {
-			assertTrue("PeakException", true);
-		}
+		PeakBuilderMSD.getPeakMassSpectrum(extractedIonSignals, chromatogram, totalIonSignals, backgroundEquation, excludedIons);
 	}
 
+	@Test
 	public void testGetPeakIntensityValues_7() {
 
-		try {
-			PeakBuilderMSD.getPeakMassSpectrum(extractedIonSignals, chromatogram, totalIonSignals, backgroundEquation, null);
-		} catch(PeakException e) {
-			assertTrue("PeakException", true);
-		}
+		PeakBuilderMSD.getPeakMassSpectrum(extractedIonSignals, chromatogram, totalIonSignals, backgroundEquation, null);
 	}
 }

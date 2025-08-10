@@ -12,6 +12,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
+
 import org.eclipse.chemclipse.model.exceptions.PeakException;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
@@ -23,15 +27,13 @@ import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.VendorMassSpectrum;
-
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test the peak exceptions.
- * 
- * @author eselmeister
  */
-public class PeakBuilder_23_Test extends TestCase {
+public class PeakBuilder_23_Test {
 
 	private ITotalScanSignals totalIonSignals;
 	private ITotalScanSignal totalIonSignal;
@@ -40,10 +42,9 @@ public class PeakBuilder_23_Test extends TestCase {
 	private IRegularMassSpectrum massSpectrum;
 	private IIon defaultIon;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		scanRange = new ScanRange(1, 10);
 		chromatogram = new ChromatogramMSD();
 		chromatogram.setScanDelay(500);
@@ -59,43 +60,28 @@ public class PeakBuilder_23_Test extends TestCase {
 		chromatogram.recalculateRetentionTimes();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		scanRange = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetTotalIonSignals_1() {
 
-		try {
-			totalIonSignals = PeakBuilderMSD.getTotalIonSignals(chromatogram, scanRange);
-			assertNotNull(totalIonSignals);
-			totalIonSignal = totalIonSignals.getTotalScanSignal(1);
-			assertEquals("Signal", 1225.0f, totalIonSignal.getTotalSignal());
-			totalIonSignal = totalIonSignals.getTotalScanSignal(10);
-			assertEquals("Signal", 1225.0f, totalIonSignal.getTotalSignal());
-		} catch(PeakException e) {
-			assertTrue("PeakException", false);
-		}
+		totalIonSignals = PeakBuilderMSD.getTotalIonSignals(chromatogram, scanRange);
+		assertNotNull(totalIonSignals);
+		totalIonSignal = totalIonSignals.getTotalScanSignal(1);
+		assertEquals("Signal", 1225.0f, totalIonSignal.getTotalSignal(), 0);
+		totalIonSignal = totalIonSignals.getTotalScanSignal(10);
+		assertEquals("Signal", 1225.0f, totalIonSignal.getTotalSignal(), 0);
 	}
 
 	public void testGetTotalIonSignals_2() {
 
-		try {
+		assertThrows(PeakException.class, () -> {
 			totalIonSignals = PeakBuilderMSD.getTotalIonSignals(null, scanRange);
-		} catch(PeakException e) {
-			assertTrue("PeakException", true);
-		}
+		});
 	}
 
 	public void testGetTotalIonSignals_3() {
 
-		try {
+		assertThrows(PeakException.class, () -> {
 			totalIonSignals = PeakBuilderMSD.getTotalIonSignals(chromatogram, null);
-		} catch(PeakException e) {
-			assertTrue("PeakException", true);
-		}
+		});
 	}
 }

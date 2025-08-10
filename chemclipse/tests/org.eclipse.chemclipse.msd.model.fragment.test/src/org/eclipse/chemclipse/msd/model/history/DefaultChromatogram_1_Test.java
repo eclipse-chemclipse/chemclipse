@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.history;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,10 +23,10 @@ import org.eclipse.chemclipse.support.history.EditHistorySortOrder;
 import org.eclipse.chemclipse.support.history.EditInformation;
 import org.eclipse.chemclipse.support.history.EditInformationComparator;
 import org.eclipse.chemclipse.support.history.IEditInformation;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class DefaultChromatogram_1_Test extends TestCase {
+public class DefaultChromatogram_1_Test {
 
 	private ChromatogramMSD chromatogram;
 	private IEditInformation editInformation;
@@ -32,10 +34,9 @@ public class DefaultChromatogram_1_Test extends TestCase {
 	private final String entry2 = "Me too.";
 	private final String entry3 = "What are we doing now?";
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		chromatogram = new ChromatogramMSD();
 		/*
 		 * Why do we need a Thread.sleep() here? If the EditInformation objects
@@ -53,14 +54,7 @@ public class DefaultChromatogram_1_Test extends TestCase {
 		chromatogram.getEditHistory().add(editInformation);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		editInformation = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetEditHistory_1() {
 
 		List<IEditInformation> history = new ArrayList<>(chromatogram.getEditHistory());
@@ -69,6 +63,7 @@ public class DefaultChromatogram_1_Test extends TestCase {
 		assertEquals("3rd entry", entry3, history.get(2).getDescription());
 	}
 
+	@Test
 	public void testGetEditHistory_2() {
 
 		List<IEditInformation> history = new ArrayList<>(chromatogram.getEditHistory());
@@ -78,6 +73,7 @@ public class DefaultChromatogram_1_Test extends TestCase {
 		assertEquals("3rd entry", entry3, history.get(2).getDescription());
 	}
 
+	@Test
 	public void testGetEditHistory_3() {
 
 		List<IEditInformation> history = new ArrayList<>(chromatogram.getEditHistory());

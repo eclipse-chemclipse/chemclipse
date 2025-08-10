@@ -12,66 +12,52 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
+import static org.junit.Assert.assertThrows;
+
 import org.easymock.EasyMock;
 import org.eclipse.chemclipse.model.exceptions.PeakException;
 import org.eclipse.chemclipse.model.support.IScanRange;
 import org.eclipse.chemclipse.model.support.ScanRange;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
-
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test the peak exceptions.
- * 
- * @author eselmeister
  */
-public class PeakBuilder_21_Test extends TestCase {
+public class PeakBuilder_21_Test {
 
 	private IChromatogramMSD chromatogram;
 	private IScanRange scanRange;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		chromatogram = EasyMock.createMock(IChromatogramMSD.class);
 		EasyMock.expect(chromatogram.getNumberOfScans()).andStubReturn(20);
 		EasyMock.replay(chromatogram);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testCheckScanRange_1() {
 
 		scanRange = new ScanRange(10, 20);
-		try {
-			PeakBuilderMSD.checkScanRange(chromatogram, scanRange);
-		} catch(PeakException e) {
-			assertTrue("PeakException", false);
-		}
+		PeakBuilderMSD.checkScanRange(chromatogram, scanRange);
 	}
 
+	@Test
 	public void testCheckScanRange_2() {
 
 		scanRange = new ScanRange(0, 20);
-		try {
-			PeakBuilderMSD.checkScanRange(chromatogram, scanRange);
-		} catch(PeakException e) {
-			assertTrue("PeakException", true);
-		}
+		PeakBuilderMSD.checkScanRange(chromatogram, scanRange);
 	}
 
+	@Test
 	public void testCheckScanRange_3() {
 
 		scanRange = new ScanRange(10, 22);
-		try {
+		assertThrows(PeakException.class, () -> {
 			PeakBuilderMSD.checkScanRange(chromatogram, scanRange);
-		} catch(PeakException e) {
-			assertTrue("PeakException", true);
-		}
+		});
 	}
 }
