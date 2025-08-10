@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import static org.junit.Assert.assertThrows;
+
 import org.eclipse.chemclipse.model.exceptions.AnalysisSupportException;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
@@ -19,22 +21,18 @@ import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.VendorMassSpectrum;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-/**
- * @author eselmeister
- */
-public class ExtractedIonSignalsModifier_1_Test extends TestCase {
+public class ExtractedIonSignalsModifier_1_Test {
 
 	private IChromatogramMSD chromatogram;
 	private IRegularMassSpectrum supplierMassSpectrum;
 	private IIon supplierIon;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		/*
 		 * Build a chromatogram and add scans with ions and no
 		 * abundance.
@@ -50,21 +48,11 @@ public class ExtractedIonSignalsModifier_1_Test extends TestCase {
 		}
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		supplierIon = null;
-		supplierMassSpectrum = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testAdjustThresholdTransitions_1() {
 
-		try {
+		assertThrows(AnalysisSupportException.class, () -> {
 			ExtractedIonSignalsModifier.adjustThresholdTransitions(null);
-		} catch(AnalysisSupportException e) {
-			assertTrue("AnalysisSupportException", true);
-		}
+		});
 	}
 }

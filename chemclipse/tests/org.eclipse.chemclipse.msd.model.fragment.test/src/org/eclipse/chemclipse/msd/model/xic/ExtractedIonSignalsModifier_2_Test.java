@@ -12,10 +12,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.chemclipse.model.exceptions.AnalysisSupportException;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
@@ -23,13 +24,10 @@ import org.eclipse.chemclipse.msd.model.exceptions.NoExtractedIonSignalStoredExc
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.VendorMassSpectrum;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-/**
- * @author eselmeister
- */
-public class ExtractedIonSignalsModifier_2_Test extends TestCase {
+public class ExtractedIonSignalsModifier_2_Test {
 
 	private IChromatogramMSD chromatogram;
 	private IRegularMassSpectrum supplierMassSpectrum;
@@ -40,10 +38,9 @@ public class ExtractedIonSignalsModifier_2_Test extends TestCase {
 	private List<Integer> ions;
 	private IExtractedIonSignalExtractor extractedIonSignalExtractor;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws NoExtractedIonSignalStoredException {
 
-		super.setUp();
 		/*
 		 * Build a chromatogram and add scans with ions and no
 		 * abundance.
@@ -78,105 +75,69 @@ public class ExtractedIonSignalsModifier_2_Test extends TestCase {
 		}
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
+	@Test
+	public void testInitialization_1() throws NoExtractedIonSignalStoredException {
 
-		extractedIonSignal = null;
-		extractedIonSignals = null;
-		chromatogram = null;
-		supplierIon = null;
-		supplierMassSpectrum = null;
-		scans = null;
-		ions = null;
-		super.tearDown();
-	}
-
-	public void testInitialization_1() {
-
-		try {
-			/*
-			 * Test that the values are zero.
-			 */
-			for(int scan : scans) {
-				extractedIonSignal = extractedIonSignals.getExtractedIonSignal(scan);
-				for(int ion : ions) {
-					assertEquals("TotalIonSignal before", 0.0f, extractedIonSignal.getAbundance(ion));
-				}
+		/*
+		 * Test that the values are zero.
+		 */
+		for(int scan : scans) {
+			extractedIonSignal = extractedIonSignals.getExtractedIonSignal(scan);
+			for(int ion : ions) {
+				assertEquals("TotalIonSignal before", 0.0f, extractedIonSignal.getAbundance(ion), 0);
 			}
-		} catch(NoExtractedIonSignalStoredException e) {
-			assertTrue("NoExtractedIonSignalStoredException", false);
 		}
 	}
 
-	public void testAdjustThresholdTransitions_1() {
+	@Test
+	public void testAdjustThresholdTransitions_1() throws NoExtractedIonSignalStoredException {
 
-		try {
-			ExtractedIonSignalsModifier.adjustThresholdTransitions(extractedIonSignals);
-			/*
-			 * Test the adjusted value.
-			 */
-			extractedIonSignal = extractedIonSignals.getExtractedIonSignal(4);
-			assertEquals("TotalIonSignal after", 35.054245f, extractedIonSignal.getAbundance(45));
-			assertEquals("TotalIonSignal after", 35.054245f, extractedIonSignal.getAbundance(76));
-			assertEquals("TotalIonSignal after", 35.054245f, extractedIonSignal.getAbundance(102));
-		} catch(AnalysisSupportException e) {
-			assertTrue("AnalysisSupportException", false);
-		} catch(NoExtractedIonSignalStoredException e) {
-			assertTrue("NoExtractedIonSignalStoredException", false);
-		}
+		ExtractedIonSignalsModifier.adjustThresholdTransitions(extractedIonSignals);
+		/*
+		 * Test the adjusted value.
+		 */
+		extractedIonSignal = extractedIonSignals.getExtractedIonSignal(4);
+		assertEquals("TotalIonSignal after", 35.054245f, extractedIonSignal.getAbundance(45), 0);
+		assertEquals("TotalIonSignal after", 35.054245f, extractedIonSignal.getAbundance(76), 0);
+		assertEquals("TotalIonSignal after", 35.054245f, extractedIonSignal.getAbundance(102), 0);
 	}
 
-	public void testAdjustThresholdTransitions_2() {
+	@Test
+	public void testAdjustThresholdTransitions_2() throws NoExtractedIonSignalStoredException {
 
-		try {
-			ExtractedIonSignalsModifier.adjustThresholdTransitions(extractedIonSignals);
-			/*
-			 * Test the adjusted value.
-			 */
-			extractedIonSignal = extractedIonSignals.getExtractedIonSignal(7);
-			assertEquals("TotalIonSignal after", 35.054245f, extractedIonSignal.getAbundance(45));
-			assertEquals("TotalIonSignal after", 35.054245f, extractedIonSignal.getAbundance(76));
-			assertEquals("TotalIonSignal after", 35.054245f, extractedIonSignal.getAbundance(102));
-		} catch(AnalysisSupportException e) {
-			assertTrue("AnalysisSupportException", false);
-		} catch(NoExtractedIonSignalStoredException e) {
-			assertTrue("NoExtractedIonSignalStoredException", false);
-		}
+		ExtractedIonSignalsModifier.adjustThresholdTransitions(extractedIonSignals);
+		/*
+		 * Test the adjusted value.
+		 */
+		extractedIonSignal = extractedIonSignals.getExtractedIonSignal(7);
+		assertEquals("TotalIonSignal after", 35.054245f, extractedIonSignal.getAbundance(45), 0);
+		assertEquals("TotalIonSignal after", 35.054245f, extractedIonSignal.getAbundance(76), 0);
+		assertEquals("TotalIonSignal after", 35.054245f, extractedIonSignal.getAbundance(102), 0);
 	}
 
-	public void testAdjustThresholdTransitions_3() {
+	@Test
+	public void testAdjustThresholdTransitions_3() throws NoExtractedIonSignalStoredException {
 
-		try {
-			ExtractedIonSignalsModifier.adjustThresholdTransitions(extractedIonSignals);
-			/*
-			 * Test the adjusted value.
-			 */
-			extractedIonSignal = extractedIonSignals.getExtractedIonSignal(9);
-			assertEquals("TotalIonSignal after", 35.054245f, extractedIonSignal.getAbundance(45));
-			assertEquals("TotalIonSignal after", 35.054245f, extractedIonSignal.getAbundance(76));
-			assertEquals("TotalIonSignal after", 35.054245f, extractedIonSignal.getAbundance(102));
-		} catch(AnalysisSupportException e) {
-			assertTrue("AnalysisSupportException", false);
-		} catch(NoExtractedIonSignalStoredException e) {
-			assertTrue("NoExtractedIonSignalStoredException", false);
-		}
+		ExtractedIonSignalsModifier.adjustThresholdTransitions(extractedIonSignals);
+		/*
+		 * Test the adjusted value.
+		 */
+		extractedIonSignal = extractedIonSignals.getExtractedIonSignal(9);
+		assertEquals("TotalIonSignal after", 35.054245f, extractedIonSignal.getAbundance(45), 0);
+		assertEquals("TotalIonSignal after", 35.054245f, extractedIonSignal.getAbundance(76), 0);
+		assertEquals("TotalIonSignal after", 35.054245f, extractedIonSignal.getAbundance(102), 0);
 	}
 
-	public void testAdjustThresholdTransitions_4() {
+	@Test
+	public void testAdjustThresholdTransitions_4() throws NoExtractedIonSignalStoredException {
 
-		try {
-			ExtractedIonSignalsModifier.adjustThresholdTransitions(extractedIonSignals);
-			/*
-			 * Test the adjusted value.
-			 */
-			extractedIonSignal = extractedIonSignals.getExtractedIonSignal(5);
-			assertEquals("TotalIonSignal after", 90.0f, extractedIonSignal.getAbundance(45));
-			assertEquals("TotalIonSignal after", 152.0f, extractedIonSignal.getAbundance(76));
-			assertEquals("TotalIonSignal after", 204.0f, extractedIonSignal.getAbundance(102));
-		} catch(AnalysisSupportException e) {
-			assertTrue("AnalysisSupportException", false);
-		} catch(NoExtractedIonSignalStoredException e) {
-			assertTrue("NoExtractedIonSignalStoredException", false);
-		}
+		ExtractedIonSignalsModifier.adjustThresholdTransitions(extractedIonSignals);
+		/*
+		 * Test the adjusted value.
+		 */
+		extractedIonSignal = extractedIonSignals.getExtractedIonSignal(5);
+		assertEquals("TotalIonSignal after", 90.0f, extractedIonSignal.getAbundance(45), 0);
+		assertEquals("TotalIonSignal after", 152.0f, extractedIonSignal.getAbundance(76), 0);
+		assertEquals("TotalIonSignal after", 204.0f, extractedIonSignal.getAbundance(102), 0);
 	}
 }

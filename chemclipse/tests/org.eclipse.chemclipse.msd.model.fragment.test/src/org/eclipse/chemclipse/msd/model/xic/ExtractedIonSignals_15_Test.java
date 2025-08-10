@@ -12,20 +12,22 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
-import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.ChromatogramSelectionMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 import org.eclipse.chemclipse.msd.model.exceptions.NoExtractedIonSignalStoredException;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.VendorMassSpectrum;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ExtractedIonSignals_15_Test extends TestCase {
+public class ExtractedIonSignals_15_Test {
 
 	private IRegularMassSpectrum supplierMassSpectrum;
 	private IIon defaultIon;
@@ -33,10 +35,9 @@ public class ExtractedIonSignals_15_Test extends TestCase {
 	private IChromatogramMSD chromatogram;
 	private IExtractedIonSignalExtractor extractedIonSignalExtractor;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		int scans = 120;
 		int ionStart = 25;
 		int ionStop = 30;
@@ -70,25 +71,20 @@ public class ExtractedIonSignals_15_Test extends TestCase {
 		extractedIonSignals = extractedIonSignalExtractor.getExtractedIonSignals(chromatogramSelection);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		extractedIonSignals = null;
-		chromatogram = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testSize_1() {
 
 		assertEquals("Size", 64, extractedIonSignals.size());
 	}
 
+	@Test
 	public void testSize_2() throws NoExtractedIonSignalStoredException {
 
 		assertEquals(5, extractedIonSignals.getStartScan());
 		assertEquals(68, extractedIonSignals.getStopScan());
 	}
 
+	@Test
 	public void testSize_3() throws NoExtractedIonSignalStoredException {
 
 		assertEquals(25, extractedIonSignals.getStartIon());

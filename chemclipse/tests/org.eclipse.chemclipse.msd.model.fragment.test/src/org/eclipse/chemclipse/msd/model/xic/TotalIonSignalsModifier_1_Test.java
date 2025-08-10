@@ -12,23 +12,24 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignal;
 import org.eclipse.chemclipse.model.signals.TotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignalsModifier;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class TotalIonSignalsModifier_1_Test extends TestCase {
+public class TotalIonSignalsModifier_1_Test {
 
 	private ITotalScanSignals signals;
 	private ITotalScanSignal signal;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		signals = new TotalScanSignals(12);
 		float[] abundance = new float[12];
 		abundance[0] = 4512.3f;
@@ -50,44 +51,44 @@ public class TotalIonSignalsModifier_1_Test extends TestCase {
 		TotalScanSignalsModifier.normalize(signals, 1000.0f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testSize_1() {
 
 		assertEquals("size", 12, signals.size());
 	}
 
+	@Test
 	public void testGetTotalIonSignal_1() {
 
 		signal = signals.getTotalScanSignal(1);
-		assertEquals("total signal", 3.623653949f, signal.getTotalSignal());
+		assertEquals("total signal", 3.623653949f, signal.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalIonSignal_2() {
 
 		signal = signals.getTotalScanSignal(6);
-		assertEquals("total signal", 1000.0f, signal.getTotalSignal());
+		assertEquals("total signal", 1000.0f, signal.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalIonSignal_3() {
 
 		signal = signals.getTotalScanSignal(12);
-		assertEquals("total signal", 0.0047380626f, signal.getTotalSignal());
+		assertEquals("total signal", 0.0047380626f, signal.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalIonSignal_4() {
 
 		signal = signals.getTotalScanSignal(3);
-		assertEquals("total signal", 38.19054848f, signal.getTotalSignal());
+		assertEquals("total signal", 38.19054848f, signal.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalIonSignal_5() {
 
 		signal = signals.getTotalScanSignal(9);
-		assertEquals("total signal", 1.0000525f, signal.getTotalSignal());
+		assertEquals("total signal", 1.0000525f, signal.getTotalSignal(), 0);
 	}
 }

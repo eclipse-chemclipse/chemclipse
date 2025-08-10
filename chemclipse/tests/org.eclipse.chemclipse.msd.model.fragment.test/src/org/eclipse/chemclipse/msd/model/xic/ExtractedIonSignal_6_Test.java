@@ -12,27 +12,16 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class ExtractedIonSignal_6_Test extends TestCase {
+import org.junit.Test;
 
-	private IExtractedIonSignal extractedIonSignal;
+public class ExtractedIonSignal_6_Test {
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testSize_1() {
 
-		extractedIonSignal = new ExtractedIonSignal(22, 28);
+		IExtractedIonSignal extractedIonSignal = new ExtractedIonSignal(22, 28);
 		extractedIonSignal.setAbundance(22, 389.2f);
 		extractedIonSignal.setAbundance(23, 298.6f);
 		extractedIonSignal.setAbundance(24, 128.2f);
@@ -40,14 +29,15 @@ public class ExtractedIonSignal_6_Test extends TestCase {
 		extractedIonSignal.setAbundance(26, 2788.89f);
 		extractedIonSignal.setAbundance(27, 829.1f);
 		extractedIonSignal.setAbundance(28, 568.89f);
-		//
+
 		assertEquals(26, extractedIonSignal.getIonMaxIntensity());
-		assertEquals(2788.89f, extractedIonSignal.getMaxIntensity());
+		assertEquals(2788.89f, extractedIonSignal.getMaxIntensity(), 0);
 	}
 
+	@Test
 	public void testSize_2() {
 
-		extractedIonSignal = new ExtractedIonSignal(22, 28);
+		IExtractedIonSignal extractedIonSignal = new ExtractedIonSignal(22, 28);
 		extractedIonSignal.setAbundance(22, 389.2f);
 		extractedIonSignal.setAbundance(23, 298.6f);
 		extractedIonSignal.setAbundance(24, 235.2f);
@@ -55,16 +45,17 @@ public class ExtractedIonSignal_6_Test extends TestCase {
 		extractedIonSignal.setAbundance(26, 2788.89f);
 		extractedIonSignal.setAbundance(27, 829.1f);
 		extractedIonSignal.setAbundance(28, 568.89f);
-		//
+
 		assertEquals(25, extractedIonSignal.getIonMaxIntensity());
-		assertEquals(2788.89f, extractedIonSignal.getMaxIntensity());
+		assertEquals(2788.89f, extractedIonSignal.getMaxIntensity(), 0);
 	}
 
+	@Test
 	public void testSize_3() {
 
-		extractedIonSignal = new ExtractedIonSignal(22, 28);
-		//
+		IExtractedIonSignal extractedIonSignal = new ExtractedIonSignal(22, 28);
+
 		assertEquals(0, extractedIonSignal.getIonMaxIntensity());
-		assertEquals(0.0f, extractedIonSignal.getMaxIntensity());
+		assertEquals(0.0f, extractedIonSignal.getMaxIntensity(), 0);
 	}
 }

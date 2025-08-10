@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
@@ -19,10 +21,10 @@ import org.eclipse.chemclipse.msd.model.exceptions.NoExtractedIonSignalStoredExc
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.VendorMassSpectrum;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ExtractedIonSignals_9_Test extends TestCase {
+public class ExtractedIonSignals_9_Test {
 
 	private IRegularMassSpectrum supplierMassSpectrum;
 	private IIon defaultIon;
@@ -31,10 +33,9 @@ public class ExtractedIonSignals_9_Test extends TestCase {
 	private IChromatogramMSD chromatogram;
 	private IExtractedIonSignalExtractor extractedIonSignalExtractor;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		int scans = 1;
 		int ionStart = 25;
 		int ionStop = 50;
@@ -56,57 +57,53 @@ public class ExtractedIonSignals_9_Test extends TestCase {
 		extractedIonSignals = extractedIonSignalExtractor.getExtractedIonSignals();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		extractedIonSignals = null;
-		extractedIonSignal = null;
-		chromatogram = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
 		assertEquals("Size", 1, extractedIonSignals.size());
 	}
 
+	@Test
 	public void test_2() throws NoExtractedIonSignalStoredException {
 
 		extractedIonSignal = extractedIonSignals.getExtractedIonSignal(1);
-		assertEquals(50.0f, extractedIonSignal.getMaxIntensity());
-		assertEquals(975.0f, extractedIonSignal.getTotalSignal());
+		assertEquals(50.0f, extractedIonSignal.getMaxIntensity(), 0);
+		assertEquals(975.0f, extractedIonSignal.getTotalSignal(), 0);
 		extractedIonSignal.normalize(100.0f);
-		assertEquals(100.0f, extractedIonSignal.getMaxIntensity());
-		assertEquals(1950.0f, extractedIonSignal.getTotalSignal());
+		assertEquals(100.0f, extractedIonSignal.getMaxIntensity(), 0);
+		assertEquals(1950.0f, extractedIonSignal.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void test_3() throws NoExtractedIonSignalStoredException {
 
 		extractedIonSignal = extractedIonSignals.getExtractedIonSignal(1);
-		assertEquals(50.0f, extractedIonSignal.getMaxIntensity());
-		assertEquals(975.0f, extractedIonSignal.getTotalSignal());
+		assertEquals(50.0f, extractedIonSignal.getMaxIntensity(), 0);
+		assertEquals(975.0f, extractedIonSignal.getTotalSignal(), 0);
 		extractedIonSignal.normalize(0.0f);
-		assertEquals(50.0f, extractedIonSignal.getMaxIntensity());
-		assertEquals(975.0f, extractedIonSignal.getTotalSignal());
+		assertEquals(50.0f, extractedIonSignal.getMaxIntensity(), 0);
+		assertEquals(975.0f, extractedIonSignal.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void test_4() throws NoExtractedIonSignalStoredException {
 
 		extractedIonSignal = extractedIonSignals.getExtractedIonSignal(1);
-		assertEquals(50.0f, extractedIonSignal.getMaxIntensity());
-		assertEquals(975.0f, extractedIonSignal.getTotalSignal());
+		assertEquals(50.0f, extractedIonSignal.getMaxIntensity(), 0);
+		assertEquals(975.0f, extractedIonSignal.getTotalSignal(), 0);
 		extractedIonSignal.normalize(1.0f);
-		assertEquals(1.0f, extractedIonSignal.getMaxIntensity());
+		assertEquals(1.0f, extractedIonSignal.getMaxIntensity(), 0);
 		assertEquals(19.5f, extractedIonSignal.getTotalSignal(), 0.1f);
 	}
 
+	@Test
 	public void test_5() throws NoExtractedIonSignalStoredException {
 
 		extractedIonSignal = extractedIonSignals.getExtractedIonSignal(1);
-		assertEquals(50.0f, extractedIonSignal.getMaxIntensity());
-		assertEquals(975.0f, extractedIonSignal.getTotalSignal());
+		assertEquals(50.0f, extractedIonSignal.getMaxIntensity(), 0);
+		assertEquals(975.0f, extractedIonSignal.getTotalSignal(), 0);
 		extractedIonSignal.normalize();
-		assertEquals(1000.0f, extractedIonSignal.getMaxIntensity());
-		assertEquals(19500.0f, extractedIonSignal.getTotalSignal());
+		assertEquals(1000.0f, extractedIonSignal.getMaxIntensity(), 0);
+		assertEquals(19500.0f, extractedIonSignal.getTotalSignal(), 0);
 	}
 }

@@ -12,38 +12,28 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignalsModifier;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class TotalIonSignalsModifier_7_Test {
 
-public class TotalIonSignalsModifier_7_Test extends TestCase {
-
-	private ITotalScanSignals signals;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testCalculateMovingAverage_1() {
 
-		signals = null;
+		ITotalScanSignals signals = null;
 		TotalScanSignalsModifier.calculateMovingAverage(signals, 5);
 		assertNull(signals);
 	}
 
+	@Test
 	public void testCalculateMovingAverage_2() {
 
-		signals = new TotalScanSignals(5);
+		ITotalScanSignals signals = new TotalScanSignals(5);
 		TotalScanSignalsModifier.calculateMovingAverage(signals, 5);
 		assertNotNull(signals);
 	}

@@ -12,50 +12,45 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
- * HashCode and equals test. extractedIonSignal1 = new ExtractedIonSignal(1,
- * 20); extractedIonSignal2 = new ExtractedIonSignal(1, 20);
- * 
- * @author eselmeister
+ * HashCode and equals test.
  */
-public class ExtractedIonSignal_2_Test extends TestCase {
+public class ExtractedIonSignal_2_Test {
 
 	private IExtractedIonSignal extractedIonSignal1;
 	private IExtractedIonSignal extractedIonSignal2;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		extractedIonSignal1 = new ExtractedIonSignal(1, 20);
 		extractedIonSignal2 = new ExtractedIonSignal(1, 20);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		extractedIonSignal1 = null;
-		extractedIonSignal2 = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testEquals_1() {
 
 		assertTrue("equals", extractedIonSignal1.equals(extractedIonSignal2));
 	}
 
+	@Test
 	public void testEquals_2() {
 
 		assertTrue("equals", extractedIonSignal2.equals(extractedIonSignal1));
 	}
 
+	@Test
 	public void testHashCode_1() {
 
 		assertTrue("hashCode", extractedIonSignal1.hashCode() == extractedIonSignal2.hashCode());
 	}
 
+	@Test
 	public void testHashCode_2() {
 
 		assertTrue("hashCode", extractedIonSignal2.hashCode() == extractedIonSignal1.hashCode());

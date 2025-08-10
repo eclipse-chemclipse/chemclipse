@@ -12,52 +12,42 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class ExtractedIonSignals_3_Test {
 
-public class ExtractedIonSignals_3_Test extends TestCase {
+	private IChromatogramMSD chromatogram = new ChromatogramMSD();
 
-	private IExtractedIonSignals extractedIonSignals;
-	private IChromatogramMSD chromatogram;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		chromatogram = new ChromatogramMSD();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		extractedIonSignals = null;
-		chromatogram = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testConstructor_1() {
 
-		extractedIonSignals = new ExtractedIonSignals(10, chromatogram);
+		IExtractedIonSignals extractedIonSignals = new ExtractedIonSignals(10, chromatogram);
 		assertNotNull("getChromatogram", extractedIonSignals.getChromatogram());
 	}
 
+	@Test
 	public void testConstructor_2() {
 
-		extractedIonSignals = new ExtractedIonSignals(10, null);
+		IExtractedIonSignals extractedIonSignals = new ExtractedIonSignals(10, null);
 		assertNull("getChromatogram", extractedIonSignals.getChromatogram());
 	}
 
+	@Test
 	public void testConstructor_3() {
 
-		extractedIonSignals = new ExtractedIonSignals(20, 40, chromatogram);
+		IExtractedIonSignals extractedIonSignals = new ExtractedIonSignals(20, 40, chromatogram);
 		assertNotNull("getChromatogram", extractedIonSignals.getChromatogram());
 	}
 
+	@Test
 	public void testConstructor_4() {
 
-		extractedIonSignals = new ExtractedIonSignals(20, 40, null);
+		IExtractedIonSignals extractedIonSignals = new ExtractedIonSignals(20, 40, null);
 		assertNull("getChromatogram", extractedIonSignals.getChromatogram());
 	}
 }

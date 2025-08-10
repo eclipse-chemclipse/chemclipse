@@ -12,23 +12,25 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignal;
 import org.eclipse.chemclipse.model.signals.TotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignalsModifier;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class TotalIonSignalsModifier_2_Test extends TestCase {
+public class TotalIonSignalsModifier_2_Test {
 
 	private ITotalScanSignals signals;
 	private ITotalScanSignal signal;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		signals = new TotalScanSignals(12);
 		float[] abundance = new float[12];
 		abundance[0] = 4512.3f;
@@ -50,47 +52,45 @@ public class TotalIonSignalsModifier_2_Test extends TestCase {
 		TotalScanSignalsModifier.normalize(signals, 1000.0f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testSize_1() {
 
 		assertEquals("size", 12, signals.size());
 	}
 
+	@Test
 	public void testGetPoint_1() {
 
 		int scan = 1;
 		ITotalScanSignal s1 = signals.getTotalScanSignal(scan);
 		ITotalScanSignal s2 = signals.getNextTotalScanSignal(scan);
 		ITotalScanSignal s3 = signals.getPreviousTotalScanSignal(scan);
-		assertEquals("total signal", 3.623654f, s1.getTotalSignal());
-		assertEquals("total signal", 46.434937f, s2.getTotalSignal());
+		assertEquals("total signal", 3.623654f, s1.getTotalSignal(), 0);
+		assertEquals("total signal", 46.434937f, s2.getTotalSignal(), 0);
 		assertNull("TotalIonSignal is null", s3);
 	}
 
+	@Test
 	public void testGetPoint_2() {
 
 		int scan = 4;
 		ITotalScanSignal s1 = signals.getTotalScanSignal(scan);
 		ITotalScanSignal s2 = signals.getNextTotalScanSignal(scan);
 		ITotalScanSignal s3 = signals.getPreviousTotalScanSignal(scan);
-		assertEquals("total signal", 18.754856f, s1.getTotalSignal());
-		assertEquals("total signal", 719.6365f, s2.getTotalSignal());
-		assertEquals("total signal", 38.190548f, s3.getTotalSignal());
+		assertEquals("total signal", 18.754856f, s1.getTotalSignal(), 0);
+		assertEquals("total signal", 719.6365f, s2.getTotalSignal(), 0);
+		assertEquals("total signal", 38.190548f, s3.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetPoint_3() {
 
 		int scan = 12;
 		ITotalScanSignal s1 = signals.getTotalScanSignal(scan);
 		ITotalScanSignal s2 = signals.getNextTotalScanSignal(scan);
 		ITotalScanSignal s3 = signals.getPreviousTotalScanSignal(scan);
-		assertEquals("total signal", 0.0047380626f, s1.getTotalSignal());
+		assertEquals("total signal", 0.0047380626f, s1.getTotalSignal(), 0);
 		assertNull("TotalIonSignal is null", s2);
-		assertEquals("total signal", 0.04191981f, s3.getTotalSignal());
+		assertEquals("total signal", 0.04191981f, s3.getTotalSignal(), 0);
 	}
 }

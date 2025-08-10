@@ -12,6 +12,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
@@ -24,10 +28,10 @@ import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.chemclipse.msd.model.core.support.MarkedIon;
 import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ExtractedIonSignals_6_Test extends TestCase {
+public class ExtractedIonSignals_6_Test {
 
 	private IExtractedIonSignals extractedIonSignals;
 	private IExtractedIonSignal extractedIonSignal;
@@ -37,10 +41,9 @@ public class ExtractedIonSignals_6_Test extends TestCase {
 	private IScanMSD massSpectrum;
 	private IMarkedIons excludedIons;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		int scans = 100;
 		int ionStart = 25;
 		int ionStop = 30;
@@ -60,17 +63,7 @@ public class ExtractedIonSignals_6_Test extends TestCase {
 		}
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		extractedIonSignals = null;
-		extractedIonSignal = null;
-		chromatogram = null;
-		totalIonSignal = null;
-		totalIonSignals = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetTotalIonSignals_1() {
 
 		IScanRange scanRange = new ScanRange(26, 100);
@@ -79,34 +72,36 @@ public class ExtractedIonSignals_6_Test extends TestCase {
 		assertNull(totalIonSignal);
 		totalIonSignal = totalIonSignals.getTotalScanSignal(100);
 		assertNotNull(totalIonSignal);
-		assertEquals("TotalSignal", 16500.0f, totalIonSignal.getTotalSignal());
+		assertEquals("TotalSignal", 16500.0f, totalIonSignal.getTotalSignal(), 0);
 		totalIonSignal = totalIonSignals.getTotalScanSignal(26);
 		assertNotNull(totalIonSignal);
-		assertEquals("TotalSignal", 4290.0f, totalIonSignal.getTotalSignal());
+		assertEquals("TotalSignal", 4290.0f, totalIonSignal.getTotalSignal(), 0);
 		totalIonSignal = totalIonSignals.getTotalScanSignal(87);
 		assertNotNull(totalIonSignal);
-		assertEquals("TotalSignal", 14355.0f, totalIonSignal.getTotalSignal());
+		assertEquals("TotalSignal", 14355.0f, totalIonSignal.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalIonSignals_2() {
 
 		totalIonSignals = extractedIonSignals.getTotalIonSignals();
 		totalIonSignal = totalIonSignals.getTotalScanSignal(1);
 		assertNotNull(totalIonSignal);
-		assertEquals("TotalSignal", 165.0f, totalIonSignal.getTotalSignal());
+		assertEquals("TotalSignal", 165.0f, totalIonSignal.getTotalSignal(), 0);
 		totalIonSignal = totalIonSignals.getTotalScanSignal(100);
 		assertNotNull(totalIonSignal);
-		assertEquals("TotalSignal", 16500.0f, totalIonSignal.getTotalSignal());
+		assertEquals("TotalSignal", 16500.0f, totalIonSignal.getTotalSignal(), 0);
 		totalIonSignal = totalIonSignals.getTotalScanSignal(26);
 		assertNotNull(totalIonSignal);
-		assertEquals("TotalSignal", 4290.0f, totalIonSignal.getTotalSignal());
+		assertEquals("TotalSignal", 4290.0f, totalIonSignal.getTotalSignal(), 0);
 		totalIonSignal = totalIonSignals.getTotalScanSignal(87);
 		assertNotNull(totalIonSignal);
-		assertEquals("TotalSignal", 14355.0f, totalIonSignal.getTotalSignal());
+		assertEquals("TotalSignal", 14355.0f, totalIonSignal.getTotalSignal(), 0);
 		totalIonSignal = totalIonSignals.getTotalScanSignal(101);
 		assertNull(totalIonSignal);
 	}
 
+	@Test
 	public void testGetTotalIonSignals_3() {
 
 		IScanRange scanRange = new ScanRange(26, 87);
@@ -117,34 +112,38 @@ public class ExtractedIonSignals_6_Test extends TestCase {
 		assertNull(totalIonSignal);
 		totalIonSignal = totalIonSignals.getTotalScanSignal(26);
 		assertNotNull(totalIonSignal);
-		assertEquals("TotalSignal", 4290.0f, totalIonSignal.getTotalSignal());
+		assertEquals("TotalSignal", 4290.0f, totalIonSignal.getTotalSignal(), 0);
 		totalIonSignal = totalIonSignals.getTotalScanSignal(87);
 		assertNotNull(totalIonSignal);
-		assertEquals("TotalSignal", 14355.0f, totalIonSignal.getTotalSignal());
+		assertEquals("TotalSignal", 14355.0f, totalIonSignal.getTotalSignal(), 0);
 		totalIonSignal = totalIonSignals.getTotalScanSignal(101);
 		assertNull(totalIonSignal);
 	}
 
+	@Test
 	public void testGetTotalIonSignals_4() {
 
 		totalIonSignals = extractedIonSignals.getTotalIonSignals(null);
 	}
 
+	@Test
 	public void testGetScan_1() {
 
 		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
 		massSpectrum = extractedIonSignals.getScan(26, excludedIons);
 		assertEquals("Ions", 6, massSpectrum.getIons().size());
-		assertEquals("TotalSignal", 4290.0f, massSpectrum.getTotalSignal());
+		assertEquals("TotalSignal", 4290.0f, massSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetScan_2() {
 
 		massSpectrum = extractedIonSignals.getScan(26);
 		assertEquals("Ions", 6, massSpectrum.getIons().size());
-		assertEquals("TotalSignal", 4290.0f, massSpectrum.getTotalSignal());
+		assertEquals("TotalSignal", 4290.0f, massSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetScan_3() {
 
 		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
@@ -152,9 +151,10 @@ public class ExtractedIonSignals_6_Test extends TestCase {
 		excludedIons.add(new MarkedIon(30));
 		massSpectrum = extractedIonSignals.getScan(26, excludedIons);
 		assertEquals("Ions", 4, massSpectrum.getIons().size());
-		assertEquals("TotalSignal", 2860.0f, massSpectrum.getTotalSignal());
+		assertEquals("TotalSignal", 2860.0f, massSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetScan_4() {
 
 		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
@@ -165,9 +165,10 @@ public class ExtractedIonSignals_6_Test extends TestCase {
 		excludedIons.add(new MarkedIon(30));
 		massSpectrum = extractedIonSignals.getScan(26, excludedIons);
 		assertEquals("Ions", 1, massSpectrum.getIons().size());
-		assertEquals("TotalSignal", 754.0f, massSpectrum.getTotalSignal());
+		assertEquals("TotalSignal", 754.0f, massSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetScan_5() {
 
 		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
@@ -179,6 +180,6 @@ public class ExtractedIonSignals_6_Test extends TestCase {
 		excludedIons.add(new MarkedIon(30));
 		massSpectrum = extractedIonSignals.getScan(26, excludedIons);
 		assertEquals("Ions", 0, massSpectrum.getIons().size());
-		assertEquals("TotalSignal", 0.0f, massSpectrum.getTotalSignal());
+		assertEquals("TotalSignal", 0.0f, massSpectrum.getTotalSignal(), 0);
 	}
 }

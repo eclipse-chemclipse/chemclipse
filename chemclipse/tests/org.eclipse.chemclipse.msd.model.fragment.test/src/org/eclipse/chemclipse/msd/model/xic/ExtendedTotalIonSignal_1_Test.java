@@ -12,43 +12,29 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.signals.ExtendedTotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Test methods of ExtendedTotalIonSignal.
- * 
- * @author eselmeister
  */
-public class ExtendedTotalIonSignal_1_Test extends TestCase {
+public class ExtendedTotalIonSignal_1_Test {
 
-	private ITotalScanSignal totalIonSignal;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		totalIonSignal = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testConstructor_1() {
 
-		totalIonSignal = new ExtendedTotalScanSignal(1000, 0.0f, -5949.3f);
-		assertEquals("Total Signal", -5949.3f, totalIonSignal.getTotalSignal());
+		ITotalScanSignal totalIonSignal = new ExtendedTotalScanSignal(1000, 0.0f, -5949.3f);
+		assertEquals("Total Signal", -5949.3f, totalIonSignal.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testSetTotalSignal_1() {
 
-		totalIonSignal = new ExtendedTotalScanSignal(1000, 0.0f, 0.0f);
+		ITotalScanSignal totalIonSignal = new ExtendedTotalScanSignal(1000, 0.0f, 0.0f);
 		totalIonSignal.setTotalSignal(-5949.3f);
-		assertEquals("Total Signal", -5949.3f, totalIonSignal.getTotalSignal());
+		assertEquals("Total Signal", -5949.3f, totalIonSignal.getTotalSignal(), 0);
 	}
 }

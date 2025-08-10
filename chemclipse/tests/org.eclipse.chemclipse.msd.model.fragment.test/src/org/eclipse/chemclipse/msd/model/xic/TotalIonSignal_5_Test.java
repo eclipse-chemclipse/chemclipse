@@ -12,86 +12,87 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.TotalScanSignal;
-
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
- * HashCode and equals test. totalIonSignal1 = new
- * TotalIonSignal(5720,1245.5f,25476.45f); totalIonSignal2 = new
- * TotalIonSignal(5725,1245.5f,25476.45f);
+ * HashCode and equals test.
  * 
  * @author Philip Wenig
  */
-public class TotalIonSignal_5_Test extends TestCase {
+public class TotalIonSignal_5_Test {
 
 	private ITotalScanSignal totalIonSignal1;
 	private ITotalScanSignal totalIonSignal2;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		totalIonSignal1 = new TotalScanSignal(5720, 1245.5f, 25476.45f);
 		totalIonSignal2 = new TotalScanSignal(5725, 1245.5f, 25476.45f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		totalIonSignal1 = null;
-		totalIonSignal2 = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testHashCode_1() {
 
 		assertNotEquals("hashCode", totalIonSignal1.hashCode(), totalIonSignal2.hashCode());
 	}
 
+	@Test
 	public void testHashCode_2() {
 
 		assertNotEquals("hashCode", totalIonSignal2.hashCode(), totalIonSignal1.hashCode());
 	}
 
+	@Test
 	public void testEquals_1() {
 
 		assertNotEquals("equals", totalIonSignal1, totalIonSignal2);
 	}
 
+	@Test
 	public void testEquals_2() {
 
 		assertNotEquals("equals", totalIonSignal2, totalIonSignal1);
 	}
 
+	@Test
 	public void testEquals_3() {
 
 		assertNotNull("equals", totalIonSignal1);
 	}
 
+	@Test
 	public void testEquals_4() {
 
 		assertNotNull("equals", totalIonSignal2);
 	}
 
+	@Test
 	public void testEquals_5() {
 
 		assertEquals("equals", totalIonSignal1, totalIonSignal1);
 	}
 
+	@Test
 	public void testEquals_6() {
 
 		assertEquals("equals", totalIonSignal2, totalIonSignal2);
 	}
 
+	@Test
 	public void testEquals_7() {
 
 		assertNotEquals("equals", totalIonSignal1, new Object());
 	}
 
+	@Test
 	public void testEquals_8() {
 
 		assertNotEquals("equals", totalIonSignal2, new Object());
