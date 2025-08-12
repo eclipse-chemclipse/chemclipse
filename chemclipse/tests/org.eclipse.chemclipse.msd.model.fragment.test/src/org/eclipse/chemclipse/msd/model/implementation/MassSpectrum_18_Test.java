@@ -12,35 +12,19 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-/**
- * + ion = new DefaultIon(45.5f, 78500.2f); +
- * massSpectrum.addIon(ion); + ion = new
- * DefaultIon(85.4f, 3000.5f); +
- * massSpectrum.addIon(ion); + ion = new
- * DefaultIon(104.1f, 120000.4f); +
- * massSpectrum.addIon(ion); + ion = new
- * DefaultIon(32.6f, 890520.4f); +
- * massSpectrum.addIon(ion); + ion = new
- * DefaultIon(105.7f, 120000.4f); +
- * massSpectrum.addIon(ion); + ion = new
- * DefaultIon(28.2f, 33000.5f); +
- * massSpectrum.addIon(ion); + ion = new
- * DefaultIon(85.4f, 3000.5f); +
- * massSpectrum.addIon(ion);
- * 
- * @author eselmeister
- */
-public class MassSpectrum_18_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class MassSpectrum_18_Test {
 
 	private ScanMSD massSpectrum;
 	private Ion ion;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		massSpectrum = new ScanMSD();
 		ion = new Ion(45.5f, 78500.2f);
 		massSpectrum.addIon(ion);
@@ -55,41 +39,39 @@ public class MassSpectrum_18_Test extends TestCase {
 		massSpectrum.adjustIons(0.3f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectrum = null;
-		ion = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetIons_1() {
 
 		assertEquals("getIons", 5, massSpectrum.getIons().size());
 	}
 
+	@Test
 	public void testGetTotalSignal_1() {
 
-		assertEquals("getTotalSignal", 1614628.4f, massSpectrum.getTotalSignal());
+		assertEquals("getTotalSignal", 1614628.4f, massSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetExtractedIonSignal_1() {
 
-		assertEquals("getExtractedIonSignal", 0.0f, massSpectrum.getExtractedIonSignal().getAbundance(0));
+		assertEquals("getExtractedIonSignal", 0.0f, massSpectrum.getExtractedIonSignal().getAbundance(0), 0);
 	}
 
+	@Test
 	public void testGetExtractedIonSignal_2() {
 
-		assertEquals("getExtractedIonSignal", 156000.52f, massSpectrum.getExtractedIonSignal(25, 120).getAbundance(104));
+		assertEquals("getExtractedIonSignal", 156000.52f, massSpectrum.getExtractedIonSignal(25, 120).getAbundance(104), 0);
 	}
 
+	@Test
 	public void testGetExtractedIonSignal_3() {
 
-		assertEquals("getExtractedIonSignal", 1157676.5f, massSpectrum.getExtractedIonSignal(25, 120).getAbundance(33));
+		assertEquals("getExtractedIonSignal", 1157676.5f, massSpectrum.getExtractedIonSignal(25, 120).getAbundance(33), 0);
 	}
 
+	@Test
 	public void testGetExtractedIonSignal_4() {
 
-		assertEquals("getExtractedIonSignal", 156000.52f, massSpectrum.getExtractedIonSignal(25, 120).getAbundance(106));
+		assertEquals("getExtractedIonSignal", 156000.52f, massSpectrum.getExtractedIonSignal(25, 120).getAbundance(106), 0);
 	}
 }

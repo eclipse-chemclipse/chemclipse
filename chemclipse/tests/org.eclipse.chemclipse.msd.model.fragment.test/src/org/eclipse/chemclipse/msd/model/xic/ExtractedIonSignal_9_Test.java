@@ -12,16 +12,18 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class ExtractedIonSignal_9_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class ExtractedIonSignal_9_Test {
 
 	private IExtractedIonSignal extractedIonSignal;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		extractedIonSignal = new ExtractedIonSignal(22, 28);
 		extractedIonSignal.setAbundance(22, 389.2f);
 		extractedIonSignal.setAbundance(23, 298.6f);
@@ -32,39 +34,39 @@ public class ExtractedIonSignal_9_Test extends TestCase {
 		extractedIonSignal.setAbundance(28, 568.89f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testSize_1() {
 
-		assertEquals(0.0f, extractedIonSignal.getNthHighestIntensity(-1));
+		assertEquals(0.0f, extractedIonSignal.getNthHighestIntensity(-1), 0);
 	}
 
+	@Test
 	public void testSize_2() {
 
-		assertEquals(0.0f, extractedIonSignal.getNthHighestIntensity(0));
+		assertEquals(0.0f, extractedIonSignal.getNthHighestIntensity(0), 0);
 	}
 
+	@Test
 	public void testSize_3() {
 
-		assertEquals(2788.89f, extractedIonSignal.getNthHighestIntensity(1));
+		assertEquals(2788.89f, extractedIonSignal.getNthHighestIntensity(1), 0);
 	}
 
+	@Test
 	public void testSize_4() {
 
-		assertEquals(829.1f, extractedIonSignal.getNthHighestIntensity(2));
+		assertEquals(829.1f, extractedIonSignal.getNthHighestIntensity(2), 0);
 	}
 
+	@Test
 	public void testSize_5() {
 
-		assertEquals(128.2f, extractedIonSignal.getNthHighestIntensity(7));
+		assertEquals(128.2f, extractedIonSignal.getNthHighestIntensity(7), 0);
 	}
 
+	@Test
 	public void testSize_6() {
 
-		assertEquals(0.0f, extractedIonSignal.getNthHighestIntensity(8));
+		assertEquals(0.0f, extractedIonSignal.getNthHighestIntensity(8), 0);
 	}
 }

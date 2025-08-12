@@ -12,50 +12,53 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import org.eclipse.chemclipse.msd.model.core.IIonTransition;
 import org.eclipse.chemclipse.msd.model.core.IIonTransitionGroup;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class IonTransitionGroup_1_Test extends TestCase {
+public class IonTransitionGroup_1_Test {
 
 	private IIonTransitionGroup ionTransitionGroup;
 	private IIonTransition ionTransition;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		ionTransitionGroup = new IonTransitionGroup();
 		ionTransition = new IonTransition(120.2d, 121.3d, 88.5d, 87.4d, 7.0d, 1.2, 1.3, 1);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGet_1() {
 
 		assertEquals(0, ionTransitionGroup.size());
 	}
 
+	@Test
 	public void testGet_2() {
 
 		assertNull(ionTransitionGroup.get(0));
 	}
 
+	@Test
 	public void testGet_3() {
 
 		assertNull(ionTransitionGroup.get(ionTransition));
 	}
 
+	@Test
 	public void testGet_4() {
 
 		assertFalse(ionTransitionGroup.contains(ionTransition));
 	}
 
+	@Test
 	public void testGet_5() {
 
 		assertNotNull(ionTransitionGroup.getIonTransitions());

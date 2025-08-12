@@ -12,35 +12,19 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-/**
- * + ion = new DefaultIon(45.5f, 78500.2f); +
- * massSpectrum.addIon(ion); + ion = new
- * DefaultIon(85.4f, 3000.5f); +
- * massSpectrum.addIon(ion); + ion = new
- * DefaultIon(104.1f, 120000.4f); +
- * massSpectrum.addIon(ion); + ion = new
- * DefaultIon(32.6f, 890520.4f); +
- * massSpectrum.addIon(ion); + ion = new
- * DefaultIon(105.7f, 120000.4f); +
- * massSpectrum.addIon(ion); + ion = new
- * DefaultIon(28.2f, 33000.5f); +
- * massSpectrum.addIon(ion); + ion = new
- * DefaultIon(85.4f, 3000.5f); +
- * massSpectrum.addIon(ion);
- * 
- * @author eselmeister
- */
-public class MassSpectrum_19_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class MassSpectrum_19_Test {
 
 	private ScanMSD massSpectrum;
 	private Ion ion;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		massSpectrum = new ScanMSD();
 		ion = new Ion(45.5f, 78500.2f);
 		massSpectrum.addIon(ion);
@@ -54,57 +38,56 @@ public class MassSpectrum_19_Test extends TestCase {
 		massSpectrum.addIon(ion);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectrum = null;
-		ion = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetTotalSignal_1() {
 
 		massSpectrum.adjustIons(-1.1f);
-		assertEquals("getTotalSignal", 1242021.9f, massSpectrum.getTotalSignal());
+		assertEquals("getTotalSignal", 1242021.9f, massSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalSignal_2() {
 
 		massSpectrum.adjustIons(1.1f);
-		assertEquals("getTotalSignal", 1242021.9f, massSpectrum.getTotalSignal());
+		assertEquals("getTotalSignal", 1242021.9f, massSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalSignal_3() {
 
 		massSpectrum.adjustIons(0.0f);
-		assertEquals("getTotalSignal", 1242021.9f, massSpectrum.getTotalSignal());
+		assertEquals("getTotalSignal", 1242021.9f, massSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalSignal_4() {
 
 		// adjust +20%
 		massSpectrum.adjustIons(0.2f);
-		assertEquals("getTotalSignal", 1490426.4f, massSpectrum.getTotalSignal());
+		assertEquals("getTotalSignal", 1490426.4f, massSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalSignal_5() {
 
 		// adjust -20%
 		massSpectrum.adjustIons(-0.2f);
-		assertEquals("getTotalSignal", 993617.5f, massSpectrum.getTotalSignal());
+		assertEquals("getTotalSignal", 993617.5f, massSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalSignal_6() {
 
 		// adjust -100%
 		massSpectrum.adjustIons(-1.0f);
-		assertEquals("getTotalSignal", 0.0f, massSpectrum.getTotalSignal());
+		assertEquals("getTotalSignal", 0.0f, massSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalSignal_7() {
 
 		// adjust +100%
 		massSpectrum.adjustIons(1.0f);
-		assertEquals("getTotalSignal", 2484043.8f, massSpectrum.getTotalSignal());
+		assertEquals("getTotalSignal", 2484043.8f, massSpectrum.getTotalSignal(), 0);
 	}
 }

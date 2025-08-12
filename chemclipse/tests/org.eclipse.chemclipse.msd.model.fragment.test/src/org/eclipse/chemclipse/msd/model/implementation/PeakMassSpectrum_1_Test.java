@@ -12,21 +12,23 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import org.eclipse.chemclipse.msd.model.core.IIon;
-import org.eclipse.chemclipse.msd.model.core.IScanMSD;
-import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class PeakMassSpectrum_1_Test extends TestCase {
+import org.eclipse.chemclipse.msd.model.core.IIon;
+import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
+import org.junit.Before;
+import org.junit.Test;
+
+public class PeakMassSpectrum_1_Test {
 
 	private IScanMSD massSpectrum;
 	private IIon ion;
 	private IPeakMassSpectrum peakMassSpectrum;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		massSpectrum = new ScanMSD();
 		ion = new Ion(45.5f, 64830.4f);
 		massSpectrum.addIon(ion);
@@ -39,27 +41,21 @@ public class PeakMassSpectrum_1_Test extends TestCase {
 		peakMassSpectrum = new PeakMassSpectrum(massSpectrum);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		ion = null;
-		massSpectrum = null;
-		peakMassSpectrum = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetNumberOfIons_1() {
 
 		assertEquals("NumberOfIons", massSpectrum.getNumberOfIons(), peakMassSpectrum.getNumberOfIons());
 	}
 
+	@Test
 	public void testGetTotalSignal_1() {
 
-		assertEquals("TotalSignal", massSpectrum.getTotalSignal(), peakMassSpectrum.getTotalSignal());
+		assertEquals("TotalSignal", massSpectrum.getTotalSignal(), peakMassSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetBasePeak_1() {
 
-		assertEquals("BasePeak", massSpectrum.getBasePeak(), peakMassSpectrum.getBasePeak());
+		assertEquals("BasePeak", massSpectrum.getBasePeak(), peakMassSpectrum.getBasePeak(), 0);
 	}
 }

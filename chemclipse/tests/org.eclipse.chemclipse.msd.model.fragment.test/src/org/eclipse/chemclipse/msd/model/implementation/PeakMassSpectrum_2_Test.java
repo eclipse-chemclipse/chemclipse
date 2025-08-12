@@ -16,9 +16,7 @@ import static org.junit.Assert.assertThrows;
 
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class PeakMassSpectrum_2_Test extends TestCase {
+public class PeakMassSpectrum_2_Test {
 
 	@Test
 	public void testNullPointer() {

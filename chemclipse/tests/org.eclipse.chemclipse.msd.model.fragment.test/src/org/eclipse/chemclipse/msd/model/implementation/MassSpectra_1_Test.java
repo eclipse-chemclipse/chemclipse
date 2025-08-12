@@ -12,21 +12,23 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
-public class MassSpectra_1_Test extends TestCase {
+public class MassSpectra_1_Test {
 
 	private IMassSpectra massSpectra;
 	private ScanMSD massSpectrum1;
 	private ScanMSD massSpectrum2;
 	private IScanMSD massSpectrum;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		massSpectra = new MassSpectra();
 		massSpectrum1 = new ScanMSD();
 		massSpectrum1.addIon(new Ion(45.4f, 730.4f));
@@ -38,20 +40,13 @@ public class MassSpectra_1_Test extends TestCase {
 		massSpectrum2.addIon(new Ion(23.3f, 530.4f));
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectrum1 = null;
-		massSpectrum2 = null;
-		massSpectra = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testMassSpectra_1() {
 
 		assertEquals("Size", 0, massSpectra.size());
 	}
 
+	@Test
 	public void testMassSpectra_2() {
 
 		massSpectra.addMassSpectrum(massSpectrum1);
@@ -59,6 +54,7 @@ public class MassSpectra_1_Test extends TestCase {
 		assertEquals("Size", 2, massSpectra.size());
 	}
 
+	@Test
 	public void testMassSpectra_3() {
 
 		massSpectra.addMassSpectrum(massSpectrum1);
@@ -67,13 +63,14 @@ public class MassSpectra_1_Test extends TestCase {
 		assertEquals("Size", 1, massSpectra.size());
 	}
 
+	@Test
 	public void testMassSpectra_4() {
 
 		massSpectra.addMassSpectrum(massSpectrum1);
 		massSpectra.addMassSpectrum(massSpectrum2);
 		massSpectra.removeMassSpectrum(massSpectrum1);
 		massSpectrum = massSpectra.getMassSpectrum(1);
-		assertEquals("TotalSignal", 727791.1f, massSpectrum.getTotalSignal());
+		assertEquals("TotalSignal", 727791.1f, massSpectrum.getTotalSignal(), 0);
 	}
 
 	public void testMassSpectra_5() {
@@ -81,9 +78,9 @@ public class MassSpectra_1_Test extends TestCase {
 		massSpectra.addMassSpectrum(massSpectrum1);
 		massSpectra.addMassSpectrum(massSpectrum2);
 		massSpectrum = massSpectra.getMassSpectrum(1);
-		assertEquals("TotalSignal", 65891.195f, massSpectrum.getTotalSignal());
+		assertEquals("TotalSignal", 65891.195f, massSpectrum.getTotalSignal(), 0);
 		massSpectrum = massSpectra.getMassSpectrum(2);
-		assertEquals("TotalSignal", 727791.1f, massSpectrum.getTotalSignal());
+		assertEquals("TotalSignal", 727791.1f, massSpectrum.getTotalSignal(), 0);
 	}
 
 	public void testMassSpectra_6() {

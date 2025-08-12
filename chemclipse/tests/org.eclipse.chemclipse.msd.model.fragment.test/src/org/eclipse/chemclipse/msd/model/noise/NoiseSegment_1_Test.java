@@ -12,23 +12,25 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.noise;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.eclipse.chemclipse.model.support.AnalysisSegment;
 import org.eclipse.chemclipse.model.support.IAnalysisSegment;
 import org.eclipse.chemclipse.msd.model.core.ICombinedMassSpectrum;
 import org.eclipse.chemclipse.msd.model.implementation.CombinedMassSpectrum;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class NoiseSegment_1_Test extends TestCase {
+public class NoiseSegment_1_Test {
 
 	private INoiseSegmentMSD noiseSegment;
 	private IAnalysisSegment analysisSegment;
 	private ICombinedMassSpectrum noiseMassSpectrum;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		analysisSegment = new AnalysisSegment(20, 200) {
 
 			@Override
@@ -47,22 +49,19 @@ public class NoiseSegment_1_Test extends TestCase {
 		noiseSegment = new NoiseSegmentMSD(analysisSegment, noiseMassSpectrum);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetAnalysisSegment_1() {
 
 		assertNotNull(noiseSegment.getAnalysisSegment());
 	}
 
+	@Test
 	public void testGetAnalysisSegment_2() {
 
 		assertEquals("Segment Width", 200, noiseSegment.getAnalysisSegment().getWidth());
 	}
 
+	@Test
 	public void testGetNoiseMassSpectrum_1() {
 
 		assertNotNull(noiseSegment.getNoiseMassSpectrum());

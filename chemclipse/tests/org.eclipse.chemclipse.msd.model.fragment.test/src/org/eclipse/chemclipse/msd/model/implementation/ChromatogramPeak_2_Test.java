@@ -12,10 +12,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 import org.eclipse.chemclipse.model.exceptions.PeakException;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -24,38 +27,26 @@ import org.junit.Test;
  * and ends at a retention time of 15500 ms.<br/>
  * The chromatogram has 17 scans, starting at a retention time of 500 ms and
  * ends at a retention time of 16500 ms. It has a background of 1750 units.
- * 
- * @author eselmeister
  */
 public class ChromatogramPeak_2_Test extends ChromatogramPeakTestCase {
 
 	private IChromatogramPeakMSD peak;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		peak = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testConstructor_1() {
 
-		try {
-			peak = new ChromatogramPeakMSD(getPeakModel(), getChromatogram());
-		} catch(IllegalArgumentException e) {
-			assertFalse("A IllegalArgumentException should not be thrown here.", true);
-		} catch(PeakException e) {
-			assertFalse("A PeakException should not be thrown here.", true);
-		}
+		peak = new ChromatogramPeakMSD(getPeakModel(), getChromatogram());
 		assertNotNull(peak);
 	}
 
+	@Test
 	public void testConstructor_2() {
 
 		assertThrows(IllegalArgumentException.class, () -> {
@@ -63,6 +54,7 @@ public class ChromatogramPeak_2_Test extends ChromatogramPeakTestCase {
 		});
 	}
 
+	@Test
 	public void testConstructor_3() {
 
 		assertThrows(IllegalArgumentException.class, () -> {
@@ -73,11 +65,7 @@ public class ChromatogramPeak_2_Test extends ChromatogramPeakTestCase {
 	@Test
 	public void testConstructor_4() {
 
-		try {
-			new ChromatogramPeakMSD(null, null);
-			fail("Expected an exception to be thrown");
-		} catch(Exception e) {
-			assertTrue(e instanceof IllegalArgumentException || e instanceof PeakException);
-		}
+		Exception e = assertThrows(Exception.class, () -> new ChromatogramPeakMSD(null, null));
+		assertTrue(e instanceof IllegalArgumentException || e instanceof PeakException);
 	}
 }

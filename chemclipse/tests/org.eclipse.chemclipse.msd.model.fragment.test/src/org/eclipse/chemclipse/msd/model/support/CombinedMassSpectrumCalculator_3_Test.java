@@ -12,16 +12,18 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.support;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class CombinedMassSpectrumCalculator_3_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class CombinedMassSpectrumCalculator_3_Test {
 
 	private CombinedMassSpectrumCalculator combinedMassSpectrumCalculator;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		combinedMassSpectrumCalculator = new CombinedMassSpectrumCalculator();
 		combinedMassSpectrumCalculator.addIon(56.0f, 5100.0f);
 		combinedMassSpectrumCalculator.addIon(60.0f, 52900.0f);
@@ -30,32 +32,29 @@ public class CombinedMassSpectrumCalculator_3_Test extends TestCase {
 		combinedMassSpectrumCalculator.addIon(103.0f, 5500.0f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testValues_1() {
 
 		int ion = 103;
-		assertEquals(5500.0, combinedMassSpectrumCalculator.getValues().get(ion).get(0));
+		assertEquals(5500.0, combinedMassSpectrumCalculator.getValues().get(ion).get(0), 0);
 		combinedMassSpectrumCalculator.removeIon(ion);
 		assertEquals(null, combinedMassSpectrumCalculator.getValues().get(ion));
 	}
 
+	@Test
 	public void testValues_2() {
 
 		int ion = 104;
-		assertEquals(5300.0, combinedMassSpectrumCalculator.getValues().get(ion).get(0));
+		assertEquals(5300.0, combinedMassSpectrumCalculator.getValues().get(ion).get(0), 0);
 		combinedMassSpectrumCalculator.removeIon(ion);
 		assertEquals(null, combinedMassSpectrumCalculator.getValues().get(ion));
 	}
 
+	@Test
 	public void testValues_3() {
 
-		assertEquals(5100.0, combinedMassSpectrumCalculator.getValues().get(56).get(0));
-		assertEquals(5500.0, combinedMassSpectrumCalculator.getValues().get(103).get(0));
+		assertEquals(5100.0, combinedMassSpectrumCalculator.getValues().get(56).get(0), 0);
+		assertEquals(5500.0, combinedMassSpectrumCalculator.getValues().get(103).get(0), 0);
 		combinedMassSpectrumCalculator.removeIon(56);
 		combinedMassSpectrumCalculator.removeIon(103);
 		assertEquals(null, combinedMassSpectrumCalculator.getValues().get(56));

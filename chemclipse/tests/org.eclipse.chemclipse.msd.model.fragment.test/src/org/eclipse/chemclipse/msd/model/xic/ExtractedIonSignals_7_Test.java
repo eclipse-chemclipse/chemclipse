@@ -12,22 +12,24 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.exceptions.NoExtractedIonSignalStoredException;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ExtractedIonSignals_7_Test extends TestCase {
+public class ExtractedIonSignals_7_Test {
 
 	private IExtractedIonSignals extractedIonSignals;
 	private IExtractedIonSignal extractedIonSignal;
 	private IChromatogramMSD chromatogram;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		int scans = 100;
 		int ionStart = 25;
 		int ionStop = 30;
@@ -47,27 +49,21 @@ public class ExtractedIonSignals_7_Test extends TestCase {
 		}
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		extractedIonSignals = null;
-		extractedIonSignal = null;
-		chromatogram = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testMakeDeepCopyWithoutSignals_1() {
 
 		IExtractedIonSignals signals = extractedIonSignals.makeDeepCopyWithoutSignals();
 		assertEquals("Size", 100, signals.size());
 	}
 
+	@Test
 	public void testMakeDeepCopyWithoutSignals_2() {
 
 		IExtractedIonSignals signals = extractedIonSignals.makeDeepCopyWithoutSignals();
 		assertNotSame(signals, extractedIonSignals);
 	}
 
+	@Test
 	public void testMakeDeepCopyWithoutSignals_3() throws NoExtractedIonSignalStoredException {
 
 		float sum = 0.0f;
@@ -76,7 +72,7 @@ public class ExtractedIonSignals_7_Test extends TestCase {
 			signal = extractedIonSignals.getExtractedIonSignal(scan);
 			sum += signal.getTotalSignal();
 		}
-		assertEquals("TotalSignals", 833250.0f, sum);
+		assertEquals("TotalSignals", 833250.0f, sum, 0);
 		// Make a deep copy.
 		IExtractedIonSignals signals = extractedIonSignals.makeDeepCopyWithoutSignals();
 		sum = 0.0f;
@@ -84,6 +80,6 @@ public class ExtractedIonSignals_7_Test extends TestCase {
 			signal = signals.getExtractedIonSignal(scan);
 			sum += signal.getTotalSignal();
 		}
-		assertEquals("TotalSignals", 0.0f, sum);
+		assertEquals("TotalSignals", 0.0f, sum, 0);
 	}
 }

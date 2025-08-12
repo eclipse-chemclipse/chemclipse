@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.matrix;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
@@ -19,18 +21,18 @@ import org.eclipse.chemclipse.msd.model.core.selection.ChromatogramSelectionMSD;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.VendorMassSpectrum;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ExtractedMatrix_2_Test extends TestCase {
+public class ExtractedMatrix_2_Test {
 
 	private IRegularMassSpectrum supplierMassSpectrum;
 	private IIon defaultIon;
 	private IChromatogramMSD chromatogram;
 	private float[][] signalMatrix;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
 		int scans = 10;
 		int ionStart = 25;
@@ -59,32 +61,19 @@ public class ExtractedMatrix_2_Test extends TestCase {
 		}
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testConstructor_1() {
 
-		try {
-			ChromatogramSelectionMSD selection = new ChromatogramSelectionMSD(chromatogram);
-			ExtractedMatrix extracted = new ExtractedMatrix(selection);
-			assertNotNull(extracted);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		ChromatogramSelectionMSD selection = new ChromatogramSelectionMSD(chromatogram);
+		ExtractedMatrix extracted = new ExtractedMatrix(selection);
+		assertNotNull(extracted);
 	}
 
+	@Test
 	public void testUpdate_1() {
 
-		try {
-			ChromatogramSelectionMSD selection = new ChromatogramSelectionMSD(chromatogram);
-			ExtractedMatrix extracted = new ExtractedMatrix(selection);
-			extracted.updateSignal();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		ChromatogramSelectionMSD selection = new ChromatogramSelectionMSD(chromatogram);
+		ExtractedMatrix extracted = new ExtractedMatrix(selection);
+		extracted.updateSignal();
 	}
 }

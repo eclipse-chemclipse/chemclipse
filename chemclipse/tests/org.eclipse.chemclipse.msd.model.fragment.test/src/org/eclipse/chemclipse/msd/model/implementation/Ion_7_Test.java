@@ -12,52 +12,43 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import org.eclipse.chemclipse.msd.model.core.IIon;
+import static org.junit.Assert.assertEquals;
 
-import junit.framework.TestCase;
+import org.eclipse.chemclipse.msd.model.core.IIon;
+import org.junit.Test;
 
 /**
  * Constructor test.
- * 
- * @author eselmeister
  */
-public class Ion_7_Test extends TestCase {
+public class Ion_7_Test {
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testConstructor_1() {
 
 		IIon ion = new Ion(5.5f);
-		assertEquals(5.5d, ion.getIon());
+		assertEquals(5.5d, ion.getIon(), 0);
 	}
 
+	@Test
 	public void testConstructor_2() {
 
 		IIon ion = new Ion(-0.1f, 2593.5f);
-		assertEquals(0d, ion.getIon());
-		assertEquals(2593.5f, ion.getAbundance());
+		assertEquals(0d, ion.getIon(), 0);
+		assertEquals(2593.5f, ion.getAbundance(), 0);
 	}
 
+	@Test
 	public void testConstructor_3() {
 
 		IIon ion = new Ion(-0.1f);
-		assertEquals(0d, ion.getIon());
+		assertEquals(0d, ion.getIon(), 0);
 	}
 
+	@Test
 	public void testConstructor_4() {
 
 		IIon ion = new Ion(1.0f, -0.1f);
-		assertEquals(1d, ion.getIon());
-		assertEquals(0f, ion.getAbundance());
+		assertEquals(1d, ion.getIon(), 0);
+		assertEquals(0f, ion.getAbundance(), 0);
 	}
 }

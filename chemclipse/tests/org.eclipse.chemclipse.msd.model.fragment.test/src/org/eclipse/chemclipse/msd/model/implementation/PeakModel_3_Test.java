@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThrows;
 
 import java.util.Map.Entry;
@@ -23,10 +24,10 @@ import org.eclipse.chemclipse.model.implementation.PeakIntensityValues;
 import org.eclipse.chemclipse.msd.model.core.IPeakIon;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class PeakModel_3_Test extends TestCase {
+public class PeakModel_3_Test {
 
 	private IPeakModelMSD peakModel;
 	private IPeakMassSpectrum peakMaximum;
@@ -37,10 +38,9 @@ public class PeakModel_3_Test extends TestCase {
 	private float startBackgroundAbundance = 0.0f;
 	private float stopBackgroundAbundance = 0.0f;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		// ----------------------PeakMaximum
 		peakMaximum = new PeakMassSpectrum();
 		fragmentValues = new TreeMap<Float, Float>();
@@ -63,18 +63,7 @@ public class PeakModel_3_Test extends TestCase {
 		// ----------------------BackgroundValues
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		peakModel = null;
-		peakMaximum = null;
-		ion = null;
-		fragmentValues = null;
-		intensityValues = null;
-		scanValues = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testConstruct_1() {
 
 		// ----------------------IntensityValues
@@ -87,16 +76,11 @@ public class PeakModel_3_Test extends TestCase {
 			intensityValues.addIntensityValue(entry.getKey(), entry.getValue());
 		}
 		// ----------------------IntensityValues
-		try {
-			peakModel = new PeakModelMSD(peakMaximum, intensityValues, startBackgroundAbundance, stopBackgroundAbundance);
-		} catch(IllegalArgumentException e) {
-			assertFalse("An IllegalArgumentException should not be thrown here.", true);
-		} catch(PeakException e) {
-			assertFalse("An PeakException should not be thrown here.", true);
-		}
+		peakModel = new PeakModelMSD(peakMaximum, intensityValues, startBackgroundAbundance, stopBackgroundAbundance);
 		assertNotNull("The construction was fine.", peakModel);
 	}
 
+	@Test
 	public void testConstruct_2() {
 
 		// ----------------------IntensityValues
@@ -113,6 +97,7 @@ public class PeakModel_3_Test extends TestCase {
 		});
 	}
 
+	@Test
 	public void testConstruct_3() {
 
 		// ----------------------IntensityValues
@@ -128,6 +113,7 @@ public class PeakModel_3_Test extends TestCase {
 		});
 	}
 
+	@Test
 	public void testConstruct_4() {
 
 		// ----------------------IntensityValues
@@ -138,6 +124,7 @@ public class PeakModel_3_Test extends TestCase {
 		});
 	}
 
+	@Test
 	public void testConstruct_5() {
 
 		// ----------------------IntensityValues

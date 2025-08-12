@@ -12,7 +12,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * The chromatogram and peak will be initialized in DefaultPeakTestCase.<br/>
@@ -20,27 +24,20 @@ import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
  * and ends at a retention time of 15500 ms.<br/>
  * The chromatogram has 17 scans, starting at a retention time of 500 ms and
  * ends at a retention time of 16500 ms. It has a background of 1750 units.
- * 
- * @author eselmeister
  */
 public class ChromatogramPeak_4_Test extends ChromatogramPeakTestCase {
 
 	private IChromatogramPeakMSD peak;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		peak = new ChromatogramPeakMSD(getPeakModel(), getChromatogram());
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		peak = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetIntegrationConstraints_1() {
 
 		assertNotNull("GetIntegrationConstraints", peak.getIntegrationConstraints());

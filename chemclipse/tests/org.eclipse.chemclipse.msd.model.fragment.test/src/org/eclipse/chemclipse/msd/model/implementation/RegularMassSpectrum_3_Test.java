@@ -12,46 +12,37 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class RegularMassSpectrum_3_Test {
 
-public class RegularMassSpectrum_3_Test extends TestCase {
+	private IRegularMassSpectrum massSpectrum = new RegularMassSpectrum();
 
-	private IRegularMassSpectrum massSpectrum;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		massSpectrum = new RegularMassSpectrum();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectrum = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
 		massSpectrum.setMassSpectrometer((short)2);
 		assertEquals(2, massSpectrum.getMassSpectrometer());
 	}
 
+	@Test
 	public void test_2() {
 
 		massSpectrum.setMassSpectrumType(null);
 		assertEquals(null, massSpectrum.getMassSpectrumType());
 	}
 
+	@Test
 	public void test_3() {
 
 		massSpectrum.setTimeSegmentId(3);
 		assertEquals(3, massSpectrum.getTimeSegmentId());
 	}
 
+	@Test
 	public void test_4() {
 
 		massSpectrum.setCycleNumber(3);

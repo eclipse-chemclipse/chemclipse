@@ -12,37 +12,30 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import org.eclipse.chemclipse.msd.model.core.IIonTransitionSettings;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class IonTransitionSettings_1_Test {
 
-public class IonTransitionSettings_1_Test extends TestCase {
+	private IIonTransitionSettings ionTransitionSettings = new IonTransitionSettings();
 
-	private IIonTransitionSettings ionTransitionSettings;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		ionTransitionSettings = new IonTransitionSettings();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGet_1() {
 
 		assertEquals(0, ionTransitionSettings.size());
 	}
 
+	@Test
 	public void testGet_2() {
 
 		assertNull(ionTransitionSettings.get(0));
 	}
 
+	@Test
 	public void testGet_3() {
 
 		assertNotNull(ionTransitionSettings.getIonTransitionGroups());

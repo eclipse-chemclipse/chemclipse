@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.noise;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.model.support.AnalysisSegment;
 import org.eclipse.chemclipse.msd.model.core.ICombinedMassSpectrum;
@@ -24,10 +26,10 @@ import org.eclipse.chemclipse.msd.model.xic.ExtractedIonSignals;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignals;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class CalculatorSupport_4_Test extends TestCase {
+public class CalculatorSupport_4_Test {
 
 	private CalculatorSupport calculatorSupport;
 	private AnalysisSegment analysisSegment;
@@ -37,10 +39,9 @@ public class CalculatorSupport_4_Test extends TestCase {
 	private IMarkedIons ionsToPreserve;
 	private ICombinedMassSpectrum noiseMassSpectrum;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		calculatorSupport = new CalculatorSupport();
 		analysisSegment = new AnalysisSegment(1, 3) {
 
@@ -91,12 +92,7 @@ public class CalculatorSupport_4_Test extends TestCase {
 		noiseMassSpectrum = calculatorSupport.getNoiseMassSpectrum(combinedMassSpectrumCalculator, ionsToPreserve, new NullProgressMonitor());
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetNoiseMassSpectrum_1() {
 
 		assertEquals("Size", 4, noiseMassSpectrum.getNumberOfIons());

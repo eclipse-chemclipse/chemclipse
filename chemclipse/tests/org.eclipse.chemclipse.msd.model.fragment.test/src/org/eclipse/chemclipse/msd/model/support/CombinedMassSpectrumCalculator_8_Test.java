@@ -12,19 +12,21 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import org.eclipse.chemclipse.model.support.CalculationType;
 import org.eclipse.chemclipse.msd.model.core.ICombinedMassSpectrum;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class CombinedMassSpectrumCalculator_8_Test extends TestCase {
+public class CombinedMassSpectrumCalculator_8_Test {
 
 	private CombinedMassSpectrumCalculator combinedMassSpectrumCalculator;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		combinedMassSpectrumCalculator = new CombinedMassSpectrumCalculator();
 		combinedMassSpectrumCalculator.addIon(56.0f, 5100.0f);
 		combinedMassSpectrumCalculator.addIon(60.0f, 0.0f);
@@ -33,17 +35,13 @@ public class CombinedMassSpectrumCalculator_8_Test extends TestCase {
 		combinedMassSpectrumCalculator.addIon(103.0f, 0.0f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testValues_1() {
 
 		assertEquals(3, combinedMassSpectrumCalculator.size());
 	}
 
+	@Test
 	public void testValues_2() {
 
 		int ion = 60;
@@ -51,6 +49,7 @@ public class CombinedMassSpectrumCalculator_8_Test extends TestCase {
 		assertNull(massSpectrum.getIon(ion));
 	}
 
+	@Test
 	public void testValues_3() {
 
 		int ion = 103;
@@ -58,24 +57,27 @@ public class CombinedMassSpectrumCalculator_8_Test extends TestCase {
 		assertNull(massSpectrum.getIon(ion));
 	}
 
+	@Test
 	public void testValues_4() {
 
 		int ion = 56;
 		ICombinedMassSpectrum massSpectrum = combinedMassSpectrumCalculator.createMassSpectrum(CalculationType.SUM);
-		assertEquals(5100.0f, massSpectrum.getIon(ion).getAbundance());
+		assertEquals(5100.0f, massSpectrum.getIon(ion).getAbundance(), 0);
 	}
 
+	@Test
 	public void testValues_5() {
 
 		int ion = 104;
 		ICombinedMassSpectrum massSpectrum = combinedMassSpectrumCalculator.createMassSpectrum(CalculationType.SUM);
-		assertEquals(5300.0f, massSpectrum.getIon(ion).getAbundance());
+		assertEquals(5300.0f, massSpectrum.getIon(ion).getAbundance(), 0);
 	}
 
+	@Test
 	public void testValues_6() {
 
 		int ion = 28;
 		ICombinedMassSpectrum massSpectrum = combinedMassSpectrumCalculator.createMassSpectrum(CalculationType.SUM);
-		assertEquals(5400.0f, massSpectrum.getIon(ion).getAbundance());
+		assertEquals(5400.0f, massSpectrum.getIon(ion).getAbundance(), 0);
 	}
 }

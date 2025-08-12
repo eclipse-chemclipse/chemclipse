@@ -12,30 +12,29 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.List;
-import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import org.eclipse.chemclipse.model.implementation.PeakIntensityValues;
-
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test the peak intensity values.<br/>
  * Make sure that the limit IPeakIntensityValues.MAX_INTENSITY is implemented
  * correctly.
- * 
- * @author eselmeister
  */
-public class PeakIntensityValues_6_Test extends TestCase {
+public class PeakIntensityValues_6_Test {
 
 	private PeakIntensityValues intensityValues;
 	private TreeMap<Integer, Float> scanValues;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		intensityValues = new PeakIntensityValues();
 		scanValues = new TreeMap<Integer, Float>();
 		scanValues.put(1500, 0.0f);
@@ -58,14 +57,7 @@ public class PeakIntensityValues_6_Test extends TestCase {
 		}
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		intensityValues = null;
-		scanValues = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetRetentionTimes_1() {
 
 		int rt;

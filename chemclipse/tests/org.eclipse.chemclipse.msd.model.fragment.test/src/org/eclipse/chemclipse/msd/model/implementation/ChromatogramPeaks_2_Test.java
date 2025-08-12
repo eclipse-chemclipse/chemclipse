@@ -12,9 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.msd.model.core.PeaksMSD;
+import org.junit.Before;
+import org.junit.Test;
 
 public class ChromatogramPeaks_2_Test extends ChromatogramPeaksTestCase {
 
@@ -22,7 +28,8 @@ public class ChromatogramPeaks_2_Test extends ChromatogramPeaksTestCase {
 	private IPeakMSD peak;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		peaks = new PeaksMSD();
@@ -31,41 +38,41 @@ public class ChromatogramPeaks_2_Test extends ChromatogramPeaksTestCase {
 		peaks.addPeak(getPeak3());
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testSize_1() {
 
 		assertEquals(3, peaks.getPeaks().size());
 	}
 
+	@Test
 	public void testGetPeak_1() {
 
 		peak = peaks.getPeak(1);
 		assertTrue(peak.equals(getPeak1()));
 	}
 
+	@Test
 	public void testGetPeak_2() {
 
 		peak = peaks.getPeak(2);
 		assertTrue(peak.equals(getPeak2()));
 	}
 
+	@Test
 	public void testGetPeak_3() {
 
 		peak = peaks.getPeak(3);
 		assertTrue(peak.equals(getPeak3()));
 	}
 
+	@Test
 	public void testGetPeak_4() {
 
 		peak = peaks.getPeak(0);
 		assertNull(peak);
 	}
 
+	@Test
 	public void testGetPeak_5() {
 
 		peak = peaks.getPeak(4);

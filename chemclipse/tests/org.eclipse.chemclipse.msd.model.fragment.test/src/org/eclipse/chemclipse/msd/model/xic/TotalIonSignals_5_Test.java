@@ -12,36 +12,26 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignals;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class TotalIonSignals_5_Test {
 
-public class TotalIonSignals_5_Test extends TestCase {
+	private ITotalScanSignals signals = new TotalScanSignals(0);
 
-	private ITotalScanSignals signals;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		signals = new TotalScanSignals(0);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testSize_1() {
 
 		assertEquals("size", 0, signals.size());
 	}
 
+	@Test
 	public void testGetMinMax_1() {
 
-		assertEquals("max signal", 0.0f, signals.getMaxSignal());
-		assertEquals("min signal", 0.0f, signals.getMinSignal());
+		assertEquals("max signal", 0.0f, signals.getMaxSignal(), 0);
+		assertEquals("min signal", 0.0f, signals.getMinSignal(), 0);
 	}
 }

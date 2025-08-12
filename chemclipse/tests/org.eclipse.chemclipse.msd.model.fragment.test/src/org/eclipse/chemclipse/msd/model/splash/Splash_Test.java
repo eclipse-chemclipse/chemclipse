@@ -12,32 +12,28 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.splash;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.VendorMassSpectrum;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class Splash_Test extends TestCase {
+public class Splash_Test {
 
 	IRegularMassSpectrum massSpectrum;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		massSpectrum = new VendorMassSpectrum();
 		massSpectrum.addIon(new Ion(100, 1));
 		massSpectrum.addIon(new Ion(101, 2));
 		massSpectrum.addIon(new Ion(102, 3));
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testSplash() {
 
 		assertEquals("splash10-0udi-0900000000-f5bf6f6a4a1520a35d4f", new SplashFactory(massSpectrum).getSplash());

@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThrows;
 
 import java.util.Map.Entry;
@@ -22,10 +23,10 @@ import org.eclipse.chemclipse.model.implementation.PeakIntensityValues;
 import org.eclipse.chemclipse.msd.model.core.IPeakIon;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class PeakModel_2_Test extends TestCase {
+public class PeakModel_2_Test {
 
 	private IPeakModelMSD peakModel;
 	private IPeakMassSpectrum peakMaximum;
@@ -36,10 +37,9 @@ public class PeakModel_2_Test extends TestCase {
 	private float startBackgroundAbundance = 0.0f;
 	private float stopBackgroundAbundance = 0.0f;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		// ----------------------PeakMaximum
 		peakMaximum = new PeakMassSpectrum();
 		fragmentValues = new TreeMap<Float, Float>();
@@ -84,24 +84,14 @@ public class PeakModel_2_Test extends TestCase {
 		// ----------------------BackgroundValues
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		peakModel = null;
-		peakMaximum = null;
-		ion = null;
-		fragmentValues = null;
-		intensityValues = null;
-		scanValues = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testConstruct_1() {
 
 		peakModel = new PeakModelMSD(peakMaximum, intensityValues, startBackgroundAbundance, stopBackgroundAbundance);
 		assertNotNull("The construction was fine.", peakModel);
 	}
 
+	@Test
 	public void testConstruct_2() {
 
 		assertThrows(IllegalArgumentException.class, () -> {
@@ -109,6 +99,7 @@ public class PeakModel_2_Test extends TestCase {
 		});
 	}
 
+	@Test
 	public void testConstruct_3() {
 
 		assertThrows(IllegalArgumentException.class, () -> {
@@ -116,6 +107,7 @@ public class PeakModel_2_Test extends TestCase {
 		});
 	}
 
+	@Test
 	public void testConstruct_4() {
 
 		assertThrows(IllegalArgumentException.class, () -> {
@@ -123,18 +115,21 @@ public class PeakModel_2_Test extends TestCase {
 		});
 	}
 
+	@Test
 	public void testConstruct_5() {
 
 		peakModel = new PeakModelMSD(peakMaximum, intensityValues, 0, stopBackgroundAbundance);
 		assertNotNull("The construction was fine.", peakModel);
 	}
 
+	@Test
 	public void testConstruct_6() {
 
 		peakModel = new PeakModelMSD(peakMaximum, intensityValues, startBackgroundAbundance, 0);
 		assertNotNull("The construction was fine.", peakModel);
 	}
 
+	@Test
 	public void testConstruct_7() {
 
 		peakModel = new PeakModelMSD(peakMaximum, intensityValues, 0, 0);

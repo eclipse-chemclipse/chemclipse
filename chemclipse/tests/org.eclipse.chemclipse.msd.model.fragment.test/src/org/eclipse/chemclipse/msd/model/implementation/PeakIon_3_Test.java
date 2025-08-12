@@ -12,36 +12,32 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.PeakIonType;
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
-public class PeakIon_3_Test extends TestCase {
+public class PeakIon_3_Test {
 
 	private IIon ion;
 	private PeakIon peakIon;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		ion = new Ion(45.5f, 2500.4f);
 		peakIon = new PeakIon(ion);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		ion = null;
-		peakIon = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetUncertaintyFactor_1() {
 
-		assertEquals("GetUncertaintyFactor", 1.0f, peakIon.getUncertaintyFactor());
+		assertEquals("GetUncertaintyFactor", 1.0f, peakIon.getUncertaintyFactor(), 0);
 	}
 
+	@Test
 	public void testGetPeakIonType_1() {
 
 		assertEquals("GetPeakIonType", PeakIonType.NO_TYPE, peakIon.getPeakIonType());

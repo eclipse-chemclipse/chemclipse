@@ -12,53 +12,40 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignals;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class TotalIonSignals_2_Test {
 
-public class TotalIonSignals_2_Test extends TestCase {
-
-	private ITotalScanSignals signals;
-	private ITotalScanSignal signal;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		signals = null;
-		signal = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testConstructor_1() {
 
-		signals = new TotalScanSignals(0);
+		ITotalScanSignals signals = new TotalScanSignals(0);
 		assertEquals("StartScan", 0, signals.getStartScan());
 		assertEquals("StopScan", 0, signals.getStopScan());
 		int scan;
 		scan = signals.getStartScan();
-		signal = signals.getTotalScanSignal(scan);
+		ITotalScanSignal signal = signals.getTotalScanSignal(scan);
 		assertNull("Null", signal);
 		scan = signals.getStopScan();
 		signal = signals.getTotalScanSignal(scan);
 		assertNull("Null", signal);
 	}
 
+	@Test
 	public void testConstructor_2() {
 
-		signals = new TotalScanSignals(-1, -1);
+		ITotalScanSignals signals = new TotalScanSignals(-1, -1);
 		assertEquals("StartScan", 0, signals.getStartScan());
 		assertEquals("StopScan", 0, signals.getStopScan());
 		int scan;
 		scan = signals.getStartScan();
-		signal = signals.getTotalScanSignal(scan);
+		ITotalScanSignal signal = signals.getTotalScanSignal(scan);
 		assertNull("Null", signal);
 		scan = signals.getStopScan();
 		signal = signals.getTotalScanSignal(scan);

@@ -12,72 +12,69 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class RegularLibraryMassSpectrum_1_Test extends TestCase {
+public class RegularLibraryMassSpectrum_1_Test {
 
-	private IRegularLibraryMassSpectrum massSpectrum;
+	private IRegularLibraryMassSpectrum massSpectrum = new RegularLibraryMassSpectrum();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		massSpectrum = new RegularLibraryMassSpectrum();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectrum = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetName_1() {
 
 		assertEquals("Name", "", massSpectrum.getLibraryInformation().getName());
 	}
 
+	@Test
 	public void testGetName_2() {
 
 		massSpectrum.getLibraryInformation().setName("Philip");
 		assertEquals("Name", "Philip", massSpectrum.getLibraryInformation().getName());
 	}
 
+	@Test
 	public void testGetName_3() {
 
 		massSpectrum.getLibraryInformation().setName(null);
 		assertEquals("Name", "", massSpectrum.getLibraryInformation().getName());
 	}
 
+	@Test
 	public void testGetComments_1() {
 
 		assertEquals("Comments", "", massSpectrum.getLibraryInformation().getComments());
 	}
 
+	@Test
 	public void testGetComments_2() {
 
 		massSpectrum.getLibraryInformation().setComments("Here are the test comments");
 		assertEquals("Comments", "Here are the test comments", massSpectrum.getLibraryInformation().getComments());
 	}
 
+	@Test
 	public void testGetComments_3() {
 
 		massSpectrum.getLibraryInformation().setComments(null);
 		assertEquals("Comments", "", massSpectrum.getLibraryInformation().getComments());
 	}
 
+	@Test
 	public void testGetCasNumber_1() {
 
 		assertEquals("CAS Number", "", massSpectrum.getLibraryInformation().getCasNumber());
 	}
 
+	@Test
 	public void testGetCasNumber_2() {
 
 		massSpectrum.getLibraryInformation().setCasNumber("56-38-XX");
 		assertEquals("CAS Number", "56-38-XX", massSpectrum.getLibraryInformation().getCasNumber());
 	}
 
+	@Test
 	public void testGetCasNumber_3() {
 
 		massSpectrum.getLibraryInformation().setCasNumber(null);

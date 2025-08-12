@@ -12,60 +12,55 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class SupplierMassSpectrum_1_Test extends TestCase {
+public class SupplierMassSpectrum_1_Test {
 
-	private IRegularMassSpectrum massSpectrum;
+	private IRegularMassSpectrum massSpectrum = new VendorMassSpectrum();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		massSpectrum = new VendorMassSpectrum();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectrum = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testRetentionTime_1() {
 
 		assertEquals("Retention Time", 0, massSpectrum.getRetentionTime());
 	}
 
+	@Test
 	public void testRetentionTime_2() {
 
 		massSpectrum.setRetentionTime(5000);
 		assertEquals("Retention Time", 5000, massSpectrum.getRetentionTime());
 	}
 
+	@Test
 	public void testRetentionIndex_1() {
 
-		assertEquals("Retention Index", 0.0f, massSpectrum.getRetentionIndex());
+		assertEquals("Retention Index", 0.0f, massSpectrum.getRetentionIndex(), 0);
 	}
 
+	@Test
 	public void testRetentionIndex_2() {
 
 		massSpectrum.setRetentionIndex(56.3f);
-		assertEquals("Retention Index", 56.3f, massSpectrum.getRetentionIndex());
+		assertEquals("Retention Index", 56.3f, massSpectrum.getRetentionIndex(), 0);
 	}
 
+	@Test
 	public void testRetentionIndex_3() {
 
 		massSpectrum.setRetentionIndex(-1.0f);
-		assertEquals("Retention Index", 0.0f, massSpectrum.getRetentionIndex());
+		assertEquals("Retention Index", 0.0f, massSpectrum.getRetentionIndex(), 0);
 	}
 
+	@Test
 	public void testScanNumber_1() {
 
 		assertEquals("Scan Number", 0, massSpectrum.getScanNumber());
 	}
 
+	@Test
 	public void testScanNumber_2() {
 
 		massSpectrum.setScanNumber(78);

@@ -12,22 +12,22 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests adjustTotalSignal(float totalSignal).
- * 
- * @author eselmeister
  */
-public class MassSpectrum_23_Test extends TestCase {
+public class MassSpectrum_23_Test {
 
 	private ScanMSD massSpectrum;
 	private Ion ion;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		massSpectrum = new ScanMSD();
 		ion = new Ion(45.5f, 78500.2f);
 		massSpectrum.addIon(ion);
@@ -41,19 +41,13 @@ public class MassSpectrum_23_Test extends TestCase {
 		massSpectrum.addIon(ion);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectrum = null;
-		ion = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetTotalSignal_1() {
 
-		assertEquals("getTotalSignal", 1242021.9f, massSpectrum.getTotalSignal());
+		assertEquals("getTotalSignal", 1242021.9f, massSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalSignal_2() {
 
 		/*
@@ -61,9 +55,10 @@ public class MassSpectrum_23_Test extends TestCase {
 		 * result total signal.
 		 */
 		massSpectrum.adjustTotalSignal(1000000.0f);
-		assertEquals("getTotalSignal", 1000000.0f, massSpectrum.getTotalSignal());
+		assertEquals("getTotalSignal", 1000000.0f, massSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalSignal_3() {
 
 		/*
@@ -71,9 +66,10 @@ public class MassSpectrum_23_Test extends TestCase {
 		 * result total signal.
 		 */
 		massSpectrum.adjustTotalSignal(0.0f);
-		assertEquals("getTotalSignal", 1242021.9f, massSpectrum.getTotalSignal());
+		assertEquals("getTotalSignal", 1242021.9f, massSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalSignal_4() {
 
 		/*
@@ -81,9 +77,10 @@ public class MassSpectrum_23_Test extends TestCase {
 		 * result total signal.
 		 */
 		massSpectrum.adjustTotalSignal(Float.NaN);
-		assertEquals("getTotalSignal", 1242021.9f, massSpectrum.getTotalSignal());
+		assertEquals("getTotalSignal", 1242021.9f, massSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalSignal_5() {
 
 		/*
@@ -91,9 +88,10 @@ public class MassSpectrum_23_Test extends TestCase {
 		 * result total signal.
 		 */
 		massSpectrum.adjustTotalSignal(Float.POSITIVE_INFINITY);
-		assertEquals("getTotalSignal", 1242021.9f, massSpectrum.getTotalSignal());
+		assertEquals("getTotalSignal", 1242021.9f, massSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalSignal_6() {
 
 		/*
@@ -101,9 +99,10 @@ public class MassSpectrum_23_Test extends TestCase {
 		 * result total signal.
 		 */
 		massSpectrum.adjustTotalSignal(10.0f);
-		assertEquals("getTotalSignal", 9.999999f, massSpectrum.getTotalSignal());
+		assertEquals("getTotalSignal", 9.999999f, massSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalSignal_7() {
 
 		/*
@@ -111,9 +110,10 @@ public class MassSpectrum_23_Test extends TestCase {
 		 * result total signal.
 		 */
 		massSpectrum.adjustTotalSignal(5000000.0f);
-		assertEquals("getTotalSignal", 5000000.0f, massSpectrum.getTotalSignal());
+		assertEquals("getTotalSignal", 5000000.0f, massSpectrum.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testGetTotalSignal_8() {
 
 		/*
@@ -121,6 +121,6 @@ public class MassSpectrum_23_Test extends TestCase {
 		 * result total signal.
 		 */
 		massSpectrum.adjustTotalSignal(-1.0f);
-		assertEquals("getTotalSignal", 1242021.9f, massSpectrum.getTotalSignal());
+		assertEquals("getTotalSignal", 1242021.9f, massSpectrum.getTotalSignal(), 0);
 	}
 }

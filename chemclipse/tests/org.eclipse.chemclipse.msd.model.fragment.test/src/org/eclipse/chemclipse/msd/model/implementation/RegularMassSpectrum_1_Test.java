@@ -12,55 +12,48 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.msd.model.core.Polarity;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class RegularMassSpectrum_1_Test {
 
-public class RegularMassSpectrum_1_Test extends TestCase {
+	private IRegularMassSpectrum massSpectrum = new RegularMassSpectrum();
 
-	private IRegularMassSpectrum massSpectrum;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		massSpectrum = new RegularMassSpectrum();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectrum = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
 		assertEquals(1, massSpectrum.getMassSpectrometer());
 	}
 
+	@Test
 	public void test_2() {
 
 		assertEquals(MassSpectrumType.CENTROID, massSpectrum.getMassSpectrumType());
 	}
 
+	@Test
 	public void test_3() {
 
 		assertEquals("Centroid", massSpectrum.getMassSpectrumType().label());
 	}
 
+	@Test
 	public void test_4() {
 
 		assertEquals(1, massSpectrum.getTimeSegmentId());
 	}
 
+	@Test
 	public void test_5() {
 
 		assertEquals(1, massSpectrum.getCycleNumber());
 	}
 
+	@Test
 	public void test6() {
 
 		assertEquals(Polarity.NONE, massSpectrum.getPolarity());

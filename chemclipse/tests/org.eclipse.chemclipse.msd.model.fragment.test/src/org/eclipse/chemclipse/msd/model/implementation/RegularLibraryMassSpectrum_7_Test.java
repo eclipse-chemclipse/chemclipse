@@ -12,19 +12,21 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.Polarity;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class RegularLibraryMassSpectrum_7_Test extends TestCase {
+public class RegularLibraryMassSpectrum_7_Test {
 
 	private IRegularLibraryMassSpectrum massSpectrum;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		massSpectrum = new RegularLibraryMassSpectrum();
 		massSpectrum.putProperty(IRegularLibraryMassSpectrum.PROPERTY_PRECURSOR_TYPE, "[M+Na]+");
 		massSpectrum.setPrecursorIon(728.3822d);
@@ -33,48 +35,49 @@ public class RegularLibraryMassSpectrum_7_Test extends TestCase {
 		massSpectrum.putProperty(IRegularLibraryMassSpectrum.PROPERTY_INSTRUMENT_NAME, "Agilent QTOF 6530");
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectrum = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertNull(massSpectrum.getPrecursorType());
 	}
 
+	@Test
 	public void test2() {
 
-		assertEquals(728.3822d, massSpectrum.getPrecursorIon());
+		assertEquals(728.3822d, massSpectrum.getPrecursorIon(), 0);
 	}
 
+	@Test
 	public void test3() {
 
-		assertEquals(705.39243072d, massSpectrum.getNeutralMass());
+		assertEquals(705.39243072d, massSpectrum.getNeutralMass(), 0);
 	}
 
+	@Test
 	public void test4() {
 
 		assertEquals(Polarity.POSITIVE, massSpectrum.getPolarity());
 	}
 
+	@Test
 	public void test5() {
 
 		assertEquals(3, massSpectrum.getPropertyKeySet().size());
 	}
 
+	@Test
 	public void test6() {
 
 		assertEquals("[M+Na]+", massSpectrum.getProperty(IRegularLibraryMassSpectrum.PROPERTY_PRECURSOR_TYPE));
 	}
 
+	@Test
 	public void test7() {
 
 		assertEquals("30", massSpectrum.getProperty(IRegularLibraryMassSpectrum.PROPERTY_COLLISION_ENERGY));
 	}
 
+	@Test
 	public void test8() {
 
 		assertEquals("Agilent QTOF 6530", massSpectrum.getProperty(IRegularLibraryMassSpectrum.PROPERTY_INSTRUMENT_NAME));

@@ -12,27 +12,26 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.msd.model.core.IIon;
-
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test the interface IChromatogramOverview with 1 scan.
- * 
- * @author eselmeister
  */
-public class ChromatogramOverview_3_Test extends TestCase {
+public class ChromatogramOverview_3_Test {
 
 	private ChromatogramMSD chrom;
 	private IChromatogramOverview chromatogram;
 	private VendorMassSpectrum supplierMassSpectrum;
 	private IIon ion;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		chrom = new ChromatogramMSD();
 		// ------------------------------Scan 1 - 200
 		for(int i = 1; i <= 200; i++) {
@@ -48,46 +47,43 @@ public class ChromatogramOverview_3_Test extends TestCase {
 		chromatogram.recalculateRetentionTimes();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chrom = null;
-		chromatogram = null;
-		supplierMassSpectrum = null;
-		ion = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetScanNumber_1() {
 
 		assertEquals("ScanNumber", 5, chromatogram.getScanNumber(12736));
 	}
 
+	@Test
 	public void testGetScanNumber_2() {
 
 		assertEquals("ScanNumber", 1, chromatogram.getScanNumber(5501));
 	}
 
+	@Test
 	public void testGetScanNumber_3() {
 
 		assertEquals("ScanNumber", 1, chromatogram.getScanNumber(5500));
 	}
 
+	@Test
 	public void testGetScanNumber_4() {
 
 		assertEquals("ScanNumber", 0, chromatogram.getScanNumber(5499));
 	}
 
+	@Test
 	public void testGetScanNumber_5() {
 
 		assertEquals("ScanNumber", 0, chromatogram.getScanNumber(0));
 	}
 
+	@Test
 	public void testGetScanNumber_6() {
 
 		assertEquals("ScanNumber", 0, chromatogram.getScanNumber(-1));
 	}
 
+	@Test
 	public void testGetScanNumber_7() {
 
 		assertEquals("stopRetentionTime", 304000, chromatogram.getStopRetentionTime());
@@ -95,21 +91,25 @@ public class ChromatogramOverview_3_Test extends TestCase {
 		assertEquals("ScanNumber", 200, chromatogram.getScanNumber(304000));
 	}
 
+	@Test
 	public void testGetScanNumber_9() {
 
 		assertEquals("ScanNumber", 81, chromatogram.getScanNumber(125637));
 	}
 
+	@Test
 	public void testGetScanNumber_10() {
 
 		assertEquals("ScanNumber", 142, chromatogram.getScanNumber(218499));
 	}
 
+	@Test
 	public void testGetScanNumber_11() {
 
 		assertEquals("ScanNumber", 29, chromatogram.getScanNumber(48000));
 	}
 
+	@Test
 	public void testGetScanNumber_12() {
 
 		assertEquals("ScanNumber", 196, chromatogram.getScanNumber(299000));

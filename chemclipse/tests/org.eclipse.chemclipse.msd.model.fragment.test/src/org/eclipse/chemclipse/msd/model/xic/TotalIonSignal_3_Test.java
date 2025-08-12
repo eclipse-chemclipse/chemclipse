@@ -12,46 +12,41 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.TotalScanSignal;
-
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test all methods of TotalIonSignal.
- * 
- * @author eselmeister
  */
-public class TotalIonSignal_3_Test extends TestCase {
+public class TotalIonSignal_3_Test {
 
 	private ITotalScanSignal totalIonSignal;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		totalIonSignal = new TotalScanSignal(5720, 1245.5f, 25476.45f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		totalIonSignal = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetRetentionTime_1() {
 
 		assertEquals("getRetentionTime", 5720, totalIonSignal.getRetentionTime());
 	}
 
+	@Test
 	public void testGetRetentionIndex_1() {
 
-		assertEquals("getRetentionIndex", 1245.5f, totalIonSignal.getRetentionIndex());
+		assertEquals("getRetentionIndex", 1245.5f, totalIonSignal.getRetentionIndex(), 0);
 	}
 
+	@Test
 	public void testGetTotalSignal_1() {
 
-		assertEquals("getTotalSignal", 25476.45f, totalIonSignal.getTotalSignal());
+		assertEquals("getTotalSignal", 25476.45f, totalIonSignal.getTotalSignal(), 0);
 	}
 }

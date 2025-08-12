@@ -12,52 +12,44 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignals;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class TotalIonSignals_3_Test {
 
-public class TotalIonSignals_3_Test extends TestCase {
+	private IChromatogramMSD chromatogram = new ChromatogramMSD();
 
-	private ITotalScanSignals signals;
-	private IChromatogramMSD chromatogram;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		chromatogram = new ChromatogramMSD();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testConstruct_1() {
 
-		signals = new TotalScanSignals(10, chromatogram);
+		ITotalScanSignals signals = new TotalScanSignals(10, chromatogram);
 		assertNotNull("getChromatogram", signals.getChromatogram());
 	}
 
+	@Test
 	public void testConstruct_2() {
 
-		signals = new TotalScanSignals(10, null);
+		ITotalScanSignals signals = new TotalScanSignals(10, null);
 		assertNull("getChromatogram", signals.getChromatogram());
 	}
 
+	@Test
 	public void testConstruct_3() {
 
-		signals = new TotalScanSignals(20, 40, chromatogram);
+		ITotalScanSignals signals = new TotalScanSignals(20, 40, chromatogram);
 		assertNotNull("getChromatogram", signals.getChromatogram());
 	}
 
+	@Test
 	public void testConstruct_4() {
 
-		signals = new TotalScanSignals(20, 40, null);
+		ITotalScanSignals signals = new TotalScanSignals(20, 40, null);
 		assertNull("getChromatogram", signals.getChromatogram());
 	}
 }

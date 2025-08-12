@@ -12,58 +12,45 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Tests the class ExtractedIonSignal.
- * 
- * @author eselmeister
  */
-public class ExtractedIonSignal_4_Test extends TestCase {
-
-	private IExtractedIonSignal extractedIonSignal;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
+public class ExtractedIonSignal_4_Test {
 
 	/**
 	 * Test setup with start and stop ion = 1 and abundance 1000.
 	 */
+	@Test
 	public void testSetup_1() {
 
-		extractedIonSignal = new ExtractedIonSignal(1, 1);
+		IExtractedIonSignal extractedIonSignal = new ExtractedIonSignal(1, 1);
 		IIon ion = new Ion(1.0f, 1000.0f);
 		extractedIonSignal.setAbundance(ion);
-		assertEquals("Abundance", 0.0f, extractedIonSignal.getAbundance(0));
-		assertEquals("Abundance", 1000.0f, extractedIonSignal.getAbundance(1));
-		assertEquals("Abundance", 0.0f, extractedIonSignal.getAbundance(2));
+		assertEquals("Abundance", 0.0f, extractedIonSignal.getAbundance(0), 0);
+		assertEquals("Abundance", 1000.0f, extractedIonSignal.getAbundance(1), 0);
+		assertEquals("Abundance", 0.0f, extractedIonSignal.getAbundance(2), 0);
 	}
 
 	/**
 	 * Test setup with start and stop ion = 1 and abundance 1000.
 	 */
+	@Test
 	public void testSetup_2() {
 
-		extractedIonSignal = new ExtractedIonSignal(1, 1);
+		IExtractedIonSignal extractedIonSignal = new ExtractedIonSignal(1, 1);
 		IIon ion = new Ion(1.0f, 1000.0f);
 		extractedIonSignal.setAbundance(ion);
 		extractedIonSignal.setAbundance(0, 2586.4f, true);
 		extractedIonSignal.setAbundance(1, 2586.4f, true);
 		extractedIonSignal.setAbundance(2, 2586.4f, true);
-		assertEquals("Abundance", 0.0f, extractedIonSignal.getAbundance(0));
-		assertEquals("Abundance", 2586.4f, extractedIonSignal.getAbundance(1));
-		assertEquals("Abundance", 0.0f, extractedIonSignal.getAbundance(2));
+		assertEquals("Abundance", 0.0f, extractedIonSignal.getAbundance(0), 0);
+		assertEquals("Abundance", 2586.4f, extractedIonSignal.getAbundance(1), 0);
+		assertEquals("Abundance", 0.0f, extractedIonSignal.getAbundance(2), 0);
 	}
 }

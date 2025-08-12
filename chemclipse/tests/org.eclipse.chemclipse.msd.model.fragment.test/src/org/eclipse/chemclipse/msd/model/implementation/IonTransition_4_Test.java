@@ -12,34 +12,31 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertFalse;
+
 import org.eclipse.chemclipse.msd.model.core.IIonTransition;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class IonTransition_4_Test extends TestCase {
+public class IonTransition_4_Test {
 
 	private IIonTransition ionTransition1;
 	private IIonTransition ionTransition2;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		ionTransition1 = new IonTransition(120.2d, 121.3d, 88.5d, 87.4d, 7.0d, 1.0, 1.2, 0);
 		ionTransition2 = new IonTransition(120.2d, 121.3d, 88.5d, 87.4d, 7.0d, 1.2, 1.3, 0);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testEquals_1() {
 
 		assertFalse(ionTransition1.equals(ionTransition2));
 	}
 
+	@Test
 	public void testEquals_2() {
 
 		assertFalse(ionTransition2.equals(ionTransition1));

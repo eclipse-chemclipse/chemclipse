@@ -12,12 +12,28 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class PeakMassSpectrum_4_Test extends TestCase {
+import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
+import org.junit.Before;
+import org.junit.Test;
 
+public class PeakMassSpectrum_4_Test {
+
+	private IPeakMassSpectrum peakMassSpectrum;
+
+	@Before
+	public void setUp() {
+
+		peakMassSpectrum = new PeakMassSpectrum();
+		for(int i = 0; i < 5; i++) {
+			peakMassSpectrum.addIon(new Ion(i, 100));
+		}
+	}
+
+	@Test
 	public void testGetNumberOfIons_1() {
 
-		// TODO: implement
+		assertEquals(5, peakMassSpectrum.getNumberOfIons());
 	}
 }

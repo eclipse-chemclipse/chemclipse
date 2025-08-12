@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,18 +21,17 @@ import org.eclipse.chemclipse.model.signals.ExtendedTotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignals;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class TotalIonSignals_10_Test extends TestCase {
+public class TotalIonSignals_10_Test {
 
 	private ITotalScanSignals signals;
 	private ITotalScanSignal signal;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		/*
 		 * Ok, we add some negative value here, but
 		 */
@@ -54,38 +55,33 @@ public class TotalIonSignals_10_Test extends TestCase {
 		}
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		signals = null;
-		signal = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testSetNegativeTotalSignalsToZero_1() {
 
 		signals.setNegativeTotalSignalsToZero();
 		float min = signals.getMinSignal();
 		float max = signals.getMaxSignal();
-		assertEquals("Min", 0.0f, min);
-		assertEquals("Max", 5500.0f, max);
+		assertEquals("Min", 0.0f, min, 0);
+		assertEquals("Max", 5500.0f, max, 0);
 	}
 
+	@Test
 	public void testSetPositiveTotalSignalsToZero_1() {
 
 		signals.setPositiveTotalSignalsToZero();
 		float min = signals.getMinSignal();
 		float max = signals.getMaxSignal();
-		assertEquals("Min", -24500.0f, min);
-		assertEquals("Max", 0.0f, max);
+		assertEquals("Min", -24500.0f, min, 0);
+		assertEquals("Max", 0.0f, max, 0);
 	}
 
+	@Test
 	public void testTotalSignalsAsAbsoluteValues_1() {
 
 		signals.setTotalSignalsAsAbsoluteValues();
 		float min = signals.getMinSignal();
 		float max = signals.getMaxSignal();
-		assertEquals("Min", 20.0f, min);
-		assertEquals("Max", 24500.0f, max);
+		assertEquals("Min", 20.0f, min, 0);
+		assertEquals("Max", 24500.0f, max, 0);
 	}
 }

@@ -12,66 +12,68 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Equals test.
  * 
  * @author Philip Wenig
  */
-public class Ion_4_Test extends TestCase {
+public class Ion_4_Test {
 
 	private Ion ion1;
 	private Ion ion2;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		ion1 = new Ion(2.2f, 4527.3f);
 		ion2 = new Ion(5.2f, 4756.3f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		ion1 = null;
-		ion2 = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testEquals_1() {
 
 		assertNotEquals("equals", ion1, ion2);
 	}
 
+	@Test
 	public void testEquals_2() {
 
 		assertNotEquals("equals", ion2, ion1);
 	}
 
+	@Test
 	public void testEquals_3() {
 
 		assertEquals("equals", ion1, ion1);
 	}
 
+	@Test
 	public void testEquals_4() {
 
 		assertNotNull("equals", ion1);
 	}
 
+	@Test
 	public void testEquals_5() {
 
 		assertNotEquals("equals", ion2, new Object());
 	}
 
+	@Test
 	public void testCompareTo_1() {
 
 		assertTrue(-1 >= ion1.compareTo(ion2));
 	}
 
+	@Test
 	public void testCompareTo_2() {
 
 		assertTrue(1 <= ion2.compareTo(ion1));

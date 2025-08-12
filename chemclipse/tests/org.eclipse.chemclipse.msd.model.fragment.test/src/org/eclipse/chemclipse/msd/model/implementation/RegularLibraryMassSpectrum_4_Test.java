@@ -12,60 +12,62 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class RegularLibraryMassSpectrum_4_Test extends TestCase {
+public class RegularLibraryMassSpectrum_4_Test {
 
 	private IRegularLibraryMassSpectrum massSpectrum;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		massSpectrum = new RegularLibraryMassSpectrum();
 		massSpectrum.setPrecursorIon(127.764d);
 		massSpectrum.setNeutralMass(127.764d);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectrum = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertNull(massSpectrum.getPrecursorType());
 	}
 
+	@Test
 	public void test2() {
 
-		assertEquals(127.764d, massSpectrum.getPrecursorIon());
+		assertEquals(127.764d, massSpectrum.getPrecursorIon(), 0);
 	}
 
+	@Test
 	public void test3() {
 
-		assertEquals(127.764d, massSpectrum.getNeutralMass());
+		assertEquals(127.764d, massSpectrum.getNeutralMass(), 0);
 	}
 
+	@Test
 	public void test4() {
 
 		assertEquals(0, massSpectrum.getPropertyKeySet().size());
 	}
 
+	@Test
 	public void test5() {
 
 		assertEquals("", massSpectrum.getProperty(IRegularLibraryMassSpectrum.PROPERTY_PRECURSOR_TYPE));
 	}
 
+	@Test
 	public void test6() {
 
 		assertEquals("", massSpectrum.getProperty(IRegularLibraryMassSpectrum.PROPERTY_COLLISION_ENERGY));
 	}
 
+	@Test
 	public void test7() {
 
 		assertEquals("", massSpectrum.getProperty(IRegularLibraryMassSpectrum.PROPERTY_INSTRUMENT_NAME));

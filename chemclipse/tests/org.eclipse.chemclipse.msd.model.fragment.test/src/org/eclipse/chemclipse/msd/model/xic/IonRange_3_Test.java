@@ -12,59 +12,57 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests the class IonRange concerning equals, hashCode and toString.
- * 
- * @author eselmeister
  */
-public class IonRange_3_Test extends TestCase {
+public class IonRange_3_Test {
 
 	private IIonRange ionRange1;
 	private IIonRange ionRange2;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		ionRange1 = new IonRange(3, 5);
 		ionRange2 = new IonRange(1, 5);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		ionRange1 = null;
-		ionRange2 = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testEquals_1() {
 
 		assertFalse(ionRange1.equals(ionRange2));
 	}
 
+	@Test
 	public void testEquals_2() {
 
 		assertFalse(ionRange2.equals(ionRange1));
 	}
 
+	@Test
 	public void testHashCode_1() {
 
 		assertFalse(ionRange1.hashCode() == ionRange2.hashCode());
 	}
 
+	@Test
 	public void testHashCode_2() {
 
 		assertFalse(ionRange2.hashCode() == ionRange1.hashCode());
 	}
 
+	@Test
 	public void testToString_1() {
 
 		assertFalse(ionRange1.toString().equals(ionRange2.toString()));
 	}
 
+	@Test
 	public void testToString_2() {
 
 		assertFalse(ionRange2.toString().equals(ionRange1.toString()));

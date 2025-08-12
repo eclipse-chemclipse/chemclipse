@@ -12,30 +12,29 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import java.util.TreeMap;
+import static org.junit.Assert.assertEquals;
+
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import org.eclipse.chemclipse.model.core.IPeakIntensityValues;
 import org.eclipse.chemclipse.model.implementation.PeakIntensityValues;
-
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test the peak intensity values.<br/>
  * Make sure that the limit IPeakIntensityValues.MAX_INTENSITY is implemented
  * correctly.
- * 
- * @author eselmeister
  */
-public class PeakIntensityValues_7_Test extends TestCase {
+public class PeakIntensityValues_7_Test {
 
 	private PeakIntensityValues intensityValues;
 	private TreeMap<Integer, Float> scanValues;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		intensityValues = new PeakIntensityValues();
 		scanValues = new TreeMap<Integer, Float>();
 		scanValues.put(1500, 0.0f);
@@ -59,36 +58,33 @@ public class PeakIntensityValues_7_Test extends TestCase {
 		intensityValues.normalize();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		intensityValues = null;
-		scanValues = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetIntensityValue_1() {
 
-		assertEquals(IPeakIntensityValues.MAX_INTENSITY, intensityValues.getIntensityValue(9500).getValue());
+		assertEquals(IPeakIntensityValues.MAX_INTENSITY, intensityValues.getIntensityValue(9500).getValue(), 0);
 	}
 
+	@Test
 	public void testGetIntensityValue_2() {
 
-		assertEquals(0.0f, intensityValues.getIntensityValue(1500).getValue());
+		assertEquals(0.0f, intensityValues.getIntensityValue(1500).getValue(), 0);
 	}
 
+	@Test
 	public void testGetIntensityValue_3() {
 
-		assertEquals(4.0f, intensityValues.getIntensityValue(15500).getValue());
+		assertEquals(4.0f, intensityValues.getIntensityValue(15500).getValue(), 0);
 	}
 
+	@Test
 	public void testGetIntensityValue_4() {
 
-		assertEquals(15.000001f, intensityValues.getIntensityValue(4500).getValue());
+		assertEquals(15.000001f, intensityValues.getIntensityValue(4500).getValue(), 0);
 	}
 
+	@Test
 	public void testGetIntensityValue_5() {
 
-		assertEquals(43.0f, intensityValues.getIntensityValue(12500).getValue());
+		assertEquals(43.0f, intensityValues.getIntensityValue(12500).getValue(), 0);
 	}
 }

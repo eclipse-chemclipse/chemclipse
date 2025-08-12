@@ -12,16 +12,18 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class ExtractedIonSignal_5_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class ExtractedIonSignal_5_Test {
 
 	private IExtractedIonSignal extractedIonSignal;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		extractedIonSignal = new ExtractedIonSignal(18, 28);
 		extractedIonSignal.setAbundance(18, 5689.8f);
 		extractedIonSignal.setAbundance(19, 829.83f);
@@ -36,39 +38,39 @@ public class ExtractedIonSignal_5_Test extends TestCase {
 		extractedIonSignal.setAbundance(28, 568.89f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testSize_1() {
 
 		assertEquals(11, extractedIonSignal.getNumberOfIonValues());
 	}
 
+	@Test
 	public void testSize_2() {
 
-		assertEquals(21531.71f, extractedIonSignal.getTotalSignal());
+		assertEquals(21531.71f, extractedIonSignal.getTotalSignal(), 0);
 	}
 
+	@Test
 	public void testSize_3() {
 
-		assertEquals(113.9f, extractedIonSignal.getMinIntensity());
+		assertEquals(113.9f, extractedIonSignal.getMinIntensity(), 0);
 	}
 
+	@Test
 	public void testSize_4() {
 
-		assertEquals(8938.2f, extractedIonSignal.getMaxIntensity());
+		assertEquals(8938.2f, extractedIonSignal.getMaxIntensity(), 0);
 	}
 
+	@Test
 	public void testSize_5() {
 
-		assertEquals(829.1f, extractedIonSignal.getMedianIntensity());
+		assertEquals(829.1f, extractedIonSignal.getMedianIntensity(), 0);
 	}
 
+	@Test
 	public void testSize_6() {
 
-		assertEquals(24, extractedIonSignal.getIonMaxIntensity());
+		assertEquals(24, extractedIonSignal.getIonMaxIntensity(), 0);
 	}
 }

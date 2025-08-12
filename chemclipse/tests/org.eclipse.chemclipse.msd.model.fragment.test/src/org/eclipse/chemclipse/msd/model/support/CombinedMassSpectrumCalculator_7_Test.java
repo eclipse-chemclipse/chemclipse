@@ -12,20 +12,21 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.support;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.support.CalculationType;
 import org.eclipse.chemclipse.msd.model.core.ICombinedMassSpectrum;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class CombinedMassSpectrumCalculator_7_Test extends TestCase {
+public class CombinedMassSpectrumCalculator_7_Test {
 
 	private static final float NORMALIZATION_FACTOR = 1000.0f;
 	private ICombinedMassSpectrum noiseMassSpectrum;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		CombinedMassSpectrumCalculator combinedMassSpectrumCalculator = new CombinedMassSpectrumCalculator();
 		combinedMassSpectrumCalculator.addIon(18.0f, 200.0f);
 		combinedMassSpectrumCalculator.addIon(28.0f, 320.0f);
@@ -33,50 +34,50 @@ public class CombinedMassSpectrumCalculator_7_Test extends TestCase {
 		combinedMassSpectrumCalculator.addIon(103.0f, 5000.0f);
 		combinedMassSpectrumCalculator.addIon(104.0f, 20500.0f);
 		combinedMassSpectrumCalculator.addIon(155.0f, 18000.0f);
-		//
+
 		noiseMassSpectrum = combinedMassSpectrumCalculator.createMassSpectrum(CalculationType.SUM);
 		noiseMassSpectrum.normalize(NORMALIZATION_FACTOR);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testValues_1() {
 
 		int ion = 18;
-		assertEquals(9.756098f, noiseMassSpectrum.getIon(ion).getAbundance());
+		assertEquals(9.756098f, noiseMassSpectrum.getIon(ion).getAbundance(), 0);
 	}
 
+	@Test
 	public void testValues_2() {
 
 		int ion = 28;
-		assertEquals(15.609756f, noiseMassSpectrum.getIon(ion).getAbundance());
+		assertEquals(15.609756f, noiseMassSpectrum.getIon(ion).getAbundance(), 0);
 	}
 
+	@Test
 	public void testValues_3() {
 
 		int ion = 43;
-		assertEquals(19.512196f, noiseMassSpectrum.getIon(ion).getAbundance());
+		assertEquals(19.512196f, noiseMassSpectrum.getIon(ion).getAbundance(), 0);
 	}
 
+	@Test
 	public void testValues_4() {
 
 		int ion = 103;
-		assertEquals(243.90244f, noiseMassSpectrum.getIon(ion).getAbundance());
+		assertEquals(243.90244f, noiseMassSpectrum.getIon(ion).getAbundance(), 0);
 	}
 
+	@Test
 	public void testValues_5() {
 
 		int ion = 104;
-		assertEquals(1000.0f, noiseMassSpectrum.getIon(ion).getAbundance());
+		assertEquals(1000.0f, noiseMassSpectrum.getIon(ion).getAbundance(), 0);
 	}
 
+	@Test
 	public void testValues_6() {
 
 		int ion = 155;
-		assertEquals(878.04877f, noiseMassSpectrum.getIon(ion).getAbundance());
+		assertEquals(878.04877f, noiseMassSpectrum.getIon(ion).getAbundance(), 0);
 	}
 }

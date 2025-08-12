@@ -12,9 +12,14 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.msd.model.core.PeaksMSD;
+import org.junit.Before;
+import org.junit.Test;
 
 public class ChromatogramPeaks_3_Test extends ChromatogramPeaksTestCase {
 
@@ -22,7 +27,8 @@ public class ChromatogramPeaks_3_Test extends ChromatogramPeaksTestCase {
 	private IPeakMSD peak;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
 		super.setUp();
 		peaks = new PeaksMSD();
@@ -31,17 +37,13 @@ public class ChromatogramPeaks_3_Test extends ChromatogramPeaksTestCase {
 		peaks.addPeak(getPeak3());
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testSize_1() {
 
 		assertEquals(3, peaks.getPeaks().size());
 	}
 
+	@Test
 	public void testRemovePeak_1() {
 
 		peaks.removePeak(getPeak1());
@@ -54,6 +56,7 @@ public class ChromatogramPeaks_3_Test extends ChromatogramPeaksTestCase {
 		assertTrue(peak.equals(getPeak3()));
 	}
 
+	@Test
 	public void testRemovePeak_2() {
 
 		peaks.removePeak(getPeak2());
@@ -66,6 +69,7 @@ public class ChromatogramPeaks_3_Test extends ChromatogramPeaksTestCase {
 		assertTrue(peak.equals(getPeak3()));
 	}
 
+	@Test
 	public void testRemovePeak_3() {
 
 		peaks.removePeak(getPeak3());

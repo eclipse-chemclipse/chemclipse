@@ -12,31 +12,22 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
 
-public class MassSpectrum_33_Test extends TestCase {
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
+import org.junit.Test;
 
-	private ScanMSD massSpectrum;
+public class MassSpectrum_33_Test {
 
-	@Override
-	protected void setUp() throws Exception {
+	private IScanMSD massSpectrum = new ScanMSD();
 
-		super.setUp();
-		massSpectrum = new ScanMSD();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectrum = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
 		assertFalse(massSpectrum.isTandemMS());
 	}
 
+	@Test
 	public void test_2() {
 
 		assertFalse(massSpectrum.isHighResolutionMS());

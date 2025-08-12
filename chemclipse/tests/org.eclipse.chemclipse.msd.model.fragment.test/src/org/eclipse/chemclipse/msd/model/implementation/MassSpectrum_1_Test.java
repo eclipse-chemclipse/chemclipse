@@ -12,49 +12,45 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Equals, hashCode
- * 
- * @author eselmeister
  */
-public class MassSpectrum_1_Test extends TestCase {
+public class MassSpectrum_1_Test {
 
 	private ScanMSD massSpectrum1;
 	private ScanMSD massSpectrum2;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		massSpectrum1 = new ScanMSD();
 		massSpectrum2 = new ScanMSD();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectrum1 = null;
-		massSpectrum2 = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testEquals_1() {
 
 		assertEquals("equals", true, massSpectrum1.equals(massSpectrum2));
 	}
 
+	@Test
 	public void testEquals_2() {
 
 		assertEquals("equals", true, massSpectrum2.equals(massSpectrum1));
 	}
 
+	@Test
 	public void testHashCode_1() {
 
 		assertEquals("hashCode", massSpectrum1.hashCode(), massSpectrum2.hashCode());
 	}
 
+	@Test
 	public void testHashCode_2() {
 
 		assertEquals("hashCode", massSpectrum2.hashCode(), massSpectrum1.hashCode());

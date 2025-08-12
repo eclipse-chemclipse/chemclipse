@@ -12,30 +12,31 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
-import java.util.TreeMap;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import org.eclipse.chemclipse.model.core.IPeakIntensityValues;
 import org.eclipse.chemclipse.model.implementation.PeakIntensityValues;
-
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test the peak intensity values.<br/>
  * Make sure that the limit IPeakIntensityValues.MAX_INTENSITY is implemented
  * correctly.
- * 
- * @author eselmeister
  */
-public class PeakIntensityValues_5_Test extends TestCase {
+public class PeakIntensityValues_5_Test {
 
 	private PeakIntensityValues intensityValues;
 	private TreeMap<Integer, Float> scanValues;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		intensityValues = new PeakIntensityValues();
 		scanValues = new TreeMap<Integer, Float>();
 		scanValues.put(10500, IPeakIntensityValues.MAX_INTENSITY);
@@ -44,14 +45,7 @@ public class PeakIntensityValues_5_Test extends TestCase {
 		}
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		intensityValues = null;
-		scanValues = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetHighestIntensityValue_1() {
 
 		Entry<Integer, Float> entry = intensityValues.getHighestIntensityValue();
@@ -59,50 +53,58 @@ public class PeakIntensityValues_5_Test extends TestCase {
 		int retentionTime = entry.getKey();
 		float intensity = entry.getValue();
 		assertEquals("retentionTime", 10500, retentionTime);
-		assertEquals("intensity", IPeakIntensityValues.MAX_INTENSITY, intensity);
+		assertEquals("intensity", IPeakIntensityValues.MAX_INTENSITY, intensity, 0);
 	}
 
+	@Test
 	public void testGetIntensityValue_1() {
 
 		Entry<Integer, Float> entry = intensityValues.getIntensityValue(8500);
 		assertNull("Entry<Integer, Float> must be null.", entry);
 	}
 
+	@Test
 	public void testGetIntensityValue_2() {
 
 		Entry<Integer, Float> entry = intensityValues.getIntensityValue(2600);
 		assertNull("Entry<Integer, Float> must be null.", entry);
 	}
 
+	@Test
 	public void testGetIntensityValue_3() {
 
 		Entry<Integer, Float> entry = intensityValues.getIntensityValue(1200);
 		assertNull("Entry<Integer, Float> must be null.", entry);
 	}
 
+	@Test
 	public void testGetIntensityValue_4() {
 
 		Entry<Integer, Float> entry = intensityValues.getIntensityValue(11700);
 		assertNull("Entry<Integer, Float> must be null.", entry);
 	}
 
+	@Test
 	public void testGetIntensityValue_5() {
 
 		Entry<Integer, Float> entry = intensityValues.getIntensityValue(14500);
 		assertNull("Entry<Integer, Float> must be null.", entry);
 	}
 
+	@Test
 	public void testGetIntensityValue_6() {
 
 		Entry<Integer, Float> entry = intensityValues.getIntensityValue(15600);
 		assertNull("Entry<Integer, Float> must be null.", entry);
 	}
 
+	@Test
 	public void testGetStartRetentionTime_1() {
 
 		assertEquals("StartRetentionTime", 10500, intensityValues.getStartRetentionTime());
 	}
 
+	@Test
 	public void testGetStopRetentionTime_1() {
 
 		assertEquals("StopRetentionTime", 10500, intensityValues.getStopRetentionTime());
