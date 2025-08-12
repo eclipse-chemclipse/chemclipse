@@ -12,6 +12,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.nmr.converter.supplier.nmrml;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 import java.util.Collection;
 
@@ -22,13 +26,10 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Before;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class MMBBI_10M12_CE01_1a_ITest extends TestCase {
+public class MMBBI_10M12_CE01_1a_ITest {
 
 	private Collection<IComplexSignalMeasurement<?>> spectrumNMR;
 
-	@Override
 	@Before
 	public void setUp() throws Exception {
 

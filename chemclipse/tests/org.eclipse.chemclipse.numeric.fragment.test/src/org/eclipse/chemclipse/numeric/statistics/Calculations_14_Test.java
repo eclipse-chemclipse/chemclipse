@@ -12,21 +12,21 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.numeric.statistics;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Testing median.
- * 
- * @author eselmeister
  */
-public class Calculations_14_Test extends TestCase {
+public class Calculations_14_Test {
 
 	private double[] values;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		values = new double[13];
 		values[0] = 735.0d;
 		values[1] = 504.0d;
@@ -43,49 +43,49 @@ public class Calculations_14_Test extends TestCase {
 		values[12] = 381.0d;
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		values = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetWindowReducedLength_1() {
 
 		int result = Calculations.getWindowReducedLength(values, 3);
 		assertEquals("getWindowReducedLength", 11, result);
 	}
 
+	@Test
 	public void testGetWindowReducedLength_2() {
 
 		int result = Calculations.getWindowReducedLength(null, 3);
 		assertEquals("getWindowReducedLength", 0, result);
 	}
 
+	@Test
 	public void testGetWindowReducedLength_3() {
 
 		int result = Calculations.getWindowReducedLength(values, 1);
 		assertEquals("getWindowReducedLength", 13, result);
 	}
 
+	@Test
 	public void testGetWindowReducedLength_4() {
 
 		int result = Calculations.getWindowReducedLength(values, 0);
 		assertEquals("getWindowReducedLength", 13, result);
 	}
 
+	@Test
 	public void testGetWindowReducedLength_5() {
 
 		int result = Calculations.getWindowReducedLength(values, 13);
 		assertEquals("getWindowReducedLength", 1, result);
 	}
 
+	@Test
 	public void testGetWindowReducedLength_6() {
 
 		int result = Calculations.getWindowReducedLength(values, 12);
 		assertEquals("getWindowReducedLength", 2, result);
 	}
 
+	@Test
 	public void testGetWindowReducedLength_7() {
 
 		int result = Calculations.getWindowReducedLength(values, 14);

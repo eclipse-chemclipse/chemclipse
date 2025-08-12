@@ -19,20 +19,18 @@ import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.VendorMassSpectrum;
+import org.junit.Before;
 import org.junit.Ignore;
 
-import junit.framework.TestCase;
-
 @Ignore
-public class ChromatogramOverviewTestCase extends TestCase {
+public class ChromatogramOverviewTestCase {
 
 	private IChromatogramMSD chromatogram;
 	private IRegularMassSpectrum massSpectrum;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		chromatogram = new ChromatogramMSD();
 		chromatogram.setScanDelay(5000);
 		chromatogram.setScanInterval(1000);
@@ -54,13 +52,6 @@ public class ChromatogramOverviewTestCase extends TestCase {
 		massSpectrum.addIon(new Ion(IIon.TIC_ION, 812450));
 		chromatogram.addScan(massSpectrum);
 		chromatogram.recalculateRetentionTimes();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		super.tearDown();
 	}
 
 	public IChromatogramOverview getChromatogramOverview() {

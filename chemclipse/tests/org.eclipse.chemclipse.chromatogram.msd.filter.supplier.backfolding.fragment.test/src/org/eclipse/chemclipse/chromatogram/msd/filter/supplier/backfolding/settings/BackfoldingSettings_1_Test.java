@@ -12,11 +12,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.backfolding.settings;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class BackfoldingSettings_1_Test extends TestCase {
+public class BackfoldingSettings_1_Test {
 
 	private IBackfoldingSettings settings = new BackfoldingSettings();
 

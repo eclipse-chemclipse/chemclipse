@@ -12,11 +12,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.csd.filter.core.chromatogram;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ChromatogramFilterSupplier_2_Test extends TestCase {
+public class ChromatogramFilterSupplier_2_Test {
 
 	private ChromatogramFilterSupplierCSD supplier = new ChromatogramFilterSupplierCSD();
 

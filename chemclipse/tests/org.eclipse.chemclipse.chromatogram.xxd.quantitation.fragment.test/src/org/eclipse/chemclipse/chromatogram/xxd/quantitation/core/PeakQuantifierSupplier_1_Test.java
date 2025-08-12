@@ -12,11 +12,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.quantitation.core;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class PeakQuantifierSupplier_1_Test extends TestCase {
+public class PeakQuantifierSupplier_1_Test {
 
 	private PeakQuantifierSupplier supplier = new PeakQuantifierSupplier();
 

@@ -12,13 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.msd.model.core.AbstractIon;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class SelectedIons_4_Test extends TestCase {
+public class SelectedIons_4_Test {
 
 	private IMarkedIons selectedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
 

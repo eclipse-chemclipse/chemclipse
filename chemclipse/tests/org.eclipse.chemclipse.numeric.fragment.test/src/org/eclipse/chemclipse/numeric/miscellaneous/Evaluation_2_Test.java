@@ -12,28 +12,18 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.numeric.miscellaneous;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 /**
  * Tests the valuesAreGreaterThanThreshold(double[] values, double threshold)
  * method.
- * 
- * @author eselmeister
  */
-public class Evaluation_2_Test extends TestCase {
+public class Evaluation_2_Test {
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testValuesAreGreaterThanThreshold_1() {
 
 		double threshold = 4.0d;
@@ -44,6 +34,7 @@ public class Evaluation_2_Test extends TestCase {
 		assertTrue(Evaluation.valuesAreGreaterThanThreshold(values, threshold));
 	}
 
+	@Test
 	public void testValuesAreGreaterThanThreshold_2() {
 
 		double threshold = 5.0d;
@@ -54,6 +45,7 @@ public class Evaluation_2_Test extends TestCase {
 		assertFalse(Evaluation.valuesAreGreaterThanThreshold(values, threshold));
 	}
 
+	@Test
 	public void testValuesAreGreaterThanThreshold_3() {
 
 		double threshold = 5.0d;
@@ -61,6 +53,7 @@ public class Evaluation_2_Test extends TestCase {
 		assertFalse(Evaluation.valuesAreGreaterThanThreshold(values, threshold));
 	}
 
+	@Test
 	public void testValuesAreGreaterThanThreshold_4() {
 
 		double threshold = 4.5d;

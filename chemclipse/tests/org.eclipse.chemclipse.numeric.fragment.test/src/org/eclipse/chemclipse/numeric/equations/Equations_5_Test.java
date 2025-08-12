@@ -12,42 +12,32 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.numeric.equations;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.numeric.core.IPoint;
 import org.eclipse.chemclipse.numeric.core.Point;
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Checks calculation of width between two points.
- * 
- * @author eselmeister
  */
-public class Equations_5_Test extends TestCase {
+public class Equations_5_Test {
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testCalculateWidth_1() {
 
 		IPoint p1 = new Point(1, 4);
 		IPoint p2 = new Point(8, 14);
 		double width = Equations.calculateWidth(p1, p2);
-		assertEquals("Width", 12.206555615733702d, width);
+		assertEquals("Width", 12.206555615733702d, width, 0);
 	}
 
+	@Test
 	public void testCalculateWidth_2() {
 
 		IPoint p1 = new Point(0, 0);
 		IPoint p2 = new Point(0, 0);
 		double width = Equations.calculateWidth(p1, p2);
-		assertEquals("Width", 0.0d, width);
+		assertEquals("Width", 0.0d, width, 0);
 	}
 }

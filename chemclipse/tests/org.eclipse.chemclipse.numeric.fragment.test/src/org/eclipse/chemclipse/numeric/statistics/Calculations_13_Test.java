@@ -12,21 +12,21 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.numeric.statistics;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Testing median.
- * 
- * @author eselmeister
  */
-public class Calculations_13_Test extends TestCase {
+public class Calculations_13_Test {
 
 	private float[] values;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		values = new float[13];
 		values[0] = 735.0f;
 		values[1] = 504.0f;
@@ -43,16 +43,10 @@ public class Calculations_13_Test extends TestCase {
 		values[12] = 381.0f;
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		values = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetSum_1() {
 
 		float result = Calculations.getSum(values);
-		assertEquals("getSum", 5865.0f, result);
+		assertEquals("getSum", 5865.0f, result, 0);
 	}
 }

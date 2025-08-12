@@ -13,6 +13,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.amdis.io;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.PathResolver;
@@ -29,7 +31,7 @@ import org.junit.Test;
 public class MassSpectrumExportConverter_DB_5_ITest extends MassSpectrumExportConverterTestCase {
 
 	@Override
-	public void setUp() throws Exception {
+	public void setUp() {
 
 		exportFile = new File(PathResolver.getAbsolutePath(TestPathHelper.TESTDIR_EXPORT) + File.separator + TestPathHelper.TESTFILE_EXPORT_DB_MSL_IDENTIFIER);
 		importFile = new File(PathResolver.getAbsolutePath(TestPathHelper.TESTDIR_EXPORT) + File.separator + TestPathHelper.TESTFILE_EXPORT_DB_MSL_IDENTIFIER);
@@ -37,7 +39,7 @@ public class MassSpectrumExportConverter_DB_5_ITest extends MassSpectrumExportCo
 	}
 
 	@Override
-	public void tearDown() throws Exception {
+	public void tearDown() {
 
 		super.tearDown();
 	}

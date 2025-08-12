@@ -12,21 +12,23 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.numeric.statistics;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Testing median.
  * 
  * @author Philip Wenig
  */
-public class Calculations_15_Test extends TestCase {
+public class Calculations_15_Test {
 
 	private double[] values;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		values = new double[13];
 		values[0] = 735.0d;
 		values[1] = 504.0d;
@@ -43,13 +45,7 @@ public class Calculations_15_Test extends TestCase {
 		values[12] = 381.0d;
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		values = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetWindowReducedLength_1() {
 
 		Calculations.smooth(values, 3);
@@ -69,7 +65,7 @@ public class Calculations_15_Test extends TestCase {
 		smoothed[11] = 304.0d;
 		smoothed[12] = 381.0d;
 		for(int i = 0; i < values.length; i++) {
-			assertEquals("ValuesSmoothed", smoothed[i], values[i]);
+			assertEquals("ValuesSmoothed", smoothed[i], values[i], 0);
 		}
 	}
 }

@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.internal.calculator;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Map;
 
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.calculator.SubtractCalculator;
@@ -21,16 +23,13 @@ import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.junit.Before;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class SubtractCalculator_3_Test extends TestCase {
+public class SubtractCalculator_3_Test {
 
 	private SubtractCalculator subtractCalculator = new SubtractCalculator();;
 	private IScanMSD subtractMassSpectrum;
 	private IScanMSD targetMassSpectrum;
 	private Map<Double, Float> subtractMassSpectrumMap;
 
-	@Override
 	@Before
 	public void setUp() throws Exception {
 
@@ -63,19 +62,19 @@ public class SubtractCalculator_3_Test extends TestCase {
 	@Test
 	public void testMassSpectrumMap_2() {
 
-		assertEquals(200.0f, subtractMassSpectrumMap.get(18.0));
+		assertEquals(200.0f, subtractMassSpectrumMap.get(18.0), 0);
 	}
 
 	@Test
 	public void testMassSpectrumMap_3() {
 
-		assertEquals(1000.0f, subtractMassSpectrumMap.get(28.0));
+		assertEquals(1000.0f, subtractMassSpectrumMap.get(28.0), 0);
 	}
 
 	@Test
 	public void testMassSpectrumMap_4() {
 
-		assertEquals(500.0f, subtractMassSpectrumMap.get(32.0));
+		assertEquals(500.0f, subtractMassSpectrumMap.get(32.0), 0);
 	}
 
 	@Test
@@ -87,36 +86,36 @@ public class SubtractCalculator_3_Test extends TestCase {
 	@Test
 	public void testSubtractedMassSpectrum_2() {
 
-		assertEquals(2893.3f, targetMassSpectrum.getIon(16.1).getAbundance());
+		assertEquals(2893.3f, targetMassSpectrum.getIon(16.1).getAbundance(), 0);
 	}
 
 	@Test
 	public void testSubtractedMassSpectrum_3() {
 
-		assertEquals(8284.3f, targetMassSpectrum.getIon(18.1).getAbundance());
+		assertEquals(8284.3f, targetMassSpectrum.getIon(18.1).getAbundance(), 0);
 	}
 
 	@Test
 	public void testSubtractedMassSpectrum_4() {
 
-		assertEquals(3894.4f, targetMassSpectrum.getIon(20.0).getAbundance());
+		assertEquals(3894.4f, targetMassSpectrum.getIon(20.0).getAbundance(), 0);
 	}
 
 	@Test
 	public void testSubtractedMassSpectrum_5() {
 
-		assertEquals(3394.6f, targetMassSpectrum.getIon(32.0).getAbundance());
+		assertEquals(3394.6f, targetMassSpectrum.getIon(32.0).getAbundance(), 0);
 	}
 
 	@Test
 	public void testSubtractedMassSpectrum_6() {
 
-		assertEquals(3793.5f, targetMassSpectrum.getIon(43.0).getAbundance());
+		assertEquals(3793.5f, targetMassSpectrum.getIon(43.0).getAbundance(), 0);
 	}
 
 	@Test
 	public void testSubtractedMassSpectrum_7() {
 
-		assertEquals(56693.0f, targetMassSpectrum.getIon(28.1).getAbundance());
+		assertEquals(56693.0f, targetMassSpectrum.getIon(28.1).getAbundance(), 0);
 	}
 }

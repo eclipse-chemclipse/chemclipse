@@ -12,11 +12,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.converter.io.support;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ArrayWriter_2_Test extends TestCase {
+public class ArrayWriter_2_Test {
 
 	private ArrayWriterTestImplementation arrayWriter = new ArrayWriterTestImplementation(new byte[1000]);
 

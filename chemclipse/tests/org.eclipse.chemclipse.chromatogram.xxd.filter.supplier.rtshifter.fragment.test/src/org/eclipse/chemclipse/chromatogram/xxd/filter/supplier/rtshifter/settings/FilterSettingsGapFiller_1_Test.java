@@ -12,27 +12,16 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.rtshifter.settings;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class FilterSettingsGapFiller_1_Test extends TestCase {
+import org.junit.Test;
 
-	private FilterSettingsGapFiller settings;
+public class FilterSettingsGapFiller_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
-		settings = new FilterSettingsGapFiller();
+		FilterSettingsGapFiller settings = new FilterSettingsGapFiller();
 		settings.setLimitFactor(5);
 		assertEquals(5, settings.getLimitFactor());
 	}

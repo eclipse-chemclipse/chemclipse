@@ -12,11 +12,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class MassSpectrumComparisonSupplier_1_Test extends TestCase {
+public class MassSpectrumComparisonSupplier_1_Test {
 
 	private MassSpectrumComparisonSupplier supplier = new MassSpectrumComparisonSupplier();
 

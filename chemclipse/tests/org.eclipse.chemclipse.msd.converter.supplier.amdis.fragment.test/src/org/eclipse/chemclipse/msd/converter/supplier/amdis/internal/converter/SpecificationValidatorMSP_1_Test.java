@@ -12,30 +12,26 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.amdis.internal.converter;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.TestPathHelper;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class SpecificationValidatorMSP_1_Test extends TestCase {
+public class SpecificationValidatorMSP_1_Test {
 
 	private File file;
 	private String spec;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		spec = TestPathHelper.getAbsolutePath(TestPathHelper.VALIDATOR_TEST_SPEC_MSP);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testValidateAgilentSpecification_1() {
 
 		file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.VALIDATOR_TEST_MSP_1));
@@ -43,6 +39,7 @@ public class SpecificationValidatorMSP_1_Test extends TestCase {
 		assertEquals("File", spec, file.getAbsolutePath());
 	}
 
+	@Test
 	public void testValidateAgilentSpecification_3() {
 
 		file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.VALIDATOR_TEST_MSP_2));
@@ -50,6 +47,7 @@ public class SpecificationValidatorMSP_1_Test extends TestCase {
 		assertEquals("File", spec, file.getAbsolutePath());
 	}
 
+	@Test
 	public void testValidateAgilentSpecification_4() {
 
 		file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.VALIDATOR_TEST_MSP_3));

@@ -12,11 +12,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.identifier;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class LibraryInformation_4_Test extends TestCase {
+public class LibraryInformation_4_Test {
 
 	private ILibraryInformation libraryInformation = new LibraryInformation();
 

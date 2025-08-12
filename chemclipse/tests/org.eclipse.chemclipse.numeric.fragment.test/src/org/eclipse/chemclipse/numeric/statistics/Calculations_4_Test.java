@@ -12,24 +12,26 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.numeric.statistics;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Testing median.
  * 
  * @author eselmeister
  */
-public class Calculations_4_Test extends TestCase {
+public class Calculations_4_Test {
 
 	private double[] values;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		values = new double[12];
 		values[0] = 735.0d;
 		values[1] = 504.0d;
@@ -45,19 +47,14 @@ public class Calculations_4_Test extends TestCase {
 		values[11] = 381.0d;
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		values = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetMedian_1() {
 
 		double result = Calculations.getMedian(values);
-		assertEquals("getMedian", 436.5d, result);
+		assertEquals("getMedian", 436.5d, result, 0);
 	}
 
+	@Test
 	public void testGetMedian_2() {
 
 		List<Double> val = new ArrayList<Double>();
@@ -65,9 +62,10 @@ public class Calculations_4_Test extends TestCase {
 			val.add(value);
 		}
 		double result = Calculations.getMedian(val);
-		assertEquals("getMedian", 436.5d, result);
+		assertEquals("getMedian", 436.5d, result, 0);
 	}
 
+	@Test
 	public void testGetMedian_3() {
 
 		List<Double> val = new ArrayList<Double>();
@@ -82,6 +80,6 @@ public class Calculations_4_Test extends TestCase {
 		}
 		val.add(780.0d);
 		double result = Calculations.getMedian(val);
-		assertEquals("getMedian", 436.5d, result);
+		assertEquals("getMedian", 436.5d, result, 0);
 	}
 }

@@ -12,56 +12,48 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.numeric.geometry;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.numeric.core.IPoint;
 import org.eclipse.chemclipse.numeric.core.Point;
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class Slope_1_Test extends TestCase {
+public class Slope_1_Test {
 
-	ISlope slope;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetSlope_1() {
 
 		IPoint p1 = new Point(5.0d, 10.0d);
 		IPoint p2 = new Point(7.0d, 3.0d);
-		slope = new Slope(p1, p2);
-		assertEquals("Slope", -3.5d, slope.getSlope());
+		ISlope slope = new Slope(p1, p2);
+		assertEquals("Slope", -3.5d, slope.getSlope(), 0);
 	}
 
+	@Test
 	public void testGetSlope_2() {
 
 		IPoint p1 = null;
 		IPoint p2 = new Point(7.0d, 3.0d);
-		slope = new Slope(p1, p2);
-		assertEquals("Slope", 0.0d, slope.getSlope());
+		ISlope slope = new Slope(p1, p2);
+		assertEquals("Slope", 0.0d, slope.getSlope(), 0);
 	}
 
+	@Test
 	public void testGetSlope_3() {
 
 		IPoint p1 = new Point(5.0d, 10.0d);
 		IPoint p2 = null;
-		slope = new Slope(p1, p2);
-		assertEquals("Slope", 0.0d, slope.getSlope());
+		ISlope slope = new Slope(p1, p2);
+		assertEquals("Slope", 0.0d, slope.getSlope(), 0);
 	}
 
+	@Test
 	public void testGetSlope_4() {
 
 		IPoint p1 = new Point(5.0d, 10.0d);
 		IPoint p2 = null;
-		slope = new Slope(p1, p2);
+		ISlope slope = new Slope(p1, p2);
 		slope.setSlope(4.6d);
-		assertEquals("Slope", 4.6d, slope.getSlope());
+		assertEquals("Slope", 4.6d, slope.getSlope(), 0);
 	}
 }

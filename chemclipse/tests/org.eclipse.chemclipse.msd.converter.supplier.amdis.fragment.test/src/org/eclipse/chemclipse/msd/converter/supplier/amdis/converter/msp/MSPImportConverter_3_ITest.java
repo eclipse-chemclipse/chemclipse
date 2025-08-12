@@ -13,6 +13,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.amdis.converter.msp;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.msd.converter.database.IDatabaseImportConverter;
@@ -23,50 +25,44 @@ import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class MSPImportConverter_3_ITest extends TestCase {
+public class MSPImportConverter_3_ITest {
 
 	private IMassSpectra massSpectra;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		File importFile = new File(PathResolver.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_LIB_3_MSP));
 		IDatabaseImportConverter importConverter = new MSPDatabaseImportConverter();
 		IProcessingInfo<IMassSpectra> processingInfo = importConverter.convert(importFile, new NullProgressMonitor());
 		massSpectra = processingInfo.getProcessingResult();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		massSpectra = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
 		assertEquals(1, massSpectra.size());
 	}
 
+	@Test
 	public void test_2() {
 
 		IScanMSD massSpectrum = massSpectra.getMassSpectrum(1);
 		ILibraryMassSpectrum libraryMassSpectrum = (ILibraryMassSpectrum)massSpectrum;
 		assertEquals(649080, massSpectrum.getRetentionTime());
 		assertEquals(0, massSpectrum.getRelativeRetentionTime());
-		assertEquals(0.0f, massSpectrum.getRetentionIndex());
+		assertEquals(0.0f, massSpectrum.getRetentionIndex(), 0);
 		assertEquals("+EI Scan (rt: 10.818 min)", libraryMassSpectrum.getLibraryInformation().getName());
 		assertEquals("", libraryMassSpectrum.getLibraryInformation().getCasNumber());
 		assertEquals("365", libraryMassSpectrum.getLibraryInformation().getReferenceIdentifier());
 		assertEquals("Lib3", libraryMassSpectrum.getLibraryInformation().getDatabase());
 		assertEquals(65, massSpectrum.getNumberOfIons());
-		assertEquals(0.80f, massSpectrum.getIon(50.0156d).getAbundance());
-		assertEquals(0.07f, massSpectrum.getIon(50.0785d).getAbundance());
-		assertEquals(0.04f, massSpectrum.getIon(55.2418d).getAbundance());
+		assertEquals(0.80f, massSpectrum.getIon(50.0156d).getAbundance(), 0);
+		assertEquals(0.07f, massSpectrum.getIon(50.0785d).getAbundance(), 0);
+		assertEquals(0.04f, massSpectrum.getIon(55.2418d).getAbundance(), 0);
 		assertEquals(5.66f, massSpectrum.getTotalSignal(), 0.01d);
 	}
 }

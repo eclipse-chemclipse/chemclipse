@@ -12,31 +12,28 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.numeric.equations;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class QuadraticEquations_1_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class QuadraticEquations_1_Test {
 
 	private QuadraticEquation equation;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		equation = new QuadraticEquation(0.0d, 310206.81754652766d, 206670.62686893356d);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testCreateLinearEquation_1() {
 
 		/*
 		 * A == 0
 		 */
 		double result = equation.calculateX(4192434.278134346d);
-		assertEquals(12.848730027242523d, result);
+		assertEquals(12.848730027242523d, result, 0);
 	}
 }

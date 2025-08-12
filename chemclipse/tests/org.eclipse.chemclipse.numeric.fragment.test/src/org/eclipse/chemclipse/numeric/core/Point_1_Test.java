@@ -12,51 +12,50 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.numeric.core;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class Point_1_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class Point_1_Test {
 
 	private IPoint point;
 	private double x = 25.3;
 	private double y = 457.7;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 
-		super.setUp();
 		point = new Point(x, y);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		point = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testPointX_1() {
 
-		assertEquals("X", x, point.getX());
+		assertEquals("X", x, point.getX(), 0);
 	}
 
+	@Test
 	public void testPointX_2() {
 
-		assertEquals("X", x, point.getX());
+		assertEquals("X", x, point.getX(), 0);
 		x = 3682.234;
 		point.setX(x);
-		assertEquals("X", x, point.getX());
+		assertEquals("X", x, point.getX(), 0);
 	}
 
+	@Test
 	public void testPointY_1() {
 
-		assertEquals("Y", y, point.getY());
+		assertEquals("Y", y, point.getY(), 0);
 	}
 
+	@Test
 	public void testPointY_2() {
 
-		assertEquals("Y", y, point.getY());
+		assertEquals("Y", y, point.getY(), 0);
 		y = 8273.3;
 		point.setY(y);
-		assertEquals("Y", y, point.getY());
+		assertEquals("Y", y, point.getY(), 0);
 	}
 }

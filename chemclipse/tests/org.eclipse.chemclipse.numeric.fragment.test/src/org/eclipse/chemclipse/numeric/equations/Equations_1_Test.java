@@ -12,37 +12,27 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.numeric.equations;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.numeric.core.IPoint;
 import org.eclipse.chemclipse.numeric.core.Point;
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Check the compilation of a linear equation.
- * 
- * @author eselmeister
  */
-public class Equations_1_Test extends TestCase {
+public class Equations_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testCreateLinearEquation_1() {
 
 		IPoint p1 = new Point(5.0d, 10.0d);
 		IPoint p2 = new Point(7.0d, 3.0d);
 		LinearEquation eq = Equations.createLinearEquation(p1, p2);
-		assertEquals("X=0", 27.5d, eq.calculateY(0));
+		assertEquals("X=0", 27.5d, eq.calculateY(0), 0);
 	}
 
+	@Test
 	public void testCreateLinearEquation_2() {
 
 		IPoint p1 = new Point(5.0d, 10.0d);
@@ -51,24 +41,27 @@ public class Equations_1_Test extends TestCase {
 		assertEquals("toString()", "org.eclipse.chemclipse.numeric.equations.LinearEquation[f(x)=-3.5x + 27.5]", eq.toString());
 	}
 
+	@Test
 	public void testGetSlope_1() {
 
 		IPoint p1 = new Point(5.0d, 10.0d);
 		IPoint p2 = new Point(7.0d, 3.0d);
-		assertEquals("Slope", -3.5d, Equations.calculateSlope(p1, p2));
+		assertEquals("Slope", -3.5d, Equations.calculateSlope(p1, p2), 0);
 	}
 
+	@Test
 	public void testGetSlope_2() {
 
 		IPoint p1 = null;
 		IPoint p2 = new Point(7.0d, 3.0d);
-		assertEquals("Slope", 0.0d, Equations.calculateSlope(p1, p2));
+		assertEquals("Slope", 0.0d, Equations.calculateSlope(p1, p2), 0);
 	}
 
+	@Test
 	public void testGetSlope_3() {
 
 		IPoint p1 = new Point(5.0d, 10.0d);
 		IPoint p2 = null;
-		assertEquals("Slope", 0.0d, Equations.calculateSlope(p1, p2));
+		assertEquals("Slope", 0.0d, Equations.calculateSlope(p1, p2), 0);
 	}
 }

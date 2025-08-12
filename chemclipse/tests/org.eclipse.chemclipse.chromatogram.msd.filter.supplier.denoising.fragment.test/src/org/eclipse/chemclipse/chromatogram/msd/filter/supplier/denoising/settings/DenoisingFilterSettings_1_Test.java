@@ -12,14 +12,17 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.denoising.settings;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
 import org.eclipse.chemclipse.support.util.TraceSettingUtil;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class DenoisingFilterSettings_1_Test extends TestCase {
+public class DenoisingFilterSettings_1_Test {
 
 	private FilterSettings settings = new FilterSettings();
 

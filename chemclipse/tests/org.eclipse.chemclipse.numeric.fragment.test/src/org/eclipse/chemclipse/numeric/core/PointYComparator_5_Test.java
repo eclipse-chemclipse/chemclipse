@@ -12,11 +12,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.numeric.core;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.numeric.miscellaneous.SortOrder;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class PointYComparator_5_Test extends TestCase {
+public class PointYComparator_5_Test {
 
 	private IPoint point1;
 	private double x1 = 24.3;
@@ -26,29 +28,21 @@ public class PointYComparator_5_Test extends TestCase {
 	private double y2 = 457.7;
 	private PointYComparator pointYComparator;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		point1 = new Point(x1, y1);
 		point2 = new Point(x2, y2);
 		pointYComparator = new PointYComparator(SortOrder.DESCENDING);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		point1 = null;
-		point2 = null;
-		pointYComparator = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testComparator_1() {
 
 		assertEquals("Compare", 1, pointYComparator.compare(point1, point2));
 	}
 
+	@Test
 	public void testComparator_2() {
 
 		assertEquals("Compare", -1, pointYComparator.compare(point2, point1));

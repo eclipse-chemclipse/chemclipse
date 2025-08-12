@@ -13,6 +13,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.amdis.io;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.PathResolver;
@@ -33,7 +36,7 @@ public class MassSpectrumExportConverter_DB_1_ITest extends MassSpectrumExportCo
 
 	@Override
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 
 		exportFile = new File(PathResolver.getAbsolutePath(TestPathHelper.TESTDIR_EXPORT) + File.separator + TestPathHelper.TESTFILE_EXPORT_DB_1_MSL);
 		importFile = new File(PathResolver.getAbsolutePath(TestPathHelper.TESTDIR_EXPORT) + File.separator + TestPathHelper.TESTFILE_EXPORT_DB_1_MSL);
@@ -42,7 +45,7 @@ public class MassSpectrumExportConverter_DB_1_ITest extends MassSpectrumExportCo
 
 	@Override
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 
 		super.tearDown();
 	}
@@ -69,11 +72,11 @@ public class MassSpectrumExportConverter_DB_1_ITest extends MassSpectrumExportCo
 		assertEquals("CAS Number", "", amdisMS.getLibraryInformation().getCasNumber());
 		assertEquals("Comments", "", amdisMS.getLibraryInformation().getComments());
 		assertEquals("Retention Time", 0, amdisMS.getRetentionTime());
-		assertEquals("Retention Index", 0.0f, amdisMS.getRetentionIndex());
+		assertEquals("Retention Index", 0.0f, amdisMS.getRetentionIndex(), 0);
 		assertEquals("Ion", 6, amdisMS.getNumberOfIons());
-		assertEquals("Lowest Ion", 1.0d, amdisMS.getLowestIon().getIon());
-		assertEquals("Lowest Ion Abundance", 167.0f, amdisMS.getLowestIon().getAbundance());
-		assertEquals("Highest Abundance Ion", 6.0d, amdisMS.getHighestAbundance().getIon());
-		assertEquals("Highest Abundance", 1000.0f, amdisMS.getHighestAbundance().getAbundance());
+		assertEquals("Lowest Ion", 1.0d, amdisMS.getLowestIon().getIon(), 0);
+		assertEquals("Lowest Ion Abundance", 167.0f, amdisMS.getLowestIon().getAbundance(), 0);
+		assertEquals("Highest Abundance Ion", 6.0d, amdisMS.getHighestAbundance().getIon(), 0);
+		assertEquals("Highest Abundance", 1000.0f, amdisMS.getHighestAbundance().getAbundance(), 0);
 	}
 }

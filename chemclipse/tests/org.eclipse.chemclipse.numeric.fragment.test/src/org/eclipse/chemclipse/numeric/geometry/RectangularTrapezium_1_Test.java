@@ -12,28 +12,24 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.numeric.geometry;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class RectangularTrapezium_1_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class RectangularTrapezium_1_Test {
 
 	private RectangularTrapezium rectangularTrapezium;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		rectangularTrapezium = new RectangularTrapezium(10.0d, 15.0d, 10.0d);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		rectangularTrapezium = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetArea() {
 
-		assertEquals("Area", 125.0d, rectangularTrapezium.getArea());
+		assertEquals("Area", 125.0d, rectangularTrapezium.getArea(), 0);
 	}
 }

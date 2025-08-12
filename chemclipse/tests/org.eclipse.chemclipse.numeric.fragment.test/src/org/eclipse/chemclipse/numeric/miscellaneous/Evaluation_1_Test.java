@@ -12,27 +12,17 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.numeric.miscellaneous;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 /**
  * Tests the valuesAreIncreasing(double[] values) method.
- * 
- * @author eselmeister
  */
-public class Evaluation_1_Test extends TestCase {
+public class Evaluation_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testValuesAreaIncreasing_1() {
 
 		double[] values = new double[3];
@@ -42,6 +32,7 @@ public class Evaluation_1_Test extends TestCase {
 		assertTrue(Evaluation.valuesAreIncreasing(values));
 	}
 
+	@Test
 	public void testValuesAreaIncreasing_2() {
 
 		double[] values = new double[2];
@@ -50,6 +41,7 @@ public class Evaluation_1_Test extends TestCase {
 		assertTrue(Evaluation.valuesAreIncreasing(values));
 	}
 
+	@Test
 	public void testValuesAreaIncreasing_3() {
 
 		double[] values = new double[3];
@@ -58,6 +50,7 @@ public class Evaluation_1_Test extends TestCase {
 		assertFalse(Evaluation.valuesAreIncreasing(values));
 	}
 
+	@Test
 	public void testValuesAreaIncreasing_4() {
 
 		double[] values = new double[1];
@@ -65,6 +58,7 @@ public class Evaluation_1_Test extends TestCase {
 		assertFalse(Evaluation.valuesAreIncreasing(values));
 	}
 
+	@Test
 	public void testValuesAreaIncreasing_5() {
 
 		double[] values = new double[3];

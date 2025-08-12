@@ -12,11 +12,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.support;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class Segment_2_Test extends TestCase {
+public class Segment_2_Test {
 
 	private ISegment segment = new Segment(null, null, null, null);
 

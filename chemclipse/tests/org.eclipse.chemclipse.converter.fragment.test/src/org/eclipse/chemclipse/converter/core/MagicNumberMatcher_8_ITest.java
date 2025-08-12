@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.converter.core;
 
+import static org.junit.Assert.assertFalse;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -20,9 +22,7 @@ import java.util.Map;
 import org.eclipse.chemclipse.converter.TestPathHelper;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class MagicNumberMatcher_8_ITest extends TestCase {
+public class MagicNumberMatcher_8_ITest {
 
 	private static final Map<Integer, Byte> INDEX_MAP = new HashMap<>();
 

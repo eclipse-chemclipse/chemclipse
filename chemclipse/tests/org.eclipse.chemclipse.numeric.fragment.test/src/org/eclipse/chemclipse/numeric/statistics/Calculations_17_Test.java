@@ -12,21 +12,22 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.numeric.statistics;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Testing median.
- * 
- * @author eselmeister
  */
-public class Calculations_17_Test extends TestCase {
+public class Calculations_17_Test {
 
 	private double[] values;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		values = new double[13];
 		values[0] = 735.0d;
 		values[1] = 504.0d;
@@ -43,18 +44,12 @@ public class Calculations_17_Test extends TestCase {
 		values[12] = 381.0d;
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		values = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testScaleToStandardizedLength_1() {
 
 		Calculations.scaleToStandardizedLength(values);
 		double sum = Calculations.getSum(values);
-		assertEquals("Sum", 2.3314683517128287E-15d, sum);
+		assertEquals("Sum", 2.3314683517128287E-15d, sum, 0);
 		double[] standardizedLength;
 		standardizedLength = new double[13];
 		standardizedLength[0] = 2.492039173673667d;
@@ -70,8 +65,6 @@ public class Calculations_17_Test extends TestCase {
 		standardizedLength[10] = -0.9319821299917778d;
 		standardizedLength[11] = -1.291943343966863d;
 		standardizedLength[12] = -0.6159186250380443d;
-		for(int i = 0; i < values.length; i++) {
-			assertEquals("StandardizedLengthValues", standardizedLength[i], values[i]);
-		}
+		assertArrayEquals("StandardizedLengthValues", standardizedLength, values, 0);
 	}
 }

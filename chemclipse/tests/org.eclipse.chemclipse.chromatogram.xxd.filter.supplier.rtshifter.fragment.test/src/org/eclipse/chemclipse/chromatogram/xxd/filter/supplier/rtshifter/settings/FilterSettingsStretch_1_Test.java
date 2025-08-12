@@ -12,27 +12,16 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.rtshifter.settings;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class FilterSettingsStretch_1_Test extends TestCase {
+import org.junit.Test;
 
-	private FilterSettingsStretch settings;
+public class FilterSettingsStretch_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test_1() {
 
-		settings = new FilterSettingsStretch();
+		FilterSettingsStretch settings = new FilterSettingsStretch();
 		settings.setScanDelay(2300);
 		settings.setChromatogramLength(60000);
 		assertEquals(2300, settings.getScanDelay());

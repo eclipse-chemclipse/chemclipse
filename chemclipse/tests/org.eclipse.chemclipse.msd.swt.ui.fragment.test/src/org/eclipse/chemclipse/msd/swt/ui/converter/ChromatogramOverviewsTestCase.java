@@ -19,21 +19,20 @@ import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.VendorMassSpectrum;
+import org.junit.Before;
 import org.junit.Ignore;
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 @Ignore
-public class ChromatogramOverviewsTestCase extends TestCase {
+public class ChromatogramOverviewsTestCase {
 
 	private IChromatogramMSD chromatogram1;
 	private IChromatogramMSD chromatogram2;
 	private IRegularMassSpectrum massSpectrum;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		// ---------------------------------chromatogram1
 		chromatogram1 = new ChromatogramMSD();
 		chromatogram1.setScanDelay(5000);
@@ -82,19 +81,13 @@ public class ChromatogramOverviewsTestCase extends TestCase {
 		// ---------------------------------chromatogram2
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram1 = null;
-		chromatogram2 = null;
-		super.tearDown();
-	}
-
+	@Test
 	public IChromatogramOverview getChromatogramOverview1() {
 
 		return chromatogram1;
 	}
 
+	@Test
 	public IChromatogramOverview getChromatogramOverview2() {
 
 		return chromatogram2;

@@ -12,32 +12,21 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.numeric.equations;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+
 import org.eclipse.chemclipse.numeric.core.IPoint;
 import org.eclipse.chemclipse.numeric.core.Point;
 import org.eclipse.chemclipse.numeric.exceptions.SolverException;
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Checks calculation of intersection between two linear equations.
- * 
- * @author eselmeister
  */
-public class Equations_4_Test extends TestCase {
+public class Equations_4_Test {
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
-	public void testCalculateIntersection_1() {
+	@Test
+	public void testCalculateIntersection_1() throws SolverException {
 
 		IPoint p11 = new Point(1, 4);
 		IPoint p12 = new Point(8, 14);
@@ -45,27 +34,23 @@ public class Equations_4_Test extends TestCase {
 		IPoint p21 = new Point(6, 3);
 		IPoint p22 = new Point(1, 8);
 		LinearEquation eq2 = Equations.createLinearEquation(p21, p22);
-		try {
-			IPoint intersection = Equations.calculateIntersection(eq1, eq2);
-			assertEquals("X", 2.6470588235294117d, intersection.getX());
-			assertEquals("Y", 6.352941176470588d, intersection.getY());
-		} catch(SolverException e) {
-			assertTrue("SolverException", false);
-		}
+		IPoint intersection = Equations.calculateIntersection(eq1, eq2);
+		assertEquals("X", 2.6470588235294117d, intersection.getX(), 0);
+		assertEquals("Y", 6.352941176470588d, intersection.getY(), 0);
 	}
 
+	@Test
 	public void testCalculateIntersection_2() {
 
 		IPoint p11 = new Point(1, 4);
 		IPoint p12 = new Point(8, 14);
 		LinearEquation eq1 = Equations.createLinearEquation(p11, p12);
-		try {
+		assertThrows(SolverException.class, () -> {
 			Equations.calculateIntersection(eq1, eq1);
-		} catch(SolverException e) {
-			assertTrue("SolverException", true);
-		}
+		});
 	}
 
+	@Test
 	public void testCalculateIntersection_3() {
 
 		IPoint p11 = new Point(1, 4);
@@ -74,22 +59,19 @@ public class Equations_4_Test extends TestCase {
 		IPoint p21 = new Point(1, 10);
 		IPoint p22 = new Point(8, 20);
 		LinearEquation eq2 = Equations.createLinearEquation(p21, p22);
-		try {
+		assertThrows(SolverException.class, () -> {
 			Equations.calculateIntersection(eq1, eq2);
-		} catch(SolverException e) {
-			assertTrue("SolverException", true);
-		}
+		});
 	}
 
+	@Test
 	public void testCalculateIntersection_4() {
 
 		IPoint p11 = new Point(1, 4);
 		IPoint p12 = new Point(8, 14);
 		LinearEquation eq1 = Equations.createLinearEquation(p11, p12);
-		try {
+		assertThrows(SolverException.class, () -> {
 			Equations.calculateIntersection(eq1, eq1);
-		} catch(SolverException e) {
-			assertTrue("SolverException", true);
-		}
+		});
 	}
 }

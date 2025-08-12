@@ -19,21 +19,19 @@ import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.VendorMassSpectrum;
+import org.junit.Before;
 import org.junit.Ignore;
 
-import junit.framework.TestCase;
-
 @Ignore
-public class ChromatogramSelectionTestCase extends TestCase {
+public class ChromatogramSelectionTestCase {
 
 	private IChromatogramMSD chromatogram;
 	private IChromatogramSelectionMSD chromatogramSelection;
 	private IRegularMassSpectrum massSpectrum;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		chromatogram = new ChromatogramMSD();
 		chromatogram.setScanDelay(5000);
 		chromatogram.setScanInterval(1000);
@@ -75,14 +73,6 @@ public class ChromatogramSelectionTestCase extends TestCase {
 		chromatogram.getBaselineModel().addBaseline(6000, 7000, 260, 390, true);
 		chromatogram.getBaselineModel().addBaseline(7001, 8000, 390, 500, true);
 		chromatogramSelection = new ChromatogramSelectionMSD(chromatogram);
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		chromatogram = null;
-		chromatogramSelection = null;
-		super.tearDown();
 	}
 
 	public IChromatogramMSD getChromatogram() {

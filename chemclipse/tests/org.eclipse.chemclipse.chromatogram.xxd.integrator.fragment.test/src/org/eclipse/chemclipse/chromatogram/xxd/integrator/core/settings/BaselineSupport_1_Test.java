@@ -12,15 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.baseline.BaselineModel;
 import org.eclipse.chemclipse.model.baseline.IBaselineModel;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class BaselineSupport_1_Test extends TestCase {
+public class BaselineSupport_1_Test {
 
 	private IBaselineSupport baselineSupport = new BaselineSupport();
 
@@ -30,9 +30,9 @@ public class BaselineSupport_1_Test extends TestCase {
 		float actual;
 		baselineSupport.setBaselineBack(1500);
 		actual = baselineSupport.getBackgroundAbundance(1500);
-		assertEquals(0.0f, actual);
+		assertEquals(0.0f, actual, 0);
 		actual = baselineSupport.getBackgroundAbundance(1);
-		assertEquals(0.0f, actual);
+		assertEquals(0.0f, actual, 0);
 	}
 
 	@Test
@@ -41,9 +41,9 @@ public class BaselineSupport_1_Test extends TestCase {
 		float actual;
 		baselineSupport.setBaselineHoldOn(1500, 2500);
 		actual = baselineSupport.getBackgroundAbundance(1500);
-		assertEquals(0.0f, actual);
+		assertEquals(0.0f, actual, 0);
 		actual = baselineSupport.getBackgroundAbundance(2500);
-		assertEquals(0.0f, actual);
+		assertEquals(0.0f, actual, 0);
 	}
 
 	@Test
@@ -52,9 +52,9 @@ public class BaselineSupport_1_Test extends TestCase {
 		float actual;
 		baselineSupport.setBaselineNow(1500);
 		actual = baselineSupport.getBackgroundAbundance(1500);
-		assertEquals(0.0f, actual);
+		assertEquals(0.0f, actual, 0);
 		actual = baselineSupport.getBackgroundAbundance(2000);
-		assertEquals(0.0f, actual);
+		assertEquals(0.0f, actual, 0);
 	}
 
 	@Test
@@ -65,9 +65,9 @@ public class BaselineSupport_1_Test extends TestCase {
 		IBaselineModel baselineModel = new BaselineModel(chromatogram);
 		baselineSupport.setBaselineModel(baselineModel);
 		actual = baselineSupport.getBackgroundAbundance(1500);
-		assertEquals(0.0f, actual);
+		assertEquals(0.0f, actual, 0);
 		actual = baselineSupport.getBackgroundAbundance(2000);
-		assertEquals(0.0f, actual);
+		assertEquals(0.0f, actual, 0);
 	}
 
 	@Test
@@ -77,8 +77,8 @@ public class BaselineSupport_1_Test extends TestCase {
 		baselineSupport.setBaselineNow(1500);
 		baselineSupport.reset();
 		actual = baselineSupport.getBackgroundAbundance(1500);
-		assertEquals(0.0f, actual);
+		assertEquals(0.0f, actual, 0);
 		actual = baselineSupport.getBackgroundAbundance(2000);
-		assertEquals(0.0f, actual);
+		assertEquals(0.0f, actual, 0);
 	}
 }

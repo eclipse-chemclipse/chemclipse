@@ -12,11 +12,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.ranges;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class TimeRange_3_Test extends TestCase {
+public class TimeRange_3_Test {
 
 	private TimeRange timeRange = new TimeRange("Test", 200, 500);
 

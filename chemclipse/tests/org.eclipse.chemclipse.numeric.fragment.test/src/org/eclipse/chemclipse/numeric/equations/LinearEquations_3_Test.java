@@ -13,21 +13,21 @@
 package org.eclipse.chemclipse.numeric.equations;
 
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.eclipse.chemclipse.numeric.core.IPoint;
 import org.eclipse.chemclipse.numeric.core.Point;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class LinearEquations_3_Test extends TestCase {
+public class LinearEquations_3_Test {
 
 	private LinearEquation eq1;
 	private LinearEquation eq2;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		IPoint p11 = new Point(1, 4);
 		IPoint p12 = new Point(8, 14);
 		eq1 = Equations.createLinearEquation(p11, p12);
@@ -36,27 +36,25 @@ public class LinearEquations_3_Test extends TestCase {
 		eq2 = Equations.createLinearEquation(p21, p22);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testEquals_1() {
 
 		assertNotEquals("equals", eq1, eq2);
 	}
 
+	@Test
 	public void testEquals_2() {
 
 		assertNotEquals("equals", eq2, eq1);
 	}
 
+	@Test
 	public void testEquals_3() {
 
 		assertNotNull("equals", eq1);
 	}
 
+	@Test
 	public void testEquals_4() {
 
 		assertNotEquals("equals", eq1, new Object());

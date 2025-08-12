@@ -12,12 +12,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.denoising.result;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.eclipse.chemclipse.chromatogram.filter.result.ResultStatus;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class DenoisingFilterResult_3_Test extends TestCase {
+public class DenoisingFilterResult_3_Test {
 
 	private IDenoisingFilterResult result = new DenoisingFilterResult(ResultStatus.OK, "The result status is ok.", null);
 

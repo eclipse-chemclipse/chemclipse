@@ -12,32 +12,29 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.numeric.statistics;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class Calculations_25_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class Calculations_25_Test {
 
 	private int[] values;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		values = new int[]{-1, 1};
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		values = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetMean_1() {
 
 		int min = Calculations.getMin(values);
 		assertEquals(-1, min);
 	}
 
+	@Test
 	public void testGetMean_2() {
 
 		int max = Calculations.getMax(values);

@@ -12,18 +12,19 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.numeric.statistics;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
 import org.eclipse.chemclipse.numeric.statistics.model.UnivariateStatistics;
+import org.junit.Before;
+import org.junit.Test;
 
-public class Calculations_Complex_2_Test extends TestCase {
+public class Calculations_Complex_2_Test {
 
 	private double[] values;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		values = new double[13];
 		values[0] = 735.0d;
 		values[1] = 504.0d;
@@ -40,13 +41,7 @@ public class Calculations_Complex_2_Test extends TestCase {
 		values[12] = 381.0d;
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		values = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testCalculations_Complex_1() {
 
 		/*
@@ -57,7 +52,7 @@ public class Calculations_Complex_2_Test extends TestCase {
 		assertEquals("getMean", 451.1538d, statistics.getMean(), 1E-4d);
 		assertEquals("getVariance", 12973.47d, statistics.getVariance(), 1E-2d);
 		assertEquals("getStandardDeviation", 113.9012d, statistics.getStandardDeviation(), 1E-3d);
-		assertEquals("getMedian", 430d, statistics.getMedian());
+		assertEquals("getMedian", 430d, statistics.getMedian(), 0);
 		assertEquals("getRelativeStandardDeviation", 0.2524663d, statistics.getRelativeStandardDeviation(), 1E-7d);
 	}
 }

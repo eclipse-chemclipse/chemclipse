@@ -12,35 +12,24 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.swt.ui.series;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.swtchart.Range;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class Range_1_Test {
 
-public class Range_1_Test extends TestCase {
-
-	private Range range;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testRange_1() {
 
-		range = new Range(0, 0);
-		assertEquals("lower", 0.0d, range.lower);
+		Range range = new Range(0, 0);
+		assertEquals("lower", 0.0d, range.lower, 0);
 	}
 
+	@Test
 	public void testRange_2() {
 
-		range = new Range(0, 0);
-		assertEquals("upper", 0.0d, range.upper);
+		Range range = new Range(0, 0);
+		assertEquals("upper", 0.0d, range.upper, 0);
 	}
 }

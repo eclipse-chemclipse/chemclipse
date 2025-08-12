@@ -13,21 +13,21 @@
 package org.eclipse.chemclipse.numeric.geometry;
 
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.eclipse.chemclipse.numeric.core.IPoint;
 import org.eclipse.chemclipse.numeric.core.Point;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class Slope_3_Test extends TestCase {
+public class Slope_3_Test {
 
 	private ISlope slope1, slope2;
 	private IPoint p1, p2;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		p1 = new Point(5.0d, 10.0d);
 		p2 = new Point(7.0d, 3.0d);
 		slope1 = new Slope(p1, p2);
@@ -36,31 +36,25 @@ public class Slope_3_Test extends TestCase {
 		slope2 = new Slope(p1, p2);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		p1 = null;
-		p2 = null;
-		slope1 = null;
-		slope2 = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testEquals_1() {
 
 		assertNotEquals("equals", slope1, slope2);
 	}
 
+	@Test
 	public void testEquals_2() {
 
 		assertNotEquals("equals", slope2, slope1);
 	}
 
+	@Test
 	public void testEquals_3() {
 
 		assertNotNull("equals", slope1);
 	}
 
+	@Test
 	public void testEquals_4() {
 
 		assertNotEquals("equals", slope1, new Object());

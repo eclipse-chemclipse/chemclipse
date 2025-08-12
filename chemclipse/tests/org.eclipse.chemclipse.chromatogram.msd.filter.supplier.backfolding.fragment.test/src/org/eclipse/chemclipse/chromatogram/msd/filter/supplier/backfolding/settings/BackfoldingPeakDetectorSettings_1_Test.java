@@ -12,12 +12,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.backfolding.settings;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.eclipse.chemclipse.chromatogram.peak.detector.model.Threshold;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class BackfoldingPeakDetectorSettings_1_Test extends TestCase {
+public class BackfoldingPeakDetectorSettings_1_Test {
 
 	private PeakDetectorSettings settings = new PeakDetectorSettings();
 

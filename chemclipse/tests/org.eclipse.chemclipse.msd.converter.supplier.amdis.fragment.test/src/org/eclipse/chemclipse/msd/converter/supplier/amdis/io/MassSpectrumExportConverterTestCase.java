@@ -20,15 +20,15 @@ import org.eclipse.chemclipse.msd.converter.database.IDatabaseImportConverter;
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.converter.msl.MSLDatabaseExportConverter;
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.converter.msl.MSLDatabaseImportConverter;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Ignore;
-
-import junit.framework.TestCase;
 
 /**
  * Imports a msl file.
  */
 @Ignore
-public class MassSpectrumExportConverterTestCase extends TestCase {
+public class MassSpectrumExportConverterTestCase {
 
 	protected File exportFile;
 	protected IDatabaseExportConverter exportConverter;
@@ -36,21 +36,18 @@ public class MassSpectrumExportConverterTestCase extends TestCase {
 	protected IMassSpectra massSpectra;
 	protected IDatabaseImportConverter importConverter;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		exportConverter = new MSLDatabaseExportConverter();
 		importConverter = new MSLDatabaseImportConverter();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
+	@After
+	public void tearDown() {
 
 		if(exportFile.exists()) {
 			exportFile.delete();
 		}
-
-		super.tearDown();
 	}
 }

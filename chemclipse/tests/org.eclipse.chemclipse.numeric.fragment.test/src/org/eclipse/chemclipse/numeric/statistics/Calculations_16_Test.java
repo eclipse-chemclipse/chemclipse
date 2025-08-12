@@ -12,21 +12,21 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.numeric.statistics;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Testing median.
- * 
- * @author eselmeister
  */
-public class Calculations_16_Test extends TestCase {
+public class Calculations_16_Test {
 
 	private double[] values;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		values = new double[13];
 		values[0] = 735.0d;
 		values[1] = 504.0d;
@@ -43,18 +43,12 @@ public class Calculations_16_Test extends TestCase {
 		values[12] = 381.0d;
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		values = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testScaleToEuclidianLength_1() {
 
 		Calculations.scaleToEuclidianLength(values);
 		double sum = Calculations.getSum(values);
-		assertEquals("Sum", 3.503944986207772d, sum);
+		assertEquals("Sum", 3.503944986207772d, sum, 0);
 		double[] euclidianLength;
 		euclidianLength = new double[13];
 		euclidianLength[0] = 0.4391133102920226d;
@@ -71,7 +65,7 @@ public class Calculations_16_Test extends TestCase {
 		euclidianLength[11] = 0.18161965486908146d;
 		euclidianLength[12] = 0.22762200166157906d;
 		for(int i = 0; i < values.length; i++) {
-			assertEquals("EuclidianLengthValues", euclidianLength[i], values[i]);
+			assertEquals("EuclidianLengthValues", euclidianLength[i], values[i], 0);
 		}
 	}
 }

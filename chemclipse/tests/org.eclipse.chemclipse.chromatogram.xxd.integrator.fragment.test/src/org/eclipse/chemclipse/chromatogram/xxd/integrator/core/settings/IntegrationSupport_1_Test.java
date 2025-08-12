@@ -12,13 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings.peaks.IIntegrationSupport;
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings.peaks.IntegrationSupport;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class IntegrationSupport_1_Test extends TestCase {
+public class IntegrationSupport_1_Test {
 
 	private IIntegrationSupport integrationSupport = new IntegrationSupport();
 

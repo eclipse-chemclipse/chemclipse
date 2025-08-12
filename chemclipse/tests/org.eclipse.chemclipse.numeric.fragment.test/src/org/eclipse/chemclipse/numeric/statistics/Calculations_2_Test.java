@@ -12,16 +12,18 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.numeric.statistics;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class Calculations_2_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class Calculations_2_Test {
 
 	private double[] values;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		values = new double[13];
 		values[0] = 735;
 		values[1] = 504;
@@ -38,28 +40,24 @@ public class Calculations_2_Test extends TestCase {
 		values[12] = 381;
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		values = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetMean_1() {
 
 		double result = Calculations.getMean(values);
-		assertEquals("getMean", 451.15384615384613d, result);
+		assertEquals("getMean", 451.15384615384613d, result, 0);
 	}
 
+	@Test
 	public void testGetVariance_1() {
 
 		double result = Calculations.getVariance(values);
-		assertEquals("getVariance", 12973.474358974356d, result);
+		assertEquals("getVariance", 12973.474358974356d, result, 0);
 	}
 
+	@Test
 	public void testGetStandardDeviation_1() {
 
 		double result = Calculations.getStandardDeviation(values);
-		assertEquals("getStandardDeviation", 113.90116048124513d, result);
+		assertEquals("getStandardDeviation", 113.90116048124513d, result, 0);
 	}
 }
