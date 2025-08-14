@@ -12,22 +12,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.support.traces;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class TraceTestCase extends TestCase {
+import org.junit.Test;
 
-	@Override
-	protected void setUp() throws Exception {
+public class Trace_Generic_03_Test {
 
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		TraceGeneric traceGeneric = new TraceGeneric();
@@ -36,6 +27,7 @@ public class TraceTestCase extends TestCase {
 		assertEquals("78", traceGeneric.toString());
 	}
 
+	@Test
 	public void test2() {
 
 		TraceGeneric traceGeneric = new TraceGeneric();
@@ -44,6 +36,7 @@ public class TraceTestCase extends TestCase {
 		assertEquals("78", traceGeneric.toString());
 	}
 
+	@Test
 	public void test3() {
 
 		TraceGeneric traceGeneric = new TraceGeneric();
@@ -52,6 +45,7 @@ public class TraceTestCase extends TestCase {
 		assertEquals("79", traceGeneric.toString());
 	}
 
+	@Test
 	public void test4() {
 
 		TraceGeneric traceGeneric = new TraceGeneric();
@@ -60,6 +54,7 @@ public class TraceTestCase extends TestCase {
 		assertEquals("78 (x1.1)", traceGeneric.toString());
 	}
 
+	@Test
 	public void test5() {
 
 		TraceGeneric traceGeneric = new TraceGeneric();
@@ -68,6 +63,7 @@ public class TraceTestCase extends TestCase {
 		assertEquals("78 (x1.12)", traceGeneric.toString());
 	}
 
+	@Test
 	public void test6() {
 
 		TraceGeneric traceGeneric = new TraceGeneric();
@@ -76,6 +72,7 @@ public class TraceTestCase extends TestCase {
 		assertEquals("78 (x1.123)", traceGeneric.toString());
 	}
 
+	@Test
 	public void test7() {
 
 		TraceGeneric traceGeneric = new TraceGeneric();
@@ -84,6 +81,7 @@ public class TraceTestCase extends TestCase {
 		assertEquals("78 (x1.1234)", traceGeneric.toString());
 	}
 
+	@Test
 	public void test8() {
 
 		TraceGeneric traceGeneric = new TraceGeneric();
@@ -92,6 +90,7 @@ public class TraceTestCase extends TestCase {
 		assertEquals("78 (x1.12345)", traceGeneric.toString());
 	}
 
+	@Test
 	public void test9() {
 
 		TraceGeneric traceGeneric = new TraceGeneric();

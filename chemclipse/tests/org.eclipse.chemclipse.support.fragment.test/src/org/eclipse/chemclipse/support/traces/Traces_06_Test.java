@@ -12,61 +12,71 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.support.traces;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.List;
 
-public class Traces_06_Test extends TraceTestCase {
+import org.junit.Test;
 
+public class Traces_06_Test {
+
+	@Test
 	public void test1a() {
 
 		String content = "400.01627±10ppm\n417.028±5ppm";
 		List<? extends ITrace> traces = TraceFactory.parseTraces(content, TraceType.MSD_HIGHRES.clazz());
 		assertEquals(2, traces.size());
-		assertEquals(400.01627d, ((TraceHighResMSD)traces.get(0)).getMZ());
-		assertEquals(417.028d, ((TraceHighResMSD)traces.get(1)).getMZ());
+		assertEquals(400.01627d, ((TraceHighResMSD)traces.get(0)).getMZ(), 0);
+		assertEquals(417.028d, ((TraceHighResMSD)traces.get(1)).getMZ(), 0);
 	}
 
+	@Test
 	public void test1b() {
 
 		String content = "400.01627+-10ppm\n417.028+-5ppm";
 		List<? extends ITrace> traces = TraceFactory.parseTraces(content, TraceType.MSD_HIGHRES.clazz());
 		assertEquals(2, traces.size());
-		assertEquals(400.01627d, ((TraceHighResMSD)traces.get(0)).getMZ());
-		assertEquals(417.028d, ((TraceHighResMSD)traces.get(1)).getMZ());
+		assertEquals(400.01627d, ((TraceHighResMSD)traces.get(0)).getMZ(), 0);
+		assertEquals(417.028d, ((TraceHighResMSD)traces.get(1)).getMZ(), 0);
 	}
 
+	@Test
 	public void test1c() {
 
 		String content = "400.01627±0.02\n417.028±0.01";
 		List<? extends ITrace> traces = TraceFactory.parseTraces(content, TraceType.MSD_HIGHRES.clazz());
 		assertEquals(2, traces.size());
-		assertEquals(400.01627d, ((TraceHighResMSD)traces.get(0)).getMZ());
-		assertEquals(417.028d, ((TraceHighResMSD)traces.get(1)).getMZ());
+		assertEquals(400.01627d, ((TraceHighResMSD)traces.get(0)).getMZ(), 0);
+		assertEquals(417.028d, ((TraceHighResMSD)traces.get(1)).getMZ(), 0);
 	}
 
+	@Test
 	public void test1d() {
 
 		String content = "400.01627+-0.02\n417.028+-0.01";
 		List<? extends ITrace> traces = TraceFactory.parseTraces(content, TraceType.MSD_HIGHRES.clazz());
 		assertEquals(2, traces.size());
-		assertEquals(400.01627d, ((TraceHighResMSD)traces.get(0)).getMZ());
-		assertEquals(417.028d, ((TraceHighResMSD)traces.get(1)).getMZ());
+		assertEquals(400.01627d, ((TraceHighResMSD)traces.get(0)).getMZ(), 0);
+		assertEquals(417.028d, ((TraceHighResMSD)traces.get(1)).getMZ(), 0);
 	}
 
+	@Test
 	public void test2c() {
 
 		String content = "400.01627±0.02\n417.028±0.01";
 		List<? extends ITrace> traces = TraceFactory.parseTraces(content, TraceType.WSD_HIGHRES.clazz());
 		assertEquals(2, traces.size());
-		assertEquals(400.01627d, ((TraceHighResWSD)traces.get(0)).getWavelength());
-		assertEquals(417.028d, ((TraceHighResWSD)traces.get(1)).getWavelength());
+		assertEquals(400.01627d, ((TraceHighResWSD)traces.get(0)).getWavelength(), 0);
+		assertEquals(417.028d, ((TraceHighResWSD)traces.get(1)).getWavelength(), 0);
 	}
 
+	@Test
 	public void test2d() {
 
 		String content = "400.01627+-0.02\n417.028+-0.01";
 		List<? extends ITrace> traces = TraceFactory.parseTraces(content, TraceType.WSD_HIGHRES.clazz());
 		assertEquals(2, traces.size());
-		assertEquals(400.01627d, ((TraceHighResWSD)traces.get(0)).getWavelength());
-		assertEquals(417.028d, ((TraceHighResWSD)traces.get(1)).getWavelength());
+		assertEquals(400.01627d, ((TraceHighResWSD)traces.get(0)).getWavelength(), 0);
+		assertEquals(417.028d, ((TraceHighResWSD)traces.get(1)).getWavelength(), 0);
 	}
 }

@@ -12,42 +12,53 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.support.traces;
 
-public class Trace_TandemMSD_01_Test extends TraceTestCase {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class Trace_TandemMSD_01_Test {
 
 	private TraceTandemMSD trace;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		trace = TraceFactory.parseTrace("139 > 111.0 @12", TraceTandemMSD.class);
 	}
 
+	@Test
 	public void testNull() {
 
 		assertNotNull(trace);
 	}
 
+	@Test
 	public void testParentMZ() {
 
 		assertEquals(139, trace.getParentMZ());
 	}
 
+	@Test
 	public void testDaughterMZ() {
 
-		assertEquals(111.0, trace.getDaughterMZ());
+		assertEquals(111.0, trace.getDaughterMZ(), 0);
 	}
 
+	@Test
 	public void testCollisionEnergy() {
 
 		assertEquals(12, trace.getCollisionEnergy());
 	}
 
+	@Test
 	public void testScaleFactor() {
 
-		assertEquals(1.0d, trace.getScaleFactor());
+		assertEquals(1.0d, trace.getScaleFactor(), 0);
 	}
 
+	@Test
 	public void testString() {
 
 		assertEquals("139 > 111.0 @12", trace.toString());

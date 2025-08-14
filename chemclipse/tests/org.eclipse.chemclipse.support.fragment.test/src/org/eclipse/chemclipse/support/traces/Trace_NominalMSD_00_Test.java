@@ -12,29 +12,31 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.support.traces;
 
-public class Trace_NominalMSD_00_Test extends TraceTestCase {
+import static org.junit.Assert.assertNull;
 
-	@Override
-	protected void setUp() throws Exception {
+import org.junit.Test;
 
-		super.setUp();
-	}
+public class Trace_NominalMSD_00_Test {
 
+	@Test
 	public void test1() {
 
 		assertNull(TraceFactory.parseTrace("", TraceTandemMSD.class));
 	}
 
+	@Test
 	public void test2() {
 
 		assertNull(TraceFactory.parseTrace("A", TraceTandemMSD.class));
 	}
 
+	@Test
 	public void test3() {
 
 		assertNull(TraceFactory.parseTrace("0", TraceTandemMSD.class));
 	}
 
+	@Test
 	public void test4() {
 
 		assertNull(TraceFactory.parseTrace("-1", TraceTandemMSD.class));

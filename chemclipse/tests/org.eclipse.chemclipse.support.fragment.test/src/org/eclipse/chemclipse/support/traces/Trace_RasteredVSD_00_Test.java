@@ -12,23 +12,31 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.support.traces;
 
-public class Trace_RasteredVSD_00_Test extends TraceTestCase {
+import static org.junit.Assert.assertNull;
 
+import org.junit.Test;
+
+public class Trace_RasteredVSD_00_Test {
+
+	@Test
 	public void test1() {
 
 		assertNull(TraceFactory.parseTrace("", TraceRasteredVSD.class));
 	}
 
+	@Test
 	public void test2() {
 
 		assertNull(TraceFactory.parseTrace("A", TraceRasteredVSD.class));
 	}
 
+	@Test
 	public void test3() {
 
 		assertNull(TraceFactory.parseTrace("0", TraceRasteredVSD.class));
 	}
 
+	@Test
 	public void test4() {
 
 		assertNull(TraceFactory.parseTrace("-1", TraceRasteredVSD.class));

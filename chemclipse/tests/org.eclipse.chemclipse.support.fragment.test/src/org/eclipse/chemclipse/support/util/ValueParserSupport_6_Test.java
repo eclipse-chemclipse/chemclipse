@@ -12,88 +12,97 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.support.util;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class ValueParserSupport_6_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class ValueParserSupport_6_Test {
 
 	private ValueParserSupport support = new ValueParserSupport();
 	private String[] values;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		values = new String[]{Double.toString(-389.3d)};
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals(1, values.length);
 	}
 
+	@Test
 	public void test2() {
 
 		assertEquals(false, support.parseBoolean(values, 0));
 	}
 
+	@Test
 	public void test3() {
 
 		assertEquals(false, support.parseBoolean(values, 0, false));
 	}
 
+	@Test
 	public void test4() {
 
 		assertEquals(true, support.parseBoolean(values, 0, true));
 	}
 
+	@Test
 	public void test5() {
 
 		assertEquals("-389.3", support.parseString(values, 0));
 	}
 
+	@Test
 	public void test6() {
 
 		assertEquals("-389.3", support.parseString(values, 0, ""));
 	}
 
+	@Test
 	public void test7() {
 
 		assertEquals("-389.3", support.parseString(values, 0, "Test"));
 	}
 
+	@Test
 	public void test8() {
 
-		assertEquals(-389.3f, support.parseFloat(values, 0));
+		assertEquals(-389.3f, support.parseFloat(values, 0), 0);
 	}
 
+	@Test
 	public void test9() {
 
-		assertEquals(-389.3f, support.parseFloat(values, 0, 0.0f));
+		assertEquals(-389.3f, support.parseFloat(values, 0, 0.0f), 0);
 	}
 
+	@Test
 	public void test10() {
 
-		assertEquals(-389.3f, support.parseFloat(values, 0, 1.0f));
+		assertEquals(-389.3f, support.parseFloat(values, 0, 1.0f), 0);
 	}
 
+	@Test
 	public void test11() {
 
-		assertEquals(-389.3d, support.parseDouble(values, 0));
+		assertEquals(-389.3d, support.parseDouble(values, 0), 0);
 	}
 
+	@Test
 	public void test12() {
 
-		assertEquals(-389.3d, support.parseDouble(values, 0, 0.0d));
+		assertEquals(-389.3d, support.parseDouble(values, 0, 0.0d), 0);
 	}
 
+	@Test
 	public void test13() {
 
-		assertEquals(-389.3d, support.parseDouble(values, 0, 1.0d));
+		assertEquals(-389.3d, support.parseDouble(values, 0, 1.0d), 0);
 	}
 }

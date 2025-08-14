@@ -12,15 +12,20 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.support.settings;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-public class ApplicationSettings_1_Test extends TestCase {
+import org.junit.Test;
 
+public class ApplicationSettings_1_Test {
+
+	@Test
 	public void test1() {
 
 		assertNotNull(ApplicationSettings.getSystemTmpDirectory());
 	}
 
+	@Test
 	public void test2() {
 
 		assertTrue(ApplicationSettings.getSystemTmpDirectory().exists());

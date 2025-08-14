@@ -12,12 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.support.history;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class ProcessSupplierSupport_1_Test extends TestCase {
+import org.junit.Test;
+
+public class ProcessSupplierSupport_1_Test {
 
 	private String PAYLOAD = "VUdWaGEwWnBiSFJsY2pwbWFXeDBaWEk2Y0hKdlkyVnpjMjl5T21Oc1lYTnpPbTl5Wnk1bFkyeHBjSE5sTG1Ob1pXMWpiR2x3YzJVdWVIaGtMbVpwYkhSbGNpNXdaV0ZyY3k1RVpXeGxkR1ZRWldGcmMwWnBiSFJsY2c9PV9SR1ZzWlhSbElGQmxZV3R6X1JVMVFWRms9X2V5SlZibWxrWlc1MGFXWnBaV1FnVDI1c2VTSTZabUZzYzJVc0lrUmxiR1YwWlNCUVpXRnJjeUk2ZEhKMVpYMD0=";
 
+	@Test
 	public void test1() {
 
 		ProcessSupplierEntry processSupplierEntry = new ProcessSupplierEntry();
@@ -25,14 +28,15 @@ public class ProcessSupplierSupport_1_Test extends TestCase {
 		processSupplierEntry.setName("Delete Peaks");
 		processSupplierEntry.setDescription("");
 		processSupplierEntry.setUserSettings("{\"Unidentified Only\":false,\"Delete Peaks\":true}");
-		//
+
 		assertEquals(PAYLOAD, ProcessSupplierSupport.toPayload(processSupplierEntry));
 	}
 
+	@Test
 	public void test2() {
 
 		ProcessSupplierEntry processSupplierEntry = ProcessSupplierSupport.fromPayload(PAYLOAD);
-		//
+
 		assertEquals("PeakFilter:filter:processor:class:org.eclipse.chemclipse.xxd.filter.peaks.DeletePeaksFilter", processSupplierEntry.getId());
 		assertEquals("Delete Peaks", processSupplierEntry.getName());
 		assertEquals("", processSupplierEntry.getDescription());

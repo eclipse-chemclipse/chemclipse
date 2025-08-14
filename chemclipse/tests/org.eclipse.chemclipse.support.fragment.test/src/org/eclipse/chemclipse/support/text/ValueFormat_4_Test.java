@@ -12,61 +12,45 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.support.text;
 
+import static org.junit.Assert.assertEquals;
+
 import java.text.NumberFormat;
 import java.text.ParseException;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
-public class ValueFormat_4_Test extends TestCase {
+public class ValueFormat_4_Test {
 
 	private NumberFormat numberFormat;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		numberFormat = ValueFormat.getNumberFormatEnglish();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
+	@Test
+	public void test1() throws ParseException {
 
-		super.tearDown();
+		assertEquals(0.0d, numberFormat.parse("0.0").doubleValue(), 0);
 	}
 
-	public void test1() {
+	@Test
+	public void test2() throws ParseException {
 
-		try {
-			assertEquals(0.0d, numberFormat.parse("0.0").doubleValue());
-		} catch(ParseException e) {
-			assertTrue(false);
-		}
+		assertEquals(0.1d, numberFormat.parse("0.1").doubleValue(), 0);
 	}
 
-	public void test2() {
+	@Test
+	public void test3() throws ParseException {
 
-		try {
-			assertEquals(0.1d, numberFormat.parse("0.1").doubleValue());
-		} catch(ParseException e) {
-			assertTrue(false);
-		}
+		assertEquals(1.0d, numberFormat.parse("1.0").doubleValue(), 0);
 	}
 
-	public void test3() {
+	@Test
+	public void test4() throws ParseException {
 
-		try {
-			assertEquals(1.0d, numberFormat.parse("1.0").doubleValue());
-		} catch(ParseException e) {
-			assertTrue(false);
-		}
-	}
-
-	public void test4() {
-
-		try {
-			assertEquals(1.1d, numberFormat.parse("1.1").doubleValue());
-		} catch(ParseException e) {
-			assertTrue(false);
-		}
+		assertEquals(1.1d, numberFormat.parse("1.1").doubleValue(), 0);
 	}
 }

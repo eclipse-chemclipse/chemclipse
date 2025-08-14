@@ -12,32 +12,41 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.support.traces;
 
-public class Trace_NominalMSD_03_Test extends TraceTestCase {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class Trace_NominalMSD_03_Test {
 
 	private TraceNominalMSD trace;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		trace = TraceFactory.parseTrace("69.5", TraceNominalMSD.class);
 	}
 
+	@Test
 	public void testNull() {
 
 		assertNotNull(trace);
 	}
 
+	@Test
 	public void testMZ() {
 
 		assertEquals(70, trace.getMZ());
 	}
 
+	@Test
 	public void testScaleFactor() {
 
-		assertEquals(1.0d, trace.getScaleFactor());
+		assertEquals(1.0d, trace.getScaleFactor(), 0);
 	}
 
+	@Test
 	public void testString() {
 
 		assertEquals("70", trace.toString());

@@ -12,47 +12,59 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.support.traces;
 
-public class Trace_HighResMSD_02_Test extends TraceTestCase {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class Trace_HighResMSD_02_Test {
 
 	private TraceHighResMSD trace;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		trace = TraceFactory.parseTrace("279.092 (x5.3)", TraceHighResMSD.class);
 	}
 
+	@Test
 	public void testMZ() {
 
-		assertEquals(279.092d, trace.getMZ());
+		assertEquals(279.092d, trace.getMZ(), 0);
 	}
 
+	@Test
 	public void testDelta() {
 
-		assertEquals(0.0d, trace.getDelta());
+		assertEquals(0.0d, trace.getDelta(), 0);
 	}
 
+	@Test
 	public void testUseRange() {
 
 		assertFalse(trace.isUseRange());
 	}
 
+	@Test
 	public void testStartMZ() {
 
 		assertEquals(279.092d, trace.getStartMZ(), 0.0000000001d);
 	}
 
+	@Test
 	public void testStopMZ() {
 
 		assertEquals(279.092d, trace.getStopMZ(), 0.0000000001d);
 	}
 
+	@Test
 	public void testScaleFactor() {
 
-		assertEquals(5.3d, trace.getScaleFactor());
+		assertEquals(5.3d, trace.getScaleFactor(), 0);
 	}
 
+	@Test
 	public void testString() {
 
 		assertEquals("279.092 (x5.3)", trace.toString());

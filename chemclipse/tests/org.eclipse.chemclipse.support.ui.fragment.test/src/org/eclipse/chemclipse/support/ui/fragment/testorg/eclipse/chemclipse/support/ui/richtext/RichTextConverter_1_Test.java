@@ -12,41 +12,48 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.support.ui.fragment.testorg.eclipse.chemclipse.support.ui.richtext;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.support.ui.richtext.RichTextConverter;
 import org.junit.Ignore;
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 @Ignore
-public class RichTextConverter_1_Test extends TestCase {
+public class RichTextConverter_1_Test {
 
 	private static final String TEST = "Hello World!";
 
+	@Test
 	public void test1() {
 
 		assertEquals("", RichTextConverter.convertRtfToHtml(null, false));
 	}
 
+	@Test
 	public void test2() {
 
 		assertEquals("", RichTextConverter.convertRtfToHtml("", false));
 	}
 
+	@Test
 	public void test3() {
 
 		assertEquals(TEST, RichTextConverter.convertRtfToHtml(TEST, true));
 	}
 
+	@Test
 	public void test4() {
 
 		assertEquals(TEST, RichTextConverter.convertRtfToHtml(TEST, false));
 	}
 
+	@Test
 	public void test5() {
 
 		assertEquals("<p><span style=\"color: #000000\">Hello World!</span></p>", RichTextConverter.convertRtfToHtml(getRichText(), true));
 	}
 
+	@Test
 	public void test6() {
 
 		assertEquals("<html><head><style><!----></style></head><body><p><span style=\"color: #000000\">Hello World!</span></p></body></html>", RichTextConverter.convertRtfToHtml(getRichText(), false));

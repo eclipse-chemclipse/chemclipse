@@ -12,10 +12,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.support.ui.fragment.testorg.eclipse.chemclipse.support.ui.richtext;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertTrue;
 
-public class TestReminder extends TestCase {
+import org.junit.Test;
 
+public class TestReminder {
+
+	@Test
 	public void test1() {
 
 		/*

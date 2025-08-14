@@ -12,14 +12,16 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.support.ui.fragment.testorg.eclipse.chemclipse.support.ui.richtext;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.support.ui.richtext.RichTextConverter;
 import org.junit.Ignore;
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 @Ignore
-public class RichTextConverter_2_Test extends TestCase {
+public class RichTextConverter_2_Test {
 
+	@Test
 	public void test1() {
 
 		String input = "<p><span style=\"font-size: 8pt; font-family: Microsoft Sans Serif\">Test</span></p>";

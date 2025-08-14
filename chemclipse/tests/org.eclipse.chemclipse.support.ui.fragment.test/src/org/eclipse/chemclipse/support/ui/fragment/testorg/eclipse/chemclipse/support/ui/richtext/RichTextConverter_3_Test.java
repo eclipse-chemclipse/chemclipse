@@ -12,14 +12,16 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.support.ui.fragment.testorg.eclipse.chemclipse.support.ui.richtext;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.support.ui.richtext.RichTextConverter;
 import org.junit.Ignore;
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 @Ignore
-public class RichTextConverter_3_Test extends TestCase {
+public class RichTextConverter_3_Test {
 
+	@Test
 	public void test1() {
 
 		String input = "{\\rtf1\\ansi\\ansicpg1252\\deff0{\\fonttbl{\\f0\\fnil\\fcharset0 Microsoft Sans Serif;}}\n\\viewkind4\\uc1\\pard\\lang1031\\f0\\fs17 Gehalt polare S\\'e4ule - 0,993%\\par\n\\b\\fs17 AB 10.5.2006:\\b0\\fs17\\par\n-> es gibt keinen Grenzwert.\\par\n}";

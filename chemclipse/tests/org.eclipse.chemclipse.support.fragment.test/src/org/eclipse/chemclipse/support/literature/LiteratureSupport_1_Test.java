@@ -12,195 +12,228 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.support.literature;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-public class LiteratureSupport_1_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class LiteratureSupport_1_Test {
 
 	private String content;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
 		content = getNewlineRIS();
-		super.setUp();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals("https://doi.org/10.1186/1471-2105-11-405", LiteratureSupport.getContainedLink(content));
 	}
 
+	@Test
 	public void test2a() {
 
 		assertEquals("OpenChrom: a cross-platform open source software for the mass spectrometric analysis of chromatographic data", LiteratureSupport.getTitle(content));
 	}
 
+	@Test
 	public void test2b() {
 
 		assertEquals("OpenChrom: a cross-platform open source software for the mass spectrometric analysis of chromatographic data", LiteratureSupport.getTitle(getFlattenRIS()));
 	}
 
+	@Test
 	public void test2c() {
 
 		assertEquals("OpenChrom: a cross-platform open source software for the mass spectrometric analysis of chromatographic data", LiteratureSupport.getTitle(getFormattedOriginalRIS()));
 	}
 
+	@Test
 	public void test2d() {
 
 		assertEquals("OpenChrom: a cross-platform open source software for the mass spectrometric analysis of chromatographic data", LiteratureSupport.getTitle(getFormattedMappedRIS()));
 	}
 
+	@Test
 	public void test2e() {
 
 		assertEquals("", LiteratureSupport.getTitle(""));
 	}
 
+	@Test
 	public void test2f() {
 
 		assertEquals("", LiteratureSupport.getTitle(null));
 	}
 
+	@Test
 	public void test3a() {
 
 		assertEquals("Reference", LiteratureSupport.getMappedIdentifierRIS("TY"));
 	}
 
+	@Test
 	public void test3b() {
 
 		assertEquals("Type of Work", LiteratureSupport.getMappedIdentifierRIS("M3"));
 	}
 
+	@Test
 	public void test3c() {
 
 		assertEquals("Access Date", LiteratureSupport.getMappedIdentifierRIS("Y2"));
 	}
 
+	@Test
 	public void test3d() {
 
 		assertEquals("Unknown", LiteratureSupport.getMappedIdentifierRIS(""));
 	}
 
+	@Test
 	public void test3e() {
 
 		assertEquals("Unknown", LiteratureSupport.getMappedIdentifierRIS(null));
 	}
 
+	@Test
 	public void test4a() {
 
 		assertTrue(LiteratureSupport.isEndOfReferenceRIS("ER"));
 	}
 
+	@Test
 	public void test4b() {
 
 		assertFalse(LiteratureSupport.isEndOfReferenceRIS("TY"));
 	}
 
+	@Test
 	public void test4c() {
 
 		assertFalse(LiteratureSupport.isEndOfReferenceRIS(""));
 	}
 
+	@Test
 	public void test4d() {
 
 		assertFalse(LiteratureSupport.isEndOfReferenceRIS(null));
 	}
 
+	@Test
 	public void test5a() {
 
 		assertTrue(LiteratureSupport.isFormatRIS(content));
 	}
 
+	@Test
 	public void test5b() {
 
 		assertFalse(LiteratureSupport.isFormatRIS(getOther()));
 	}
 
+	@Test
 	public void test6a() {
 
 		assertEquals(getFormattedOriginalRIS(), LiteratureSupport.getFormattedRIS(getNewlineRIS(), false));
 	}
 
+	@Test
 	public void test6b() {
 
 		assertEquals(getFormattedOriginalRIS(), LiteratureSupport.getFormattedRIS(getFlattenRIS(), false));
 	}
 
+	@Test
 	public void test6c() {
 
 		assertEquals("", LiteratureSupport.getFormattedRIS("", false));
 	}
 
+	@Test
 	public void test6d() {
 
 		assertEquals("", LiteratureSupport.getFormattedRIS(null, false));
 	}
 
+	@Test
 	public void test7a() {
 
 		assertEquals(getFormattedMappedRIS(), LiteratureSupport.getFormattedRIS(getNewlineRIS(), true));
 	}
 
+	@Test
 	public void test7b() {
 
 		assertEquals(getFormattedMappedRIS(), LiteratureSupport.getFormattedRIS(getFlattenRIS(), true));
 	}
 
+	@Test
 	public void test7c() {
 
 		assertEquals("", LiteratureSupport.getFormattedRIS("", true));
 	}
 
+	@Test
 	public void test7d() {
 
 		assertEquals("", LiteratureSupport.getFormattedRIS(null, true));
 	}
 
+	@Test
 	public void test8a() {
 
 		assertEquals("OpenChrom: a cross-platform open source software", LiteratureSupport.getTitle("TI  - OpenChrom: a cross-platform open source software\n"));
 	}
 
+	@Test
 	public void test8b() {
 
 		assertEquals("OpenChrom: a cross-platform open source software", LiteratureSupport.getTitle("TI  - OpenChrom: a cross-platform open source software JO  - BMC"));
 	}
 
+	@Test
 	public void test8c() {
 
 		assertEquals("OpenChrom: a cross-platform open source software", LiteratureSupport.getTitle("TI  - OpenChrom: a cross-platform open source software"));
 	}
 
+	@Test
 	public void test9a() {
 
 		assertEquals("OpenChrom: a cross-platform open source software", LiteratureSupport.getTitle("T1  - OpenChrom: a cross-platform open source software\n"));
 	}
 
+	@Test
 	public void test9b() {
 
 		assertEquals("OpenChrom: a cross-platform open source software", LiteratureSupport.getTitle("T1  - OpenChrom: a cross-platform open source software JO  - BMC"));
 	}
 
+	@Test
 	public void test9c() {
 
 		assertEquals("OpenChrom: a cross-platform open source software", LiteratureSupport.getTitle("T1  - OpenChrom: a cross-platform open source software"));
 	}
 
+	@Test
 	public void test10a() {
 
 		assertEquals("OpenChrom: a cross-platform open source software", LiteratureSupport.getTitle("Title: OpenChrom: a cross-platform open source software\n"));
 	}
 
+	@Test
 	public void test10b() {
 
 		assertEquals("OpenChrom: a cross-platform open source software", LiteratureSupport.getTitle("Title: OpenChrom: a cross-platform open source software JO  - BMC"));
 	}
 
+	@Test
 	public void test10c() {
 
 		assertEquals("OpenChrom: a cross-platform open source software", LiteratureSupport.getTitle("Title: OpenChrom: a cross-platform open source software"));

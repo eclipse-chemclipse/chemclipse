@@ -12,22 +12,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.support.settings;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class OperatingSystemUtils_1_Test extends TestCase {
+import org.junit.Test;
 
-	@Override
-	protected void setUp() throws Exception {
+public class OperatingSystemUtils_1_Test {
 
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetLineDelimiter_1() {
 
 		String delimiter = OperatingSystemUtils.getLineDelimiter();

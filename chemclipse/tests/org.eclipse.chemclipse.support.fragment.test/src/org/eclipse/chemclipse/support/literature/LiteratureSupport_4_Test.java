@@ -12,12 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.support.literature;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /*
  * Test the line endings.
  */
-public class LiteratureSupport_4_Test extends TestCase {
+public class LiteratureSupport_4_Test {
 
 	private static final String URL = "https://doi.org/10.1002/rcm.9294";
 	private static final String TITLE = "A general procedure for rounding m/z values in low‐resolution mass spectra";
@@ -25,46 +28,45 @@ public class LiteratureSupport_4_Test extends TestCase {
 	private String contentB;
 	private String contentC;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
 		contentA = getRIS_v1();
 		contentB = getRIS_v2();
 		contentC = getRIS_v3();
-		super.setUp();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1a() {
 
 		assertEquals(URL, LiteratureSupport.getContainedLink(contentA));
 	}
 
+	@Test
 	public void test1b() {
 
 		assertEquals(URL, LiteratureSupport.getContainedLink(contentB));
 	}
 
+	@Test
 	public void test1c() {
 
 		assertEquals(URL, LiteratureSupport.getContainedLink(contentC));
 	}
 
+	@Test
 	public void test2a() {
 
 		assertEquals(TITLE, LiteratureSupport.getTitle(contentA));
 	}
 
+	@Test
 	public void test2b() {
 
 		assertEquals(TITLE, LiteratureSupport.getTitle(contentB));
 	}
 
+	@Test
 	public void test2c() {
 
 		assertEquals(TITLE, LiteratureSupport.getTitle(contentC));

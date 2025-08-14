@@ -12,16 +12,18 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.swt.ui.support;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.swt.graphics.Color;
 import org.junit.Ignore;
-
-import junit.framework.TestCase;
+import org.junit.Test;
 
 @Ignore
-public class Colors_1_UITest extends TestCase {
+public class Colors_1_UITest {
 
 	private Color color = Colors.RED;
 
+	@Test
 	public void test1() {
 
 		int alpha = 255;
@@ -33,6 +35,7 @@ public class Colors_1_UITest extends TestCase {
 		assertEquals("rgba(255,0,0,1.0)", rgba);
 	}
 
+	@Test
 	public void test2() {
 
 		int alpha = 200;
@@ -44,6 +47,7 @@ public class Colors_1_UITest extends TestCase {
 		assertEquals("rgba(255,0,0,0.7843137254901961)", rgba);
 	}
 
+	@Test
 	public void test3() {
 
 		int alpha = 150;
@@ -55,6 +59,7 @@ public class Colors_1_UITest extends TestCase {
 		assertEquals("rgba(255,0,0,0.5882352941176471)", rgba);
 	}
 
+	@Test
 	public void test4() {
 
 		int alpha = 100;
@@ -66,6 +71,7 @@ public class Colors_1_UITest extends TestCase {
 		assertEquals("rgba(255,0,0,0.39215686274509803)", rgba);
 	}
 
+	@Test
 	public void test5() {
 
 		int alpha = 50;
@@ -77,6 +83,7 @@ public class Colors_1_UITest extends TestCase {
 		assertEquals("rgba(255,0,0,0.19607843137254902)", rgba);
 	}
 
+	@Test
 	public void test6() {
 
 		int alpha = 0;

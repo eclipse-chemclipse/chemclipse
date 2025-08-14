@@ -12,32 +12,41 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.support.traces;
 
-public class Trace_RasteredWSD_04_Test extends TraceTestCase {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class Trace_RasteredWSD_04_Test {
 
 	private TraceRasteredWSD trace;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		trace = TraceFactory.parseTrace("201 (x1.6)", TraceRasteredWSD.class);
 	}
 
+	@Test
 	public void testNull() {
 
 		assertNotNull(trace);
 	}
 
+	@Test
 	public void testWavelength() {
 
 		assertEquals(201, trace.getWavelength());
 	}
 
+	@Test
 	public void testScaleFactor() {
 
-		assertEquals(1.6d, trace.getScaleFactor());
+		assertEquals(1.6d, trace.getScaleFactor(), 0);
 	}
 
+	@Test
 	public void testString() {
 
 		assertEquals("201 (x1.6)", trace.toString());
