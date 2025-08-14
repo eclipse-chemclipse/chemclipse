@@ -12,6 +12,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.model.quantitation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +27,8 @@ import org.eclipse.chemclipse.model.quantitation.IResponseSignal;
 import org.eclipse.chemclipse.model.quantitation.IResponseSignals;
 import org.eclipse.chemclipse.msd.model.core.AbstractIon;
 import org.eclipse.chemclipse.msd.model.implementation.QuantitationPeakMSD;
+import org.junit.Before;
+import org.junit.Test;
 
 public class QuantitationCompound_4_Test extends ReferencePeakMSDTestCase {
 
@@ -31,11 +37,12 @@ public class QuantitationCompound_4_Test extends ReferencePeakMSDTestCase {
 	private IResponseSignals concentrationResponseEntries;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
 		super.setUp();
 		quantitationCompound = new QuantitationCompound("Styrene", "mg/ml", 5500);
-		//
+
 		List<IQuantitationPeak> quantitationPeaks = new ArrayList<IQuantitationPeak>();
 		IQuantitationPeak quantitationPeak1 = new QuantitationPeakMSD(getReferencePeakMSD_TIC_1(), 0.01d, "mg/ml");
 		quantitationPeaks.add(quantitationPeak1);
@@ -43,74 +50,73 @@ public class QuantitationCompound_4_Test extends ReferencePeakMSDTestCase {
 		quantitationPeaks.add(quantitationPeak2);
 		IQuantitationPeak quantitationPeak3 = new QuantitationPeakMSD(getReferencePeakMSD_TIC_3(), 0.1d, "mg/ml");
 		quantitationPeaks.add(quantitationPeak3);
-		//
+
 		quantitationCompound.getQuantitationPeaks().addAll(quantitationPeaks);
 		quantitationCompound.setUseTIC(true);
 		quantitationCompound.calculateSignalTablesFromPeaks();
-		//
+
 		quantitationSignals = quantitationCompound.getQuantitationSignals();
 		concentrationResponseEntries = quantitationCompound.getResponseSignals();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-		quantitationCompound = null;
-		quantitationSignals = null;
-		concentrationResponseEntries = null;
-	}
-
+	@Test
 	public void testGetQuantitationSignals_1() {
 
 		assertNotNull(quantitationSignals);
 	}
 
+	@Test
 	public void testGetQuantitationSignals_2() {
 
 		assertEquals(1, quantitationSignals.size());
 	}
 
+	@Test
 	public void testGetQuantitationSignals_3() {
 
 		IQuantitationSignal quantitationSignal = quantitationSignals.first();
-		assertEquals(AbstractIon.TIC_ION, quantitationSignal.getSignal());
-		assertEquals(IQuantitationSignal.ABSOLUTE_RELATIVE_RESPONSE, quantitationSignal.getRelativeResponse());
-		assertEquals(0.0d, quantitationSignal.getUncertainty());
+		assertEquals(AbstractIon.TIC_ION, quantitationSignal.getSignal(), 0);
+		assertEquals(IQuantitationSignal.ABSOLUTE_RELATIVE_RESPONSE, quantitationSignal.getRelativeResponse(), 0);
+		assertEquals(0.0d, quantitationSignal.getUncertainty(), 0);
 		assertTrue(quantitationSignal.isUse());
 	}
 
+	@Test
 	public void testGetConcentrationResponseEntries_1() {
 
 		assertNotNull(concentrationResponseEntries);
 	}
 
+	@Test
 	public void testGetConcentrationResponseEntries_2() {
 
 		assertEquals(3, concentrationResponseEntries.size());
 	}
 
+	@Test
 	public void testGetConcentrationResponseEntries_3() {
 
 		IResponseSignal concentrationResponseEntry = concentrationResponseEntries.get(0);
-		assertEquals(AbstractIon.TIC_ION, concentrationResponseEntry.getSignal());
-		assertEquals(0.01d, concentrationResponseEntry.getConcentration());
-		assertEquals(750220.0d, concentrationResponseEntry.getResponse());
+		assertEquals(AbstractIon.TIC_ION, concentrationResponseEntry.getSignal(), 0);
+		assertEquals(0.01d, concentrationResponseEntry.getConcentration(), 0);
+		assertEquals(750220.0d, concentrationResponseEntry.getResponse(), 0);
 	}
 
+	@Test
 	public void testGetConcentrationResponseEntries_4() {
 
 		IResponseSignal concentrationResponseEntry = concentrationResponseEntries.get(1);
-		assertEquals(AbstractIon.TIC_ION, concentrationResponseEntry.getSignal());
-		assertEquals(0.05d, concentrationResponseEntry.getConcentration());
-		assertEquals(3751100.0d, concentrationResponseEntry.getResponse());
+		assertEquals(AbstractIon.TIC_ION, concentrationResponseEntry.getSignal(), 0);
+		assertEquals(0.05d, concentrationResponseEntry.getConcentration(), 0);
+		assertEquals(3751100.0d, concentrationResponseEntry.getResponse(), 0);
 	}
 
+	@Test
 	public void testGetConcentrationResponseEntries_5() {
 
 		IResponseSignal concentrationResponseEntry = concentrationResponseEntries.get(2);
-		assertEquals(AbstractIon.TIC_ION, concentrationResponseEntry.getSignal());
-		assertEquals(0.1d, concentrationResponseEntry.getConcentration());
-		assertEquals(7502200.0d, concentrationResponseEntry.getResponse());
+		assertEquals(AbstractIon.TIC_ION, concentrationResponseEntry.getSignal(), 0);
+		assertEquals(0.1d, concentrationResponseEntry.getConcentration(), 0);
+		assertEquals(7502200.0d, concentrationResponseEntry.getResponse(), 0);
 	}
 }

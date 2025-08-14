@@ -12,56 +12,57 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.pdfbox.extensions.settings;
 
+import static org.junit.Assert.assertEquals;
+
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class PageBaseConverter_2_Test extends TestCase {
+public class PageBaseConverter_2_Test {
 
 	private IPageBaseConverter converter;
 	private PDRectangle pdRectangle;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		converter = ConverterFactory.getInstance(PageBase.TOP_LEFT);
 		pdRectangle = PDRectangle.A4;
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1a() {
 
-		assertEquals(-1.0f, converter.getPositionX(pdRectangle.getWidth(), -1.0f));
+		assertEquals(-1.0f, converter.getPositionX(pdRectangle.getWidth(), -1.0f), 0);
 	}
 
+	@Test
 	public void test1b() {
 
-		assertEquals(0.0f, converter.getPositionX(pdRectangle.getWidth(), 0.0f));
+		assertEquals(0.0f, converter.getPositionX(pdRectangle.getWidth(), 0.0f), 0);
 	}
 
+	@Test
 	public void test1c() {
 
-		assertEquals(1.0f, converter.getPositionX(pdRectangle.getWidth(), 1.0f));
+		assertEquals(1.0f, converter.getPositionX(pdRectangle.getWidth(), 1.0f), 0);
 	}
 
+	@Test
 	public void test2a() {
 
-		assertEquals(842.8898f, converter.getPositionY(pdRectangle.getHeight(), -1.0f));
+		assertEquals(842.8898f, converter.getPositionY(pdRectangle.getHeight(), -1.0f), 0);
 	}
 
+	@Test
 	public void test2b() {
 
-		assertEquals(841.8898f, converter.getPositionY(pdRectangle.getHeight(), 0.0f));
+		assertEquals(841.8898f, converter.getPositionY(pdRectangle.getHeight(), 0.0f), 0);
 	}
 
+	@Test
 	public void test2c() {
 
-		assertEquals(840.8898f, converter.getPositionY(pdRectangle.getHeight(), 1.0f));
+		assertEquals(840.8898f, converter.getPositionY(pdRectangle.getHeight(), 1.0f), 0);
 	}
 }

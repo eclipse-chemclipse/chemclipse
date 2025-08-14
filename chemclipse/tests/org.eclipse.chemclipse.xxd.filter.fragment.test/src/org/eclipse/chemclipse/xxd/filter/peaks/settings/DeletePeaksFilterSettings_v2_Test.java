@@ -12,51 +12,51 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.filter.peaks.settings;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.xxd.filter.support.DeletePeakOption;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class DeletePeaksFilterSettings_v2_Test {
 
-public class DeletePeaksFilterSettings_v2_Test extends TestCase {
+	private DeletePeaksFilterSettings settings = new DeletePeaksFilterSettings();
 
-	private DeletePeaksFilterSettings settings;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		settings = new DeletePeaksFilterSettings();
-	}
-
+	@Test
 	public void test0() {
 
 		settings.transferToLatestVersion("{\"Delete Peaks\":true}");
 		assertEquals(DeletePeakOption.ALL, settings.getDeletePeakOption());
 	}
 
+	@Test
 	public void test1() {
 
 		settings.transferToLatestVersion("{\"Delete Peaks\":false,\"Unidentified Only\":false,\"Inactive Only\":false}");
 		assertEquals(DeletePeakOption.NONE, settings.getDeletePeakOption());
 	}
 
+	@Test
 	public void test2() {
 
 		settings.transferToLatestVersion("{\"Delete Peaks\":false,\"Unidentified Only\":true,\"Inactive Only\":false}");
 		assertEquals(DeletePeakOption.NONE, settings.getDeletePeakOption());
 	}
 
+	@Test
 	public void test3() {
 
 		settings.transferToLatestVersion("{\"Delete Peaks\":true,\"Unidentified Only\":false,\"Inactive Only\":false}");
 		assertEquals(DeletePeakOption.ALL, settings.getDeletePeakOption());
 	}
 
+	@Test
 	public void test4() {
 
 		settings.transferToLatestVersion("{\"Delete Peaks\":true,\"Unidentified Only\":true,\"Inactive Only\":false}");
 		assertEquals(DeletePeakOption.UNIDENTIFIED, settings.getDeletePeakOption());
 	}
 
+	@Test
 	public void test5() {
 
 		settings.transferToLatestVersion("{\"Delete Peaks\":true,\"Unidentified Only\":false,\"Inactive Only\":true}");

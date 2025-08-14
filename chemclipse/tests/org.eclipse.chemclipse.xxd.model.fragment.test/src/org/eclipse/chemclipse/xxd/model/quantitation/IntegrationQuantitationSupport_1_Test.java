@@ -12,40 +12,42 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.model.quantitation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.chemclipse.model.quantitation.QuantitationSupport;
 import org.eclipse.chemclipse.msd.model.core.AbstractIon;
+import org.junit.Before;
+import org.junit.Test;
 
 public class IntegrationQuantitationSupport_1_Test extends QuantitationCalculator_TIC_TestCase {
 
 	private QuantitationSupport support;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
 		super.setUp();
 		support = new QuantitationSupport(getReferencePeakMSD_TIC_1());
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-		support = null;
-	}
-
+	@Test
 	public void testIsTheTotalSignalIntegrated_1() {
 
 		assertTrue(support.isTotalSignalIntegrated());
 	}
 
+	@Test
 	public void testValidateTIC_1() {
 
 		assertTrue(support.validateTIC());
 	}
 
+	@Test
 	public void testValidateXIC_1() {
 
 		List<Double> selectedQuantitationIons = new ArrayList<Double>();
@@ -53,8 +55,9 @@ public class IntegrationQuantitationSupport_1_Test extends QuantitationCalculato
 		assertTrue(support.validateXIC(selectedQuantitationIons));
 	}
 
+	@Test
 	public void testGetIntegrationArea_1() {
 
-		assertEquals(750220.0d, support.getIntegrationArea(AbstractIon.TIC_ION));
+		assertEquals(750220.0d, support.getIntegrationArea(AbstractIon.TIC_ION), 0);
 	}
 }

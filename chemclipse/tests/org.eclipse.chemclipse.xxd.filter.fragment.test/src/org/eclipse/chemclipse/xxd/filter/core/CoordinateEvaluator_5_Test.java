@@ -12,18 +12,26 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.filter.core;
 
+import static org.junit.Assert.assertFalse;
+
 import org.eclipse.chemclipse.model.core.IScan;
-import org.eclipse.chemclipse.model.implementation.Scan;
+import org.eclipse.chemclipse.xxd.filter.model.CoordinateOption;
+import org.eclipse.chemclipse.xxd.filter.model.RangeOption;
+import org.junit.Test;
 
-public class CoordinateEvaluatorTestCase {
+public class CoordinateEvaluator_5_Test extends CoordinateEvaluatorTestCase {
 
-	protected IScan createScan(int retentionTime, float retentionIndex) {
+	@Test
+	public void test1() {
 
-		IScan scan = new Scan(1000);
-		scan.setRetentionTime(retentionTime);
-		scan.setRetentionIndex(retentionIndex);
+		assertFalse(CoordinateEvaluator.isMatchScan(null, CoordinateOption.NONE, RangeOption.NONE, 0));
+	}
 
-		return scan;
+	@Test
+	public void test2() {
+
+		IScan scan = createScan(0, 0);
+		assertFalse(CoordinateEvaluator.isMatchScan(scan, CoordinateOption.NONE, RangeOption.NONE, 0));
 	}
 
 }

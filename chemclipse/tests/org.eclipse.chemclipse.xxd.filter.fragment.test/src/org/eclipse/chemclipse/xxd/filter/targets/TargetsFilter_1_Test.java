@@ -12,6 +12,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.filter.targets;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,21 +27,21 @@ import org.eclipse.chemclipse.model.identifier.LibraryInformation;
 import org.eclipse.chemclipse.model.implementation.IdentificationTarget;
 import org.eclipse.chemclipse.xxd.filter.peaks.settings.DeleteTargetsFilterSettings;
 import org.eclipse.chemclipse.xxd.filter.support.TargetsDeleteOption;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class TargetsFilter_1_Test extends TestCase {
+public class TargetsFilter_1_Test {
 
 	private DeleteTargetsFilterSettings settings = new DeleteTargetsFilterSettings();
 	private ITargetSupplier targetSupplier = getTargetSupplier();
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		settings.setTargetDeleteOption(TargetsDeleteOption.PROPERTY_LEVEL);
 	}
 
+	@Test
 	public void test1() {
 
 		settings.setProperty("");
@@ -45,6 +49,7 @@ public class TargetsFilter_1_Test extends TestCase {
 		assertEquals(3, targetSupplier.getTargets().size());
 	}
 
+	@Test
 	public void test2() {
 
 		settings.setProperty("-1");
@@ -52,6 +57,7 @@ public class TargetsFilter_1_Test extends TestCase {
 		assertEquals(3, targetSupplier.getTargets().size());
 	}
 
+	@Test
 	public void test3() {
 
 		settings.setProperty("0");
@@ -59,6 +65,7 @@ public class TargetsFilter_1_Test extends TestCase {
 		assertEquals(3, targetSupplier.getTargets().size());
 	}
 
+	@Test
 	public void test4() {
 
 		settings.setProperty(null);
@@ -66,6 +73,7 @@ public class TargetsFilter_1_Test extends TestCase {
 		assertEquals(3, targetSupplier.getTargets().size());
 	}
 
+	@Test
 	public void test5() {
 
 		settings.setProperty("a");
@@ -73,6 +81,7 @@ public class TargetsFilter_1_Test extends TestCase {
 		assertEquals(3, targetSupplier.getTargets().size());
 	}
 
+	@Test
 	public void test6a() {
 
 		settings.setProperty("1");
@@ -81,6 +90,7 @@ public class TargetsFilter_1_Test extends TestCase {
 		assertFalse(contains(targetSupplier, "Styrene"));
 	}
 
+	@Test
 	public void test6b() {
 
 		settings.setProperty("> 1");
@@ -89,6 +99,7 @@ public class TargetsFilter_1_Test extends TestCase {
 		assertTrue(contains(targetSupplier, "Styrene"));
 	}
 
+	@Test
 	public void test6c() {
 
 		settings.setProperty(">= 1");
@@ -96,6 +107,7 @@ public class TargetsFilter_1_Test extends TestCase {
 		assertEquals(0, targetSupplier.getTargets().size());
 	}
 
+	@Test
 	public void test7a() {
 
 		settings.setProperty("2");
@@ -104,6 +116,7 @@ public class TargetsFilter_1_Test extends TestCase {
 		assertFalse(contains(targetSupplier, "Benzene"));
 	}
 
+	@Test
 	public void test7b() {
 
 		settings.setProperty("> 2");
@@ -113,6 +126,7 @@ public class TargetsFilter_1_Test extends TestCase {
 		assertTrue(contains(targetSupplier, "Benzene"));
 	}
 
+	@Test
 	public void test7c() {
 
 		settings.setProperty(">= 2");
@@ -121,6 +135,7 @@ public class TargetsFilter_1_Test extends TestCase {
 		assertTrue(contains(targetSupplier, "Styrene"));
 	}
 
+	@Test
 	public void test8a() {
 
 		settings.setProperty("3");
@@ -129,6 +144,7 @@ public class TargetsFilter_1_Test extends TestCase {
 		assertFalse(contains(targetSupplier, "Propane"));
 	}
 
+	@Test
 	public void test8b() {
 
 		settings.setProperty("> 3");
@@ -136,6 +152,7 @@ public class TargetsFilter_1_Test extends TestCase {
 		assertEquals(3, targetSupplier.getTargets().size());
 	}
 
+	@Test
 	public void test8c() {
 
 		settings.setProperty(">= 3");
@@ -145,6 +162,7 @@ public class TargetsFilter_1_Test extends TestCase {
 		assertTrue(contains(targetSupplier, "Benzene"));
 	}
 
+	@Test
 	public void test9a() {
 
 		settings.setProperty("4");
@@ -152,6 +170,7 @@ public class TargetsFilter_1_Test extends TestCase {
 		assertEquals(3, targetSupplier.getTargets().size());
 	}
 
+	@Test
 	public void test9b() {
 
 		settings.setProperty("> 4");
@@ -159,6 +178,7 @@ public class TargetsFilter_1_Test extends TestCase {
 		assertEquals(3, targetSupplier.getTargets().size());
 	}
 
+	@Test
 	public void test9c() {
 
 		settings.setProperty(">= 4");

@@ -12,35 +12,34 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.processing.core;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class ProcessingMessage_2_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class ProcessingMessage_2_Test {
 
 	private IProcessingMessage processingMessage;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		processingMessage = new ProcessingMessage(null, null, null);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testGetValues_1() {
 
 		assertEquals(MessageType.ERROR, processingMessage.getMessageType());
 	}
 
+	@Test
 	public void testGetValues_2() {
 
 		assertEquals("Description was null.", processingMessage.getDescription());
 	}
 
+	@Test
 	public void testGetValues_3() {
 
 		assertEquals("Message was null.", processingMessage.getMessage());

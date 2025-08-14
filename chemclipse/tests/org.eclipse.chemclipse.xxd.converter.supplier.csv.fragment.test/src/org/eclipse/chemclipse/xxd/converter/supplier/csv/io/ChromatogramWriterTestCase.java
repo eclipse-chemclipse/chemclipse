@@ -14,17 +14,17 @@
 package org.eclipse.chemclipse.xxd.converter.supplier.csv.io;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.eclipse.chemclipse.msd.converter.chromatogram.ChromatogramConverterMSD;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.After;
 import org.junit.Ignore;
 
-import junit.framework.TestCase;
-
 @Ignore
-public class ChromatogramWriterTestCase extends TestCase {
+public class ChromatogramWriterTestCase {
 
 	protected IChromatogramMSD chromatogramImport;
 	protected IChromatogramMSD chromatogram;
@@ -35,10 +35,8 @@ public class ChromatogramWriterTestCase extends TestCase {
 	protected String extensionPointImport;
 	protected String extensionPointExportReimport;
 
-	@Override
-	protected void setUp() throws Exception {
+	public void setUp() {
 
-		super.setUp();
 		/*
 		 * Import the chromatogram.
 		 */
@@ -59,16 +57,9 @@ public class ChromatogramWriterTestCase extends TestCase {
 		chromatogram = processingInfo.getProcessingResult();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
+	@After
+	public void tearDown() throws IOException {
 
-		pathImport = null;
-		pathExport = null;
-		fileImport = null;
 		fileExport.delete();
-		fileExport = null;
-		chromatogramImport = null;
-		chromatogram = null;
-		super.tearDown();
 	}
 }

@@ -12,29 +12,30 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.tsd.converter.core.matcher;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-public class TraceRangeMatcher_1_Test extends TestCase {
+import org.junit.Test;
+
+public class TraceRangeMatcher_1_Test {
 
 	private TraceRangeMatcher traceRangeMatcher = new TraceRangeMatcher();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
+	@Test
 	public void test1() {
 
 		assertFalse(traceRangeMatcher.isParseFully());
 	}
 
+	@Test
 	public void test2() {
 
 		traceRangeMatcher.setParseFully(true);
 		assertTrue(traceRangeMatcher.isParseFully());
 	}
 
+	@Test
 	public void test3() {
 
 		traceRangeMatcher.addHighResMSD("", 0, 0);
@@ -42,6 +43,7 @@ public class TraceRangeMatcher_1_Test extends TestCase {
 		assertEquals(0, traceRangeMatcher.getTraceRanges(Integer.MAX_VALUE).size());
 	}
 
+	@Test
 	public void test4() {
 
 		traceRangeMatcher.addHighResMSD("", -1, 0);
@@ -49,6 +51,7 @@ public class TraceRangeMatcher_1_Test extends TestCase {
 		assertEquals(0, traceRangeMatcher.getTraceRanges(Integer.MAX_VALUE).size());
 	}
 
+	@Test
 	public void test5() {
 
 		traceRangeMatcher.addHighResMSD("", 0, -1);
@@ -56,6 +59,7 @@ public class TraceRangeMatcher_1_Test extends TestCase {
 		assertEquals(0, traceRangeMatcher.getTraceRanges(Integer.MAX_VALUE).size());
 	}
 
+	@Test
 	public void test6() {
 
 		traceRangeMatcher.addHighResMSD("", -1, -1);
@@ -63,6 +67,7 @@ public class TraceRangeMatcher_1_Test extends TestCase {
 		assertEquals(0, traceRangeMatcher.getTraceRanges(Integer.MAX_VALUE).size());
 	}
 
+	@Test
 	public void test7() {
 
 		traceRangeMatcher.addHighResMSD("94.05±0.05", 0, 0);
@@ -70,6 +75,7 @@ public class TraceRangeMatcher_1_Test extends TestCase {
 		assertEquals(0, traceRangeMatcher.getTraceRanges(Integer.MAX_VALUE).size());
 	}
 
+	@Test
 	public void test8() {
 
 		traceRangeMatcher.addHighResMSD("94.05±0.05", 0, Integer.MAX_VALUE);
@@ -77,6 +83,7 @@ public class TraceRangeMatcher_1_Test extends TestCase {
 		assertEquals(1, traceRangeMatcher.getTraceRanges(Integer.MAX_VALUE).size());
 	}
 
+	@Test
 	public void test9() {
 
 		traceRangeMatcher.addHighResMSD("94.05±0.05", 0, 0);
@@ -85,6 +92,7 @@ public class TraceRangeMatcher_1_Test extends TestCase {
 		assertEquals(0, traceRangeMatcher.getTraceRanges(Integer.MAX_VALUE).size());
 	}
 
+	@Test
 	public void test10() {
 
 		traceRangeMatcher.addHighResMSD("94.05±0.05", 0, Integer.MAX_VALUE);
@@ -93,6 +101,7 @@ public class TraceRangeMatcher_1_Test extends TestCase {
 		assertEquals(1, traceRangeMatcher.getTraceRanges(Integer.MAX_VALUE).size());
 	}
 
+	@Test
 	public void test11() {
 
 		traceRangeMatcher.addHighResMSD("94.05±0.05", 0, 0);
@@ -101,6 +110,7 @@ public class TraceRangeMatcher_1_Test extends TestCase {
 		assertEquals(1, traceRangeMatcher.getTraceRanges(Integer.MAX_VALUE).size());
 	}
 
+	@Test
 	public void test12() {
 
 		traceRangeMatcher.addHighResMSD("94.05±0.05", 0, Integer.MAX_VALUE);

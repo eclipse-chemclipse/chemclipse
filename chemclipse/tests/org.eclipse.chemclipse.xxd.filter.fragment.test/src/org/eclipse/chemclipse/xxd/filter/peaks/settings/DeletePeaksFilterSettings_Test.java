@@ -12,50 +12,50 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.filter.peaks.settings;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.xxd.filter.support.DeletePeakOption;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class DeletePeaksFilterSettings_Test {
 
-public class DeletePeaksFilterSettings_Test extends TestCase {
+	private DeletePeaksFilterSettings settings = new DeletePeaksFilterSettings();
 
-	private DeletePeaksFilterSettings settings;
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-		settings = new DeletePeaksFilterSettings();
-	}
-
+	@Test
 	public void test0() {
 
 		settings.transferToLatestVersion("{\"Delete Peaks\":true}");
 		assertEquals(DeletePeakOption.ALL, settings.getDeletePeakOption());
 	}
 
+	@Test
 	public void test1() {
 
 		assertEquals(DeletePeakOption.NONE, settings.getDeletePeakOption());
 	}
 
+	@Test
 	public void test2() {
 
 		settings.transferToLatestVersion(null);
 		assertEquals(DeletePeakOption.NONE, settings.getDeletePeakOption());
 	}
 
+	@Test
 	public void test3() {
 
 		settings.transferToLatestVersion("");
 		assertEquals(DeletePeakOption.NONE, settings.getDeletePeakOption());
 	}
 
+	@Test
 	public void test4() {
 
 		settings.transferToLatestVersion(" ");
 		assertEquals(DeletePeakOption.NONE, settings.getDeletePeakOption());
 	}
 
+	@Test
 	public void test5() {
 
 		settings.setDeletePeakOption(DeletePeakOption.INACTIVE);
@@ -63,6 +63,7 @@ public class DeletePeaksFilterSettings_Test extends TestCase {
 		assertEquals(DeletePeakOption.INACTIVE, settings.getDeletePeakOption());
 	}
 
+	@Test
 	public void test6() {
 
 		settings.setDeletePeakOption(DeletePeakOption.INACTIVE);
@@ -70,6 +71,7 @@ public class DeletePeaksFilterSettings_Test extends TestCase {
 		assertEquals(DeletePeakOption.INACTIVE, settings.getDeletePeakOption());
 	}
 
+	@Test
 	public void test7() {
 
 		settings.setDeletePeakOption(DeletePeakOption.INACTIVE);
@@ -77,6 +79,7 @@ public class DeletePeaksFilterSettings_Test extends TestCase {
 		assertEquals(DeletePeakOption.INACTIVE, settings.getDeletePeakOption());
 	}
 
+	@Test
 	public void test8() {
 
 		settings.setDeletePeakOption(DeletePeakOption.INACTIVE);

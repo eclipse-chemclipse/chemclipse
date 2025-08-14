@@ -12,26 +12,25 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.wsd.converter.supplier.scf.io;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.time.ZoneId;
 
 import org.eclipse.chemclipse.wsd.converter.supplier.scf.ChromatogramReaderTestCase;
 import org.eclipse.chemclipse.wsd.converter.supplier.scf.SCF;
+import org.junit.Before;
 import org.junit.Test;
 
 public class ABCZ_F_ITest extends ChromatogramReaderTestCase {
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
 		extensionPointId = SCF.EXTENSION_POINT_ID;
 		pathImport = SCF.getAbsolutePath(SCF.TESTFILE_IMPORT_ABCZ_F);
 		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
 	}
 
 	@Test

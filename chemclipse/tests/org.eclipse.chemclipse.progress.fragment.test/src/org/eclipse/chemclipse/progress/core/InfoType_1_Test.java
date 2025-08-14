@@ -12,33 +12,23 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.progress.core;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class InfoType_1_Test extends TestCase {
+import org.junit.Test;
 
-	private InfoType infoType;
+public class InfoType_1_Test {
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testInfoType_1() {
 
-		infoType = InfoType.MESSAGE;
+		InfoType infoType = InfoType.MESSAGE;
 		assertEquals("MESSAGE", InfoType.MESSAGE, infoType);
 	}
 
+	@Test
 	public void testInfoType_2() {
 
-		infoType = InfoType.ERROR_MESSAGE;
+		InfoType infoType = InfoType.ERROR_MESSAGE;
 		assertEquals("ERROR_MESSAGE", InfoType.ERROR_MESSAGE, infoType);
 	}
 }

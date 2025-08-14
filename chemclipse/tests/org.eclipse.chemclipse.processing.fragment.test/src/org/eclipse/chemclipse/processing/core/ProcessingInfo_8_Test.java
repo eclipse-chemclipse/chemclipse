@@ -13,11 +13,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.processing.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
+
 import org.eclipse.chemclipse.processing.core.exceptions.TypeCastException;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ProcessingInfo_8_Test extends TestCase {
+public class ProcessingInfo_8_Test {
 
 	private interface MyInterface {
 
@@ -42,40 +46,27 @@ public class ProcessingInfo_8_Test extends TestCase {
 
 	private IProcessingInfo<Object> processingInfo;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		processingInfo = new ProcessingInfo<>();
 		MyClass myClass = new MyClass("Test");
 		processingInfo.setProcessingResult(myClass);
 		// processingInfo.setProcessingResult(null);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testProcessingInfo_1() {
 
-		try {
-			MyInterface result = (MyInterface)processingInfo.getProcessingResult();
-			assertNotNull(result);
-			assertEquals("Test", result.getData());
-		} catch(TypeCastException e) {
-			assertTrue(true);
-		}
+		MyInterface result = (MyInterface)processingInfo.getProcessingResult();
+		assertNotNull(result);
+		assertEquals("Test", result.getData());
 	}
 
 	@SuppressWarnings("deprecation")
+	@Test
 	public void testProcessingInfo_2() {
 
-		try {
-			processingInfo.getProcessingResult(Integer.class);
-		} catch(TypeCastException e) {
-			assertTrue(true);
-		}
+		assertThrows(TypeCastException.class, () -> processingInfo.getProcessingResult(Integer.class));
 	}
 }

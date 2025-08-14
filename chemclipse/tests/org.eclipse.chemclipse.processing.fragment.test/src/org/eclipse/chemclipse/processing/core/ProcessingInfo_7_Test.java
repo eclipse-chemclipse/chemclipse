@@ -12,45 +12,34 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.processing.core;
 
+import static org.junit.Assert.assertThrows;
+
 import org.eclipse.chemclipse.processing.core.exceptions.TypeCastException;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ProcessingInfo_7_Test extends TestCase {
+public class ProcessingInfo_7_Test {
 
 	private IProcessingInfo<Object> processingInfo;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		processingInfo = new ProcessingInfo<>();
 		processingInfo.setProcessingResult(null);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
 	@SuppressWarnings("deprecation")
+	@Test
 	public void testProcessingInfo_1() {
 
-		try {
-			processingInfo.getProcessingResult(String.class);
-		} catch(TypeCastException e) {
-			assertTrue(true);
-		}
+		assertThrows(TypeCastException.class, () -> processingInfo.getProcessingResult(String.class));
 	}
 
 	@SuppressWarnings("deprecation")
+	@Test
 	public void testProcessingInfo_2() {
 
-		try {
-			processingInfo.getProcessingResult(Integer.class);
-		} catch(TypeCastException e) {
-			assertTrue(true);
-		}
+		assertThrows(TypeCastException.class, () -> processingInfo.getProcessingResult(Integer.class));
 	}
 }

@@ -12,17 +12,23 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.converter.supplier.csv.io;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 
 import org.eclipse.chemclipse.model.settings.Delimiter;
 import org.eclipse.chemclipse.xxd.converter.supplier.csv.TestPathHelper;
 import org.eclipse.chemclipse.xxd.converter.supplier.csv.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.versions.VersionConstants;
+import org.junit.Before;
+import org.junit.Test;
 
 public class ChromatogramReader_1_ITest extends ChromatogramWriterTestCase {
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
 		PreferenceSupplier.setImportDelimiter(Delimiter.COMMA);
 		PreferenceSupplier.setImportZeroMarker("0.0");
@@ -39,11 +45,13 @@ public class ChromatogramReader_1_ITest extends ChromatogramWriterTestCase {
 		super.setUp();
 	}
 
+	@Test
 	public void testReimport_1() {
 
 		assertNotNull(chromatogram);
 	}
 
+	@Test
 	public void testReimport_2() {
 
 		assertEquals(5726, chromatogram.getNumberOfScans());

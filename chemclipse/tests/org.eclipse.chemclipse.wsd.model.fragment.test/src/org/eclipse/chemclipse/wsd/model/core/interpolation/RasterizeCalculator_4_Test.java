@@ -12,22 +12,24 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.wsd.model.core.interpolation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import java.util.Map;
 import java.util.TreeMap;
 
 import org.eclipse.chemclipse.model.interpolation.RasterizeCalculator;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class RasterizeCalculator_4_Test extends TestCase {
+public class RasterizeCalculator_4_Test {
 
 	private TreeMap<Float, Float> dataOriginal = new TreeMap<>();
 	float delta = 0.1f;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		dataOriginal.put(200.4f, 500.0f);
 		dataOriginal.put(202.4f, 1000.0f);
 		dataOriginal.put(204.4f, 1500.0f);
@@ -36,23 +38,18 @@ public class RasterizeCalculator_4_Test extends TestCase {
 		dataOriginal.put(210.4f, 600.0f);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		dataOriginal = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		Map<Integer, Float> dataRasterized = RasterizeCalculator.apply(dataOriginal, 0);
 		assertNull(dataRasterized);
 	}
 
+	@Test
 	public void test2() {
 
 		Map<Integer, Float> dataRasterized = RasterizeCalculator.apply(dataOriginal, 1);
-		//
+
 		assertEquals(11, dataRasterized.size());
 		assertEquals(400.0f, dataRasterized.get(200), delta);
 		assertEquals(650.0f, dataRasterized.get(201), delta);
@@ -67,10 +64,11 @@ public class RasterizeCalculator_4_Test extends TestCase {
 		assertEquals(640.0f, dataRasterized.get(210), delta);
 	}
 
+	@Test
 	public void test3() {
 
 		Map<Integer, Float> dataRasterized = RasterizeCalculator.apply(dataOriginal, 2);
-		//
+
 		assertEquals(6, dataRasterized.size());
 		assertEquals(400.0f, dataRasterized.get(200), delta);
 		assertNull(dataRasterized.get(201));
@@ -85,10 +83,11 @@ public class RasterizeCalculator_4_Test extends TestCase {
 		assertEquals(640.0f, dataRasterized.get(210), delta);
 	}
 
+	@Test
 	public void test4() {
 
 		Map<Integer, Float> dataRasterized = RasterizeCalculator.apply(dataOriginal, 10);
-		//
+
 		assertEquals(2, dataRasterized.size());
 		assertEquals(400.0f, dataRasterized.get(200), delta);
 		assertNull(dataRasterized.get(201));
@@ -103,6 +102,7 @@ public class RasterizeCalculator_4_Test extends TestCase {
 		assertEquals(640.0f, dataRasterized.get(210), delta);
 	}
 
+	@Test
 	public void test5() {
 
 		Map<Integer, Float> dataRasterized = RasterizeCalculator.apply(dataOriginal, 0);

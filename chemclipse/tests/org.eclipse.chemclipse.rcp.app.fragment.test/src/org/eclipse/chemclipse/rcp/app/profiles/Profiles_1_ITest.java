@@ -12,41 +12,26 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.rcp.app.profiles;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import junit.framework.TestCase;
-
+import org.eclipse.chemclipse.rcp.app.TestPathHelper;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
+import org.junit.Test;
 
-import org.eclipse.chemclipse.rcp.app.TestPathHelper;
+public class Profiles_1_ITest {
 
-public class Profiles_1_ITest extends TestCase {
-
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
-	public void test1() {
+	@Test
+	public void test1() throws FileNotFoundException, CoreException {
 
 		File file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_EXPORT_DIR) + TestPathHelper.TESTFILE_EXPORT_NAME);
 		try {
 			Profiles.exportProfile(file);
-			assertTrue(true);
 			assertTrue(file.delete());
-		} catch(FileNotFoundException e) {
-			assertTrue(false);
-		} catch(CoreException e) {
-			assertTrue(false);
 		} finally {
 			/*
 			 * Safety delete if something goes wrong.
@@ -57,17 +42,11 @@ public class Profiles_1_ITest extends TestCase {
 		}
 	}
 
-	public void test2() {
+	@Test
+	public void test2() throws FileNotFoundException, CoreException {
 
 		File file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.TESTFILE_IMPORT_PREFS_1));
-		try {
-			IStatus status = Profiles.importProfile(file);
-			assertEquals(IStatus.OK, status.getCode());
-		} catch(FileNotFoundException e) {
-			assertTrue(false);
-		} catch(CoreException e) {
-			System.out.println(e);
-			assertTrue(false);
-		}
+		IStatus status = Profiles.importProfile(file);
+		assertEquals(IStatus.OK, status.getCode());
 	}
 }

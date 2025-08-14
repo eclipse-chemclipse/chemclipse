@@ -12,18 +12,21 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.identifier.supplier.wikidata.fragment.test;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.xxd.identifier.supplier.wikidata.query.QueryEntity;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class Caffeine_Test {
 
-public class Caffeine_Test extends TestCase {
-
+	@Test
 	public void testCAS() {
 
 		String item = QueryEntity.fromCAS("58-08-2");
 		assertEquals("http://www.wikidata.org/entity/Q60235", item);
 	}
 
+	@Test
 	public void testName() {
 
 		String url = QueryEntity.fromName("caffeine");

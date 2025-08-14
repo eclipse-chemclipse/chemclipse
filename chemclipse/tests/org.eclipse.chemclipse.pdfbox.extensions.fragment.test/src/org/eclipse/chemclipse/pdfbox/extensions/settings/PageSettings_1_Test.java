@@ -12,47 +12,49 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.pdfbox.extensions.settings;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class PageSettings_1_Test extends TestCase {
+public class PageSettings_1_Test {
 
 	private PageSettings settings;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		settings = new PageSettings(PDRectangle.A4, PageBase.BOTTOM_LEFT, Unit.MM, true);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals(settings.getPDRectangle(), PDRectangle.A4);
 	}
 
+	@Test
 	public void test2() {
 
 		assertEquals(settings.getPageBase(), PageBase.BOTTOM_LEFT);
 	}
 
+	@Test
 	public void test3() {
 
 		assertEquals(settings.getUnit(), Unit.MM);
 	}
 
+	@Test
 	public void test4() {
 
 		assertTrue(settings.isLandscape());
 	}
 
+	@Test
 	public void test5() {
 
 		assertFalse(new PageSettings(PDRectangle.A4, PageBase.BOTTOM_LEFT, Unit.MM, false).isLandscape());

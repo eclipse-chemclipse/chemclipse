@@ -12,45 +12,45 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.processing.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
-public class ProcessingInfo_1_Test extends TestCase {
+public class ProcessingInfo_1_Test {
 
 	private IProcessingInfo<String> processingInfo;
 	private IProcessingMessage processingMessage;
 	private String processingResult;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		processingInfo = new ProcessingInfo<>();
 		processingResult = "Hello World!";
 		processingInfo.setProcessingResult(processingResult);
-		//
+
 		processingMessage = new ProcessingMessage(MessageType.ERROR, "Load Peak", "The peak X35P couldn't be loaded, cause it seems to have no values.");
 		processingInfo.addMessage(processingMessage);
-		//
+
 		processingMessage = new ProcessingMessage(MessageType.WARN, "Load Peak", "The peak X35P couldn't be loaded completely.");
 		processingInfo.addMessage(processingMessage);
-		//
+
 		processingMessage = new ProcessingMessage(MessageType.INFO, "Calculate Abundance", "The abundance was calculated correctly.");
 		processingInfo.addMessage(processingMessage);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testProcessingInfo_1() {
 
 		assertNotNull(processingInfo.getProcessingResult());
 	}
 
+	@Test
 	public void testProcessingInfo_2() {
 
 		Object result = processingInfo.getProcessingResult();
@@ -58,12 +58,14 @@ public class ProcessingInfo_1_Test extends TestCase {
 		assertEquals("Hello World!", (String)result);
 	}
 
+	@Test
 	public void testProcessingInfo_3() {
 
 		List<IProcessingMessage> messages = processingInfo.getMessages();
 		assertEquals(3, messages.size());
 	}
 
+	@Test
 	public void testProcessingInfo_4() {
 
 		List<IProcessingMessage> messages = processingInfo.getMessages();
@@ -73,6 +75,7 @@ public class ProcessingInfo_1_Test extends TestCase {
 		assertEquals("The peak X35P couldn't be loaded, cause it seems to have no values.", message.getMessage());
 	}
 
+	@Test
 	public void testProcessingInfo_5() {
 
 		List<IProcessingMessage> messages = processingInfo.getMessages();
@@ -82,6 +85,7 @@ public class ProcessingInfo_1_Test extends TestCase {
 		assertEquals("The peak X35P couldn't be loaded completely.", message.getMessage());
 	}
 
+	@Test
 	public void testProcessingInfo_6() {
 
 		List<IProcessingMessage> messages = processingInfo.getMessages();

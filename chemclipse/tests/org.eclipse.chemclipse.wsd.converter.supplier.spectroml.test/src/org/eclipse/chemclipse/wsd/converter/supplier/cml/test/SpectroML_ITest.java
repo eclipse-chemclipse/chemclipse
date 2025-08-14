@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.wsd.converter.supplier.cml.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 import java.time.ZoneId;
 
@@ -21,29 +24,20 @@ import org.eclipse.chemclipse.wsd.converter.supplier.spectroml.converter.ScanImp
 import org.eclipse.chemclipse.wsd.converter.supplier.spectroml.model.IVendorSpectrumWSD;
 import org.eclipse.chemclipse.wsd.model.core.ISpectrumWSD;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.junit.Before;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class SpectroML_ITest extends TestCase {
+public class SpectroML_ITest {
 
 	private ISpectrumWSD spectrumWSD;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		File file = new File(PathResolver.getAbsolutePath(TestPathHelper.SAMPLE));
 		ScanImportConverter importConverter = new ScanImportConverter();
 		IProcessingInfo<ISpectrumWSD> processingInfo = importConverter.convert(file, new NullProgressMonitor());
 		spectrumWSD = processingInfo.getProcessingResult();
-	}
-
-	@Override
-	protected void tearDown() throws Exception {
-
-		spectrumWSD = null;
-		super.tearDown();
 	}
 
 	@Test

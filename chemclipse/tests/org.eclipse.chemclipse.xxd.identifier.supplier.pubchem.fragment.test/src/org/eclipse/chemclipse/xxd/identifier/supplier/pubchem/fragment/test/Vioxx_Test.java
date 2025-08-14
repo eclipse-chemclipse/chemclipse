@@ -12,29 +12,33 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.identifier.supplier.pubchem.fragment.test;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.identifier.LibraryInformation;
 import org.eclipse.chemclipse.xxd.identifier.supplier.pubchem.rest.PowerUserGateway;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+public class Vioxx_Test {
 
-public class Vioxx_Test extends TestCase {
+	private ILibraryInformation libraryInformation;
 
-	ILibraryInformation libraryInformation;
-
-	@Override
+	@Before
 	public void setUp() {
 
 		libraryInformation = new LibraryInformation();
 		libraryInformation.setName("Vioxx");
 	}
 
+	@Test
 	public void testSMILES() {
 
 		String smiles = PowerUserGateway.getSMILES(libraryInformation);
 		assertEquals("CS(=O)(=O)C1=CC=C(C=C1)C2=C(C(=O)OC2)C3=CC=CC=C3", smiles);
 	}
 
+	@Test
 	public void testCID() {
 
 		assertEquals(Integer.valueOf(5090), PowerUserGateway.getCIDS(libraryInformation).get(0));

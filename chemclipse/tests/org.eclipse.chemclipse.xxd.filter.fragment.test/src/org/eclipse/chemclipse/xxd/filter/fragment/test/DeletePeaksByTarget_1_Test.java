@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.filter.fragment.test;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IPeakIntensityValues;
 import org.eclipse.chemclipse.model.core.IPeakModel;
@@ -28,20 +31,19 @@ import org.eclipse.chemclipse.model.implementation.Scan;
 import org.eclipse.chemclipse.xxd.filter.peaks.DeletePeaksByTargetFilter;
 import org.eclipse.chemclipse.xxd.filter.peaks.settings.DeletePeaksByTargetFilterSettings;
 import org.eclipse.chemclipse.xxd.filter.support.PeaksDeleteOption;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class DeletePeaksByTarget_1_Test extends TestCase {
+public class DeletePeaksByTarget_1_Test {
 
 	private IPeak peak;
 	private PeaksDeleteOption peaksDeleteOption = PeaksDeleteOption.NAME;
 	private String value = "Borane, diethylmethyl-";
 	private String regex = "(Bo)(.*)(, diethyl)(.*)";
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		/*
 		 * Create a mock peak.
 		 */
@@ -56,7 +58,7 @@ public class DeletePeaksByTarget_1_Test extends TestCase {
 		IPeakModel peakModel = new PeakModel(peakMaximum, peakIntensityValues, 0.0f, 0.0f);
 		peakModel.setStrictModel(true);
 		peak = new Peak(peakModel);
-		//
+
 		ILibraryInformation libraryInformation = new LibraryInformation();
 		libraryInformation.setName(value);
 		libraryInformation.setCasNumber("");
@@ -64,13 +66,7 @@ public class DeletePeaksByTarget_1_Test extends TestCase {
 		peak.getTargets().add(identificationTarget);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		peak = null;
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		DeletePeaksByTargetFilterSettings configuration = new DeletePeaksByTargetFilterSettings();
@@ -78,10 +74,11 @@ public class DeletePeaksByTarget_1_Test extends TestCase {
 		configuration.setValue(value);
 		configuration.setCaseSensitive(false);
 		configuration.setRegularExpression(false);
-		//
+
 		assertTrue(DeletePeaksByTargetFilter.isDeletePeak(peak, configuration));
 	}
 
+	@Test
 	public void test2() {
 
 		DeletePeaksByTargetFilterSettings configuration = new DeletePeaksByTargetFilterSettings();
@@ -89,36 +86,39 @@ public class DeletePeaksByTarget_1_Test extends TestCase {
 		configuration.setValue(value);
 		configuration.setCaseSensitive(true);
 		configuration.setRegularExpression(false);
-		//
+
 		assertTrue(DeletePeaksByTargetFilter.isDeletePeak(peak, configuration));
 	}
 
+	@Test
 	public void test3() {
 
 		assertTrue(value.matches(regex));
-		//
+
 		DeletePeaksByTargetFilterSettings configuration = new DeletePeaksByTargetFilterSettings();
 		configuration.setPeaksDeleteOption(peaksDeleteOption);
 		configuration.setValue(regex);
 		configuration.setCaseSensitive(false);
 		configuration.setRegularExpression(true);
-		//
+
 		assertTrue(DeletePeaksByTargetFilter.isDeletePeak(peak, configuration));
 	}
 
+	@Test
 	public void test4() {
 
 		assertTrue(value.matches(regex));
-		//
+
 		DeletePeaksByTargetFilterSettings configuration = new DeletePeaksByTargetFilterSettings();
 		configuration.setPeaksDeleteOption(peaksDeleteOption);
 		configuration.setValue(regex);
 		configuration.setCaseSensitive(true); // Has no effect when regex is activated.
 		configuration.setRegularExpression(true);
-		//
+
 		assertTrue(DeletePeaksByTargetFilter.isDeletePeak(peak, configuration));
 	}
 
+	@Test
 	public void test5() {
 
 		DeletePeaksByTargetFilterSettings configuration = new DeletePeaksByTargetFilterSettings();
@@ -126,10 +126,11 @@ public class DeletePeaksByTarget_1_Test extends TestCase {
 		configuration.setValue("");
 		configuration.setCaseSensitive(false);
 		configuration.setRegularExpression(false);
-		//
+
 		assertFalse(DeletePeaksByTargetFilter.isDeletePeak(peak, configuration));
 	}
 
+	@Test
 	public void test6() {
 
 		DeletePeaksByTargetFilterSettings configuration = new DeletePeaksByTargetFilterSettings();
@@ -137,10 +138,11 @@ public class DeletePeaksByTarget_1_Test extends TestCase {
 		configuration.setValue("");
 		configuration.setCaseSensitive(true);
 		configuration.setRegularExpression(false);
-		//
+
 		assertFalse(DeletePeaksByTargetFilter.isDeletePeak(peak, configuration));
 	}
 
+	@Test
 	public void test7() {
 
 		DeletePeaksByTargetFilterSettings configuration = new DeletePeaksByTargetFilterSettings();
@@ -148,10 +150,11 @@ public class DeletePeaksByTarget_1_Test extends TestCase {
 		configuration.setValue("");
 		configuration.setCaseSensitive(false);
 		configuration.setRegularExpression(true);
-		//
+
 		assertFalse(DeletePeaksByTargetFilter.isDeletePeak(peak, configuration));
 	}
 
+	@Test
 	public void test8() {
 
 		DeletePeaksByTargetFilterSettings configuration = new DeletePeaksByTargetFilterSettings();
@@ -159,10 +162,11 @@ public class DeletePeaksByTarget_1_Test extends TestCase {
 		configuration.setValue("");
 		configuration.setCaseSensitive(true);
 		configuration.setRegularExpression(true);
-		//
+
 		assertFalse(DeletePeaksByTargetFilter.isDeletePeak(peak, configuration));
 	}
 
+	@Test
 	public void test9() {
 
 		DeletePeaksByTargetFilterSettings configuration = new DeletePeaksByTargetFilterSettings();
@@ -170,10 +174,11 @@ public class DeletePeaksByTarget_1_Test extends TestCase {
 		configuration.setValue(value.toLowerCase()); // case sensitive
 		configuration.setCaseSensitive(true);
 		configuration.setRegularExpression(false);
-		//
+
 		assertFalse(DeletePeaksByTargetFilter.isDeletePeak(peak, configuration));
 	}
 
+	@Test
 	public void test10() {
 
 		DeletePeaksByTargetFilterSettings configuration = new DeletePeaksByTargetFilterSettings();
@@ -181,10 +186,11 @@ public class DeletePeaksByTarget_1_Test extends TestCase {
 		configuration.setValue(null);
 		configuration.setCaseSensitive(false);
 		configuration.setRegularExpression(false);
-		//
+
 		assertFalse(DeletePeaksByTargetFilter.isDeletePeak(peak, configuration));
 	}
 
+	@Test
 	public void test11() {
 
 		DeletePeaksByTargetFilterSettings configuration = new DeletePeaksByTargetFilterSettings();
@@ -192,10 +198,11 @@ public class DeletePeaksByTarget_1_Test extends TestCase {
 		configuration.setValue("");
 		configuration.setCaseSensitive(false);
 		configuration.setRegularExpression(false);
-		//
+
 		assertFalse(DeletePeaksByTargetFilter.isDeletePeak(null, configuration));
 	}
 
+	@Test
 	public void test12() {
 
 		DeletePeaksByTargetFilterSettings configuration = new DeletePeaksByTargetFilterSettings();
@@ -203,7 +210,7 @@ public class DeletePeaksByTarget_1_Test extends TestCase {
 		configuration.setValue(null);
 		configuration.setCaseSensitive(false);
 		configuration.setRegularExpression(false);
-		//
+
 		assertFalse(DeletePeaksByTargetFilter.isDeletePeak(null, configuration));
 	}
 }

@@ -12,31 +12,29 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.tsd.converter.core.matcher;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class TraceRangeMatcher_2_Test extends TestCase {
+import org.junit.Test;
+
+public class TraceRangeMatcher_2_Test {
 
 	private TraceRangeMatcher traceRangeMatcher = new TraceRangeMatcher();
 
-	@Override
-	protected void setUp() throws Exception {
-
-		super.setUp();
-	}
-
+	@Test
 	public void test1() {
 
 		traceRangeMatcher.addHighResMSD("94.05±0.05", 0, 1000);
-		//
+
 		assertEquals(1, traceRangeMatcher.getTraceRanges(0).size());
 		assertEquals(1, traceRangeMatcher.getTraceRanges(1000).size());
 		assertEquals(0, traceRangeMatcher.getTraceRanges(1001).size());
 	}
 
+	@Test
 	public void test2() {
 
 		traceRangeMatcher.addHighResMSD("94.05±0.05", 500, 1000);
-		//
+
 		assertEquals(0, traceRangeMatcher.getTraceRanges(0).size());
 		assertEquals(0, traceRangeMatcher.getTraceRanges(499).size());
 		assertEquals(1, traceRangeMatcher.getTraceRanges(500).size());
@@ -44,11 +42,12 @@ public class TraceRangeMatcher_2_Test extends TestCase {
 		assertEquals(0, traceRangeMatcher.getTraceRanges(1001).size());
 	}
 
+	@Test
 	public void test3() {
 
 		traceRangeMatcher.addHighResMSD("94.05±0.05", 500, 1000);
 		traceRangeMatcher.addHighResMSD("150.15±0.05", 750, 1500);
-		//
+
 		assertEquals(0, traceRangeMatcher.getTraceRanges(0).size());
 		assertEquals(0, traceRangeMatcher.getTraceRanges(499).size());
 		assertEquals(1, traceRangeMatcher.getTraceRanges(500).size());

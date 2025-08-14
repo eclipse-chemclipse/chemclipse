@@ -18,6 +18,7 @@ import org.eclipse.chemclipse.chromatogram.msd.filter.core.chromatogram.IChromat
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.coda.settings.FilterSettings;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.Before;
+import org.junit.Test;
 
 public class CodaFilter_1_ITest extends ChromatogramImporterTestCase {
 
@@ -31,6 +32,7 @@ public class CodaFilter_1_ITest extends ChromatogramImporterTestCase {
 		super.setUp();
 	}
 
+	@Test
 	public void testApplyFilter_1() {
 
 		int scan = 1;

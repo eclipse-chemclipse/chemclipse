@@ -12,37 +12,39 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.model.quantitation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.eclipse.chemclipse.model.quantitation.IQuantitationPeak;
 import org.eclipse.chemclipse.msd.model.implementation.QuantitationPeakMSD;
+import org.junit.Before;
+import org.junit.Test;
 
 public class QuantitationPeakMSD_1_Test extends ReferencePeakMSDTestCase {
 
 	private IQuantitationPeak quantitationPeakMSD;
 
 	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
 		super.setUp();
 		quantitationPeakMSD = new QuantitationPeakMSD(getReferencePeakMSD_TIC_1(), 0.67d, "mg/ml");
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-		quantitationPeakMSD = null;
-	}
-
+	@Test
 	public void testGetConcentration_1() {
 
-		assertEquals(0.67d, quantitationPeakMSD.getConcentration());
+		assertEquals(0.67d, quantitationPeakMSD.getConcentration(), 0);
 	}
 
+	@Test
 	public void testGetConcentrationUnit_1() {
 
 		assertEquals("mg/ml", quantitationPeakMSD.getConcentrationUnit());
 	}
 
+	@Test
 	public void testGetReferencePeakMSD_1() {
 
 		assertNotNull(quantitationPeakMSD.getReferencePeak());

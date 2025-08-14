@@ -12,35 +12,33 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.processing.core;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-public class ProcessingInfo_4_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class ProcessingInfo_4_Test {
 
 	private IProcessingInfo<String> processingInfo;
 	private IProcessingMessage processingMessage;
 	private String processingResult;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		processingInfo = new ProcessingInfo<>();
 		processingResult = "Hello World!";
 		processingInfo.setProcessingResult(processingResult);
-		//
+
 		processingMessage = new ProcessingMessage(MessageType.WARN, "Load Peak", "The peak X35P couldn't be loaded completely.");
 		processingInfo.addMessage(processingMessage);
-		//
+
 		processingMessage = new ProcessingMessage(MessageType.INFO, "Calculate Abundance", "The abundance was calculated correctly.");
 		processingInfo.addMessage(processingMessage);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testProcessingInfo_1() {
 
 		assertFalse(processingInfo.hasErrorMessages());
@@ -48,6 +46,7 @@ public class ProcessingInfo_4_Test extends TestCase {
 		processingInfo.addMessage(processingMessage);
 	}
 
+	@Test
 	public void testProcessingInfo_2() {
 
 		processingMessage = new ProcessingMessage(MessageType.ERROR, "Load Peak", "The peak X35P couldn't be loaded, cause it seems to have no values.");

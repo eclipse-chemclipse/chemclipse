@@ -12,85 +12,94 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.ranges;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
 
-public class TimeRangeLabels_3_Test extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class TimeRangeLabels_3_Test {
 
 	private TimeRangeLabels timeRangeLabels;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		timeRangeLabels = new TimeRangeLabels("Some Range", "Test|Value");
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test1() {
 
 		assertEquals("Some Range", timeRangeLabels.getTitle());
 	}
 
+	@Test
 	public void test2() {
 
 		assertEquals("TestValue", timeRangeLabels.getInitialValue());
 	}
 
+	@Test
 	public void test3() {
 
 		assertEquals("Add a new Some Range.", timeRangeLabels.getAddMessage());
 	}
 
+	@Test
 	public void test4() {
 
 		assertEquals("Please define a new Some Range.", timeRangeLabels.getAddError());
 	}
 
+	@Test
 	public void test5() {
 
 		assertEquals("The Some Range exists already.", timeRangeLabels.getAddExists());
 	}
 
+	@Test
 	public void test6() {
 
 		assertEquals("Create a new Some Range.", timeRangeLabels.getCreateMessage());
 	}
 
+	@Test
 	public void test7() {
 
 		assertEquals("TestValue | 10.2 | 10.4 | 10.6", timeRangeLabels.getCreateInitialValue());
 	}
 
+	@Test
 	public void test8() {
 
 		assertEquals("Edit the selected Some Range.", timeRangeLabels.getEditMessage());
 	}
 
+	@Test
 	public void test9() {
 
 		assertEquals("Would you like to delete the selected Some Range?", timeRangeLabels.getDeleteMessage());
 	}
 
+	@Test
 	public void test10() {
 
 		assertEquals("Would you like to delete the all Some Ranges?", timeRangeLabels.getClearMessage());
 	}
 
+	@Test
 	public void test11() {
 
 		assertEquals("The Some Range must not contain the following delimiter '|'.", timeRangeLabels.getErrorDelimiter());
 	}
 
+	@Test
 	public void test12() {
 
 		assertEquals(1, timeRangeLabels.getProposals().length);
 	}
 
+	@Test
 	public void test13() {
 
 		assertEquals("TestValue", timeRangeLabels.getProposals()[0]);

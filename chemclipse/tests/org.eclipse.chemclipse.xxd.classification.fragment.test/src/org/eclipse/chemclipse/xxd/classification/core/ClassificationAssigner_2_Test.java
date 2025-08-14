@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.classification.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IPeakIntensityValues;
 import org.eclipse.chemclipse.model.core.IPeakModel;
@@ -29,24 +32,22 @@ import org.eclipse.chemclipse.model.implementation.Scan;
 import org.eclipse.chemclipse.xxd.classification.model.ClassificationRule;
 import org.eclipse.chemclipse.xxd.classification.model.Reference;
 import org.eclipse.chemclipse.xxd.classification.settings.ClassifierAssignFilterSettings;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ClassificationAssigner_2_Test extends TestCase {
+public class ClassificationAssigner_2_Test {
 
 	private static final String NAME = "Heptanoic acid, 3-methylbutyl ester";
 	private static final String CAS = "109-25-1";
 	private static final String REFERENCE_ID = "ID-202206";
 	private static final String CLASSIFICATION = "Ester";
-	//
+
 	private IPeak peak;
 	private IIdentificationTarget identificationTarget;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
-		//
 		IScan peakMaximum = new Scan(1000);
 		IPeakIntensityValues peakIntensityValues = new PeakIntensityValues();
 		peakIntensityValues.addIntensityValue(100, 10.f);
@@ -60,195 +61,208 @@ public class ClassificationAssigner_2_Test extends TestCase {
 		peak = new Peak(peakModel);
 		identificationTarget = createIdentificationTarget();
 		peak.getTargets().add(identificationTarget);
-		//
+
 		assertTrue(peak.getClassifier().isEmpty());
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void test0a() {
 
 		ClassificationRule rule = createClassificationRule("", CLASSIFICATION);
 		ClassifierAssignFilterSettings settings = createSettings(false, false, false, rule);
 		ClassificationAssigner.apply(peak, settings);
-		//
+
 		assertTrue(peak.getClassifier().isEmpty());
 	}
 
+	@Test
 	public void test0b() {
 
 		ClassificationRule rule = createClassificationRule("109-25-1", "");
 		ClassifierAssignFilterSettings settings = createSettings(false, false, false, rule);
 		ClassificationAssigner.apply(peak, settings);
-		//
+
 		assertTrue(peak.getClassifier().isEmpty());
 	}
 
+	@Test
 	public void test0c() {
 
 		ClassificationRule rule = createClassificationRule("", "");
 		ClassifierAssignFilterSettings settings = createSettings(false, false, false, rule);
 		ClassificationAssigner.apply(peak, settings);
-		//
+
 		assertTrue(peak.getClassifier().isEmpty());
 	}
 
+	@Test
 	public void test1a() {
 
 		ClassificationRule rule = createClassificationRule("109-25-1", CLASSIFICATION);
 		ClassifierAssignFilterSettings settings = createSettings(false, false, false, rule);
 		ClassificationAssigner.apply(peak, settings);
-		//
+
 		assertEquals(peak.getClassifier().size(), 1);
 		assertTrue(peak.getClassifier().contains(CLASSIFICATION));
 	}
 
+	@Test
 	public void test1b() {
 
 		ClassificationRule rule = createClassificationRule("109-25-1", CLASSIFICATION);
 		ClassifierAssignFilterSettings settings = createSettings(false, false, false, rule);
 		ClassificationAssigner.apply(peak, settings);
-		//
+
 		assertEquals(peak.getClassifier().size(), 1);
 		assertTrue(peak.getClassifier().contains(CLASSIFICATION));
 	}
 
+	@Test
 	public void test2() {
 
 		ClassificationRule rule = createClassificationRule("109-25-1", CLASSIFICATION);
 		ClassifierAssignFilterSettings settings = createSettings(true, false, false, rule);
 		ClassificationAssigner.apply(peak, settings);
-		//
+
 		assertEquals(peak.getClassifier().size(), 1);
 		assertTrue(peak.getClassifier().contains(CLASSIFICATION));
 	}
 
+	@Test
 	public void test3() {
 
 		ClassificationRule rule = createClassificationRule("109-25-1", CLASSIFICATION);
 		ClassifierAssignFilterSettings settings = createSettings(true, true, false, rule);
 		ClassificationAssigner.apply(peak, settings);
-		//
+
 		assertEquals(peak.getClassifier().size(), 1);
 		assertTrue(peak.getClassifier().contains(CLASSIFICATION));
 	}
 
+	@Test
 	public void test4() {
 
 		ClassificationRule rule = createClassificationRule("109-25-1", CLASSIFICATION);
 		ClassifierAssignFilterSettings settings = createSettings(true, true, true, rule);
 		ClassificationAssigner.apply(peak, settings);
-		//
+
 		assertEquals(peak.getClassifier().size(), 1);
 		assertTrue(peak.getClassifier().contains(CLASSIFICATION));
 	}
 
+	@Test
 	public void test5a() {
 
 		ClassificationRule rule = createClassificationRule("-25-", CLASSIFICATION);
 		ClassifierAssignFilterSettings settings = createSettings(false, false, false, rule);
 		ClassificationAssigner.apply(peak, settings);
-		//
+
 		assertTrue(peak.getClassifier().isEmpty());
 	}
 
+	@Test
 	public void test5b() {
 
 		ClassificationRule rule = createClassificationRule("-25-", CLASSIFICATION);
 		ClassifierAssignFilterSettings settings = createSettings(true, false, false, rule);
 		ClassificationAssigner.apply(peak, settings);
-		//
+
 		assertTrue(peak.getClassifier().isEmpty());
 	}
 
+	@Test
 	public void test5c() {
 
 		ClassificationRule rule = createClassificationRule("-25-", CLASSIFICATION);
 		ClassifierAssignFilterSettings settings = createSettings(false, true, false, rule);
 		ClassificationAssigner.apply(peak, settings);
-		//
+
 		assertEquals(peak.getClassifier().size(), 1);
 		assertTrue(peak.getClassifier().contains(CLASSIFICATION));
 	}
 
+	@Test
 	public void test5d() {
 
 		ClassificationRule rule = createClassificationRule("-25-", CLASSIFICATION);
 		ClassifierAssignFilterSettings settings = createSettings(false, true, false, rule);
 		ClassificationAssigner.apply(peak, settings);
-		//
+
 		assertEquals(peak.getClassifier().size(), 1);
 		assertTrue(peak.getClassifier().contains(CLASSIFICATION));
 	}
 
+	@Test
 	public void test5e() {
 
 		ClassificationRule rule = createClassificationRule("-25-", CLASSIFICATION);
 		ClassifierAssignFilterSettings settings = createSettings(true, true, false, rule);
 		ClassificationAssigner.apply(peak, settings);
-		//
+
 		assertEquals(peak.getClassifier().size(), 1);
 		assertTrue(peak.getClassifier().contains(CLASSIFICATION));
 	}
 
+	@Test
 	public void test5f() {
 
 		ClassificationRule rule = createClassificationRule("(.*)(-25-)(.*)", CLASSIFICATION);
 		ClassifierAssignFilterSettings settings = createSettings(true, false, true, rule);
 		ClassificationAssigner.apply(peak, settings);
-		//
+
 		assertEquals(peak.getClassifier().size(), 1);
 		assertTrue(peak.getClassifier().contains(CLASSIFICATION));
 	}
 
+	@Test
 	public void test5g() {
 
 		ClassificationRule rule = createClassificationRule("(.*)(-25-)", CLASSIFICATION);
 		ClassifierAssignFilterSettings settings = createSettings(true, false, true, rule);
 		ClassificationAssigner.apply(peak, settings);
-		//
+
 		assertTrue(peak.getClassifier().isEmpty());
 	}
 
+	@Test
 	public void test5h() {
 
 		ClassificationRule rule = createClassificationRule("(.*)(-25-)", CLASSIFICATION);
 		ClassifierAssignFilterSettings settings = createSettings(true, true, true, rule);
 		ClassificationAssigner.apply(peak, settings);
-		//
+
 		assertEquals(peak.getClassifier().size(), 1);
 		assertTrue(peak.getClassifier().contains(CLASSIFICATION));
 	}
 
+	@Test
 	public void test5i() {
 
 		ClassificationRule rule = createClassificationRule("(.*)(-25-)(.*)", CLASSIFICATION);
 		ClassifierAssignFilterSettings settings = createSettings(false, false, true, rule);
 		ClassificationAssigner.apply(peak, settings);
-		//
+
 		assertEquals(peak.getClassifier().size(), 1);
 		assertTrue(peak.getClassifier().contains(CLASSIFICATION));
 	}
 
+	@Test
 	public void test5j() {
 
 		ClassificationRule rule = createClassificationRule("(.*)(-25-)", CLASSIFICATION);
 		ClassifierAssignFilterSettings settings = createSettings(false, false, true, rule);
 		ClassificationAssigner.apply(peak, settings);
-		//
+
 		assertTrue(peak.getClassifier().isEmpty());
 	}
 
+	@Test
 	public void test5k() {
 
 		ClassificationRule rule = createClassificationRule("(.*)(-25-)", CLASSIFICATION);
 		ClassifierAssignFilterSettings settings = createSettings(false, true, true, rule);
 		ClassificationAssigner.apply(peak, settings);
-		//
+
 		assertEquals(peak.getClassifier().size(), 1);
 		assertTrue(peak.getClassifier().contains(CLASSIFICATION));
 	}
@@ -271,12 +285,12 @@ public class ClassificationAssigner_2_Test extends TestCase {
 	private ClassifierAssignFilterSettings createSettings(boolean caseSensitive, boolean matchPartly, boolean useRegularExpression, ClassificationRule classificationRule) {
 
 		ClassifierAssignFilterSettings settings = new ClassifierAssignFilterSettings();
-		//
+
 		settings.setCaseSensitive(caseSensitive);
 		settings.setMatchPartly(matchPartly);
 		settings.setUseRegularExpression(useRegularExpression);
 		settings.getClassificationDictionary().add(classificationRule);
-		//
+
 		return settings;
 	}
 }

@@ -13,30 +13,28 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.processing.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
+
 import org.eclipse.chemclipse.processing.core.exceptions.TypeCastException;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class ProcessingInfo_6_Test extends TestCase {
+public class ProcessingInfo_6_Test {
 
 	private IProcessingInfo<String> processingInfo;
 	private String processingResult;
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() {
 
-		super.setUp();
 		processingInfo = new ProcessingInfo<>();
 		processingResult = "Hello World!";
 		processingInfo.setProcessingResult(processingResult);
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
-	}
-
+	@Test
 	public void testProcessingInfo_1() {
 
 		String result = processingInfo.getProcessingResult();
@@ -45,12 +43,9 @@ public class ProcessingInfo_6_Test extends TestCase {
 	}
 
 	@SuppressWarnings("deprecation")
+	@Test
 	public void testProcessingInfo_2() {
 
-		try {
-			processingInfo.getProcessingResult(Integer.class);
-		} catch(TypeCastException e) {
-			assertTrue(true);
-		}
+		assertThrows(TypeCastException.class, () -> processingInfo.getProcessingResult(Integer.class));
 	}
 }
