@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipse.chemclipse.rcp.compilation.testing.feature_0.9.0.qualifier.jar" id="org.eclipse.chemclipse.rcp.compilation.testing.feature" version="0.9.0.qualifier">
-      <category name="org.eclipse.chemclipse.chemclipse"/>
-   </feature>
    <feature url="features/org.eclipse.chemclipse.rcp.compilation.community.feature_0.9.0.qualifier.jar" id="org.eclipse.chemclipse.rcp.compilation.community.feature" version="0.9.0.qualifier">
       <category name="org.eclipse.chemclipse.chemclipse"/>
    </feature>
