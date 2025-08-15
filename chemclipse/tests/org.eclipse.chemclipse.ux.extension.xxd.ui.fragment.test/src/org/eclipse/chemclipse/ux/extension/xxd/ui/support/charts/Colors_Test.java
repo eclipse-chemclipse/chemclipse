@@ -12,8 +12,6 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts;
 
-import static org.junit.Assert.assertTrue;
-
 import org.eclipse.chemclipse.swt.ui.support.Colors;
 import org.eclipse.swt.graphics.Color;
 import org.junit.Ignore;
@@ -32,7 +30,6 @@ public class Colors_Test {
 		print("DARK_RED", Colors.DARK_RED);
 		print("GRAY", Colors.GRAY);
 		print("RED", Colors.RED);
-		assertTrue(true);
 	}
 
 	private void print(String name, Color color) {

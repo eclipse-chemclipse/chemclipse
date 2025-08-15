@@ -13,7 +13,7 @@
 package org.eclipse.chemclipse.msd.converter.core;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertThrows;
 
 import org.eclipse.chemclipse.converter.core.IConverterSupportSetter;
 import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException;
@@ -33,84 +33,56 @@ public class AbstractConverterSupport_1_Test extends AbstractConverterTestCase {
 	}
 
 	@Test
-	public void testGetConverterIdByName_1() {
+	public void testGetConverterIdByName_1() throws NoConverterAvailableException {
 
 		String converterId = "org.eclipse.chemclipse.msd.converter.supplier.agilent";
 		String converterName = "Agilent Chromatogram (*.D/DATA.MS)";
-		try {
-			assertEquals(converterId, converterSupport.getConverterId(converterName, false));
-		} catch(NoConverterAvailableException e) {
-			assertTrue("The failure NoConverterAvailableException should not be thrown here.", false);
-		}
+		assertEquals(converterId, converterSupport.getConverterId(converterName, false));
 	}
 
 	@Test
-	public void testGetConverterIdByName_2() {
+	public void testGetConverterIdByName_2() throws NoConverterAvailableException {
 
 		String converterId = "org.eclipse.chemclipse.msd.converter.supplier.agilent.msd1";
 		String converterName = "Agilent Chromatogram (*.D/MSD1.MS)";
-		try {
-			assertEquals(converterId, converterSupport.getConverterId(converterName, false));
-		} catch(NoConverterAvailableException e) {
-			assertTrue("The failure NoConverterAvailableException should not be thrown here.", false);
-		}
+		assertEquals(converterId, converterSupport.getConverterId(converterName, false));
 	}
 
 	@Test
-	public void testGetConverterIdByName_3() {
+	public void testGetConverterIdByName_3() throws NoConverterAvailableException {
 
 		String converterId = "net.openchrom.msd.converter.supplier.cdf";
 		String converterName = "ANDI/AIA CDF Chromatogram (*.CDF)";
-		try {
-			assertEquals(converterId, converterSupport.getConverterId(converterName, false));
-		} catch(NoConverterAvailableException e) {
-			assertTrue("The failure NoConverterAvailableException should not be thrown here.", false);
-		}
+		assertEquals(converterId, converterSupport.getConverterId(converterName, false));
 	}
 
 	@Test
-	public void testGetConverterIdByName_4() {
+	public void testGetConverterIdByName_4() throws NoConverterAvailableException {
 
 		String converterId = "org.eclipse.chemclipse.msd.converter.supplier.excel";
 		String converterName = "Excel Chromatogram (*.xlsx)";
-		try {
-			assertEquals(converterId, converterSupport.getConverterId(converterName, false));
-		} catch(NoConverterAvailableException e) {
-			assertTrue("The failure NoConverterAvailableException should not be thrown here.", false);
-		}
+		assertEquals(converterId, converterSupport.getConverterId(converterName, false));
 	}
 
 	@Test
-	public void testGetConverterIdByName_5() {
+	public void testGetConverterIdByName_5() throws NoConverterAvailableException {
 
 		String converterId = "org.eclipse.chemclipse.msd.converter.supplier.test";
 		String converterName = "Test Chromatogram (*.C/CHROM.MS)";
-		try {
-			assertEquals(converterId, converterSupport.getConverterId(converterName, false));
-		} catch(NoConverterAvailableException e) {
-			assertTrue("The failure NoConverterAvailableException should not be thrown here.", false);
-		}
+		assertEquals(converterId, converterSupport.getConverterId(converterName, false));
 	}
 
 	@Test
 	public void testGetConverterIdByName_6() {
 
 		String converterName = "org.eclipse.chemclipse.msd.converter";
-		try {
-			converterSupport.getConverterId(converterName, false);
-		} catch(NoConverterAvailableException e) {
-			assertTrue(true);
-		}
+		assertThrows(NoConverterAvailableException.class, () -> converterSupport.getConverterId(converterName, false));
 	}
 
 	@Test
 	public void testGetConverterIdByName_7() {
 
 		String converterName = "";
-		try {
-			converterSupport.getConverterId(converterName, false);
-		} catch(NoConverterAvailableException e) {
-			assertTrue(true);
-		}
+		assertThrows(NoConverterAvailableException.class, () -> converterSupport.getConverterId(converterName, false));
 	}
 }

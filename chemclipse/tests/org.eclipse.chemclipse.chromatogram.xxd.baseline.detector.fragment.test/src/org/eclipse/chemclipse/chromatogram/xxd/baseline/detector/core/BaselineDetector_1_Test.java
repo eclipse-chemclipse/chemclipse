@@ -14,6 +14,7 @@ package org.eclipse.chemclipse.chromatogram.xxd.baseline.detector.core;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -103,12 +104,10 @@ public class BaselineDetector_1_Test {
 	@Test
 	public void testGetMassSpectrumComparisonSupplier_3() throws NoBaselineDetectorAvailableException {
 
-		String id = "org.eclipse.chemclipse.chromatogram.xxd.baseline.detector.supplier.tic";
-		try {
+		assertThrows(NoBaselineDetectorAvailableException.class, () -> { // The detector was removed
+			String id = "org.eclipse.chemclipse.chromatogram.xxd.baseline.detector.supplier.tic";
 			IBaselineDetectorSupplier supplier = support.getBaselineDetectorSupplier(id);
 			assertNull(supplier);
-		} catch(Exception e) {
-			assertTrue(true); // The detector was removed
-		}
+		});
 	}
 }

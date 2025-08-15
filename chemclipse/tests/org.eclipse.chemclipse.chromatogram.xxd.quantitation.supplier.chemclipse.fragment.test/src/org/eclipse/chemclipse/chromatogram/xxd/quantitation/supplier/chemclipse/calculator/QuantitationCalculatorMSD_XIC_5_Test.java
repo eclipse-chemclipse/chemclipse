@@ -12,7 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.quantitation.supplier.chemclipse.calculator;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertThrows;
 
 import org.eclipse.chemclipse.chromatogram.xxd.quantitation.supplier.chemclipse.internal.calculator.IQuantitationCalculatorMSD;
 import org.eclipse.chemclipse.chromatogram.xxd.quantitation.supplier.chemclipse.internal.calculator.QuantitationCalculatorMSD;
@@ -59,10 +59,8 @@ public class QuantitationCalculatorMSD_XIC_5_Test extends QuantitationCalculator
 		quantitationSignals.add(new QuantitationSignal(108.0d, 0.25f));
 		concentrationResponseEntries.add(new ResponseSignal(180.0d, 0.3d, 59600.0d));
 		quantitationCompound.setUseCrossZero(false);
-		try {
+		assertThrows(EvaluationException.class, () -> {
 			calculator.calculateQuantitationResults(getReferencePeakMSD_XIC_X(), quantitationCompound);
-		} catch(EvaluationException e) {
-			assertTrue(true);
-		}
+		});
 	}
 }

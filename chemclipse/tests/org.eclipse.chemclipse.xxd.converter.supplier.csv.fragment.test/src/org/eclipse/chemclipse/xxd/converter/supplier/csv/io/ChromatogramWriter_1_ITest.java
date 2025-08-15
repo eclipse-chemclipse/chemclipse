@@ -41,7 +41,6 @@ public class ChromatogramWriter_1_ITest extends ChromatogramReaderTestCase {
 
 		File file = new File(TestPathHelper.getAbsolutePath(TestPathHelper.DIRECTORY_EXPORT_TEST) + File.separator + "Test.csv");
 		chromatogramWriter.writeChromatogram(file, chromatogram, new NullProgressMonitor());
-		file.delete();
-		assertTrue(true);
+		assertTrue(file.delete());
 	}
 }

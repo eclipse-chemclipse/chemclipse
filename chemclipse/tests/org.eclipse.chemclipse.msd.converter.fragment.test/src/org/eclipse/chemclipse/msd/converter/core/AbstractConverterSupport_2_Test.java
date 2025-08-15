@@ -13,7 +13,7 @@
 package org.eclipse.chemclipse.msd.converter.core;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertThrows;
 
 import org.eclipse.chemclipse.converter.core.IConverterSupportSetter;
 import org.junit.Before;
@@ -35,76 +35,46 @@ public class AbstractConverterSupport_2_Test extends AbstractConverterTestCase {
 	public void testGetConverterIdByName_1() {
 
 		String converterId = "org.eclipse.chemclipse.msd.converter.supplier.agilent";
-		try {
-			assertEquals(converterId, converterSupport.getSupplier().get(0).getId());
-		} catch(Exception e) {
-			assertTrue("The failure NoConverterAvailableException should not be thrown here.", false);
-		}
+		assertEquals(converterId, converterSupport.getSupplier().get(0).getId());
 	}
 
 	@Test
 	public void testGetConverterIdByName_2() {
 
 		String converterId = "org.eclipse.chemclipse.msd.converter.supplier.agilent.msd1";
-		try {
-			assertEquals(converterId, converterSupport.getSupplier().get(1).getId());
-		} catch(Exception e) {
-			assertTrue("The failure NoConverterAvailableException should not be thrown here.", false);
-		}
+		assertEquals(converterId, converterSupport.getSupplier().get(1).getId());
 	}
 
 	@Test
 	public void testGetConverterIdByName_3() {
 
 		String converterId = "net.openchrom.msd.converter.supplier.cdf";
-		try {
-			assertEquals(converterId, converterSupport.getSupplier().get(2).getId());
-		} catch(Exception e) {
-			assertTrue("The failure NoConverterAvailableException should not be thrown here.", false);
-		}
+		assertEquals(converterId, converterSupport.getSupplier().get(2).getId());
 	}
 
 	@Test
 	public void testGetConverterIdByName_4() {
 
 		String converterId = "org.eclipse.chemclipse.msd.converter.supplier.excel";
-		try {
-			assertEquals(converterId, converterSupport.getSupplier().get(3).getId());
-		} catch(Exception e) {
-			assertTrue("The failure NoConverterAvailableException should not be thrown here.", false);
-		}
+		assertEquals(converterId, converterSupport.getSupplier().get(3).getId());
 	}
 
 	@Test
 	public void testGetConverterIdByName_5() {
 
 		String converterId = "org.eclipse.chemclipse.msd.converter.supplier.test";
-		try {
-			assertEquals(converterId, converterSupport.getSupplier().get(4).getId());
-		} catch(Exception e) {
-			assertTrue("The failure NoConverterAvailableException should not be thrown here.", false);
-		}
+		assertEquals(converterId, converterSupport.getSupplier().get(4).getId());
 	}
 
 	@Test
 	public void testGetConverterIdByName_6() {
 
-		try {
-			@SuppressWarnings("unused")
-			String converterId = converterSupport.getSupplier().get(-1).getId();
-		} catch(Exception e) {
-			assertTrue(true);
-		}
+		assertThrows(IndexOutOfBoundsException.class, () -> converterSupport.getSupplier().get(-1).getId());
 	}
 
 	@Test
 	public void testGetConverterIdByName_7() {
 
-		try {
-			@SuppressWarnings("unused")
-			String converterId = converterSupport.getSupplier().get(5).getId();
-		} catch(Exception e) {
-			assertTrue(true);
-		}
+		assertThrows(IndexOutOfBoundsException.class, () -> converterSupport.getSupplier().get(5).getId());
 	}
 }
