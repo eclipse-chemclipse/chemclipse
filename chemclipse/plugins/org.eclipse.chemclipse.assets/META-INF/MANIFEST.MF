@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Assets
 Bundle-SymbolicName: org.eclipse.chemclipse.assets
 Bundle-Version: 0.9.0.qualifier
-Bundle-Activator: org.eclipse.chemclipse.assets.Activator
 Bundle-Vendor: ChemClipse
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.chemclipse.logging;bundle-version="0.9.0",

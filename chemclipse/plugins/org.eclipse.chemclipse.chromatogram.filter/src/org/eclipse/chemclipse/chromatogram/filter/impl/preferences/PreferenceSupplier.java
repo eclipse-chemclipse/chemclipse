@@ -12,7 +12,6 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.filter.impl.preferences;
 
-import org.eclipse.chemclipse.chromatogram.filter.Activator;
 import org.eclipse.chemclipse.chromatogram.filter.impl.settings.FilterSettingsHeaderInput;
 import org.eclipse.chemclipse.chromatogram.filter.impl.settings.FilterSettingsHeaderTransfer;
 import org.eclipse.chemclipse.chromatogram.filter.impl.settings.FilterSettingsReset;
@@ -28,6 +27,7 @@ import org.eclipse.chemclipse.chromatogram.filter.system.SettingsRetentionIndexQ
 import org.eclipse.chemclipse.model.math.IonRoundMethod;
 import org.eclipse.chemclipse.support.preferences.AbstractPreferenceSupplier;
 import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
+import org.osgi.framework.FrameworkUtil;
 
 public class PreferenceSupplier extends AbstractPreferenceSupplier implements IPreferenceSupplier {
 
@@ -87,7 +87,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	@Override
 	public String getPreferenceNode() {
 
-		return Activator.getContext().getBundle().getSymbolicName();
+		return FrameworkUtil.getBundle(PreferenceSupplier.class).getSymbolicName();
 	}
 
 	@Override
