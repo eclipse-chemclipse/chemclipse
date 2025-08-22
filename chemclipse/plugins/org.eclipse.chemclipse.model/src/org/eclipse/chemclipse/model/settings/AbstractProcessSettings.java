@@ -30,12 +30,13 @@ public abstract class AbstractProcessSettings implements IProcessSettings {
 	}
 
 	/**
-	 * Replaces the patterns. For example {chromatogram_name}{extension} is e
+	 * Replaces the pattern and extension.
+	 * For example {chromatogram_name}{extension} is validated to TestChromatogram.csv
 	 * 
 	 * @param chromatogram
 	 * @param fileNamePattern
 	 * @param extension
-	 * @return
+	 * @return String
 	 */
 	public static String validateFileName(IChromatogram chromatogram, String fileNamePattern, String extension) {
 
@@ -47,14 +48,6 @@ public abstract class AbstractProcessSettings implements IProcessSettings {
 		return FileSystem.getCurrent().toLegalFileName(fileName, '-');
 	}
 
-	/**
-	 * Replaces the file name placeholder and validates the file name to be legal.
-	 * 
-	 * @param chromatogram
-	 * @param fileNamePattern
-	 * @param extension
-	 * @return String
-	 */
 	protected String getFileName(IChromatogram chromatogram, String fileNamePattern, String extension) {
 
 		return validateFileName(chromatogram, fileNamePattern, extension);
