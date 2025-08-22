@@ -18,12 +18,17 @@ import org.eclipse.chemclipse.support.literature.LiteratureReference;
 
 public interface IProcessSettings {
 
+	/*
+	 * File name placeholder
+	 */
 	public static final String VARIABLE_CHROMATOGRAM_NAME = "{chromatogram_name}";
 	public static final String VARIABLE_CHROMATOGRAM_DATANAME = "{chromatogram_dataname}";
 	public static final String VARIABLE_CHROMATOGRAM_SAMPLEGROUP = "{chromatogram_samplegroup}";
 	public static final String VARIABLE_CHROMATOGRAM_SHORTINFO = "{chromatogram_shortinfo}";
 	public static final String VARIABLE_EXTENSION = "{extension}";
-	//
+	/*
+	 * Directory placeholder
+	 */
 	public static final String VARIABLE_CURRENT_DIRECTORY = "{current_directory}";
 
 	/**

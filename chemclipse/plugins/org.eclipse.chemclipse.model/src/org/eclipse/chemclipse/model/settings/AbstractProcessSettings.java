@@ -30,6 +30,24 @@ public abstract class AbstractProcessSettings implements IProcessSettings {
 	}
 
 	/**
+	 * Replaces the patterns. For example {chromatogram_name}{extension} is e
+	 * 
+	 * @param chromatogram
+	 * @param fileNamePattern
+	 * @param extension
+	 * @return
+	 */
+	public static String validateFileName(IChromatogram chromatogram, String fileNamePattern, String extension) {
+
+		String fileName = replaceFileName(chromatogram, fileNamePattern);
+		fileName = replaceFileExtension(fileName, extension);
+		/*
+		 * Remove OS specific file system control characters.
+		 */
+		return FileSystem.getCurrent().toLegalFileName(fileName, '-');
+	}
+
+	/**
 	 * Replaces the file name placeholder and validates the file name to be legal.
 	 * 
 	 * @param chromatogram
@@ -39,12 +57,7 @@ public abstract class AbstractProcessSettings implements IProcessSettings {
 	 */
 	protected String getFileName(IChromatogram chromatogram, String fileNamePattern, String extension) {
 
-		String fileName = replaceFileName(chromatogram, fileNamePattern);
-		fileName = replaceFileExtension(fileName, extension);
-		/*
-		 * Remove OS specific file system control characters.
-		 */
-		return FileSystem.getCurrent().toLegalFileName(fileName, '-');
+		return validateFileName(chromatogram, fileNamePattern, extension);
 	}
 
 	@Override
@@ -64,10 +77,11 @@ public abstract class AbstractProcessSettings implements IProcessSettings {
 		if(startIndex != -1) {
 			return value.substring(startIndex);
 		}
+
 		return value;
 	}
 
-	private String replaceFileName(IChromatogram chromatogram, String fileNamePattern) {
+	private static String replaceFileName(IChromatogram chromatogram, String fileNamePattern) {
 
 		String fileName = fileNamePattern;
 		/*
@@ -81,21 +95,20 @@ public abstract class AbstractProcessSettings implements IProcessSettings {
 		return fileName;
 	}
 
-	private String replaceVariable(String fileNamePattern, String variable, String replacement, String defaultReplacement) {
+	private static String replaceVariable(String fileNamePattern, String variable, String replacement, String defaultReplacement) {
 
 		String result = fileNamePattern;
-		//
 		if(fileNamePattern.contains(variable)) {
 			if(replacement == null || replacement.isEmpty()) {
 				replacement = defaultReplacement;
 			}
 			result = fileNamePattern.replace(variable, replacement);
 		}
-		//
+
 		return result;
 	}
 
-	private String replaceFileExtension(String fileName, String extension) {
+	private static String replaceFileExtension(String fileName, String extension) {
 
 		return fileName.replace(VARIABLE_EXTENSION, extension);
 	}

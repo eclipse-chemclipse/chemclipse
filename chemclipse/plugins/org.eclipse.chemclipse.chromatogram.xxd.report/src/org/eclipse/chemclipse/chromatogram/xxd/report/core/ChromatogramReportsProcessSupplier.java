@@ -81,25 +81,36 @@ public class ChromatogramReportsProcessSupplier implements IProcessTypeSupplier 
 			} else {
 				settings = new DefaultChromatogramReportSettings();
 			}
+			/*
+			 * Validate the export folder.
+			 */
 			File exportFolder = settings.getExportFolder();
 			if(exportFolder == null) {
 				messageConsumer.addErrorMessage(getName(), "No output folder specified and no default configured.");
 				return chromatogramSelection;
 			}
+			/*
+			 * Validate the default directory.
+			 */
 			if(exportFolder.getAbsolutePath().contains(IProcessSettings.VARIABLE_CURRENT_DIRECTORY)) {
 				String exportPath = AbstractProcessSettings.getCleanedFileValue(exportFolder.getAbsolutePath());
 				exportFolder = new File(exportPath.replace(IProcessSettings.VARIABLE_CURRENT_DIRECTORY, chromatogramSelection.getChromatogram().getFile().getParent()));
 			}
+			/*
+			 * Create the report file and run the report.
+			 */
 			String extension = supplier.getFileExtension();
 			if(exportFolder.exists() || exportFolder.mkdirs()) {
 				IChromatogram chromatogram = chromatogramSelection.getChromatogram();
-				File file = new File(exportFolder, settings.getFileNamePattern().replace(IProcessSettings.VARIABLE_CHROMATOGRAM_NAME, chromatogram.getName()).replace(IProcessSettings.VARIABLE_EXTENSION, extension));
+				String fileName = AbstractProcessSettings.validateFileName(chromatogram, settings.getFileNamePattern(), extension);
+				File file = new File(exportFolder, fileName);
 				IProcessingInfo<?> info = ChromatogramReports.generate(file, settings.isAppend(), chromatogram, settings, getId(), monitor);
 				messageConsumer.addMessages(info);
 				messageConsumer.addInfoMessage(getName(), "Report written to " + file.getAbsolutePath());
 			} else {
 				messageConsumer.addErrorMessage(getName(), "The specified output folder does not exist and can't be created.");
 			}
+
 			return chromatogramSelection;
 		}
 	}
