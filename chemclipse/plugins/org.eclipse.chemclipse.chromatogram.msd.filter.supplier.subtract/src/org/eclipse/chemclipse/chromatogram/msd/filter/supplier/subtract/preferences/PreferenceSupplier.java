@@ -12,13 +12,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.preferences;
 
-import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.Activator;
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.internal.preferences.PreferenceSupplierMSD;
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.settings.ChromatogramFilterSettings;
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.settings.MassSpectrumFilterSettings;
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.settings.PeakFilterSettings;
 import org.eclipse.chemclipse.support.preferences.AbstractPreferenceSupplier;
 import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
+import org.osgi.framework.FrameworkUtil;
 
 public class PreferenceSupplier extends AbstractPreferenceSupplier implements IPreferenceSupplier {
 
@@ -36,7 +36,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	@Override
 	public String getPreferenceNode() {
 
-		return Activator.getContext().getBundle().getSymbolicName();
+		return FrameworkUtil.getBundle(PreferenceSupplier.class).getSymbolicName();
 	}
 
 	@Override

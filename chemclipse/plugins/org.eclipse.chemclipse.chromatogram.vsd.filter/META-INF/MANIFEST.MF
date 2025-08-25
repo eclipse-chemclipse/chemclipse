@@ -8,7 +8,6 @@ Export-Package: org.eclipse.chemclipse.chromatogram.vsd.filter.model,
  org.eclipse.chemclipse.chromatogram.vsd.filter.preferences,
  org.eclipse.chemclipse.chromatogram.vsd.filter.service,
  org.eclipse.chemclipse.chromatogram.vsd.filter.validators
-Bundle-Activator: org.eclipse.chemclipse.chromatogram.vsd.filter.Activator
 Bundle-Vendor: ChemClipse
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.chemclipse.logging;bundle-version="0.8.0",

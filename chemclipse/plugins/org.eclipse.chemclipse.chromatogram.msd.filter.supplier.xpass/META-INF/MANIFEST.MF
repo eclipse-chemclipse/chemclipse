@@ -4,7 +4,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: XPass
 Bundle-SymbolicName: org.eclipse.chemclipse.chromatogram.msd.filter.supplier.xpass;singleton:=true
 Bundle-Version: 0.9.0.qualifier
-Bundle-Activator: org.eclipse.chemclipse.chromatogram.msd.filter.supplier.xpass.Activator
 Bundle-Vendor: ChemClipse
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.chemclipse.msd.model;bundle-version="0.8.0",

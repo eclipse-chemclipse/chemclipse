@@ -14,7 +14,6 @@ package org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.p
 
 import java.util.List;
 
-import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.Activator;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.impl.CalculatorStrategy;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.settings.CalculatorSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.settings.MassSpectrumIdentifierAlkaneSettings;
@@ -24,6 +23,7 @@ import org.eclipse.chemclipse.support.preferences.AbstractPreferenceSupplier;
 import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
 import org.eclipse.chemclipse.support.settings.UserManagement;
 import org.eclipse.chemclipse.support.util.FileListUtil;
+import org.osgi.framework.FrameworkUtil;
 
 public class PreferenceSupplier extends AbstractPreferenceSupplier implements IPreferenceSupplier {
 
@@ -101,7 +101,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	@Override
 	public String getPreferenceNode() {
 
-		return Activator.getContext().getBundle().getSymbolicName();
+		return FrameworkUtil.getBundle(PreferenceSupplier.class).getSymbolicName();
 	}
 
 	@Override
