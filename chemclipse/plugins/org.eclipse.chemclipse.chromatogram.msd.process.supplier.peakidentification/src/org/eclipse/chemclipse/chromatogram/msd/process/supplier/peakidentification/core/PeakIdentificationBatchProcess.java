@@ -15,9 +15,9 @@
 package org.eclipse.chemclipse.chromatogram.msd.process.supplier.peakidentification.core;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -193,7 +193,7 @@ public class PeakIdentificationBatchProcess implements IPeakIdentificationBatchP
 		 * Process the chromatogram and report the results.
 		 */
 		try {
-			PrintWriter printWriter = new PrintWriter(results, "UTF-8");
+			PrintWriter printWriter = new PrintWriter(results, StandardCharsets.UTF_8);
 			/*
 			 * Integrator Report
 			 */
@@ -206,9 +206,7 @@ public class PeakIdentificationBatchProcess implements IPeakIdentificationBatchP
 			 */
 			printWriter.flush();
 			printWriter.close();
-		} catch(FileNotFoundException e) {
-			logger.warn(e);
-		} catch(UnsupportedEncodingException e) {
+		} catch(IOException e) {
 			logger.warn(e);
 		}
 	}

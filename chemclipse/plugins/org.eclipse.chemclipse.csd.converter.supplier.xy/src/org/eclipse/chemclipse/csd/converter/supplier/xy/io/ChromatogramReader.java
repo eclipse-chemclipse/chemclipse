@@ -18,8 +18,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.eclipse.chemclipse.converter.exceptions.FileIsEmptyException;
 import org.eclipse.chemclipse.converter.exceptions.FileIsNotReadableException;
@@ -64,9 +64,9 @@ public class ChromatogramReader extends AbstractChromatogramCSDReader {
 		/*
 		 * Read the chromatogram
 		 */
-		boolean importSuccessful = readChromatogram(file, Charset.defaultCharset().name(), chromatogram);
+		boolean importSuccessful = readChromatogram(file, Charset.defaultCharset(), chromatogram);
 		if(!importSuccessful) {
-			readChromatogram(file, "UTF-16", chromatogram);
+			readChromatogram(file, StandardCharsets.UTF_16, chromatogram);
 		}
 		/*
 		 * Calculate the scanInterval and scanDelay.
@@ -76,7 +76,7 @@ public class ChromatogramReader extends AbstractChromatogramCSDReader {
 		return chromatogram;
 	}
 
-	private boolean readChromatogram(File file, String charsetName, IVendorChromatogram chromatogram) {
+	private boolean readChromatogram(File file, Charset charset, IVendorChromatogram chromatogram) {
 
 		try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
 			try {
@@ -153,10 +153,6 @@ public class ChromatogramReader extends AbstractChromatogramCSDReader {
 			} catch(Exception e) {
 				logger.warn(e);
 			}
-		} catch(UnsupportedEncodingException e1) {
-			logger.warn(e1);
-		} catch(FileNotFoundException e1) {
-			logger.warn(e1);
 		} catch(IOException e1) {
 			logger.warn(e1);
 		}

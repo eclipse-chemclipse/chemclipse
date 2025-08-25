@@ -13,11 +13,11 @@
 package org.eclipse.chemclipse.xxd.identifier.supplier.wikidata.query;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 
 import org.eclipse.chemclipse.logging.core.Logger;
 
@@ -63,7 +63,7 @@ public class QueryEntity extends AbstractQuery {
 
 		String url;
 		try {
-			url = Wikidata.ENDPOINT + "?query=" + java.net.URLEncoder.encode(queryString, "UTF-8");
+			url = Wikidata.ENDPOINT + "?query=" + java.net.URLEncoder.encode(queryString, StandardCharsets.UTF_8);
 			HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)) //
 												.header("Accept", "application/json") //
 												.header("User-Agent", getUserAgent()) //
@@ -81,8 +81,6 @@ public class QueryEntity extends AbstractQuery {
 					return picNode.asText();
 				}
 			}
-		} catch(UnsupportedEncodingException e) {
-			logger.error(e);
 		} catch(IOException e) {
 			logger.error(e);
 		} catch(InterruptedException e) {
