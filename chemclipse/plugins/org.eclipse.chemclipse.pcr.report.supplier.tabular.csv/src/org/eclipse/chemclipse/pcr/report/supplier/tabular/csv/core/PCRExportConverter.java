@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.pcr.converter.core.AbstractPlateExportConverter;
 import org.eclipse.chemclipse.pcr.converter.core.IPlateExportConverter;
@@ -122,7 +122,7 @@ public class PCRExportConverter extends AbstractPlateExportConverter implements 
 
 		csvPrinter.print(HeaderMessages.sample);
 		ChannelMappings channelMappings = PreferenceSupplier.getChannelMappings();
-		List<ChannelMapping> targetMappings = channelMappings.stream().filter(m -> StringUtils.equalsIgnoreCase(targetSubset, m.getSubset())).collect(Collectors.toList());
+		List<ChannelMapping> targetMappings = channelMappings.stream().filter(m -> Strings.CI.equals(targetSubset, m.getSubset())).collect(Collectors.toList());
 		List<ChannelMapping> sortedMappings = targetMappings.stream().sorted(Comparator.comparing(ChannelMapping::getChannel)).collect(Collectors.toList());
 		for(ChannelMapping sortedMapping : sortedMappings) {
 			csvPrinter.print(sortedMapping.getLabel());
@@ -134,12 +134,12 @@ public class PCRExportConverter extends AbstractPlateExportConverter implements 
 		WellMappings wellMapings = PreferenceSupplier.getWellMappings();
 		VirtualChannels virtualChannels = PreferenceSupplier.getVirtualChannels();
 		for(VirtualChannel virtualChannel : virtualChannels) {
-			if(!StringUtils.equalsIgnoreCase(targetSubset, virtualChannel.getSubset())) {
+			if(!Strings.CI.equals(targetSubset, virtualChannel.getSubset())) {
 				continue;
 			}
 			Map<Integer, IChannel> targetChannels = new HashMap<>();
 			for(IWell well : wells) {
-				if(!StringUtils.equalsIgnoreCase(targetSubset, well.getSampleSubset())) {
+				if(!Strings.CI.equals(targetSubset, well.getSampleSubset())) {
 					continue;
 				}
 				Pattern pattern = Pattern.compile(virtualChannel.getSample(), Pattern.CASE_INSENSITIVE);
@@ -170,9 +170,9 @@ public class PCRExportConverter extends AbstractPlateExportConverter implements 
 				continue;
 			}
 			for(IWell well : wells) {
-				if(StringUtils.equalsIgnoreCase(targetSubset, well.getSampleSubset())) {
+				if(Strings.CI.equals(targetSubset, well.getSampleSubset())) {
 					for(WellMapping wellMapping : wellMapings) {
-						if(!StringUtils.equalsIgnoreCase(targetSubset, wellMapping.getSubset())) {
+						if(!Strings.CI.equals(targetSubset, wellMapping.getSubset())) {
 							continue;
 						}
 						Pattern pattern = Pattern.compile(wellMapping.getSample(), Pattern.CASE_INSENSITIVE);
@@ -218,9 +218,9 @@ public class PCRExportConverter extends AbstractPlateExportConverter implements 
 		generateVirtualChannels(sortedWells, targetSubset);
 		WellMappings wellMapings = PreferenceSupplier.getWellMappings();
 		for(IWell well : sortedWells) {
-			if(StringUtils.equalsIgnoreCase(targetSubset, well.getSampleSubset())) {
+			if(Strings.CI.equals(targetSubset, well.getSampleSubset())) {
 				for(WellMapping wellMapping : wellMapings) {
-					if(!StringUtils.equalsIgnoreCase(targetSubset, wellMapping.getSubset())) {
+					if(!Strings.CI.equals(targetSubset, wellMapping.getSubset())) {
 						continue;
 					}
 					Pattern pattern = Pattern.compile(wellMapping.getSample(), Pattern.CASE_INSENSITIVE);

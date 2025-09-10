@@ -25,14 +25,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.common"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecore"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.equinox.p2.core.feature"
          version="0.0.0"/>
 
@@ -46,14 +38,6 @@
 
    <includes
          id="org.eclipse.rcp"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.ecf.core.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.ecf.filetransfer.feature"
          version="0.0.0"/>
 
    <includes

@@ -16,7 +16,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.eclipse.chemclipse.container.definition.Container;
 import org.eclipse.chemclipse.container.definition.IFileContentProvider;
 import org.eclipse.chemclipse.converter.core.IMagicNumberMatcher;
@@ -54,7 +54,7 @@ public class FileContainerCache {
 	public IFileContentProvider getFileContentProvider(File file) {
 
 		for(FileContainer fileContainer : fileContainers) {
-			if(StringUtils.endsWithIgnoreCase(file.getName(), fileContainer.getFileExtension())) {
+			if(Strings.CI.endsWith(file.getName(), fileContainer.getFileExtension())) {
 				IMagicNumberMatcher magicNumberMatcher = fileContainer.getMagicNumberMatcher();
 				if(magicNumberMatcher != null) {
 					if(magicNumberMatcher.checkFileFormat(file)) {
