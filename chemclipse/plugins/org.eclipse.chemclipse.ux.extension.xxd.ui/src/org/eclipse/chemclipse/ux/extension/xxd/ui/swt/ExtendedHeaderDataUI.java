@@ -29,6 +29,7 @@ import org.eclipse.chemclipse.swt.ui.components.DataMapSupportUI;
 import org.eclipse.chemclipse.swt.ui.components.InformationUI;
 import org.eclipse.chemclipse.swt.ui.components.SearchSupportUI;
 import org.eclipse.chemclipse.swt.ui.support.RichTextSupport;
+import org.eclipse.chemclipse.swt.ui.support.editor.SWTEditor;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.nebula.widgets.richtext.RichTextEditor;
@@ -261,7 +262,7 @@ public class ExtendedHeaderDataUI extends Composite implements IExtendedPartUI {
 					measurementInfo.setFindings(richTextEditor.getText().trim());
 				}
 			});
-		} else if(editor instanceof Text plainTextEditor) {
+		} else if(editor instanceof SWTEditor plainTextEditor) {
 			plainTextEditor.addModifyListener(e -> {
 
 				if(measurementInfo != null) {

@@ -15,6 +15,7 @@ package org.eclipse.chemclipse.swt.ui.support;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.support.settings.OperatingSystemUtils;
+import org.eclipse.chemclipse.swt.ui.support.editor.SWTEditor;
 import org.eclipse.nebula.widgets.richtext.RichTextEditor;
 import org.eclipse.nebula.widgets.richtext.RichTextViewer;
 import org.eclipse.swt.SWT;
@@ -25,7 +26,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Scrollable;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 public class RichTextSupport {
 
@@ -89,7 +89,7 @@ public class RichTextSupport {
 		String text = "";
 		if(editor instanceof RichTextEditor richTextEditor) {
 			text = richTextEditor.getText();
-		} else if(editor instanceof Text plainTextEditor) {
+		} else if(editor instanceof SWTEditor plainTextEditor) {
 			text = plainTextEditor.getText();
 		}
 
@@ -111,7 +111,7 @@ public class RichTextSupport {
 			richTextEditor.setText(text);
 		} else if(editor instanceof RichTextViewer richTextViewer) {
 			richTextViewer.setText(text);
-		} else if(editor instanceof Text plainTextEditor) {
+		} else if(editor instanceof SWTEditor plainTextEditor) {
 			plainTextEditor.setText(text);
 		}
 	}
@@ -147,12 +147,11 @@ public class RichTextSupport {
 				useRichTextEditor = BROWSER_AVAILABLE;
 			}
 		}
-
 		return useRichTextEditor;
 	}
 
-	private static Text createTextEditor(Composite parent, int style) {
+	private static SWTEditor createTextEditor(Composite parent, int style) {
 
-		return new Text(parent, style);
+		return new SWTEditor(parent, style);
 	}
 }

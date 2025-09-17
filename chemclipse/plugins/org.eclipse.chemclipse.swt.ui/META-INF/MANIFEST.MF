@@ -30,4 +30,5 @@ Export-Package: org.eclipse.chemclipse.swt.ui,
  org.eclipse.chemclipse.swt.ui.notifier,
  org.eclipse.chemclipse.swt.ui.preferences,
  org.eclipse.chemclipse.swt.ui.services,
- org.eclipse.chemclipse.swt.ui.support
+ org.eclipse.chemclipse.swt.ui.support,
+ org.eclipse.chemclipse.swt.ui.support.editor
