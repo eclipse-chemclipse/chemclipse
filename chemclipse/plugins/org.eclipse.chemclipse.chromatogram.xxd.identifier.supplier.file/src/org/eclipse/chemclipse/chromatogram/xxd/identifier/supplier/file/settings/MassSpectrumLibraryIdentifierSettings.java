@@ -16,8 +16,8 @@ package org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.setting
 import java.io.File;
 import java.util.StringJoiner;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.AbstractMassSpectrumIdentifierSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.msd.identifier.settings.AbstractMassSpectrumIdentifierSettings;
 import org.eclipse.chemclipse.support.settings.DoubleSettingsProperty;
 import org.eclipse.chemclipse.support.settings.FileSettingProperty;
 import org.eclipse.chemclipse.support.settings.FileSettingProperty.DialogType;

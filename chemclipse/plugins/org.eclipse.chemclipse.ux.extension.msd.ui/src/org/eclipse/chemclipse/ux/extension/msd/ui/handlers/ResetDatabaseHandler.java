@@ -12,15 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.msd.ui.handlers;
 
-import jakarta.inject.Named;
-
-import org.eclipse.chemclipse.chromatogram.msd.identifier.support.DatabasesCache;
+import org.eclipse.chemclipse.msd.identifier.support.DatabasesCache;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.di.UISynchronize;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+
+import jakarta.inject.Named;
 
 public class ResetDatabaseHandler {
 

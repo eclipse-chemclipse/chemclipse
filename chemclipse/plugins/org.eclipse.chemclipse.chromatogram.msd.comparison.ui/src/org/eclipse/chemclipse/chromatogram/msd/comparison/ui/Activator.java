@@ -12,7 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.comparison.ui;
 
-import org.eclipse.chemclipse.chromatogram.msd.comparison.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.msd.identifier.comparison.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.support.ui.activator.AbstractActivatorUI;
 import org.osgi.framework.BundleContext;
 

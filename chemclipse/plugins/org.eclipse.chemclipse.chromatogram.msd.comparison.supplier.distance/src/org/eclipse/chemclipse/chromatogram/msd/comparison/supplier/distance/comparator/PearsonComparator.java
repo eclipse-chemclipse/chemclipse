@@ -13,8 +13,8 @@
 package org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.distance.comparator;
 
 import org.apache.commons.math3.ml.distance.DistanceMeasure;
-import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.IMassSpectrumComparator;
 import org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.distance.internal.PearsonDistance;
+import org.eclipse.chemclipse.msd.identifier.comparison.IMassSpectrumComparator;
 
 public class PearsonComparator extends AbstractDistanceComparator implements IMassSpectrumComparator {
 

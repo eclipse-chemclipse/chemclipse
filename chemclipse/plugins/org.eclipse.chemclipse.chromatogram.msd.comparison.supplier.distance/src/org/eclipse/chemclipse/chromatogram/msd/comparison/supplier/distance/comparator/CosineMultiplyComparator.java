@@ -12,7 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.distance.comparator;
 
-import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.IMassSpectrumComparator;
+import org.eclipse.chemclipse.msd.identifier.comparison.IMassSpectrumComparator;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
 
 public class CosineMultiplyComparator extends CosineComparator implements IMassSpectrumComparator {

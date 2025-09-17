@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IMassSpectrumComparatorSettings;
-import org.eclipse.chemclipse.chromatogram.msd.identifier.support.TargetBuilderMSD;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.core.MassSpectrumIdentifierFile;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.core.PeakIdentifierFile;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.IFileIdentifierSettings;
@@ -35,6 +33,8 @@ import org.eclipse.chemclipse.model.support.LimitSupport;
 import org.eclipse.chemclipse.msd.classifier.supplier.molpeak.PathResolver;
 import org.eclipse.chemclipse.msd.classifier.supplier.molpeak.settings.IBasePeakSettings;
 import org.eclipse.chemclipse.msd.converter.database.DatabaseConverter;
+import org.eclipse.chemclipse.msd.identifier.settings.IMassSpectrumComparatorSettings;
+import org.eclipse.chemclipse.msd.identifier.support.TargetBuilderMSD;
 import org.eclipse.chemclipse.msd.model.core.ILibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;

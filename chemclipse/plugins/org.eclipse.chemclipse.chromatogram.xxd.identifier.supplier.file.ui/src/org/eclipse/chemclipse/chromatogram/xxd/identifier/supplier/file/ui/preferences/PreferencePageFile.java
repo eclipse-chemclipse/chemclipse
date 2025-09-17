@@ -12,7 +12,6 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.ui.preferences;
 
-import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.MassSpectrumComparator;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.ui.Activator;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.ui.editors.IdentifierTableEditor;
@@ -21,6 +20,7 @@ import org.eclipse.chemclipse.model.identifier.IDeltaCalculationSettings;
 import org.eclipse.chemclipse.model.identifier.IPenaltyCalculationSettings;
 import org.eclipse.chemclipse.model.identifier.PenaltyCalculation;
 import org.eclipse.chemclipse.model.support.CalculationType;
+import org.eclipse.chemclipse.msd.identifier.comparison.MassSpectrumComparator;
 import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.DoubleFieldEditor;
 import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.ExtendedIntegerFieldEditor;
 import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.FloatFieldEditor;

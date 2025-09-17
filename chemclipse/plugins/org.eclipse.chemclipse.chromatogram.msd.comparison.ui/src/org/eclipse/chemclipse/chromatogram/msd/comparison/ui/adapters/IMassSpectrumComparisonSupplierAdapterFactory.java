@@ -12,7 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.comparison.ui.adapters;
 
-import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.IMassSpectrumComparisonSupplier;
+import org.eclipse.chemclipse.msd.identifier.comparison.IMassSpectrumComparisonSupplier;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.IToolTipProvider;

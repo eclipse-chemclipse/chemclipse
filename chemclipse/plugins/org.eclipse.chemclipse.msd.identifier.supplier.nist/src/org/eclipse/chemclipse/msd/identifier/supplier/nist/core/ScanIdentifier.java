@@ -17,9 +17,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.massspectrum.AbstractMassSpectrumIdentifier;
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IMassSpectrumIdentifierSettings;
 import org.eclipse.chemclipse.model.support.LimitSupport;
+import org.eclipse.chemclipse.msd.identifier.AbstractMassSpectrumIdentifier;
+import org.eclipse.chemclipse.msd.identifier.settings.IMassSpectrumIdentifierSettings;
 import org.eclipse.chemclipse.msd.identifier.supplier.nist.core.support.Identifier;
 import org.eclipse.chemclipse.msd.identifier.supplier.nist.l10n.Messages;
 import org.eclipse.chemclipse.msd.identifier.supplier.nist.preferences.PreferenceSupplier;

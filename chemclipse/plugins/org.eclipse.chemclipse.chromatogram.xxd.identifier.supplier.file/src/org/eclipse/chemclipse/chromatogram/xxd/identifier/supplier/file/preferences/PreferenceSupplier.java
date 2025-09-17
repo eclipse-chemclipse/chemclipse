@@ -15,7 +15,6 @@ package org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.prefere
 
 import java.util.List;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IMassSpectrumComparatorSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.ILibraryIdentifierSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.IUnknownSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.IUnknownSettingsMSD;
@@ -32,6 +31,7 @@ import org.eclipse.chemclipse.model.identifier.DeltaCalculation;
 import org.eclipse.chemclipse.model.identifier.IPenaltyCalculationSettings;
 import org.eclipse.chemclipse.model.identifier.PenaltyCalculation;
 import org.eclipse.chemclipse.model.support.CalculationType;
+import org.eclipse.chemclipse.msd.identifier.settings.IMassSpectrumComparatorSettings;
 import org.eclipse.chemclipse.support.preferences.AbstractPreferenceSupplier;
 import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
 import org.eclipse.chemclipse.support.util.FileListUtil;

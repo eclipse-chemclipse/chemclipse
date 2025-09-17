@@ -12,5 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.identifier.settings;
 
+import org.eclipse.chemclipse.msd.identifier.settings.AbstractIdentifierSettingsMSD;
+
 public abstract class AbstractPeakIdentifierSettingsMSD extends AbstractIdentifierSettingsMSD implements IPeakIdentifierSettingsMSD {
 }

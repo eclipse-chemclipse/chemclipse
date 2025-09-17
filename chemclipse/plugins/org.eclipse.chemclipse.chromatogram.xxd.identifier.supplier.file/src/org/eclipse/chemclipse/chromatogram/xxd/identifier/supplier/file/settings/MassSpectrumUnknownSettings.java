@@ -12,9 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IMassSpectrumIdentifierSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.model.identifier.AbstractIdentifierSettings;
+import org.eclipse.chemclipse.msd.identifier.settings.IMassSpectrumIdentifierSettings;
 import org.eclipse.chemclipse.support.settings.FloatSettingsProperty;
 import org.eclipse.chemclipse.support.settings.IntSettingsProperty;
 

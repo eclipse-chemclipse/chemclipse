@@ -15,14 +15,14 @@ package org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.core;
 
 import java.util.List;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.massspectrum.AbstractMassSpectrumIdentifier;
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IMassSpectrumIdentifierSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.identifier.FileIdentifier;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.identifier.UnknownIdentifier;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.model.UnknownSettingsSupport;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.MassSpectrumUnknownSettings;
 import org.eclipse.chemclipse.model.targets.TargetUnknownSettings;
+import org.eclipse.chemclipse.msd.identifier.AbstractMassSpectrumIdentifier;
+import org.eclipse.chemclipse.msd.identifier.settings.IMassSpectrumIdentifierSettings;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;

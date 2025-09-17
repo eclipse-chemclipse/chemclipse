@@ -13,11 +13,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.core;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.library.AbstractLibraryService;
-import org.eclipse.chemclipse.chromatogram.msd.identifier.library.ILibraryService;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.identifier.FileIdentifier;
 import org.eclipse.chemclipse.model.exceptions.ValueMustNotBeNullException;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
+import org.eclipse.chemclipse.msd.identifier.library.AbstractLibraryService;
+import org.eclipse.chemclipse.msd.identifier.library.ILibraryService;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;

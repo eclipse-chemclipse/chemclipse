@@ -12,8 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IMassSpectrumComparatorSettings;
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IMassSpectrumIdentifierSettings;
+import org.eclipse.chemclipse.msd.identifier.settings.IMassSpectrumComparatorSettings;
+import org.eclipse.chemclipse.msd.identifier.settings.IMassSpectrumIdentifierSettings;
 
 public interface ILibraryIdentifierSettings extends IMassSpectrumIdentifierSettings, IFileIdentifierSettings, IMassSpectrumComparatorSettings {
 }

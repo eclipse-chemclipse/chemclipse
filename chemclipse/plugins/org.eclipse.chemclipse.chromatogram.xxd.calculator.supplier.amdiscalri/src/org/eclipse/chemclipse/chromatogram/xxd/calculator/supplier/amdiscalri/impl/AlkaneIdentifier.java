@@ -17,8 +17,6 @@ package org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.i
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IMassSpectrumComparatorSettings;
-import org.eclipse.chemclipse.chromatogram.msd.identifier.support.DatabasesCache;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.PathResolver;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.settings.MassSpectrumIdentifierAlkaneSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.settings.PeakIdentifierAlkaneSettings;
@@ -29,6 +27,8 @@ import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings.PeakIdentifierSettings;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.IPeakIdentificationResults;
+import org.eclipse.chemclipse.msd.identifier.settings.IMassSpectrumComparatorSettings;
+import org.eclipse.chemclipse.msd.identifier.support.DatabasesCache;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;

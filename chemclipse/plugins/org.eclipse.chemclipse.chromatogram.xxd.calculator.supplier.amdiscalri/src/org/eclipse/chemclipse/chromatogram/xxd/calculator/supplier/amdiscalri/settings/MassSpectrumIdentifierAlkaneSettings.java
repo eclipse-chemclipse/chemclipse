@@ -12,7 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.settings;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IMassSpectrumIdentifierSettings;
+import org.eclipse.chemclipse.msd.identifier.settings.IMassSpectrumIdentifierSettings;
 
 public class MassSpectrumIdentifierAlkaneSettings extends AbstractAlkaneSettings implements IMassSpectrumIdentifierSettings {
 }

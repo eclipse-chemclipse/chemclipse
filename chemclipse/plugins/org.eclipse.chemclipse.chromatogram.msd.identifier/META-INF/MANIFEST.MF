@@ -11,20 +11,13 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.chemclipse.support;bundle-version="0.8.0",
  org.eclipse.chemclipse.processing;bundle-version="0.8.0",
  org.eclipse.chemclipse.model;bundle-version="0.8.0",
- org.eclipse.chemclipse.msd.converter;bundle-version="0.8.0",
- com.fasterxml.jackson.core.jackson-annotations;bundle-version="2.6.2",
- org.eclipse.chemclipse.chromatogram.msd.comparison
+ org.eclipse.chemclipse.msd.identifier;bundle-version="0.9.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-21
 Export-Package: org.eclipse.chemclipse.chromatogram.msd.identifier.chromatogram,
- org.eclipse.chemclipse.chromatogram.msd.identifier.exceptions,
- org.eclipse.chemclipse.chromatogram.msd.identifier.library,
- org.eclipse.chemclipse.chromatogram.msd.identifier.massspectrum,
  org.eclipse.chemclipse.chromatogram.msd.identifier.peak,
- org.eclipse.chemclipse.chromatogram.msd.identifier.settings,
- org.eclipse.chemclipse.chromatogram.msd.identifier.support
+ org.eclipse.chemclipse.chromatogram.msd.identifier.settings
+Import-Package: com.fasterxml.jackson.annotation;version="2.19.2"
 Bundle-Vendor: ChemClipse
 Service-Component: OSGI-INF/org.eclipse.chemclipse.chromatogram.msd.identifier.chromatogram.ChromatogramIdentifierProcessTypeSupplier.xml,
- OSGI-INF/org.eclipse.chemclipse.chromatogram.msd.identifier.massspectrum.MassSpectrumIdentifierProcessTypeSupplier.xml,
- OSGI-INF/org.eclipse.chemclipse.chromatogram.msd.identifier.massspectrum.StandaloneMassSpectrumIdentifierProcessTypeSupplier.xml,
  OSGI-INF/org.eclipse.chemclipse.chromatogram.msd.identifier.peak.PeakIdentifierMSDProcessTypeSupplier.xml

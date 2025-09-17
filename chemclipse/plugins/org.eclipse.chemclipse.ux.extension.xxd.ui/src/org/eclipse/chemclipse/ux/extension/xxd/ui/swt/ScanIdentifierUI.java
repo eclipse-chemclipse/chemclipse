@@ -19,15 +19,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.massspectrum.IMassSpectrumIdentifierSupplier;
-import org.eclipse.chemclipse.chromatogram.msd.identifier.massspectrum.IMassSpectrumIdentifierSupport;
-import org.eclipse.chemclipse.chromatogram.msd.identifier.massspectrum.MassSpectrumIdentifier;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.wavespectrum.IWaveSpectrumIdentifierSupplier;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.wavespectrum.IWaveSpectrumIdentifierSupport;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.wavespectrum.WaveSpectrumIdentifier;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.types.DataType;
+import org.eclipse.chemclipse.msd.identifier.IMassSpectrumIdentifierSupplier;
+import org.eclipse.chemclipse.msd.identifier.IMassSpectrumIdentifierSupport;
+import org.eclipse.chemclipse.msd.identifier.MassSpectrumIdentifier;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;

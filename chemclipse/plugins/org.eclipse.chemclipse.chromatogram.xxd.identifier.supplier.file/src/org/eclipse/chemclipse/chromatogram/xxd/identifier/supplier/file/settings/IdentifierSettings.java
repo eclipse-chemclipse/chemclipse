@@ -14,15 +14,15 @@ package org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.setting
 
 import java.io.File;
 
-import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.IMassSpectrumComparator;
-import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.IMassSpectrumComparisonSupplier;
-import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.MassSpectrumComparator;
-import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.MassSpectrumComparatorDynamicSettingProperty;
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.AbstractIdentifierSettingsMSD;
 import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IChromatogramIdentifierSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
 import org.eclipse.chemclipse.model.support.CalculationType;
+import org.eclipse.chemclipse.msd.identifier.comparison.IMassSpectrumComparator;
+import org.eclipse.chemclipse.msd.identifier.comparison.IMassSpectrumComparisonSupplier;
+import org.eclipse.chemclipse.msd.identifier.comparison.MassSpectrumComparator;
+import org.eclipse.chemclipse.msd.identifier.comparison.MassSpectrumComparatorDynamicSettingProperty;
+import org.eclipse.chemclipse.msd.identifier.settings.AbstractIdentifierSettingsMSD;
 import org.eclipse.chemclipse.support.settings.ComboSettingsProperty;
 import org.eclipse.chemclipse.support.settings.DoubleSettingsProperty;
 import org.eclipse.chemclipse.support.settings.FileSettingProperty;

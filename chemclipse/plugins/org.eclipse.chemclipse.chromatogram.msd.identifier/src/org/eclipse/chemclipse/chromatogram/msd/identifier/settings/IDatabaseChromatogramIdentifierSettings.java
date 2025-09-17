@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.identifier.settings;
 
+import org.eclipse.chemclipse.msd.identifier.settings.IDatabaseIdentifierSettings;
+
 public interface IDatabaseChromatogramIdentifierSettings extends IDatabaseIdentifierSettings, IChromatogramIdentifierSettings {
 
 	/*

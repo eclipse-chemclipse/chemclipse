@@ -14,7 +14,7 @@ package org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.distance.com
 
 import org.apache.commons.math3.ml.distance.DistanceMeasure;
 import org.apache.commons.math3.ml.distance.EuclideanDistance;
-import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.IMassSpectrumComparator;
+import org.eclipse.chemclipse.msd.identifier.comparison.IMassSpectrumComparator;
 
 public class EuclideanComparator extends AbstractDistanceComparator implements IMassSpectrumComparator {
 

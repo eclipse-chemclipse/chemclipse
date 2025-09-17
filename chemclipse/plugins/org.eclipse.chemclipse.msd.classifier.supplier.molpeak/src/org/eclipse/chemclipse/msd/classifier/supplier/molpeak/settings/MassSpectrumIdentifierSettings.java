@@ -13,7 +13,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.classifier.supplier.molpeak.settings;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IMassSpectrumIdentifierSettings;
+import org.eclipse.chemclipse.msd.identifier.settings.IMassSpectrumIdentifierSettings;
 
 public class MassSpectrumIdentifierSettings extends AbstractBasePeakSettings implements IMassSpectrumIdentifierSettings {
 }

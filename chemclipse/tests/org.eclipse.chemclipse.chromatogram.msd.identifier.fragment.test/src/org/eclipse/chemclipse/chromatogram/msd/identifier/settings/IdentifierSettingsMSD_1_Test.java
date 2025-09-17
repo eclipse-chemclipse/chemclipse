@@ -14,6 +14,7 @@ package org.eclipse.chemclipse.chromatogram.msd.identifier.settings;
 
 import static org.junit.Assert.assertEquals;
 
+import org.eclipse.chemclipse.msd.identifier.settings.IMassSpectrumComparatorSettings;
 import org.junit.Test;
 
 public class IdentifierSettingsMSD_1_Test {

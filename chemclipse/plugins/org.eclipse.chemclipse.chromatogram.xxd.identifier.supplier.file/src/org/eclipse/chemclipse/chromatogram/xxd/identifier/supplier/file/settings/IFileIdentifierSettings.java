@@ -13,10 +13,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.settings;
 
-import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.IMassSpectrumComparator;
 import org.eclipse.chemclipse.model.identifier.IDeltaCalculationSettings;
 import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
 import org.eclipse.chemclipse.model.identifier.IPenaltyCalculationSettings;
+import org.eclipse.chemclipse.msd.identifier.comparison.IMassSpectrumComparator;
 
 public interface IFileIdentifierSettings extends IIdentifierSettings, IPenaltyCalculationSettings, IDeltaCalculationSettings {
 

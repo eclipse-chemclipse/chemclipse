@@ -12,7 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.identifier.supplier.nist.settings;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.AbstractMassSpectrumIdentifierSettings;
+import org.eclipse.chemclipse.msd.identifier.settings.AbstractMassSpectrumIdentifierSettings;
 
 public abstract class AbstractScanSearchSettings extends AbstractMassSpectrumIdentifierSettings implements ISearchSettings {
 

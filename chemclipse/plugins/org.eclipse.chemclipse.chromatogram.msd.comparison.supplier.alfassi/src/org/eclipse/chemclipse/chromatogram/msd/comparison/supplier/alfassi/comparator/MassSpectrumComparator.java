@@ -13,14 +13,14 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.alfassi.comparator;
 
-import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.AbstractMassSpectrumComparator;
-import org.eclipse.chemclipse.chromatogram.msd.comparison.massspectrum.IMassSpectrumComparator;
-import org.eclipse.chemclipse.chromatogram.msd.comparison.math.GeometricDistanceCalculator;
-import org.eclipse.chemclipse.chromatogram.msd.comparison.math.IMatchCalculator;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.identifier.ComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.MatchConstraints;
+import org.eclipse.chemclipse.msd.identifier.comparison.AbstractMassSpectrumComparator;
+import org.eclipse.chemclipse.msd.identifier.comparison.IMassSpectrumComparator;
+import org.eclipse.chemclipse.msd.identifier.comparison.math.GeometricDistanceCalculator;
+import org.eclipse.chemclipse.msd.identifier.comparison.math.IMatchCalculator;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;

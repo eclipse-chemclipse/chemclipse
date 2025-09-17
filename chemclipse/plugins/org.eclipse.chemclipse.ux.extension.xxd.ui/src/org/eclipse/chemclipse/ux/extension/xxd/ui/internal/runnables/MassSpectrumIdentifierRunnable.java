@@ -15,7 +15,7 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.runnables;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import org.eclipse.chemclipse.chromatogram.msd.identifier.massspectrum.MassSpectrumIdentifier;
+import org.eclipse.chemclipse.msd.identifier.MassSpectrumIdentifier;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.l10n.ExtensionMessages;
 import org.eclipse.core.runtime.IProgressMonitor;

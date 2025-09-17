@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.identifier.settings;
 
+import org.eclipse.chemclipse.msd.identifier.settings.AbstractDatabaseIdentifierSettings;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
