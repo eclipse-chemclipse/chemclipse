@@ -612,7 +612,7 @@ public class PeakBuilderMSD {
 			 * Exclude ions?
 			 */
 			if(excludedIons == null) {
-				massSpectrum = chromatogram.getSupplierScan(scan);
+				massSpectrum = chromatogram.getScan(scan);
 			} else {
 				massSpectrum = chromatogram.getScan(scan, excludedIons);
 			}

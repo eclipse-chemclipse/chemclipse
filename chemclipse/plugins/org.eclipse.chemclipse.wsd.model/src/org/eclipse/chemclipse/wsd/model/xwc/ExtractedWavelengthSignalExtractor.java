@@ -96,7 +96,7 @@ public class ExtractedWavelengthSignalExtractor implements IExtractedWavelengthS
 		IScanWSD scanWSD;
 		IExtractedWavelengthSignals extractedIonSignals = new ExtractedWavelengthSignals(startScan, stopScan, chromatogram);
 		for(int scan = startScan; scan <= stopScan; scan++) {
-			scanWSD = chromatogram.getSupplierScan(scan);
+			scanWSD = chromatogram.getScan(scan);
 			if(!scanWSD.getScanSignals().isEmpty()) {
 				IExtractedWavelengthSignal extractedWavelengthSignal = scanWSD.getExtractedWavelengthSignal();
 				extractedWavelengthSignal.setRetentionTime(scanWSD.getRetentionTime());

@@ -85,7 +85,7 @@ public class ChromatogramSelectionCSD extends AbstractChromatogramSelection impl
 			 * Chromatogram CSD
 			 */
 			if(chromatogram instanceof IChromatogramCSD chromatogramCSD) {
-				selectedScan = chromatogramCSD.getSupplierScan(1);
+				selectedScan = chromatogramCSD.getScan(1);
 			}
 		} else {
 			selectedScan = null;

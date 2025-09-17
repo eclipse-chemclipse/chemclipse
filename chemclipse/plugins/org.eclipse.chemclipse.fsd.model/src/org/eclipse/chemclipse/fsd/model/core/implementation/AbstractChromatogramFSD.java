@@ -51,13 +51,13 @@ public abstract class AbstractChromatogramFSD extends AbstractChromatogram imple
 
 		Set<Float> wavelengths = new HashSet<>();
 		for(int i = 1; i < getNumberOfScans(); i++) {
-			getSupplierScan(i).getScanSignals().forEach(signal -> wavelengths.add(signal.getWavelength()));
+			getScan(i).getScanSignals().forEach(signal -> wavelengths.add(signal.getWavelength()));
 		}
 		return wavelengths;
 	}
 
 	@Override
-	public IScanFSD getSupplierScan(int scan) {
+	public IScanFSD getScan(int scan) {
 
 		int position = scan;
 		if(position > 0 && position <= getScans().size()) {

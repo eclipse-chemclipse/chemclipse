@@ -22,7 +22,7 @@ import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.ionremover.prefer
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.ionremover.settings.ChromatogramFilterSettings;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
-import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
@@ -81,7 +81,6 @@ public class ChromatogramFilter extends AbstractChromatogramFilterMSD {
 		if(ionsToRemove.getIonsNominal().isEmpty()) {
 			throw new FilterException("There was no ion stored to be excluded.");
 		}
-		IRegularMassSpectrum supplierMassSpectrum;
 		IChromatogramMSD chromatogram = chromatogramSelection.getChromatogram();
 		int startScan = chromatogram.getScanNumber(chromatogramSelection.getStartRetentionTime());
 		int stopScan = chromatogram.getScanNumber(chromatogramSelection.getStopRetentionTime());
@@ -91,8 +90,8 @@ public class ChromatogramFilter extends AbstractChromatogramFilterMSD {
 		 */
 		for(int scan = startScan; scan <= stopScan; scan++) {
 			monitor.subTask("Remove ions from scan: " + scan);
-			supplierMassSpectrum = chromatogram.getSupplierScan(scan);
-			supplierMassSpectrum.removeIons(ionsToRemove);
+			IScanMSD massSpectrum = chromatogram.getScan(scan);
+			massSpectrum.removeIons(ionsToRemove);
 		}
 	}
 }

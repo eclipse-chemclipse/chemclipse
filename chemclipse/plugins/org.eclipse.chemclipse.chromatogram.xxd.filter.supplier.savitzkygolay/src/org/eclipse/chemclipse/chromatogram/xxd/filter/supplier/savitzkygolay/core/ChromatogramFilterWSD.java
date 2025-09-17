@@ -45,7 +45,7 @@ public class ChromatogramFilterWSD extends AbstractChromatogramFilterWSD {
 			Iterator<Integer> iteratorScan = totalSignals.iterator();
 			while(iteratorScan.hasNext()) {
 				Integer scan = iteratorScan.next();
-				IScanWSD scanWSD = chromatogramWSD.getSupplierScan(scan);
+				IScanWSD scanWSD = chromatogramWSD.getScan(scan);
 				ITotalScanSignal totalscanSignal = totalSignals.getTotalScanSignal(scan);
 				scanWSD.adjustTotalSignal(totalscanSignal.getTotalSignal());
 			}

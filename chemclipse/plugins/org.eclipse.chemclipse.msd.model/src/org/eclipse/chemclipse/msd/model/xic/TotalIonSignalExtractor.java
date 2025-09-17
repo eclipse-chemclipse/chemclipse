@@ -22,6 +22,7 @@ import org.eclipse.chemclipse.model.signals.TotalScanSignalExtractor;
 import org.eclipse.chemclipse.model.signals.TotalScanSignals;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 
@@ -129,9 +130,8 @@ public class TotalIonSignalExtractor extends TotalScanSignalExtractor implements
 		/*
 		 * Add the selected scans.
 		 */
-		IRegularMassSpectrum ms;
 		for(int scan = startScan; scan <= stopScan; scan++) {
-			ms = chromatogram.getSupplierScan(scan);
+			IScanMSD ms = chromatogram.getScan(scan);
 			totalIonSignal = new TotalScanSignal(ms.getRetentionTime(), ms.getRetentionIndex(), ms.getTotalSignal(excludedIons));
 			signals.add(totalIonSignal);
 		}

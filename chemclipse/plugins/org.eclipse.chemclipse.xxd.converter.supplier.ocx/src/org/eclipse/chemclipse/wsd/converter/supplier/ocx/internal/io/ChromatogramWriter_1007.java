@@ -107,7 +107,7 @@ public class ChromatogramWriter_1007 extends AbstractChromatogramWriter implemen
 		dataOutputStream.writeInt(scans); // Number of Scans
 		// Retention Times - Total Signals
 		for(int scan = 1; scan <= scans; scan++) {
-			IScanWSD scanWSD = chromatogram.getSupplierScan(scan);
+			IScanWSD scanWSD = chromatogram.getScan(scan);
 			int scanSignalTotal = scanWSD.getScanSignals().size();
 			dataOutputStream.writeInt(scanSignalTotal);
 			for(int signal = 0; signal < scanSignalTotal; signal++) {
@@ -186,7 +186,7 @@ public class ChromatogramWriter_1007 extends AbstractChromatogramWriter implemen
 		int scans = chromatogram.getNumberOfScans();
 		dataOutputStream.writeInt(scans);
 		for(int scan = 1; scan <= scans; scan++) {
-			IScanWSD scanWSD = chromatogram.getSupplierScan(scan);
+			IScanWSD scanWSD = chromatogram.getScan(scan);
 			int scanSignalTotal = scanWSD.getScanSignals().size();
 			dataOutputStream.writeInt(scanSignalTotal);
 			for(int signal = 0; signal < scanSignalTotal; signal++) {
@@ -234,7 +234,7 @@ public class ChromatogramWriter_1007 extends AbstractChromatogramWriter implemen
 		IBaselineModel baselineModel = chromatogram.getBaselineModel();
 		// Scans
 		for(int scan = 1; scan <= scans; scan++) {
-			int retentionTime = chromatogram.getSupplierScan(scan).getRetentionTime();
+			int retentionTime = chromatogram.getScan(scan).getRetentionTime();
 			float backgroundAbundance = baselineModel.getBackgroundAbundance(retentionTime);
 			dataOutputStream.writeInt(retentionTime); // Retention Time
 			dataOutputStream.writeFloat(backgroundAbundance); // Background Abundance

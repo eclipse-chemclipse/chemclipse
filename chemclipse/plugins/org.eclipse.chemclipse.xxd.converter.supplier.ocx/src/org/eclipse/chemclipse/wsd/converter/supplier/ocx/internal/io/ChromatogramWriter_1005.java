@@ -104,7 +104,7 @@ public class ChromatogramWriter_1005 extends AbstractChromatogramWriter implemen
 		dataOutputStream.writeInt(scans); // Number of Scans
 		// Retention Times - Total Signals
 		for(int scan = 1; scan <= scans; scan++) {
-			IScanWSD scanWsd = chromatogram.getSupplierScan(scan);
+			IScanWSD scanWsd = chromatogram.getScan(scan);
 			int scanSignalTotal = scanWsd.getScanSignals().size();
 			dataOutputStream.writeInt(scanSignalTotal);
 			for(int signal = 0; signal < scanSignalTotal; signal++) {
@@ -114,12 +114,12 @@ public class ChromatogramWriter_1005 extends AbstractChromatogramWriter implemen
 				dataOutputStream.writeInt(wavelength);
 				dataOutputStream.writeFloat(abundance);
 			}
-			int retentionTime = chromatogram.getSupplierScan(scan).getRetentionTime();
+			int retentionTime = chromatogram.getScan(scan).getRetentionTime();
 			dataOutputStream.writeInt(retentionTime); // Retention Time
-			dataOutputStream.writeFloat(chromatogram.getSupplierScan(scan).getRetentionIndex()); // Retention Index
-			dataOutputStream.writeFloat(chromatogram.getSupplierScan(scan).getTotalSignal()); // Total Signal
-			dataOutputStream.writeInt(chromatogram.getSupplierScan(scan).getTimeSegmentId()); // Time Segment Id
-			dataOutputStream.writeInt(chromatogram.getSupplierScan(scan).getCycleNumber()); // Cycle Number
+			dataOutputStream.writeFloat(chromatogram.getScan(scan).getRetentionIndex()); // Retention Index
+			dataOutputStream.writeFloat(chromatogram.getScan(scan).getTotalSignal()); // Total Signal
+			dataOutputStream.writeInt(chromatogram.getScan(scan).getTimeSegmentId()); // Time Segment Id
+			dataOutputStream.writeInt(chromatogram.getScan(scan).getCycleNumber()); // Cycle Number
 		}
 
 		dataOutputStream.flush();
@@ -183,7 +183,7 @@ public class ChromatogramWriter_1005 extends AbstractChromatogramWriter implemen
 		int scans = chromatogram.getNumberOfScans();
 		dataOutputStream.writeInt(scans);
 		for(int scan = 1; scan <= scans; scan++) {
-			IScanWSD scanWsd = chromatogram.getSupplierScan(scan);
+			IScanWSD scanWsd = chromatogram.getScan(scan);
 			int scanSignalTotal = scanWsd.getScanSignals().size();
 			dataOutputStream.writeInt(scanSignalTotal);
 			for(int signal = 0; signal < scanSignalTotal; signal++) {
@@ -193,12 +193,12 @@ public class ChromatogramWriter_1005 extends AbstractChromatogramWriter implemen
 				dataOutputStream.writeInt(wavelength);
 				dataOutputStream.writeFloat(abundance);
 			}
-			int retentionTime = chromatogram.getSupplierScan(scan).getRetentionTime();
+			int retentionTime = chromatogram.getScan(scan).getRetentionTime();
 			dataOutputStream.writeInt(retentionTime); // Retention Time
-			dataOutputStream.writeFloat(chromatogram.getSupplierScan(scan).getRetentionIndex()); // Retention Index
-			dataOutputStream.writeFloat(chromatogram.getSupplierScan(scan).getTotalSignal()); // Total Signal
-			dataOutputStream.writeInt(chromatogram.getSupplierScan(scan).getTimeSegmentId()); // Time Segment Id
-			dataOutputStream.writeInt(chromatogram.getSupplierScan(scan).getCycleNumber()); // Cycle Number
+			dataOutputStream.writeFloat(chromatogram.getScan(scan).getRetentionIndex()); // Retention Index
+			dataOutputStream.writeFloat(chromatogram.getScan(scan).getTotalSignal()); // Total Signal
+			dataOutputStream.writeInt(chromatogram.getScan(scan).getTimeSegmentId()); // Time Segment Id
+			dataOutputStream.writeInt(chromatogram.getScan(scan).getCycleNumber()); // Cycle Number
 		}
 		// clean up flush the stream and close zip-entry 1
 		dataOutputStream.flush();
@@ -221,7 +221,7 @@ public class ChromatogramWriter_1005 extends AbstractChromatogramWriter implemen
 		IBaselineModel baselineModel = chromatogram.getBaselineModel();
 		// Scans
 		for(int scan = 1; scan <= scans; scan++) {
-			int retentionTime = chromatogram.getSupplierScan(scan).getRetentionTime();
+			int retentionTime = chromatogram.getScan(scan).getRetentionTime();
 			float backgroundAbundance = baselineModel.getBackgroundAbundance(retentionTime);
 			dataOutputStream.writeInt(retentionTime); // Retention Time
 			dataOutputStream.writeFloat(backgroundAbundance); // Background Abundance

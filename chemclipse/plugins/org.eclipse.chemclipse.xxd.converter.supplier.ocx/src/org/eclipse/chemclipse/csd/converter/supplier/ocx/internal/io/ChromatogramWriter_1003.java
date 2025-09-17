@@ -120,7 +120,7 @@ public class ChromatogramWriter_1003 extends AbstractChromatogramWriter implemen
 		dataOutputStream.writeInt(scans); // Number of Scans
 		// Scans
 		for(int scan = 1; scan <= scans; scan++) {
-			IScanCSD scanFID = chromatogram.getSupplierScan(scan);
+			IScanCSD scanFID = chromatogram.getScan(scan);
 
 			dataOutputStream.writeInt(scanFID.getRetentionTime()); // Retention Time
 			dataOutputStream.writeFloat(scanFID.getRetentionIndex()); // Retention Index
@@ -147,7 +147,7 @@ public class ChromatogramWriter_1003 extends AbstractChromatogramWriter implemen
 		IBaselineModel baselineModel = chromatogram.getBaselineModel();
 		// Scans
 		for(int scan = 1; scan <= scans; scan++) {
-			int retentionTime = chromatogram.getSupplierScan(scan).getRetentionTime();
+			int retentionTime = chromatogram.getScan(scan).getRetentionTime();
 			float backgroundAbundance = baselineModel.getBackgroundAbundance(retentionTime);
 			dataOutputStream.writeInt(retentionTime); // Retention Time
 			dataOutputStream.writeFloat(backgroundAbundance); // Background Abundance

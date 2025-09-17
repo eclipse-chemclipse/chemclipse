@@ -485,7 +485,7 @@ public class PeakBuilderWSD {
 		ITotalScanSignal totalScanSignal = totalScanSignals.getMaxTotalScanSignal();
 		if(totalScanSignal != null) {
 			int scan = chromatogram.getScanNumber(totalScanSignal.getRetentionTime());
-			IScanWSD scanWSD = chromatogram.getSupplierScan(scan);
+			IScanWSD scanWSD = chromatogram.getScan(scan);
 			float actualSignal = scanWSD.getTotalSignal();
 			float backgroundSignal = (float)backgroundEquation.calculateY(totalScanSignal.getRetentionTime());
 			float correctedSignal = actualSignal - backgroundSignal;

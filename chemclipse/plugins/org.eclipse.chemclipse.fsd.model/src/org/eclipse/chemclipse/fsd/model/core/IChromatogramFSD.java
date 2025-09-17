@@ -25,7 +25,8 @@ public interface IChromatogramFSD extends IChromatogram, IChromatogramBaselineFS
 	 * @param scan
 	 * @return {@link IScanFSD}
 	 */
-	IScanFSD getSupplierScan(int scan);
+	@Override
+	IScanFSD getScan(int scan);
 
 	/**
 	 * 

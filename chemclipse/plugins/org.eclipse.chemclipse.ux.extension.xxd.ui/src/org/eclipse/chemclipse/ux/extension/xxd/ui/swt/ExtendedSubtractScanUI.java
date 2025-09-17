@@ -22,7 +22,6 @@ import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.support.CalculationType;
 import org.eclipse.chemclipse.model.targets.TargetSupport;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
-import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 import org.eclipse.chemclipse.msd.model.support.FilterSupport;
@@ -209,7 +208,7 @@ public class ExtendedSubtractScanUI extends Composite implements IExtendedPartUI
 					 */
 					IScanMSD massSpectrum1 = PreferenceSupplierModelMSD.getSessionSubtractMassSpectrum();
 					CalculationType calculationType = PreferenceSupplierModelMSD.getCalculationType();
-					IRegularMassSpectrum massSpectrum2 = chromatogramSelectionMSD.getSelectedScan();
+					IScanMSD massSpectrum2 = chromatogramSelectionMSD.getSelectedScan();
 					boolean useNormalize = PreferenceSupplierModelMSD.isUseNormalizedScan();
 					IScanMSD subtractMassSpectrum = FilterSupport.getCombinedMassSpectrum(massSpectrum1, massSpectrum2, null, useNormalize, calculationType);
 					saveSessionMassSpectrum(e.display, subtractMassSpectrum);

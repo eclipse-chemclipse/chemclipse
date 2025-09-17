@@ -23,7 +23,6 @@ import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.backfolding.prefe
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.backfolding.settings.ChromatogramFilterSettings;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
-import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignals;
@@ -73,8 +72,6 @@ public class ChromatogramFilterMSD extends AbstractChromatogramFilterMSD {
 		 */
 		BackfoldingShifter backfoldingShifter = new BackfoldingShifter();
 		IExtractedIonSignals extractedIonSignals = backfoldingShifter.shiftIons(chromatogramSelection, filterSettings, monitor);
-		IScanMSD massSpectrum;
-		IRegularMassSpectrum supplierMassSpectrum;
 		/*
 		 * Use the start and stop scan range.
 		 */
@@ -86,8 +83,8 @@ public class ChromatogramFilterMSD extends AbstractChromatogramFilterMSD {
 		 * backfolding algorithm.
 		 */
 		for(int scan = startScan; scan <= stopScan; scan++) {
-			massSpectrum = extractedIonSignals.getScan(scan);
-			supplierMassSpectrum = chromatogram.getSupplierScan(scan);
+			IScanMSD massSpectrum = extractedIonSignals.getScan(scan);
+			IScanMSD supplierMassSpectrum = chromatogram.getScan(scan);
 			supplierMassSpectrum.removeAllIons();
 			for(IIon ion : massSpectrum.getIons()) {
 				supplierMassSpectrum.addIon(ion, false);

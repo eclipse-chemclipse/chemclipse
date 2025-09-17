@@ -56,7 +56,7 @@ public abstract class AbstractChromatogramPeakMSD extends AbstractPeakMSD implem
 	@Override
 	public IScanMSD getChromatogramMassSpectrum() {
 
-		return chromatogram.getSupplierScan(getScanMax());
+		return chromatogram.getScan(getScanMax());
 	}
 
 	@Override

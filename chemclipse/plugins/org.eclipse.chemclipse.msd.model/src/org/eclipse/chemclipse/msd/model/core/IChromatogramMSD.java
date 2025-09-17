@@ -45,9 +45,10 @@ public interface IChromatogramMSD extends IChromatogram, IChromatogramPeaksMSD {
 	 * scan mass spectrum is stored.
 	 * 
 	 * @param scan
-	 * @return {@link IRegularMassSpectrum}
+	 * @return {@link IScanMSD}
 	 */
-	IRegularMassSpectrum getSupplierScan(int scan);
+	@Override
+	IScanMSD getScan(int scan);
 
 	/**
 	 * Returns the number of scanned ions.<br/>

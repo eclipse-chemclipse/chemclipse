@@ -25,7 +25,7 @@ import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
-import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 
 public class GaussianPeakFactoryMSD {
 
@@ -35,6 +35,7 @@ public class GaussianPeakFactoryMSD {
 	private static final String INTEGRATOR_DESCRIPTION = "Gaussian Peak generator";
 
 	private GaussianPeakFactoryMSD() {
+
 	}
 
 	public static IPeakMSD createGaussianPeakMSD(IChromatogramMSD chromatogramMSD, float height, int retentionTime, float startBackgroundAbundance, float stopBackgroundAbundance) throws IllegalArgumentException, PeakException {
@@ -55,8 +56,8 @@ public class GaussianPeakFactoryMSD {
 			peakIntensities.addIntensityValue(rt, (float)gaussian.value(rt));
 		}
 		peakIntensities.normalize();
-		final IRegularMassSpectrum vendorMassSpectrum = chromatogramMSD.getSupplierScan(scanNumber);
-		final IPeakModelMSD peakModelMSD = new PeakModelMSD(new PeakMassSpectrum(vendorMassSpectrum), peakIntensities, startBackgroundAbundance, stopBackgroundAbundance);
+		final IScanMSD massSpectrum = chromatogramMSD.getScan(scanNumber);
+		final IPeakModelMSD peakModelMSD = new PeakModelMSD(new PeakMassSpectrum(massSpectrum), peakIntensities, startBackgroundAbundance, stopBackgroundAbundance);
 		return new PeakMSD(peakModelMSD);
 	}
 
@@ -78,11 +79,11 @@ public class GaussianPeakFactoryMSD {
 			peakIntensities.addIntensityValue(rt, (float)gaussian.value(rt));
 		}
 		peakIntensities.normalize();
-		final IRegularMassSpectrum vendorMassSpectrum = chromatogramMSD.getSupplierScan(scanNumber);
+		final IScanMSD massSpectrum = chromatogramMSD.getScan(scanNumber);
 		/*
 		 * Here we pass the retention times and indexes
 		 */
-		final IPeakMassSpectrum peakMassSpectrum = new PeakMassSpectrum(vendorMassSpectrum);
+		final IPeakMassSpectrum peakMassSpectrum = new PeakMassSpectrum(massSpectrum);
 		peakMassSpectrum.setRetentionIndex(retentionIndex);
 		peakMassSpectrum.setRetentionTimeColumn1(setRetentionTimeColumn1);
 		peakMassSpectrum.setRetentionTimeColumn2(setRetentionTimeColumn2);

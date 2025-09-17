@@ -26,6 +26,7 @@ import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IIonTransitionSettings;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.support.IMarkedIonTransitions;
 import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.chemclipse.msd.model.core.support.MarkedIonTransitions;
@@ -41,7 +42,7 @@ import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
  */
 public class ChromatogramSelectionMSD extends AbstractChromatogramSelection implements IChromatogramSelectionMSD {
 
-	private IRegularMassSpectrum selectedScan;
+	private IScanMSD selectedScan;
 	private IMarkedIons selectedIons;
 	private IMarkedIons excludedIons;
 	private IMarkedIonTransitions markedIonTransitions;
@@ -99,7 +100,7 @@ public class ChromatogramSelectionMSD extends AbstractChromatogramSelection impl
 	}
 
 	@Override
-	public IRegularMassSpectrum getSelectedScan() {
+	public IScanMSD getSelectedScan() {
 
 		return selectedScan;
 	}
@@ -141,7 +142,7 @@ public class ChromatogramSelectionMSD extends AbstractChromatogramSelection impl
 			 * Chromatogram MSD
 			 */
 			if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
-				selectedScan = chromatogramMSD.getSupplierScan(1);
+				selectedScan = chromatogramMSD.getScan(1);
 			}
 		} else {
 			selectedScan = null;
@@ -186,7 +187,7 @@ public class ChromatogramSelectionMSD extends AbstractChromatogramSelection impl
 	}
 
 	@Override
-	public void setSelectedScan(IRegularMassSpectrum selectedScan) {
+	public void setSelectedScan(IScanMSD selectedScan) {
 
 		/*
 		 * FireUpdateChange will be called in the validate method.

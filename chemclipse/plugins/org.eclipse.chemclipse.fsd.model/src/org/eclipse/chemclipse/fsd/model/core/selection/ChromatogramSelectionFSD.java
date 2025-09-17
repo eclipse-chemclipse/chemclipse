@@ -101,7 +101,7 @@ public class ChromatogramSelectionFSD extends AbstractChromatogramSelection impl
 			 * Chromatogram FSD
 			 */
 			if(chromatogram instanceof IChromatogramFSD chromatogramFSD) {
-				selectedScan = chromatogramFSD.getSupplierScan(1);
+				selectedScan = chromatogramFSD.getScan(1);
 			}
 		} else {
 			selectedScan = null;

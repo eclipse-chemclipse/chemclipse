@@ -68,7 +68,7 @@ public class TotalWavelengthSignalExtractor extends TotalScanSignalExtractor imp
 		 * Add the selected scans.
 		 */
 		for(int scan = startScan; scan <= stopScan; scan++) {
-			IScanWSD scanWSD = chromatogram.getSupplierScan(scan);
+			IScanWSD scanWSD = chromatogram.getScan(scan);
 			ITotalScanSignal totalWavelengthSignal = new TotalScanSignal(scanWSD.getRetentionTime(), scanWSD.getRetentionIndex(), scanWSD.getTotalSignal(excludedWavelengths));
 			signals.add(totalWavelengthSignal);
 		}
@@ -113,7 +113,7 @@ public class TotalWavelengthSignalExtractor extends TotalScanSignalExtractor imp
 		 * Add the selected scans.
 		 */
 		for(int scan = startScan; scan <= stopScan; scan++) {
-			IScanWSD scanWSD = chromatogram.getSupplierScan(scan);
+			IScanWSD scanWSD = chromatogram.getScan(scan);
 			ITotalScanSignal totalWavelengthSignal = new TotalScanSignal(scanWSD.getRetentionTime(), scanWSD.getRetentionIndex(), scanWSD.getTotalSignal(excludedWavelengths));
 			signals.add(totalWavelengthSignal);
 		}

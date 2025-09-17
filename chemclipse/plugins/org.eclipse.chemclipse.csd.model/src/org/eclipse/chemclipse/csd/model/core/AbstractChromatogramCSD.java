@@ -31,7 +31,7 @@ public abstract class AbstractChromatogramCSD extends AbstractChromatogram imple
 	private static final long serialVersionUID = -1514838958855146167L;
 
 	@Override
-	public IScanCSD getSupplierScan(int scan) {
+	public IScanCSD getScan(int scan) {
 
 		int position = scan;
 		if(position > 0 && position <= getScans().size()) {

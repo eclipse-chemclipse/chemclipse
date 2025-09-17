@@ -19,13 +19,14 @@ import org.eclipse.chemclipse.model.core.IChromatogram;
 public interface IChromatogramWSD extends IChromatogram, IChromatogramWSDBaseline, IChromatogramPeaksWSD {
 
 	/**
-	 * Returns a supplier scan or null, if no supplier
+	 * Returns a scan or null, if no wave
 	 * spectrum is stored.
 	 * 
 	 * @param scan
 	 * @return {@link IScanWSD}
 	 */
-	IScanWSD getSupplierScan(int scan);
+	@Override
+	IScanWSD getScan(int scan);
 
 	/**
 	 * 

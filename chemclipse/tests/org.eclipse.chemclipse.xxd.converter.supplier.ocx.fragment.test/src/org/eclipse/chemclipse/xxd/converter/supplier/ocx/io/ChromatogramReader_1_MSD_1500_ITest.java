@@ -20,7 +20,6 @@ import java.io.File;
 import org.eclipse.chemclipse.msd.converter.chromatogram.ChromatogramConverterMSD;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIonTransitionSettings;
-import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.TestPathHelper;
@@ -128,7 +127,7 @@ public class ChromatogramReader_1_MSD_1500_ITest {
 	@Test
 	public void testChromatogramReader_12() {
 
-		IScanMSD massSpectrum = chromatogram.getSupplierScan(1);
+		IScanMSD massSpectrum = chromatogram.getScan(1);
 		/*
 		 * Proxy
 		 */
@@ -155,7 +154,7 @@ public class ChromatogramReader_1_MSD_1500_ITest {
 	@Test
 	public void testChromatogramReader_13() {
 
-		IScanMSD massSpectrum = chromatogram.getSupplierScan(22);
+		IScanMSD massSpectrum = chromatogram.getScan(22);
 		/*
 		 * Proxy
 		 */
@@ -182,7 +181,7 @@ public class ChromatogramReader_1_MSD_1500_ITest {
 	@Test
 	public void testChromatogramReader_14() {
 
-		IScanMSD massSpectrum = chromatogram.getSupplierScan(80);
+		IScanMSD massSpectrum = chromatogram.getScan(80);
 		/*
 		 * Proxy
 		 */
@@ -209,7 +208,7 @@ public class ChromatogramReader_1_MSD_1500_ITest {
 	@Test
 	public void testChromatogramReader_15() {
 
-		IScanMSD massSpectrum = chromatogram.getSupplierScan(110);
+		IScanMSD massSpectrum = chromatogram.getScan(110);
 		/*
 		 * Proxy
 		 */
@@ -273,21 +272,21 @@ public class ChromatogramReader_1_MSD_1500_ITest {
 	@Test
 	public void testReader_22() {
 
-		IRegularMassSpectrum massSpectrum = chromatogram.getSupplierScan(37);
+		IScanMSD massSpectrum = chromatogram.getScan(37);
 		assertEquals(16, massSpectrum.getTargets().size());
 	}
 
 	@Test
 	public void testReader_23() {
 
-		IRegularMassSpectrum massSpectrum = chromatogram.getSupplierScan(44);
+		IScanMSD massSpectrum = chromatogram.getScan(44);
 		assertEquals(16, massSpectrum.getTargets().size());
 	}
 
 	@Test
 	public void testChromatogramReader_24() {
 
-		IScanMSD massSpectrum = chromatogram.getSupplierScan(87);
+		IScanMSD massSpectrum = chromatogram.getScan(87);
 		massSpectrum.enforceLoadScanProxy();
 		assertNotNull(massSpectrum.getOptimizedMassSpectrum());
 		assertEquals(5, massSpectrum.getTargets().size());

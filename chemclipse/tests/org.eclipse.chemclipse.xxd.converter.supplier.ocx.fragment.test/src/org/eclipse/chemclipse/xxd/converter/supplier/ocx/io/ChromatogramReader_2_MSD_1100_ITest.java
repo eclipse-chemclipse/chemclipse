@@ -128,7 +128,7 @@ public class ChromatogramReader_2_MSD_1100_ITest {
 	@Test
 	public void testChromatogramReader_12() {
 
-		IScanMSD massSpectrum = chromatogram.getSupplierScan(1);
+		IScanMSD massSpectrum = chromatogram.getScan(1);
 		/*
 		 * Proxy
 		 */
@@ -155,7 +155,7 @@ public class ChromatogramReader_2_MSD_1100_ITest {
 	@Test
 	public void testChromatogramReader_13() {
 
-		IScanMSD massSpectrum = chromatogram.getSupplierScan(92);
+		IScanMSD massSpectrum = chromatogram.getScan(92);
 		/*
 		 * Proxy
 		 */
@@ -182,7 +182,7 @@ public class ChromatogramReader_2_MSD_1100_ITest {
 	@Test
 	public void testChromatogramReader_14() {
 
-		IScanMSD massSpectrum = chromatogram.getSupplierScan(147);
+		IScanMSD massSpectrum = chromatogram.getScan(147);
 		/*
 		 * Proxy
 		 */
@@ -209,7 +209,7 @@ public class ChromatogramReader_2_MSD_1100_ITest {
 	@Test
 	public void testChromatogramReader_15() {
 
-		IScanMSD massSpectrum = chromatogram.getSupplierScan(207);
+		IScanMSD massSpectrum = chromatogram.getScan(207);
 		/*
 		 * Proxy
 		 */
@@ -335,7 +335,7 @@ public class ChromatogramReader_2_MSD_1100_ITest {
 	@Test
 	public void testChromatogramReader_25() {
 
-		IScanMSD massSpectrum = chromatogram.getSupplierScan(117);
+		IScanMSD massSpectrum = chromatogram.getScan(117);
 		massSpectrum.enforceLoadScanProxy();
 		assertNotNull(massSpectrum.getOptimizedMassSpectrum());
 		assertEquals(8, massSpectrum.getTargets().size());

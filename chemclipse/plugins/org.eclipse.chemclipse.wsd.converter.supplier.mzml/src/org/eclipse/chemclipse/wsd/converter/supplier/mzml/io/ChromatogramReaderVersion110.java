@@ -107,7 +107,7 @@ public class ChromatogramReaderVersion110 extends AbstractChromatogramReader imp
 					intensities = binaryData.getValue();
 				}
 			}
-			IVendorScan scan = (IVendorScan)chromatogram.getSupplierScan(i);
+			IVendorScan scan = (IVendorScan)chromatogram.getScan(i);
 			scan.deleteScanSignals(); // otherwise the total signal is added upon
 			addSpectrum(wavelengths, intensities, scan);
 			i++;

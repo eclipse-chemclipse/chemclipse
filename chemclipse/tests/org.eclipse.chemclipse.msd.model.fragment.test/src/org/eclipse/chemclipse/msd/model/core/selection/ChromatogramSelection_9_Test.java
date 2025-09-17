@@ -18,6 +18,7 @@ import static org.junit.Assert.assertNotNull;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.RegularMassSpectrum;
@@ -50,7 +51,7 @@ public class ChromatogramSelection_9_Test {
 	@Test
 	public void testGetSelectedScan_1() {
 
-		IRegularMassSpectrum selectedScan = selection.getSelectedScan();
+		IScanMSD selectedScan = selection.getSelectedScan();
 		assertNotNull(selectedScan);
 		assertEquals("RetentionTime", 500, selectedScan.getRetentionTime());
 	}

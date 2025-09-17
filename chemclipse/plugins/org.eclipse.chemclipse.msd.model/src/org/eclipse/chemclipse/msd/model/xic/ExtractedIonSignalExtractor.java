@@ -96,7 +96,7 @@ public class ExtractedIonSignalExtractor implements IExtractedIonSignalExtractor
 		 */
 		exitloop:
 		for(int scan = start; scan <= stop; scan++) {
-			if(!chromatogram.getSupplierScan(scan).isEmpty()) {
+			if(!chromatogram.getScan(scan).isEmpty()) {
 				startScan = scan;
 				break exitloop;
 			}
@@ -105,7 +105,7 @@ public class ExtractedIonSignalExtractor implements IExtractedIonSignalExtractor
 		 * Get the stop without empty scans.
 		 */
 		for(int scan = stop; scan > startScan; scan--) {
-			if(chromatogram.getSupplierScan(scan).isEmpty()) {
+			if(chromatogram.getScan(scan).isEmpty()) {
 				stopScan = scan - 1;
 			}
 		}
@@ -114,7 +114,7 @@ public class ExtractedIonSignalExtractor implements IExtractedIonSignalExtractor
 		 */
 		IExtractedIonSignals extractedIonSignals = new ExtractedIonSignals(startScan, stopScan, chromatogram);
 		for(int scan = startScan; scan <= stopScan; scan++) {
-			extractSignals(extractedIonSignals, chromatogram.getSupplierScan(scan), startIon, stopIon);
+			extractSignals(extractedIonSignals, chromatogram.getScan(scan), startIon, stopIon);
 		}
 
 		return extractedIonSignals;

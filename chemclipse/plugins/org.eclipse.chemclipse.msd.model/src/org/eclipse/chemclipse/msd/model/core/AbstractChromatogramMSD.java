@@ -124,21 +124,21 @@ public abstract class AbstractChromatogramMSD extends AbstractChromatogram imple
 	@Override
 	public IScanMSD getScan(int scan, IMarkedIons excludedIons) {
 
-		IRegularMassSpectrum supplierMassSpectrum = getSupplierScan(scan);
-		if(supplierMassSpectrum == null) {
+		IScanMSD scanMSD = getScan(scan);
+		if(scanMSD == null) {
 			return null;
 		}
-		return supplierMassSpectrum.getMassSpectrum(excludedIons);
+		return scanMSD.getMassSpectrum(excludedIons);
 	}
 
 	@Override
-	public IRegularMassSpectrum getSupplierScan(int scan) {
+	public IScanMSD getScan(int scan) {
 
 		int position = scan;
 		if(position > 0 && position <= getScans().size()) {
 			IScan storedScan = getScans().get(--position);
-			if(storedScan instanceof IRegularMassSpectrum regularMassSpectrum) {
-				return regularMassSpectrum;
+			if(storedScan instanceof IScanMSD scanMSD) {
+				return scanMSD;
 			}
 		}
 		return null;

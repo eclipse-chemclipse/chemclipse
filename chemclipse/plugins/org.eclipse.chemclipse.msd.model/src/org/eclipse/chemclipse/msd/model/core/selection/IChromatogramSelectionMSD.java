@@ -16,6 +16,7 @@ package org.eclipse.chemclipse.msd.model.core.selection;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.support.IMarkedIonTransitions;
 import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 
@@ -42,16 +43,16 @@ public interface IChromatogramSelectionMSD extends IChromatogramSelection {
 	 * Returns the selected scan of the current chromatogram or null, if none is
 	 * stored.
 	 *
-	 * @return {@link IRegularMassSpectrum}
+	 * @return {@link IScanMSD}
 	 */
 	@Override
-	IRegularMassSpectrum getSelectedScan();
+	IScanMSD getSelectedScan();
 
 	/**
 	 * Sets the selected scan of the current chromatogram.<br/>
 	 * The scan must not be null.
 	 */
-	void setSelectedScan(IRegularMassSpectrum selectedScan);
+	void setSelectedScan(IScanMSD selectedScan);
 
 	/**
 	 * Use this convenient method, if you don't want to fire and update.

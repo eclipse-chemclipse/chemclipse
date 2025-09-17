@@ -103,7 +103,7 @@ public class ChromatogramSelectionWSD extends AbstractChromatogramSelection impl
 			 * Chromatogram WSD
 			 */
 			if(chromatogram instanceof IChromatogramWSD chromatogramWSD) {
-				selectedScan = chromatogramWSD.getSupplierScan(1);
+				selectedScan = chromatogramWSD.getScan(1);
 			}
 		} else {
 			selectedScan = null;

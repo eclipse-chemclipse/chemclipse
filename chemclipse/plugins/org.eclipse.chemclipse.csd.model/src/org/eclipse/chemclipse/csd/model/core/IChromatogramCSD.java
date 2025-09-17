@@ -16,5 +16,6 @@ import org.eclipse.chemclipse.model.core.IChromatogram;
 
 public interface IChromatogramCSD extends IChromatogram, IChromatogramPeaksCSD {
 
-	IScanCSD getSupplierScan(int scan);
+	@Override
+	IScanCSD getScan(int scan);
 }

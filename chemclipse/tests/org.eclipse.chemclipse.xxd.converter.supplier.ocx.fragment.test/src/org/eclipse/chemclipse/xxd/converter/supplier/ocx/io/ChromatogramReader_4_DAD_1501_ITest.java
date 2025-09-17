@@ -101,7 +101,7 @@ public class ChromatogramReader_4_DAD_1501_ITest {
 	@Test
 	public void testReader_9() {
 
-		IScanWSD scan = chromatogram.getSupplierScan(1);
+		IScanWSD scan = chromatogram.getScan(1);
 
 		assertEquals(226, scan.getScanSignals().size());
 		assertEquals(5.9459736E7f, scan.getTotalSignal(), 0);

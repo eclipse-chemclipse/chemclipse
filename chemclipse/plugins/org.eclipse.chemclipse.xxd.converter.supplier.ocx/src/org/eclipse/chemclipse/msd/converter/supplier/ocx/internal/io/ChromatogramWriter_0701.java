@@ -37,6 +37,7 @@ import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.support.history.IEditHistory;
 import org.eclipse.chemclipse.support.history.IEditInformation;
@@ -160,7 +161,7 @@ public class ChromatogramWriter_0701 extends AbstractChromatogramWriter implemen
 		dataOutputStream.writeInt(scans); // Number of Scans
 		// Scans
 		for(int scan = 1; scan <= scans; scan++) {
-			IRegularMassSpectrum massSpectrum = chromatogram.getSupplierScan(scan);
+			IScanMSD massSpectrum = chromatogram.getScan(scan);
 			writeMassSpectrum(dataOutputStream, massSpectrum);
 		}
 
@@ -277,10 +278,12 @@ public class ChromatogramWriter_0701 extends AbstractChromatogramWriter implemen
 		zipOutputStream.closeEntry();
 	}
 
-	private void writeMassSpectrum(DataOutputStream dataOutputStream, IRegularMassSpectrum massSpectrum) throws IOException {
+	private void writeMassSpectrum(DataOutputStream dataOutputStream, IScanMSD massSpectrum) throws IOException {
 
-		writeString(dataOutputStream, getMassSpectrometer(massSpectrum.getMassSpectrometer()).toString()); // Mass Spectrometer
-		writeString(dataOutputStream, String.valueOf(getMassSpectrumType(massSpectrum.getMassSpectrumType()))); // Mass Spectrum Type
+		if(massSpectrum instanceof IRegularMassSpectrum regularMassSpectrum) {
+			writeString(dataOutputStream, getMassSpectrometer(regularMassSpectrum.getMassSpectrometer()).toString()); // Mass Spectrometer
+			writeString(dataOutputStream, String.valueOf(getMassSpectrumType(regularMassSpectrum.getMassSpectrumType()))); // Mass Spectrum Type
+		}
 		dataOutputStream.writeInt(massSpectrum.getRetentionTime()); // Retention Time
 		dataOutputStream.writeFloat(massSpectrum.getRetentionIndex()); // Retention Index
 		List<IIon> ions = massSpectrum.getIons();

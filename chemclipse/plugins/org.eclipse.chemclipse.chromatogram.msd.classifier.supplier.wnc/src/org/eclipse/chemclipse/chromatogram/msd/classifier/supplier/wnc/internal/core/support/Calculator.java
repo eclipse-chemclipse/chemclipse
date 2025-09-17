@@ -53,7 +53,7 @@ public class Calculator {
 		 * Extract the ion abundance values.
 		 */
 		for(int scan = startScan; scan <= stopScan; scan++) {
-			IExtractedIonSignal scanSignals = chromatogram.getSupplierScan(scan).getExtractedIonSignal();
+			IExtractedIonSignal scanSignals = chromatogram.getScan(scan).getExtractedIonSignal();
 			for(Integer ion = scanSignals.getStartIon(); ion <= scanSignals.getStopIon(); ion++) {
 				/*
 				 * If there is still an abundance for the ion in the map, than add the signal.

@@ -128,16 +128,14 @@ public class Chromatogram_9_Test {
 	@Test
 	public void testGetScan_1() {
 
-		IScanMSD massSpectrum;
-		massSpectrum = chromatogram.getSupplierScan(49);
+		IScanMSD massSpectrum = chromatogram.getScan(49);
 		assertEquals("TotalSignal", 49.0f, massSpectrum.getTotalSignal(), 0);
 	}
 
 	@Test
 	public void testGetScan_2() {
 
-		IScanMSD massSpectrum;
-		massSpectrum = chromatogram.getSupplierScan(50);
+		IScanMSD massSpectrum = chromatogram.getScan(50);
 		assertEquals("TotalSignal", 51.0f, massSpectrum.getTotalSignal(), 0);
 	}
 }

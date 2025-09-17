@@ -17,7 +17,7 @@ import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
-import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.exceptions.NoExtractedIonSignalStoredException;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.xic.ExtractedIonSignals;
@@ -77,7 +77,7 @@ public class DenoiseOperation extends AbstractOperation {
 		for(int scan = startScan; scan <= stopScan; scan++) {
 			try {
 				IExtractedIonSignal extractedIonSignal = extractedIonSignals.getExtractedIonSignal(scan);
-				IRegularMassSpectrum supplierMassSpectrum = chromatogram.getSupplierScan(scan);
+				IScanMSD supplierMassSpectrum = chromatogram.getScan(scan);
 				previousExtractedIonSignals.add(supplierMassSpectrum.getExtractedIonSignal());
 				replaceIons(extractedIonSignal, supplierMassSpectrum);
 			} catch(NoExtractedIonSignalStoredException e) {
@@ -115,7 +115,7 @@ public class DenoiseOperation extends AbstractOperation {
 		for(int scan = startScan; scan <= stopScan; scan++) {
 			try {
 				IExtractedIonSignal extractedIonSignal = previousExtractedIonSignals.getExtractedIonSignal(scan);
-				IRegularMassSpectrum supplierMassSpectrum = chromatogram.getSupplierScan(scan);
+				IScanMSD supplierMassSpectrum = chromatogram.getScan(scan);
 				replaceIons(extractedIonSignal, supplierMassSpectrum);
 			} catch(NoExtractedIonSignalStoredException e) {
 				logger.warn(e);
@@ -130,9 +130,9 @@ public class DenoiseOperation extends AbstractOperation {
 	 * fragments stored in the extracted ion signal.
 	 * 
 	 * @param extractedIonSignal
-	 * @param supplierMassSpectrum
+	 * @param massSpectrum
 	 */
-	private static void replaceIons(IExtractedIonSignal extractedIonSignal, IRegularMassSpectrum supplierMassSpectrum) {
+	private static void replaceIons(IExtractedIonSignal extractedIonSignal, IScanMSD massSpectrum) {
 
 		int startIon = extractedIonSignal.getStartIon();
 		int stopIon = extractedIonSignal.getStopIon();
@@ -140,7 +140,7 @@ public class DenoiseOperation extends AbstractOperation {
 		/*
 		 * Remove all ions.
 		 */
-		supplierMassSpectrum.removeAllIons();
+		massSpectrum.removeAllIons();
 		IIon defaultIon;
 		/*
 		 * Add the new ion values if abundance > 0.0f.
@@ -149,7 +149,7 @@ public class DenoiseOperation extends AbstractOperation {
 			abundance = extractedIonSignal.getAbundance(ion);
 			if(abundance > 0.0f) {
 				defaultIon = new Ion(ion, abundance);
-				supplierMassSpectrum.addIon(defaultIon);
+				massSpectrum.addIon(defaultIon);
 			}
 		}
 	}

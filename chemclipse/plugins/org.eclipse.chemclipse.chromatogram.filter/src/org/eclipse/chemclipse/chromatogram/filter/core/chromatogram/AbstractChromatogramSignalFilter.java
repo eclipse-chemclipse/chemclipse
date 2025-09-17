@@ -101,7 +101,7 @@ public abstract class AbstractChromatogramSignalFilter extends AbstractChromatog
 			Iterator<Integer> itScan = totalSignals.iterator();
 			while(itScan.hasNext()) {
 				Integer scan = itScan.next();
-				IScanCSD scanCSD = chromatogramCSD.getSupplierScan(scan);
+				IScanCSD scanCSD = chromatogramCSD.getScan(scan);
 				ITotalScanSignal totalscanSignal = totalSignals.getTotalScanSignal(scan);
 				scanCSD.adjustTotalSignal(totalscanSignal.getTotalSignal());
 			}
@@ -135,7 +135,7 @@ public abstract class AbstractChromatogramSignalFilter extends AbstractChromatog
 		if(chromatogramFilterResult.getResultStatus().equals(ResultStatus.OK)) {
 			while(itScan.hasNext()) {
 				Integer scan = itScan.next();
-				IScanMSD scanMSD = chromatogramMSD.getSupplierScan(scan);
+				IScanMSD scanMSD = chromatogramMSD.getScan(scan);
 				ITotalScanSignal totalscanSignal = totalSignals.getTotalScanSignal(scan);
 				scanMSD.adjustTotalSignal(totalscanSignal.getTotalSignal());
 			}
@@ -173,7 +173,7 @@ public abstract class AbstractChromatogramSignalFilter extends AbstractChromatog
 			float wavelength = totalSignals.getWavelength();
 			while(itScan.hasNext()) {
 				int scan = itScan.next();
-				Optional<IScanSignalWSD> optionalSignal = chromatogramWSD.getSupplierScan(scan).getScanSignal(wavelength);
+				Optional<IScanSignalWSD> optionalSignal = chromatogramWSD.getScan(scan).getScanSignal(wavelength);
 				if(optionalSignal.isPresent()) {
 					IScanSignalWSD scanSignal = optionalSignal.get();
 					IExtractedSingleWavelengthSignal totalSignal = totalSignals.getTotalScanSignal(scan);

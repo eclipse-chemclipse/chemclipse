@@ -23,12 +23,12 @@ import org.eclipse.chemclipse.model.core.IIntegrationEntry;
 import org.eclipse.chemclipse.model.core.IPeakIntensityValues;
 import org.eclipse.chemclipse.model.implementation.IntegrationEntry;
 import org.eclipse.chemclipse.model.implementation.PeakIntensityValues;
-import org.eclipse.chemclipse.model.implementation.Scan;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramPeakMSD;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.PeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.implementation.PeakModelMSD;
+import org.eclipse.chemclipse.msd.model.implementation.ScanMSD;
 import org.junit.Test;
 
 public class AbstractChromatogram_4_Test {
@@ -95,9 +95,9 @@ public class AbstractChromatogram_4_Test {
 		assertTrue("Peaks are returned even if no peak rt-max should be in this range", chromatogram.getPeaks(peakStart + numberOfPeaks / 2, Integer.MAX_VALUE).isEmpty());
 	}
 
-	private static Scan createScanAt(int retentionTime) {
+	private static IScanMSD createScanAt(int retentionTime) {
 
-		Scan scan = new Scan(100);
+		IScanMSD scan = new ScanMSD();
 		scan.setRetentionTime(retentionTime);
 		return scan;
 	}

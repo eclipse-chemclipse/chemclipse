@@ -71,7 +71,7 @@ public class ChromatogramFilterCSD extends AbstractChromatogramFilterCSD {
 		Iterator<Integer> iteratorScans = totalSignals.iterator();
 		while(iteratorScans.hasNext()) {
 			Integer scan = iteratorScans.next();
-			IScanCSD scanCSD = chromatogram.getSupplierScan(scan);
+			IScanCSD scanCSD = chromatogram.getScan(scan);
 			ITotalScanSignal totalscanSignal = totalSignals.getTotalScanSignal(scan);
 			scanCSD.adjustTotalSignal(totalscanSignal.getTotalSignal());
 		}

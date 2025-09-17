@@ -237,7 +237,7 @@ public class ChromatogramWriter_1502 extends AbstractChromatogramWriter implemen
 				/*
 				 * Write separate scan proxy values.
 				 */
-				IRegularMassSpectrum massSpectrum = chromatogram.getSupplierScan(scan);
+				IScanMSD massSpectrum = chromatogram.getScan(scan);
 				int offset = dataOutputStream.size();
 				int retentionTime = massSpectrum.getRetentionTime();
 				int numberOfIons = massSpectrum.getNumberOfIons();
@@ -323,7 +323,7 @@ public class ChromatogramWriter_1502 extends AbstractChromatogramWriter implemen
 			chromatogram.setActiveBaseline(baselineId);
 			IBaselineModel baselineModel = chromatogram.getBaselineModel();
 			for(int scan = 1; scan <= scans; scan++) {
-				int retentionTime = chromatogram.getSupplierScan(scan).getRetentionTime();
+				int retentionTime = chromatogram.getScan(scan).getRetentionTime();
 				float backgroundAbundance = baselineModel.getBackground(retentionTime);
 				dataOutputStream.writeInt(retentionTime); // Retention Time
 				dataOutputStream.writeFloat(backgroundAbundance); // Background Abundance
@@ -509,11 +509,17 @@ public class ChromatogramWriter_1502 extends AbstractChromatogramWriter implemen
 		zipOutputStream.closeEntry();
 	}
 
-	private void writeMassSpectrum(DataOutputStream dataOutputStream, IRegularMassSpectrum massSpectrum) throws IOException {
+	private void writeMassSpectrum(DataOutputStream dataOutputStream, IScanMSD massSpectrum) throws IOException {
 
-		dataOutputStream.writeShort(massSpectrum.getMassSpectrometer()); // Mass Spectrometer
-		dataOutputStream.writeShort(getMassSpectrumType(massSpectrum.getMassSpectrumType())); // Mass Spectrum Type
-		dataOutputStream.writeDouble(massSpectrum.getPrecursorIon()); // Precursor Ion (0 if MS1 or none has been selected)
+		if(massSpectrum instanceof IRegularMassSpectrum regularMassSpectrum) {
+			dataOutputStream.writeShort(regularMassSpectrum.getMassSpectrometer()); // Mass Spectrometer
+			dataOutputStream.writeShort(getMassSpectrumType(regularMassSpectrum.getMassSpectrumType())); // Mass Spectrum Type
+			dataOutputStream.writeDouble(regularMassSpectrum.getPrecursorIon()); // Precursor Ion (0 if MS1 or none has been selected)
+		} else {
+			dataOutputStream.writeShort(1); // Mass Spectrometer
+			dataOutputStream.writeShort(getMassSpectrumType(MassSpectrumType.CENTROID)); // Mass Spectrum Type
+			dataOutputStream.writeDouble(0); // Precursor Ion
+		}
 		writeNormalMassSpectrum(dataOutputStream, massSpectrum);
 	}
 

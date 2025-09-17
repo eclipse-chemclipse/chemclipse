@@ -81,7 +81,7 @@ public abstract class AbstractChromatogramPeakWSD extends AbstractPeakWSD implem
 		 */
 		IScan peakScan = getPeakModel().getPeakMaximum();
 		if(peakScan instanceof IScanWSD peakScanWSD) {
-			IScanWSD genuineScanWSD = chromatogram.getSupplierScan(getScanMax());
+			IScanWSD genuineScanWSD = chromatogram.getScan(getScanMax());
 			if(genuineScanWSD != null) {
 				int numberOfSignals = genuineScanWSD.getNumberOfScanSignals();
 				if(numberOfSignals != 0) {

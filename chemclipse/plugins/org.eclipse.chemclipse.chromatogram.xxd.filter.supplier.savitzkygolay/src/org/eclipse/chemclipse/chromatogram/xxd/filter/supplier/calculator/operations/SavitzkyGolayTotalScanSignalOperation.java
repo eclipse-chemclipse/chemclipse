@@ -119,7 +119,7 @@ public class SavitzkyGolayTotalScanSignalOperation extends AbstractOperation imp
 		Iterator<Integer> iteratorScan = totalSignals.iterator();
 		while(iteratorScan.hasNext()) {
 			Integer scan = iteratorScan.next();
-			IScanMSD scanMSD = chromatogram.getSupplierScan(scan);
+			IScanMSD scanMSD = chromatogram.getScan(scan);
 			ITotalScanSignal totalscanSignal = totalSignals.getTotalScanSignal(scan);
 			scanMSD.adjustTotalSignal(totalscanSignal.getTotalSignal());
 		}

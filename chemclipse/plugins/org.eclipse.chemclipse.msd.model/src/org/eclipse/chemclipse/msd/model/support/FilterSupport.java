@@ -68,7 +68,7 @@ public class FilterSupport {
 			}
 		} else {
 			for(int scan = startScan; scan <= stopScan; scan++) {
-				massSpectrumCalculator.addIons(chromatogram.getSupplierScan(scan).getIons(), excludedIons);
+				massSpectrumCalculator.addIons(chromatogram.getScan(scan).getIons(), excludedIons);
 			}
 		}
 		/*

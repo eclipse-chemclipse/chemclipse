@@ -111,7 +111,7 @@ public class ChromatogramReader_1_MSD_0903_ITest {
 	@Test
 	public void testChromatogramReader_12() {
 
-		IScanMSD massSpectrum = chromatogram.getSupplierScan(1);
+		IScanMSD massSpectrum = chromatogram.getScan(1);
 
 		assertEquals(32, massSpectrum.getNumberOfIons());
 		assertEquals(15.1d, massSpectrum.getLowestIon().getIon(), 0);
@@ -127,7 +127,7 @@ public class ChromatogramReader_1_MSD_0903_ITest {
 	@Test
 	public void testChromatogramReader_13() {
 
-		IScanMSD massSpectrum = chromatogram.getSupplierScan(22);
+		IScanMSD massSpectrum = chromatogram.getScan(22);
 
 		assertEquals(35, massSpectrum.getNumberOfIons());
 		assertEquals(15.1d, massSpectrum.getLowestIon().getIon(), 0);
@@ -143,7 +143,7 @@ public class ChromatogramReader_1_MSD_0903_ITest {
 	@Test
 	public void testChromatogramReader_14() {
 
-		IScanMSD massSpectrum = chromatogram.getSupplierScan(80);
+		IScanMSD massSpectrum = chromatogram.getScan(80);
 
 		assertEquals(29, massSpectrum.getNumberOfIons());
 		assertEquals(16.0d, massSpectrum.getLowestIon().getIon(), 0);
@@ -159,7 +159,7 @@ public class ChromatogramReader_1_MSD_0903_ITest {
 	@Test
 	public void testChromatogramReader_15() {
 
-		IScanMSD massSpectrum = chromatogram.getSupplierScan(110);
+		IScanMSD massSpectrum = chromatogram.getScan(110);
 
 		assertEquals(31, massSpectrum.getNumberOfIons());
 		assertEquals(15.1d, massSpectrum.getLowestIon().getIon(), 0);

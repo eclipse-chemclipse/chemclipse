@@ -17,7 +17,7 @@ import org.eclipse.chemclipse.model.baseline.IBaselineModel;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.msd.model.core.AbstractIon;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
-import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 import org.eclipse.chemclipse.msd.model.xic.ExtractedIonSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
@@ -50,8 +50,6 @@ public class BackgroundIntegrator extends AbstractSumareaIntegrator implements I
 			IExtractedIonSignals extractedIonSignals = extractedIonSignalExtractor.getExtractedIonSignals(chromatogramSelection);
 			IExtractedIonSignal startSignal;
 			IExtractedIonSignal stopSignal;
-			IRegularMassSpectrum supplierMassSpectrumStart;
-			IRegularMassSpectrum supplierMassSpectrumStop;
 			int start;
 			int stop;
 			double ionPercentage = 0.0d;
@@ -63,8 +61,8 @@ public class BackgroundIntegrator extends AbstractSumareaIntegrator implements I
 				try {
 					startSignal = extractedIonSignals.getExtractedIonSignal(scan);
 					stopSignal = extractedIonSignals.getExtractedIonSignal(scan + 1);
-					supplierMassSpectrumStart = chromatogram.getSupplierScan(scan);
-					supplierMassSpectrumStop = chromatogram.getSupplierScan(scan + 1);
+					IScanMSD supplierMassSpectrumStart = chromatogram.getScan(scan);
+					IScanMSD supplierMassSpectrumStop = chromatogram.getScan(scan + 1);
 					ionPercentage = calculateIonPercentageOfScans(supplierMassSpectrumStart, supplierMassSpectrumStop, ion);
 					if(startSignal != null && stopSignal != null) {
 						start = startSignal.getRetentionTime();
@@ -84,10 +82,10 @@ public class BackgroundIntegrator extends AbstractSumareaIntegrator implements I
 		return backgroundArea;
 	}
 
-	private double calculateIonPercentageOfScans(IRegularMassSpectrum supplierMassSpectrumStart, IRegularMassSpectrum supplierMassSpectrumStop, int ion) {
+	private double calculateIonPercentageOfScans(IScanMSD massSpectrumStart, IScanMSD massSpectrumStop, int ion) {
 
-		IExtractedIonSignal extractedIonSignalStart = supplierMassSpectrumStart.getExtractedIonSignal();
-		IExtractedIonSignal extractedIonSignalStop = supplierMassSpectrumStop.getExtractedIonSignal();
+		IExtractedIonSignal extractedIonSignalStart = massSpectrumStart.getExtractedIonSignal();
+		IExtractedIonSignal extractedIonSignalStop = massSpectrumStop.getExtractedIonSignal();
 		double percentageStartSignal = 0.0d;
 		float startSignal = extractedIonSignalStart.getTotalSignal();
 		if(startSignal > 0) {
