@@ -45,7 +45,6 @@
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="https://download.eclipse.org/nebula/updates/release/3.1.1/"/>
 		<unit id="org.eclipse.nebula.feature.feature.group"/>
-		<unit id="org.eclipse.nebula.widgets.richtext.feature.feature.group"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="https://download.eclipse.org/oomph/simrel-orbit/release/4.28.0"/>

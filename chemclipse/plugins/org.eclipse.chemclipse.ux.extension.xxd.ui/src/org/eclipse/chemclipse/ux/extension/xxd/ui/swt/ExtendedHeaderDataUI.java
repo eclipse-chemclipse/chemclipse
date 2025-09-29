@@ -28,11 +28,9 @@ import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.chemclipse.swt.ui.components.DataMapSupportUI;
 import org.eclipse.chemclipse.swt.ui.components.InformationUI;
 import org.eclipse.chemclipse.swt.ui.components.SearchSupportUI;
-import org.eclipse.chemclipse.swt.ui.support.RichTextSupport;
 import org.eclipse.chemclipse.swt.ui.support.editor.SWTEditor;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.nebula.widgets.richtext.RichTextEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -65,6 +63,8 @@ public class ExtendedHeaderDataUI extends Composite implements IExtendedPartUI {
 	private AtomicReference<Control> findingsControl = new AtomicReference<>();
 
 	private IMeasurementInfo measurementInfo = null;
+
+	private SWTEditor editor;
 
 	public ExtendedHeaderDataUI(Composite parent, int style) {
 
@@ -254,22 +254,13 @@ public class ExtendedHeaderDataUI extends Composite implements IExtendedPartUI {
 		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
 		tabItem.setText("Findings");
 
-		Control editor = RichTextSupport.createEditor(tabFolder, SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP);
-		if(editor instanceof RichTextEditor richTextEditor) {
-			richTextEditor.addModifyListener(e -> {
+		editor = new SWTEditor(tabFolder, SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP);
+		editor.addModifyListener(e -> {
 
-				if(measurementInfo != null) {
-					measurementInfo.setFindings(richTextEditor.getText().trim());
-				}
-			});
-		} else if(editor instanceof SWTEditor plainTextEditor) {
-			plainTextEditor.addModifyListener(e -> {
-
-				if(measurementInfo != null) {
-					measurementInfo.setFindings(plainTextEditor.getText().trim());
-				}
-			});
-		}
+			if(measurementInfo != null) {
+				measurementInfo.setFindings(editor.getText().trim());
+			}
+		});
 
 		tabItem.setControl(editor);
 		findingsControl.set(editor);
@@ -378,7 +369,7 @@ public class ExtendedHeaderDataUI extends Composite implements IExtendedPartUI {
 
 	private void updateFindings(String content) {
 
-		RichTextSupport.setEditorText(findingsControl.get(), content);
+		editor.setText(content);
 	}
 
 	private void updateInfoToolbar() {

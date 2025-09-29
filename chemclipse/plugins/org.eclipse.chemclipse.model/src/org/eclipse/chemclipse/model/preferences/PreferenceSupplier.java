@@ -56,14 +56,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	public static final String P_SEPARATION_COLUMN_MAPPINGS = "separationColumnMappings";
 	public static final String DEF_SEPARATION_COLUMN_MAPPINGS = "";
 	/*
-	 * Rich Text Editor (Webkit, Edge)
-	 * It causes problems on some systems, hence let the user disable it.
-	 */
-	public static final String P_USE_RICH_TEXT_EDITOR = "useRichTextEditor";
-	public static final boolean DEF_USE_RICH_TEXT_EDITOR = true;
-	public static final String P_RUN_BROWSER_CHECK = "runBrowserCheck";
-	public static final boolean DEF_RUN_BROWSER_CHECK = true;
-	/*
 	 * Don't show in the preference page
 	 */
 	public static final String P_LIST_PATH_IMPORT = "listPathImport";
@@ -105,8 +97,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 		putDefault(P_SEPARATION_COLUMN_HEADER_FIELD, DEF_SEPARATION_COLUMN_HEADER_FIELD);
 		putDefault(P_PARSE_SEPARATION_COLUMN_REFERENCED_CHROMATOGRAMS, DEF_PARSE_SEPARATION_COLUMN_REFERENCED_CHROMATOGRAMS);
 		putDefault(P_SEPARATION_COLUMN_MAPPINGS, DEF_SEPARATION_COLUMN_MAPPINGS);
-		putDefault(P_USE_RICH_TEXT_EDITOR, DEF_USE_RICH_TEXT_EDITOR);
-		putDefault(P_RUN_BROWSER_CHECK, DEF_RUN_BROWSER_CHECK);
 		putDefault(P_LIST_PATH_IMPORT, DEF_LIST_PATH_IMPORT);
 		putDefault(P_LIST_PATH_EXPORT, DEF_LIST_PATH_EXPORT);
 	}
@@ -261,18 +251,4 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 		return INSTANCE().get(P_SEPARATION_COLUMN_MAPPINGS, DEF_SEPARATION_COLUMN_MAPPINGS);
 	}
 
-	public static boolean isUseRichTextEditor() {
-
-		return INSTANCE().getBoolean(P_USE_RICH_TEXT_EDITOR, DEF_USE_RICH_TEXT_EDITOR);
-	}
-
-	public static void setUseRichTextEditor(boolean use) {
-
-		INSTANCE().setBoolean(P_USE_RICH_TEXT_EDITOR, use);
-	}
-
-	public static boolean isRunBrowserCheck() {
-
-		return INSTANCE().getBoolean(P_RUN_BROWSER_CHECK, DEF_RUN_BROWSER_CHECK);
-	}
 }
