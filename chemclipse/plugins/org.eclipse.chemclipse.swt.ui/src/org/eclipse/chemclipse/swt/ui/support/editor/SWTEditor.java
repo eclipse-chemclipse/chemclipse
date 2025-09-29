@@ -52,6 +52,7 @@ public class SWTEditor extends Composite {
 	ToolItem boldControl, italicControl;
 
 	boolean insert = true;
+	boolean readOnly = false;
 	StyleRange[] selectedRanges;
 	int newCharCount, start;
 	int styleState;
@@ -78,7 +79,8 @@ public class SWTEditor extends Composite {
 		Display display = new Display();
 		Shell shell = new Shell(display);
 		shell.setLayout(new FillLayout());
-		SWTEditor editor = new SWTEditor(shell, SWT.NONE);
+		SWTEditor editor = new SWTEditor(shell, SWT.READ_ONLY);
+		editor.setText("<b>test</b>");
 		shell.setSize(1000, 700);
 		shell.open();
 		while(!shell.isDisposed()) {
@@ -107,8 +109,15 @@ public class SWTEditor extends Composite {
 		setLayout(new GridLayout(1, true));
 		this.parent = parent;
 		initResources();
-		createToolBar();
-		styledText = new StyledText(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		if ((style & SWT.READ_ONLY) != 0 ) {
+			readOnly= true;
+		}
+		if (readOnly) {
+			styledText = new StyledText(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL| SWT.READ_ONLY);
+		} else {
+			createToolBar();
+			styledText = new StyledText(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		}
 		GridData gridData = new GridData();
 		gridData.horizontalAlignment = GridData.FILL;
 		gridData.verticalAlignment = GridData.FILL;
@@ -450,7 +459,7 @@ public class SWTEditor extends Composite {
 	}
 
 	void updateToolBar() {
-
+		if (readOnly) return;
 		styleState = 0;
 		link = null;
 		boolean bold = false, italic = false;
