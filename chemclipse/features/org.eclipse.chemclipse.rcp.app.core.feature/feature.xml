@@ -133,14 +133,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.eclipse.team.core"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.team.ui"
-         version="0.0.0"/>
-
-   <plugin
          id="org.eclipse.text"
          version="0.0.0"/>
 
@@ -242,14 +234,6 @@
 
    <plugin
          id="org.eclipse.ui.themes"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.ltk.core.refactoring"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.ltk.ui.refactoring"
          version="0.0.0"/>
 
    <plugin
