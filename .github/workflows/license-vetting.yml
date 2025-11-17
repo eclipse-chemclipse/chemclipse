@@ -6,9 +6,13 @@ on:
   push:
     branches:
       - 'develop'
+    paths:
+      - '**/*.target'
   pull_request:
     branches:
      - 'develop'
+    paths:
+     - '**/*.target'
   issue_comment:
     types: [created]
 
