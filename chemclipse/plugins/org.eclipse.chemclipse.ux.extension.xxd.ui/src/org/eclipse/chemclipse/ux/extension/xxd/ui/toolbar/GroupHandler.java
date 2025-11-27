@@ -12,7 +12,6 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.toolbar;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -47,19 +46,6 @@ public class GroupHandler {
 	 */
 	private GroupHandler() {
 
-	}
-
-	/**
-	 * Show mandatory parts by default for these groups.
-	 */
-	public static void activateReferencedParts() {
-
-		for(String handlerName : Arrays.asList(GroupHandlerScans.NAME, GroupHandlerTargets.NAME)) {
-			IGroupHandler groupHandler = getGroupHandler(handlerName);
-			if(groupHandler != null) {
-				groupHandler.setPartStatus(true);
-			}
-		}
 	}
 
 	public static void actionParts(String elementId) {

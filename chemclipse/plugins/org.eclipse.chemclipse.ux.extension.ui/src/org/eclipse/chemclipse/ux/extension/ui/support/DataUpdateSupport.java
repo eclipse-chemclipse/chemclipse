@@ -164,14 +164,7 @@ public class DataUpdateSupport {
 			/*
 			 * Handler
 			 */
-			EventHandler eventHandler = new EventHandler() {
-
-				@Override
-				public void handleEvent(Event event) {
-
-					update(event, properties);
-				}
-			};
+			EventHandler eventHandler = event -> update(event, properties);
 			/*
 			 * Subscribe the new handler.
 			 */

@@ -81,6 +81,8 @@ public class PartSupport {
 		MPartStack partStack = (MPartStack)eModelService.find(IPerspectiveAndViewIds.EDITOR_PART_STACK_ID, mApplication);
 		part.setToBeRendered(false);
 		part.setVisible(false);
-		DisplayUtils.getDisplay().asyncExec(() -> partStack.getChildren().remove(part));
+		if (partStack != null) {
+			DisplayUtils.getDisplay().asyncExec(() -> partStack.getChildren().remove(part));
+		}
 	}
 }

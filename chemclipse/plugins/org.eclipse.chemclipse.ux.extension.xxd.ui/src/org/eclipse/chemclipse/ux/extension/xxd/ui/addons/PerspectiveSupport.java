@@ -35,7 +35,6 @@ public class PerspectiveSupport {
 	 */
 	private static final String DATA_ANALYSIS_PERSPECTIVE_LABEL = "<Data Analysis (Main)>";
 	private static final String TOOLBAR_ID = "org.eclipse.chemclipse.ux.extension.xxd.ui.toolbar.dataanalysis";
-	private static boolean activatePartsInitially = true;
 
 	@PostConstruct
 	public void postConstruct() {
@@ -56,10 +55,6 @@ public class PerspectiveSupport {
 						 * Show parts initially.
 						 */
 						enableToolBar(true);
-						if(activatePartsInitially) {
-							GroupHandler.activateReferencedParts();
-							activatePartsInitially = false;
-						}
 					} else {
 						enableToolBar(false);
 					}
@@ -70,7 +65,6 @@ public class PerspectiveSupport {
 				if(object instanceof String label) {
 					if(DATA_ANALYSIS_PERSPECTIVE_LABEL.equals(label)) {
 						enableToolBar(true);
-						GroupHandler.activateReferencedParts();
 					} else {
 						enableToolBar(false);
 					}

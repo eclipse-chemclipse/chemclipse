@@ -7,6 +7,7 @@
     <elements xsi:type="basic:Part" xmi:id="_E8UhsDmqEei-wI9hy1kIxA" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.targetsPart" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.xxd.ui/org.eclipse.chemclipse.ux.extension.xxd.ui.parts.TargetsPart" label="%Targets" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/target.png"/>
     <elements xsi:type="basic:Part" xmi:id="_NC1V0DmqEei-wI9hy1kIxA" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.comparisonScan" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.xxd.ui/org.eclipse.chemclipse.ux.extension.xxd.ui.parts.ComparisonScanChartPart" label="%ComparisonScan" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/comparisonScanDefault.gif"/>
     <elements xsi:type="basic:Part" xmi:id="_51oP0EMaEeik0tjTEoFbUg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.scanChartPart" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.xxd.ui/org.eclipse.chemclipse.ux.extension.xxd.ui.parts.ScanChartPart" label="%ScanChart" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/selectedScansDefault.gif"/>
+    <elements xsi:type="basic:Part" xmi:id="_zINEIMrtEfCt6tI6IJCymA" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.scanTablePartDescriptor" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.xxd.ui/org.eclipse.chemclipse.ux.extension.xxd.ui.parts.ScanTablePart" label="%ScanTable" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/ion.gif"/>
     <elements xsi:type="basic:Part" xmi:id="_pWhTQI8wEeiO3oL5WUkZBQ" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.sequenceexplorer" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.xxd.ui/org.eclipse.chemclipse.ux.extension.xxd.ui.parts.SequenceExplorerPart" label="%SequenceExplorer" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/sequenceListDefault.gif"/>
     <elements xsi:type="basic:Part" xmi:id="_7SwRMNngEeiyx5W2f1mKlA" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.chromatogramOverlay" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.xxd.ui/org.eclipse.chemclipse.ux.extension.xxd.ui.parts.ChromatogramOverlayPart" label="%ChromatogramOverlay" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/chromatogramOverlayDefault.gif"/>
     <elements xsi:type="basic:Part" xmi:id="_-4WmgM_TEem5S_IrSHwKAQ" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.peakDetector" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.xxd.ui/org.eclipse.chemclipse.ux.extension.xxd.ui.parts.PeakDetectorPart" label="%PeakDetector" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/detectionTypeScanBB.gif"/>
@@ -35,14 +36,17 @@
           </children>
         </children>
         <children xsi:type="basic:PartSashContainer" xmi:id="_rvP3ECyHEeakko_bfjza1A" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.partsashcontainer.4" containerData="4180" selectedElement="_v9YrcCyHEeakko_bfjza1A" horizontal="true">
-          <children xsi:type="basic:PartStack" xmi:id="_v9YrcCyHEeakko_bfjza1A" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.partstack.bottom.left">
+          <children xsi:type="basic:PartStack" xmi:id="_v9YrcCyHEeakko_bfjza1A" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.partstack.bottom.left" selectedElement="_GYiJgMrnEfCGHeE4LnO-1w">
             <children xsi:type="advanced:Placeholder" xmi:id="_6Zv8oCyHEeakko_bfjza1A" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.edithistory" ref="_XKgwsDU0EeuREPdzMrDpOQ"/>
+            <children xsi:type="advanced:Placeholder" xmi:id="_GYiJgMrnEfCGHeE4LnO-1w" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.placeholder.targets" ref="_E8UhsDmqEei-wI9hy1kIxA" closeable="true"/>
           </children>
-          <children xsi:type="basic:PartStack" xmi:id="_wRFDgCyHEeakko_bfjza1A" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.partstack.bottom.center">
+          <children xsi:type="basic:PartStack" xmi:id="_wRFDgCyHEeakko_bfjza1A" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.partstack.bottom.center" selectedElement="_qRr-IMrnEfCGHeE4LnO-1w">
             <children xsi:type="basic:Part" xmi:id="_8g1GMLC4EeyD2cMwBNhxCA" elementId="org.eclipse.ui.console.ConsoleView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Console" iconURI="platform:/plugin/org.eclipse.ui.console/icons/full/cview16/console_view.png"/>
+            <children xsi:type="advanced:Placeholder" xmi:id="_qRr-IMrnEfCGHeE4LnO-1w" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.placeholder.scanchart" ref="_51oP0EMaEeik0tjTEoFbUg" closeable="true"/>
           </children>
-          <children xsi:type="basic:PartStack" xmi:id="_wjm98CyHEeakko_bfjza1A" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.partstack.bottom.right">
+          <children xsi:type="basic:PartStack" xmi:id="_wjm98CyHEeakko_bfjza1A" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.partstack.bottom.right" selectedElement="_XjWaQMroEfCGHeE4LnO-1w">
             <children xsi:type="advanced:Placeholder" xmi:id="_9p3CgCyHEeakko_bfjza1A" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.processinginfo" ref="_aHkWoK2kEeuuJ_UXBFJQCQ"/>
+            <children xsi:type="advanced:Placeholder" xmi:id="_XjWaQMroEfCGHeE4LnO-1w" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.placeholder.scantable" ref="_zINEIMrtEfCt6tI6IJCymA" closeable="true"/>
           </children>
         </children>
       </children>
