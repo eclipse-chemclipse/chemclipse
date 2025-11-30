@@ -28,6 +28,7 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.commands.MCommand;
 import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
+import org.eclipse.e4.ui.model.application.ui.menu.ItemType;
 import org.eclipse.e4.ui.model.application.ui.menu.MDirectMenuItem;
 import org.eclipse.e4.ui.model.application.ui.menu.MDirectToolItem;
 import org.eclipse.e4.ui.model.application.ui.menu.MHandledMenuItem;
@@ -269,6 +270,7 @@ public abstract class AbstractGroupHandler implements IGroupHandler {
 				menuItem.setTooltip("");
 				menuItem.setIconURI(partHandler.getIconURI());
 				menuItem.setCommand(command);
+				menuItem.setType(ItemType.CHECK);
 				/*
 				 * Place the items in the correct order.
 				 */
@@ -277,9 +279,8 @@ public abstract class AbstractGroupHandler implements IGroupHandler {
 			/*
 			 * Adjust the label.
 			 */
-			String prefix = partHandler.isPartVisible() ? Action.HIDE.label() + " " : Action.SHOW.label() + " ";
-			String label = prefix + partHandler.getName();
-			menuItem.setLabel(label);
+			menuItem.setLabel(partHandler.getName());
+			menuItem.setSelected(partHandler.isPartVisible());
 			/*
 			 * If the user has defined to use the part, show it.
 			 */
