@@ -10,24 +10,24 @@
         <children xsi:type="menu:MenuSeparator" xmi:id="_ouvAQEaqEeKL9t3RgmYB_g" elementId="org.eclipse.chemclipse.rcp.app.ui.menuseparator.file.0"/>
         <children xsi:type="menu:MenuSeparator" xmi:id="_oiu1oLiaEeu05KeOzWexnw" elementId="org.eclipse.chemclipse.rcp.app.ui.menuseparator.close"/>
         <children xsi:type="menu:MenuSeparator" xmi:id="_ouvAQEaqEeKL9t3RgmYB_g" elementId="org.eclipse.chemclipse.rcp.app.ui.menuseparator.file.1"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_k-VQwDgEEeKBGer45Yb2dA" elementId="org.eclipse.chemclipse.rcp.app.ui.handledmenuitem.save" label="%Save" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/save_edit.png" mnemonics="S" command="_SkvDQDgEEeKBGer45Yb2dA"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_padd0DgEEeKBGer45Yb2dA" elementId="org.eclipse.chemclipse.rcp.app.ui.handledmenuitem.saveAll" label="%SaveAll" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/saveall_edit.png" command="_ZgJ9QDgEEeKBGer45Yb2dA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_k-VQwDgEEeKBGer45Yb2dA" elementId="org.eclipse.chemclipse.rcp.app.ui.handledmenuitem.save" label="%Save" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/save_edit.svg" mnemonics="S" command="_SkvDQDgEEeKBGer45Yb2dA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_padd0DgEEeKBGer45Yb2dA" elementId="org.eclipse.chemclipse.rcp.app.ui.handledmenuitem.saveAll" label="%SaveAll" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/saveall_edit.svg" command="_ZgJ9QDgEEeKBGer45Yb2dA"/>
         <children xsi:type="menu:MenuSeparator" xmi:id="_pliscEaqEeKL9t3RgmYB_g" elementId="org.eclipse.chemclipse.rcp.app.ui.menuseparator.file.2"/>
         <children xsi:type="menu:MenuSeparator" xmi:id="_08BOgL7lEeKcwbn54SGPtA" elementId="org.eclipse.chemclipse.rcp.app.ui.menuseparator.1"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_q2y48EaqEeKL9t3RgmYB_g" elementId="org.eclipse.chemclipse.rcp.app.ui.menu.item.import" label="%Import" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/import_wiz.png" command="_w-HcgEaqEeKL9t3RgmYB_g"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_tZ1dcEaqEeKL9t3RgmYB_g" elementId="org.eclipse.chemclipse.rcp.app.ui.menu.item.export" label="%Export" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/export_wiz.png" command="_zmfM8EaqEeKL9t3RgmYB_g"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_q2y48EaqEeKL9t3RgmYB_g" elementId="org.eclipse.chemclipse.rcp.app.ui.menu.item.import" label="%Import" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/import_wiz.svg" command="_w-HcgEaqEeKL9t3RgmYB_g"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_tZ1dcEaqEeKL9t3RgmYB_g" elementId="org.eclipse.chemclipse.rcp.app.ui.menu.item.export" label="%Export" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/export_wiz.svg" command="_zmfM8EaqEeKL9t3RgmYB_g"/>
         <children xsi:type="menu:MenuSeparator" xmi:id="_ky5jULiZEeu05KeOzWexnw" elementId="org.eclipse.chemclipse.rcp.app.ui.menuseparator.file.3"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_h0BcRTLzEeKMEOdllHiEaA" elementId="org.eclipse.chemclipse.rcp.app.ui.menu.item.quit" label="%Quit" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/delete.png" command="_h0A1OjLzEeKMEOdllHiEaA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_h0BcRTLzEeKMEOdllHiEaA" elementId="org.eclipse.chemclipse.rcp.app.ui.menu.item.quit" label="%Quit" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/delete.svg" command="_h0A1OjLzEeKMEOdllHiEaA"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_QrQhQDiVEeKDEdWQrkwLnQ" elementId="org.eclipse.chemclipse.rcp.app.ui.menu.plugins" label="%Plugins">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_WAg5QDiWEeKDEdWQrkwLnQ" elementId="org.eclipse.chemclipse.rcp.app.ui.handledmenuitem.updates" visible="false" label="%CheckUpdates" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/updates.gif" enabled="false" command="_LrC6QDiWEeKDEdWQrkwLnQ"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_Kt7o8I40Ee-oY-nH1TVkXQ" elementId="org.eclipse.chemclipse.rcp.app.ui.menu.view" label="%View">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_MBtwADilEeKDEdWQrkwLnQ" elementId="org.eclipse.chemclipse.rcp.app.ui.handledmenuitem.selectView" label="%SelectView" iconURI="platform:/plugin/org.eclipse.ui.views/icons/full/elcl16/new.png" command="_ASbeYDilEeKDEdWQrkwLnQ"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_MBtwADilEeKDEdWQrkwLnQ" elementId="org.eclipse.chemclipse.rcp.app.ui.handledmenuitem.selectView" label="%SelectView" iconURI="platform:/plugin/org.eclipse.ui.views/icons/full/elcl16/new.svg" command="_ASbeYDilEeKDEdWQrkwLnQ"/>
         <children xsi:type="menu:MenuSeparator" xmi:id="_V3TKEI40Ee-oY-nH1TVkXQ" elementId="org.eclipse.chemclipse.rcp.app.ui.menuseparator.view"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_DSko4DiVEeKDEdWQrkwLnQ" elementId="org.eclipse.chemclipse.rcp.app.ui.menu.window" label="%Window">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_lA-LQDiXEeKDEdWQrkwLnQ" elementId="org.eclipse.chemclipse.rcp.app.ui.handledmenuitem.perspectiveSwitcher" label="%PerspectiveSwitcher" iconURI="platform:/plugin/org.eclipse.ui/icons/full/eview16/new_persp.png" tooltip="" mnemonics="" command="_XUgbQDiXEeKDEdWQrkwLnQ"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_lA-LQDiXEeKDEdWQrkwLnQ" elementId="org.eclipse.chemclipse.rcp.app.ui.handledmenuitem.perspectiveSwitcher" label="%PerspectiveSwitcher" iconURI="platform:/plugin/org.eclipse.ui/icons/full/eview16/new_persp.svg" tooltip="" mnemonics="" command="_XUgbQDiXEeKDEdWQrkwLnQ"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_oDZQ8K2nEeuLFPgaKUTizg" elementId="org.eclipse.chemclipse.rcp.app.ui.handledmenuitem.resetperspective" label="%ResetPerspective" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/reset.gif" command="_X4T0YKzhEeu9gOO-5hThuA"/>
         <children xsi:type="menu:MenuSeparator" xmi:id="_PpiZsGTlEe2pDehzkyrxqQ" elementId="org.eclipse.chemclipse.rcp.app.ui.menuseparator.3"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_0NmMgGTlEe2pDehzkyrxqQ" elementId="org.eclipse.chemclipse.rcp.app.ui.handledmenuitem.quickaccess" label="%QuickAccess" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/scalable/search.svg" mnemonics="" command="_VHTxUGTiEe2pDehzkyrxqQ"/>
@@ -35,23 +35,23 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_nz0_UDiVEeKDEdWQrkwLnQ" elementId="org.eclipse.chemclipse.rcp.app.ui.handledmenuitem.preferences" label="%Preferences" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/preferences.gif" command="_XevnQDiVEeKDEdWQrkwLnQ"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_h0BcRjLzEeKMEOdllHiEaA" elementId="org.eclipse.chemclipse.rcp.app.ui.menu.help" label="%Help">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_-y9BQCaJEeOrR5M2kqmSOQ" elementId="org.eclipse.chemclipse.rcp.app.ui.menu.item.help.contents" label="%Contents" iconURI="platform:/plugin/org.eclipse.help.ui/icons/etool16/help.png" tooltip="Show the table of contents" command="_zeEzsCaJEeOrR5M2kqmSOQ"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_RIofcBQIEe2TEsI5wKibaA" elementId="org.eclipse.chemclipse.rcp.app.ui.menu.item.help.search" label="%Search" iconURI="platform:/plugin/org.eclipse.help.ui/icons/etool16/helpsearch_co.png" tooltip="Search through the help" command="_WfrxwBQKEe2TEsI5wKibaA"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_PwyGQBQJEe2TEsI5wKibaA" elementId="org.eclipse.chemclipse.rcp.app.ui.menu.item.help.context" visible="false" label="%Context" iconURI="platform:/plugin/org.eclipse.help.ui/icons/view16/help_view.png" tooltip="Show context sensitive help" enabled="false" command="_bDq6UBQKEe2TEsI5wKibaA"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_ZoF1sEATEe2Qr_bc3qI_WQ" elementId="org.eclipse.chemclipse.rcp.app.ui.handledmenuitem.tutorials" label="%Tutorials" iconURI="platform:/plugin/org.eclipse.ui.cheatsheets/icons/view16/cheatsheet_view.png" command="_fIGhoEATEe2Qr_bc3qI_WQ"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_-y9BQCaJEeOrR5M2kqmSOQ" elementId="org.eclipse.chemclipse.rcp.app.ui.menu.item.help.contents" label="%Contents" iconURI="platform:/plugin/org.eclipse.help.ui/icons/etool16/help.svg" tooltip="Show the table of contents" command="_zeEzsCaJEeOrR5M2kqmSOQ"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_RIofcBQIEe2TEsI5wKibaA" elementId="org.eclipse.chemclipse.rcp.app.ui.menu.item.help.search" label="%Search" iconURI="platform:/plugin/org.eclipse.help.ui/icons/etool16/helpsearch_co.svg" tooltip="Search through the help" command="_WfrxwBQKEe2TEsI5wKibaA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_PwyGQBQJEe2TEsI5wKibaA" elementId="org.eclipse.chemclipse.rcp.app.ui.menu.item.help.context" visible="false" label="%Context" iconURI="platform:/plugin/org.eclipse.help.ui/icons/view16/help_view.svg" tooltip="Show context sensitive help" enabled="false" command="_bDq6UBQKEe2TEsI5wKibaA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_ZoF1sEATEe2Qr_bc3qI_WQ" elementId="org.eclipse.chemclipse.rcp.app.ui.handledmenuitem.tutorials" label="%Tutorials" iconURI="platform:/plugin/org.eclipse.ui.cheatsheets/icons/view16/cheatsheet_view.svg" command="_fIGhoEATEe2Qr_bc3qI_WQ"/>
         <children xsi:type="menu:MenuSeparator" xmi:id="_Y1rmoJZdEe2urNCxpFmllQ" elementId="org.eclipse.chemclipse.rcp.app.ui.menuseparator.5"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_h0BcRzLzEeKMEOdllHiEaA" elementId="org.eclipse.chemclipse.rcp.app.ui.menu.item.about" label="%About" iconURI="platform:/plugin/org.eclipse.jface/icons/full/message_info.png" tooltip="Show versions and licenses" command="_h0A1RDLzEeKMEOdllHiEaA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_h0BcRzLzEeKMEOdllHiEaA" elementId="org.eclipse.chemclipse.rcp.app.ui.menu.item.about" label="%About" iconURI="platform:/plugin/org.eclipse.jface/icons/full/message_info.svg" tooltip="Show versions and licenses" command="_h0A1RDLzEeKMEOdllHiEaA"/>
       </children>
     </mainMenu>
-    <sharedElements xsi:type="basic:Part" xmi:id="_Sq1foEd4EeKhRMzT2OpX0g" elementId="org.eclipse.ui.console.ConsoleView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Console" iconURI="platform:/plugin/org.eclipse.ui.console/icons/full/cview16/console_view.png">
+    <sharedElements xsi:type="basic:Part" xmi:id="_Sq1foEd4EeKhRMzT2OpX0g" elementId="org.eclipse.ui.console.ConsoleView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Console" iconURI="platform:/plugin/org.eclipse.ui.console/icons/full/cview16/console_view.svg">
       <tags>View</tags>
       <tags>categoryTag:General</tags>
     </sharedElements>
-    <sharedElements xsi:type="basic:Part" xmi:id="_hwsHoEd8EeKxr87RO7WY0w" elementId="org.eclipse.ui.navigator.ProjectExplorer" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="%ProjectExplorer" iconURI="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/eview16/resource_persp.png">
+    <sharedElements xsi:type="basic:Part" xmi:id="_hwsHoEd8EeKxr87RO7WY0w" elementId="org.eclipse.ui.navigator.ProjectExplorer" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="%ProjectExplorer" iconURI="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/eview16/resource_persp.svg">
       <tags>View</tags>
       <tags>categoryTag:General</tags>
     </sharedElements>
-    <sharedElements xsi:type="basic:Part" xmi:id="_twQ-EEjnEeKCXsBuXeeyZA" elementId="org.eclipse.ui.views.PropertySheet" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Property Sheet" iconURI="platform:/plugin/org.eclipse.ui.views/icons/full/eview16/prop_ps.png">
+    <sharedElements xsi:type="basic:Part" xmi:id="_twQ-EEjnEeKCXsBuXeeyZA" elementId="org.eclipse.ui.views.PropertySheet" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Property Sheet" iconURI="platform:/plugin/org.eclipse.ui.views/icons/full/eview16/prop_ps.svg">
       <tags>View</tags>
       <tags>categoryTag:General</tags>
     </sharedElements>
@@ -63,7 +63,7 @@
         <tags>NoAutoCollapse</tags>
       </children>
     </sharedElements>
-    <sharedElements xsi:type="basic:Part" xmi:id="_FpFY0H9YEeKoCe-SGRyJ_w" elementId="org.eclipse.ui.views.PropertySheet" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Properties" iconURI="platform:/plugin/org.eclipse.ui.views//icons/full/eview16/prop_ps.png" closeable="true">
+    <sharedElements xsi:type="basic:Part" xmi:id="_FpFY0H9YEeKoCe-SGRyJ_w" elementId="org.eclipse.ui.views.PropertySheet" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Properties" iconURI="platform:/plugin/org.eclipse.ui.views//icons/full/eview16/prop_ps.svg" closeable="true">
       <tags>View</tags>
       <tags>categoryTag:General</tags>
       <menus xmi:id="_Q1OhIH9YEeKoCe-SGRyJ_w" elementId="org.eclipse.ui.views.PropertySheet">
@@ -72,7 +72,7 @@
       </menus>
       <toolbar xmi:id="_JJI_MH9YEeKoCe-SGRyJ_w" elementId="org.eclipse.ui.views.PropertySheet"/>
     </sharedElements>
-    <sharedElements xsi:type="basic:Part" xmi:id="_KwDYQI1yEeKgaYcpx_IhbQ" elementId="org.eclipse.ui.internal.introview" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Welcome" iconURI="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.png" closeable="true">
+    <sharedElements xsi:type="basic:Part" xmi:id="_KwDYQI1yEeKgaYcpx_IhbQ" elementId="org.eclipse.ui.internal.introview" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Welcome" iconURI="platform:/plugin/org.eclipse.ui/icons/full/eview16/defaultview_misc.svg" closeable="true">
       <persistedState key="memento" value="&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?>&amp;#xD;&amp;#xA;&amp;lt;view>&amp;#xD;&amp;#xA;&amp;lt;presentation currentPage=&amp;quot;root&amp;quot; restore=&amp;quot;true&amp;quot;/>&amp;#xD;&amp;#xA;&amp;lt;standbyPart/>&amp;#xD;&amp;#xA;&amp;lt;/view>"/>
       <tags>View</tags>
       <tags>categoryTag:General</tags>
@@ -82,19 +82,19 @@
       </menus>
       <toolbar xmi:id="_hl6gQI1zEeKgaYcpx_IhbQ" elementId="org.eclipse.ui.internal.introview" visible="false"/>
     </sharedElements>
-    <sharedElements xsi:type="basic:Part" xmi:id="_T2mREFeKEeWJDdTjy0i2HA" elementId="org.eclipse.chemclipse.processing.ui.parts.ProcessingInfoPart" contributionURI="bundleclass://org.eclipse.chemclipse.processing.ui/org.eclipse.chemclipse.processing.ui.parts.ProcessingInfoPart" label="Feedback" iconURI="platform:/plugin/org.eclipse.jface/icons/full/message_info.png"/>
-    <sharedElements xsi:type="basic:Part" xmi:id="_W8FzsFuuEeWKQYKM0-fotA" elementId="org.eclipse.chemclipse.rcp.app.ui.part.editHistory" contributionURI="bundleclass://org.eclipse.chemclipse.support.ui/org.eclipse.chemclipse.support.ui.parts.EditHistoryPart" label="Edit History" iconURI="platform:/plugin/org.eclipse.jface/icons/full/message_info.png"/>
+    <sharedElements xsi:type="basic:Part" xmi:id="_T2mREFeKEeWJDdTjy0i2HA" elementId="org.eclipse.chemclipse.processing.ui.parts.ProcessingInfoPart" contributionURI="bundleclass://org.eclipse.chemclipse.processing.ui/org.eclipse.chemclipse.processing.ui.parts.ProcessingInfoPart" label="Feedback" iconURI="platform:/plugin/org.eclipse.jface/icons/full/message_info.svg"/>
+    <sharedElements xsi:type="basic:Part" xmi:id="_W8FzsFuuEeWKQYKM0-fotA" elementId="org.eclipse.chemclipse.rcp.app.ui.part.editHistory" contributionURI="bundleclass://org.eclipse.chemclipse.support.ui/org.eclipse.chemclipse.support.ui.parts.EditHistoryPart" label="Edit History" iconURI="platform:/plugin/org.eclipse.jface/icons/full/message_info.svg"/>
     <sharedElements xsi:type="basic:Part" xmi:id="_V3EBsHb_EeWs9YprkfnL3Q" elementId="org.eclipse.ease.ui.views.scriptShell" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Script Shell" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/script_shell.png"/>
     <trimBars xmi:id="_h0BcTDLzEeKMEOdllHiEaA" elementId="org.eclipse.chemclipse.rcp.app.ui.trimbar.top">
       <children xsi:type="menu:ToolBar" xmi:id="_h0BcTTLzEeKMEOdllHiEaA" elementId="org.eclipse.chemclipse.rcp.app.ui.toolbar.main">
         <children xsi:type="menu:ToolBarSeparator" xmi:id="_nIMLMINGEeOuPY34hxPAxA" elementId="org.eclipse.chemclipse.rcp.app.ui.toolbarseparator.3"/>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_tL2EwDgEEeKBGer45Yb2dA" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.save" label="Save" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/save_edit.png" tooltip="Save" command="_SkvDQDgEEeKBGer45Yb2dA"/>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_vo3g0DgEEeKBGer45Yb2dA" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.saveAll" label="Save All" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/saveall_edit.png" tooltip="Save All" command="_ZgJ9QDgEEeKBGer45Yb2dA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_tL2EwDgEEeKBGer45Yb2dA" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.save" label="Save" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/save_edit.svg" tooltip="Save" command="_SkvDQDgEEeKBGer45Yb2dA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_vo3g0DgEEeKBGer45Yb2dA" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.saveAll" label="Save All" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/saveall_edit.svg" tooltip="Save All" command="_ZgJ9QDgEEeKBGer45Yb2dA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_y11CQDiXEeKDEdWQrkwLnQ" elementId="org.eclipse.chemclipse.rcp.app.ui.toolbar.perspectives">
         <children xsi:type="menu:ToolBarSeparator" xmi:id="_lwvQEINGEeOuPY34hxPAxA" elementId="org.eclipse.chemclipse.rcp.app.ui.toolbarseparator.1"/>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_0oR3UDiXEeKDEdWQrkwLnQ" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.perspectiveSwitcher" label="Perspective Switcher" iconURI="platform:/plugin/org.eclipse.ui/icons/full/eview16/new_persp.png" tooltip="Perspective Switcher" command="_XUgbQDiXEeKDEdWQrkwLnQ"/>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_dnrPMDinEeKDEdWQrkwLnQ" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.selectView" label="Select View" iconURI="platform:/plugin/org.eclipse.ui.views/icons/full/elcl16/new.png" tooltip="Select View" command="_ASbeYDilEeKDEdWQrkwLnQ"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_0oR3UDiXEeKDEdWQrkwLnQ" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.perspectiveSwitcher" label="Perspective Switcher" iconURI="platform:/plugin/org.eclipse.ui/icons/full/eview16/new_persp.svg" tooltip="Perspective Switcher" command="_XUgbQDiXEeKDEdWQrkwLnQ"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_dnrPMDinEeKDEdWQrkwLnQ" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.selectView" label="Select View" iconURI="platform:/plugin/org.eclipse.ui.views/icons/full/elcl16/new.svg" tooltip="Select View" command="_ASbeYDilEeKDEdWQrkwLnQ"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_tLbzwKzhEeu9gOO-5hThuA" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.resetperspective" label="Reset Perspective" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/reset.gif" tooltip="Reset Perspective" command="_X4T0YKzhEeu9gOO-5hThuA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_2GIJsMDJEeOKxaD_PtepsA" elementId="org.eclipse.chemclipse.rcp.app.ui.toolbar.window">
@@ -104,8 +104,8 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_XqnQUF6nEe2sw_cXqaBWMw" elementId="org.eclipse.chemclipse.rcp.app.ui.toolbar.help">
         <children xsi:type="menu:ToolBarSeparator" xmi:id="_Y8yp4F6nEe2sw_cXqaBWMw" elementId="org.eclipse.chemclipse.rcp.app.ui.toolbarseparator.6"/>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_oQ91EDL0EeKMEOdllHiEaA" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.about" label="About" iconURI="platform:/plugin/org.eclipse.jface/icons/full/message_info.png" tooltip="About" command="_h0A1RDLzEeKMEOdllHiEaA"/>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_ULurUMDKEeOKxaD_PtepsA" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.help" visible="false" label="Help" iconURI="platform:/plugin/org.eclipse.help.ui/icons/etool16/help.png" enabled="false" command="_zeEzsCaJEeOrR5M2kqmSOQ"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_oQ91EDL0EeKMEOdllHiEaA" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.about" label="About" iconURI="platform:/plugin/org.eclipse.jface/icons/full/message_info.svg" tooltip="About" command="_h0A1RDLzEeKMEOdllHiEaA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_ULurUMDKEeOKxaD_PtepsA" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.help" visible="false" label="Help" iconURI="platform:/plugin/org.eclipse.help.ui/icons/etool16/help.svg" enabled="false" command="_zeEzsCaJEeOrR5M2kqmSOQ"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_dz9NIF6nEe2sw_cXqaBWMw" elementId="org.eclipse.chemclipse.rcp.app.ui.toolbar.plugins">
         <children xsi:type="menu:HandledToolItem" xmi:id="_G9eogOToEeK3p9M57zVYqQ" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.updates" visible="false" label="Updates" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/updates.gif" enabled="false" command="_LrC6QDiWEeKDEdWQrkwLnQ"/>

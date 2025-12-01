@@ -7,6 +7,6 @@
     <elements xsi:type="commands:Handler" xmi:id="_iMcjwDi9Ee21NqK38qIIXw" elementId="org.eclipse.chemclipse.assets.ui.handler.installassets" contributionURI="bundleclass://org.eclipse.chemclipse.assets.ui/org.eclipse.chemclipse.assets.ui.handlers.InstallAssetsHandler" command="_IOWDADi9Ee21NqK38qIIXw"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_v1X3kDi9Ee21NqK38qIIXw" featurename="children" parentElementId="org.eclipse.chemclipse.rcp.app.ui.menu.plugins">
-    <elements xsi:type="menu:HandledMenuItem" xmi:id="_SLaToDi-Ee21NqK38qIIXw" elementId="org.eclipse.chemclipse.assets.ui.handledmenuitem.installassets" label="%InstallAssets" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/import_wiz.png" tooltip="Installs additional assets" command="_IOWDADi9Ee21NqK38qIIXw"/>
+    <elements xsi:type="menu:HandledMenuItem" xmi:id="_SLaToDi-Ee21NqK38qIIXw" elementId="org.eclipse.chemclipse.assets.ui.handledmenuitem.installassets" label="%InstallAssets" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/import_wiz.svg" tooltip="Installs additional assets" command="_IOWDADi9Ee21NqK38qIIXw"/>
   </fragments>
 </fragment:ModelFragments>
