@@ -140,7 +140,7 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_CHROMATOGRAM_SELECTION = "chromatogramSelection.gif";
 	String IMAGE_BATCHPROCESS = "batchprocess.gif";
 	String IMAGE_BATCHPROCESS_PEAKIDENT = "batchprocessPeakIdent.gif";
-	String IMAGE_CONFIGURE = "configure.gif";
+	String IMAGE_CONFIGURE = "configure.svg";
 	String IMAGE_EXECUTE = "execute.png";
 	String IMAGE_EXECUTE_WARNING = "execute_warning.png";
 	String IMAGE_EXECUTE_ERROR = "execute_error.png";
