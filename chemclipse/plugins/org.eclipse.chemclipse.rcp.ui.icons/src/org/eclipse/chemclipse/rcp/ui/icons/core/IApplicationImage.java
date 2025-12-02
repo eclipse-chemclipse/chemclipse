@@ -113,7 +113,7 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_WARN = "warn.png";
 	String IMAGE_INFO = "info.svg";
 	String IMAGE_VALID = "valid.gif";
-	String IMAGE_QUESTION = "question.png";
+	String IMAGE_QUESTION = "question.svg";
 	String IMAGE_MASS_SPECTRUM = "massSpectrum.gif";
 	String IMAGE_MASS_SPECTRUM_FILE = "massSpectrumFile.gif";
 	String IMAGE_MASS_SPECTRUM_DATABASE = "massSpectrumDatabase.gif";
@@ -130,7 +130,7 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_SAVEALL = "saveall.gif";
 	String IMAGE_SAVEALL_DISABLED = "saveall_disabled.gif";
 	String IMAGE_VIEW = "view.gif";
-	String IMAGE_UNKNOWN = "unknown.gif";
+	String IMAGE_UNKNOWN = "unknown.svg";
 	String IMAGE_LOG = "log.gif";
 	String IMAGE_ION = "ion.gif";
 	String IMAGE_REPORT = "report.gif";
