@@ -16,7 +16,7 @@ import java.io.IOException;
 
 import org.eclipse.chemclipse.rcp.app.ui.Activator;
 import org.eclipse.chemclipse.rcp.app.ui.preferences.PreferenceSupplier;
-import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
@@ -56,12 +56,6 @@ public class PerspectiveChooserDialog extends Dialog {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets
-	 * .Shell)
-	 */
 	@Override
 	protected void configureShell(Shell shell) {
 
@@ -71,9 +65,6 @@ public class PerspectiveChooserDialog extends Dialog {
 		}
 	}
 
-	/*
-	 * (non-Javadoc) Method declared on Dialog.
-	 */
 	@Override
 	protected void buttonPressed(int buttonId) {
 
@@ -90,7 +81,7 @@ public class PerspectiveChooserDialog extends Dialog {
 					try {
 						store.save();
 					} catch(IOException e) {
-						Activator.getDefault().getLog().log(Status.error("Saving preferences failed", e));
+						ILog.get().error("Saving preferences failed", e);
 					}
 				}
 			}
@@ -98,9 +89,6 @@ public class PerspectiveChooserDialog extends Dialog {
 		super.buttonPressed(buttonId);
 	}
 
-	/*
-	 * (non-Javadoc) Method declared on Dialog.
-	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
 

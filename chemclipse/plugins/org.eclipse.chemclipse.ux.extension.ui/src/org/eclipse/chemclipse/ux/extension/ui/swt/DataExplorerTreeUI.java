@@ -22,12 +22,11 @@ import java.util.function.Function;
 
 import org.eclipse.chemclipse.processing.converter.ISupplier;
 import org.eclipse.chemclipse.processing.converter.ISupplierFileIdentifier;
-import org.eclipse.chemclipse.ux.extension.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.ui.l10n.ExtensionMessages;
 import org.eclipse.chemclipse.ux.extension.ui.listener.DataExplorerDragListener;
 import org.eclipse.chemclipse.ux.extension.ui.provider.DataExplorerContentProvider;
 import org.eclipse.chemclipse.ux.extension.ui.provider.DataExplorerLabelProvider;
-import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -139,7 +138,7 @@ public class DataExplorerTreeUI {
 				try {
 					persistentPreferenceStore.save();
 				} catch(IOException e) {
-					Activator.getDefault().getLog().log(Status.error(ExtensionMessages.storingPreferencesFailed, e));
+					ILog.get().error(ExtensionMessages.storingPreferencesFailed, e);
 				}
 			}
 		}

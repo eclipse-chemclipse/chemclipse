@@ -62,8 +62,8 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ScanChartSuppor
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ScanDataSupport;
 import org.eclipse.chemclipse.vsd.model.core.IScanVSD;
 import org.eclipse.chemclipse.wsd.model.core.IScanWSD;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.preference.IPreferencePage;
@@ -283,7 +283,7 @@ public class ExtendedComparisonScanUI extends Composite implements IExtendedPart
 		} catch(InterruptedException e) {
 			Thread.currentThread().interrupt();
 		} catch(ExecutionException e) {
-			Activator.getDefault().getLog().log(Status.error("Updating the reference scan failed.", e));
+			ILog.get().error("Updating the reference scan failed.", e);
 		}
 	}
 
