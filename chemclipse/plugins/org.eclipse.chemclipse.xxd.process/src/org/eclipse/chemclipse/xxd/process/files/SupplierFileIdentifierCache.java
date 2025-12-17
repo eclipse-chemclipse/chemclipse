@@ -30,7 +30,7 @@ public class SupplierFileIdentifierCache implements Function<File, Map<ISupplier
 
 	public SupplierFileIdentifierCache(int maxFileSize) {
 
-		supplierCache = new LinkedHashMap<File, Map<ISupplierFileIdentifier, Collection<ISupplier>>>(maxFileSize, 0.75f, true) {
+		supplierCache = new LinkedHashMap<>(maxFileSize, 0.75f, true) {
 
 			private static final long serialVersionUID = 1L;
 
@@ -44,7 +44,7 @@ public class SupplierFileIdentifierCache implements Function<File, Map<ISupplier
 
 	public void setIdentifier(Collection<? extends ISupplierFileIdentifier> supplierFileIdentifier) {
 
-		fileIdentifiers = supplierFileIdentifier.toArray(new ISupplierFileIdentifier[0]);
+		fileIdentifiers = supplierFileIdentifier.toArray(ISupplierFileIdentifier[]::new);
 		refreshAll();
 	}
 

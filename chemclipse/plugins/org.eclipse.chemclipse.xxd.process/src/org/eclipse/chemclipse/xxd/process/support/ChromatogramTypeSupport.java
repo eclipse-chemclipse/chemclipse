@@ -126,28 +126,14 @@ public class ChromatogramTypeSupport {
 			}
 		}
 
-		DataType dataType;
-		switch(type) {
-			case ISupplierFileIdentifier.TYPE_MSD:
-				dataType = DataType.MSD;
-				break;
-			case ISupplierFileIdentifier.TYPE_CSD:
-				dataType = DataType.CSD;
-				break;
-			case ISupplierFileIdentifier.TYPE_WSD:
-				dataType = DataType.WSD;
-				break;
-			case ISupplierFileIdentifier.TYPE_VSD:
-				dataType = DataType.VSD;
-				break;
-			case ISupplierFileIdentifier.TYPE_FSD:
-				dataType = DataType.FSD;
-				break;
-			default:
-				dataType = null;
-				break;
-		}
-
+		DataType dataType = switch(type) {
+			case ISupplierFileIdentifier.TYPE_MSD -> DataType.MSD;
+			case ISupplierFileIdentifier.TYPE_CSD -> DataType.CSD;
+			case ISupplierFileIdentifier.TYPE_WSD -> DataType.WSD;
+			case ISupplierFileIdentifier.TYPE_VSD -> DataType.VSD;
+			case ISupplierFileIdentifier.TYPE_FSD -> DataType.FSD;
+			default -> null;
+		};
 		return dataType;
 	}
 
