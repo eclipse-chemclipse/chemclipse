@@ -94,15 +94,6 @@ public class ProcessorPCA extends AbstractProcessorMultivariateAanalysis impleme
 				Map<String, Boolean> variablesSelectionMap = getVariablesSelectionMap(masterEvaluation != null ? masterEvaluation.getSamples().getVariables() : Collections.emptyList());
 				subMonitor.worked(20);
 				/*
-				 * Looping over Samples
-				 */
-				List<Integer> useSample = new ArrayList<>();
-				for(int i = 0; i < samples.getSamples().size(); i++) {
-					if(samples.getSamples().get(i).isSelected() && !samples.getSamples().get(i).isPredicted()) {
-						useSample.add(i);
-					}
-				}
-				/*
 				 * Preprocess
 				 */
 				IPreprocessingSettings preprocessingSettings = analysisSettings.getPreprocessingSettings();
