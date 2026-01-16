@@ -52,9 +52,9 @@ public class AlkaneIdentifier {
 
 	public AlkaneIdentifier() {
 
-		FileListUtil fileListUtil = new FileListUtil();
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
 		try {
+			FileListUtil fileListUtil = new FileListUtil();
+			Bundle bundle = FrameworkUtil.getBundle(getClass());
 			massSpectraFiles = PathResolver.getFile(bundle, StandardsReader.ALKANES).getAbsolutePath();
 			databasesCache = new DatabasesCache(fileListUtil.getFiles(massSpectraFiles));
 		} catch(IOException e) {

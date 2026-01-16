@@ -37,7 +37,6 @@ public class StandardsReader {
 	public IMassSpectra getStandardsMassSpectra() throws IOException {
 
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
 		File file = PathResolver.getFile(bundle, ALKANES);
 		IProcessingInfo<IMassSpectra> processingInfo = DatabaseConverter.convert(file, new NullProgressMonitor());
 		return processingInfo.getProcessingResult();

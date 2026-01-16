@@ -92,7 +92,7 @@ public class PagePeakAssignment extends AbstractExtendedWizardPage {
 		availableStandards = wizardElements.getAvailableStandards();
 
 		try {
-			Bundle bundle = FrameworkUtil.getBundle(getClass());
+			Bundle bundle = FrameworkUtil.getBundle(StandardsReader.class);
 			File file = PathResolver.getFile(bundle, StandardsReader.ALKANES);
 			databaseName = file.getName();
 		} catch(IOException e) {
