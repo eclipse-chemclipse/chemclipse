@@ -271,13 +271,13 @@ public abstract class AbstractPeakModel extends AbstractPeakModelStrict implemen
 	private void checkModelConditions(IScan peakMaximum, IPeakIntensityValues peakIntensityValues) throws IllegalArgumentException, PeakException {
 
 		if(peakMaximum == null) {
-			throw new IllegalArgumentException("The peak maximum must not be null.");
+			throw new PeakException("The peak maximum must not be null.");
 		}
 		/*
 		 * Test if there are intensity values stored.
 		 */
 		if(peakIntensityValues == null || peakIntensityValues.size() < IPeakModel.MINIMUM_SCANS) {
-			throw new IllegalArgumentException("The intensity values must not be null or must contain at least 3 key value pairs.");
+			throw new PeakException("The intensity values must not be null or must contain at least 3 key value pairs.");
 		}
 		/*
 		 * Check that the highest intensity is 100.0f. If it is more or less,
