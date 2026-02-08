@@ -42,7 +42,7 @@
 	<repository location="https://download.eclipse.org/swtchart/integration/develop/repository"/>
 </location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="https://download.eclipse.org/nebula/updates/release/3.2.0/"/>
+		<repository location="https://download.eclipse.org/nebula/updates/release/3.3.0/"/>
 		<unit id="org.eclipse.nebula.feature.feature.group"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
