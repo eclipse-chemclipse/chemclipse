@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -17,7 +17,6 @@ import org.eclipse.chemclipse.processing.methods.IProcessMethod;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.e4.core.di.annotations.Creatable;
 import org.eclipse.e4.core.services.events.IEventBroker;
-import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
 import jakarta.annotation.PostConstruct;
@@ -27,32 +26,11 @@ import jakarta.inject.Singleton;
 @Singleton
 public class ProcessMethodNotifications extends AbstractNotifications<IProcessMethod> {
 
-	private EventHandler eventHandlerCreate = new EventHandler() {
+	private EventHandler eventHandlerCreate = event -> created((IProcessMethod)event.getProperty(IChemClipseEvents.EVENT_BROKER_DATA));
 
-		@Override
-		public void handleEvent(Event event) {
+	private EventHandler eventHandlerSelect = event -> select((IProcessMethod)event.getProperty(IChemClipseEvents.EVENT_BROKER_DATA));
 
-			created((IProcessMethod)event.getProperty(IChemClipseEvents.EVENT_BROKER_DATA));
-		}
-	};
-
-	private EventHandler eventHandlerSelect = new EventHandler() {
-
-		@Override
-		public void handleEvent(Event event) {
-
-			select((IProcessMethod)event.getProperty(IChemClipseEvents.EVENT_BROKER_DATA));
-		}
-	};
-
-	private EventHandler eventHandlerUpdate = new EventHandler() {
-
-		@Override
-		public void handleEvent(Event event) {
-
-			updated((IProcessMethod)event.getProperty(IChemClipseEvents.EVENT_BROKER_DATA), (IProcessMethod)event.getProperty(IChemClipseEvents.PROPERTY_METHOD_OLD_OBJECT));
-		}
-	};
+	private EventHandler eventHandlerUpdate = event -> updated((IProcessMethod)event.getProperty(IChemClipseEvents.EVENT_BROKER_DATA), (IProcessMethod)event.getProperty(IChemClipseEvents.PROPERTY_METHOD_OLD_OBJECT));
 
 	@PostConstruct
 	protected void setupListener(IEventBroker eventBroker) {

@@ -164,9 +164,7 @@ public class DataUpdateSupport {
 			/*
 			 * Handler
 			 */
-			EventHandler eventHandler = (Event event) -> {
-				update(event, properties);
-			};
+			EventHandler eventHandler = event -> update(event, properties);
 			/*
 			 * Subscribe the new handler.
 			 */

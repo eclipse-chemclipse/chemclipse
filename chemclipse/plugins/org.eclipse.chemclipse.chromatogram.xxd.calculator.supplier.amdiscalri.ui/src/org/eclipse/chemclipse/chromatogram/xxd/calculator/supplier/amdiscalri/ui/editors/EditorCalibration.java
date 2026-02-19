@@ -34,7 +34,6 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IURIEditorInput;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.MultiPageEditorPart;
-import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
 import jakarta.annotation.PreDestroy;
@@ -170,7 +169,7 @@ public class EditorCalibration extends MultiPageEditorPart {
 
 	private EventHandler registerEventHandler(IEventBroker eventBroker, String topic, String[] properties) {
 
-		EventHandler eventHandler = (Event event) -> {
+		EventHandler eventHandler = event -> {
 			try {
 				objects.clear();
 				for(String property : properties) {

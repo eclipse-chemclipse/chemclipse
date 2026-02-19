@@ -65,7 +65,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
-import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
 public class MethodSupportUI extends Composite implements IExtendedPartUI {
@@ -128,14 +127,7 @@ public class MethodSupportUI extends Composite implements IExtendedPartUI {
 
 	private EventHandler createEventHandler() {
 
-		return new EventHandler() {
-
-			@Override
-			public void handleEvent(Event event) {
-
-				updateInput();
-			}
-		};
+		return event -> updateInput();
 	}
 
 	private void createControl() {

@@ -26,7 +26,6 @@ import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.osgi.framework.BundleContext;
-import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
 /**
@@ -41,10 +40,6 @@ public class Activator extends AbstractActivatorUI {
 	private static Activator plugin;
 	private List<EventHandler> registeredEventHandler = new ArrayList<>();
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-	 */
 	@Override
 	public void start(BundleContext context) throws Exception {
 
@@ -54,10 +49,6 @@ public class Activator extends AbstractActivatorUI {
 		registerEventBroker(context);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-	 */
 	@Override
 	public void stop(BundleContext context) throws Exception {
 
@@ -85,7 +76,7 @@ public class Activator extends AbstractActivatorUI {
 
 	private EventHandler registerEventHandler(IEventBroker eventBroker, String property, String topic) {
 
-		EventHandler eventHandler = (Event event) -> {
+		EventHandler eventHandler = event -> {
 
 			try {
 				Object object = event.getProperty(property);
