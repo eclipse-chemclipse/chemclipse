@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -15,18 +15,19 @@ package org.eclipse.chemclipse.rcp.app.ui.handlers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.support.ui.workbench.PreferencesSupport;
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.e4.core.commands.EHandlerService;
 import org.eclipse.e4.core.di.annotations.Execute;
-import org.eclipse.e4.core.services.log.Logger;
 
-@SuppressWarnings("restriction")
 public class PreferencesHandler {
 
+	private static final Logger logger = Logger.getLogger();
+
 	@Execute
-	void execute(ECommandService commandService, EHandlerService handlerService, Logger logger) {
+	void execute(ECommandService commandService, EHandlerService handlerService) {
 
 		ParameterizedCommand command = commandService.createCommand("org.eclipse.ui.window.preferences", null);
 		if(handlerService.canExecute(command)) {
