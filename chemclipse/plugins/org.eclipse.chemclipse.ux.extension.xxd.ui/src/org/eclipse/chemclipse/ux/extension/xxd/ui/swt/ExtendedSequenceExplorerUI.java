@@ -148,7 +148,7 @@ public class ExtendedSequenceExplorerUI extends Composite implements IExtendedPa
 
 		SearchSupportUI searchSupportUI = new SearchSupportUI(parent, SWT.NONE);
 		searchSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		searchSupportUI.setSearchListener(sequenceFilesUI::setSearchText);
+		searchSupportUI.setSearchListener((searchText, caseSensitive) -> sequenceFilesUI.setSearchText(searchText, caseSensitive));
 
 		return searchSupportUI;
 	}

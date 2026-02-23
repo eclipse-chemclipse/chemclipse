@@ -187,7 +187,7 @@ public class UserLocationsSettingsEditor implements SettingsUIProvider.SettingsU
 
 		SearchSupportUI searchSupportUI = new SearchSupportUI(parent, SWT.NONE);
 		searchSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		searchSupportUI.setSearchListener(listControl.get()::setSearchText);
+		searchSupportUI.setSearchListener((searchText, caseSensitive) -> listControl.get().setSearchText(searchText, caseSensitive));
 
 		toolbarSearch.set(searchSupportUI);
 	}

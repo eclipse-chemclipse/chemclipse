@@ -199,7 +199,7 @@ public class RetentionIndexAssignerEditor extends Composite implements IChangeLi
 
 		SearchSupportUI searchSupportUI = new SearchSupportUI(parent, SWT.NONE);
 		searchSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		searchSupportUI.setSearchListener(tableViewer.get()::setSearchText);
+		searchSupportUI.setSearchListener((searchText, caseSensitive) -> tableViewer.get().setSearchText(searchText, caseSensitive));
 
 		toolbarSearch.set(searchSupportUI);
 	}

@@ -126,7 +126,7 @@ public class ExtendedLiteratureUI extends Composite implements IExtendedPartUI {
 
 		SearchSupportUI searchSupportUI = new SearchSupportUI(parent, SWT.NONE);
 		searchSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		searchSupportUI.setSearchListener(literatureControl.get()::updateSearchResult);
+		searchSupportUI.setSearchListener((searchText, caseSensitive) -> literatureControl.get().updateSearchResult(searchText, caseSensitive));
 
 		toolbarSearch.set(searchSupportUI);
 	}

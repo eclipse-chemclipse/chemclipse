@@ -183,7 +183,7 @@ public class NamedTracesSettingsEditor implements SettingsUIProvider.SettingsUIC
 
 		SearchSupportUI searchSupportUI = new SearchSupportUI(parent, SWT.NONE);
 		searchSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		searchSupportUI.setSearchListener(listUI::setSearchText);
+		searchSupportUI.setSearchListener((searchText, caseSensitive) -> listUI.setSearchText(searchText, caseSensitive));
 
 		toolbarSearch.set(searchSupportUI);
 	}

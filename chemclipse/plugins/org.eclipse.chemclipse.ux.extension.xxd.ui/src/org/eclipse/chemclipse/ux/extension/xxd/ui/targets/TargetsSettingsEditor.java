@@ -199,7 +199,7 @@ public class TargetsSettingsEditor extends Composite implements SettingsUIProvid
 
 		SearchSupportUI searchSupportUI = new SearchSupportUI(parent, SWT.NONE);
 		searchSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		searchSupportUI.setSearchListener(targetTemplateListControl.get()::setSearchText);
+		searchSupportUI.setSearchListener((searchText, caseSensitive) -> targetTemplateListControl.get().setSearchText(searchText, caseSensitive));
 
 		toolbarSearch.set(searchSupportUI);
 	}
