@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - changes for PartSupport
@@ -28,7 +28,6 @@ import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.chemclipse.support.ui.workbench.EditorSupport;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.ux.extension.ui.editors.IChromatogramEditor;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.l10n.ExtensionMessages;
 import org.eclipse.chemclipse.xxd.process.files.SupplierFileIdentifier;
 import org.eclipse.chemclipse.xxd.process.support.ProcessTypeSupport;
@@ -84,7 +83,7 @@ public class ChromatogramEditor3x extends EditorPart implements IChromatogramEdi
 		parent.setLayout(new FillLayout());
 		DataType dataType = getDataType();
 		if(dataType != null) {
-			chromatogramEditor = new ChromatogramEditor(dataType, parent, part, dirtyable, DisplayUtils.getShell(), new ProcessTypeSupport(), Activator.getDefault().getEclipseContext());
+			chromatogramEditor = new ChromatogramEditor(dataType, parent, part, dirtyable, DisplayUtils.getShell(), new ProcessTypeSupport());
 		} else {
 			IProcessingInfo<?> processingInfo = new ProcessingInfo<>();
 			processingInfo.addErrorMessage("Chromatogram Editor", "Unknown data type.");

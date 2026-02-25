@@ -1,12 +1,12 @@
 /*******************************************************************************
- * e  Copyright (c) 2018, 2025 Lablicate GmbH.
+ * e  Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -17,7 +17,6 @@ import org.eclipse.chemclipse.processing.ui.E4ProcessSupplierContext;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
-import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.model.application.ui.MDirtyable;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.widgets.Composite;
@@ -32,8 +31,8 @@ public class ChromatogramEditorCSD extends ChromatogramEditor {
 	public static final String ICON_URI = ApplicationImageFactory.getInstance().getURI(IApplicationImage.IMAGE_CHROMATOGRAM_CSD, IApplicationImageProvider.SIZE_16x16);
 
 	@Inject
-	public ChromatogramEditorCSD(Composite parent, MPart part, MDirtyable dirtyable, Shell shell, E4ProcessSupplierContext processSupplierContext, IEclipseContext eclipseContext) {
+	public ChromatogramEditorCSD(Composite parent, MPart part, MDirtyable dirtyable, Shell shell, E4ProcessSupplierContext processSupplierContext) {
 
-		super(DataType.CSD, parent, part, dirtyable, shell, processSupplierContext, eclipseContext);
+		super(DataType.CSD, parent, part, dirtyable, shell, processSupplierContext);
 	}
 }
