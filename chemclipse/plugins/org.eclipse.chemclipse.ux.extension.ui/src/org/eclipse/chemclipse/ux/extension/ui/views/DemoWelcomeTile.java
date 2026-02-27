@@ -14,9 +14,10 @@
 package org.eclipse.chemclipse.ux.extension.ui.views;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -118,14 +119,7 @@ public class DemoWelcomeTile implements IWelcomeTileDefinition {
 	private void copyChromatogram(File file) throws IOException {
 
 		try (InputStream stream = DemoWelcomeTile.class.getResourceAsStream("/files/DemoChromatogram.ocb")) {
-			try (FileOutputStream fout = new FileOutputStream(file)) {
-				byte[] buffer = new byte[1024];
-				int read;
-				while((read = stream.read(buffer)) > -1) {
-					fout.write(buffer, 0, read);
-				}
-				fout.flush();
-			}
+			Files.copy(stream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		}
 	}
 
