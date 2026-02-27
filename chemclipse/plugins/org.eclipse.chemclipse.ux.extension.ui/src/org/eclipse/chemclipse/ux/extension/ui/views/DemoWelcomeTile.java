@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - add support for loading the demo chromatogram directly, refactor for using the TileDefinition
@@ -24,6 +24,7 @@ import java.util.concurrent.Executors;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
+import org.eclipse.chemclipse.support.events.IPerspectiveAndViewIds;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.chemclipse.support.ui.workbench.EditorSupport;
 import org.eclipse.chemclipse.support.ui.workbench.PerspectiveSupport;
@@ -93,7 +94,7 @@ public class DemoWelcomeTile implements IWelcomeTileDefinition {
 		/*
 		 * Get the editor part stack.
 		 */
-		MPartStack partStack = (MPartStack)modelService.find("org.eclipse.e4.primaryDataStack", application);
+		MPartStack partStack = (MPartStack)modelService.find(IPerspectiveAndViewIds.EDITOR_PART_STACK_ID, application);
 		/*
 		 * Add it to the stack and show it.
 		 */
