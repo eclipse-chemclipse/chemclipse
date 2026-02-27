@@ -32,7 +32,6 @@ import org.eclipse.chemclipse.support.ui.workbench.PerspectiveSupport;
 import org.eclipse.chemclipse.ux.extension.ui.definitions.IWelcomeTileDefinition;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.MApplication;
-import org.eclipse.e4.ui.model.application.ui.basic.MBasicFactory;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
@@ -72,7 +71,7 @@ public class DemoWelcomeTile implements IWelcomeTileDefinition {
 
 					try {
 						if(chromatogramFile != null && chromatogramFile.exists()) {
-							MPart part = createChromatogramPart();
+							MPart part = createChromatogramPart(modelService);
 							part.setLabel("DemoChromatogram.ocb");
 							Map<String, Object> map = new HashMap<>();
 							map.put(EditorSupport.MAP_FILE, chromatogramFile.getAbsolutePath());
@@ -103,12 +102,12 @@ public class DemoWelcomeTile implements IWelcomeTileDefinition {
 		partService.showPart(part, PartState.ACTIVATE);
 	}
 
-	MPart createChromatogramPart() {
+	MPart createChromatogramPart(EModelService modelService) {
 
 		/*
 		 * Create the input part and prepare it.
 		 */
-		MPart part = MBasicFactory.INSTANCE.createPart();
+		MPart part = modelService.createModelElement(MPart.class);
 		part.setElementId("org.eclipse.chemclipse.ux.extension.xxd.ui.part.chromatogramEditorMSD");
 		part.setContributionURI("bundleclass://org.eclipse.chemclipse.ux.extension.xxd.ui/org.eclipse.chemclipse.ux.extension.xxd.ui.editors.ChromatogramEditorMSD");
 		part.setIconURI(ApplicationImageFactory.getInstance().getURI(IApplicationImage.IMAGE_CHROMATOGRAM, IApplicationImageProvider.SIZE_16x16));
