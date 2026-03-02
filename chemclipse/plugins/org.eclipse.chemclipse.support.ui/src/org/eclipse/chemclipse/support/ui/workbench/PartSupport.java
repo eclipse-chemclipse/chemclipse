@@ -12,8 +12,6 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.support.ui.workbench;
 
-import java.util.Collection;
-
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.support.events.IPerspectiveAndViewIds;
 import org.eclipse.e4.core.di.annotations.Creatable;
@@ -45,24 +43,6 @@ public class PartSupport {
 	private EPartService ePartService;
 	@Inject
 	private IEventBroker eventBroker;
-
-	public void removeEditorsFromPartStack() {
-
-		MPartStack partStack = (MPartStack)eModelService.find(IPerspectiveAndViewIds.EDITOR_PART_STACK_ID, mApplication);
-		Collection<MPart> parts = ePartService.getParts();
-		for(MPart part : parts) {
-			if(part.getObject() != null) {
-				part.setToBeRendered(false);
-				part.setVisible(false);
-				partStack.getChildren().remove(part);
-			}
-		}
-	}
-
-	public boolean saveDirtyParts() {
-
-		return ePartService.saveAll(true);
-	}
 
 	/**
 	 * Load and show the part.
