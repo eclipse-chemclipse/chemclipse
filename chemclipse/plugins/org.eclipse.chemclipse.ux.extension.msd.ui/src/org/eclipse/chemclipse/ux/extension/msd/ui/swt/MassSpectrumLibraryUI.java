@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2025 Lablicate GmbH.
+ * Copyright (c) 2016, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -343,9 +343,8 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 				UpdateNotifier.update(identificationTarget);
 				/*
 				 * It's important to set the focus here.
-				 * The PerspectiveSwitchHandler.focusPerspectiveAndView activates other views and sets the
-				 * focus there. But when trying to press "DEL", the focus would be on the other views.
-				 * Hence, it needs to be set back to this list.
+				 * Other views are activated and the focus is set there. But when trying to press "DEL",
+				 * the focus would be on the other views. Hence, it needs to be set back to this list.
 				 */
 				massSpectrumListUI.getTable().setFocus();
 			}
