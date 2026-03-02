@@ -108,22 +108,6 @@ public class PartSupport {
 		hiddenPartStacks.add(PARTSTACK_RIGHT_TOP);
 	}
 
-	/**
-	 * Might return null.
-	 * Use this method e.g. to get a 3.x editor part.
-	 * The 3.x editorId is the id that is used in the plugin.xml
-	 * to declare the editor.
-	 */
-	public static MPart get3xEditorPart(String editorId, EPartService partService, EModelService service, MApplication application) {
-
-		for(MPart mPart : partService.getParts()) {
-			if(is3xEditorPart(mPart, editorId)) {
-				return mPart;
-			}
-		}
-		return null;
-	}
-
 	public static MPart getPart(String partId, String partStackId, EPartService partService, EModelService modelService, MApplication application) {
 
 		MPart part = getPart(partId, modelService, application);
@@ -444,11 +428,6 @@ public class PartSupport {
 		if(partStack != null) {
 			partStack.setVisible(visible);
 		}
-	}
-
-	private static boolean is3xEditorPart(MPart mPart, String editorId) {
-
-		return mPart.getElementId().equals(COMPATIBILITY_EDITOR_ELEMENT_ID) && mPart.getTags().contains(editorId);
 	}
 
 	private static MPartDescriptor getDescriptor(String partId, MApplication application) {
