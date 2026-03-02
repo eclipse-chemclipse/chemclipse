@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Alexander Kerner - Generics
@@ -35,7 +35,6 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.support.ui.workbench.EditorSupport;
-import org.eclipse.chemclipse.support.ui.workbench.PartSupport;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.ux.extension.ui.methods.MethodFileSupport;
 import org.eclipse.chemclipse.ux.extension.ui.support.ProcessMethodNotifications;
@@ -50,7 +49,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
 
 public class ProcessMethodEditor implements IModificationHandler, IChemClipseEditor {
@@ -70,8 +68,6 @@ public class ProcessMethodEditor implements IModificationHandler, IChemClipseEdi
 	private IProcessSupplierContext processSupplierContext;
 	@Inject
 	private ProcessMethodNotifications notifications;
-	@Inject
-	private PartSupport partsupport;
 
 	private File processMethodFile;
 	private ExtendedMethodUI extendedMethodUI;
@@ -81,12 +77,6 @@ public class ProcessMethodEditor implements IModificationHandler, IChemClipseEdi
 	public void setFocus() {
 
 		extendedMethodUI.setFocus();
-	}
-
-	@PreDestroy
-	private void preDestroy() {
-
-		partsupport.closePart(part);
 	}
 
 	@Persist
