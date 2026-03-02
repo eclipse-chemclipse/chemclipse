@@ -53,19 +53,6 @@ public class PerspectiveSupport {
 		}
 	}
 
-	public String getActivePerspective() {
-
-		MPerspective perspective = getActiveMPerspective();
-		if(perspective != null) {
-			String perspectiveName = perspective.getLabel();
-			perspectiveName = perspectiveName.replace("<", "");
-			perspectiveName = perspectiveName.replace(">", "");
-			return perspectiveName;
-		} else {
-			return "";
-		}
-	}
-
 	private MPerspective getActiveMPerspective() {
 
 		List<MPerspectiveStack> perspectiveStacks = eModelService.findElements(mApplication, null, MPerspectiveStack.class);
