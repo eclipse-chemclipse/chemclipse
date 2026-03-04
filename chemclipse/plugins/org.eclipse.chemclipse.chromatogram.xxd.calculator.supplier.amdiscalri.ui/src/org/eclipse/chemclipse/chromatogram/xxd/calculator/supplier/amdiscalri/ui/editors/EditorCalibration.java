@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -25,6 +25,7 @@ import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IEditorInput;
@@ -33,12 +34,12 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IURIEditorInput;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.part.MultiPageEditorPart;
+import org.eclipse.ui.part.EditorPart;
 import org.osgi.service.event.EventHandler;
 
 import jakarta.annotation.PreDestroy;
 
-public class EditorCalibration extends MultiPageEditorPart {
+public class EditorCalibration extends EditorPart {
 
 	private static final Logger logger = Logger.getLogger(EditorCalibration.class);
 
@@ -79,7 +80,8 @@ public class EditorCalibration extends MultiPageEditorPart {
 	@Override
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
 
-		super.init(site, input);
+		setSite(site);
+		setInput(input);
 		String fileName = input.getName();
 		fileName = fileName.substring(0, fileName.length() - 4);
 		setPartName(fileName);
@@ -191,11 +193,9 @@ public class EditorCalibration extends MultiPageEditorPart {
 	}
 
 	@Override
-	protected void createPages() {
+	public void createPartControl(Composite parent) {
 
-		pageCalibration = new PageCalibration(getContainer());
-		int pageIndex = addPage(pageCalibration.getControl());
-		setPageText(pageIndex, "Retention Index Calibration (*.cal)");
+		pageCalibration = new PageCalibration(parent);
 		registeredEventHandler = new ArrayList<>();
 		registerEvents();
 	}
