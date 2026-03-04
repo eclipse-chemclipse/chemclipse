@@ -22,10 +22,8 @@ import java.util.Set;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.descriptor.basic.MPartDescriptor;
 import org.eclipse.e4.ui.model.application.ui.MUIElement;
-import org.eclipse.e4.ui.model.application.ui.advanced.MArea;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
-import org.eclipse.e4.ui.model.application.ui.basic.MStackElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MDirectToolItem;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolBar;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
@@ -33,7 +31,6 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 
 public class PartSupport {
 
@@ -127,19 +124,6 @@ public class PartSupport {
 		return part;
 	}
 
-	public static boolean partStackContainsPart(String partId, String partStackId, EModelService modelService, MApplication application) {
-
-		MPartStack partStack = getPartStack(partStackId, modelService, application);
-		if(partStack != null) {
-			for(MStackElement stackElement : partStack.getChildren()) {
-				if(partId.equals(stackElement.getElementId())) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
 	public static MPartStack getPartStack(String partStackId, EModelService modelService, MApplication application) {
 
 		MUIElement element = getElement(partStackId, modelService, application);
@@ -222,18 +206,6 @@ public class PartSupport {
 		return isVisible;
 	}
 
-	public static boolean isChildrenOfPartStack(MPartStack partStack, String elementId) {
-
-		if(partStack != null) {
-			for(MStackElement stackElement : partStack.getChildren()) {
-				if(stackElement.getElementId().equals(elementId)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
 	public static boolean isPartVisible(MPart part, EPartService partService) {
 
 		if(part != null) {
@@ -279,14 +251,6 @@ public class PartSupport {
 		}
 	}
 
-	public static void setAreaVisibility(String areaId, boolean visible, EModelService modelService, MApplication application) {
-
-		MArea area = (MArea)modelService.find(areaId, application);
-		if(area != null) {
-			area.setVisible(visible);
-		}
-	}
-
 	public static boolean toggleCompositeVisibility(Composite composite) {
 
 		boolean visible = !composite.isVisible();
@@ -306,31 +270,6 @@ public class PartSupport {
 			parent.layout(true);
 			parent.redraw();
 		}
-	}
-
-	public static boolean toggleControlVisibility(Control control) {
-
-		boolean visible = !control.isVisible();
-		setControlVisibility(control, visible);
-		return visible;
-	}
-
-	public static void setControlVisibility(Control control, boolean visible) {
-
-		control.setVisible(visible);
-		GridData gridData = (GridData)control.getLayoutData();
-		if(gridData != null) {
-			gridData.exclude = !visible;
-		}
-
-		Composite parent = control.getParent();
-		Composite parentParent = parent.getParent();
-		if(parentParent != null) {
-			parent = parentParent;
-		}
-
-		parent.layout(true);
-		parent.redraw();
 	}
 
 	public static void setPartVisibility(String partId, String partStackId, boolean visible, EPartService partService, EModelService modelService, MApplication application) {
