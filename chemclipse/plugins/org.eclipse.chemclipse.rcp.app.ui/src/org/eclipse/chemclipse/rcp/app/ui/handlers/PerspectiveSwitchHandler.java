@@ -13,16 +13,13 @@
 package org.eclipse.chemclipse.rcp.app.ui.handlers;
 
 import org.eclipse.chemclipse.rcp.app.ui.dialogs.PerspectiveSwitcherDialog;
-import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.di.annotations.Execute;
-import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 
 public class PerspectiveSwitchHandler {
 
 	@Execute
-	public void execute(MWindow window) {
+	public void execute(PerspectiveSwitcherDialog perspectiveSwitcherDialog) {
 
-		PerspectiveSwitcherDialog perspectiveSwitcherDialog = ContextInjectionFactory.make(PerspectiveSwitcherDialog.class, window.getContext());
 		perspectiveSwitcherDialog.open();
 	}
 

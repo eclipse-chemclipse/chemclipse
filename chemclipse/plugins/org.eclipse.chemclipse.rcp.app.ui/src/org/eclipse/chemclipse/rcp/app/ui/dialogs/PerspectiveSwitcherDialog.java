@@ -25,6 +25,7 @@ import org.eclipse.chemclipse.support.ui.workbench.PerspectiveSupport;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.e4.core.di.annotations.Creatable;
 import org.eclipse.e4.core.di.extensions.Preference;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
@@ -54,6 +55,7 @@ import org.eclipse.swt.widgets.Text;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
+@Creatable
 public class PerspectiveSwitcherDialog extends Dialog implements ISelectionChangedListener {
 
 	/*
