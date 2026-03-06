@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - E4/support snippet launching
@@ -45,7 +45,6 @@ import org.eclipse.chemclipse.ux.extension.ui.editors.EditorDescriptor;
 import org.eclipse.chemclipse.ux.extension.ui.editors.ProcessMethodEditor;
 import org.eclipse.chemclipse.ux.extension.ui.provider.AbstractSupplierFileEditorSupport;
 import org.eclipse.chemclipse.ux.extension.ui.provider.ISupplierEditorSupport;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.editors.AbstractChromatogramEditor;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.editors.ChromatogramEditorCSD;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.editors.ChromatogramEditorFSD;
@@ -210,7 +209,7 @@ public class SupplierEditorSupport extends AbstractSupplierFileEditorSupport imp
 	public void openOverview(final File file) {
 
 		if(isSupplierFile(file)) {
-			IEventBroker eventBroker = Activator.getDefault().getEventBroker();
+			IEventBroker eventBroker = contextSupplier.get().get(IEventBroker.class);
 			eventBroker.send(topicUpdateRawfile, file);
 		}
 	}
@@ -218,7 +217,7 @@ public class SupplierEditorSupport extends AbstractSupplierFileEditorSupport imp
 	@Override
 	public void openOverview(IMeasurementInfo measurementInfo) {
 
-		IEventBroker eventBroker = Activator.getDefault().getEventBroker();
+		IEventBroker eventBroker = contextSupplier.get().get(IEventBroker.class);
 		eventBroker.send(topicUpdateOverview, measurementInfo);
 	}
 
