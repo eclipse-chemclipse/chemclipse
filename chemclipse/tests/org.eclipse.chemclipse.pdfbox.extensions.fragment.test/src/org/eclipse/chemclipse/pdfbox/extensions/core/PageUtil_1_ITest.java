@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -23,8 +23,6 @@ import java.util.List;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.JPEGFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.eclipse.chemclipse.pdfbox.extensions.elements.CellElement;
@@ -64,24 +62,23 @@ public class PageUtil_1_ITest {
 
 	private void printHeaderData(PDDocument document) throws IOException {
 
-		PDFont font = PDType1Font.HELVETICA;
-		printPageLeft(document, font);
-		printPageLeftShorten(document, font);
-		printPageRight(document, font);
-		printPageRightShorten(document, font);
-		printPageMultiLine(document, font);
-		printPageTextMinHeight(document, font);
-		printPageRotate0(document, font);
-		printPageRotate180(document, font);
-		printPageLogoPortrait(document, font);
-		printPageLogoLandscape(document, font);
-		printPageTablePortrait(document, font);
-		printPageTableLandscape(document, font);
-		printPageTableExtendedText(document, font);
-		printPageDefault(document, font);
+		printPageLeft(document);
+		printPageLeftShorten(document);
+		printPageRight(document);
+		printPageRightShorten(document);
+		printPageMultiLine(document);
+		printPageTextMinHeight(document);
+		printPageRotate0(document);
+		printPageRotate180(document);
+		printPageLogoPortrait(document);
+		printPageLogoLandscape(document);
+		printPageTablePortrait(document);
+		printPageTableLandscape(document);
+		printPageTableExtendedText(document);
+		printPageDefault(document);
 	}
 
-	private PDPage printPageLeft(PDDocument document, PDFont font) throws IOException {
+	private PDPage printPageLeft(PDDocument document) throws IOException {
 
 		PageUtil pageUtil = new PageUtil(document, new PageSettings(PDRectangle.A4, PageBase.TOP_LEFT, Unit.MM, false));
 
@@ -100,7 +97,7 @@ public class PageUtil_1_ITest {
 		return pageUtil.getPage();
 	}
 
-	private PDPage printPageLeftShorten(PDDocument document, PDFont font) throws IOException {
+	private PDPage printPageLeftShorten(PDDocument document) throws IOException {
 
 		PageUtil pageUtil = new PageUtil(document, new PageSettings(PDRectangle.A4, PageBase.TOP_LEFT, Unit.MM, false));
 
@@ -119,7 +116,7 @@ public class PageUtil_1_ITest {
 		return pageUtil.getPage();
 	}
 
-	private PDPage printPageRight(PDDocument document, PDFont font) throws IOException {
+	private PDPage printPageRight(PDDocument document) throws IOException {
 
 		PageUtil pageUtil = new PageUtil(document, new PageSettings(PDRectangle.A4, PageBase.TOP_LEFT, Unit.MM, true));
 
@@ -138,7 +135,7 @@ public class PageUtil_1_ITest {
 		return pageUtil.getPage();
 	}
 
-	private PDPage printPageRightShorten(PDDocument document, PDFont font) throws IOException {
+	private PDPage printPageRightShorten(PDDocument document) throws IOException {
 
 		PageUtil pageUtil = new PageUtil(document, new PageSettings(PDRectangle.A4, PageBase.TOP_LEFT, Unit.MM, true));
 
@@ -157,7 +154,7 @@ public class PageUtil_1_ITest {
 		return pageUtil.getPage();
 	}
 
-	private PDPage printPageMultiLine(PDDocument document, PDFont font) throws IOException {
+	private PDPage printPageMultiLine(PDDocument document) throws IOException {
 
 		PageUtil pageUtil = new PageUtil(document, new PageSettings(PDRectangle.A4, PageBase.TOP_LEFT, Unit.MM, false));
 
@@ -176,7 +173,7 @@ public class PageUtil_1_ITest {
 		return pageUtil.getPage();
 	}
 
-	private PDPage printPageTextMinHeight(PDDocument document, PDFont font) throws IOException {
+	private PDPage printPageTextMinHeight(PDDocument document) throws IOException {
 
 		PageUtil pageUtil = new PageUtil(document, new PageSettings(PDRectangle.A4, PageBase.TOP_LEFT, Unit.MM, false));
 
@@ -195,21 +192,21 @@ public class PageUtil_1_ITest {
 		return pageUtil.getPage();
 	}
 
-	private PDPage printPageRotate0(PDDocument document, PDFont font) throws IOException {
+	private PDPage printPageRotate0(PDDocument document) throws IOException {
 
-		PDPage page = printPageRight(document, font);
+		PDPage page = printPageRight(document);
 		page.setRotation(0);
 		return page;
 	}
 
-	private PDPage printPageRotate180(PDDocument document, PDFont font) throws IOException {
+	private PDPage printPageRotate180(PDDocument document) throws IOException {
 
-		PDPage page = printPageRight(document, font);
+		PDPage page = printPageRight(document);
 		page.setRotation(-180);
 		return page;
 	}
 
-	private PDPage printPageLogoPortrait(PDDocument document, PDFont font) throws IOException {
+	private PDPage printPageLogoPortrait(PDDocument document) throws IOException {
 
 		PageUtil pageUtil = new PageUtil(document, new PageSettings(PDRectangle.A4, PageBase.TOP_LEFT, Unit.MM, false));
 
@@ -227,7 +224,7 @@ public class PageUtil_1_ITest {
 		return pageUtil.getPage();
 	}
 
-	private PDPage printPageLogoLandscape(PDDocument document, PDFont font) throws IOException {
+	private PDPage printPageLogoLandscape(PDDocument document) throws IOException {
 
 		PageUtil pageUtil = new PageUtil(document, new PageSettings(PDRectangle.A4, PageBase.TOP_LEFT, Unit.MM, true));
 
@@ -245,7 +242,7 @@ public class PageUtil_1_ITest {
 		return pageUtil.getPage();
 	}
 
-	private PDPage printPageTablePortrait(PDDocument document, PDFont font) throws IOException {
+	private PDPage printPageTablePortrait(PDDocument document) throws IOException {
 
 		PageUtil pageUtil = new PageUtil(document, new PageSettings(PDRectangle.A4, PageBase.TOP_LEFT, Unit.MM, false));
 
@@ -291,7 +288,7 @@ public class PageUtil_1_ITest {
 		return pageUtil.getPage();
 	}
 
-	private PDPage printPageTableLandscape(PDDocument document, PDFont font) throws IOException {
+	private PDPage printPageTableLandscape(PDDocument document) throws IOException {
 
 		PageUtil pageUtil = new PageUtil(document, new PageSettings(PDRectangle.A4, PageBase.TOP_LEFT, Unit.MM, true));
 
@@ -323,7 +320,7 @@ public class PageUtil_1_ITest {
 		return pageUtil.getPage();
 	}
 
-	private PDPage printPageTableExtendedText(PDDocument document, PDFont font) throws IOException {
+	private PDPage printPageTableExtendedText(PDDocument document) throws IOException {
 
 		PageUtil pageUtil = new PageUtil(document, new PageSettings(PDRectangle.A4, PageBase.TOP_LEFT, Unit.MM, true));
 
@@ -355,7 +352,7 @@ public class PageUtil_1_ITest {
 		return pageUtil.getPage();
 	}
 
-	private PDPage printPageDefault(PDDocument document, PDFont font) throws IOException {
+	private PDPage printPageDefault(PDDocument document) throws IOException {
 
 		PageUtil pageUtil = new PageUtil(document, new PageSettings(PDRectangle.A4, PageBase.BOTTOM_LEFT, Unit.PT, false));
 
