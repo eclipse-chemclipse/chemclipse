@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2025 Lablicate GmbH.
+ * Copyright (c) 2022, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -83,8 +83,8 @@ public class PenaltyCalculationUI extends Composite {
 		comboViewerPenaltyCalculation = createComboViewer(this);
 		textReferenceValue = createText(this, "Reference", 0.0d);
 		textPenaltyWindow = createText(this, "Penalty Window", 10.0d);
-		spinnerPenaltyLevelFactor = createSpinnerPenaltyLevelFactor(this);
-		spinnerMaxPenalty = createSpinnerMaxPenalty(this);
+		spinnerPenaltyLevelFactor = createSpinnerPenaltyLevelFactor();
+		spinnerMaxPenalty = createSpinnerMaxPenalty();
 		buttonCalculate = createButtonCalculate(this);
 
 		initialize();
@@ -213,7 +213,7 @@ public class PenaltyCalculationUI extends Composite {
 		return text;
 	}
 
-	private Spinner createSpinnerPenaltyLevelFactor(Composite parent) {
+	private Spinner createSpinnerPenaltyLevelFactor() {
 
 		int min = (int)IPenaltyCalculationSettings.MIN_PENALTY_LEVEL_FACTOR;
 		int max = (int)IPenaltyCalculationSettings.MAX_PENALTY_LEVEL_FACTOR;
@@ -221,7 +221,7 @@ public class PenaltyCalculationUI extends Composite {
 		return createSpinner(this, "Penalty Level Factor", min, max, selection);
 	}
 
-	private Spinner createSpinnerMaxPenalty(Composite parent) {
+	private Spinner createSpinnerMaxPenalty() {
 
 		int min = (int)IPenaltyCalculationSettings.MIN_PENALTY_MATCH_FACTOR;
 		int max = (int)IPenaltyCalculationSettings.MAX_PENALTY_MATCH_FACTOR;

@@ -22,7 +22,6 @@ import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.services.IServiceConstants;
-import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
 import jakarta.inject.Named;
 
@@ -42,7 +41,7 @@ public class SaveAsHandler {
 	}
 
 	@Execute
-	void execute(ECommandService commandService, EHandlerService handlerService, EPartService partService, @Named(IServiceConstants.ACTIVE_PART) MPart part) {
+	void execute(ECommandService commandService, EHandlerService handlerService, @Named(IServiceConstants.ACTIVE_PART) MPart part) {
 
 		if(part != null) {
 			Object object = part.getObject();

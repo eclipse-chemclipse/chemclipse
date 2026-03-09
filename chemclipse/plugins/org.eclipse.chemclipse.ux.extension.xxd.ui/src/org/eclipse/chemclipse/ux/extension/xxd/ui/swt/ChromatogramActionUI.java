@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Alexander Kerner - Generics
@@ -51,7 +51,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 
 public class ChromatogramActionUI extends Composite {
 
@@ -86,7 +85,7 @@ public class ChromatogramActionUI extends Composite {
 		comboChromatogramAction.getCombo().setEnabled(enabled);
 
 		if(enabled) {
-			boolean success = setChromatogramActionItems(comboChromatogramAction.getCombo(), chromatogramSelection);
+			boolean success = setChromatogramActionItems(chromatogramSelection);
 			buttonChromatogramAction.setEnabled(success);
 		} else {
 			buttonChromatogramAction.setEnabled(false);
@@ -178,7 +177,7 @@ public class ChromatogramActionUI extends Composite {
 		return button;
 	}
 
-	private boolean setChromatogramActionItems(Control parent, IChromatogramSelection chromatogramSelection) {
+	private boolean setChromatogramActionItems(IChromatogramSelection chromatogramSelection) {
 
 		/*
 		 * Fill the hash map.

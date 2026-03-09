@@ -39,7 +39,6 @@ import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
 
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
@@ -62,7 +61,7 @@ public class SequenceEditor {
 	private ExtendedSequenceListUI extendedSequenceListUI;
 
 	@Inject
-	public SequenceEditor(Composite parent, MPart part, MDirtyable dirtyable, EModelService modelService, MApplication application, Shell shell) {
+	public SequenceEditor(Composite parent, MPart part, MDirtyable dirtyable, EModelService modelService, MApplication application) {
 
 		this.part = part;
 		this.dirtyable = dirtyable;

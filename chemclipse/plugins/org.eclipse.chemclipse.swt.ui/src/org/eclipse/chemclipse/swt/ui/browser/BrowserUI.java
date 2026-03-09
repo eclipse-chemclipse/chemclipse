@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -31,19 +31,18 @@ public class BrowserUI extends Composite {
 
 		super(parent, style);
 		this.url = url;
-		initialize(parent);
+		initialize();
 	}
 
-	private void initialize(Composite parent) {
+	private void initialize() {
 
-		GridData layoutData;
 		setLayout(new FillLayout());
 		Composite composite = new Composite(this, SWT.FILL);
 		composite.setLayout(new GridLayout(1, true));
 		/*
 		 * Header
 		 */
-		layoutData = new GridData(GridData.FILL_HORIZONTAL);
+		GridData layoutData = new GridData(GridData.FILL_HORIZONTAL);
 		Composite headerComposite = new Composite(composite, SWT.NONE);
 		headerComposite.setLayout(new GridLayout(1, true));
 		headerComposite.setLayoutData(layoutData);

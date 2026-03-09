@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -33,7 +33,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 public class DatabaseCollectorPage extends WizardPage {
@@ -70,7 +69,7 @@ public class DatabaseCollectorPage extends WizardPage {
 		createFileSection(composite);
 		createDirectorySection(composite);
 
-		validate(getShell());
+		validate();
 		setControl(composite);
 	}
 
@@ -99,7 +98,7 @@ public class DatabaseCollectorPage extends WizardPage {
 			@Override
 			public void keyReleased(KeyEvent e) {
 
-				validate(e.display.getActiveShell());
+				validate();
 			}
 		});
 
@@ -132,7 +131,7 @@ public class DatabaseCollectorPage extends WizardPage {
 					File file = new File(pathname);
 					PreferenceSupplier.setPathExport(file.getParentFile().getAbsolutePath());
 					textLibraryFileControl.get().setText(file.getAbsolutePath());
-					validate(e.display.getActiveShell());
+					validate();
 				}
 			}
 		});
@@ -166,7 +165,7 @@ public class DatabaseCollectorPage extends WizardPage {
 				if(directory != null) {
 					PreferenceSupplier.setPathImport(directory);
 					textLibraryDirectoryControl.get().setText(directory);
-					validate(e.display.getActiveShell());
+					validate();
 				}
 			}
 		});
@@ -178,7 +177,7 @@ public class DatabaseCollectorPage extends WizardPage {
 		label.setText(text);
 	}
 
-	private void validate(Shell shell) {
+	private void validate() {
 
 		String message = null;
 		/*

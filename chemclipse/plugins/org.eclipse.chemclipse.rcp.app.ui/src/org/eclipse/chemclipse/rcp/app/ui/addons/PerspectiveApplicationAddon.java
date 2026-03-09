@@ -1,20 +1,18 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2025 Lablicate GmbH.
+ * Copyright (c) 2013, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
 package org.eclipse.chemclipse.rcp.app.ui.addons;
 
-import jakarta.annotation.PostConstruct;
 import java.util.Properties;
-
 
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.support.events.IPerspectiveAndViewIds;
@@ -23,12 +21,13 @@ import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
-import org.eclipse.e4.ui.workbench.modeling.EPartService;
+
+import jakarta.annotation.PostConstruct;
 
 public class PerspectiveApplicationAddon {
 
 	@PostConstruct
-	public void postConstruct(MApplication application, EModelService modelService, EPartService partService, IEventBroker eventBroker) {
+	public void postConstruct(MApplication application, EModelService modelService, IEventBroker eventBroker) {
 
 		/*
 		 * The default perspective can be defined in the product definition, e.g.:
