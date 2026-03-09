@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Matthias Mailänder - exclude unrelated import/export wizards
@@ -36,7 +36,6 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 	public void initialize(IWorkbenchConfigurer configurer) {
 
 		super.initialize(configurer);
-		configurer.setSaveAndRestore(true);
 		WorkbenchAdvisorSupport.declareProjectExplorerImages(configurer);
 	}
 
