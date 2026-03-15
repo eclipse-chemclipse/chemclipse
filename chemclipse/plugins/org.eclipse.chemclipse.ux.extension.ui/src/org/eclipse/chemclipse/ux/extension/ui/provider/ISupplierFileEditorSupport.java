@@ -100,7 +100,6 @@ public interface ISupplierFileEditorSupport extends ISupplierFileIdentifier {
 				if(!PreferenceSupplierDataExplorer.isOpenEditorMultipleTimes()) {
 					List<MPart> parts = modelService.findElements(application, null, MPart.class);
 					if(parts != null) {
-						exitloop:
 						for(MPart part : parts) {
 							Object editor = part.getObject();
 							if(editor instanceof IChromatogramEditor chromatogramEditor) {
@@ -111,7 +110,7 @@ public interface ISupplierFileEditorSupport extends ISupplierFileIdentifier {
 									 */
 									if(fileEditor.getAbsolutePath().startsWith(file.getAbsolutePath())) {
 										openEditor = false;
-										break exitloop;
+										break;
 									}
 								} else {
 									/*
@@ -119,7 +118,7 @@ public interface ISupplierFileEditorSupport extends ISupplierFileIdentifier {
 									 */
 									if(fileEditor.equals(file)) {
 										openEditor = false;
-										break exitloop;
+										break;
 									}
 								}
 							}
@@ -131,12 +130,7 @@ public interface ISupplierFileEditorSupport extends ISupplierFileIdentifier {
 			 * Try to open the editor.
 			 */
 			if(openEditor) {
-				/*
-				 * Fix for: "Application does not have an active window"
-				 * in org.eclipse.e4.ui.internal.workbench.ApplicationPartServiceImpl
-				 */
 				MWindow window = application.getChildren().get(0);
-				application.getContext().set("activeChildContext", window.getContext()); // EclipseContext.ACTIVE_CHILD
 				/*
 				 * Create the input part and prepare it.
 				 */
