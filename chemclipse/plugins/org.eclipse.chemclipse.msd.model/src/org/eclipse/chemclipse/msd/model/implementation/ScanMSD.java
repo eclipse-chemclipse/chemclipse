@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Alexander Kerner - implementation
@@ -22,11 +22,11 @@ import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 
 /**
  * If a new mass spectrum type should be implemented, extend the abstract class {@link AbstractScanMSD} and not this class.
- * 
+ *
  * @author Philip Wenig
  * @author Alexander Kerner
  */
-public class ScanMSD extends AbstractScanMSD implements IScanMSD {
+public class ScanMSD extends AbstractScanMSD {
 
 	/**
 	 * Renew the serialVersionUID any time you have changed some fields or
@@ -49,7 +49,7 @@ public class ScanMSD extends AbstractScanMSD implements IScanMSD {
 	 * shallow copy of provided {@code templateScan}.
 	 * </p>
 	 * To create a deep copy, use {@link #makeDeepCopy()}.
-	 * 
+	 *
 	 * @param templateScan
 	 *            {@link IScanMSD scan} that is used as a template
 	 */

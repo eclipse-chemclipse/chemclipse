@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -24,7 +24,7 @@ import java.util.TreeMap;
 import org.eclipse.chemclipse.model.exceptions.PeakException;
 import org.eclipse.chemclipse.numeric.equations.LinearEquation;
 
-public abstract class AbstractPeakIntensityValues extends AbstractPeakIntensityValuesStrict implements IPeakIntensityValues {
+public abstract class AbstractPeakIntensityValues extends AbstractPeakIntensityValuesStrict {
 
 	private static final long serialVersionUID = 8193494258780090715L;
 
@@ -49,7 +49,7 @@ public abstract class AbstractPeakIntensityValues extends AbstractPeakIntensityV
 	 * Prefer to use the normal constructor.
 	 * If this constructor is used, please use the normalize() method,
 	 * after setting all intensity values.
-	 * 
+	 *
 	 * @param maxIntensity
 	 */
 	public AbstractPeakIntensityValues(float maxIntensity) {

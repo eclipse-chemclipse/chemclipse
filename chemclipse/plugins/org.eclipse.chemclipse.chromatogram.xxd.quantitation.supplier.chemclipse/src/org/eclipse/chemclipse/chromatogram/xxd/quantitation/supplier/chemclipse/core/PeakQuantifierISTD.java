@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.xxd.quantitation.core.AbstractPeakQuantifier;
-import org.eclipse.chemclipse.chromatogram.xxd.quantitation.core.IPeakQuantifier;
 import org.eclipse.chemclipse.chromatogram.xxd.quantitation.settings.IPeakQuantifierSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.quantitation.supplier.chemclipse.internal.core.PeakQuantitationCalculatorISTD;
 import org.eclipse.chemclipse.chromatogram.xxd.quantitation.supplier.chemclipse.preferences.PreferenceSupplier;
@@ -26,7 +25,7 @@ import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-public class PeakQuantifierISTD extends AbstractPeakQuantifier implements IPeakQuantifier {
+public class PeakQuantifierISTD extends AbstractPeakQuantifier {
 
 	private PeakQuantitationCalculatorISTD calculatorISTD = new PeakQuantitationCalculatorISTD();
 

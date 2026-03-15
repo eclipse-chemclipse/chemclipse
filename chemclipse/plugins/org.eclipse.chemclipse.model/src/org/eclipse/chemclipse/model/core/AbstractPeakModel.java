@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -24,7 +24,7 @@ import org.eclipse.chemclipse.numeric.core.Point;
 import org.eclipse.chemclipse.numeric.equations.Equations;
 import org.eclipse.chemclipse.numeric.equations.LinearEquation;
 
-public abstract class AbstractPeakModel extends AbstractPeakModelStrict implements IPeakModel {
+public abstract class AbstractPeakModel extends AbstractPeakModelStrict {
 
 	/**
 	 * Renew the UUID on change.
@@ -69,7 +69,7 @@ public abstract class AbstractPeakModel extends AbstractPeakModelStrict implemen
 	 * peak. The background should not be considered in the peak maximum. So the
 	 * peak maximum represents the pure maybe deconvoluted mass spectrum for the
 	 * actual peak.<br/>
-	 * 
+	 *
 	 * @param peakMaximum
 	 * @param peakIntensityValues
 	 * @param startBackgroundAbundance
@@ -324,7 +324,7 @@ public abstract class AbstractPeakModel extends AbstractPeakModelStrict implemen
 	 * beginning to the end.<br/>
 	 * If the gradient angle (alpha) is positive, the baseline decreases from
 	 * the beginning to the end.
-	 * 
+	 *
 	 * @return double
 	 */
 	private double calculateGradientAngle() {

@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - adjust to API Changes
@@ -48,7 +48,6 @@ import org.eclipse.chemclipse.model.quantitation.InternalStandard;
 import org.eclipse.chemclipse.model.quantitation.QuantitationFlag;
 import org.eclipse.chemclipse.model.support.ChromatogramSupport;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.io.ChromatogramReaderMSD;
-import org.eclipse.chemclipse.msd.converter.supplier.ocx.io.IChromatogramMSDZipReader;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.io.IReaderProxy;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorChromatogram;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorIon;
@@ -93,7 +92,7 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
  * Methods are copied to ensure that file formats are kept readable even if they contain errors.
  * This is suitable but I know, it's not the best way to achieve long term support for older formats.
  */
-public class ChromatogramReader_1501 extends AbstractChromatogramReader implements IChromatogramMSDZipReader {
+public class ChromatogramReader_1501 extends AbstractChromatogramReader {
 
 	private static final Logger logger = Logger.getLogger(ChromatogramReader_1501.class);
 	private ReaderIO_1501 reader1501 = new ReaderIO_1501();

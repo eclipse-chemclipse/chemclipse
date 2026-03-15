@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2025 Michael Chang.
+ * Copyright (c) 2015, 2026 Michael Chang.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Michael Chang - initial API and implementation
  *******************************************************************************/
@@ -21,14 +21,13 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 import org.eclipse.chemclipse.wsd.converter.io.AbstractChromatogramWSDReader;
-import org.eclipse.chemclipse.wsd.converter.io.IChromatogramWSDReader;
 
-public abstract class AbstractChromatogramReader extends AbstractChromatogramWSDReader implements IChromatogramWSDReader {
+public abstract class AbstractChromatogramReader extends AbstractChromatogramWSDReader {
 
 	/**
 	 * Object = ZipFile or ZipInputStream
 	 * May return null;
-	 * 
+	 *
 	 * @param object
 	 * @param entryName
 	 * @return {@link DataInputStream}

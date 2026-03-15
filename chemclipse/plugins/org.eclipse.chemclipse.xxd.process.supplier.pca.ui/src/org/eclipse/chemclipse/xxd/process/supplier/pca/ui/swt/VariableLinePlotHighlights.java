@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Lorenz Gerber- initial API and implementation
  *******************************************************************************/
@@ -20,9 +20,8 @@ import org.eclipse.swtchart.Chart;
 import org.eclipse.swtchart.Range;
 import org.eclipse.swtchart.extensions.core.BaseChart;
 import org.eclipse.swtchart.extensions.marker.AbstractBaseChartPaintListener;
-import org.eclipse.swtchart.extensions.marker.IBaseChartPaintListener;
 
-public class VariableLinePlotHighlights extends AbstractBaseChartPaintListener implements IBaseChartPaintListener {
+public class VariableLinePlotHighlights extends AbstractBaseChartPaintListener {
 
 	private int[] highlightedIndices;
 

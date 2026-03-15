@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2023, 2025 Lablicate GmbH.
+ * Copyright (c) 2023, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -26,7 +26,6 @@ import org.eclipse.swtchart.LineStyle;
 import org.eclipse.swtchart.Range;
 import org.eclipse.swtchart.extensions.core.BaseChart;
 import org.eclipse.swtchart.extensions.marker.AbstractBaseChartPaintListener;
-import org.eclipse.swtchart.extensions.marker.IBaseChartPaintListener;
 import org.eclipse.swtchart.extensions.model.ElementLine;
 import org.eclipse.swtchart.extensions.model.ElementRectangle;
 import org.eclipse.swtchart.extensions.model.ICustomSeries;
@@ -36,7 +35,7 @@ import org.eclipse.swtchart.extensions.support.ElementSupport;
 import org.eclipse.swtchart.extensions.support.PointPrimary;
 import org.eclipse.swtchart.extensions.support.RectanglePrimary;
 
-public class RetentionIndexMarker extends AbstractBaseChartPaintListener implements IBaseChartPaintListener {
+public class RetentionIndexMarker extends AbstractBaseChartPaintListener {
 
 	private boolean showIdentifier = false;
 	private boolean showLabelTop = true;

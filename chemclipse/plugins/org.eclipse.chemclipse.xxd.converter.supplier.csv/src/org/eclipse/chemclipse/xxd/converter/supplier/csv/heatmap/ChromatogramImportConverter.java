@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2025 Lablicate GmbH.
+ * Copyright (c) 2016, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -15,14 +15,13 @@ package org.eclipse.chemclipse.xxd.converter.supplier.csv.heatmap;
 import java.io.File;
 
 import org.eclipse.chemclipse.converter.chromatogram.AbstractChromatogramImportConverter;
-import org.eclipse.chemclipse.converter.chromatogram.IChromatogramImportConverter;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-public class ChromatogramImportConverter extends AbstractChromatogramImportConverter<IChromatogramMSD> implements IChromatogramImportConverter<IChromatogramMSD> {
+public class ChromatogramImportConverter extends AbstractChromatogramImportConverter<IChromatogramMSD> {
 
 	private static final String DESCRIPTION = "CSV Heatmap Result Import Converter";
 

@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -16,9 +16,8 @@ import org.eclipse.chemclipse.model.core.IPeakIntensityValues;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.exceptions.PeakException;
 import org.eclipse.chemclipse.wsd.model.core.AbstractPeakModelWSD;
-import org.eclipse.chemclipse.wsd.model.core.IPeakModelWSD;
 
-public class PeakModelWSD extends AbstractPeakModelWSD implements IPeakModelWSD {
+public class PeakModelWSD extends AbstractPeakModelWSD {
 
 	private static final long serialVersionUID = -7038661392283961955L;
 

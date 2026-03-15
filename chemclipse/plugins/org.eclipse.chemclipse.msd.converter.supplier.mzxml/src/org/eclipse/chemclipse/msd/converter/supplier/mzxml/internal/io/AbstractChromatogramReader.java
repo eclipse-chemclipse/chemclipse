@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2025 Lablicate GmbH.
+ * Copyright (c) 2015, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -31,7 +31,6 @@ import javax.xml.stream.events.XMLEvent;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.msd.converter.io.AbstractChromatogramMSDReader;
-import org.eclipse.chemclipse.msd.converter.io.IChromatogramMSDReader;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.IVendorChromatogram;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.IVendorScan;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.VendorChromatogram;
@@ -40,7 +39,7 @@ import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.VendorScan;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-public abstract class AbstractChromatogramReader extends AbstractChromatogramMSDReader implements IChromatogramMSDReader {
+public abstract class AbstractChromatogramReader extends AbstractChromatogramMSDReader {
 
 	private static final Logger logger = Logger.getLogger(AbstractChromatogramReader.class);
 

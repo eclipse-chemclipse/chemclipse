@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - allow chromatogram to be marked as dirty, support for analysis segments
@@ -26,13 +26,12 @@ import org.eclipse.chemclipse.model.support.IScanRange;
 import org.eclipse.chemclipse.model.targets.ITargetDisplaySettings;
 import org.eclipse.chemclipse.model.updates.IUpdater;
 import org.eclipse.chemclipse.support.history.ISupplierEditHistory;
-import org.eclipse.core.runtime.IAdaptable;
 
 /**
  * A chromatogram consists of several scans. This is the detector
  * independent part of it.
  */
-public interface IChromatogram extends SegmentedMeasurement, IMeasurement, IChromatogramOverview, IAdaptable, IChromatogramPeaks, ISupplierEditHistory, IChromatogramBaseline, IUpdater, IChromatogramIntegrationSupport, IChromatogramProcessorSupport, ITargetSupplier, ITargetDisplaySettings {
+public interface IChromatogram extends SegmentedMeasurement, IChromatogramOverview, IChromatogramPeaks, ISupplierEditHistory, IChromatogramBaseline, IUpdater, IChromatogramIntegrationSupport, IChromatogramProcessorSupport, ITargetSupplier, ITargetDisplaySettings {
 
 	String DEFAULT_CHROMATOGRAM_NAME = "Chromatogram";
 	int MIN_SCANDELAY = 0;

@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2025 Lablicate GmbH.
+ * Copyright (c) 2015, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -21,14 +21,13 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 import org.eclipse.chemclipse.csd.converter.io.AbstractChromatogramCSDReader;
-import org.eclipse.chemclipse.csd.converter.io.IChromatogramCSDReader;
 
-public abstract class AbstractChromatogramReader extends AbstractChromatogramCSDReader implements IChromatogramCSDReader {
+public abstract class AbstractChromatogramReader extends AbstractChromatogramCSDReader {
 
 	/**
 	 * Object = ZipFile or ZipInputStream
 	 * May return null;
-	 * 
+	 *
 	 * @param object
 	 * @param entryName
 	 * @return {@link DataInputStream}

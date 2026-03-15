@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2025 Lablicate GmbH.
+ * Copyright (c) 2014, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Matthias Mailänder - abstract
@@ -24,12 +24,11 @@ import org.eclipse.chemclipse.model.identifier.ComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.MatchConstraints;
 import org.eclipse.chemclipse.msd.identifier.comparison.AbstractMassSpectrumComparator;
-import org.eclipse.chemclipse.msd.identifier.comparison.IMassSpectrumComparator;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 
-public abstract class AbstractDistanceComparator extends AbstractMassSpectrumComparator implements IMassSpectrumComparator {
+public abstract class AbstractDistanceComparator extends AbstractMassSpectrumComparator {
 
 	abstract DistanceMeasure getDistanceMeasure();
 
@@ -60,7 +59,7 @@ public abstract class AbstractDistanceComparator extends AbstractMassSpectrumCom
 	 * Calculates the distance of both mass spectra.
 	 * 0 : best match
 	 * 1 : no match
-	 * 
+	 *
 	 * @param unknownSignal
 	 * @param referenceSignal
 	 * @param distanceMeasure

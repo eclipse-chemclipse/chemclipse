@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -14,7 +14,7 @@ package org.eclipse.chemclipse.chromatogram.xxd.integrator.result;
 
 import org.eclipse.chemclipse.msd.model.core.IIon;
 
-public class ChromatogramIntegrationResult extends AbstractChromatogramIntegrationResult implements IChromatogramIntegrationResult {
+public class ChromatogramIntegrationResult extends AbstractChromatogramIntegrationResult {
 
 	public ChromatogramIntegrationResult(double ion, double chromatogramArea, double backgroundArea) {
 
@@ -23,7 +23,7 @@ public class ChromatogramIntegrationResult extends AbstractChromatogramIntegrati
 
 	/**
 	 * Set the TIC result.
-	 * 
+	 *
 	 * @param chromatogramArea
 	 * @param backgroundArea
 	 */

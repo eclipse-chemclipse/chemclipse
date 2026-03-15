@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Matthias Mailänder - auto detection for chromatography files
@@ -21,9 +21,8 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
 
 import org.eclipse.chemclipse.converter.core.AbstractFileContentMatcher;
-import org.eclipse.chemclipse.converter.core.IFileContentMatcher;
 
-public class ChromatogramFileContentMatcher extends AbstractFileContentMatcher implements IFileContentMatcher {
+public class ChromatogramFileContentMatcher extends AbstractFileContentMatcher {
 
 	@Override
 	public boolean checkFileFormat(File file) {

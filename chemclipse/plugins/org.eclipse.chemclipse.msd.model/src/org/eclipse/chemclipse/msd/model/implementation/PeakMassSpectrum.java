@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -18,7 +18,7 @@ import org.eclipse.chemclipse.msd.model.core.IPeakIon;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 
-public class PeakMassSpectrum extends AbstractPeakMassSpectrum implements IPeakMassSpectrum {
+public class PeakMassSpectrum extends AbstractPeakMassSpectrum {
 
 	/**
 	 * Renew the serialVersionUID any time you have changed some fields or
@@ -36,7 +36,7 @@ public class PeakMassSpectrum extends AbstractPeakMassSpectrum implements IPeakM
 	 * intensity relative to the intensity of peakMassSpectrum. The given
 	 * intensity must be intensity >= 0 and intensity <=
 	 * IPeakIntensityValues.MAX_INTENSITY.
-	 * 
+	 *
 	 * @param peakMassSpectrum
 	 * @param intensity
 	 */
@@ -48,7 +48,7 @@ public class PeakMassSpectrum extends AbstractPeakMassSpectrum implements IPeakM
 	/**
 	 * Creates a new instance of a peak mass spectrum shifted to the given
 	 * intensity relative to the intensity of peakMassSpectrum.
-	 * 
+	 *
 	 * @param massSpectrum
 	 */
 	public PeakMassSpectrum(IScanMSD massSpectrum) throws IllegalArgumentException {
@@ -75,7 +75,7 @@ public class PeakMassSpectrum extends AbstractPeakMassSpectrum implements IPeakM
 	 * 100% actual: 6514141.6f -> 100% : 6514141.6f<br/>
 	 * 120% actual: 6514141.6f -> 100% : 5428451.333f<br/>
 	 * 50% actual: 6514141.6f -> 100% : 13028283.2f<br/>
-	 * 
+	 *
 	 * @param massSpectrum
 	 * @param actualPercentageIntensity
 	 */

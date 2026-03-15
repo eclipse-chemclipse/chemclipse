@@ -6,19 +6,18 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
 package org.eclipse.chemclipse.csd.model.implementation;
 
 import org.eclipse.chemclipse.csd.model.core.AbstractPeakModelCSD;
-import org.eclipse.chemclipse.csd.model.core.IPeakModelCSD;
 import org.eclipse.chemclipse.model.core.IPeakIntensityValues;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.exceptions.PeakException;
 
-public class PeakModelCSD extends AbstractPeakModelCSD implements IPeakModelCSD {
+public class PeakModelCSD extends AbstractPeakModelCSD {
 
 	private static final long serialVersionUID = 9110628073033467778L;
 

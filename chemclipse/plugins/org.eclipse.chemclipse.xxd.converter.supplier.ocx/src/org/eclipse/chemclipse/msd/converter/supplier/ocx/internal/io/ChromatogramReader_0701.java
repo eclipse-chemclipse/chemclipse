@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -41,7 +41,6 @@ import org.eclipse.chemclipse.model.implementation.IdentificationTarget;
 import org.eclipse.chemclipse.model.implementation.IntegrationEntry;
 import org.eclipse.chemclipse.model.implementation.PeakIntensityValues;
 import org.eclipse.chemclipse.model.support.ChromatogramSupport;
-import org.eclipse.chemclipse.msd.converter.supplier.ocx.io.IChromatogramMSDZipReader;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorChromatogram;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorIon;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorScan;
@@ -70,7 +69,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * Methods are copied to ensure that file formats are kept readable even if they contain errors.
  * This is suitable but I know, it's not the best way to achieve long term support for older formats.
  */
-public class ChromatogramReader_0701 extends AbstractChromatogramReader implements IChromatogramMSDZipReader {
+public class ChromatogramReader_0701 extends AbstractChromatogramReader {
 
 	private static final Logger logger = Logger.getLogger(ChromatogramReader_0701.class);
 
@@ -456,7 +455,7 @@ public class ChromatogramReader_0701 extends AbstractChromatogramReader implemen
 	/**
 	 * Legacy.
 	 * Convert between Enum and short value.
-	 * 
+	 *
 	 * @param massSpectrometer
 	 * @return
 	 */
@@ -475,7 +474,7 @@ public class ChromatogramReader_0701 extends AbstractChromatogramReader implemen
 	/**
 	 * Legacy.
 	 * Convert between Enum and short value.
-	 * 
+	 *
 	 * @param massSpectrometer
 	 * @return
 	 */

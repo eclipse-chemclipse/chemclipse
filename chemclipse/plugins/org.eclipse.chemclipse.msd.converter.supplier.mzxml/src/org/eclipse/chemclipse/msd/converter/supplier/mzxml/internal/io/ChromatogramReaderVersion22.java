@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2025 Lablicate GmbH.
+ * Copyright (c) 2015, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -22,7 +22,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.chemclipse.converter.l10n.ConverterMessages;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.msd.converter.io.IChromatogramMSDReader;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v22.model.DataProcessing;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v22.model.MsInstrument;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v22.model.MsRun;
@@ -51,7 +50,7 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
 
-public class ChromatogramReaderVersion22 extends AbstractChromatogramReader implements IChromatogramMSDReader {
+public class ChromatogramReaderVersion22 extends AbstractChromatogramReader {
 
 	public static final String VERSION = "mzXML_2.2";
 
