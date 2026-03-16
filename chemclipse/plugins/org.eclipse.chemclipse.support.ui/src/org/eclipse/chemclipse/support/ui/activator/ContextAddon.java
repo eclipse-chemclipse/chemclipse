@@ -1,24 +1,26 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2025 Lablicate GmbH.
+ * Copyright (c) 2014, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
 package org.eclipse.chemclipse.support.ui.activator;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.inject.Inject;
-
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Creatable;
 import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.ui.basic.MWindow;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+
+import jakarta.annotation.PostConstruct;
+import jakarta.inject.Inject;
 
 @Creatable
 public class ContextAddon {
@@ -26,7 +28,7 @@ public class ContextAddon {
 	/**
 	 * This add-on is created by the application, see Application.e4xmi.
 	 * org.eclipse.chemclipse.rcp.app.ui/Application.e4xmi
-	 * 
+	 *
 	 * We plan to switch to the e4.legacy model instead of having an own application model.
 	 * As soon as the migration was successful, the ContextAddon can be included via a fragment:
 	 * --
@@ -63,16 +65,34 @@ public class ContextAddon {
 	 * Be aware, this is the 'ApplicationPartServiceImpl' instance:
 	 * org.eclipse.e4.ui.internal.workbench.ApplicationPartServiceImpl
 	 * ---
-	 * In some cases, the 'PartServiceImpl' is needed:
-	 * org.eclipse.e4.ui.internal.workbench.PartServiceImpl
+	 * If 'PartServiceImpl' is needed use {@link #getWindowPartService()}
 	 * ---
 	 * Inject it, when creating a part. Have a look also at:
 	 * AbstractActivatorUI.updateEPartService(EPartService partService);
-	 * 
-	 * @return {@link EPartService}
 	 */
 	public static EPartService getPartService() {
 
 		return (contextAddon != null) ? contextAddon.partService : null;
+	}
+
+	/**
+	 * Returns the window-scoped 'PartServiceImpl'.
+	 * This is the service to use when creating or showing parts, as it has a valid window context.
+	 * Falls back to the application-scoped {@link #getPartService()} if no window context is available.
+	 */
+	public static EPartService getWindowPartService() {
+
+		MApplication application = getApplication();
+		if(application != null && !application.getChildren().isEmpty()) {
+			MWindow window = application.getChildren().get(0);
+			IEclipseContext context = window.getContext();
+			if(context != null) {
+				EPartService windowPartService = context.get(EPartService.class);
+				if(windowPartService != null) {
+					return windowPartService;
+				}
+			}
+		}
+		return getPartService();
 	}
 }

@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2025 Lablicate GmbH.
+ * Copyright (c) 2020, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Matthias Mailänder - set the part icon in the toolbar
@@ -29,10 +29,10 @@ import jakarta.inject.Inject;
 
 /**
  * fragment.e4xmi
- * 
+ *
  * @Evaluate is used by the "Imperative Expression"
  * @Execute is used by "Direct Menu Item"
- * 
+ *
  */
 public abstract class AbstractPartHandler implements IPartHandler {
 
@@ -47,7 +47,7 @@ public abstract class AbstractPartHandler implements IPartHandler {
 
 	public EPartService getPartService() {
 
-		return partService != null ? partService : ContextAddon.getPartService();
+		return partService != null ? partService : ContextAddon.getWindowPartService();
 	}
 
 	public EModelService getModelService() {
