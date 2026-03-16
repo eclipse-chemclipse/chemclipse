@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2025 Lablicate GmbH.
+ * Copyright (c) 2021, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
@@ -18,9 +18,8 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import org.eclipse.chemclipse.converter.core.AbstractFileContentMatcher;
-import org.eclipse.chemclipse.converter.core.IFileContentMatcher;
 
-public class FileContentMatcherInfraredSpectroscopy extends AbstractFileContentMatcher implements IFileContentMatcher {
+public class FileContentMatcherInfraredSpectroscopy extends AbstractFileContentMatcher {
 
 	@Override
 	public boolean checkFileFormat(File file) {

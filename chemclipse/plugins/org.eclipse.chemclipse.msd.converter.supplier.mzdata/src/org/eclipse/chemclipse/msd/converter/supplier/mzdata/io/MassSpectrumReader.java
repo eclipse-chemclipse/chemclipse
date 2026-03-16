@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2025 Lablicate GmbH.
+ * Copyright (c) 2013, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Matthias Mailänder - adapted for MALDI
@@ -24,7 +24,7 @@ import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.io.MassSpec
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-public class MassSpectrumReader extends AbstractMassSpectraReader implements IMassSpectraReader {
+public class MassSpectrumReader extends AbstractMassSpectraReader {
 
 	@Override
 	public IMassSpectra read(File file, IProgressMonitor monitor) throws IOException {

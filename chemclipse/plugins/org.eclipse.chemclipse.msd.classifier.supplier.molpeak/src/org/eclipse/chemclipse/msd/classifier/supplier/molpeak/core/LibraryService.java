@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Dr. Lorenz Gerber - initial API and implementation
  * Philip Wenig - initial API and implementation
@@ -21,13 +21,12 @@ import org.eclipse.chemclipse.model.exceptions.ValueMustNotBeNullException;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.msd.classifier.supplier.molpeak.identifier.BasePeakIdentifier;
 import org.eclipse.chemclipse.msd.identifier.library.AbstractLibraryService;
-import org.eclipse.chemclipse.msd.identifier.library.ILibraryService;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-public class LibraryService extends AbstractLibraryService implements ILibraryService {
+public class LibraryService extends AbstractLibraryService {
 
 	private final BasePeakIdentifier basePeakIdentifier;
 

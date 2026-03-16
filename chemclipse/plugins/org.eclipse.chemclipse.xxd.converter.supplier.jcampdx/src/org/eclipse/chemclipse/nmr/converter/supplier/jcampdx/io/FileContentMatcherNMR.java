@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
@@ -18,9 +18,8 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import org.eclipse.chemclipse.converter.core.AbstractFileContentMatcher;
-import org.eclipse.chemclipse.converter.core.IFileContentMatcher;
 
-public class FileContentMatcherNMR extends AbstractFileContentMatcher implements IFileContentMatcher {
+public class FileContentMatcherNMR extends AbstractFileContentMatcher {
 
 	@Override
 	public boolean checkFileFormat(File file) {

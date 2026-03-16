@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - use {@link IPlotArea} instead of raw composite
@@ -75,7 +75,6 @@ import org.eclipse.swtchart.extensions.core.IChartSettings;
 import org.eclipse.swtchart.extensions.core.IKeyboardSupport;
 import org.eclipse.swtchart.extensions.core.IMouseSupport;
 import org.eclipse.swtchart.extensions.events.AbstractHandledEventProcessor;
-import org.eclipse.swtchart.extensions.events.IHandledEventProcessor;
 import org.eclipse.swtchart.extensions.linecharts.ICompressionSupport;
 import org.eclipse.swtchart.extensions.linecharts.ILineSeriesData;
 import org.eclipse.swtchart.extensions.linecharts.ILineSeriesSettings;
@@ -153,7 +152,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 	private ChromatogramChartSupport chromatogramChartSupport = new ChromatogramChartSupport();
 	private PeakChartSupport peakChartSupport = new PeakChartSupport();
 
-	private class KeyPressedEventProcessor extends AbstractHandledEventProcessor implements IHandledEventProcessor {
+	private class KeyPressedEventProcessor extends AbstractHandledEventProcessor {
 
 		private int keyCode;
 
@@ -187,7 +186,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 		}
 	}
 
-	private class MouseDownEventProcessor extends AbstractHandledEventProcessor implements IHandledEventProcessor {
+	private class MouseDownEventProcessor extends AbstractHandledEventProcessor {
 
 		@Override
 		public int getEvent() {
@@ -214,7 +213,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 		}
 	}
 
-	private class MouseMoveEventProcessor extends AbstractHandledEventProcessor implements IHandledEventProcessor {
+	private class MouseMoveEventProcessor extends AbstractHandledEventProcessor {
 
 		@Override
 		public int getEvent() {
@@ -235,7 +234,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 		}
 	}
 
-	private class MouseUpEventProcessor extends AbstractHandledEventProcessor implements IHandledEventProcessor {
+	private class MouseUpEventProcessor extends AbstractHandledEventProcessor {
 
 		@Override
 		public int getEvent() {
@@ -262,7 +261,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 		}
 	}
 
-	private class MouseDoubleClickEventProcessor extends AbstractHandledEventProcessor implements IHandledEventProcessor {
+	private class MouseDoubleClickEventProcessor extends AbstractHandledEventProcessor {
 
 		@Override
 		public int getEvent() {
@@ -954,7 +953,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 
 	/**
 	 * Extracts the selected peak.
-	 * 
+	 *
 	 * @param xStop
 	 * @param yStop
 	 */

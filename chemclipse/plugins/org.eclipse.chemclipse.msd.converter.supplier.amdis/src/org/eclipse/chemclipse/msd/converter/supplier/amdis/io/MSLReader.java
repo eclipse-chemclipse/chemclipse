@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -36,7 +36,6 @@ import org.eclipse.chemclipse.model.identifier.ColumnIndexMarker;
 import org.eclipse.chemclipse.model.identifier.IColumnIndexMarker;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.msd.converter.io.AbstractMassSpectraReader;
-import org.eclipse.chemclipse.msd.converter.io.IMassSpectraReader;
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.converter.misc.CompoundInformation;
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.converter.misc.ConverterCID;
 import org.eclipse.chemclipse.msd.converter.supplier.amdis.converter.misc.ConverterMOL;
@@ -51,7 +50,7 @@ import org.eclipse.chemclipse.support.model.SeparationColumnType;
 import org.eclipse.chemclipse.support.util.ValueParserSupport;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-public class MSLReader extends AbstractMassSpectraReader implements IMassSpectraReader {
+public class MSLReader extends AbstractMassSpectraReader {
 
 	private static final Logger logger = Logger.getLogger(MSLReader.class);
 
@@ -117,7 +116,7 @@ public class MSLReader extends AbstractMassSpectraReader implements IMassSpectra
 
 	/**
 	 * Extracts the mass spectrum from the given text.
-	 * 
+	 *
 	 * @param massSpectrumData
 	 * @return {@link IVendorLibraryMassSpectrum}
 	 */
@@ -128,7 +127,7 @@ public class MSLReader extends AbstractMassSpectraReader implements IMassSpectra
 
 	/**
 	 * Extracts the mass spectrum from the given text.
-	 * 
+	 *
 	 * @param massSpectrumData
 	 * @param referenceIdentifierMarker
 	 * @param referenceIdentifierPrefix
@@ -244,7 +243,7 @@ public class MSLReader extends AbstractMassSpectraReader implements IMassSpectra
 
 	/**
 	 * Returns a list of mass spectra data.
-	 * 
+	 *
 	 * @throws IOException
 	 */
 	private ConcurrentHashMap<Integer, String> getMassSpectraData(File file) throws IOException {
@@ -283,7 +282,7 @@ public class MSLReader extends AbstractMassSpectraReader implements IMassSpectra
 	/**
 	 * Adds the content from the StringBuilder to the mass spectra data list, if
 	 * the length is > 0.
-	 * 
+	 *
 	 * @param builder
 	 * @param massSpectraData
 	 */
@@ -298,7 +297,7 @@ public class MSLReader extends AbstractMassSpectraReader implements IMassSpectra
 
 	/**
 	 * Returns a mass spectra object or null, if something has gone wrong.
-	 * 
+	 *
 	 * @param indexedMassSpectraData
 	 * @return IMassSpectra
 	 */
@@ -328,7 +327,7 @@ public class MSLReader extends AbstractMassSpectraReader implements IMassSpectra
 
 	/**
 	 * Detect a mass spectrum and add it to a sorted map.
-	 * 
+	 *
 	 * @param massSpectra
 	 * @param massSpectrumData
 	 */
@@ -347,7 +346,7 @@ public class MSLReader extends AbstractMassSpectraReader implements IMassSpectra
 	/**
 	 * Extracts all ion from the given mass spectrum data and stores
 	 * them in the given mass spectrum.
-	 * 
+	 *
 	 * @param massSpectrum
 	 * @param massSpectrumData
 	 */
@@ -383,7 +382,7 @@ public class MSLReader extends AbstractMassSpectraReader implements IMassSpectra
 	/**
 	 * Extracts the content from the given mass spectrum string defined by the
 	 * given pattern.
-	 * 
+	 *
 	 * @param massSpectrumData
 	 * @return String
 	 */

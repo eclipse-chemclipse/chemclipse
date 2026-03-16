@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2025 Lablicate GmbH.
+ * Copyright (c) 2016, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - add delegate constructor, add support for adding a libraryscan
@@ -21,7 +21,7 @@ import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.core.runtime.IAdaptable;
 
-public class IdentificationTarget extends AbstractIdentificationTarget implements IIdentificationTarget, IAdaptable {
+public class IdentificationTarget extends AbstractIdentificationTarget implements IAdaptable {
 
 	/**
 	 * Renew the UUID on change.
@@ -44,7 +44,7 @@ public class IdentificationTarget extends AbstractIdentificationTarget implement
 
 	/**
 	 * Set the scan that was used to identify the target in the library if available
-	 * 
+	 *
 	 * @param libraryScan
 	 */
 	public void setLibraryScan(IScan libraryScan) {

@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - use {@link IPlotArea} instead of raw composite
@@ -54,7 +54,6 @@ import org.eclipse.swtchart.extensions.core.IChartSettings;
 import org.eclipse.swtchart.extensions.core.IKeyboardSupport;
 import org.eclipse.swtchart.extensions.core.IMouseSupport;
 import org.eclipse.swtchart.extensions.events.AbstractHandledEventProcessor;
-import org.eclipse.swtchart.extensions.events.IHandledEventProcessor;
 
 public class ExtendedPeakChartUI extends Composite implements IExtendedPartUI {
 
@@ -89,7 +88,7 @@ public class ExtendedPeakChartUI extends Composite implements IExtendedPartUI {
 
 	private PeakDataSupport peakDataSupport = new PeakDataSupport();
 
-	private class KeyPressedEventProcessor extends AbstractHandledEventProcessor implements IHandledEventProcessor {
+	private class KeyPressedEventProcessor extends AbstractHandledEventProcessor {
 
 		private int keyCode;
 
@@ -123,7 +122,7 @@ public class ExtendedPeakChartUI extends Composite implements IExtendedPartUI {
 		}
 	}
 
-	private class MouseDoubleClickEventProcessor extends AbstractHandledEventProcessor implements IHandledEventProcessor {
+	private class MouseDoubleClickEventProcessor extends AbstractHandledEventProcessor {
 
 		@Override
 		public int getEvent() {

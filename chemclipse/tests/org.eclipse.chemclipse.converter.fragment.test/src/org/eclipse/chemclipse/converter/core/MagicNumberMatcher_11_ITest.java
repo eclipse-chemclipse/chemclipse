@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -31,7 +31,7 @@ public class MagicNumberMatcher_11_ITest {
 		INDEX_MAP.put(7, (byte)0x3B);
 	}
 
-	private class MagicNumberMatcher extends AbstractMagicNumberMatcher implements IMagicNumberMatcher {
+	private class MagicNumberMatcher extends AbstractMagicNumberMatcher {
 
 		@Override
 		public boolean checkFileFormat(File file) {
