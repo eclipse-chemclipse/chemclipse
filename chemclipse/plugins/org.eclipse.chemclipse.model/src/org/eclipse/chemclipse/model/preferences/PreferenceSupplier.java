@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2025 Lablicate GmbH.
+ * Copyright (c) 2016, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -20,7 +20,7 @@ import org.eclipse.chemclipse.model.targets.LibraryField;
 import org.eclipse.chemclipse.support.preferences.AbstractPreferenceSupplier;
 import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
 
-public class PreferenceSupplier extends AbstractPreferenceSupplier implements IPreferenceSupplier {
+public class PreferenceSupplier extends AbstractPreferenceSupplier {
 
 	public static final String P_MISC_SEPARATOR = "miscSeparator";
 	public static final String DEF_MISC_SEPARATOR = "!";
@@ -184,7 +184,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 
 	/**
 	 * Get the active ion round method.
-	 * 
+	 *
 	 * @return
 	 */
 	public static IonRoundMethod getIonRoundMethod() {
@@ -205,7 +205,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 
 	/**
 	 * Set the active ion round method.
-	 * 
+	 *
 	 * @param ionRoundMethod
 	 */
 	public static void setIonRoundMethod(IonRoundMethod ionRoundMethod) {

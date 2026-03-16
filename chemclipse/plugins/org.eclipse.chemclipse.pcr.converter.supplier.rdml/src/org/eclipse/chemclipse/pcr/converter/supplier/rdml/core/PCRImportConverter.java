@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
@@ -29,7 +29,7 @@ import org.xml.sax.SAXException;
 
 import jakarta.xml.bind.JAXBException;
 
-public class PCRImportConverter extends AbstractPlateImportConverter implements IPlateImportConverter {
+public class PCRImportConverter extends AbstractPlateImportConverter {
 
 	private static final Logger logger = Logger.getLogger(PCRImportConverter.class);
 	private static final String DESCRIPTION = "RDML Converter";

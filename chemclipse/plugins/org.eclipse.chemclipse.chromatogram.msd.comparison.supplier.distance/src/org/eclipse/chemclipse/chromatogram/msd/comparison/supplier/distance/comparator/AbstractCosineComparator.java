@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - don't extract ion signal more than once, use lazy result
@@ -23,12 +23,11 @@ import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.LazyComparisonResult;
 import org.eclipse.chemclipse.model.identifier.MatchConstraints;
 import org.eclipse.chemclipse.msd.identifier.comparison.AbstractMassSpectrumComparator;
-import org.eclipse.chemclipse.msd.identifier.comparison.IMassSpectrumComparator;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 
-public abstract class AbstractCosineComparator extends AbstractMassSpectrumComparator implements IMassSpectrumComparator {
+public abstract class AbstractCosineComparator extends AbstractMassSpectrumComparator {
 
 	@Override
 	public IProcessingInfo<IComparisonResult> compare(IScanMSD unknown, IScanMSD reference, MatchConstraints matchConstraints) {
@@ -116,7 +115,7 @@ public abstract class AbstractCosineComparator extends AbstractMassSpectrumCompa
 	/**
 	 * This method returns the intensity value.
 	 * Override it in subclasses to enabled a specific behavior.
-	 * 
+	 *
 	 * @param signal
 	 * @param i
 	 * @return double

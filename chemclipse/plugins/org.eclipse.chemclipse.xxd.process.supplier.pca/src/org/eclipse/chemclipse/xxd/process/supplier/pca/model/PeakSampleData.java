@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Jan Holy - initial API and implementation
  * Philip Wenig - adjustment type
@@ -16,10 +16,9 @@ package org.eclipse.chemclipse.xxd.process.supplier.pca.model;
 import java.util.Optional;
 
 import org.eclipse.chemclipse.model.core.IPeak;
-import org.eclipse.chemclipse.model.statistics.ISampleData;
 import org.eclipse.chemclipse.model.statistics.SampleData;
 
-public class PeakSampleData extends SampleData<IPeak> implements ISampleData<IPeak> {
+public class PeakSampleData extends SampleData<IPeak> {
 
 	private Optional<IPeak> peak;
 

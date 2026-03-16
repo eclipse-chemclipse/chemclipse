@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
@@ -35,7 +35,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Strings;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.pcr.converter.core.AbstractPlateExportConverter;
-import org.eclipse.chemclipse.pcr.converter.core.IPlateExportConverter;
 import org.eclipse.chemclipse.pcr.model.core.Channel;
 import org.eclipse.chemclipse.pcr.model.core.IChannel;
 import org.eclipse.chemclipse.pcr.model.core.IPlate;
@@ -56,7 +55,7 @@ import org.eclipse.chemclipse.processing.core.ProcessingInfo;
 import org.eclipse.chemclipse.support.text.ValueFormat;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-public class PCRExportConverter extends AbstractPlateExportConverter implements IPlateExportConverter {
+public class PCRExportConverter extends AbstractPlateExportConverter {
 
 	private static final Logger logger = Logger.getLogger(PCRExportConverter.class);
 

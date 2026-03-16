@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -17,7 +17,7 @@ import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
 import org.eclipse.chemclipse.support.settings.UserManagement;
 import org.eclipse.chemclipse.ux.extension.ui.Activator;
 
-public class PreferenceSupplierDataExplorer extends AbstractPreferenceSupplier implements IPreferenceSupplier {
+public class PreferenceSupplierDataExplorer extends AbstractPreferenceSupplier {
 
 	public static final String P_SELECTED_DRIVE_PATH = "selectedDrivePath";
 	public static final String DEF_SELECTED_DRIVE_PATH = "";

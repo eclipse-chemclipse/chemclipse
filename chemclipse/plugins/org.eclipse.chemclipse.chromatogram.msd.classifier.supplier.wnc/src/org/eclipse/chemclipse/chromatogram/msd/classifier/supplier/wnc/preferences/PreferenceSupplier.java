@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2025 Lablicate GmbH.
+ * Copyright (c) 2011, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -25,7 +25,7 @@ import org.eclipse.chemclipse.support.preferences.AbstractPreferenceSupplier;
 import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
 import org.osgi.framework.FrameworkUtil;
 
-public class PreferenceSupplier extends AbstractPreferenceSupplier implements IPreferenceSupplier {
+public class PreferenceSupplier extends AbstractPreferenceSupplier {
 
 	public static final String DEFAULT_TRACES = "Water:18;Nitrogen:28;Oxygen:32;Carbon Dioxide:44;Solvent Tailing:84;Column Bleed:207";
 
@@ -72,7 +72,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 
 	/**
 	 * Returns a list of WNC ions to preserve stored in the settings.
-	 * 
+	 *
 	 * @return List<IWNCIon>
 	 */
 	public static TargetTraces getTargetTraces(String content) {
@@ -108,7 +108,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	/**
 	 * Returns a string array.<br/>
 	 * E.g. "water:18;nitrogen:28;carbon dioxide:44"
-	 * 
+	 *
 	 * @param stringList
 	 * @return String[]
 	 */
@@ -131,7 +131,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 
 	/**
 	 * Stores the ions.
-	 * 
+	 *
 	 * @param targetTraces
 	 */
 	public static void storeTargetTraces(TargetTraces targetTraces) {

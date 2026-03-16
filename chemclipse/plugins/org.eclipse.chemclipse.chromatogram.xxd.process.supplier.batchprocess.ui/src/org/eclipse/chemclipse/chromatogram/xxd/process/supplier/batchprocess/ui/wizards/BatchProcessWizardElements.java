@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
@@ -14,10 +14,9 @@ package org.eclipse.chemclipse.chromatogram.xxd.process.supplier.batchprocess.ui
 
 import java.io.File;
 
-import org.eclipse.chemclipse.support.ui.wizards.IWizardElements;
 import org.eclipse.chemclipse.support.ui.wizards.WizardElements;
 
-public class BatchProcessWizardElements extends WizardElements implements IWizardElements {
+public class BatchProcessWizardElements extends WizardElements {
 
 	private File batchProcessFile;
 

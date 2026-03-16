@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2025 Lablicate GmbH.
+ * Copyright (c) 2012, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -21,7 +21,7 @@ import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
 import org.eclipse.chemclipse.support.util.TraceSettingUtil;
 import org.osgi.framework.FrameworkUtil;
 
-public class PreferenceSupplier extends AbstractPreferenceSupplier implements IPreferenceSupplier {
+public class PreferenceSupplier extends AbstractPreferenceSupplier {
 
 	public static final String P_SELECTED_IONS = "selectedIons";
 	public static final String DEF_SELECTED_IONS = "0"; // 103;104 | 0 = TIC
@@ -69,7 +69,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 
 	/**
 	 * Returns a list of ions to preserve stored in the settings.
-	 * 
+	 *
 	 * @return List<Integer>
 	 */
 	public static String getIons(String preference, String def) {

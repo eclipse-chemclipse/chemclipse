@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
@@ -20,9 +20,8 @@ import org.eclipse.chemclipse.model.core.support.HeaderField;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
 import org.eclipse.chemclipse.ux.extension.ui.editors.ProcessMethodEditor;
 import org.eclipse.chemclipse.ux.extension.ui.provider.AbstractSupplierFileEditorSupport;
-import org.eclipse.chemclipse.ux.extension.ui.provider.ISupplierFileEditorSupport;
 
-public class MethodEditorSupport extends AbstractSupplierFileEditorSupport implements ISupplierFileEditorSupport {
+public class MethodEditorSupport extends AbstractSupplierFileEditorSupport {
 
 	public MethodEditorSupport() {
 

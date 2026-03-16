@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - add NMR datatype, remove obsolete constants, extract init into static methods
@@ -31,7 +31,7 @@ import org.eclipse.swtchart.ILineSeries.PlotSymbolType;
 import org.eclipse.swtchart.LineStyle;
 import org.eclipse.swtchart.extensions.linecharts.ICompressionSupport;
 
-public class PreferenceSupplier extends AbstractPreferenceSupplier implements IPreferenceSupplier {
+public class PreferenceSupplier extends AbstractPreferenceSupplier {
 
 	public static final String[][] PART_STACKS = new String[][]{ //
 			{"--", PartSupport.PARTSTACK_NONE}, //

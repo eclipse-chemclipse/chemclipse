@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -16,14 +16,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
-public abstract class AbstractMacWineSupport extends AbstractWineRuntimeSupport implements IWineRuntimeSupport {
+public abstract class AbstractMacWineSupport extends AbstractWineRuntimeSupport {
 
 	private String macWineBinary = "";
 
 	/**
 	 * /Users/chemclipse/.wine/drive_c/Programme/NIST/MSSEARCH/nistms$.exe
 	 * /Users/chemclipse/.wine/dosdevices/c:/Programme/NIST/MSSEARCH/nistms$.exe
-	 * 
+	 *
 	 * @param macWineBinary
 	 *            (e.g. "/Applications/Wine.app")
 	 */

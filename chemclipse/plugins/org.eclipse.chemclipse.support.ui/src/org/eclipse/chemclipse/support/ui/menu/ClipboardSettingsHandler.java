@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -18,7 +18,7 @@ import org.eclipse.chemclipse.support.ui.swt.dialogs.ClipboardSettingsDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Display;
 
-public class ClipboardSettingsHandler extends AbstractTableMenuEntry implements ITableMenuEntry {
+public class ClipboardSettingsHandler extends AbstractTableMenuEntry {
 
 	@Override
 	public String getCategory() {

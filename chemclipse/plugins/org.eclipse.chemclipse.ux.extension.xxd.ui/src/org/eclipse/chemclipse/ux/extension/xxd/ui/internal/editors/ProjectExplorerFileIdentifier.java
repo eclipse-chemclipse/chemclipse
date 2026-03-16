@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -18,9 +18,8 @@ import java.util.List;
 import org.eclipse.chemclipse.model.types.DataType;
 import org.eclipse.chemclipse.processing.converter.AbstractSupplierFileIdentifier;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
-import org.eclipse.chemclipse.processing.converter.ISupplierFileIdentifier;
 
-public class ProjectExplorerFileIdentifier extends AbstractSupplierFileIdentifier implements ISupplierFileIdentifier {
+public class ProjectExplorerFileIdentifier extends AbstractSupplierFileIdentifier {
 
 	private String type = "";
 

@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2025 Lablicate GmbH.
+ * Copyright (c) 2013, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - use ScanMSD in favor of CombinedMassSpectrum
@@ -22,7 +22,7 @@ import org.eclipse.chemclipse.msd.model.implementation.ScanMSD;
 import org.eclipse.chemclipse.support.preferences.AbstractPreferenceSupplier;
 import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
 
-public class PreferenceSupplier extends AbstractPreferenceSupplier implements IPreferenceSupplier {
+public class PreferenceSupplier extends AbstractPreferenceSupplier {
 
 	public static final int MIN_TRACES = 1;
 	public static final int MAX_TRACES = Integer.MAX_VALUE;
@@ -85,7 +85,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 
 	/**
 	 * Returns the session subtract mass spectrum, which is used by the filter.
-	 * 
+	 *
 	 * @return {@link IScanMSD}
 	 */
 	public static IScanMSD getSessionSubtractMassSpectrum() {
@@ -95,7 +95,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 
 	/**
 	 * Sets the session mass spectrum, which is used by the filter.
-	 * 
+	 *
 	 * @param subtractMassSpectrum
 	 */
 	public static void setSessionSubtractMassSpectrum(IScanMSD subtractMassSpectrum) {

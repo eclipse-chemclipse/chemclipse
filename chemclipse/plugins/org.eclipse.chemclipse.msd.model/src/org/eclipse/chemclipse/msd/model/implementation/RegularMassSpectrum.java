@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -20,7 +20,7 @@ import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 /**
  * If a new mass spectrum type should be implemented, extend the abstract class {@link AbstractScanMSD} and not this class.
  */
-public class RegularMassSpectrum extends AbstractRegularMassSpectrum implements IRegularMassSpectrum {
+public class RegularMassSpectrum extends AbstractRegularMassSpectrum {
 
 	/**
 	 * Renew the serialVersionUID any time you have changed some fields or

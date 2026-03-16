@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
@@ -23,7 +23,7 @@ import org.eclipse.chemclipse.pcr.model.core.IPlate;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-public class PCRImportConverter extends AbstractPlateImportConverter implements IPlateImportConverter {
+public class PCRImportConverter extends AbstractPlateImportConverter {
 
 	private static final Logger logger = Logger.getLogger(PCRImportConverter.class);
 	private static final String DESCRIPTION = "RDES Import";

@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -16,7 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
-public abstract class AbstractWindowsSupport extends AbstractRuntimeSupport implements IRuntimeSupport {
+public abstract class AbstractWindowsSupport extends AbstractRuntimeSupport {
 
 	/**
 	 * Set e.g.: C:\Programs\NIST\MSSEARCH\NISTMS$.EXE

@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2025 Lablicate GmbH.
+ * Copyright (c) 2022, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
@@ -14,10 +14,9 @@ package org.eclipse.chemclipse.pcr.report.supplier.tabular.ui.internal.provider;
 
 import org.eclipse.chemclipse.pcr.report.supplier.tabular.model.ChannelMapping;
 import org.eclipse.chemclipse.support.ui.swt.AbstractRecordTableComparator;
-import org.eclipse.chemclipse.support.ui.swt.IRecordTableComparator;
 import org.eclipse.jface.viewers.Viewer;
 
-public class ChannelMappingTableComparator extends AbstractRecordTableComparator implements IRecordTableComparator {
+public class ChannelMappingTableComparator extends AbstractRecordTableComparator {
 
 	@Override
 	public int compare(Viewer viewer, Object e1, Object e2) {

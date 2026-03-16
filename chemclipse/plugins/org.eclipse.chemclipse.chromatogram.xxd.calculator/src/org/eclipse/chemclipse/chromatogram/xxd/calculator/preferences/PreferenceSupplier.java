@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2025 Lablicate GmbH.
+ * Copyright (c) 2014, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Dr. Alexander Kerner - implementation
@@ -21,7 +21,7 @@ import org.eclipse.chemclipse.support.preferences.AbstractPreferenceSupplier;
 import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
 import org.osgi.framework.BundleContext;
 
-public class PreferenceSupplier extends AbstractPreferenceSupplier implements IPreferenceSupplier {
+public class PreferenceSupplier extends AbstractPreferenceSupplier {
 
 	public static final String P_NOISE_CALCULATOR_ID = "noiseCalculatorId";
 	public static final String DEF_NOISE_CALCULATOR_ID = "org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.noise.dyson";
@@ -62,7 +62,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	/**
 	 * Returns the selected noise calculator id or the default
 	 * if none has been selected yet.
-	 * 
+	 *
 	 * @return String
 	 */
 	public static String getSelectedNoiseCalculatorId() {
@@ -72,7 +72,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 
 	/**
 	 * Returns the selected segment width.
-	 * 
+	 *
 	 * @return
 	 */
 	public static int getSelectedSegmentWidth() {

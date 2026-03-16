@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -22,7 +22,7 @@ import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignals;
 
-public class ChromatogramIntegrator extends AbstractSumareaIntegrator implements ISumareaIntegrator {
+public class ChromatogramIntegrator extends AbstractSumareaIntegrator {
 
 	private static final Logger logger = Logger.getLogger(ChromatogramIntegrator.class);
 

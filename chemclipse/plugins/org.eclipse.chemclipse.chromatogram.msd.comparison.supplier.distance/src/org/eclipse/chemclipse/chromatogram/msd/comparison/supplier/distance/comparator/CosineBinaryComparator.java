@@ -6,16 +6,15 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Dr. Alexander Kerner - initial API and implementation
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.distance.comparator;
 
-import org.eclipse.chemclipse.msd.identifier.comparison.IMassSpectrumComparator;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
 
-public class CosineBinaryComparator extends CosineComparator implements IMassSpectrumComparator {
+public class CosineBinaryComparator extends CosineComparator {
 
 	@Override
 	protected double getVectorValue(IExtractedIonSignal signal, int i) {

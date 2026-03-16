@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Alexander Stark - initial API and implementation
  * Christoph Läubrich - Change to use a more generic API, cleanup the code and streamline the algorithm flow
@@ -14,7 +14,6 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.nmr.processing.digitalfilter;
 
-import java.io.Serializable;
 import java.util.Arrays;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -34,7 +33,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.osgi.service.component.annotations.Component;
 
 @Component(service = {Filter.class, IMeasurementFilter.class})
-public class DigitalFilterRemoval extends AbstractFIDSignalFilter<DigitalFilterRemovalSettings> implements Serializable {
+public class DigitalFilterRemoval extends AbstractFIDSignalFilter<DigitalFilterRemovalSettings> {
 
 	private static final long serialVersionUID = 4481720817522447928L;
 	private static final String FILTER_NAME = "Digital Filter Removal";

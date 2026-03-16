@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
@@ -41,7 +41,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.notifier.UpdateNotifier;
 import org.eclipse.chemclipse.pcr.converter.core.AbstractPlateExportConverter;
-import org.eclipse.chemclipse.pcr.converter.core.IPlateExportConverter;
 import org.eclipse.chemclipse.pcr.model.core.IChannel;
 import org.eclipse.chemclipse.pcr.model.core.IPlate;
 import org.eclipse.chemclipse.pcr.model.core.IWell;
@@ -56,7 +55,7 @@ import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-public class PCRExportConverter extends AbstractPlateExportConverter implements IPlateExportConverter {
+public class PCRExportConverter extends AbstractPlateExportConverter {
 
 	public static final String TOPIC_PROCESSING_FILE_CREATED = "processing/file/created/pcr/excel"; // $NON-NLS-1$
 

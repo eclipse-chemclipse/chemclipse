@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Alexander Kerner - Generics
@@ -18,7 +18,6 @@ import org.eclipse.chemclipse.model.identifier.ComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.MatchConstraints;
 import org.eclipse.chemclipse.msd.identifier.comparison.AbstractMassSpectrumComparator;
-import org.eclipse.chemclipse.msd.identifier.comparison.IMassSpectrumComparator;
 import org.eclipse.chemclipse.msd.identifier.comparison.math.GeometricDistanceCalculator;
 import org.eclipse.chemclipse.msd.identifier.comparison.math.IMatchCalculator;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
@@ -32,7 +31,7 @@ import org.eclipse.chemclipse.processing.core.IProcessingInfo;
  * <br/>
  * Alfassi, Z. B., Vector analysis of multi-measurements identification
  */
-public class MassSpectrumComparator extends AbstractMassSpectrumComparator implements IMassSpectrumComparator {
+public class MassSpectrumComparator extends AbstractMassSpectrumComparator {
 
 	public static final String COMPARATOR_ID = "org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.alfassi.geometric";
 

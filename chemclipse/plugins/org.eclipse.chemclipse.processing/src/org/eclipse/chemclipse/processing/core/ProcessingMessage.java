@@ -6,13 +6,13 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
 package org.eclipse.chemclipse.processing.core;
 
-public class ProcessingMessage extends AbstractProcessingMessage implements IProcessingMessage {
+public class ProcessingMessage extends AbstractProcessingMessage {
 
 	public ProcessingMessage(MessageType messageType, String description, String message) {
 

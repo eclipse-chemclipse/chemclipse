@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -25,7 +25,7 @@ import org.eclipse.chemclipse.support.preferences.AbstractPreferenceSupplier;
 import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
 import org.osgi.framework.FrameworkUtil;
 
-public class PreferenceSupplier extends AbstractPreferenceSupplier implements IPreferenceSupplier {
+public class PreferenceSupplier extends AbstractPreferenceSupplier {
 
 	public static final String P_IONS_TO_REMOVE = "ionsToRemove";
 	public static final String P_IONS_TO_PRESERVE = "ionsToPreserve";
@@ -84,7 +84,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	/**
 	 * Sets the ions stored in the list to the marked ions
 	 * instance.
-	 * 
+	 *
 	 * @param markedIons
 	 * @param ions
 	 */
@@ -97,7 +97,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 
 	/**
 	 * Returns a list of ions to preserve stored in the settings.
-	 * 
+	 *
 	 * @return List<Integer>
 	 */
 	public static Set<Integer> getIons(String preference, String def) {
@@ -127,7 +127,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	/**
 	 * Returns a string array.<br/>
 	 * E.g. "18;28;84;207" to 18 28 84 207
-	 * 
+	 *
 	 * @param stringList
 	 * @return String[]
 	 */
@@ -151,7 +151,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 	/**
 	 * Creates the settings strings.<br/>
 	 * E.g. 18 28 84 207 to "18;28;84;207"
-	 * 
+	 *
 	 * @param items
 	 * @return String
 	 */
@@ -169,7 +169,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 
 	/**
 	 * Returns whether to adjust threshold transitions or not.
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public static boolean adjustThresholdTransitions() {
@@ -179,7 +179,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 
 	/**
 	 * Returns a list of ions to remove stored in the settings.
-	 * 
+	 *
 	 * @return Set<Integer>
 	 */
 	public static Set<Integer> getIonsToRemove() {
@@ -189,7 +189,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 
 	/**
 	 * Returns a list of ions to preserve stored in the settings.
-	 * 
+	 *
 	 * @return Set<Integer>
 	 */
 	public static Set<Integer> getIonsToPreserve() {
@@ -199,7 +199,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier implements IP
 
 	/**
 	 * Returns the segment width enum.
-	 * 
+	 *
 	 * @return {@link SegmentWidth}
 	 */
 	public static int getSegmentWidth() {

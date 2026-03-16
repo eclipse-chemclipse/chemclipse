@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Matthias Mailänder - add a wavelength selection mode
@@ -82,7 +82,7 @@ public class ChromatogramHeatmapUI extends Composite implements IExtendedPartUI 
 		createControl();
 	}
 
-	class WavelengthSelector extends MouseListener.Stub implements MouseListener {
+	class WavelengthSelector extends MouseListener.Stub {
 
 		@Override
 		public void mousePressed(MouseEvent mouseEvent) {

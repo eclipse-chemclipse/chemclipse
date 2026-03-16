@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -15,11 +15,11 @@ package org.eclipse.chemclipse.model.signals;
 /**
  * If you need signals with a negative total signal range, use {@link ExtendedTotalScanSignal}.
  */
-public class TotalScanSignal extends AbstractTotalScanSignal implements ITotalScanSignal {
+public class TotalScanSignal extends AbstractTotalScanSignal {
 
 	/**
 	 * Add the values with a positive check.
-	 * 
+	 *
 	 * @param retentionTime
 	 * @param retentionIndex
 	 * @param totalSignal
@@ -32,7 +32,7 @@ public class TotalScanSignal extends AbstractTotalScanSignal implements ITotalSc
 	/**
 	 * Validates that retention time and retention index are positive.
 	 * If validatePositive is true, it will be checked that totalSignal is positive too.
-	 * 
+	 *
 	 * @param retentionTime
 	 * @param retentionIndex
 	 * @param totalSignal
