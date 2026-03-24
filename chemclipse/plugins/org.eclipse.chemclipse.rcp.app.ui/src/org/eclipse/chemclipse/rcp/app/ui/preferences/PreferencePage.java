@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -18,7 +18,6 @@ import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.rcp.app.profiles.Profiles;
 import org.eclipse.chemclipse.rcp.app.ui.Activator;
 import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.SpacerFieldEditor;
-import org.eclipse.chemclipse.support.ui.swt.EnhancedCombo;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferencePageContainer;
@@ -32,7 +31,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
@@ -99,12 +97,12 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 
 				String name = selectedProfileFieldEditor.getText().trim();
 				if(name == null || name.equals("")) {
-					MessageBox messageBox = new MessageBox(Display.getCurrent().getActiveShell(), SWT.ICON_INFORMATION);
+					MessageBox messageBox = new MessageBox(deleteProfile.getShell(), SWT.ICON_INFORMATION);
 					messageBox.setText("Delete profile");
 					messageBox.setMessage("There is no profile selected.");
 					messageBox.open();
 				} else {
-					MessageBox messageBox = new MessageBox(Display.getCurrent().getActiveShell(), SWT.ICON_WARNING | SWT.YES | SWT.NO | SWT.CANCEL);
+					MessageBox messageBox = new MessageBox(deleteProfile.getShell(), SWT.ICON_WARNING | SWT.YES | SWT.NO | SWT.CANCEL);
 					messageBox.setText("Delete profile?");
 					messageBox.setMessage("Do you really want to delete the profile: " + name);
 					if(messageBox.open() == SWT.YES) {
@@ -120,7 +118,7 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 		/*
 		 * Load Profile
 		 */
-		availableProfilesCombo = EnhancedCombo.create(composite, SWT.NONE);
+		availableProfilesCombo = new Combo(composite, SWT.READ_ONLY);
 		availableProfilesCombo.setItems(getProfileNames());
 		availableProfilesCombo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
@@ -134,7 +132,7 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 
 				String name = availableProfilesCombo.getText().trim();
 				if(name == null || name.equals("")) {
-					MessageBox messageBox = new MessageBox(Display.getCurrent().getActiveShell(), SWT.ICON_INFORMATION);
+					MessageBox messageBox = new MessageBox(loadProfile.getShell(), SWT.ICON_INFORMATION);
 					messageBox.setText("Load profile");
 					messageBox.setMessage("Please select a profile to load.");
 					messageBox.open();
@@ -178,13 +176,13 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 
 				String name = newProfileNameText.getText().trim();
 				if(name == null || name.equals("")) {
-					MessageBox messageBox = new MessageBox(Display.getCurrent().getActiveShell(), SWT.ICON_INFORMATION);
+					MessageBox messageBox = new MessageBox(saveProfile.getShell(), SWT.ICON_INFORMATION);
 					messageBox.setText("Save profile");
 					messageBox.setMessage("Please type in a profile name.");
 					messageBox.open();
 				} else {
 					if(profileExists(name)) {
-						MessageBox messageBox = new MessageBox(Display.getCurrent().getActiveShell(), SWT.ICON_WARNING | SWT.YES | SWT.NO | SWT.CANCEL);
+						MessageBox messageBox = new MessageBox(saveProfile.getShell(), SWT.ICON_WARNING | SWT.YES | SWT.NO | SWT.CANCEL);
 						messageBox.setText("Overwrite profile?");
 						messageBox.setMessage("Do you really want to overwrite the profile: " + name);
 						if(messageBox.open() == SWT.YES) {
@@ -245,11 +243,6 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
-	 */
 	@Override
 	public void init(IWorkbench workbench) {
 
