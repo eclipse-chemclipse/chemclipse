@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -19,12 +19,9 @@ import java.util.List;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.impl.CalibrationFile;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.ui.swt.CalibrationFileListUI;
-import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.preference.FieldEditor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -34,7 +31,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.widgets.Widget;
 
 public class CalibrationTableEditor extends FieldEditor {
 
@@ -43,7 +39,6 @@ public class CalibrationTableEditor extends FieldEditor {
 	private Button buttonAdd;
 	private Button buttonRemove;
 	private Button buttonClear;
-	private SelectionListener selectionListener;
 
 	private String[] filterExtensions;
 	private String[] filterNames;
@@ -170,8 +165,11 @@ public class CalibrationTableEditor extends FieldEditor {
 	private void createButtons(Composite composite) {
 
 		buttonAdd = createButton(composite, "Add", "Add a new calibration file."); //$NON-NLS-1$
+		buttonAdd.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> addPressed()));
 		buttonRemove = createButton(composite, "Remove", "Remove the selected calibration file."); //$NON-NLS-1$
+		buttonRemove.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> removePressed()));
 		buttonClear = createButton(composite, "Clear", "Remove all calibration files."); //$NON-NLS-1$
+		buttonClear.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> clearPressed()));
 	}
 
 	private Button createButton(Composite parent, String text, String tooltip) {
@@ -184,32 +182,7 @@ public class CalibrationTableEditor extends FieldEditor {
 		int widthHint = convertHorizontalDLUsToPixels(button, IDialogConstants.BUTTON_WIDTH);
 		data.widthHint = Math.max(widthHint, button.computeSize(SWT.DEFAULT, SWT.DEFAULT, true).x);
 		button.setLayoutData(data);
-		button.addSelectionListener(getSelectionListener());
 		return button;
-	}
-
-	private SelectionListener getSelectionListener() {
-
-		if(selectionListener == null) {
-			selectionListener = new SelectionAdapter() {
-
-				@Override
-				public void widgetSelected(SelectionEvent event) {
-
-					Widget widget = event.widget;
-					if(widget == buttonAdd) {
-						addPressed();
-					} else if(widget == buttonRemove) {
-						removePressed();
-					} else if(widget == buttonClear) {
-						clearPressed();
-					} else if(widget == calibrationFileListUI.getTable()) {
-						selectionChanged();
-					}
-				}
-			};
-		}
-		return selectionListener;
 	}
 
 	private void addPressed() {
@@ -251,7 +224,7 @@ public class CalibrationTableEditor extends FieldEditor {
 
 		CalibrationFile calibrationFile = null;
 
-		FileDialog fileDialog = new FileDialog(DisplayUtils.getShell(buttonAdd), SWT.OPEN);
+		FileDialog fileDialog = new FileDialog(buttonAdd.getShell(), SWT.OPEN);
 		fileDialog.setText("Select New Calibration File");
 		fileDialog.setFilterPath(PreferenceSupplier.getFilterPathIndexFiles());
 
@@ -319,7 +292,7 @@ public class CalibrationTableEditor extends FieldEditor {
 
 		if(calibrationFileListUI == null) {
 			calibrationFileListUI = new CalibrationFileListUI(parent, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL | SWT.H_SCROLL);
-			calibrationFileListUI.getTable().addSelectionListener(getSelectionListener());
+			calibrationFileListUI.getTable().addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> selectionChanged()));
 		} else {
 			checkParent(calibrationFileListUI.getTable(), parent);
 		}
