@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - adjust API, add support for name
@@ -208,7 +208,7 @@ public abstract class AbstractPeak implements IPeak {
 	@Override
 	public List<IQuantitationEntry> getQuantitationEntries() {
 
-		return Collections.unmodifiableList(new ArrayList<IQuantitationEntry>(quantitationEntries));
+		return Collections.unmodifiableList(new ArrayList<>(quantitationEntries));
 	}
 
 	@Override

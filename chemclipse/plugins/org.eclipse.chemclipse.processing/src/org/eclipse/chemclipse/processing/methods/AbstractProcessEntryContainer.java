@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -103,7 +103,7 @@ public abstract class AbstractProcessEntryContainer implements IProcessEntryCont
 						/*
 						 * Combined method
 						 */
-						AbstractProcessSupplier.applyProcessor(processorPreferences, new SubProcessExecutionConsumer<T>(consumer, new SubProcess<T>() {
+						AbstractProcessSupplier.applyProcessor(processorPreferences, new SubProcessExecutionConsumer<>(consumer, new SubProcess<T>() {
 
 							@Override
 							public <SubX> void execute(IProcessorPreferences<SubX> preferences, IProcessExecutionConsumer<T> parent, ProcessExecutionContext subcontext) {

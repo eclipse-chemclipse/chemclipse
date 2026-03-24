@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -138,7 +138,7 @@ public class ResponseSignals extends ArrayList<IResponseSignal> implements IResp
 	@Override
 	public Set<Double> getSignalSet() {
 
-		Set<Double> signalSet = new HashSet<Double>();
+		Set<Double> signalSet = new HashSet<>();
 		for(IResponseSignal entry : this) {
 			signalSet.add(entry.getSignal());
 		}

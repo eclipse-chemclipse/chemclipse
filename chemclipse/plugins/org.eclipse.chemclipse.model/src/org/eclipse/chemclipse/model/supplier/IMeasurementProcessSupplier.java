@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Christoph Läubrich - initial API and implementation
  *******************************************************************************/
@@ -27,7 +27,7 @@ public interface IMeasurementProcessSupplier<ConfigType> extends IProcessSupplie
 
 	/**
 	 * Apply the given processor ID to the given list of measurements
-	 * 
+	 *
 	 * @param measurements
 	 *            the measurements to process
 	 * @param processSettings
@@ -38,7 +38,7 @@ public interface IMeasurementProcessSupplier<ConfigType> extends IProcessSupplie
 
 	static IProcessExecutionConsumer<Collection<? extends IMeasurement>> createConsumer(Collection<? extends IMeasurement> measurements) {
 
-		return new IProcessExecutionConsumer<Collection<? extends IMeasurement>>() {
+		return new IProcessExecutionConsumer<>() {
 
 			AtomicReference<Collection<? extends IMeasurement>> result = new AtomicReference<>(measurements);
 

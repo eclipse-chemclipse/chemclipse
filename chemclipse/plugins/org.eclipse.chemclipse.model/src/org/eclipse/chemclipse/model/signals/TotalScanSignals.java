@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -33,7 +33,7 @@ public class TotalScanSignals implements ITotalScanSignals {
 
 	/**
 	 * Creates a TotalIonSignals instance with the given scan length.
-	 * 
+	 *
 	 * @param numberOfScans
 	 */
 	public TotalScanSignals(int numberOfScans) {
@@ -62,7 +62,7 @@ public class TotalScanSignals implements ITotalScanSignals {
 	 * Creates a {@link TotalScanSignals} instance.<br/>
 	 * The start and stop scan needs also to be specified, if e.g. only a
 	 * selection from scan 40 - 60 is chosen.
-	 * 
+	 *
 	 * @param startScan
 	 * @param stopScan
 	 */
@@ -87,7 +87,7 @@ public class TotalScanSignals implements ITotalScanSignals {
 
 	/**
 	 * Sets additionally the parent chromatogram to the signals instance.
-	 * 
+	 *
 	 * @param startScan
 	 * @param stopScan
 	 * @param chromatogram
@@ -179,7 +179,7 @@ public class TotalScanSignals implements ITotalScanSignals {
 	@Override
 	public Iterator<Integer> iterator() {
 
-		return new Iterator<Integer>() {
+		return new Iterator<>() {
 
 			private int startScan = getStartScan();
 			private int stopScan = getStopScan();

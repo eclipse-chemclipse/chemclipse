@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -55,7 +55,7 @@ public class Denoising {
 	/**
 	 * Tries to remove ions according to noise and to lower the
 	 * signals of noise.
-	 * 
+	 *
 	 * @param chromatogramSelection
 	 * @throws FilterException
 	 */
@@ -142,7 +142,7 @@ public class Denoising {
 
 	/**
 	 * Removes the given ions from the scan range (start/stop scan).
-	 * 
+	 *
 	 * @param extractedIonSignals
 	 * @param startScan
 	 * @param stopScan
@@ -177,7 +177,7 @@ public class Denoising {
 
 	/**
 	 * Subtracts the noise mass spectrum from the given scan range.
-	 * 
+	 *
 	 * @param extractedIonSignals
 	 * @param noiseMassSpectrum
 	 * @param startScan
@@ -199,7 +199,7 @@ public class Denoising {
 
 	/**
 	 * Subtracts the noise mass spectrum from the scan.
-	 * 
+	 *
 	 * @param extractedIonSignal
 	 * @param noiseMassSpectrum
 	 * @param monitor
@@ -235,7 +235,7 @@ public class Denoising {
 
 	/**
 	 * Calculates a noise coefficient.
-	 * 
+	 *
 	 * @param extractedIonSignal
 	 * @param noiseSignal
 	 * @return float
@@ -250,7 +250,7 @@ public class Denoising {
 		 * Get the noise ions. The compareTo method allows to sort by
 		 * abundance descending.
 		 */
-		List<IonNoise> entries = new ArrayList<IonNoise>();
+		List<IonNoise> entries = new ArrayList<>();
 		for(int ion = startIon; ion <= stopIon; ion++) {
 			entries.add(new IonNoise(ion, noiseSignal.getAbundance(ion)));
 		}
@@ -262,7 +262,7 @@ public class Denoising {
 		 * The correlation factors. The number of used ions tells how
 		 * many ions shall be taken into account.
 		 */
-		List<Float> coefficients = new ArrayList<Float>();
+		List<Float> coefficients = new ArrayList<>();
 		int counter = 0;
 		exitfor:
 		for(IonNoise entry : entries) {
@@ -306,12 +306,12 @@ public class Denoising {
 
 	/**
 	 * Subtracts the noise mass spectra from the calculated segments.
-	 * 
+	 *
 	 * @return
 	 */
 	private static List<ICombinedMassSpectrum> subtractNoiseMassSpectraFromSegments(IExtractedIonSignals extractedIonSignals, List<INoiseSegmentMSD> noiseSegments, IMarkedIons ionsToPreserve, int numberOfUsedIonsForCoefficient, IProgressMonitor monitor) {
 
-		List<ICombinedMassSpectrum> noiseMassSpectra = new ArrayList<ICombinedMassSpectrum>();
+		List<ICombinedMassSpectrum> noiseMassSpectra = new ArrayList<>();
 		Calculator calculator = new Calculator();
 		int segments = noiseSegments.size();
 		int startScan;
@@ -390,7 +390,7 @@ public class Denoising {
 	/**
 	 * If the segment has e.g. a width of 13 scans, the method will return 6. If
 	 * the segment has e.g. a width of 14 scans, it will return 7.
-	 * 
+	 *
 	 * @param noiseSegment
 	 * @return int
 	 */
@@ -407,7 +407,7 @@ public class Denoising {
 	/**
 	 * If the segment has e.g. a width of 13 scans, the method will return 7. If
 	 * the segment has e.g. a width of 14 scans, it will return 7.
-	 * 
+	 *
 	 * @param noiseSegment
 	 * @return int
 	 */

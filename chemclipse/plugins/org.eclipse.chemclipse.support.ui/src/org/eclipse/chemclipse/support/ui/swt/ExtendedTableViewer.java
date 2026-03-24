@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Dr. Janos Binder - initial API and implementation
@@ -231,7 +231,7 @@ public class ExtendedTableViewer extends TableViewer implements IExtendedTableVi
 	/**
 	 * Returns the table viewer column with the given label or null
 	 * if none was matched.
-	 * 
+	 *
 	 * @param label
 	 * @return {@link TableViewerColumn}
 	 */
@@ -299,7 +299,7 @@ public class ExtendedTableViewer extends TableViewer implements IExtendedTableVi
 	/**
 	 * Checks if the cell of the given column was selected.
 	 * ColumnIndex is 0 based.
-	 * 
+	 *
 	 * @param event
 	 * @param columnLabel
 	 * @return boolean
@@ -320,7 +320,7 @@ public class ExtendedTableViewer extends TableViewer implements IExtendedTableVi
 	/**
 	 * Returns the column index of the selected cell or -1 if
 	 * none was selected. ColumnIndex is 0 based.
-	 * 
+	 *
 	 * @param event
 	 * @return int
 	 */
@@ -357,7 +357,7 @@ public class ExtendedTableViewer extends TableViewer implements IExtendedTableVi
 	/**
 	 * Checks if the cell of the given column was selected.
 	 * ColumnIndex is 0 based.
-	 * 
+	 *
 	 * @param event
 	 * @param columnIndex
 	 * @return boolean
@@ -412,7 +412,7 @@ public class ExtendedTableViewer extends TableViewer implements IExtendedTableVi
 						@Override
 						public void sort(Viewer viewer, Object[] elements) {
 
-							Comparator<Object> comparer = new Comparator<Object>() {
+							Comparator<Object> comparer = new Comparator<>() {
 
 								@SuppressWarnings("unchecked")
 								@Override

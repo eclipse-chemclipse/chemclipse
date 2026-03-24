@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
@@ -26,7 +26,7 @@ public interface IScanProcessSupplier<SettingType> extends IProcessSupplier<Sett
 
 	/**
 	 * Apply this processor to the given {@link IScan}
-	 * 
+	 *
 	 * @param scan
 	 *            the {@link IScan} to process
 	 * @param processSettings
@@ -41,7 +41,7 @@ public interface IScanProcessSupplier<SettingType> extends IProcessSupplier<Sett
 			return null;
 		}
 
-		return new IProcessExecutionConsumer<IScan>() {
+		return new IProcessExecutionConsumer<>() {
 
 			AtomicReference<IScan> result = new AtomicReference<>(scan);
 

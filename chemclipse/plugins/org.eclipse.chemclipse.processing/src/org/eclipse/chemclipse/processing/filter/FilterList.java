@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Christoph Läubrich - initial API and implementation
  *******************************************************************************/
@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 
 /**
  * A filterlist extends the {@link Iterable} interface in a way that allows optional adding/removal of elements
- * 
+ *
  * @author Christoph Läubrich
  *
  * @param <T>
@@ -49,7 +49,7 @@ public interface FilterList<T> extends Iterable<T> {
 
 	static <Singleton> FilterList<Singleton> singelton(Singleton item) {
 
-		return new FilterList<Singleton>() {
+		return new FilterList<>() {
 
 			@Override
 			public Iterator<Singleton> iterator() {
@@ -67,7 +67,7 @@ public interface FilterList<T> extends Iterable<T> {
 
 	static <X> Iterator<X> convert(Iterator<? extends X> other) {
 
-		return new Iterator<X>() {
+		return new Iterator<>() {
 
 			@Override
 			public boolean hasNext() {

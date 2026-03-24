@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -91,7 +91,7 @@ public class Scan implements Serializable {
 	public List<ScanOrigin> getScanOrigin() {
 
 		if(scanOrigin == null) {
-			scanOrigin = new ArrayList<ScanOrigin>();
+			scanOrigin = new ArrayList<>();
 		}
 		return this.scanOrigin;
 	}
@@ -99,7 +99,7 @@ public class Scan implements Serializable {
 	public List<PrecursorMz> getPrecursorMz() {
 
 		if(precursorMz == null) {
-			precursorMz = new ArrayList<PrecursorMz>();
+			precursorMz = new ArrayList<>();
 		}
 		return this.precursorMz;
 	}
@@ -117,7 +117,7 @@ public class Scan implements Serializable {
 	public List<Peaks> getPeaks() {
 
 		if(peaks == null) {
-			peaks = new ArrayList<Peaks>();
+			peaks = new ArrayList<>();
 		}
 		return this.peaks;
 	}

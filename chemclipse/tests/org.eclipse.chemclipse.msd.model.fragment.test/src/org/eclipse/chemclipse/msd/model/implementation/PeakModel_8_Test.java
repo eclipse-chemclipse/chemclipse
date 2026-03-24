@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -33,7 +33,7 @@ public class PeakModel_8_Test extends PeakModelTestCase {
 
 		// ----------------------PeakMaximum
 		peakMaximum = new PeakMassSpectrum();
-		fragmentValues = new TreeMap<Float, Float>();
+		fragmentValues = new TreeMap<>();
 		fragmentValues.put(104.0f, 230000.0f);
 		fragmentValues.put(103.0f, 58000.0f);
 		fragmentValues.put(51.0f, 26000.0f);

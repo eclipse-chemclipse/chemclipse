@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -64,7 +64,7 @@ public class SupDataType {
 	public List<Float> getFloat() {
 
 		if(_float == null) {
-			_float = new ArrayList<Float>();
+			_float = new ArrayList<>();
 		}
 		return this._float;
 	}
@@ -72,7 +72,7 @@ public class SupDataType {
 	public List<Double> getDouble() {
 
 		if(_double == null) {
-			_double = new ArrayList<Double>();
+			_double = new ArrayList<>();
 		}
 		return this._double;
 	}
@@ -80,7 +80,7 @@ public class SupDataType {
 	public List<Integer> getInt() {
 
 		if(_int == null) {
-			_int = new ArrayList<Integer>();
+			_int = new ArrayList<>();
 		}
 		return this._int;
 	}

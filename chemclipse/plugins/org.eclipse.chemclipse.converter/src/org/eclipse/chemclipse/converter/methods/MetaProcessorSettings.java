@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Christoph Läubrich - initial API and implementation
  * Philip Wenig - enable profiles
@@ -17,9 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.chemclipse.processing.methods.IProcessEntry;
+import org.eclipse.chemclipse.processing.methods.IProcessEntryContainer;
 import org.eclipse.chemclipse.processing.methods.IProcessMethod;
 import org.eclipse.chemclipse.processing.methods.ListProcessEntryContainer;
-import org.eclipse.chemclipse.processing.methods.IProcessEntryContainer;
 import org.eclipse.chemclipse.processing.supplier.IProcessSupplier;
 import org.eclipse.chemclipse.processing.supplier.IProcessorPreferences;
 
@@ -41,7 +41,7 @@ public class MetaProcessorSettings {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return the {@link IProcessMethod} this settings are meant for
 	 */
 	@JsonIgnore
@@ -60,7 +60,7 @@ public class MetaProcessorSettings {
 		 * .metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.chemclipse.processing.supplier.IProcessSupplier.prefs
 		 */
 		String processEntryIdentifier = getProcessEntryIdentifier(processEntry);
-		return new IProcessorPreferences<T>() {
+		return new IProcessorPreferences<>() {
 
 			@Override
 			public DialogBehavior getDialogBehaviour() {
@@ -121,7 +121,7 @@ public class MetaProcessorSettings {
 
 	/**
 	 * Create an unique id. The active profile is tracked too.
-	 * 
+	 *
 	 * @param processEntry
 	 * @return String
 	 */

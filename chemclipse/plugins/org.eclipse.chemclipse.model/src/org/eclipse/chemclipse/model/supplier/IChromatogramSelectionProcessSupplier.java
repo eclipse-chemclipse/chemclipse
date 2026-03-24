@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Christoph Läubrich - initial API and implementation
  * Philip Wenig - process macro recorder
@@ -27,7 +27,7 @@ public interface IChromatogramSelectionProcessSupplier<SettingType> extends IPro
 
 	/**
 	 * Apply this processor to the given {@link IChromatogramSelection}
-	 * 
+	 *
 	 * @param chromatogramSelection
 	 *            the {@link IChromatogramSelection} to process
 	 * @param processSettings
@@ -42,7 +42,7 @@ public interface IChromatogramSelectionProcessSupplier<SettingType> extends IPro
 			return null;
 		}
 
-		return new IProcessExecutionConsumer<IChromatogramSelection>() {
+		return new IProcessExecutionConsumer<>() {
 
 			AtomicReference<IChromatogramSelection> result = new AtomicReference<>(chromatogramSelection);
 

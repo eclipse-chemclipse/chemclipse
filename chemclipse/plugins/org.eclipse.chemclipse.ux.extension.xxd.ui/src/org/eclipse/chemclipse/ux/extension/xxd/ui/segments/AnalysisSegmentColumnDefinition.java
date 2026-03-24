@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Christoph Läubrich - initial API and implementation
  *******************************************************************************/
@@ -38,21 +38,21 @@ public class AnalysisSegmentColumnDefinition implements ColumnDefinitionProvider
 	public List<ColumnDefinition<?, ?>> getColumnDefinitions() {
 
 		List<ColumnDefinition<?, ?>> list = new ArrayList<>();
-		list.add(new SimpleColumnDefinition<>("Start Scan", 100, new AnalysisSegmentColumnLabelProvider<IAnalysisSegment>(IAnalysisSegment.class, IAnalysisSegment::getStartScan)).withEditingSupport(viewer -> new IntegerColumnEditingSupport<IAnalysisSegment>(viewer, getProperty(IAnalysisSegment::getStartScan), //
+		list.add(new SimpleColumnDefinition<>("Start Scan", 100, new AnalysisSegmentColumnLabelProvider<>(IAnalysisSegment.class, IAnalysisSegment::getStartScan)).withEditingSupport(viewer -> new IntegerColumnEditingSupport<IAnalysisSegment>(viewer, getProperty(IAnalysisSegment::getStartScan), //
 				(IAnalysisSegment segment, Integer value) -> {
 					if(segment instanceof AnalysisSegment analysisSegment) {
 						analysisSegment.setStartScan(value);
 						updateListener.run();
 					}
 				})));
-		list.add(new SimpleColumnDefinition<>("Stop Scan", 100, new AnalysisSegmentColumnLabelProvider<IAnalysisSegment>(IAnalysisSegment.class, IAnalysisSegment::getStopScan)).withEditingSupport(viewer -> new IntegerColumnEditingSupport<IAnalysisSegment>(viewer, getProperty(IAnalysisSegment::getStopScan), //
+		list.add(new SimpleColumnDefinition<>("Stop Scan", 100, new AnalysisSegmentColumnLabelProvider<>(IAnalysisSegment.class, IAnalysisSegment::getStopScan)).withEditingSupport(viewer -> new IntegerColumnEditingSupport<IAnalysisSegment>(viewer, getProperty(IAnalysisSegment::getStopScan), //
 				(IAnalysisSegment segment, Integer value) -> {
 					if(segment instanceof AnalysisSegment analysisSegment) {
 						analysisSegment.setStopScan(value);
 						updateListener.run();
 					}
 				})));
-		list.add(new SimpleColumnDefinition<>("Width", 100, new AnalysisSegmentColumnLabelProvider<IAnalysisSegment>(IAnalysisSegment.class, IAnalysisSegment::getWidth)));
+		list.add(new SimpleColumnDefinition<>("Width", 100, new AnalysisSegmentColumnLabelProvider<>(IAnalysisSegment.class, IAnalysisSegment::getWidth)));
 		return list;
 	}
 

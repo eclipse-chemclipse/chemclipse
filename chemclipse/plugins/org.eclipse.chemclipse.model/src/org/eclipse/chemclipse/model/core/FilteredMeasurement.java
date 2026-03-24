@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Christoph Läubrich - initial API and implementation
  * Alexander Kerner - implementation
@@ -480,7 +480,7 @@ public class FilteredMeasurement<FilteredType extends IMeasurement, ConfigType> 
 		FilteredType filteredObject = (FilteredType)in.readObject();
 		ConfigType filterConfig = (ConfigType)in.readObject();
 		String filterID = (String)in.readObject();
-		this.context = new FilterContext<FilteredType, ConfigType>() {
+		this.context = new FilterContext<>() {
 
 			private Filter<ConfigType> filter;
 

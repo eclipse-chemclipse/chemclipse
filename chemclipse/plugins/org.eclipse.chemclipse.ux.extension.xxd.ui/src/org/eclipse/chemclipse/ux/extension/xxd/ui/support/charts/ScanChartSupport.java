@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -161,7 +161,7 @@ public class ScanChartSupport {
 				/*
 				 * WSD
 				 */
-				List<IScanSignalWSD> scanSignalsWSD = new ArrayList<IScanSignalWSD>(scanWSD.getScanSignals());
+				List<IScanSignalWSD> scanSignalsWSD = new ArrayList<>(scanWSD.getScanSignals());
 				Collections.sort(scanSignalsWSD, wavelengthValueComparator);
 				int size = scanSignalsWSD.size();
 				xSeries = new double[size];

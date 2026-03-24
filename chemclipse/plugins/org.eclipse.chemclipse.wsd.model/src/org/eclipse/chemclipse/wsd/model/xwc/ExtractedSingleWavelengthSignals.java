@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Jan Holy - initial API and implementation
  * Philip Wenig - refactor baseline
@@ -49,7 +49,7 @@ public class ExtractedSingleWavelengthSignals implements IExtractedSingleWavelen
 	 * Creates a {@link IExtractedWavelengthSignals} instance.<br/>
 	 * The start and stop scan needs also to be specified, if e.g. only a
 	 * selection from scan 40 - 60 is chosen.
-	 * 
+	 *
 	 * @param startScan
 	 * @param stopScan
 	 */
@@ -165,7 +165,7 @@ public class ExtractedSingleWavelengthSignals implements IExtractedSingleWavelen
 	@Override
 	public Iterator<Integer> iterator() {
 
-		return new Iterator<Integer>() {
+		return new Iterator<>() {
 
 			private int startScan = getStartScan();
 			private int stopScan = getStopScan();

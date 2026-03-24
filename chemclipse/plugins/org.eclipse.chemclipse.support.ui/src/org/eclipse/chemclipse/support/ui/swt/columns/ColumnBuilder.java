@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Christoph Läubrich - initial API and implementation
  * Philip Wenig - refactoring classifier
@@ -65,7 +65,7 @@ public class ColumnBuilder<DataType, ColumnType> {
 
 	public static <DataType, ColumnType extends Comparable<ColumnType>> ColumnBuilder<DataType, ColumnType> defaultSortableColumn(String title, int width, Function<DataType, ColumnType> mapper) {
 
-		return new ColumnBuilder<DataType, ColumnType>(title, width, mapper).sort(Comparable::compareTo);
+		return new ColumnBuilder<>(title, width, mapper).sort(Comparable::compareTo);
 	}
 
 	public ColumnDefinition<DataType, ColumnType> create() {
