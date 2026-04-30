@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -75,18 +75,26 @@ public class HighPassMassSpectrumPeaksFilter extends AbstractMassSpectrumFilter 
 
 	private static List<IMassSpectrumPeak> filteredPeaks(List<IMassSpectrumPeak> peaks, HighPassMassSpectrumPeaksFilterSettings settings, IProgressMonitor monitor) {
 
-		List<IMassSpectrumPeak> sortedPeaks = peaks.stream() //
-				.sorted(Comparator.comparingDouble(IMassSpectrumPeak::getAbundance).reversed()) //
-				.toList();
-
 		List<IMassSpectrumPeak> peaksToDelete = new ArrayList<>();
-		SubMonitor subMonitor = SubMonitor.convert(monitor, peaks.size());
-		for(int i = 0; i < peaks.size(); i++) {
-			if(i >= settings.getNumberHighest()) {
-				IMassSpectrumPeak peak = sortedPeaks.get(i);
-				peaksToDelete.add(peak);
+		int numberHighest = settings.getNumberHighest();
+		if(numberHighest > 0) {
+			/*
+			 * Data
+			 */
+			List<IMassSpectrumPeak> sortedPeaks = peaks.stream() //
+					.sorted(Comparator.comparingDouble(IMassSpectrumPeak::getAbundance).reversed()) //
+					.toList();
+			/*
+			 * Filter
+			 */
+			SubMonitor subMonitor = SubMonitor.convert(monitor, peaks.size());
+			for(int i = 0; i < peaks.size(); i++) {
+				if(i >= numberHighest) {
+					IMassSpectrumPeak peak = sortedPeaks.get(i);
+					peaksToDelete.add(peak);
+				}
+				subMonitor.worked(1);
 			}
-			subMonitor.worked(1);
 		}
 
 		return peaksToDelete;

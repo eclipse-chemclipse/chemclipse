@@ -56,12 +56,16 @@ public class HighPassPeaksFilter extends AbstractPeakFilter<HighPassPeaksFilterS
 			configuration = createConfiguration(peaks);
 		}
 
+		/*
+		 * 0 is the conditional option to skip this processor.
+		 */
 		int numberHighest = configuration.getNumberHighest();
-		PeakFilterOption peakFilterOption = configuration.getPeakFilterOption();
-		List<IPeak> peaksToDelete = XPassPeaksFilter.filterPeaks(peaks, context, peakFilterOption, numberHighest, true);
-
-		deletePeaks(peaksToDelete, chromatogramSelection);
-		resetPeakSelection(chromatogramSelection);
+		if(numberHighest > 0) {
+			PeakFilterOption peakFilterOption = configuration.getPeakFilterOption();
+			List<IPeak> peaksToDelete = XPassPeaksFilter.filterPeaks(peaks, context, peakFilterOption, numberHighest, true);
+			deletePeaks(peaksToDelete, chromatogramSelection);
+			resetPeakSelection(chromatogramSelection);
+		}
 	}
 
 	@Override

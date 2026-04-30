@@ -56,12 +56,16 @@ public class LowPassPeaksFilter extends AbstractPeakFilter<LowPassPeaksFilterSet
 			configuration = createConfiguration(peaks);
 		}
 
+		/*
+		 * 0 is the conditional option to skip this processor.
+		 */
 		int numberLowest = configuration.getNumberLowest();
-		PeakFilterOption peakFilterOption = configuration.getPeakFilterOption();
-		List<IPeak> peaksToDelete = XPassPeaksFilter.filterPeaks(peaks, context, peakFilterOption, numberLowest, false);
-
-		deletePeaks(peaksToDelete, chromatogramSelection);
-		resetPeakSelection(chromatogramSelection);
+		if(numberLowest > 0) {
+			PeakFilterOption peakFilterOption = configuration.getPeakFilterOption();
+			List<IPeak> peaksToDelete = XPassPeaksFilter.filterPeaks(peaks, context, peakFilterOption, numberLowest, false);
+			deletePeaks(peaksToDelete, chromatogramSelection);
+			resetPeakSelection(chromatogramSelection);
+		}
 	}
 
 	@Override

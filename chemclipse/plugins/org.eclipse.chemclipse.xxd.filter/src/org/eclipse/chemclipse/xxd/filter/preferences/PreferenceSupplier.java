@@ -23,14 +23,17 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final float MIN_FACTOR = 0.0f;
 	public static final float MAX_FACTOR = 100.0f;
 
-	public static final String P_NUMBER_LOWEST = "numberLowest";
+	/*
+	 * Min number lowest 0 allows to skip the filter optionally.
+	 */
 	public static final int DEF_NUMBER_LOWEST = 5;
-	public static final int MIN_NUMBER_LOWEST = 1;
+	public static final int MIN_NUMBER_LOWEST = 0;
 	public static final int MAX_NUMBER_LOWEST = Integer.MAX_VALUE;
-
-	public static final String P_NUMBER_HIGHEST = "numberHighest";
+	/*
+	 * Min number highest 0 allows to skip the filter optionally.
+	 */
 	public static final int DEF_NUMBER_HIGHEST = 5;
-	public static final int MIN_NUMBER_HIGHEST = 1;
+	public static final int MIN_NUMBER_HIGHEST = 0;
 	public static final int MAX_NUMBER_HIGHEST = Integer.MAX_VALUE;
 
 	public static IPreferenceSupplier INSTANCE() {
@@ -47,7 +50,5 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	@Override
 	public void initializeDefaults() {
 
-		putDefault(P_NUMBER_LOWEST, Integer.toString(DEF_NUMBER_LOWEST));
-		putDefault(P_NUMBER_HIGHEST, Integer.toString(DEF_NUMBER_HIGHEST));
 	}
 }
