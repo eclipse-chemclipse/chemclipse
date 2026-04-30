@@ -15,7 +15,6 @@ package org.eclipse.chemclipse.xxd.filter.chromatogram.settings;
 import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
 import org.eclipse.chemclipse.support.settings.FloatSettingsProperty;
 import org.eclipse.chemclipse.xxd.filter.model.CoordinateOption;
-import org.eclipse.chemclipse.xxd.filter.preferences.PreferenceSupplier;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
@@ -28,7 +27,7 @@ public class TransferFilterSettings {
 	private float limitMatchFactor = 80.0f;
 	@JsonProperty(value = "Match Quality", defaultValue = "0.0")
 	@JsonPropertyDescription(value = "Overrides the match quality. If zero, the existing match factor is used.")
-	@FloatSettingsProperty(minValue = PreferenceSupplier.MIN_FACTOR, maxValue = PreferenceSupplier.MAX_FACTOR)
+	@FloatSettingsProperty(minValue = 0, maxValue = 100)
 	private float matchQuality = 0.0f;
 	@JsonProperty(value = "Coordinate Option", defaultValue = "RETENTION_TIME_MIN")
 	@JsonPropertyDescription(value = "Use the given coordinate selection.")

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2025 Lablicate GmbH.
+ * Copyright (c) 2022, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -14,7 +14,6 @@ package org.eclipse.chemclipse.xxd.filter.peaks.settings;
 
 import org.eclipse.chemclipse.support.settings.DoubleSettingsProperty;
 import org.eclipse.chemclipse.support.settings.StringSettingsProperty;
-import org.eclipse.chemclipse.xxd.filter.preferences.PreferenceSupplier;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
@@ -25,9 +24,9 @@ public class DeletePeaksByQuantitationFilterSettings {
 	@JsonPropertyDescription(value = "Delete the peaks with a quantitation of the given name or all if empty.")
 	@StringSettingsProperty(allowEmpty = true)
 	private String name = "";
-	@JsonProperty(value = "Min. Concentration", defaultValue = "")
+	@JsonProperty(value = "Min. Concentration", defaultValue = "0.0")
 	@JsonPropertyDescription(value = "Delete the peaks with a concentration lower the given limit.")
-	@DoubleSettingsProperty(minValue = PreferenceSupplier.MIN_CONCENTRATION, maxValue = PreferenceSupplier.MAX_CONCENTRATION)
+	@DoubleSettingsProperty(minValue = 0, maxValue = Double.MAX_VALUE)
 	private double concentration = 0.0d;
 	@JsonProperty(value = "Unit", defaultValue = "")
 	@JsonPropertyDescription(value = "Delete the peaks with a quantitation of the given unit.")
