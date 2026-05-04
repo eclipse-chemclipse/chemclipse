@@ -18,14 +18,15 @@ import org.eclipse.chemclipse.processing.core.IMessageProvider;
 import org.eclipse.chemclipse.processing.ui.Activator;
 import org.eclipse.chemclipse.support.events.IPerspectiveAndViewIds;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Creatable;
 import org.eclipse.e4.ui.di.UISynchronize;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
 
 import jakarta.inject.Inject;
 
@@ -40,6 +41,9 @@ public class ProcessingInfoPartSupport {
 	private UISynchronize uiSynchronize = null;
 	@Inject
 	private ProcessingInfoUpdateNotifier processingInfoUpdateNotifier;
+
+	@Inject
+	private IEclipseContext context;
 
 	/**
 	 * Use getInstance() instead or create this support via:
@@ -96,10 +100,10 @@ public class ProcessingInfoPartSupport {
 					 * Focus the view if requested, this will open the feedback view if required.
 					 */
 					if(focusProcessingInfoPart) {
-						try {
-							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(IPerspectiveAndViewIds.VIEW_FEEDBACK);
-						} catch(PartInitException e) {
-							logger.warn(e);
+						//lazy resolve EPartService instead of injecting it so there is time for EPartService to be initialized
+						EPartService windowPartService = context.get(EPartService.class);
+						if(windowPartService != null) {
+							windowPartService.showPart(IPerspectiveAndViewIds.VIEW_FEEDBACK, PartState.VISIBLE);
 						}
 					}
 				});
