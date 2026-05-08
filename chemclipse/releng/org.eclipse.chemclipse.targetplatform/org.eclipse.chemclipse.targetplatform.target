@@ -53,16 +53,7 @@
 		<unit id="org.apache.poi.ooxml"/>
 		<unit id="org.apache.poi.ooxml.schemas"/>
 		<unit id="org.apache.xmlbeans"/>
-	</location>
-	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
-		<dependencies>
-			<dependency>
-				<groupId>org.easymock</groupId>
-				<artifactId>easymock</artifactId>
-				<version>5.6.0</version>
-				<type>jar</type>
-			</dependency>
-		</dependencies>
+		<unit id="org.easymock"/>
 	</location>
 	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" label="org.apache.pdfbox" missingManifest="generate" type="Maven">
 		<dependencies>
