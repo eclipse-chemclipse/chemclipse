@@ -326,6 +326,91 @@ public class SeriesConverter {
 
 	}
 
+	public static List<IScatterSeriesData> sPlotToSeries(IResultsMVA results, List<IVariable> highlighted) {
+
+		IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+		List<IScatterSeriesData> scatterSeriesDataList = new ArrayList<>();
+		List<IVariable> variables = results.getExtractedVariables();
+		double[] pCovarianceValues = results.getPCovarianceValues();
+		double[] pCorrValues = results.getPCorrValues();
+
+		if(variables == null || pCovarianceValues == null || pCorrValues == null) {
+			return scatterSeriesDataList;
+		}
+
+		int length = Math.min(variables.size(), Math.min(pCovarianceValues.length, pCorrValues.length));
+		for(int i = 0; i < length; i++) {
+			IVariable variable = variables.get(i);
+			String name = variable.getValue();
+
+			double x = pCovarianceValues[i];
+			double y = pCorrValues[i];
+
+			ISeriesData seriesData = new SeriesData(new double[]{x}, new double[]{y}, name);
+			IScatterSeriesData scatterSeriesData = new ScatterSeriesData(seriesData);
+			IScatterSeriesSettings scatterSeriesSettings = scatterSeriesData.getSettings();
+			scatterSeriesSettings.setSymbolColor(variable.isSelected() ? Colors.RED : Colors.GRAY);
+			scatterSeriesSettings.setSymbolType(createFromSettings(preferenceStore, PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_TYPE));
+			if(highlighted.contains(variable)) {
+				scatterSeriesSettings.setSymbolType(createFromSettings(preferenceStore, PreferenceSupplier.P_LOADING_PLOT_2D_HIGHLIGHT_SYMBOL_TYPE));
+			}
+			scatterSeriesSettings.setSymbolSize(preferenceStore.getInt(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_SIZE));
+			IScatterSeriesSettings scatterSeriesSettingsHighlight = (IScatterSeriesSettings)scatterSeriesSettings.getSeriesSettingsHighlight();
+			scatterSeriesSettingsHighlight.setSymbolColor(Colors.RED);
+			scatterSeriesSettingsHighlight.setSymbolSize(preferenceStore.getInt(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_SIZE) + 2);
+			scatterSeriesDataList.add(scatterSeriesData);
+		}
+		return scatterSeriesDataList;
+	}
+
+	public static List<IScatterSeriesData> sPlotToSeriesDescription(IResultsMVA results, List<IVariable> highlighted) {
+
+		IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+		List<IScatterSeriesData> scatterSeriesDataList = new ArrayList<>();
+		List<IVariable> variables = results.getExtractedVariables();
+		double[] pCovarianceValues = results.getPCovarianceValues();
+		double[] pCorrValues = results.getPCorrValues();
+
+		if(variables == null || pCovarianceValues == null || pCorrValues == null) {
+			return scatterSeriesDataList;
+		}
+
+		int length = Math.min(variables.size(), Math.min(pCovarianceValues.length, pCorrValues.length));
+		for(int i = 0; i < length; i++) {
+			IVariable variable = variables.get(i);
+			String description = variable.getDescription();
+			String name = null;
+			if(description == null || description.isEmpty()) {
+				name = variable.getValue();
+			} else {
+				name = description;
+			}
+
+			double x = pCovarianceValues[i];
+			double y = pCorrValues[i];
+
+			ISeriesData seriesData = new SeriesData(new double[]{x}, new double[]{y}, name);
+			IScatterSeriesData scatterSeriesData = new ScatterSeriesData(seriesData);
+			IScatterSeriesSettings scatterSeriesSettings = scatterSeriesData.getSettings();
+
+			if(variable.isSelected()) {
+				scatterSeriesSettings.setSymbolColor(Colors.RED);
+			} else {
+				scatterSeriesSettings.setSymbolColor(Colors.GRAY);
+			}
+			scatterSeriesSettings.setSymbolType(createFromSettings(preferenceStore, PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_TYPE));
+			if(highlighted.contains(variable)) {
+				scatterSeriesSettings.setSymbolType(createFromSettings(preferenceStore, PreferenceSupplier.P_LOADING_PLOT_2D_HIGHLIGHT_SYMBOL_TYPE));
+			}
+			scatterSeriesSettings.setSymbolSize(preferenceStore.getInt(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_SIZE));
+			IScatterSeriesSettings scatterSeriesSettingsHighlight = (IScatterSeriesSettings)scatterSeriesSettings.getSeriesSettingsHighlight();
+			scatterSeriesSettingsHighlight.setSymbolColor(Colors.RED);
+			scatterSeriesSettingsHighlight.setSymbolSize(preferenceStore.getInt(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_SIZE) + 2);
+			scatterSeriesDataList.add(scatterSeriesData);
+		}
+		return scatterSeriesDataList;
+	}
+
 	private static PlotSymbolType createFromSettings(IPreferenceStore preferenceStore, String name) {
 
 		try {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2025 Lablicate GmbH.
+ * Copyright (c) 2013, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -27,6 +27,8 @@ public class ResultsPCA implements IResultsMVA {
 	private double[] cumulativeCrossValidations;
 	private List<IVariable> extractedVariables;
 	private List<IResultMVA> pcaResultList;
+	private double[] pCovarianceValues;
+	private double[] pCorrValues;
 
 	private IAnalysisSettings analysisSettings;
 
@@ -113,5 +115,29 @@ public class ResultsPCA implements IResultsMVA {
 	public void setCumulativeCrossValidations(double[] cumulativeCrossValidations) {
 
 		this.cumulativeCrossValidations = cumulativeCrossValidations;
+	}
+
+	@Override
+	public double[] getPCovarianceValues() {
+
+		return pCovarianceValues;
+	}
+
+	@Override
+	public void setPCovarianceValues(double[] pCovarianceValues) {
+
+		this.pCovarianceValues = pCovarianceValues;
+	}
+
+	@Override
+	public double[] getPCorrValues() {
+
+		return pCorrValues;
+	}
+
+	@Override
+	public void setPCorrValues(double[] pCorrValues) {
+
+		this.pCorrValues = pCorrValues;
 	}
 }

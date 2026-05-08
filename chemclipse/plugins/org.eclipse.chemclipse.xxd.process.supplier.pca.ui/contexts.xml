@@ -9,4 +9,8 @@
       <description>In the Score Plot, the data points represent the Samples. Their position explain the similarity to other Samples according to the respective components.</description>
       <topic label="Controls" href="html/controls/score_plot.html"/>
    </context>
+   <context id="s_plot" title="S Plot">
+      <description>In the S Plot, the data points represent the Features. Their position is defined by predictive covariance p and predictive correlation p(corr) from the OPLS model.</description>
+      <topic label="Controls" href="html/controls/s_plot.html"/>
+   </context>
 </contexts>
