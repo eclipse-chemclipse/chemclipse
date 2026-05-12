@@ -4,14 +4,16 @@
       label="nmrML Converter"
       version="0.9.0.qualifier"
       provider-name="ChemClipse"
-      plugin="org.eclipse.chemclipse.feature.branding">
+      plugin="org.eclipse.chemclipse.feature.branding"
+      license-feature="org.eclipse.license"
+      license-feature-version="2.0.2.qualifier">
 
    <description url="http://www.chemclipse.net">
       This is the nmrML converter.
    </description>
 
    <copyright url="http://www.lablicate.net">
-      Copyright (c) 2021 Lablicate GmbH.
+      Copyright (c) 2021, 2026 Lablicate GmbH.
    </copyright>
 
    <license url="%licenseURL">
