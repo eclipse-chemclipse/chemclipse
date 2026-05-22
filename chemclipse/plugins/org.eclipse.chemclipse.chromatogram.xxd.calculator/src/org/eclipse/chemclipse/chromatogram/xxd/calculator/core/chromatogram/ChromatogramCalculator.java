@@ -47,7 +47,7 @@ public class ChromatogramCalculator {
 	}
 
 	/**
-	 * Applies the specified filter (filterID) with the given {@link IChromatogramCalculatorSettings} on the {@link IChromatogramSelectionMSD} .<br/>
+	 * Applies the specified filter (filterID) with the given {@link IChromatogramCalculatorSettings} on the {@link IChromatogramSelection} .<br/>
 	 * The filter can be supported as a plugin through the extension point
 	 * mechanism.<br/>
 	 * You could think of filters that for example remove background

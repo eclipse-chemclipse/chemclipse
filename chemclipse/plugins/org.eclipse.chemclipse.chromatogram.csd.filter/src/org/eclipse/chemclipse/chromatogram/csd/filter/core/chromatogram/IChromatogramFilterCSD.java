@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -26,20 +26,11 @@ public interface IChromatogramFilterCSD {
 	 * filter settings.<br/>
 	 * Return an {@link IProcessingInfo} instance.<br/>
 	 * If there is no monitor instance, use a {@link NullProgressMonitor}.
-	 * 
-	 * @param chromatogramSelection
-	 * @param chromatogramFilterSettings
-	 * @param monitor
-	 * @return {@link IProcessingInfo}
 	 */
 	IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelectionCSD chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor);
 
 	/**
 	 * Validates the selection and settings and returns a process info instance.
-	 * 
-	 * @param chromatogramSelection
-	 * @param chromatogramFilterSettings
-	 * @return {@link IProcessingInfo}
 	 */
 	IProcessingInfo<IChromatogramFilterResult> validate(IChromatogramSelectionCSD chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings);
 }

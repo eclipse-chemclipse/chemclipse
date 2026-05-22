@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -55,11 +55,6 @@ public class PeakFilter {
 	 * Applies the specified filter (filterID) with the given {@link IPeakFilterSettings} on the {@link IPeak} .<br/>
 	 * The filter can be supported as a plugin through the extension point
 	 * mechanism.
-	 * 
-	 * @param peak
-	 * @param peakFilterSettings
-	 * @param filterId
-	 * @return {@link IProcessingInfo}
 	 */
 	public static IProcessingInfo<?> applyFilter(IPeakCSD peak, IPeakFilterSettings peakFilterSettings, String filterId, IProgressMonitor monitor) {
 
@@ -76,12 +71,7 @@ public class PeakFilter {
 
 	/**
 	 * Applies the specified filter, but retrieves the IPeakFilterSettings dynamically.<br/>
-	 * See also method: applyFilter(IPeakMSD peak, IPeakFilterSettings peakFilterSettings, String filterId, IProgressMonitor monitor)
-	 * 
-	 * @param peak
-	 * @param filterId
-	 * @param monitor
-	 * @return {@link IProcessingInfo}
+	 * @see #applyFilter(IPeakCSD , IPeakFilterSettings, String , IProgressMonitor)
 	 */
 	public static IProcessingInfo<?> applyFilter(IPeakCSD peak, String filterId, IProgressMonitor monitor) {
 
@@ -100,11 +90,6 @@ public class PeakFilter {
 	 * Applies the specified filter (filterID) with the given {@link IPeakFilterSettings} on the peak list .<br/>
 	 * The filter can be supported as a plugin through the extension point
 	 * mechanism.
-	 * 
-	 * @param peaks
-	 * @param peakFilterSettings
-	 * @param filterId
-	 * @return {@link IProcessingInfo}
 	 */
 	public static IProcessingInfo<?> applyFilter(List<IPeakCSD> peaks, IPeakFilterSettings peakFilterSettings, String filterId, IProgressMonitor monitor) {
 
@@ -121,12 +106,7 @@ public class PeakFilter {
 
 	/**
 	 * Applies the specified filter, but retrieves the IPeakFilterSettings dynamically.<br/>
-	 * See also method: applyFilter(List<IPeakMSD> peaks, IPeakFilterSettings peakFilterSettings, String filterId, IProgressMonitor monitor)
-	 * 
-	 * @param peaks
-	 * @param filterId
-	 * @param monitor
-	 * @return {@link IProcessingInfo}
+	 * @see #applyFilter(List, IPeakFilterSettings, String, IProgressMonitor)
 	 */
 	public static IProcessingInfo<?> applyFilter(List<IPeakCSD> peaks, String filterId, IProgressMonitor monitor) {
 
@@ -145,11 +125,6 @@ public class PeakFilter {
 	 * Applies the specified filter (filterID) with the given {@link IPeakFilterSettings} on the peaks stored in the chromatogram selection.<br/>
 	 * The filter can be supported as a plugin through the extension point
 	 * mechanism.
-	 * 
-	 * @param chromatogramSelection
-	 * @param peakFilterSettings
-	 * @param filterId
-	 * @return {@link IProcessingInfo}
 	 */
 	public static IProcessingInfo<?> applyFilter(IChromatogramSelectionCSD chromatogramSelection, IPeakFilterSettings peakFilterSettings, String filterId, IProgressMonitor monitor) {
 
@@ -168,11 +143,6 @@ public class PeakFilter {
 	/**
 	 * Applies the specified filter, but retrieves the IPeakFilterSettings dynamically.<br/>
 	 * See also method: applyFilter(IChromatogramSelectionMSD chromatogramSelection, IPeakFilterSettings peakFilterSettings, String filterId, IProgressMonitor monitor)
-	 * 
-	 * @param chromatogramSelection
-	 * @param filterId
-	 * @param monitor
-	 * @return {@link IProcessingInfo}
 	 */
 	public static IProcessingInfo<?> applyFilter(IChromatogramSelectionCSD chromatogramSelection, String filterId, IProgressMonitor monitor) {
 
@@ -190,8 +160,6 @@ public class PeakFilter {
 
 	/**
 	 * Returns the peak filter support instance.
-	 * 
-	 * @return {@link IPeakFilterSupport}
 	 */
 	public static IPeakFilterSupport getPeakFilterSupport() {
 
@@ -236,9 +204,6 @@ public class PeakFilter {
 	/**
 	 * Returns an {@link IPeakFilter} instance or null if none is
 	 * available.
-	 * 
-	 * @param filterId
-	 * @return IConfigurationElement
 	 */
 	private static IConfigurationElement getConfigurationElement(final String filterId) {
 

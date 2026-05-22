@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Jan Holy - implementation
@@ -21,7 +21,6 @@ import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.msd.identifier.settings.IPeakIdentifierSettingsMSD;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.exceptions.NoIdentifierAvailableException;
 import org.eclipse.chemclipse.model.identifier.IPeakIdentificationResults;
 import org.eclipse.chemclipse.model.identifier.core.Identifier;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
@@ -57,9 +56,6 @@ public class PeakIdentifierMSD {
 	/**
 	 * Returns an {@link IConfigurationElement} instance or null if none is
 	 * available.
-	 *
-	 * @param filterId
-	 * @return IConfigurationElement
 	 */
 	private static IConfigurationElement getConfigurationElement(final String filterId) {
 
@@ -105,8 +101,6 @@ public class PeakIdentifierMSD {
 
 	/**
 	 * Returns an {@link IPeakIdentifierSupportMSD} instance.
-	 *
-	 * @return {@link IPeakIdentifierSupportMSD}
 	 */
 	public static IPeakIdentifierSupportMSD getPeakIdentifierSupport() {
 
@@ -144,13 +138,6 @@ public class PeakIdentifierMSD {
 
 	/**
 	 * Runs the given identifier
-	 *
-	 * @param peak
-	 * @param identifierSettings
-	 * @param identifierId
-	 * @param monitor
-	 * @return {@link IProcessingInfo}
-	 * @throws NoIdentifierAvailableException
 	 */
 	public static IProcessingInfo<IPeakIdentificationResults> identify(IPeakMSD peak, IPeakIdentifierSettingsMSD identifierSettings, String identifierId, IProgressMonitor monitor) {
 
@@ -161,12 +148,6 @@ public class PeakIdentifierMSD {
 
 	/**
 	 * Runs the given identifier
-	 *
-	 * @param peak
-	 * @param identifierId
-	 * @param monitor
-	 * @return {@link IProcessingInfo}
-	 * @throws NoIdentifierAvailableException
 	 */
 	public static IProcessingInfo<IPeakIdentificationResults> identify(IPeakMSD peak, String identifierId, IProgressMonitor monitor) {
 
@@ -175,13 +156,6 @@ public class PeakIdentifierMSD {
 
 	/**
 	 * Runs the given identifier
-	 *
-	 * @param peaks
-	 * @param identifierSettings
-	 * @param identifierId
-	 * @param monitor
-	 * @return {@link IProcessingInfo}
-	 * @throws NoIdentifierAvailableException
 	 */
 	public static IProcessingInfo<IPeakIdentificationResults> identify(List<? extends IPeakMSD> peaks, IPeakIdentifierSettingsMSD identifierSettings, String identifierId, IProgressMonitor monitor) {
 
@@ -195,12 +169,6 @@ public class PeakIdentifierMSD {
 
 	/**
 	 * Runs the given identifier
-	 *
-	 * @param peaks
-	 * @param identifierId
-	 * @param monitor
-	 * @return {@link IProcessingInfo}
-	 * @throws NoIdentifierAvailableException
 	 */
 	public static IProcessingInfo<IPeakIdentificationResults> identify(List<? extends IPeakMSD> peaks, String identifierId, IProgressMonitor monitor) {
 

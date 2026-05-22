@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -49,12 +49,6 @@ public class PeakDetectorCSD {
 
 	/**
 	 * Tries to detect the peaks in the chromatogram selection.
-	 * 
-	 * @param chromatogramSelection
-	 * @param peakDetectorSettings
-	 * @param peakDetectorId
-	 * @param monitor
-	 * @return IProcessingInfo
 	 */
 	public static IProcessingInfo<?> detect(IChromatogramSelectionCSD chromatogramSelection, IPeakDetectorSettingsCSD peakDetectorSettings, String peakDetectorId, IProgressMonitor monitor) {
 
@@ -117,9 +111,6 @@ public class PeakDetectorCSD {
 
 	/**
 	 * Returns an IPeakDetector instance or null if none is available.
-	 * 
-	 * @param peakDetectorId
-	 * @return IConfigurationElement
 	 */
 	private static IConfigurationElement getConfigurationElement(final String peakDetectorId) {
 

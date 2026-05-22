@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Christoph Läubrich - initial API and implementation
  * Philip Wenig - refactoring
@@ -47,9 +47,9 @@ import jakarta.inject.Named;
 
 /**
  * This Handler allows to open a E4 Snippet as an editor, the command must be called with a the {@link OpenSnippetHandler#SNIPPT_PARAMETER} to identify the snippet.
- * It also contains a static {@link OpenSnippetHandler#openSnippet(String, EPartService, MApplication, EModelService)} method to open snippet programmatically.
+ * It also contains a static {@link #openSnippet(String, MApplication, EModelService, EPartService)} method to open snippet programmatically.
  * Even though any snippet can be handled by this method, only MParts can be really opened! If you you use a Snippet that is not a {@link MPart}, or {@link MCompositePart} you must take further actions to make it visible
- * 
+ *
  * @author Christoph Läubrich
  *
  */
@@ -73,7 +73,7 @@ public class OpenSnippetHandler {
 
 	/**
 	 * Clone and open the given snippet
-	 * 
+	 *
 	 * @param snippetId
 	 *            the snippet id to use
 	 * @param modelService
@@ -139,7 +139,7 @@ public class OpenSnippetHandler {
 
 	/**
 	 * Creates a consumer that when applied adds the argument to the editor part stack
-	 * 
+	 *
 	 * @param modelService
 	 * @param searchRoot
 	 *            the root to search for the part stack, normally this is an {@link MApplication}
@@ -227,7 +227,7 @@ public class OpenSnippetHandler {
 
 	/**
 	 * Clone the given snippet
-	 * 
+	 *
 	 * @param snippetId
 	 *            the snippet id to use
 	 * @param modelService

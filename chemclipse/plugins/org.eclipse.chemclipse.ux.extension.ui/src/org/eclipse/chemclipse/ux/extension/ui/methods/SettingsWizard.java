@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - move method to open wizard, refactor for new settings
@@ -49,11 +49,8 @@ public class SettingsWizard extends Wizard {
 	/**
 	 * Opens a wizard to edit the given preferences if the user confirms the given {@link IProcessorPreferences} are updated via the public set methods.
 	 * Returns false if the user pressed CANCEL.
-	 * 
-	 * @param shell
-	 * @param preferences
+	 *
 	 * @return <code>true</code> if user has confirmed, <code>false</code> otherwise
-	 * @throws IOException
 	 */
 	public static <T> boolean openEditPreferencesWizard(Shell shell, IProcessorPreferences<T> preferences, boolean showProfileToolbar) {
 
@@ -113,7 +110,7 @@ public class SettingsWizard extends Wizard {
 
 	/**
 	 * Obtain the settings from the preferences, maybe asking the user for input
-	 * 
+	 *
 	 * @return the preferences to use or <code>null</code> if user canceled the wizard
 	 * @throws IOException
 	 *             if reading the settings failed

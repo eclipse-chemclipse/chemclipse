@@ -40,7 +40,7 @@ public interface IPeakFilter<ConfigType> extends Filter<ConfigType> {
 	 * @param context
 	 *            to be used for access to progress monitor and messaging
 	 * @throws IllegalArgumentException
-	 *             if the given {@link IPeak}s are incompatible with this filter ({@link #acceptsPeaks(IPeak)} returns <code>false</code>)
+	 *             if the given {@link IPeak}s are incompatible with this filter
 	 */
 	void filterPeaks(IChromatogramSelection chromatogramSelection, ConfigType configuration, ProcessExecutionContext context) throws IllegalArgumentException;
 

@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2025 Lablicate GmbH.
+ * Copyright (c) 2012, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -103,7 +103,7 @@ public class ChromatogramReports {
 	 * This methods returns an {@link ChromatogramReportSupport} instance.<br/>
 	 * The {@link ChromatogramReportSupport} instance stores descriptions
 	 * about all valid and registered chromatogram report suppliers.
-	 * 
+	 *
 	 * @return ChromatogramReportSupplierSupport
 	 */
 	public static IChromatogramReportSupport getChromatogramReportSupplierSupport() {
@@ -152,9 +152,6 @@ public class ChromatogramReports {
 	/**
 	 * Returns an IChromatogramReportGenerator instance or null if none is
 	 * available.
-	 * 
-	 * @param reportGeneratorId
-	 * @return IChromatogramReportGenerator
 	 */
 	private static IChromatogramReportGenerator getChromatogramReportGenerator(final String reportGeneratorId) {
 
@@ -174,9 +171,6 @@ public class ChromatogramReports {
 	/**
 	 * Returns an IChromatogramReportGenerator instance or null if none is
 	 * available.
-	 * 
-	 * @param converterId
-	 * @return IConfigurationElement
 	 */
 	private static IConfigurationElement getConfigurationElement(final String reportGeneratorId) {
 
@@ -202,10 +196,10 @@ public class ChromatogramReports {
 
 	/**
 	 * This method return true if the input string contains a not allowed
-	 * character like \/:*?"<>| It returns true if the input string is a valid
+	 * character like \/:*?"&lt;&gt;| It returns true if the input string is a valid
 	 * string and false if not.<br/>
 	 * If the input string is null it returns false.
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public static boolean isValid(final String input) {

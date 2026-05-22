@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -23,36 +23,22 @@ public interface ICombinedIntegratorSupport {
 	 * The id of the selected integrator is used to determine which integrator
 	 * should be used to calculate the integration results of the chromatogram.<br/>
 	 * Be aware of that the first index is 0. It is a 0-based index.
-	 * 
-	 * @param index
-	 * @return String
-	 * @throws NoIntegratorAvailableException
 	 */
 	String getIntegratorId(int index) throws NoIntegratorAvailableException;
 
 	/**
 	 * Returns an IPeakIntegratorSupplier object.<br/>
 	 * The object stores some additional supplier information.
-	 * 
-	 * @param integratorId
-	 * @return {@link ICombinedIntegratorSupplier}
-	 * @throws NoIntegratorAvailableException
 	 */
 	ICombinedIntegratorSupplier getIntegratorSupplier(String integratorId) throws NoIntegratorAvailableException;
 
 	/**
 	 * Returns an ArrayList with all available peak integrator ids.<br/>
-	 * 
-	 * @return List<String>
-	 * @throws NoIntegratorAvailableException
 	 */
 	List<String> getAvailableIntegratorIds() throws NoIntegratorAvailableException;
 
 	/**
 	 * Returns the list of available peak integrator names.
-	 * 
-	 * @return String[]
-	 * @throws NoIntegratorAvailableException
 	 */
 	String[] getIntegratorNames() throws NoIntegratorAvailableException;
 }

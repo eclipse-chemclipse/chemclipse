@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -62,7 +62,7 @@ public class MassSpectrumFilter {
 
 	/**
 	 * Applies the specified filter, but retrieves the IMassSpectrumFilterSettings dynamically.<br/>
-	 * See also method: applyFilter(IMassSpectrum massSpectrum, IMassSpectrumFilterSettings massSpectrumFilterSettings, String filterId, IProgressMonitor monitor)
+	 * @see #applyFilter(List, IMassSpectrumFilterSettings , String , IProgressMonitor)
 	 */
 	public static IProcessingInfo<IMassSpectrumFilterResult> applyFilter(IScanMSD massSpectrum, String filterId, IProgressMonitor monitor) {
 
@@ -89,7 +89,7 @@ public class MassSpectrumFilter {
 
 	/**
 	 * Applies the specified filter, but retrieves the IMassSpectrumFilterSettings dynamically.<br/>
-	 * See also method: applyFilter(List<IMassSpectrum> massSpectra, IMassSpectrumFilterSettings massSpectrumFilterSettings, String filterId, IProgressMonitor monitor)
+	 * @see #applyFilter(List, IMassSpectrumFilterSettings, String , IProgressMonitor)
 	 */
 	public static IProcessingInfo<IMassSpectrumFilterResult> applyFilter(List<IScanMSD> massSpectra, String filterId, IProgressMonitor monitor) {
 

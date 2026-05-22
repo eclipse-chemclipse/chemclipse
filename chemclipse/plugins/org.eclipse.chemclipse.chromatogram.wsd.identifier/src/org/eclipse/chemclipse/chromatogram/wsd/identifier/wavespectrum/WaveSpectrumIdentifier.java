@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2025 Lablicate GmbH.
+ * Copyright (c) 2010, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - adjust to simplified API, add generics
@@ -18,8 +18,6 @@ import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.settings.IWaveSpectrumIdentifierSettings;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.exceptions.NoIdentifierAvailableException;
-import org.eclipse.chemclipse.model.identifier.IPeakIdentificationResult;
 import org.eclipse.chemclipse.model.identifier.core.Identifier;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.IProcessingMessage;
@@ -52,14 +50,7 @@ public class WaveSpectrumIdentifier {
 	}
 
 	/**
-	 * Runs the given identifier and returns an {@link IWaveSpectrumIdentificationResult} instance.
-	 * 
-	 * @param waveSpectrum
-	 * @param identifierSettings
-	 * @param identifierId
-	 * @param monitor
-	 * @return {@link IPeakIdentificationResult}
-	 * @throws NoIdentifierAvailableException
+	 * Runs the given identifier and returns an {@link IProcessingInfo<WaveSpectra>} instance.
 	 */
 	public static IProcessingInfo<WaveSpectra> identify(IScanWSD waveSpectrum, IWaveSpectrumIdentifierSettings identifierSettings, String identifierId, IProgressMonitor monitor) {
 
@@ -67,13 +58,7 @@ public class WaveSpectrumIdentifier {
 	}
 
 	/**
-	 * Runs the given identifier and returns an {@link IWaveSpectrumIdentificationResult} instance.
-	 * 
-	 * @param waveSpectrum
-	 * @param identifierId
-	 * @param monitor
-	 * @return {@link IPeakIdentificationResult}
-	 * @throws NoIdentifierAvailableException
+	 * Runs the given identifier and returns an {@link IProcessingInfo<WaveSpectra>} instance.
 	 */
 	public static IProcessingInfo<WaveSpectra> identify(IScanWSD waveSpectrum, String identifierId, IProgressMonitor monitor) {
 
@@ -81,14 +66,7 @@ public class WaveSpectrumIdentifier {
 	}
 
 	/**
-	 * Runs the given identifier and returns an {@link IWaveSpectrumIdentificationResults} instance.
-	 * 
-	 * @param waveSpectra
-	 * @param identifierSettings
-	 * @param identifierId
-	 * @param monitor
-	 * @return {@link IWaveSpectrumIdentificationResults}
-	 * @throws NoIdentifierAvailableException
+	 * Runs the given identifier and returns an {@link IProcessingInfo<WaveSpectra>} instance.
 	 */
 	public static IProcessingInfo<WaveSpectra> identify(List<IScanWSD> waveSpectra, IWaveSpectrumIdentifierSettings identifierSettings, String identifierId, IProgressMonitor monitor) {
 
@@ -103,13 +81,7 @@ public class WaveSpectrumIdentifier {
 	}
 
 	/**
-	 * Runs the given identifier and returns an {@link IWaveSpectrumIdentificationResults} instance.
-	 * 
-	 * @param waveSpectra
-	 * @param identifierId
-	 * @param monitor
-	 * @return {@link IWaveSpectrumIdentificationResults}
-	 * @throws NoIdentifierAvailableException
+	 * Runs the given identifier and returns an {@link IProcessingInfo<WaveSpectra>} instance.
 	 */
 	public static IProcessingInfo<WaveSpectra> identify(List<IScanWSD> waveSpectra, String identifierId, IProgressMonitor monitor) {
 
@@ -118,8 +90,6 @@ public class WaveSpectrumIdentifier {
 
 	/**
 	 * Returns an {@link IWaveSpectrumIdentifierSupport} instance.
-	 * 
-	 * @return {@link IWaveSpectrumIdentifierSupport}
 	 */
 	public static IWaveSpectrumIdentifierSupport getWaveSpectrumIdentifierSupport() {
 
@@ -173,9 +143,6 @@ public class WaveSpectrumIdentifier {
 	/**
 	 * Returns an {@link IConfigurationElement} instance or null if none is
 	 * available.
-	 * 
-	 * @param filterId
-	 * @return IConfigurationElement
 	 */
 	private static IConfigurationElement getConfigurationElement(final String filterId) {
 

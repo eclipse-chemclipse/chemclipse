@@ -30,7 +30,7 @@ public interface IChromatogramCalculator {
 	/**
 	 * Apply the calculator in the given chromatogram selection and take care of the
 	 * calculator settings.<br/>
-	 * Return an {@link IChromatogramCalculatorProcessingInfo} instance.<br/>
+	 * Return an {@link IProcessingInfo} instance.<br/>
 	 * If there is no monitor instance, use a {@link NullProgressMonitor}.
 	 */
 	IProcessingInfo<?> applyCalculator(IChromatogramSelection chromatogramSelection, IChromatogramCalculatorSettings chromatogramCalculatorSettings, IProgressMonitor monitor);

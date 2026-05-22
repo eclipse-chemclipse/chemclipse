@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2025 Lablicate GmbH.
+ * Copyright (c) 2010, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - adjust to simplified API, add generics
@@ -17,8 +17,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.exceptions.NoIdentifierAvailableException;
-import org.eclipse.chemclipse.model.identifier.IPeakIdentificationResult;
 import org.eclipse.chemclipse.model.identifier.core.Identifier;
 import org.eclipse.chemclipse.msd.identifier.settings.IMassSpectrumIdentifierSettings;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
@@ -52,14 +50,7 @@ public class MassSpectrumIdentifier {
 	}
 
 	/**
-	 * Runs the given identifier and returns an {@link IMassSpectrumIdentificationResult} instance.
-	 * 
-	 * @param massSpectrum
-	 * @param identifierSettings
-	 * @param identifierId
-	 * @param monitor
-	 * @return {@link IPeakIdentificationResult}
-	 * @throws NoIdentifierAvailableException
+	 * Runs the given identifier and returns an {@link IProcessingInfo<IMassSpectra>} instance.
 	 */
 	public static IProcessingInfo<IMassSpectra> identify(IScanMSD massSpectrum, IMassSpectrumIdentifierSettings identifierSettings, String identifierId, IProgressMonitor monitor) {
 
@@ -67,13 +58,7 @@ public class MassSpectrumIdentifier {
 	}
 
 	/**
-	 * Runs the given identifier and returns an {@link IMassSpectrumIdentificationResult} instance.
-	 * 
-	 * @param massSpectrum
-	 * @param identifierId
-	 * @param monitor
-	 * @return {@link IPeakIdentificationResult}
-	 * @throws NoIdentifierAvailableException
+	 * Runs the given identifier and returns an {@link IProcessingInfo<IMassSpectra>} instance.
 	 */
 	public static IProcessingInfo<IMassSpectra> identify(IScanMSD massSpectrum, String identifierId, IProgressMonitor monitor) {
 
@@ -81,14 +66,7 @@ public class MassSpectrumIdentifier {
 	}
 
 	/**
-	 * Runs the given identifier and returns an {@link IMassSpectrumIdentificationResults} instance.
-	 * 
-	 * @param massSpectra
-	 * @param identifierSettings
-	 * @param identifierId
-	 * @param monitor
-	 * @return {@link IMassSpectrumIdentificationResults}
-	 * @throws NoIdentifierAvailableException
+	 * Runs the given identifier and returns an {@link IProcessingInfo<IMassSpectra>} instance.
 	 */
 	public static IProcessingInfo<IMassSpectra> identify(List<IScanMSD> massSpectra, IMassSpectrumIdentifierSettings identifierSettings, String identifierId, IProgressMonitor monitor) {
 
@@ -103,13 +81,7 @@ public class MassSpectrumIdentifier {
 	}
 
 	/**
-	 * Runs the given identifier and returns an {@link IMassSpectrumIdentificationResults} instance.
-	 * 
-	 * @param massSpectra
-	 * @param identifierId
-	 * @param monitor
-	 * @return {@link IMassSpectrumIdentificationResults}
-	 * @throws NoIdentifierAvailableException
+	 * Runs the given identifier and returns an {@link IProcessingInfo<IMassSpectra>} instance.
 	 */
 	public static IProcessingInfo<IMassSpectra> identify(List<IScanMSD> massSpectra, String identifierId, IProgressMonitor monitor) {
 
@@ -117,9 +89,7 @@ public class MassSpectrumIdentifier {
 	}
 
 	/**
-	 * Returns an {@link IMassSpectrumIdentifierSupport} instance.
-	 * 
-	 * @return {@link IMassSpectrumIdentifierSupport}
+	 * {@return an {@link IMassSpectrumIdentifierSupport} instance}
 	 */
 	public static IMassSpectrumIdentifierSupport getMassSpectrumIdentifierSupport() {
 
@@ -173,9 +143,6 @@ public class MassSpectrumIdentifier {
 	/**
 	 * Returns an {@link IConfigurationElement} instance or null if none is
 	 * available.
-	 * 
-	 * @param filterId
-	 * @return IConfigurationElement
 	 */
 	private static IConfigurationElement getConfigurationElement(final String filterId) {
 

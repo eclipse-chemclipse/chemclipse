@@ -63,11 +63,11 @@ public abstract class AbstractPeakModel extends AbstractPeakModelStrict {
 
 	/**
 	 * The abstract peak model creates a peak model by defining its core values.<br/>
-	 * The peak maximum is a {@link IPeakMassSpectrum} which stores the
-	 * responsible mass spectrum for this peak.<br/>
+	 * The peak maximum is a {@link IScan} which stores the
+	 * responsible scan for this peak.<br/>
 	 * The peak maximum should contain absolute abundance values for the given
 	 * peak. The background should not be considered in the peak maximum. So the
-	 * peak maximum represents the pure maybe deconvoluted mass spectrum for the
+	 * peak maximum represents the pure maybe deconvoluted scan for the
 	 * actual peak.
 	 */
 	protected AbstractPeakModel(IScan peakMaximum, IPeakIntensityValues peakIntensityValues, float startBackgroundAbundance, float stopBackgroundAbundance, boolean strictModel) throws PeakException {

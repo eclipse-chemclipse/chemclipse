@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Jan Holy - implementation
@@ -20,7 +20,6 @@ import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.settings.IPeakIdentifierSettingsWSD;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.exceptions.NoIdentifierAvailableException;
 import org.eclipse.chemclipse.model.identifier.IPeakIdentificationResults;
 import org.eclipse.chemclipse.model.identifier.core.Identifier;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
@@ -54,9 +53,6 @@ public class PeakIdentifierWSD {
 	/**
 	 * Returns an {@link IConfigurationElement} instance or null if none is
 	 * available.
-	 *
-	 * @param filterId
-	 * @return IConfigurationElement
 	 */
 	private static IConfigurationElement getConfigurationElement(final String filterId) {
 
@@ -102,8 +98,6 @@ public class PeakIdentifierWSD {
 
 	/**
 	 * Returns an {@link IPeakIdentifierSupportWSD} instance.
-	 *
-	 * @return {@link IPeakIdentifierSupportWSD}
 	 */
 	public static IPeakIdentifierSupportWSD getPeakIdentifierSupport() {
 
@@ -138,13 +132,6 @@ public class PeakIdentifierWSD {
 
 	/**
 	 * Runs the given identifier
-	 *
-	 * @param peak
-	 * @param identifierSettings
-	 * @param identifierId
-	 * @param monitor
-	 * @return {@link IProcessingInfo}
-	 * @throws NoIdentifierAvailableException
 	 */
 	public static IProcessingInfo<IPeakIdentificationResults> identify(IChromatogramPeakWSD peak, IPeakIdentifierSettingsWSD identifierSettings, String identifierId, IProgressMonitor monitor) {
 
@@ -155,12 +142,6 @@ public class PeakIdentifierWSD {
 
 	/**
 	 * Runs the given identifier
-	 *
-	 * @param peak
-	 * @param identifierId
-	 * @param monitor
-	 * @return {@link IProcessingInfo}
-	 * @throws NoIdentifierAvailableException
 	 */
 	public static IProcessingInfo<IPeakIdentificationResults> identify(IPeakWSD peak, String identifierId, IProgressMonitor monitor) {
 
@@ -169,13 +150,6 @@ public class PeakIdentifierWSD {
 
 	/**
 	 * Runs the given identifier
-	 *
-	 * @param peaks
-	 * @param identifierSettings
-	 * @param identifierId
-	 * @param monitor
-	 * @return {@link IProcessingInfo}
-	 * @throws NoIdentifierAvailableException
 	 */
 	public static IProcessingInfo<IPeakIdentificationResults> identify(List<? extends IPeakWSD> peaks, IPeakIdentifierSettingsWSD identifierSettings, String identifierId, IProgressMonitor monitor) {
 
@@ -189,12 +163,6 @@ public class PeakIdentifierWSD {
 
 	/**
 	 * Runs the given identifier
-	 *
-	 * @param peaks
-	 * @param identifierId
-	 * @param monitor
-	 * @return {@link IProcessingInfo}
-	 * @throws NoIdentifierAvailableException
 	 */
 	public static IProcessingInfo<IPeakIdentificationResults> identify(List<? extends IPeakWSD> peaks, String identifierId, IProgressMonitor monitor) {
 

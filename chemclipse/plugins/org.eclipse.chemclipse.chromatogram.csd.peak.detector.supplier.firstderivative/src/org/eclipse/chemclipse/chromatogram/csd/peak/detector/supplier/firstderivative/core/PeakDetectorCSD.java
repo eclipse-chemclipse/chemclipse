@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - extract common methods to base class
@@ -22,7 +22,6 @@ import org.eclipse.chemclipse.chromatogram.csd.peak.detector.core.IPeakDetectorC
 import org.eclipse.chemclipse.chromatogram.csd.peak.detector.settings.IPeakDetectorSettingsCSD;
 import org.eclipse.chemclipse.chromatogram.csd.peak.detector.supplier.firstderivative.Activator;
 import org.eclipse.chemclipse.chromatogram.csd.peak.detector.supplier.firstderivative.settings.PeakDetectorSettingsCSD;
-import org.eclipse.chemclipse.chromatogram.peak.detector.exceptions.ValueMustNotBeNullException;
 import org.eclipse.chemclipse.chromatogram.peak.detector.model.Threshold;
 import org.eclipse.chemclipse.chromatogram.peak.detector.support.IRawPeak;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.NoiseChromatogramSupport;
@@ -103,9 +102,6 @@ public class PeakDetectorCSD extends BasePeakDetector implements IPeakDetectorCS
 	 * Detect the peaks in the selection.
 	 * This method does not add the peaks to the chromatogram.
 	 * It needs to be handled separately.
-	 * 
-	 * @param chromatogramSelection
-	 * @throws ValueMustNotBeNullException
 	 */
 	public List<IChromatogramPeakCSD> detectPeaks(IChromatogramSelectionCSD chromatogramSelection, PeakDetectorSettingsCSD peakDetectorSettings, IProgressMonitor monitor) {
 
@@ -180,10 +176,6 @@ public class PeakDetectorCSD extends BasePeakDetector implements IPeakDetectorCS
 	/**
 	 * Builds from each raw peak a valid {@link IChromatogramPeakCSD} and adds it to the
 	 * chromatogram.
-	 * 
-	 * @param rawPeaks
-	 * @param chromatogram
-	 * @return List<IChromatogramPeakCSD>
 	 */
 	private List<IChromatogramPeakCSD> extractPeaks(List<IRawPeak> rawPeaks, IChromatogramCSD chromatogram, PeakDetectorSettingsCSD peakDetectorSettings) {
 
@@ -275,9 +267,6 @@ public class PeakDetectorCSD extends BasePeakDetector implements IPeakDetectorCS
 	/**
 	 * Checks that the peak is not null and that it matches
 	 * the min S/N requirements.
-	 * 
-	 * @param peak
-	 * @return boolean
 	 */
 	private boolean isValidPeak(IChromatogramPeakCSD peak, PeakDetectorSettingsCSD peakDetectorSettings) {
 

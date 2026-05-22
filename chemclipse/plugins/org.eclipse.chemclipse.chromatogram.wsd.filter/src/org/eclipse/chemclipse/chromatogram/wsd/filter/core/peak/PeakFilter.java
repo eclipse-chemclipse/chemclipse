@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -70,7 +70,7 @@ public class PeakFilter {
 
 	/**
 	 * Applies the specified filter, but retrieves the IPeakFilterSettings dynamically.<br/>
-	 * See also method: applyFilter(IPeakMSD peak, IPeakFilterSettings peakFilterSettings, String filterId, IProgressMonitor monitor)
+	 * @see #applyFilter(IPeakWSD peak, IPeakFilterSettings peakFilterSettings, String filterId, IProgressMonitor monitor)
 	 */
 	public static IProcessingInfo<IPeakFilterResult> applyFilter(IPeakWSD peak, String filterId, IProgressMonitor monitor) {
 
@@ -105,7 +105,7 @@ public class PeakFilter {
 
 	/**
 	 * Applies the specified filter, but retrieves the IPeakFilterSettings dynamically.<br/>
-	 * See also method: applyFilter(List<IPeakMSD> peaks, IPeakFilterSettings peakFilterSettings, String filterId, IProgressMonitor monitor)
+	 * @see #applyFilter(List, IPeakFilterSettings , String , IProgressMonitor )
 	 */
 	public static IProcessingInfo<IPeakFilterResult> applyFilter(List<IPeakWSD> peaks, String filterId, IProgressMonitor monitor) {
 

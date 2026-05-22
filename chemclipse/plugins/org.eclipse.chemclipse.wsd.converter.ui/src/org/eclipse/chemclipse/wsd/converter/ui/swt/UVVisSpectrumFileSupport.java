@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
@@ -60,9 +60,6 @@ public class UVVisSpectrumFileSupport {
 
 	/**
 	 * Opens a file dialog and tries to save the mass spectra
-	 * 
-	 * @param spectrum
-	 * @throws NoConverterAvailableException
 	 */
 	public static void saveSpectrum(Shell shell, ISpectrumWSD spectrum, String fileName) {
 
@@ -95,11 +92,6 @@ public class UVVisSpectrumFileSupport {
 	 * Validates the selected file to save the spectrum. This method checks
 	 * if the spectrum is stored in a directory or not and prepares the file
 	 * system in a convenient way.
-	 * 
-	 * @param dialog
-	 * @param supplier
-	 * @param shell
-	 * @param spectrum
 	 */
 	private static void validateFile(FileDialog dialog, List<ISupplier> supplier, Shell shell, ISpectrumWSD spectrum) {
 

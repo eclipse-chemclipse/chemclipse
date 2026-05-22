@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -42,14 +42,16 @@ public class PreferencesSupport {
 
 	/**
 	 * Cleans the preference tree, e.g.:
-	 * 
+	 * {@snippet :
+	 *
 	 * List<String> preservePreferencePrefixes = new ArrayList<String>();
 	 * preservePreferencePrefixes.add("org.eclipse.chemclipse");
-	 * 
+	 *
 	 * List<String> preservePreferenceNodes = new ArrayList<String>();
 	 * preservePreferenceNodes.add("org.eclipse.equinox.internal.p2.ui.sdk.ProvisioningPreferencePage"); // Install/Update
 	 * preservePreferenceNodes.add("org.eclipse.equinox.internal.p2.ui.sdk.SitesPreferencePage"); // Available Software Sites
 	 * preservePreferenceNodes.add("org.eclipse.equinox.internal.p2.ui.sdk.scheduler.AutomaticUpdatesPreferencePage"); // Automatic Updates
+	 * }
 	 */
 	public static void cleanPreferences(List<String> preservePreferencePrefixes, List<String> preservePreferenceNodes) {
 

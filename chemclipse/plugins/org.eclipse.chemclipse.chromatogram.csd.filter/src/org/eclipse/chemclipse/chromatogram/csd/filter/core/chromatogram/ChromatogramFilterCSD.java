@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -47,16 +47,11 @@ public class ChromatogramFilterCSD {
 	}
 
 	/**
-	 * Applies the specified filter (filterID) with the given {@link IChromatogramFilterSettings} on the {@link IChromatogramSelectionMSD} .<br/>
+	 * Applies the specified filter (filterID) with the given {@link IChromatogramFilterSettings} on the {@link IChromatogramSelectionCSD} .<br/>
 	 * The filter can be supported as a plugin through the extension point
 	 * mechanism.<br/>
 	 * You could think of filters that for example remove background
 	 * automatically or mean normalize the chromatogram.
-	 * 
-	 * @param chromatogramSelection
-	 * @param chromatogramFilterSettings
-	 * @param filterId
-	 * @return {@link IProcessingInfo}
 	 */
 	public static IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelectionCSD chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, String filterId, IProgressMonitor monitor) {
 
@@ -124,9 +119,6 @@ public class ChromatogramFilterCSD {
 	/**
 	 * Returns an {@link IChromatogramFilterCSD} instance or null if none is
 	 * available.
-	 * 
-	 * @param filterId
-	 * @return IConfigurationElement
 	 */
 	private static IConfigurationElement getConfigurationElement(final String filterId) {
 

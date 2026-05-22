@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Christoph Läubrich - initial API and implementation
  *******************************************************************************/
@@ -23,11 +23,11 @@ import org.eclipse.chemclipse.model.core.FilteredMeasurement;
 import org.eclipse.chemclipse.processing.filter.FilterContext;
 
 /**
- * This class is meant as a class for Filters that wants to filter some aspects of a {@link FIDMeasurement}, the class simply delegates to an original {@link FIDMeasurement} and returns all his data to the caller.
+ * This class is meant as a class for Filters that wants to filter some aspects of a {@link IMeasurementFID}, the class simply delegates to an original {@link IMeasurementFID} and returns all his data to the caller.
  * A filter can now extend this class and return for example a filtered set of signals.
- * 
+ *
  * <b>Important</b> This class is not meant for format readers, these should extend {@link AbstractMeasurement} instead and implement the interface on a reader specific class
- * 
+ *
  * @author Christoph Läubrich
  *
  */

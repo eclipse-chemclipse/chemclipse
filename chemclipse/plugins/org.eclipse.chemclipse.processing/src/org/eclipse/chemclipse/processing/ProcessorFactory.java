@@ -14,11 +14,10 @@ package org.eclipse.chemclipse.processing;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 
 /**
- * A ProcessorFactory service allows access to all currently known {@link Filter} in the system
+ * A ProcessorFactory service allows access to all currently known {@link org.eclipse.chemclipse.processing.filter.Filter} in the system
  *
  * @author Christoph Läubrich
  *
@@ -37,8 +36,8 @@ public interface ProcessorFactory {
 	<T extends Processor<?>> Collection<T> getProcessors(Class<T> processorType, BiPredicate<? super T, Map<String, ?>> acceptor);
 
 	/**
-	 * Helper method to create generic Class types for subinterfaces that satisfy the {@link #getFilters(Class, BiFunction)} method, e.g.
-	 * <pre>Collection&lt;IScanFilter&lt;?&gt;&gt; scanFilter = filterFactory.getFilters(FilterFactory.genericClass(IScanFilter.class), new BiFunction&lt;IScanFilter&lt;?&gt;, Map&lt;String, ?&gt;, Boolean&gt;() { ...});</pre>
+	 * Helper method to create generic Class types for subinterfaces that satisfy the {@link #getProcessors(Class, BiPredicate)} method, e.g.
+	 * <pre>Collection&lt;IScanFilter&lt;?&gt;&gt; scanFilter =processorFactory.getProcessors(ProcessorFactory.genericClass(IScanFilter.class), new BiPredicate&lt;IScanFilter&lt;?&gt;, Map&lt;String, ?&gt;, Boolean&gt;() { ...});</pre>
 	 */
 	@SuppressWarnings("unchecked")
 	static <T> Class<T> genericClass(Class<?> cls) {
