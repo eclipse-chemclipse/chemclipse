@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -32,20 +32,11 @@ public interface IChromatogramCalculator {
 	 * calculator settings.<br/>
 	 * Return an {@link IChromatogramCalculatorProcessingInfo} instance.<br/>
 	 * If there is no monitor instance, use a {@link NullProgressMonitor}.
-	 * 
-	 * @param chromatogramSelection
-	 * @param chromatogramCalculatorSettings
-	 * @param monitor
-	 * @return {@link IProcessingInfo}
 	 */
 	IProcessingInfo<?> applyCalculator(IChromatogramSelection chromatogramSelection, IChromatogramCalculatorSettings chromatogramCalculatorSettings, IProgressMonitor monitor);
 
 	/**
 	 * Validates the selection and settings and returns a process info instance.
-	 * 
-	 * @param chromatogramSelection
-	 * @param chromatogramCalculatorSettings
-	 * @return {@link IProcessingInfo}
 	 */
 	IProcessingInfo<?> validate(IChromatogramSelection chromatogramSelection, IChromatogramCalculatorSettings chromatogramCalculatorSettings);
 }

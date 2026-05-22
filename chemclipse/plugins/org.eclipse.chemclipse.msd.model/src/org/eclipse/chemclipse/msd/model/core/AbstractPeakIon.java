@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -42,12 +42,6 @@ public abstract class AbstractPeakIon extends AbstractIon implements IPeakIon {
 	 * A factor of 0.0f mean 0%, a factor of 1.0f means 100%.<br/>
 	 * 100% means, that this ions belongs surely to the corresponding
 	 * mass spectrum.
-	 * 
-	 * @param ion
-	 * @param abundance
-	 * @param uncertaintyFactor
-	 * @throws AbundanceLimitExceededException
-	 * @throws IonLimitExceededException
 	 */
 	protected AbstractPeakIon(double ion, float abundance, float uncertaintyFactor) {
 

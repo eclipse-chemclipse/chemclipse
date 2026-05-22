@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - add contentEquals / containsRetentionTime / javadoc
@@ -27,7 +27,7 @@ public interface IRetentionTimeRange {
 
 	/**
 	 * Compares this objects content to the other objects content, the default implementation compares {@link #getStartRetentionTime()}, {@link #getStopRetentionTime()}
-	 * this method is different to {@link #equals(Object)} that it does compares for user visible properties to be equal in contrast to objects identity and it allows to compare different instance type, this also means that it is not required that
+	 * this method is different to {@link java.lang.Object#equals(Object)} that it does compares for user visible properties to be equal in contrast to objects identity and it allows to compare different instance type, this also means that it is not required that
 	 * Object1.contentEquals(Object2} == Object2.contentEquals(Object1}
 	 */
 	default boolean contentEquals(IRetentionTimeRange other) {
@@ -43,11 +43,11 @@ public interface IRetentionTimeRange {
 
 	/**
 	 * Check if the given retention time is contained within this range
-	 * 
+	 *
 	 * @param retentionTime
 	 *            the retention time (in milliseconds) to check
 	 * @return <code>true</code> if retention time is within bounds, <code>false</code> otherwise
-	 * 
+	 *
 	 */
 	default boolean containsRetentionTime(int retentionTime) {
 

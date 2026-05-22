@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Alexander Kerner - implementation
@@ -53,7 +53,7 @@ import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
  * [AMDISLibraryMassSpectrum]<br/>
  * [PeakSubstanceLibraryMassSpectrum]<br/>
  * [...]<br/>
- * 
+ *
  * @author Philip Wenig
  * @author Alexander Kerner
  * @see AbstractChromatogramMSD
@@ -65,7 +65,7 @@ public interface IScanMSD extends IScan, IMassSpectrumCloneable, IMassSpectrumNo
 	 * All ions which are stored in excludedIons will not be
 	 * considered.<br/>
 	 * If no ions are stored, 0 will be returned.
-	 * 
+	 *
 	 * @return float - total ion current
 	 */
 	float getTotalSignal(IMarkedIons excludedIons);
@@ -73,14 +73,14 @@ public interface IScanMSD extends IScan, IMassSpectrumCloneable, IMassSpectrumNo
 	/**
 	 * Returns an IExtractedIonSignal object.<br/>
 	 * The lowest and highest ion borders will be calculated dynamically.
-	 * 
+	 *
 	 * @return IExtractedIonSignal
 	 */
 	IExtractedIonSignal getExtractedIonSignal();
 
 	/**
 	 * Returns an IExtractedIonSignal object with the given scan range.
-	 * 
+	 *
 	 * @return IExtractedIonSignal
 	 */
 	IExtractedIonSignal getExtractedIonSignal(double startIon, double stopIon);
@@ -89,7 +89,7 @@ public interface IScanMSD extends IScan, IMassSpectrumCloneable, IMassSpectrumNo
 	 * Returns the base peak. The base peak is the peak with the highest
 	 * abundance.<br/>
 	 * If no ions are stored, 0 will be returned.
-	 * 
+	 *
 	 * @return float BasePeak
 	 */
 	double getBasePeak();
@@ -97,7 +97,7 @@ public interface IScanMSD extends IScan, IMassSpectrumCloneable, IMassSpectrumNo
 	/**
 	 * Returns the abundance of the base peak.<br/>
 	 * If no ions are stored, 0 will be returned.
-	 * 
+	 *
 	 * @return float BasePeakAbundance
 	 */
 	float getBasePeakAbundance();
@@ -105,7 +105,7 @@ public interface IScanMSD extends IScan, IMassSpectrumCloneable, IMassSpectrumNo
 	/**
 	 * Returns the lowest ion ion of the mass spectrum.<br/>
 	 * If no ions are stored, the ImmutableZeroIon will be returned.
-	 * 
+	 *
 	 * @return IIon
 	 */
 	IIon getLowestIon();
@@ -131,7 +131,7 @@ public interface IScanMSD extends IScan, IMassSpectrumCloneable, IMassSpectrumNo
 	/**
 	 * Returns the lowest and the highest ion (ion) of the actual scan.<br/>
 	 * If no ions are stored, null will be returned.
-	 * 
+	 *
 	 * @return {@link IIonBounds}
 	 */
 	IIonBounds getIonBounds();
@@ -278,7 +278,7 @@ public interface IScanMSD extends IScan, IMassSpectrumCloneable, IMassSpectrumNo
 	IScanMSD getOptimizedMassSpectrum();
 
 	/**
-	 * Returns whether this is a SIM (<= 10 m/z values) or SCAN measurement.
+	 * Returns whether this is a SIM (&lt;= 10 m/z values) or SCAN measurement.
 	 */
 	boolean isMeasurementSIM();
 

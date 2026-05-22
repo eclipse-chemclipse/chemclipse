@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -19,12 +19,9 @@ public class ScanRange implements IScanRange {
 
 	/**
 	 * Creates a new ScanRange object. There are some limitations:<br/>
-	 * The startScan may not be <= 1 and > MAX_SCAN. In such a case it will be
-	 * set to MIN_SCAN. The stopScan should be <= MAX_SCAN and > 0 otherwise it
+	 * The startScan may not be &lt;= 1 and &gt; MAX_SCAN. In such a case it will be
+	 * set to MIN_SCAN. The stopScan should be &lt;= MAX_SCAN and &gt; 0 otherwise it
 	 * will be set to MAX_SCAN.
-	 * 
-	 * @param startScan
-	 * @param stopScan
 	 */
 	public ScanRange(int startScan, int stopScan) {
 

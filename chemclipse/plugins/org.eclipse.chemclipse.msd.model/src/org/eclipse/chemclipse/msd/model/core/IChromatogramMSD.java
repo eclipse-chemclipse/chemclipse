@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -33,19 +33,12 @@ public interface IChromatogramMSD extends IChromatogram, IChromatogramPeaksMSD {
 	 * You can test the retrieved mass spectrum with "instanceof" if it is a
 	 * kind of ISupplierMassSpectrum. If no scan is available, null will be
 	 * returned.
-	 * 
-	 * @param scan
-	 * @param excludedIons
-	 * @return IScanMSD
 	 */
 	IScanMSD getScan(int scan, IMarkedIons excludedIons);
 
 	/**
 	 * Returns a supplier scan mass spectrum or null, if no supplier
 	 * scan mass spectrum is stored.
-	 * 
-	 * @param scan
-	 * @return {@link IScanMSD}
 	 */
 	@Override
 	IScanMSD getScan(int scan);
@@ -55,8 +48,6 @@ public interface IChromatogramMSD extends IChromatogram, IChromatogramPeaksMSD {
 	 * If a chromatogram contains for example 100 scans. These 100 scans contain
 	 * each 300 ions, then a value of 100 * 300 = 30000 will be
 	 * returned.
-	 * 
-	 * @return int
 	 */
 	int getNumberOfScanIons();
 
@@ -72,55 +63,40 @@ public interface IChromatogramMSD extends IChromatogram, IChromatogramPeaksMSD {
 	 * This represents approximately the threshold value of the mass
 	 * spectrometer.<br/>
 	 * If no scans are stored, 0 will be returned.
-	 * 
-	 * @return float
 	 */
 	float getMinIonAbundance();
 
 	/**
 	 * Returns the maximal available ion abundance signal.<br/>
 	 * If no scans are stored, 0 will be returned.
-	 * 
-	 * @return float
 	 */
 	float getMaxIonAbundance();
 
 	/**
 	 * Returns the lowest start ion (ion).<br/>
 	 * Returns 0 if no scan is stored.
-	 * 
-	 * @return double
 	 */
 	double getStartIon();
 
 	/**
 	 * Returns the highest stop ion (ion).<br/>
 	 * Returns 0 if no scan is stored.
-	 * 
-	 * @return double
 	 */
 	double getStopIon();
 
 	/**
 	 * Returns the ion transition settings.
 	 * Used e.g. by triple quadrupol experiments.
-	 * 
-	 * @return {@link IIonTransitionSettings
-	 * 
 	 */
 	IIonTransitionSettings getIonTransitionSettings();
 
 	/**
 	 * Set the combined mass spectrum of the chromatogram.
-	 * 
-	 * @param scanMSD
 	 */
 	void setCombinedMassSpectrum(IScanMSD scanMSD);
 
 	/**
 	 * The combined mass spectrum is a summary of the scans/peaks of the chromatogram.
-	 * 
-	 * @return {@link IScanMSD}
 	 */
 	IScanMSD getCombinedMassSpectrum();
 }

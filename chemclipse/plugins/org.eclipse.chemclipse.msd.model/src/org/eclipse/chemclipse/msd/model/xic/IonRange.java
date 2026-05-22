@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -23,12 +23,9 @@ public class IonRange implements IIonRange {
 
 	/**
 	 * Creates a new IonRange object. There are some limitations:<br/>
-	 * The startIon may not be <= 0 and > MAX_Ion. In such a case it
-	 * will be set to MIN_Ion. The stopIon should be <= MAX_Ion and > 0
+	 * The startIon may not be &lt;= 0 and &gt; MAX_Ion. In such a case it
+	 * will be set to MIN_Ion. The stopIon should be &lt;= MAX_Ion and &gt; 0
 	 * otherwise it will be set to MAX_Ion.
-	 * 
-	 * @param startIon
-	 * @param stopIon
 	 */
 	public IonRange(int startIon, int stopIon) {
 

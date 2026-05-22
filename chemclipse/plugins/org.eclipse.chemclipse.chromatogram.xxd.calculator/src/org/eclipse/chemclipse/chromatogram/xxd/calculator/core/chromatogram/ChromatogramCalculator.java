@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -52,11 +52,6 @@ public class ChromatogramCalculator {
 	 * mechanism.<br/>
 	 * You could think of filters that for example remove background
 	 * automatically or mean normalize the chromatogram.
-	 * 
-	 * @param chromatogramSelection
-	 * @param chromatogramCalculatorSettings
-	 * @param filterId
-	 * @return {@link IChromatogramCalculatorProcessingInfo}
 	 */
 	public static IProcessingInfo<?> applyCalculator(IChromatogramSelection chromatogramSelection, IChromatogramCalculatorSettings chromatogramCalculatorSettings, String filterId, IProgressMonitor monitor) {
 
@@ -124,7 +119,7 @@ public class ChromatogramCalculator {
 	/**
 	 * Returns an {@link IChromatogramCalculator} instance or null if none is
 	 * available.
-	 * 
+	 *
 	 * @param calculatorId
 	 * @return IConfigurationElement
 	 */

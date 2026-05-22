@@ -6,14 +6,13 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.alignment.converter.retentionindices;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -68,14 +67,6 @@ public class RetentionIndicesConverter {
 	 * If a failure in the file could be detected an exception will be thrown.<br/>
 	 * For example that the file is not readable or the file is not existent.<br/>
 	 * If the converter was not able to convert the file, null will be returned.
-	 * 
-	 * @param retentionIndices
-	 * @param converterId
-	 * @return {@link IChromatogram}
-	 * @throws FileNotFoundException
-	 * @throws FileIsNotReadableException
-	 * @throws FileIsEmptyException
-	 * @throws IOException
 	 */
 	public static IRetentionIndices convert(final File retentionIndices, final String converterId) throws FileIsNotReadableException, FileIsEmptyException, IOException {
 
@@ -96,12 +87,6 @@ public class RetentionIndicesConverter {
 	 * which retention index converter to use.<br/>
 	 * This method will test all suitable converters.<br/>
 	 * If no converter was able to read the file, null will be returned.
-	 * 
-	 * @param file
-	 * @throws FileNotFoundException
-	 * @throws FileIsNotReadableException
-	 * @throws FileIsEmptyException
-	 * @return {@link IChromatogram}
 	 */
 	public static IRetentionIndices convert(final File file) throws FileIsNotReadableException, FileIsEmptyException {
 
@@ -177,14 +162,6 @@ public class RetentionIndicesConverter {
 
 	/**
 	 * Returns the written file or null if something has gone wrong.
-	 * 
-	 * @param file
-	 * @param retentionIndices
-	 * @param converterId
-	 * @return File
-	 * @throws FileNotFoundException
-	 * @throws FileIsNotWriteableException
-	 * @throws IOException
 	 */
 	public static File convert(final File file, final IRetentionIndices retentionIndices, final String converterId) throws FileIsNotWriteableException, IOException {
 
@@ -203,9 +180,6 @@ public class RetentionIndicesConverter {
 	/**
 	 * Returns an IRetentionIndicesImportConverter instance or null if none is
 	 * available.
-	 * 
-	 * @param converterId
-	 * @return IChromatogramImportConverter
 	 */
 	private static IRetentionIndicesImportConverter getRetentionIndicesImportConverter(final String converterId) {
 
@@ -225,9 +199,6 @@ public class RetentionIndicesConverter {
 	/**
 	 * Returns an IRetentionIndicesExportConverter instance or null if none is
 	 * available.
-	 * 
-	 * @param converterId
-	 * @return IRetentionIndicesExportConverter
 	 */
 	private static IRetentionIndicesExportConverter getRetentionIndicesExportConverter(final String converterId) {
 
@@ -247,9 +218,6 @@ public class RetentionIndicesConverter {
 	/**
 	 * Returns an IRetentionIndicesImportConverter or
 	 * IRetentionIndicesExportConverter instance or null if none is available.
-	 * 
-	 * @param converterId
-	 * @return IConfigurationElement
 	 */
 	private static IConfigurationElement getConfigurationElement(final String converterId) {
 
@@ -272,8 +240,6 @@ public class RetentionIndicesConverter {
 	 * about all valid and registered chromatogram converters.<br/>
 	 * It can be used to get more information about the registered converters
 	 * such like filter names, file extensions.
-	 * 
-	 * @return RetentionIndicesConverterSupport
 	 */
 	public static RetentionIndicesConverterSupport getRetentionIndicesConverterSupport() {
 
@@ -309,11 +275,9 @@ public class RetentionIndicesConverter {
 
 	/**
 	 * This method return true if the input string contains a not allowed
-	 * character like \/:*?"<>| It returns true if the input string is a valid
+	 * character like \/:*?"&lt;&gt;| It returns true if the input string is a valid
 	 * string and false if not.<br/>
 	 * If the input string is null it returns false.
-	 * 
-	 * @return boolean
 	 */
 	protected static boolean isValid(final String input) {
 

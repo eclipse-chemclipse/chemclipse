@@ -1,18 +1,19 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Dr. Alexander Kerner - initial API and implementation
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.util;
 
 import org.eclipse.chemclipse.model.core.IIntegrationEntry;
+import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
@@ -20,7 +21,7 @@ import org.eclipse.chemclipse.msd.model.implementation.ChromatogramPeakMSD;
 
 /**
  * Utility class for {@link IChromatogramMSD} related stuff.
- * 
+ *
  * @author Alexander Kerner
  *
  */
@@ -28,19 +29,18 @@ public class ChromatogramMSDs {
 
 	/**
 	 * Convenience method to add a {@link IPeakMSD} to an {@link IChromatogramMSD}.
-	 * </p>
+	 * <br>
 	 * Internally a {@link IChromatogramPeakMSD} is created, added to given chromatogram and finally returned.
 	 * <br>
 	 * {@link IIntegrationEntry integration entries} and {@link IIdentificationTarget peak targets} are copied from given peak.
-	 * </p>
-	 * 
+	 *
 	 * @param chromatogram
 	 *            {@link IChromatogramMSD} to which given peak should be added
 	 * @param peak
 	 *            {@link IPeakMSD} peak to add to given chromatogram
-	 * 
+	 *
 	 * @return {@link IChromatogramPeakMSD} which was created and added to given {@link IChromatogramMSD}
-	 * 
+	 *
 	 * @see IPeakMSD
 	 * @see IChromatogramMSD
 	 * @see IChromatogramPeakMSD

@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Alexander Kerner - implementation
@@ -26,8 +26,6 @@ public interface IMassSpectra extends IUpdateListener {
 
 	/**
 	 * Adds the mass spectrum to the end of the list.
-	 * 
-	 * @param massSpectrum
 	 */
 	void addMassSpectrum(IScanMSD massSpectrum);
 
@@ -35,8 +33,6 @@ public interface IMassSpectra extends IUpdateListener {
 
 	/**
 	 * Removes the mass spectrum from the list.
-	 * 
-	 * @param massSpectrum
 	 */
 	void removeMassSpectrum(IScanMSD massSpectrum);
 
@@ -44,72 +40,51 @@ public interface IMassSpectra extends IUpdateListener {
 	 * Returns the mass spectrum with the given number.<br/>
 	 * Be aware, the index is 1 based and not 0 based like in a normal list.<br/>
 	 * If no mass spectrum is available, null will be returned.
-	 * 
-	 * @param i
-	 * @return IMassSpectrum
 	 */
 	IScanMSD getMassSpectrum(int i);
 
 	/**
 	 * Returns a list of stored mass spectra.
-	 * 
-	 * @return List<IMassSpectrum>
 	 */
 	List<IScanMSD> getList();
 
 	/**
 	 * Returns true if the list is empty.
-	 * 
-	 * @return boolean
 	 */
 	boolean isEmpty();
 
 	/**
 	 * Returns the number of stored mass spectra.
-	 * 
-	 * @return int
 	 */
 	int size();
 
 	/**
 	 * Returns the converter id.
-	 * 
-	 * @return String
 	 */
 	String getConverterId();
 
 	/**
 	 * Sets the converter id.
-	 * 
-	 * @param converterId
 	 */
 	void setConverterId(String converterId);
 
 	/**
 	 * Returns the name.
-	 * 
-	 * @return String
 	 */
 	String getName();
 
 	/**
 	 * Sets the name.
-	 * 
-	 * @param name
 	 */
 	void setName(String name);
 
 	/**
 	 * Use the update listener to react to updates.
-	 * 
-	 * @param updateListener
 	 */
 	void addUpdateListener(IUpdateListener updateListener);
 
 	/**
 	 * Remove the specified update listener.
-	 * 
-	 * @param updateListener
 	 */
 	void removeUpdateListener(IUpdateListener updateListener);
 

@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -32,9 +32,9 @@ public abstract class AbstractPeakMassSpectrum extends AbstractRegularMassSpectr
 	/**
 	 * Creates a new instance of a peak mass spectrum shifted to the given
 	 * intensity relative to the intensity of peakMassSpectrum. The given
-	 * intensity must be intensity >= 0 and intensity <=
+	 * intensity must be intensity &gt;= 0 and intensity &lt;=
 	 * IPeakIntensityValues.MAX_INTENSITY.
-	 * 
+	 *
 	 * @param peakMassSpectrum
 	 * @param intensity
 	 */
@@ -78,13 +78,10 @@ public abstract class AbstractPeakMassSpectrum extends AbstractRegularMassSpectr
 	 * percentageIntensity of 125.0f will be provided, the total intensity of
 	 * the returned peak mass spectrum will be 45600.<br/>
 	 * Some examples:<br/>
-	 * 97.2% actual: 6514141.6f -> 100% : 6701791.77f<br/>
-	 * 100% actual: 6514141.6f -> 100% : 6514141.6f<br/>
-	 * 120% actual: 6514141.6f -> 100% : 5428451.333f<br/>
-	 * 50% actual: 6514141.6f -> 100% : 13028283.2f<br/>
-	 * 
-	 * @param massSpectrum
-	 * @param actualPercentageIntensity
+	 * 97.2% actual: 6514141.6f -&gt; 100% : 6701791.77f<br/>
+	 * 100% actual: 6514141.6f -&gt; 100% : 6514141.6f<br/>
+	 * 120% actual: 6514141.6f -&gt; 100% : 5428451.333f<br/>
+	 * 50% actual: 6514141.6f -&gt; 100% : 13028283.2f<br/>
 	 */
 	protected AbstractPeakMassSpectrum(IScanMSD massSpectrum, float actualPercentageIntensity) throws IllegalArgumentException {
 

@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -30,13 +30,17 @@ public interface IPreferenceSupplier {
 
 	/**
 	 * Returns the scope context, e.g.:
+	 * {@snippet :
 	 * InstanceScope.INSTANCE
+	 * }
 	 */
 	IScopeContext getScopeContext();
 
 	/**
 	 * Returns the preference node, e.g.:
+	 * {@snippet :
 	 * Activator.getContext().getBundle().getSymbolicName();
+	 * }
 	 */
 	String getPreferenceNode();
 
@@ -53,21 +57,23 @@ public interface IPreferenceSupplier {
 	/**
 	 * Returns a map of default values
 	 * that can be used to initialize the values for the preference page.
-	 * 
+	 * {@snippet :
 	 * public static final String P_VERSION = "version";
 	 * public static final String DEF_VERSION = "1.0.0.0";
-	 * 
-	 * Map<String, String> defaultValues = new HashMap<String, String>();
+	 *
+	 * Map&lt;String, String&gt; defaultValues = new HashMap&lt;&gt;();
 	 * defaultValues.put(P_VERSION, DEF_VERSION);
+	 * }
 	 */
 	Map<String, String> getDefaultValues();
 
 	/**
 	 * Returns the eclipse preferences instance.
 	 * Use the preferences as follows:
-	 * 
+	 * {@snippet :
 	 * IEclipsePreferences preferences = SCOPE_CONTEXT.getNode(PREFERENCE_NODE);
 	 * String myPreference = preferences.get(P_STRING , DEF_STRING);
+	 * }
 	 */
 	IEclipsePreferences getPreferences();
 

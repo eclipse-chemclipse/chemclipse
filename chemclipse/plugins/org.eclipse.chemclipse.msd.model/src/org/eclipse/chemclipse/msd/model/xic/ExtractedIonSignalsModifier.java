@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -46,7 +46,7 @@ public class ExtractedIonSignalsModifier {
 	 * See
 	 * "An integrated method for spectrum extraction and compound identification from gas chromatography/mass spectrometry data "
 	 * , S.E. Stein, 1999
-	 * 
+	 *
 	 * @throws AnalysisSupportException
 	 */
 	public static IIonUniquenessValues calculateIonUniqueness(IExtractedIonSignals extractedIonSignals) throws AnalysisSupportException {
@@ -76,10 +76,6 @@ public class ExtractedIonSignalsModifier {
 	 * This method adjusts threshold transitions in the given {@link IExtractedIonSignals} instance. See
 	 * "An integrated method for spectrum extraction and compound identification from gas chromatography/mass spectrometry data "
 	 * , S.E. Stein, 1999
-	 * 
-	 * @param extractedIonSignals
-	 * @throws AnalysisSupportException
-	 * @throws NoExtractedIonSignalStoredException
 	 */
 	public static void adjustThresholdTransitions(IExtractedIonSignals extractedIonSignals) throws AnalysisSupportException {
 
@@ -175,7 +171,7 @@ public class ExtractedIonSignalsModifier {
 
 	/**
 	 * Adjusts the ion values.
-	 * 
+	 *
 	 * @param analysisSegment
 	 * @param ion
 	 * @param preSetThresholdAbundanceValue
@@ -203,7 +199,7 @@ public class ExtractedIonSignalsModifier {
 
 	/**
 	 * Sets all zero abundance values to the new abundance.
-	 * 
+	 *
 	 * @param analysisSegment
 	 * @param excludedIons
 	 * @param ion
@@ -234,7 +230,7 @@ public class ExtractedIonSignalsModifier {
 	/**
 	 * Calculates the amount of transitions where the abundance of a certain
 	 * ion falls tos zero.
-	 * 
+	 *
 	 * @param startScan
 	 * @param stopScan
 	 * @param extractedIonSignals
@@ -292,7 +288,7 @@ public class ExtractedIonSignalsModifier {
 
 	/**
 	 * Determines whether the signal is zero or not.
-	 * 
+	 *
 	 * @return boolean
 	 * @throws NoExtractedIonSignalStoredException
 	 */

@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -53,7 +53,7 @@ public class TimeRange {
 	/**
 	 * Start / Stop in milliseconds.
 	 * Auto-correction of start/stop if performed.
-	 * 
+	 *
 	 * @param start
 	 * @param stop
 	 */
@@ -71,7 +71,7 @@ public class TimeRange {
 	/**
 	 * Start / Maximum / Stop in milliseconds.
 	 * Auto-correction of start/maximum/stop if performed.
-	 * 
+	 *
 	 * @param start
 	 * @param maximum
 	 * @param stop
@@ -131,8 +131,8 @@ public class TimeRange {
 
 	/**
 	 * Updates the start time.
-	 * The start time must be <= stop time, otherwise no update is performed.
-	 * 
+	 * The start time must be &lt;= stop time, otherwise no update is performed.
+	 *
 	 * @param start
 	 */
 	public void updateStart(int start) {
@@ -150,14 +150,12 @@ public class TimeRange {
 	 */
 	public void updateMaximum() {
 
-		this.maximum = (int)calculateCenter(start, stop);
+		this.maximum = calculateCenter(start, stop);
 	}
 
 	/**
 	 * Updates the maximum time.
-	 * The maximum time must be >= start time and <= stop time, otherwise no update is performed.
-	 * 
-	 * @param maximum
+	 * The maximum time must be &gt;= start time and &lt;= stop time, otherwise no update is performed.
 	 */
 	public void updateMaximum(int maximum) {
 
@@ -168,9 +166,7 @@ public class TimeRange {
 
 	/**
 	 * Updates the stop time.
-	 * The stop time must be >= start time, otherwise no update is performed.
-	 * 
-	 * @param stop
+	 * The stop time must be &gt;= start time, otherwise no update is performed.
 	 */
 	public void updateStop(int stop) {
 
@@ -236,18 +232,23 @@ public class TimeRange {
 	@Override
 	public boolean equals(Object obj) {
 
-		if(this == obj)
+		if(this == obj) {
 			return true;
-		if(obj == null)
+		}
+		if(obj == null) {
 			return false;
-		if(getClass() != obj.getClass())
+		}
+		if(getClass() != obj.getClass()) {
 			return false;
+		}
 		TimeRange other = (TimeRange)obj;
 		if(identifier == null) {
-			if(other.identifier != null)
+			if(other.identifier != null) {
 				return false;
-		} else if(!identifier.equals(other.identifier))
+			}
+		} else if(!identifier.equals(other.identifier)) {
 			return false;
+		}
 		return true;
 	}
 

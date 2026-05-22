@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -25,9 +25,6 @@ public interface IRetentionIndicesConverterSupport {
 	 * The filter extension are the specific retention indices file extensions.
 	 * AMDIS has for example an filter extension (.cal) which represents a
 	 * retention indices file.
-	 * 
-	 * @return String[]
-	 * @throws NoRetentionIndicesConverterAvailableException
 	 */
 	String[] getFilterExtensions() throws NoRetentionIndicesConverterAvailableException;
 
@@ -37,9 +34,6 @@ public interface IRetentionIndicesConverterSupport {
 	 * The filter names are the specific retention indices file names to be
 	 * displayed for example in the SWT FileDialog. AMDIS has for example an
 	 * filter name "AMDIS RI Calibration Data (.cal)".
-	 * 
-	 * @return String[]
-	 * @throws NoRetentionIndicesConverterAvailableException
 	 */
 	String[] getFilterNames() throws NoRetentionIndicesConverterAvailableException;
 
@@ -48,10 +42,6 @@ public interface IRetentionIndicesConverterSupport {
 	 * The id of the selected filter is used to determine which converter should
 	 * be used to import or export the retention indices.<br/>
 	 * Be aware of that the first index is 0. It is a 0-based index.
-	 * 
-	 * @param index
-	 * @return String
-	 * @throws NoRetentionIndicesConverterAvailableException
 	 */
 	String getConverterId(int index) throws NoRetentionIndicesConverterAvailableException;
 
@@ -59,10 +49,6 @@ public interface IRetentionIndicesConverterSupport {
 	 * Returns an ArrayList with all available converter ids for the given file.<br/>
 	 * If the file ends with "*.cal" all converter ids which can convert files
 	 * ending with "*.cal" will be returned.<br/>
-	 * 
-	 * @param retentionIndices
-	 * @return List<String>
-	 * @throws NoRetentionIndicesConverterAvailableException
 	 */
 	List<String> getAvailableConverterIds(File retentionIndices) throws NoRetentionIndicesConverterAvailableException;
 }

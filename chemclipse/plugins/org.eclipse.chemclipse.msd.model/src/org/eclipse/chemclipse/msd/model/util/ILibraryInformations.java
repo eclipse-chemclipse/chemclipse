@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Dr. Alexander Kerner - initial API and implementation
  * Philip Wenig - identification target comparator
@@ -26,7 +26,7 @@ import org.eclipse.chemclipse.support.comparator.SortOrder;
 
 /**
  * Utility class for {@link ILibraryInformation} related stuff.
- * 
+ *
  * @author Alexander Kerner
  *
  */
@@ -36,7 +36,7 @@ public class ILibraryInformations {
 
 	/**
 	 * Same as {@link #selectLibraryInformation(Collection, Comparator)}, using {@link #DEFAULT_TARGET_COMPARATOR}.
-	 * 
+	 *
 	 * @param targets
 	 *            {@link IIdentificationTarget peak targets} from which one {@link ILibraryInformation} should be selected
 	 * @return the selected {@link ILibraryInformation}
@@ -48,9 +48,9 @@ public class ILibraryInformations {
 
 	/**
 	 * From a collection of {@link IIdentificationTarget peak targets} the best one is selected and it's {@link ILibraryInformation} is returned.
-	 * </p>
+	 * <br>
 	 * <i>Best one</i> is defined by given {@link Comparator} and means efficiently <i>lowest one</i>.
-	 * 
+	 *
 	 * @param targets
 	 *            {@link IIdentificationTarget peak targets} from which one {@link ILibraryInformation} should be selected
 	 * @param comparator

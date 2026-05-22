@@ -131,13 +131,15 @@ public abstract class AbstractIon implements IIon {
 	/**
 	 * Returns the given ion as an value rounded to the given precision.
 	 * E.g.:
-	 * ion = 28.78749204
-	 * precision 1 => 28.8
-	 * precision 2 => 28.79
-	 * precision 3 => 28.787
-	 * precision 4 => 28.7875
-	 * precision 5 => 28.78749
-	 * precision 6 => 28.787492
+	 * <ul>
+	 * <li>ion = 28.78749204</li>
+	 * <li>precision 1 =&gt; 28.8</li>
+	 * <li>precision 2 =&gt; 28.79</li>
+	 * <li>precision 3 =&gt; 28.787</li>
+	 * <li>precision 4 =&gt; 28.7875</li>
+	 * <li>precision 5 =&gt; 28.78749</li>
+	 * <li>precision 6 =&gt; 28.787492</li>
+	 * </ul>
 	 *
 	 * The precision of 6 is the maximum. If the precious is outward of
 	 * this bounds it will set to 1.
@@ -205,8 +207,8 @@ public abstract class AbstractIon implements IIon {
 
 	/**
 	 * Compares the mass/charge ration of two ions. Returns the
-	 * following values: a.compareTo(b) 0 a == b : 28 == 28 -1 a < b : 18 < 28
-	 * +1 a > b : 28 > 18
+	 * following values: a.compareTo(b) 0 a == b : 28 == 28 -1 a &lt; b : 18 &lt; 28
+	 * +1 a &gt; b : 28 &gt; 18
 	 */
 	@Override
 	public int compareTo(IIon other) {

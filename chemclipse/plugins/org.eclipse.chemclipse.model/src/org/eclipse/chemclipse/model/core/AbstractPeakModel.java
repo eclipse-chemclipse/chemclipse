@@ -68,12 +68,7 @@ public abstract class AbstractPeakModel extends AbstractPeakModelStrict {
 	 * The peak maximum should contain absolute abundance values for the given
 	 * peak. The background should not be considered in the peak maximum. So the
 	 * peak maximum represents the pure maybe deconvoluted mass spectrum for the
-	 * actual peak.<br/>
-	 *
-	 * @param peakMaximum
-	 * @param peakIntensityValues
-	 * @param startBackgroundAbundance
-	 * @param stopBackgroundAbundance
+	 * actual peak.
 	 */
 	protected AbstractPeakModel(IScan peakMaximum, IPeakIntensityValues peakIntensityValues, float startBackgroundAbundance, float stopBackgroundAbundance, boolean strictModel) throws PeakException {
 

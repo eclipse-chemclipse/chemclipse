@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
@@ -23,9 +23,9 @@ import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 
 /**
- * @see Wohlgemuth, G, et al. SPLASH, a Hashed Identifier for Mass Spectra.
+ * Reference: Wohlgemuth, G, et al. SPLASH, a Hashed Identifier for Mass Spectra.
  *      Nature Biotechnology 34, 1099-101 (2016).
- *      <a href="https://doi.org/10.1038/nbt.3689">https://doi.org/10.1038/nbt.3689</a>
+ * @see <a href="https://doi.org/10.1038/nbt.3689">https://doi.org/10.1038/nbt.3689</a>
  */
 public class SplashFactory {
 

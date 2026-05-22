@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -101,7 +101,7 @@ public interface IPeakIntensityValues extends IPeakIntensityValuesStrict {
 	 * It means that the entry - defined by its retention time key - will be
 	 * returned which is equal or lower to the given retention time key.<br/>
 	 * Only valid entries will be returned if the following condition is true:
-	 * "retentionTime &gt;= getStartRetentionTime() && retentionTime &lt;= getStopRetentionTime()"
+	 * "retentionTime &gt;= getStartRetentionTime() &amp;&amp; retentionTime &lt;= getStopRetentionTime()"
 	 * , if it is not true, null will be returned.<br/>
 	 * If there is no entry available, null will be returned.
 	 */

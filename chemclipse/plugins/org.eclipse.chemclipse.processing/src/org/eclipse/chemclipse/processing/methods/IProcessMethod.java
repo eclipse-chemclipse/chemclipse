@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - enhance method definition, add readonly support
@@ -23,14 +23,14 @@ import org.eclipse.chemclipse.support.model.SeparationColumnType;
 public interface IProcessMethod extends IProcessEntryContainer {
 
 	/**
-	 * 
+	 *
 	 * @return returns the methods UUID to identify the method across file-systems
 	 */
 	String getUUID();
 
 	/**
 	 * The name is used to display a label to the user
-	 * 
+	 *
 	 * @return the human readable label/name
 	 */
 	@Override
@@ -38,27 +38,27 @@ public interface IProcessMethod extends IProcessEntryContainer {
 
 	/**
 	 * The category is used to group similar methods
-	 * 
+	 *
 	 * @return the category
 	 */
 	String getCategory();
 
 	/**
 	 * Returns the map to track the column type for specific profiles.
-	 * 
+	 *
 	 * @return {@link Map}
 	 */
 	Map<String, SeparationColumnType> getProfileColumnsMap();
 
 	/**
 	 * The operator is the person who has created / currently manages this method
-	 * 
+	 *
 	 * @return the operator of the method
 	 */
 	String getOperator();
 
 	/**
-	 * 
+	 *
 	 * @return the human readable description of this method
 	 */
 	@Override
@@ -66,13 +66,13 @@ public interface IProcessMethod extends IProcessEntryContainer {
 
 	/**
 	 * a method marked as final is one that is approved or otherwise locked for further modifications and will stay constant over time
-	 * 
+	 *
 	 * @return <code>true</code> if this is a final method or <code>false</code> otherwise
 	 */
 	boolean isFinal();
 
 	/**
-	 * 
+	 *
 	 * @return the underlying sourcefile or <code>null</code> if this file is not file-based
 	 */
 	default File getSourceFile() {
@@ -82,14 +82,14 @@ public interface IProcessMethod extends IProcessEntryContainer {
 
 	/**
 	 * a method might be defined in the context of valid types e.g. for Chromatography (MSD, WSD, CSD) or NMR
-	 * 
+	 *
 	 * @return the {@link DataCategory}s that are valid for this methods context
 	 */
 	Set<DataCategory> getDataCategories();
 
 	/**
 	 * Each {@link IProcessMethod} can carry a set of metadata pairs to store user metadata
-	 * 
+	 *
 	 * @return a map of key/value pairs of the metadata
 	 */
 	Map<String, String> getMetaData();
@@ -102,11 +102,11 @@ public interface IProcessMethod extends IProcessEntryContainer {
 	 * {@link #getOperator()},
 	 * {@link #isFinal()}
 	 * and all contained {@link IProcessEntry}s
-	 * this method is different to {@link #equals(Object)} that it does compares for user visible properties to be equal in contrast to objects identity and it allows to compare different instance type, this also means that it is not required that
+	 * this method is different to {@link java.lang.Object#equals(Object)} that it does compares for user visible properties to be equal in contrast to objects identity and it allows to compare different instance type, this also means that it is not required that
 	 * Object1.contentEquals(Object2} == Object2.contentEquals(Object1},
-	 * 
+	 *
 	 * {@link #getDataCategories()} are not compared because that does not contribute to the content but is only a hint
-	 * 
+	 *
 	 * @param other
 	 * @return
 	 */

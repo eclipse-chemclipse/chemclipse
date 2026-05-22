@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -55,7 +55,7 @@ public class RetentionIndex implements IRetentionIndex, Comparable<IRetentionInd
 
 	/**
 	 * Checks the retention time to min and max values and sets it if valid.
-	 * 
+	 *
 	 * @param retentionTime
 	 */
 	// @edu.umd.cs.findbugs.annotations.SuppressWarnings("INT_VACUOUS_COMPARISON")
@@ -83,7 +83,7 @@ public class RetentionIndex implements IRetentionIndex, Comparable<IRetentionInd
 
 	/**
 	 * Checks the index to min and max values and sets it if valid.
-	 * 
+	 *
 	 * @param index
 	 */
 	private void setCheckedIndex(final float index) {
@@ -107,8 +107,8 @@ public class RetentionIndex implements IRetentionIndex, Comparable<IRetentionInd
 
 	/**
 	 * Compares the index of two retention index entries. Returns the following
-	 * values: a.compareTo(b) 0 a == b : 2000 == 2000 -1 a < b : 1000 < 2000 +1
-	 * a > b : 3000 > 2000
+	 * values: a.compareTo(b) 0 a == b : 2000 == 2000 -1 a &lt; b : 1000 &lt; 2000 +1
+	 * a &gt; b : 3000 &gt; 2000
 	 */
 	@Override
 	public int compareTo(final IRetentionIndex other) {

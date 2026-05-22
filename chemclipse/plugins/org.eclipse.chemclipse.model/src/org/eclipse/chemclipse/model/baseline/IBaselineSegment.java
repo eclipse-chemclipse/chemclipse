@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -23,36 +23,28 @@ public interface IBaselineSegment {
 	int getStartRetentionTime();
 
 	/**
-	 * The start retention time must be >= 0 and must be =< stopRetentionTime.
-	 * 
-	 * @param startRetentionTime
+	 * The start retention time must be &gt;= 0 and must be =&lt; stopRetentionTime.
 	 */
 	void setStartRetentionTime(int startRetentionTime);
 
 	float getStartBackgroundAbundance();
 
 	/**
-	 * The start background abundance time must be >= 0.
-	 * 
-	 * @param startBackgroundAbundance
+	 * The start background abundance time must be &gt;= 0.
 	 */
 	void setStartBackgroundAbundance(float startBackgroundAbundance);
 
 	int getStopRetentionTime();
 
 	/**
-	 * The stop retention time must be >= 0 and must be >= startRetentionTime.
-	 * 
-	 * @param stopRetentionTime
+	 * The stop retention time must be &gt;= 0 and must be &gt;= startRetentionTime.
 	 */
 	void setStopRetentionTime(int stopRetentionTime);
 
 	float getStopBackgroundAbundance();
 
 	/**
-	 * The stop background abundance time must be >= 0.
-	 * 
-	 * @param stopBackgroundAbundance
+	 * The stop background abundance time must be &gt;= 0.
 	 */
 	void setStopBackgroundAbundance(float stopBackgroundAbundance);
 

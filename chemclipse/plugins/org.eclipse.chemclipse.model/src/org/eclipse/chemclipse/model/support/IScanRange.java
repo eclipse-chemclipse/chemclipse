@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - add contains method
@@ -22,21 +22,21 @@ public interface IScanRange {
 
 	/**
 	 * Returns the start scan number.
-	 * 
+	 *
 	 * @return int
 	 */
 	int getStartScan();
 
 	/**
 	 * Returns the stop scan number.
-	 * 
+	 *
 	 * @return int
 	 */
 	int getStopScan();
 
 	/**
 	 * Returns the width of the scan range.
-	 * 
+	 *
 	 * @return int
 	 */
 	default int getWidth() {
@@ -51,9 +51,9 @@ public interface IScanRange {
 
 	/**
 	 * Compares this objects content to the other objects content, the default implementation compares {@link #getStartScan()}, {@link #getStopScan()}
-	 * this method is different to {@link #equals(Object)} that it does compares for user visible properties to be equal in contrast to objects identity and it allows to compare different instance type, this also means that it is not required that
+	 * this method is different to {@link java.lang.Object#equals(Object)} that it does compares for user visible properties to be equal in contrast to objects identity and it allows to compare different instance type, this also means that it is not required that
 	 * Object1.contentEquals(Object2} == Object2.contentEquals(Object1}
-	 * 
+	 *
 	 * @param other
 	 * @return
 	 */

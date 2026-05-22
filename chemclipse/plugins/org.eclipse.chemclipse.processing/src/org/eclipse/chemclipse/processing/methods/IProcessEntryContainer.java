@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Christoph Läubrich - initial API and implementation
  * Philip Wenig - support instruments
@@ -30,7 +30,7 @@ public interface IProcessEntryContainer extends Iterable<IProcessEntry> {
 	int DEFAULT_RESUME_INDEX = 0; // Process all items.
 
 	/**
-	 * 
+	 *
 	 * @return an informative name describing the container
 	 */
 	String getName();
@@ -65,7 +65,7 @@ public interface IProcessEntryContainer extends Iterable<IProcessEntry> {
 	/**
 	 * This flag defines if the process method supports the resume operation.
 	 * Both resume and profile selection will be checked.
-	 * 
+	 *
 	 * This option needs to be activated on purpose.
 	 */
 	boolean isSupportResume();
@@ -85,8 +85,8 @@ public interface IProcessEntryContainer extends Iterable<IProcessEntry> {
 	 * <li>if any entry is not contentEquals to the other one <code>false</code> is returned</li>
 	 * <li>if any of the iterator return more elements than the other <code>false</code> is returned
 	 * </ol>
-	 * 
-	 * this method is different to {@link #equals(Object)} that it does compares for user visible properties to be equal in contrast to objects identity and it allows to compare different instance type, this also means that it is not required that
+	 *
+	 * this method is different to {@link java.lang.Object#equals(Object)} that it does compares for user visible properties to be equal in contrast to objects identity and it allows to compare different instance type, this also means that it is not required that
 	 * Object1.contentEquals(Object2} == Object2.contentEquals(Object1}
 	 */
 	default boolean entriesEquals(IProcessEntryContainer other) {

@@ -47,7 +47,7 @@ public class ScanMSD extends AbstractScanMSD {
 	/**
 	 * Creates a new instance of {@code ScanMSD} by creating a
 	 * shallow copy of provided {@code templateScan}.
-	 * </p>
+	 * <br>
 	 * To create a deep copy, use {@link #makeDeepCopy()}.
 	 *
 	 * @param templateScan

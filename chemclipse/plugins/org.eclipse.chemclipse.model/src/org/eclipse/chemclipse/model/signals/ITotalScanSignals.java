@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - add method to get values in a given range
@@ -26,34 +26,24 @@ public interface ITotalScanSignals extends Iterable<Integer> {
 
 	/**
 	 * Returns the chromatogram where these signals derive from.
-	 * 
-	 * @return {@link IChromatogram}
 	 */
 	IChromatogram getChromatogram();
 
 	/**
 	 * Adds an {@link ITotalScanSignal} instance at the end of the stored
 	 * signals.
-	 * 
-	 * @param totalScanSignal
 	 */
 	void add(ITotalScanSignal totalScanSignal);
 
 	/**
 	 * Returns an {@link ITotalScanSignal} object.<br/>
 	 * If no object is available, null will be returned.
-	 * 
-	 * @param scan
-	 * @return ITotalIonSignal
 	 */
 	ITotalScanSignal getTotalScanSignal(int scan);
 
 	/**
 	 * Returns the next scan relative to the given scan.<br/>
 	 * If no scan is available, null will be returned.
-	 * 
-	 * @param scan
-	 * @return ITotalIonSignal
 	 */
 	default ITotalScanSignal getNextTotalScanSignal(int scan) {
 
@@ -63,9 +53,6 @@ public interface ITotalScanSignals extends Iterable<Integer> {
 	/**
 	 * Returns the previous scan relative to the given scan.<br/>
 	 * If no scan is available, null will be returned.
-	 * 
-	 * @param scan
-	 * @return IPoint
 	 */
 	default ITotalScanSignal getPreviousTotalScanSignal(int scan) {
 
@@ -73,7 +60,7 @@ public interface ITotalScanSignals extends Iterable<Integer> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return first signal with index start scan if signals is empty return null
 	 */
 	default ITotalScanSignal getFirstTotalScanSignal() {
@@ -82,7 +69,7 @@ public interface ITotalScanSignals extends Iterable<Integer> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return first signal with index stop scan if signals is empty return null
 	 */
 	default ITotalScanSignal getLastTotalScanSignal() {
@@ -94,29 +81,21 @@ public interface ITotalScanSignals extends Iterable<Integer> {
 
 	/**
 	 * Returns the size.
-	 * 
-	 * @return int
 	 */
 	int size();
 
 	/**
 	 * Returns the start scan number.
-	 * 
-	 * @return int
 	 */
 	int getStartScan();
 
 	/**
 	 * Returns the stop scan number.
-	 * 
-	 * @return int
 	 */
 	int getStopScan();
 
 	/**
 	 * Returns the highest total signal from the stored total ion signals.
-	 * 
-	 * @return float
 	 */
 	default float getMaxSignal() {
 
@@ -132,8 +111,6 @@ public interface ITotalScanSignals extends Iterable<Integer> {
 
 	/**
 	 * Returns the lowest total signal from the stored total ion signals.
-	 * 
-	 * @return float
 	 */
 	default float getMinSignal() {
 
@@ -149,8 +126,6 @@ public interface ITotalScanSignals extends Iterable<Integer> {
 
 	/**
 	 * Makes a deep copy of the actual total ion signals list.
-	 * 
-	 * @return ITotalIonSignals
 	 */
 	ITotalScanSignals makeDeepCopy();
 
@@ -158,22 +133,16 @@ public interface ITotalScanSignals extends Iterable<Integer> {
 	 * Returns a list of the stored total ion signals. The list is a copy.
 	 * Remove or add total ion signals with the appropriate methods of this
 	 * interface.
-	 * 
-	 * @return List<ITotalIonSignal>
 	 */
 	List<ITotalScanSignal> getTotalScanSignals();
 
 	/**
 	 * Returns a list of the stored total ion signals. The list is unmodifiable.
-	 * 
-	 * @return List<ITotalIonSignal>
 	 */
 	List<ITotalScanSignal> getTotalScanSignalList();
 
 	/**
 	 * Returns the highest total ion signal.
-	 * 
-	 * @return {@link ITotalScanSignal}
 	 */
 	default ITotalScanSignal getMaxTotalScanSignal() {
 
@@ -182,8 +151,6 @@ public interface ITotalScanSignals extends Iterable<Integer> {
 
 	/**
 	 * Returns the lowest total ion signal.
-	 * 
-	 * @return {@link ITotalScanSignal}
 	 */
 	default ITotalScanSignal getMinTotalScanSignal() {
 
@@ -227,8 +194,6 @@ public interface ITotalScanSignals extends Iterable<Integer> {
 
 	/**
 	 * Returns all total ion signals as an float array.
-	 * 
-	 * @return float[]
 	 */
 	default float[] getValues() {
 
@@ -241,7 +206,7 @@ public interface ITotalScanSignals extends Iterable<Integer> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param range
 	 * @return all values in the given range as array
 	 */

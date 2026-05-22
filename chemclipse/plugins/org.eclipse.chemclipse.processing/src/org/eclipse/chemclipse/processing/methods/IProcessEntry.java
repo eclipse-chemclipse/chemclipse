@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - make unmodifiable except the Settings
@@ -24,20 +24,20 @@ import org.eclipse.chemclipse.processing.supplier.IProcessorPreferences;
 public interface IProcessEntry extends IProcessEntryContainer {
 
 	/**
-	 * 
+	 *
 	 * @return the {@link IProcessSupplier} id this {@link IProcessEntry} referees to
 	 */
 	String getProcessorId();
 
 	/**
-	 * 
+	 *
 	 * @return the name of this {@link IProcessEntry}, most likely the name of the {@link IProcessSupplier}
 	 */
 	@Override
 	String getName();
 
 	/**
-	 * 
+	 *
 	 * @return the description of this {@link IProcessEntry}, most likely the description of the {@link IProcessSupplier}
 	 */
 	@Override
@@ -69,13 +69,13 @@ public interface IProcessEntry extends IProcessEntryContainer {
 	void deleteProfile(String profile);
 
 	/**
-	 * 
+	 *
 	 * @return the current settings of the {@link IProcessEntry} might be <code>null</code>
 	 */
 	String getSettings();
 
 	/**
-	 * 
+	 *
 	 * @return the current settings of the {@link IProcessEntry} might be <code>null</code>
 	 */
 	String getSettings(String profile);
@@ -87,14 +87,14 @@ public interface IProcessEntry extends IProcessEntryContainer {
 	Map<String, String> getSettingsMap();
 
 	/**
-	 * 
+	 *
 	 * @return the {@link DataCategory}s this {@link IProcessEntry} applies to, most likely equals to the {@link DataCategory}s of the {@link IProcessSupplier}
 	 */
 	Set<DataCategory> getDataCategories();
 
 	/**
 	 * Set the settings for this entry
-	 * 
+	 *
 	 * @throws IllegalArgumentException
 	 *             if the entry is readonly
 	 */
@@ -125,7 +125,7 @@ public interface IProcessEntry extends IProcessEntryContainer {
 
 	/**
 	 * Compares this entry content to the other entries content, the default implementation compares {@link #getName()}, {@link #getDescription()}, {@link #getSettings()}, {@link #isReadOnly()} {@link #getProcessorId()},
-	 * this method is different to {@link #equals(Object)} that it does compares for user visible properties to be equal in contrast to objects identity and it allows to compare differnt instance type, this also means that it is not required that
+	 * this method is different to {@link java.lang.Object#equals(Object)} that it does compares for user visible properties to be equal in contrast to objects identity and it allows to compare different instance type, this also means that it is not required that
 	 * Object1.contentEquals(Object2} == Object2.contentEquals(Object1}
 	 */
 	default boolean contentEquals(IProcessEntry other) {
