@@ -10,6 +10,7 @@
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - execute updates in own eventqueue, optimize display of target spectrum
+ * Lorenz Gerber - allow null IScanMSD in updateData
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.parts;
 
@@ -82,12 +83,10 @@ public class ComparisonScanChartPart extends AbstractPart<ExtendedComparisonScan
 						}
 					}
 				} else if(isScanReferenceComparisonEvent(topic)) {
-					if(object instanceof Object[] values) {
-						Object object1 = values[0];
-						Object object2 = values[1];
-						if(object1 instanceof IScanMSD unknownMassSpectrum && object2 instanceof IScanMSD referenceMassSpectrum) {
-							getControl().update(unknownMassSpectrum, referenceMassSpectrum);
-						}
+					if(object instanceof Object[] values && values.length >= 2) {
+						IScanMSD unknownMassSpectrum = values[0] instanceof IScanMSD s ? s : null;
+						IScanMSD referenceMassSpectrum = values[1] instanceof IScanMSD s ? s : null;
+						getControl().update(unknownMassSpectrum, referenceMassSpectrum);
 					}
 				}
 			}
