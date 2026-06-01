@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2025 Lablicate GmbH.
+ * Copyright (c) 2011, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -26,15 +26,16 @@ public interface IPeakMSD extends IPeak {
 	 * to noise ratio or the peak abundance at a given scan number.<br/>
 	 * These values are only accessible when a valid parent chromatogram
 	 * instance exists.
-	 * 
+	 *
 	 * @return IPeakModel
 	 */
+	@Override
 	IPeakModelMSD getPeakModel();
 
 	/**
 	 * Returns the extracted peak mass spectrum. See also
 	 * getChromatogramMassSpectrum().
-	 * 
+	 *
 	 * @return IPeakMassSpectrum
 	 */
 	IPeakMassSpectrum getExtractedMassSpectrum();

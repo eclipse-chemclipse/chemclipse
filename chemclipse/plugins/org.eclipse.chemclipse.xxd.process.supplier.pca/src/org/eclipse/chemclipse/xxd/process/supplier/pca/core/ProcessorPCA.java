@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Jan Holy - initial API and implementation
  * Lorenz Gerber - PCA adapter, algorithm, opls target group, CV
@@ -39,6 +39,7 @@ import org.eclipse.core.runtime.SubMonitor;
 
 public class ProcessorPCA extends AbstractProcessorMultivariateAanalysis implements IProcessor {
 
+	@Override
 	public <V extends IVariable, S extends ISample> void cleanUnusedVariables(IEvaluation<IVariable, ISample, IResult> evaluationPCA, IProgressMonitor monitor) {
 
 		if(evaluationPCA != null) {
@@ -79,6 +80,7 @@ public class ProcessorPCA extends AbstractProcessorMultivariateAanalysis impleme
 		}
 	}
 
+	@Override
 	public IEvaluation<IVariable, ISample, IResult> process(ISamplesPCA<IVariable, ISample> samples, IEvaluation<IVariable, ISample, IResult> masterEvaluation, IProgressMonitor monitor) throws MathIllegalArgumentException {
 
 		EvaluationPCA evaluationPCA = null;

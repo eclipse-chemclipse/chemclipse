@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -21,6 +21,7 @@ public class RetentionIndicesSupplier implements IRetentionIndicesSupplier {
 	private boolean exportable = false;
 	private boolean importable = false;
 
+	@Override
 	public String getId() {
 
 		return id;
@@ -29,7 +30,7 @@ public class RetentionIndicesSupplier implements IRetentionIndicesSupplier {
 	/**
 	 * Sets the supplier id like
 	 * "org.eclipse.chemclipse.chromatogram.alignment.supplier.amdis".
-	 * 
+	 *
 	 * @param id
 	 */
 	protected void setId(final String id) {
@@ -39,6 +40,7 @@ public class RetentionIndicesSupplier implements IRetentionIndicesSupplier {
 		}
 	}
 
+	@Override
 	public String getDescription() {
 
 		return description;
@@ -46,7 +48,7 @@ public class RetentionIndicesSupplier implements IRetentionIndicesSupplier {
 
 	/**
 	 * Sets the description of the retention index supplier.
-	 * 
+	 *
 	 * @param description
 	 */
 	protected void setDescription(final String description) {
@@ -56,6 +58,7 @@ public class RetentionIndicesSupplier implements IRetentionIndicesSupplier {
 		}
 	}
 
+	@Override
 	public String getFilterName() {
 
 		return filterName;
@@ -63,7 +66,7 @@ public class RetentionIndicesSupplier implements IRetentionIndicesSupplier {
 
 	/**
 	 * Set the filter name to be shown in the FileDialog.
-	 * 
+	 *
 	 * @param filterName
 	 */
 	protected void setFilterName(final String filterName) {
@@ -73,6 +76,7 @@ public class RetentionIndicesSupplier implements IRetentionIndicesSupplier {
 		}
 	}
 
+	@Override
 	public String getFileExtension() {
 
 		return fileExtension;
@@ -81,7 +85,7 @@ public class RetentionIndicesSupplier implements IRetentionIndicesSupplier {
 	/**
 	 * Sets the file extension, e.g. AMDIS (.cal). If for example only (cal)
 	 * will be stored, a leading point will automatically be added (.cal).
-	 * 
+	 *
 	 * @param fileExtension
 	 */
 	protected void setFileExtension(final String fileExtension) {
@@ -95,6 +99,7 @@ public class RetentionIndicesSupplier implements IRetentionIndicesSupplier {
 		}
 	}
 
+	@Override
 	public boolean isExportable() {
 
 		return exportable;
@@ -102,7 +107,7 @@ public class RetentionIndicesSupplier implements IRetentionIndicesSupplier {
 
 	/**
 	 * Sets whether the retention indices are exportable or not.
-	 * 
+	 *
 	 * @param isExportable
 	 */
 	protected void setExportable(final boolean isExportable) {
@@ -110,6 +115,7 @@ public class RetentionIndicesSupplier implements IRetentionIndicesSupplier {
 		this.exportable = isExportable;
 	}
 
+	@Override
 	public boolean isImportable() {
 
 		return importable;
@@ -117,7 +123,7 @@ public class RetentionIndicesSupplier implements IRetentionIndicesSupplier {
 
 	/**
 	 * Sets whether the retention indices are importable or not.
-	 * 
+	 *
 	 * @param isImportable
 	 */
 	protected void setImportable(final boolean isImportable) {

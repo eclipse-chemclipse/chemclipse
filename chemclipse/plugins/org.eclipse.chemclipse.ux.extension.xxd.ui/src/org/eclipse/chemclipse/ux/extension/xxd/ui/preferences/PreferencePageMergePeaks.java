@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2025 Lablicate GmbH.
+ * Copyright (c) 2021, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -30,6 +30,7 @@ public class PreferencePageMergePeaks extends FieldEditorPreferencePage implemen
 		setDescription("");
 	}
 
+	@Override
 	public void createFieldEditors() {
 
 		addField(new ComboFieldEditor(PreferenceSupplier.P_MERGE_PEAKS_CALCULATION_TYPE, "Calculation Type", CalculationType.getOptions(), getFieldEditorParent()));
@@ -37,6 +38,7 @@ public class PreferencePageMergePeaks extends FieldEditorPreferencePage implemen
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_MERGE_PEAKS_DELETE_ORIGINS, "Delete Origins", getFieldEditorParent()));
 	}
 
+	@Override
 	public void init(IWorkbench workbench) {
 
 	}

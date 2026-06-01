@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -28,6 +28,7 @@ public class PreferencePageLists extends FieldEditorPreferencePage implements IW
 		setDescription("");
 	}
 
+	@Override
 	public void createFieldEditors() {
 
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_SHOW_PEAKS_IN_LIST, "Show peaks in list", getFieldEditorParent()));
@@ -37,6 +38,7 @@ public class PreferencePageLists extends FieldEditorPreferencePage implements IW
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_SHOW_PEAK_PROFILES_SELECTION_ALL, "Show peak profiles (CTRL + A)", getFieldEditorParent()));
 	}
 
+	@Override
 	public void init(IWorkbench workbench) {
 
 	}

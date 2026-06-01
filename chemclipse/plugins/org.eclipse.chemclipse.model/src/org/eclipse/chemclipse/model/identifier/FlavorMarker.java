@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2025 Lablicate GmbH.
+ * Copyright (c) 2022, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -48,11 +48,13 @@ public class FlavorMarker implements IFlavorMarker {
 		odorThresholds.clear();
 	}
 
+	@Override
 	public boolean isManuallyVerified() {
 
 		return manuallyVerified;
 	}
 
+	@Override
 	public void setManuallyVerified(boolean manuallyVerified) {
 
 		this.manuallyVerified = manuallyVerified;
@@ -133,12 +135,15 @@ public class FlavorMarker implements IFlavorMarker {
 	@Override
 	public boolean equals(Object obj) {
 
-		if(this == obj)
+		if(this == obj) {
 			return true;
-		if(obj == null)
+		}
+		if(obj == null) {
 			return false;
-		if(getClass() != obj.getClass())
+		}
+		if(getClass() != obj.getClass()) {
 			return false;
+		}
 		FlavorMarker other = (FlavorMarker)obj;
 		return Objects.equals(matrix, other.matrix) && Objects.equals(odor, other.odor) && Objects.equals(solvent, other.solvent);
 	}

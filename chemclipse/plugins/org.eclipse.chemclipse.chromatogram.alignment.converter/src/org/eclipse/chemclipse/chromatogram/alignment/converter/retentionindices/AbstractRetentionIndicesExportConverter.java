@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -23,12 +23,8 @@ public abstract class AbstractRetentionIndicesExportConverter implements IRetent
 	/**
 	 * This method validates whether the retention indices file is writable.<br/>
 	 * If the file is not writable a FileIsNotWritableException will be thrown.
-	 * 
-	 * @param file
-	 * @throws FileNotFoundException
-	 * @throws FileIsNotWriteableException
-	 * @throws IOException
 	 */
+	@Override
 	public void validate(final File file) throws FileIsNotWriteableException, IOException {
 
 		/*
@@ -49,10 +45,6 @@ public abstract class AbstractRetentionIndicesExportConverter implements IRetent
 	/**
 	 * Creates missing directories and files.<br/>
 	 * If a failure occurs an exception will be thrown.
-	 * 
-	 * @param file
-	 * @throws FileIsNotWriteableException
-	 * @throws IOException
 	 */
 	private void createDirectoriesAndFiles(final File file) throws FileIsNotWriteableException, IOException {
 

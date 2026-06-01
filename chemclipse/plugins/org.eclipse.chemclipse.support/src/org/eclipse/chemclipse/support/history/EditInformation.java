@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -43,7 +43,7 @@ public class EditInformation implements IEditInformation {
 
 	/**
 	 * Creates a new EditInformation object from the given date, description and editor.
-	 * 
+	 *
 	 * @param date
 	 * @param description
 	 */
@@ -62,7 +62,7 @@ public class EditInformation implements IEditInformation {
 
 	/**
 	 * Do not set this method public or protected.
-	 * 
+	 *
 	 * @param description
 	 */
 	private void setDate(Date date) {
@@ -85,7 +85,7 @@ public class EditInformation implements IEditInformation {
 
 	/**
 	 * Do not set this method public or protected.
-	 * 
+	 *
 	 * @param description
 	 */
 	private void setDescription(String description) {
@@ -104,7 +104,7 @@ public class EditInformation implements IEditInformation {
 
 	/**
 	 * Do not set this method public or protected.
-	 * 
+	 *
 	 * @param editor
 	 */
 	private void setEditor(String editor) {
@@ -121,6 +121,7 @@ public class EditInformation implements IEditInformation {
 		return processSupplierEntry;
 	}
 
+	@Override
 	public void setProcessSupplierEntry(ProcessSupplierEntry processSupplierEntry) {
 
 		this.processSupplierEntry = processSupplierEntry;
