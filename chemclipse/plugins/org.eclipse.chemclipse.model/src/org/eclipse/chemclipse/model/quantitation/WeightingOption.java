@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -26,6 +26,7 @@ public enum WeightingOption implements ILabel {
 		this.label = label;
 	}
 
+	@Override
 	public String label() {
 
 		return label;

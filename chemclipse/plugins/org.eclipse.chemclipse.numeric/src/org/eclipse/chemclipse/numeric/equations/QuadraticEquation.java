@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -27,7 +27,7 @@ public class QuadraticEquation implements IQuadraticEquation {
 	/**
 	 * Creates a new quadratic equation.
 	 * f(x) = ax^2 + bx + c
-	 * 
+	 *
 	 * @param a
 	 * @param b
 	 * @param c
@@ -39,16 +39,19 @@ public class QuadraticEquation implements IQuadraticEquation {
 		this.c = c;
 	}
 
+	@Override
 	public double getA() {
 
 		return a;
 	}
 
+	@Override
 	public double getB() {
 
 		return b;
 	}
 
+	@Override
 	public double getC() {
 
 		return c;

@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -105,6 +105,7 @@ public class BaselineSegment implements IBaselineSegment {
 		}
 	}
 
+	@Override
 	public ITrace getTrace() {
 
 		return trace;
@@ -127,12 +128,15 @@ public class BaselineSegment implements IBaselineSegment {
 	@Override
 	public boolean equals(Object obj) {
 
-		if(this == obj)
+		if(this == obj) {
 			return true;
-		if(obj == null)
+		}
+		if(obj == null) {
 			return false;
-		if(getClass() != obj.getClass())
+		}
+		if(getClass() != obj.getClass()) {
 			return false;
+		}
 		BaselineSegment other = (BaselineSegment)obj;
 		return Float.floatToIntBits(startBackgroundAbundance) == Float.floatToIntBits(other.startBackgroundAbundance) && startRetentionTime == other.startRetentionTime && Float.floatToIntBits(stopBackgroundAbundance) == Float.floatToIntBits(other.stopBackgroundAbundance) && stopRetentionTime == other.stopRetentionTime && Objects.equals(trace, other.trace);
 	}
