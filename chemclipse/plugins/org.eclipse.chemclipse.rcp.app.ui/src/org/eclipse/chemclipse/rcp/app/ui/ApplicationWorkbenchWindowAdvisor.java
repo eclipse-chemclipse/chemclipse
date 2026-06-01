@@ -12,13 +12,19 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.rcp.app.ui;
 
+import org.eclipse.chemclipse.logging.core.Logger;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 import org.eclipse.ui.internal.ide.EditorAreaDropAdapter;
+import org.osgi.service.prefs.BackingStoreException;
+import org.osgi.service.prefs.Preferences;
 
 @SuppressWarnings("restriction")
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
+
+	private static final Logger logger = Logger.getLogger(ApplicationWorkbenchWindowAdvisor.class);
 
 	public ApplicationWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
 
@@ -32,6 +38,19 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
 		IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
 		configurer.setShowProgressIndicator(true);
+		disableLogViewFocus();
 	}
 
+	private void disableLogViewFocus() {
+
+		Preferences preferences = InstanceScope.INSTANCE.getNode("org.eclipse.ui.views.log");
+		preferences.putBoolean("activate", false);
+		preferences.putBoolean("activateWarn", false);
+		preferences.putBoolean("activateError", false);
+		try {
+			preferences.flush();
+		} catch(BackingStoreException e) {
+			logger.error(e);
+		}
+	}
 }
