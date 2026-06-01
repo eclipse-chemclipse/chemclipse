@@ -10,6 +10,11 @@
       </fragment>
    </extension>
    <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="org.eclipse.chemclipse.ux.extension.xxd.ui.LogViewSettings"></startup>
+   </extension>
+   <extension
          point="org.eclipse.ui.preferencePages">
       <page
             category="org.eclipse.chemclipse.rcp.app.ui.preferences.settingsPreferencePage"
