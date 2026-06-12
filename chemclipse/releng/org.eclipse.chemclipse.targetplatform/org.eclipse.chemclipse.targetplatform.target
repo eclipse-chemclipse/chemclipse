@@ -13,7 +13,6 @@
 	<unit id="com.google.guava"/>
 	<unit id="com.google.guava.failureaccess"/>
 	<unit id="org.glassfish.hk2.osgi-resource-locator"/>
-	<unit id="com.sun.xml.bind.jaxb-osgi"/>
 	<unit id="jakarta.xml.bind-api"/>
 	<unit id="bcprov"/>
 	<unit id="bcpg"/>
@@ -28,6 +27,16 @@
 	<unit id="org.apache.httpcomponents.core5.httpcore5"/>
 	<unit id="org.eclipse.jdt.junit6.runtime"/>
 	<repository location="https://download.eclipse.org/releases/2026-06/"/>
+</location>
+<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" label="com.sun.xml.bind.jaxb-osgi" missingManifest="error" type="Maven">
+	<dependencies>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-osgi</artifactId>
+			<version>4.0.8</version>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 	<repository location="https://download.eclipse.org/cbi/updates/license/"/>
