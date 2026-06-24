@@ -17,8 +17,6 @@ import org.eclipse.chemclipse.converter.chromatogram.IChromatogramConverter;
 import org.eclipse.chemclipse.fsd.model.core.IChromatogramFSD;
 import org.eclipse.chemclipse.fsd.model.core.IChromatogramPeakFSD;
 import org.eclipse.chemclipse.processing.DataCategory;
-import org.eclipse.chemclipse.processing.core.IProcessingInfo;
-import org.eclipse.core.runtime.IProgressMonitor;
 
 public class ChromatogramConverterFSD extends AbstractChromatogramConverter<IChromatogramPeakFSD, IChromatogramFSD> {
 
@@ -36,10 +34,5 @@ public class ChromatogramConverterFSD extends AbstractChromatogramConverter<IChr
 		}
 
 		return instance;
-	}
-
-	@Override
-	public void postProcessChromatogram(IProcessingInfo<IChromatogramFSD> processingInfo, IProgressMonitor monitor) {
-
 	}
 }

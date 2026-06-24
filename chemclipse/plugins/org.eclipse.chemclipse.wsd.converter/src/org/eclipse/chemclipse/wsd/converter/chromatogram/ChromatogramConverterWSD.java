@@ -17,10 +17,8 @@ package org.eclipse.chemclipse.wsd.converter.chromatogram;
 import org.eclipse.chemclipse.converter.chromatogram.AbstractChromatogramConverter;
 import org.eclipse.chemclipse.converter.chromatogram.IChromatogramConverter;
 import org.eclipse.chemclipse.processing.DataCategory;
-import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramPeakWSD;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
-import org.eclipse.core.runtime.IProgressMonitor;
 
 public class ChromatogramConverterWSD extends AbstractChromatogramConverter<IChromatogramPeakWSD, IChromatogramWSD> {
 
@@ -38,10 +36,5 @@ public class ChromatogramConverterWSD extends AbstractChromatogramConverter<IChr
 		}
 
 		return instance;
-	}
-
-	@Override
-	public void postProcessChromatogram(IProcessingInfo<IChromatogramWSD> processingInfo, IProgressMonitor monitor) {
-
 	}
 }

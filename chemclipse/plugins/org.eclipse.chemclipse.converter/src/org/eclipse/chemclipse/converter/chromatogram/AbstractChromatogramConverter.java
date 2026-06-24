@@ -150,6 +150,7 @@ public abstract class AbstractChromatogramConverter<P extends IPeak, T extends I
 		Object converter = getChromatogramConverter(converterId, Converter.IMPORT_CONVERTER);
 		if(converter instanceof IChromatogramImportConverter chromatogramImportConverter) {
 			processingInfo = chromatogramImportConverter.convert(file, monitor);
+			postProcessChromatogram(processingInfo, monitor);
 		} else {
 			processingInfo = getNoImportConverterAvailableProcessingInfo(file);
 		}
@@ -252,14 +253,10 @@ public abstract class AbstractChromatogramConverter<P extends IPeak, T extends I
 			processingInfo.addErrorMessage(DESCRIPTION_IMPORT, "There is no suitable converter available to load the chromatogram file: " + getFileName(file));
 		}
 		/*
-		 * Post process or collect the errors.
+		 * Collect messages.
 		 */
-		if(type.isInstance(processingInfo.getProcessingResult())) {
-			postProcessChromatogram(processingInfo, monitor);
-		} else {
-			for(IProcessingMessage processingMessage : processingMessagesError) {
-				processingInfo.addMessage(processingMessage);
-			}
+		for(IProcessingMessage processingMessage : processingMessagesError) {
+			processingInfo.addMessage(processingMessage);
 		}
 
 		return processingInfo;
@@ -270,7 +267,6 @@ public abstract class AbstractChromatogramConverter<P extends IPeak, T extends I
 
 		if(processingInfo != null && processingInfo.getProcessingResult() instanceof IChromatogram chromatogram) {
 			ChromatogramColumnSupport.parseSeparationColumn(chromatogram);
-
 			for(IChromatogramConverterAdditionService service : Activator.getDefault().getChromatogramConverterAdditionService()) {
 				service.parseAdditionalData(chromatogram);
 			}

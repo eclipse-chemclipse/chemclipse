@@ -18,10 +18,7 @@ import org.eclipse.chemclipse.converter.chromatogram.AbstractChromatogramConvert
 import org.eclipse.chemclipse.converter.chromatogram.IChromatogramConverter;
 import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
 import org.eclipse.chemclipse.csd.model.core.IChromatogramPeakCSD;
-import org.eclipse.chemclipse.model.support.ChromatogramColumnSupport;
 import org.eclipse.chemclipse.processing.DataCategory;
-import org.eclipse.chemclipse.processing.core.IProcessingInfo;
-import org.eclipse.core.runtime.IProgressMonitor;
 
 public class ChromatogramConverterCSD extends AbstractChromatogramConverter<IChromatogramPeakCSD, IChromatogramCSD> {
 
@@ -39,13 +36,5 @@ public class ChromatogramConverterCSD extends AbstractChromatogramConverter<IChr
 		}
 
 		return instance;
-	}
-
-	@Override
-	public void postProcessChromatogram(IProcessingInfo<IChromatogramCSD> processingInfo, IProgressMonitor monitor) {
-
-		if(processingInfo != null && processingInfo.getProcessingResult() instanceof IChromatogramCSD chromatogramCSD) {
-			ChromatogramColumnSupport.parseSeparationColumn(chromatogramCSD);
-		}
 	}
 }
