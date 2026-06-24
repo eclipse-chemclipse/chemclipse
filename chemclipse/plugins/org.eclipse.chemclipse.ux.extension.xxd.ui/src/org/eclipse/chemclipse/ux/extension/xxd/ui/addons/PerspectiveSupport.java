@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -33,7 +33,6 @@ public class PerspectiveSupport {
 	 * This flag is used to show a set of parts initially
 	 * in the Data Analysis perspective.
 	 */
-	private static final String DATA_ANALYSIS_PERSPECTIVE_ID = PartSupport.PERSPECTIVE_DATA_ANALYSIS;
 	private static final String TOOLBAR_ID = "org.eclipse.chemclipse.ux.extension.xxd.ui.toolbar.dataanalysis";
 	private static boolean activatePartsInitially = true;
 
@@ -51,7 +50,7 @@ public class PerspectiveSupport {
 			if(topic.equals(IChemClipseEvents.TOPIC_APPLICATION_SELECT_PERSPECTIVE)) {
 				Object object = objects.get(0);
 				if(object instanceof String perspectiveId) {
-					if(DATA_ANALYSIS_PERSPECTIVE_ID.equals(perspectiveId)) {
+					if(PartSupport.PERSPECTIVE_DATA_ANALYSIS.equals(perspectiveId)) {
 						/*
 						 * Show parts initially.
 						 */
@@ -68,7 +67,7 @@ public class PerspectiveSupport {
 			} else if(topic.equals(IChemClipseEvents.TOPIC_APPLICATION_RESET_PERSPECTIVE)) {
 				Object object = objects.get(0);
 				if(object instanceof String perspectiveId) {
-					if(DATA_ANALYSIS_PERSPECTIVE_ID.equals(perspectiveId)) {
+					if(PartSupport.PERSPECTIVE_DATA_ANALYSIS.equals(perspectiveId)) {
 						enableToolBar(true);
 						GroupHandler.activateReferencedParts();
 					} else {
