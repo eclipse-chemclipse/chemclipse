@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2025 Lablicate GmbH.
+ * Copyright (c) 2020, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -33,7 +33,7 @@ public class PerspectiveSupport {
 	 * This flag is used to show a set of parts initially
 	 * in the Data Analysis perspective.
 	 */
-	private static final String DATA_ANALYSIS_PERSPECTIVE_LABEL = "<Data Analysis (Main)>";
+	private static final String DATA_ANALYSIS_PERSPECTIVE_ID = PartSupport.PERSPECTIVE_DATA_ANALYSIS;
 	private static final String TOOLBAR_ID = "org.eclipse.chemclipse.ux.extension.xxd.ui.toolbar.dataanalysis";
 	private static boolean activatePartsInitially = true;
 
@@ -50,8 +50,8 @@ public class PerspectiveSupport {
 
 			if(topic.equals(IChemClipseEvents.TOPIC_APPLICATION_SELECT_PERSPECTIVE)) {
 				Object object = objects.get(0);
-				if(object instanceof String label) {
-					if(DATA_ANALYSIS_PERSPECTIVE_LABEL.equals(label)) {
+				if(object instanceof String perspectiveId) {
+					if(DATA_ANALYSIS_PERSPECTIVE_ID.equals(perspectiveId)) {
 						/*
 						 * Show parts initially.
 						 */
@@ -67,8 +67,8 @@ public class PerspectiveSupport {
 				}
 			} else if(topic.equals(IChemClipseEvents.TOPIC_APPLICATION_RESET_PERSPECTIVE)) {
 				Object object = objects.get(0);
-				if(object instanceof String label) {
-					if(DATA_ANALYSIS_PERSPECTIVE_LABEL.equals(label)) {
+				if(object instanceof String perspectiveId) {
+					if(DATA_ANALYSIS_PERSPECTIVE_ID.equals(perspectiveId)) {
 						enableToolBar(true);
 						GroupHandler.activateReferencedParts();
 					} else {

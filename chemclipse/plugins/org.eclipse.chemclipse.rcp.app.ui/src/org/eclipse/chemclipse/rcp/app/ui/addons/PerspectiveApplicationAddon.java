@@ -57,7 +57,7 @@ public class PerspectiveApplicationAddon {
 		MPerspectiveStack perspectiveStack = (MPerspectiveStack)modelService.find(IPerspectiveAndViewIds.STACK_PERSPECTIVES, application);
 		perspectiveStack.setSelectedElement(perspective);
 		if(eventBroker != null) {
-			eventBroker.send(IChemClipseEvents.TOPIC_APPLICATION_SELECT_PERSPECTIVE, perspective.getLabel());
+			eventBroker.send(IChemClipseEvents.TOPIC_APPLICATION_SELECT_PERSPECTIVE, perspective.getElementId());
 			scheduleSnapshot(application, modelService, perspectiveStack, eventBroker);
 		}
 	}

@@ -77,7 +77,7 @@ public class ResetPerspectiveHandler {
 		perspective.getTags().addAll(resetPerspective.getTags());
 		restoreEditorAreaStackId(modelService, window);
 		partService.requestActivation();
-		eventBroker.post(IChemClipseEvents.TOPIC_APPLICATION_RESET_PERSPECTIVE, perspective.getLabel());
+		eventBroker.post(IChemClipseEvents.TOPIC_APPLICATION_RESET_PERSPECTIVE, perspective.getElementId());
 	}
 
 	/*

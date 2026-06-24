@@ -77,7 +77,7 @@ public class PerspectiveSupport {
 				return;
 			}
 			ePartService.switchPerspective(perspectiveModel);
-			eventBroker.post(IChemClipseEvents.TOPIC_APPLICATION_SELECT_PERSPECTIVE, perspectiveModel.getLabel());
+			eventBroker.post(IChemClipseEvents.TOPIC_APPLICATION_SELECT_PERSPECTIVE, perspectiveModel.getElementId());
 		}
 	}
 
