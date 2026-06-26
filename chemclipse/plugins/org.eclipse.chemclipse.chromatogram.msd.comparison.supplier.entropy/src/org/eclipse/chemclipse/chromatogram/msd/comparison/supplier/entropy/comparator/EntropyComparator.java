@@ -19,7 +19,6 @@ import org.eclipse.chemclipse.model.identifier.ComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.MatchConstraints;
 import org.eclipse.chemclipse.msd.identifier.comparison.AbstractMassSpectrumComparator;
-import org.eclipse.chemclipse.msd.identifier.comparison.IMassSpectrumComparator;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
@@ -33,7 +32,7 @@ import org.eclipse.chemclipse.processing.core.IProcessingInfo;
  * Nat Methods 18, 1524-1531 (2021).
  * https://doi.org/10.1038/s41592-021-01331-z.
  */
-public class EntropyComparator extends AbstractMassSpectrumComparator implements IMassSpectrumComparator {
+public class EntropyComparator extends AbstractMassSpectrumComparator {
 
 	@Override
 	public IProcessingInfo<IComparisonResult> compare(IScanMSD unknown, IScanMSD reference, MatchConstraints matchConstraints) {
