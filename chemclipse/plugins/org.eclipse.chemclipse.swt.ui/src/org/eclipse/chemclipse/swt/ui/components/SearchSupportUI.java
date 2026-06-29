@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -115,7 +115,6 @@ public class SearchSupportUI extends Composite {
 	private Button createButtonSearch(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Run the search");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SEARCH, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -133,7 +132,6 @@ public class SearchSupportUI extends Composite {
 	private void createTextSearch(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER | SWT.SEARCH | SWT.ICON_CANCEL | SWT.ICON_SEARCH);
-		text.setText("");
 		text.setToolTipText("Type in the search items.");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		/*

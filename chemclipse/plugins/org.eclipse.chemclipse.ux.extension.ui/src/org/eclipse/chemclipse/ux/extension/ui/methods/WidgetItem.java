@@ -561,7 +561,6 @@ public class WidgetItem {
 	private Control createCheckboxWidget(Composite parent) {
 
 		Button button = new Button(parent, SWT.CHECK);
-		button.setText("");
 		button.setSelection(getValueAsBoolean());
 		button.setToolTipText(inputValue.getDescription());
 		button.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));

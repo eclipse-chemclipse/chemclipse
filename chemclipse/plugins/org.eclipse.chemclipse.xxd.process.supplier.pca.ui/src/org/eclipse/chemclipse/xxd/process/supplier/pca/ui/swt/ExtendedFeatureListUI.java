@@ -335,7 +335,6 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 	private Button createButtonCleanVariables(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Remove unused variables.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_CLEAR, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -357,7 +356,6 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 	private Button createButtonReset(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Reset the feature table.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_RESET, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -375,7 +373,6 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 	private void createButtonFilterSelected(Composite parent) {
 
 		Button button = new Button(parent, SWT.TOGGLE);
-		button.setText("");
 		setButtonImage(button, IMAGE_FILTER_VISUAL_SELECTED, PREFIX_ENABLE, PREFIX_DISABLE, TOOLTIP_FILTER_VISUAL_SELECTED, false);
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -406,7 +403,6 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 	private Button createButtonExport(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Export the feature table.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EXPORT, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

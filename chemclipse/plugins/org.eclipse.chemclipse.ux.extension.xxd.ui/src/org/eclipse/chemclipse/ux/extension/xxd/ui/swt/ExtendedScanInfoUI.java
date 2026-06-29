@@ -109,7 +109,6 @@ public class ExtendedScanInfoUI extends Composite implements IExtendedPartUI {
 	private Label createLabel(Composite parent) {
 
 		Label label = new Label(parent, SWT.NONE);
-		label.setText("");
 		label.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		return label;
 	}

@@ -152,7 +152,6 @@ public class SelectProjectWizardPage extends AbstractExtendedWizardPage {
 		 * Create a new project
 		 */
 		projectNameText = new Text(composite, SWT.BORDER);
-		projectNameText.setText("");
 		projectNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		projectNameText.addModifyListener(e -> validateTextSelection());
 		/*

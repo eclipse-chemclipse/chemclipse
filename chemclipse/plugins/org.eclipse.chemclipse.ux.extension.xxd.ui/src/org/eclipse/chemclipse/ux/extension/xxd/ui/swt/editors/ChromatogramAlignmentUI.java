@@ -126,7 +126,6 @@ public class ChromatogramAlignmentUI extends Composite implements IChromatogramS
 	private Button createButtonShrinkChromatograms(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Shrink the chromatograms to the smallest chromatogram of all open editors.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SHRINK_CHROMATOGRAMS, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -144,7 +143,6 @@ public class ChromatogramAlignmentUI extends Composite implements IChromatogramS
 	private Button createButtonAlignChromatograms(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Align the chromatograms to the length of the selection.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ALIGN_CHROMATOGRAMS, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -162,7 +160,6 @@ public class ChromatogramAlignmentUI extends Composite implements IChromatogramS
 	private Button createButtonStretchChromatograms(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Stretch the chromatograms to the widest chromatogram of all open editors.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_STRETCH_CHROMATOGRAMS, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -180,7 +177,6 @@ public class ChromatogramAlignmentUI extends Composite implements IChromatogramS
 	private Button createButtonAdjustChromatograms(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Adjust the chromatograms using the settings");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ADJUST_CHROMATOGRAMS, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -198,7 +194,6 @@ public class ChromatogramAlignmentUI extends Composite implements IChromatogramS
 	private Button createButtonSetRanges(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Set the time range for all editors.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EXECUTE_ADD, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

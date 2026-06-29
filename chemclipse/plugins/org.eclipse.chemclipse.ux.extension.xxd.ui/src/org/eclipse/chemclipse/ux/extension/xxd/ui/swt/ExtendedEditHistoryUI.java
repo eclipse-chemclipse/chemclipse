@@ -116,7 +116,6 @@ public class ExtendedEditHistoryUI extends Composite implements IExtendedPartUI 
 	private void createButtonMethod(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Create a process method using the history.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_METHOD, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

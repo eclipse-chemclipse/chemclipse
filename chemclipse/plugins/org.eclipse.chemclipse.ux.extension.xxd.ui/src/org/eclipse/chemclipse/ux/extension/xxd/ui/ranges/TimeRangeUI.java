@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -90,7 +90,6 @@ public class TimeRangeUI extends Composite implements IExtendedPartUI {
 	private void createButtonLock(Composite parent) {
 
 		Button button = new Button(parent, SWT.TOGGLE);
-		button.setText("");
 		setButtonImage(button, IMAGE_LOCK, PREFIX_ENABLE, PREFIX_DISABLE, TOOLTIP_LOCK, false);
 		button.addSelectionListener(new SelectionAdapter() {
 

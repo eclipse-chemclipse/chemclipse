@@ -183,14 +183,11 @@ public class FilesLongFormatSettingsWizardPage extends AbstractAnalysisWizardPag
 	private Text createTextMainFile(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText("Path to long format data  file.");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		if(mainFile != null) {
 			text.setText(mainFile.getAbsolutePath());
-		} else {
-			text.setText("");
 		}
 
 		return text;
@@ -199,14 +196,11 @@ public class FilesLongFormatSettingsWizardPage extends AbstractAnalysisWizardPag
 	private Text createTextFilterFile(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText("Path to long format filter file.");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		if(filterFile != null) {
 			text.setText(filterFile.getAbsolutePath());
-		} else {
-			text.setText("");
 		}
 
 		return text;
@@ -215,7 +209,6 @@ public class FilesLongFormatSettingsWizardPage extends AbstractAnalysisWizardPag
 	private void createButtonSelectDataFile(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Select the data matrix.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_FILE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -243,7 +236,6 @@ public class FilesLongFormatSettingsWizardPage extends AbstractAnalysisWizardPag
 	private void createButtonSelectFilterFile(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Select the filter data file.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_FILE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

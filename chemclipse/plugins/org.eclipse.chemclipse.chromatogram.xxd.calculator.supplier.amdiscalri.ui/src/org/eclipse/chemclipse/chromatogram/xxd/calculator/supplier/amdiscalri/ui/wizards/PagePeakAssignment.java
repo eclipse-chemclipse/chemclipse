@@ -231,7 +231,6 @@ public class PagePeakAssignment extends AbstractExtendedWizardPage {
 	private Label createLabelIndexRange(Composite parent) {
 
 		Label label = new Label(parent, SWT.NONE);
-		label.setText("");
 		GridData gridDataLabel = new GridData(GridData.FILL_HORIZONTAL);
 		gridDataLabel.grabExcessHorizontalSpace = true;
 		gridDataLabel.horizontalSpan = 2;
@@ -322,7 +321,6 @@ public class PagePeakAssignment extends AbstractExtendedWizardPage {
 		});
 
 		textCurrentIndexName = new Text(parent, SWT.BORDER);
-		textCurrentIndexName.setText("");
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.grabExcessHorizontalSpace = true;
 		textCurrentIndexName.setLayoutData(gridData);

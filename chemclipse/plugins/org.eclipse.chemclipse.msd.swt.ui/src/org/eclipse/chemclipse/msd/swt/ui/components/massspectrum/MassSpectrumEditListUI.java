@@ -92,14 +92,12 @@ public class MassSpectrumEditListUI extends Composite {
 		labelMz.setText("m/z");
 
 		textMz = new Text(composite, SWT.BORDER);
-		textMz.setText("");
 		textMz.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		Label labelIntensity = new Label(composite, SWT.NONE);
 		labelIntensity.setText("abundance");
 
 		textIntensity = new Text(composite, SWT.BORDER);
-		textIntensity.setText("");
 		textIntensity.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		buttonIonAdd = new Button(composite, SWT.PUSH);

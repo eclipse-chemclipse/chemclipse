@@ -195,7 +195,6 @@ public class MethodSupportUI extends Composite implements IExtendedPartUI {
 	private void createButtonAddMethod(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Creates and adds a new method.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_METHOD_ADD, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -220,7 +219,6 @@ public class MethodSupportUI extends Composite implements IExtendedPartUI {
 	private void createButtonEditMethod(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText(ExtensionMessages.editSelectedMethod);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_METHOD_EDIT, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -241,7 +239,6 @@ public class MethodSupportUI extends Composite implements IExtendedPartUI {
 	private void createButtonCopyMethod(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Copy the selected method.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_METHOD_COPY, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -320,7 +317,6 @@ public class MethodSupportUI extends Composite implements IExtendedPartUI {
 	private void createButtonRecordMethod(Composite parent) {
 
 		Button button = new Button(parent, SWT.TOGGLE);
-		button.setText("");
 		button.setToolTipText(ExtensionMessages.tooltipRecordMethod);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_METHOD_RECORD, IApplicationImageProvider.SIZE_16x16));
 		button.setSelection(processMethodMacroRecorder != null);
@@ -367,7 +363,6 @@ public class MethodSupportUI extends Composite implements IExtendedPartUI {
 	private void createButtonDeleteMethod(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText(ExtensionMessages.deleteSelectedMethod);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_METHOD_DELETE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -408,7 +403,6 @@ public class MethodSupportUI extends Composite implements IExtendedPartUI {
 	private void createButtonExecuteMethod(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText(ExtensionMessages.applyMethodSelectedChromatogram);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EXECUTE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -430,7 +424,6 @@ public class MethodSupportUI extends Composite implements IExtendedPartUI {
 	private void createButtonMethodDirectory(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText(ExtensionMessages.selectMethodDirectory);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_FOLDER_OPENED, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

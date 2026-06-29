@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -105,7 +105,6 @@ public class ProcessMethodHeader extends Composite {
 		label.setText("Name:");
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText("The name of this method that is used for display");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		text.addKeyListener(new org.eclipse.swt.events.KeyAdapter() {
@@ -129,7 +128,6 @@ public class ProcessMethodHeader extends Composite {
 		label.setText("Operator:");
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText("The operator is the person who has created / currently manages this method");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		text.addKeyListener(new org.eclipse.swt.events.KeyAdapter() {
@@ -153,7 +151,6 @@ public class ProcessMethodHeader extends Composite {
 		label.setText("Description:");
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText("Description");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		text.addKeyListener(new org.eclipse.swt.events.KeyAdapter() {
@@ -177,7 +174,6 @@ public class ProcessMethodHeader extends Composite {
 		label.setText("Enable Resume:");
 
 		Button button = new Button(parent, SWT.CHECK);
-		button.setText("");
 		button.setToolTipText("This option allows to resume the method at a selected entry.");
 		button.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -202,7 +198,6 @@ public class ProcessMethodHeader extends Composite {
 		label.setText("Category:");
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText("The category groups similar methods under a common name");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		text.addKeyListener(new org.eclipse.swt.events.KeyAdapter() {

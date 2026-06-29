@@ -280,7 +280,6 @@ public class TargetSettingEditor {
 	private Button createButtonCheckOperation(Composite parent, boolean setVisible) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Set all target references " + (setVisible ? "visible" : "invisible") + ".");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(setVisible ? IApplicationImage.IMAGE_CHECK_ALL : IApplicationImage.IMAGE_UNCHECK_ALL, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

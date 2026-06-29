@@ -164,7 +164,6 @@ public class ExtendedRetentionIndexListUI extends Composite implements IExtended
 
 		Button button = new Button(parent, SWT.TOGGLE);
 		button.setToolTipText(ExtensionMessages.toggleInfoToolbar);
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_INFO, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -219,7 +218,6 @@ public class ExtendedRetentionIndexListUI extends Composite implements IExtended
 
 		Button button = new Button(parent, SWT.TOGGLE);
 		button.setToolTipText(ExtensionMessages.toggleSearchToolbar);
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SEARCH, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -238,7 +236,6 @@ public class ExtendedRetentionIndexListUI extends Composite implements IExtended
 
 		Button button = new Button(parent, SWT.TOGGLE);
 		button.setToolTipText(ExtensionMessages.toggleModifyToolbar);
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EDIT_DEFAULT, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -261,7 +258,6 @@ public class ExtendedRetentionIndexListUI extends Composite implements IExtended
 
 		Button button = new Button(parent, SWT.TOGGLE);
 		button.setToolTipText(ExtensionMessages.toggleEditToolbar);
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EDIT_ENTRY_DEFAULT, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -281,7 +277,6 @@ public class ExtendedRetentionIndexListUI extends Composite implements IExtended
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText(ExtensionMessages.addLibraryToSearch);
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ADD, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -300,7 +295,6 @@ public class ExtendedRetentionIndexListUI extends Composite implements IExtended
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText(ExtensionMessages.removeLibraryFromSearch);
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_REMOVE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -330,7 +324,6 @@ public class ExtendedRetentionIndexListUI extends Composite implements IExtended
 
 		labelInfoTop = new Label(composite, SWT.NONE);
 		labelInfoTop.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-		labelInfoTop.setText("");
 		labelInfoTop.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		return composite;
@@ -354,7 +347,6 @@ public class ExtendedRetentionIndexListUI extends Composite implements IExtended
 
 		labelInfoBottom = new Label(composite, SWT.NONE);
 		labelInfoBottom.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-		labelInfoBottom.setText("");
 		labelInfoBottom.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		return composite;

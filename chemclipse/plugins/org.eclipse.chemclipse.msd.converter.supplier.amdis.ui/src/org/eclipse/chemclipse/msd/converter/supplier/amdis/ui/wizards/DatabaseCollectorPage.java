@@ -90,7 +90,6 @@ public class DatabaseCollectorPage extends WizardPage {
 	private void createTextExportFile(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText("Name of the export database");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		text.addKeyListener(new KeyAdapter() {
@@ -140,7 +139,6 @@ public class DatabaseCollectorPage extends WizardPage {
 	private void createTextImportDirectory(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER | SWT.READ_ONLY);
-		text.setText("");
 		text.setToolTipText("Path to the directory, that shall be parsed for *.msl files.");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 

@@ -132,7 +132,6 @@ public class TaskTile extends Composite {
 	private Label addTextSection(Composite parent) {
 
 		Label label = new Label(parent, SWT.NONE);
-		label.setText(""); //$NON-NLS-1$
 		label.setLayoutData(getGridData(SWT.BEGINNING, SWT.END, 1));
 		label.setForeground(colors[2]);
 		addControlListener(label);
@@ -142,7 +141,6 @@ public class TaskTile extends Composite {
 	private Label addTextDescription(Composite parent) {
 
 		Label label = new Label(parent, SWT.CENTER | SWT.WRAP);
-		label.setText(""); //$NON-NLS-1$
 		label.setLayoutData(getGridData(SWT.CENTER, SWT.BEGINNING, 2));
 		label.setForeground(colors[3]);
 		addControlListener(label);

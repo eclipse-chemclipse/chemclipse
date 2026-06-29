@@ -171,14 +171,11 @@ public class FileSettingsWizardPage extends AbstractAnalysisWizardPage {
 	private Text createTextFile(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText("Path to data matrix file.");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		if(file != null) {
 			text.setText(file.getAbsolutePath());
-		} else {
-			text.setText("");
 		}
 
 		return text;
@@ -187,7 +184,6 @@ public class FileSettingsWizardPage extends AbstractAnalysisWizardPage {
 	private void createButtonSelectFile(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Select the data matrix.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_FILE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

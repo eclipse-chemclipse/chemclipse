@@ -119,7 +119,6 @@ public class PageCalibrationSettings extends AbstractExtendedWizardPage {
 		});
 
 		textPathRetentionIndexFile = new Text(composite, SWT.BORDER);
-		textPathRetentionIndexFile.setText("");
 		textPathRetentionIndexFile.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		textPathRetentionIndexFile.addModifyListener(e -> {
 
@@ -128,7 +127,6 @@ public class PageCalibrationSettings extends AbstractExtendedWizardPage {
 		});
 
 		buttonSelectCalibrationFile = new Button(composite, SWT.PUSH);
-		buttonSelectCalibrationFile.setText("");
 		buttonSelectCalibrationFile.setToolTipText("Select *.cal");
 		buttonSelectCalibrationFile.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_FILE_ADD, IApplicationImageProvider.SIZE_16x16));
 		buttonSelectCalibrationFile.addSelectionListener(new SelectionAdapter() {
@@ -155,12 +153,10 @@ public class PageCalibrationSettings extends AbstractExtendedWizardPage {
 	private void createDataFileSection(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER | SWT.READ_ONLY);
-		text.setText("");
 		text.setToolTipText("Data File");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Select the chromatogram.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_FILE_ADD, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

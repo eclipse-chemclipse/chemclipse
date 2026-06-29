@@ -119,7 +119,6 @@ public class ComboTarget extends Composite {
 	private Combo createCombo(Composite parent) {
 
 		Combo combo = new Combo(parent, SWT.NONE);
-		combo.setText("");
 		combo.setToolTipText("Select a target or type in a new substance name.");
 		combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
@@ -151,17 +150,17 @@ public class ComboTarget extends Composite {
 			if(contents != null) {
 				// Prefer exact matches.
 				List<String> startsWith = Arrays.stream(items) //
-												.filter(Objects::nonNull) //
-												.filter(s -> s.toLowerCase().startsWith(contents)) //
-												.limit(100) //
-												.toList(); //
+						.filter(Objects::nonNull) //
+						.filter(s -> s.toLowerCase().startsWith(contents)) //
+						.limit(100) //
+						.toList(); //
 				// Then do fuzzier searches.
 				List<String> contains = List.of();
 				if(startsWith.size() < 100) {
 					contains = Arrays.stream(items) //
-										.filter(Objects::nonNull) //
-										.filter(s -> s.toLowerCase().contains(contents)) //
-										.limit(100 - startsWith.size()).toList(); //
+							.filter(Objects::nonNull) //
+							.filter(s -> s.toLowerCase().contains(contents)) //
+							.limit(100 - startsWith.size()).toList(); //
 				}
 
 				// Merge keeping their order.

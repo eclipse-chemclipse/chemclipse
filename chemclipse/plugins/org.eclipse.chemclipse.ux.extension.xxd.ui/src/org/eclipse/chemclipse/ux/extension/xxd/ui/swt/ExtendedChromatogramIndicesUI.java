@@ -104,7 +104,6 @@ public class ExtendedChromatogramIndicesUI extends Composite implements IExtende
 	private void createButtonToggleToolbarSearch(Composite parent) {
 
 		Button button = new Button(parent, SWT.TOGGLE);
-		button.setText("");
 		setButtonImage(button, IMAGE_SEARCH, PREFIX_ENABLE, PREFIX_DISABLE, TOOLTIP_SEARCH, false);
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -120,7 +119,6 @@ public class ExtendedChromatogramIndicesUI extends Composite implements IExtende
 	private void createButtonToggleToolbarEdit(Composite parent) {
 
 		Button button = new Button(parent, SWT.TOGGLE);
-		button.setText("");
 		setButtonImage(button, IMAGE_EDIT, PREFIX_ENABLE, PREFIX_DISABLE, TOOLTIP_EDIT, false);
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -136,7 +134,6 @@ public class ExtendedChromatogramIndicesUI extends Composite implements IExtende
 	private void createButtonSave(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Save the calibration data.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SAVE_AS, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

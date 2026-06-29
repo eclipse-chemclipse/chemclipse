@@ -130,7 +130,6 @@ public class ColorCodeDialog extends TitleAreaDialog {
 	private void createColorDisplayElement(Composite parent) {
 
 		colorWidget = new Label(parent, SWT.BORDER);
-		colorWidget.setText("");
 		colorWidget.setToolTipText(ExtensionMessages.colorIsUsed);
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.grabExcessHorizontalSpace = true;

@@ -133,7 +133,7 @@ public class PeakTargetTransferUI extends Composite implements IChromatogramSele
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.horizontalSpan = 3;
 		label.setLayoutData(gridData);
-		label.setText("");
+
 		return label;
 	}
 

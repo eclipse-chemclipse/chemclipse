@@ -230,7 +230,6 @@ public class ExtendedMoleculeUI extends Composite implements IExtendedPartUI {
 	private Button createButtonCalculate(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Calculate the molecule image.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_CALCULATE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -301,7 +300,6 @@ public class ExtendedMoleculeUI extends Composite implements IExtendedPartUI {
 	private Text createTextMolecule(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		text.setText("");
 		text.setToolTipText("Molecule Structure");
 
 		return text;
@@ -329,7 +327,6 @@ public class ExtendedMoleculeUI extends Composite implements IExtendedPartUI {
 	private Button createButtonReset(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Reset molecule image.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_RESET, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -347,7 +344,6 @@ public class ExtendedMoleculeUI extends Composite implements IExtendedPartUI {
 	private Button createButtonExport(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Export the molecule image");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SAVE_AS, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

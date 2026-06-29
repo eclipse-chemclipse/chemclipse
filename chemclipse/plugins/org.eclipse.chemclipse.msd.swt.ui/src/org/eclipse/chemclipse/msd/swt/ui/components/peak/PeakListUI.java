@@ -287,11 +287,9 @@ public class PeakListUI {
 	private void createInfos(Composite composite) {
 
 		labelSelectedPeak = new Label(composite, SWT.NONE);
-		labelSelectedPeak.setText("");
 		labelSelectedPeak.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		labelPeaks = new Label(composite, SWT.NONE);
-		labelPeaks.setText("");
 		labelPeaks.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 	}
 

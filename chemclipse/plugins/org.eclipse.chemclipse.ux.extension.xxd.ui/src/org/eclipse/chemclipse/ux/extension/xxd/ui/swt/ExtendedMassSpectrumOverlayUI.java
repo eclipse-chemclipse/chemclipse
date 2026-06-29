@@ -152,7 +152,6 @@ public class ExtendedMassSpectrumOverlayUI extends Composite implements IExtende
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Open a new Overlay");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_PLUS, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -171,7 +170,6 @@ public class ExtendedMassSpectrumOverlayUI extends Composite implements IExtende
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Reset the Overlay");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_RESET, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -299,7 +297,6 @@ public class ExtendedMassSpectrumOverlayUI extends Composite implements IExtende
 
 		Label label = new Label(parent, SWT.NONE);
 		label.setToolTipText("Indicates whether the data has been modified or not.");
-		label.setText("");
 		label.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		return label;

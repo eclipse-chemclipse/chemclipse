@@ -415,7 +415,6 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 	private Label createDetectionTypeLabel(Composite parent) {
 
 		Label label = new Label(parent, SWT.NONE);
-		label.setText("");
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.grabExcessHorizontalSpace = true;
 		label.setLayoutData(gridData);
@@ -443,7 +442,6 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 	private Button createDetectionTypeButton(Composite parent, String detectionType, String image) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText(detectionTypeDescriptions.get(detectionType));
 		button.setImage(ApplicationImageFactory.getInstance().getImage(image, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -463,7 +461,6 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 	private Button createAddPeakButton(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Add the manually detected peak.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ADD, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

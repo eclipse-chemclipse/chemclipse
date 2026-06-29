@@ -184,7 +184,6 @@ public class ExtendedInternalStandardsUI extends Composite implements IExtendedP
 		composite.setLayout(new GridLayout(1, false));
 
 		labelPeak = new Label(composite, SWT.NONE);
-		labelPeak.setText("");
 		labelPeak.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		return composite;
@@ -214,7 +213,6 @@ public class ExtendedInternalStandardsUI extends Composite implements IExtendedP
 	private Button createButtonCancel(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Cancel Operation");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_CANCEL, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -233,7 +231,6 @@ public class ExtendedInternalStandardsUI extends Composite implements IExtendedP
 	private Button createButtonAdd(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Add Internal Standard");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ADD, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -260,7 +257,6 @@ public class ExtendedInternalStandardsUI extends Composite implements IExtendedP
 	private Button createButtonDelete(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Delete Internal Standard");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DELETE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -304,7 +300,6 @@ public class ExtendedInternalStandardsUI extends Composite implements IExtendedP
 			}
 		});
 
-		combo.setText("");
 		combo.setToolTipText("Name of the internal standard (ISTD).");
 		combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
@@ -323,7 +318,6 @@ public class ExtendedInternalStandardsUI extends Composite implements IExtendedP
 	private void createTextConcentration(Composite parent) {
 
 		textConcentration = new Text(parent, SWT.BORDER);
-		textConcentration.setText("");
 		textConcentration.setToolTipText("Concentration, e.g. 10 mg/L");
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.minimumWidth = 80;
@@ -389,7 +383,6 @@ public class ExtendedInternalStandardsUI extends Composite implements IExtendedP
 	private Button createButtonInsert(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Insert Internal Standard");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EXECUTE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -408,7 +401,6 @@ public class ExtendedInternalStandardsUI extends Composite implements IExtendedP
 
 		Button button = new Button(parent, SWT.TOGGLE);
 		button.setToolTipText("Toggle info toolbar.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_INFO, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -427,7 +419,6 @@ public class ExtendedInternalStandardsUI extends Composite implements IExtendedP
 
 		Button button = new Button(parent, SWT.TOGGLE);
 		button.setToolTipText("Toggle modify toolbar.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EDIT_DEFAULT, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -457,7 +448,6 @@ public class ExtendedInternalStandardsUI extends Composite implements IExtendedP
 
 		Button button = new Button(parent, SWT.TOGGLE);
 		button.setToolTipText("Enable/disable to edit the table.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EDIT_ENTRY_DEFAULT, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 

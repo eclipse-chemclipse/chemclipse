@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -102,7 +102,6 @@ public class TimeSpinner extends Composite {
 
 		Text text = new Text(parent, SWT.BORDER);
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		text.setText("");
 
 		ControlDecoration controlDecoration = new ControlDecoration(text, SWT.LEFT | SWT.TOP);
 		TimeRangeValidator validator = new TimeRangeValidator(marker);
@@ -129,7 +128,6 @@ public class TimeSpinner extends Composite {
 	private Button createButtonModify(Composite parent, boolean increase) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText((increase ? "Increase" : "Decrease") + " the current time [min].");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(increase ? IApplicationImage.IMAGE_VALUE_INCREASE : IApplicationImage.IMAGE_VALUE_DECREASE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

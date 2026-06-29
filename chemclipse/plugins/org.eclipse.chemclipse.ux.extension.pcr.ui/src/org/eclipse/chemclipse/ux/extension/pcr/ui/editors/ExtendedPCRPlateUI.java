@@ -81,7 +81,6 @@ public class ExtendedPCRPlateUI extends Composite implements IExtendedPartUI {
 	private void createDataInfoLabel(Composite parent) {
 
 		labelDataInfo = new Label(parent, SWT.NONE);
-		labelDataInfo.setText(""); //$NON-NLS-1$
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.grabExcessHorizontalSpace = true;
 		labelDataInfo.setLayoutData(gridData);
@@ -138,7 +137,6 @@ public class ExtendedPCRPlateUI extends Composite implements IExtendedPartUI {
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText(ExtensionMessages.resetPlate);
-		button.setText(""); //$NON-NLS-1$
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_RESET, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 

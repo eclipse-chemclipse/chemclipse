@@ -149,7 +149,6 @@ public class FileHeaderDataEditor extends Composite {
 	private void createTextRegularExpression(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText("Regular Expression");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 

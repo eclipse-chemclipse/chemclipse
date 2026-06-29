@@ -148,7 +148,6 @@ public class ExtendedMassSpectrumTargetsUI extends Composite implements IExtende
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Delete all targets");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DELETE_ALL, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 

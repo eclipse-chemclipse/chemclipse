@@ -94,7 +94,6 @@ public class ProcessorToolbarSelectionUI extends Composite {
 	private Text createTextSearch(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER | SWT.SEARCH | SWT.ICON_CANCEL | SWT.ICON_SEARCH);
-		text.setText(""); //$NON-NLS-1$
 		text.setToolTipText(ProcessMessages.searchAvailableProcessorItems);
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		/*
@@ -139,7 +138,6 @@ public class ProcessorToolbarSelectionUI extends Composite {
 	private Button createButtonSearch(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText(""); //$NON-NLS-1$
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SEARCH, IApplicationImageProvider.SIZE_16x16));
 
 		button.addSelectionListener(new SelectionAdapter() {

@@ -114,7 +114,6 @@ public class ExtendedRegularExpressionUI extends Composite implements IExtendedP
 	private void createTextRegularExpression(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText("Type in the regular expression here.");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
@@ -172,7 +171,6 @@ public class ExtendedRegularExpressionUI extends Composite implements IExtendedP
 	private void createButtonExecute(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Apply the regular expression on the content.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EXECUTE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -206,7 +204,6 @@ public class ExtendedRegularExpressionUI extends Composite implements IExtendedP
 	private void createTextSection(Composite parent) {
 
 		StyledText styledText = new StyledText(parent, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
-		styledText.setText("");
 		styledText.setToolTipText("Copy & Paste the content to validate here.");
 		styledText.setLayoutData(new GridData(GridData.FILL_BOTH));
 

@@ -118,7 +118,6 @@ public class CalibrationEditUI extends Composite {
 	private Text createTextRetentionTime(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText(ExtensionMessages.setRetentionTimeMinutes);
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
@@ -139,7 +138,6 @@ public class CalibrationEditUI extends Composite {
 	private Text createTextRetentionIndex(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText(ExtensionMessages.setRetentionIndex);
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
@@ -160,7 +158,6 @@ public class CalibrationEditUI extends Composite {
 	private Combo createComboReferences(Composite parent) {
 
 		Combo combo = new Combo(parent, SWT.BORDER);
-		combo.setText("");
 		combo.setItems(getAvailableStandards());
 		combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
@@ -198,7 +195,6 @@ public class CalibrationEditUI extends Composite {
 	private Button createButtonSet(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Set the retention index.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EXECUTE_ADD, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -221,7 +217,6 @@ public class CalibrationEditUI extends Composite {
 	private Button createButtonCancel(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Cancel the current operation.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_CANCEL, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -240,7 +235,6 @@ public class CalibrationEditUI extends Composite {
 	private Button createButtonDelete(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Delete the selected calibration entries.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DELETE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -258,7 +252,6 @@ public class CalibrationEditUI extends Composite {
 	private Button createButtonAdd(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Activate the add operation.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ADD, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

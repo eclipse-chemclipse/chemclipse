@@ -89,7 +89,6 @@ public class RulerDetailsUI extends Composite {
 	private Text createText(Composite parent, String tooltip) {
 
 		Text text = new Text(parent, SWT.BORDER | SWT.READ_ONLY);
-		text.setText("");
 		text.setToolTipText(tooltip);
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 

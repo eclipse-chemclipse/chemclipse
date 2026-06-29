@@ -130,7 +130,6 @@ public abstract class DataInputPageWizard extends WizardPage {
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Add new files.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ADD, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -148,7 +147,6 @@ public abstract class DataInputPageWizard extends WizardPage {
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Remove selected files.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DELETE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -167,7 +165,6 @@ public abstract class DataInputPageWizard extends WizardPage {
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Remove all files.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DELETE_ALL, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
