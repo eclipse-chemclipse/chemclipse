@@ -358,7 +358,7 @@ public abstract class AbstractChromatogramEditor extends AbstractUpdater<Extende
 				 */
 				File file = new File((String)map.get(EditorSupport.MAP_FILE));
 				boolean batch = (boolean)map.get(EditorSupport.MAP_BATCH);
-				String supplierId = (String)map.get(EditorSupport.MAP_SUPPLIER_ID);
+				String supplierId = getSupplierID(map);
 				chromatogramSelection = loadChromatogramSelection(file, supplierId, batch);
 				if(chromatogramSelection != null) {
 					IChromatogram chromatogram = chromatogramSelection.getChromatogram();
@@ -394,6 +394,24 @@ public abstract class AbstractChromatogramEditor extends AbstractUpdater<Extende
 		}
 
 		return chromatogramSelection;
+	}
+
+	/**
+	 * Could be also null if not set yet.
+	 * 
+	 * @return String
+	 */
+	private synchronized String getSupplierID(Map<?, ?> map) {
+
+		String supplierId = null;
+		Object id = map.get(EditorSupport.MAP_SUPPLIER_ID);
+		if(id instanceof String value) {
+			if(!value.isBlank()) {
+				supplierId = value.trim();
+			}
+		}
+
+		return supplierId;
 	}
 
 	private synchronized IChromatogramSelection loadChromatogramSelection(File file, String supplierId, boolean batch) throws ChromatogramIsNullException {
