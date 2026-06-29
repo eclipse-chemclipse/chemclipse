@@ -174,7 +174,6 @@ public class PerspectiveSwitcherDialog extends Dialog implements ISelectionChang
 
 		Text text = new Text(parent, SWT.SINGLE | SWT.BORDER | SWT.SEARCH | SWT.ICON_CANCEL);
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		text.setText("");
 
 		text.addKeyListener(new KeyAdapter() {
 

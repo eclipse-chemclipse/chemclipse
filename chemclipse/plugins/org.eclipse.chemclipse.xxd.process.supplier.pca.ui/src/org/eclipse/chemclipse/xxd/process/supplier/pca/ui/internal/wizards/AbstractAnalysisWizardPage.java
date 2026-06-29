@@ -39,7 +39,6 @@ public abstract class AbstractAnalysisWizardPage extends WizardPage {
 	protected Text createTextTitle(Composite parent, int horizontalSpan) {
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText("The title of the current analysis.");
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.horizontalSpan = horizontalSpan;

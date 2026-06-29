@@ -174,7 +174,6 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Select a library");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_IMPORT, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -227,7 +226,6 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setEnabled(false);
-		button.setText("");
 		button.setToolTipText("Delete the library entry.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DELETE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

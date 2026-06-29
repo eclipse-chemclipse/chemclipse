@@ -104,7 +104,6 @@ public class DataMapSupportUI extends Composite {
 	private Text createTextValue(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText("Type in a header value.");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		text.addKeyListener(new KeyAdapter() {
@@ -122,7 +121,6 @@ public class DataMapSupportUI extends Composite {
 	private Button createButtonAdd(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Add the entry.");
 		button.setEnabled(false);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ADD, IApplicationImageProvider.SIZE_16x16));

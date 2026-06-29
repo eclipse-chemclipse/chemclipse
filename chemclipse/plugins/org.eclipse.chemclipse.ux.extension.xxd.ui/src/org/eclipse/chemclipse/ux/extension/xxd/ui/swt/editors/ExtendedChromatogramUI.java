@@ -1296,7 +1296,6 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 	private void createButtonTargetLabels(Composite parent) {
 
 		Button button = new Button(parent, SWT.NONE);
-		button.setText("");
 		button.setToolTipText(ExtensionMessages.manageLabelsChromatogram);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_LABELS, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -1406,7 +1405,6 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 	private void createButtonToggleRetentionIndex(Composite parent) {
 
 		Button button = new Button(parent, SWT.TOGGLE);
-		button.setText("");
 		setButtonImage(button, IMAGE_RETENTION_INDICES, PREFIX_SHOW, PREFIX_HIDE, TOOLTIP_RETENTION_INDICES, preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_RETENTION_INDEX_MARKER));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -1614,7 +1612,6 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 	private Button createButtonReset(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Reset the chromatogram");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_RESET, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

@@ -167,7 +167,6 @@ public class ProcessorToolbarUI extends Composite {
 	private Button createButton(Composite parent, Processor processor, BiConsumer<IProcessSupplier<?>, IProcessSupplierContext> executionListener, IProcessSupplierContext processSupplierContext) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText(getToolTipText(processor));
 		button.setImage(processor.getMenuIcon());
 

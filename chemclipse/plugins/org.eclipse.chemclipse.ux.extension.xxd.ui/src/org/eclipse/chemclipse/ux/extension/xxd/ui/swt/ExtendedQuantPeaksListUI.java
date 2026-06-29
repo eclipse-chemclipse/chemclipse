@@ -92,7 +92,6 @@ public class ExtendedQuantPeaksListUI extends Composite implements IExtendedPart
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Create Response Table");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_CALCULATE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 

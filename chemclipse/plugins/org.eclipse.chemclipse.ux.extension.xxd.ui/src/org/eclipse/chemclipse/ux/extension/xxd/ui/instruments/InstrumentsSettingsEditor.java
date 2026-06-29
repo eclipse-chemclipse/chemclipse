@@ -203,7 +203,6 @@ public class InstrumentsSettingsEditor implements SettingsUIProvider.SettingsUIC
 	private Button createButtonAdd(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText(CREATE_NEW_INSTRUMENT);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ADD, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -229,7 +228,6 @@ public class InstrumentsSettingsEditor implements SettingsUIProvider.SettingsUIC
 	private Button createButtonEdit(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText(EDIT_SELECTED_INSTRUMENT);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EDIT, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -263,7 +261,6 @@ public class InstrumentsSettingsEditor implements SettingsUIProvider.SettingsUIC
 	private Button createButtonRemove(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText(REMOVE_SELECTED_INSTRUMENT);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DELETE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -289,7 +286,6 @@ public class InstrumentsSettingsEditor implements SettingsUIProvider.SettingsUIC
 	private Button createButtonRemoveAll(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText(REMOVE_ALL_INSTRUMENTS);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DELETE_ALL, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -310,7 +306,6 @@ public class InstrumentsSettingsEditor implements SettingsUIProvider.SettingsUIC
 	private Button createButtonImport(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText(ExtensionMessages.importInstrumentList);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_IMPORT, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -340,7 +335,6 @@ public class InstrumentsSettingsEditor implements SettingsUIProvider.SettingsUIC
 	private Button createButtonExport(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText(ExtensionMessages.exportInstrumentList);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EXPORT, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -375,7 +369,6 @@ public class InstrumentsSettingsEditor implements SettingsUIProvider.SettingsUIC
 	private Button createButtonSave(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText(ExtensionMessages.saveInstrumentList);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SAVE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

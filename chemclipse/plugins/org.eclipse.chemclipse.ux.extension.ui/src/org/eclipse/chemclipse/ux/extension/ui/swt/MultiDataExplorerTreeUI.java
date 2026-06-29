@@ -271,7 +271,6 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 	private void createLocationPlaceholder(Composite parent, int horizontalSpan) {
 
 		Label label = new Label(parent, SWT.NONE);
-		label.setText("");
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.horizontalSpan = horizontalSpan;
 		label.setLayoutData(gridData);
@@ -281,7 +280,6 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Reset the data explorer.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_RESET, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -370,7 +368,6 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Delete the location.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DELETE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 

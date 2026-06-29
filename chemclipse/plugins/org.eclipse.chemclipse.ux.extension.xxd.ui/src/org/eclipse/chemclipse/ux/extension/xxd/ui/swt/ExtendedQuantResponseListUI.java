@@ -163,7 +163,6 @@ public class ExtendedQuantResponseListUI extends Composite implements IExtendedP
 	private Text createTextSignal(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText("Type in a new signal.");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
@@ -187,7 +186,6 @@ public class ExtendedQuantResponseListUI extends Composite implements IExtendedP
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Add a new signal.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ADD, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -205,7 +203,6 @@ public class ExtendedQuantResponseListUI extends Composite implements IExtendedP
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Delete the selected signals.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DELETE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 

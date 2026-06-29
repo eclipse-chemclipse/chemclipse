@@ -107,7 +107,6 @@ public class TimeRangeDialog extends Dialog {
 	private void createFeedbackLabel(Composite parent) {
 
 		Label label = new Label(parent, SWT.NONE);
-		label.setText("");
 		label.setToolTipText("Validation");
 		label.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 

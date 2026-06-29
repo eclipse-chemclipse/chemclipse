@@ -102,7 +102,6 @@ public class RegexShortcutsUI extends Composite {
 	private void createText(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText("The regular expression command is displayed here.");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 

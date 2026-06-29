@@ -149,7 +149,6 @@ public class ChromatogramActionUI extends Composite {
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Execute the selected chromatogram action.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EXECUTE_EXTENSION, IApplicationImageProvider.SIZE_16x16));
 
 		button.addSelectionListener(new SelectionAdapter() {

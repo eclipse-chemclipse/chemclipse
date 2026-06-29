@@ -332,7 +332,6 @@ public class PreprocessingSettingsUI extends Composite {
 	private Button createButtonInfoFormula(Composite parent, ComboViewer comboViewer) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Show the formula.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_INFO, IApplicationImageProvider.SIZE_16x16));
 

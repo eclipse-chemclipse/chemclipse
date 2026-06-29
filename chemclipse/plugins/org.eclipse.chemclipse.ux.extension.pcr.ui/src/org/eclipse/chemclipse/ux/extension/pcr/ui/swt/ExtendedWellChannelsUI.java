@@ -97,7 +97,6 @@ public class ExtendedWellChannelsUI extends Composite implements IExtendedPartUI
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Reset the Table");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_RESET, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -169,7 +168,6 @@ public class ExtendedWellChannelsUI extends Composite implements IExtendedPartUI
 	private Text createText(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER | SWT.READ_ONLY);
-		text.setText("");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		return text;
 	}

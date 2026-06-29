@@ -112,7 +112,6 @@ public class GroupNamingWizardPage extends AbstractAnalysisWizardPage {
 	private Button createButtonAssign(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Assign the group name to the selected samples.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EXECUTE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -130,7 +129,6 @@ public class GroupNamingWizardPage extends AbstractAnalysisWizardPage {
 	private void createTextGroupName(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText("Enter the group name to be assigned to the selected samples.");
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.widthHint = 150;
@@ -152,7 +150,6 @@ public class GroupNamingWizardPage extends AbstractAnalysisWizardPage {
 	private Button createButtonClearSelection(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Clear all selections.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_CLEAR, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -173,7 +170,6 @@ public class GroupNamingWizardPage extends AbstractAnalysisWizardPage {
 	private Button createButtonInverseSelection(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Inverse the sample selection.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SELECTED, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

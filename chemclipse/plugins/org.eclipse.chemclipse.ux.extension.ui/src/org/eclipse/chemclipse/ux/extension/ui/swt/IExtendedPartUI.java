@@ -84,7 +84,6 @@ public interface IExtendedPartUI {
 	default Button createButton(Composite parent, String text, String tooltip, String image, int style) {
 
 		Button button = new Button(parent, style);
-		button.setText("");
 		button.setToolTipText(tooltip);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(image, IApplicationImageProvider.SIZE_16x16));
 
@@ -99,7 +98,6 @@ public interface IExtendedPartUI {
 	default Button createButtonToggleToolbar(Composite parent, List<AtomicReference<? extends Composite>> toolbars, String image, String tooltip) {
 
 		Button button = new Button(parent, SWT.TOGGLE);
-		button.setText("");
 		setButtonImage(button, image, PREFIX_SHOW, PREFIX_HIDE, tooltip, false);
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -159,7 +157,6 @@ public interface IExtendedPartUI {
 	default Button createButtonToggleEditTable(Composite parent, List<AtomicReference<? extends ExtendedTableViewer>> viewers, String image) {
 
 		Button button = new Button(parent, SWT.TOGGLE);
-		button.setText("");
 		setButtonImage(button, image, PREFIX_ENABLE, PREFIX_DISABLE, TOOLTIP_TABLE, false);
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -201,7 +198,6 @@ public interface IExtendedPartUI {
 	default Button createButtonToggleChartGrid(Composite parent, List<AtomicReference<? extends ScrollableChart>> chartControls, String image, ChartGridSupport chartGridSupport) {
 
 		Button button = new Button(parent, SWT.TOGGLE);
-		button.setText("");
 		setButtonImage(button, image, PREFIX_ENABLE, PREFIX_DISABLE, TOOLTIP_CHART_GRID, false);
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -230,7 +226,6 @@ public interface IExtendedPartUI {
 	default Button createButtonToggleChartLegend(Composite parent, AtomicReference<? extends ScrollableChart> scrollableChart, String image) {
 
 		Button button = new Button(parent, SWT.TOGGLE);
-		button.setText("");
 		setButtonImage(button, image, PREFIX_ENABLE, PREFIX_DISABLE, TOOLTIP_LEGEND, false);
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -251,7 +246,6 @@ public interface IExtendedPartUI {
 	default Button createButtonToggleLegendMarker(Composite parent, AtomicReference<? extends ScrollableChart> scrollableChart, String image) {
 
 		Button button = new Button(parent, SWT.TOGGLE);
-		button.setText("");
 		setButtonImage(button, image, PREFIX_ENABLE, PREFIX_DISABLE, TOOLTIP_LEGEND_MARKER, false);
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -301,7 +295,6 @@ public interface IExtendedPartUI {
 		 * Validated SWT.PUSH - no toggle
 		 */
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Open the Settings");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_CONFIGURE, IApplicationImageProvider.SIZE_16x16));
 

@@ -170,7 +170,6 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 	private Button createPreviousReferenceScanButton(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Get the scan of the previous source.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_PREVIOUS_YELLOW, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -219,7 +218,6 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 	private Button createNextReferenceScanButton(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Get the scan of the next source.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_NEXT_YELLOW, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -260,7 +258,6 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 	private Label createLabel(Composite parent) {
 
 		Label label = new Label(parent, SWT.NONE);
-		label.setText("");
 		label.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		return label;
 	}

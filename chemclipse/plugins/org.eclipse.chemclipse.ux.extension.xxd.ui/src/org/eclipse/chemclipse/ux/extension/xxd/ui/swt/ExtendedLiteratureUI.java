@@ -133,7 +133,6 @@ public class ExtendedLiteratureUI extends Composite implements IExtendedPartUI {
 	private void createDataSection(Composite parent) {
 
 		LiteratureUI styledText = new LiteratureUI(parent, SWT.BORDER | SWT.WRAP | SWT.FULL_SELECTION | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		styledText.setText("");
 		styledText.setToolTipText("Literature");
 		styledText.setLayoutData(new GridData(GridData.FILL_BOTH));
 
@@ -191,7 +190,6 @@ public class ExtendedLiteratureUI extends Composite implements IExtendedPartUI {
 	private void createButtonDOI(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Open the contained DOI in an external browser.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EXTERNAL_BROWSER, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

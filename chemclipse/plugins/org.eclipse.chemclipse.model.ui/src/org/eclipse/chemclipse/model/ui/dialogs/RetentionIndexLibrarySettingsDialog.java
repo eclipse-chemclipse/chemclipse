@@ -180,7 +180,6 @@ public class RetentionIndexLibrarySettingsDialog extends TitleAreaDialog {
 		createLabel(parent, "Search Column:");
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText(ColumnIndexSupport.COLUMN_TYPES);
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		text.addModifyListener(e -> retentionIndexLibrarySettings.setSearchColumn(text.getText().trim()));
@@ -299,7 +298,6 @@ public class RetentionIndexLibrarySettingsDialog extends TitleAreaDialog {
 		createLabel(parent, "Specific Database:");
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText("If set, the name of the database to search must match. Otherwise, take all available into account.");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		text.addModifyListener(e -> retentionIndexLibrarySettings.setSpecificDatabase(text.getText().trim()));

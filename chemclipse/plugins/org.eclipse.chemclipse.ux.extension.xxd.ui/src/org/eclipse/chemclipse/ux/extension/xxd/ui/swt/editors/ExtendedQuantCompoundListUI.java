@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -152,7 +152,6 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 
 		Button button = new Button(parent, SWT.TOGGLE);
 		button.setToolTipText("Toggle the info toolbar.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_INFO, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -171,7 +170,6 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 
 		Button button = new Button(parent, SWT.TOGGLE);
 		button.setToolTipText("Toggle the header toolbar.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_HEADER_DATA, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -190,7 +188,6 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 
 		Button button = new Button(parent, SWT.TOGGLE);
 		button.setToolTipText("Toggle modify toolbar.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EDIT_DEFAULT, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -213,7 +210,6 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Create Response Tables");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_CALCULATE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -253,7 +249,6 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 		composite.setLayout(new GridLayout(1, false));
 
 		labelInfo = new Label(composite, SWT.NONE);
-		labelInfo.setText("");
 		labelInfo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		return composite;
@@ -278,7 +273,6 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 		label.setText("Operator:");
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText("Operator");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		text.addModifyListener(e -> {
@@ -298,7 +292,6 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 		label.setText("Description:");
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText("Description");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		text.addModifyListener(e -> {
@@ -343,7 +336,6 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 	private Text createTextSignal(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText("Type in a new compound.");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
@@ -367,7 +359,6 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Add a new compound.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ADD, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -385,7 +376,6 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Delete the selected compounds.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DELETE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -412,7 +402,6 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Enable/disable to edit the table.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EDIT_ENTRY_DEFAULT, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -433,7 +422,6 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Toggle search toolbar.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SEARCH, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -452,7 +440,6 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Save");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SAVE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -472,7 +459,6 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Reset");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_RESET, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 

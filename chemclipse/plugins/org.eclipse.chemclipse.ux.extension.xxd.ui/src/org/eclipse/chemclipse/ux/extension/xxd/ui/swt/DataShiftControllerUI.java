@@ -198,7 +198,6 @@ public class DataShiftControllerUI extends Composite implements IExtendedPartUI 
 
 		String tooltip = "Shift data in x direction.";
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText(tooltip);
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.widthHint = 150;
@@ -268,7 +267,6 @@ public class DataShiftControllerUI extends Composite implements IExtendedPartUI 
 
 		String tooltip = "Shift data in y direction.";
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText(tooltip);
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.widthHint = 150;
@@ -346,7 +344,6 @@ public class DataShiftControllerUI extends Composite implements IExtendedPartUI 
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Shift the data in XY direction.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EXECUTE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -368,7 +365,6 @@ public class DataShiftControllerUI extends Composite implements IExtendedPartUI 
 
 		Button button = new Button(parent, SWT.TOGGLE);
 		button.setToolTipText("");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SHIFT_AUTO_MIRROR, IApplicationImageProvider.SIZE_16x16));
 		button.setData(KEY_MIRROR_MODUS, DisplayModus.NORMAL);
 		button.addSelectionListener(new SelectionAdapter() {
@@ -477,8 +473,6 @@ public class DataShiftControllerUI extends Composite implements IExtendedPartUI 
 	private Button createButtonMirror(Composite parent) {
 
 		Button button = new Button(parent, SWT.TOGGLE);
-		button.setToolTipText(""); // Will be set dynamically
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SHIFT_MIRROR, IApplicationImageProvider.SIZE_16x16));
 		button.setData(KEY_MIRROR_MODUS, DisplayModus.NORMAL);
 		button.addSelectionListener(new SelectionAdapter() {
@@ -501,7 +495,6 @@ public class DataShiftControllerUI extends Composite implements IExtendedPartUI 
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Move Left");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ARROW_BACKWARD, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -524,7 +517,6 @@ public class DataShiftControllerUI extends Composite implements IExtendedPartUI 
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Move Right");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ARROW_FORWARD, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -547,7 +539,6 @@ public class DataShiftControllerUI extends Composite implements IExtendedPartUI 
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Move Up");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ARROW_UP_2, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -570,7 +561,6 @@ public class DataShiftControllerUI extends Composite implements IExtendedPartUI 
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Move Down");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ARROW_DOWN_2, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 

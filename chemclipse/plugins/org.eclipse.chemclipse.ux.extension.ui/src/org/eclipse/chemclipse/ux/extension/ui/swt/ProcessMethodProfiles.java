@@ -179,7 +179,6 @@ public class ProcessMethodProfiles extends Composite {
 	private void createButtonAdd(Composite composite) {
 
 		Button button = new Button(composite, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Add a new profile.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ADD, IApplicationImageProvider.SIZE_16x16));
 
@@ -234,7 +233,6 @@ public class ProcessMethodProfiles extends Composite {
 	private void createButtonDelete(Composite composite) {
 
 		Button button = new Button(composite, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Delete the profile.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DELETE, IApplicationImageProvider.SIZE_16x16));
 

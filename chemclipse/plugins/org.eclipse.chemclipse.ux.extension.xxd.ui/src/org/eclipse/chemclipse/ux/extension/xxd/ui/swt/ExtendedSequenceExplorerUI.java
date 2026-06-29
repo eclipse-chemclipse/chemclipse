@@ -107,7 +107,6 @@ public class ExtendedSequenceExplorerUI extends Composite implements IExtendedPa
 
 		Button button = new Button(parent, SWT.TOGGLE);
 		button.setToolTipText("Toggle search toolbar.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SEARCH, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -126,7 +125,6 @@ public class ExtendedSequenceExplorerUI extends Composite implements IExtendedPa
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Reset the sequence file editor.");
-		button.setText("");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_RESET, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -208,7 +206,6 @@ public class ExtendedSequenceExplorerUI extends Composite implements IExtendedPa
 	private Button createRootFolderButton(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Select the root folder.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ADD, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

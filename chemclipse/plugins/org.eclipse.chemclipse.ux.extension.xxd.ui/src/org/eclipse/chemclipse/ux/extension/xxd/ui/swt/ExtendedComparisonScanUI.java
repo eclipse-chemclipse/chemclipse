@@ -604,7 +604,6 @@ public class ExtendedComparisonScanUI extends Composite implements IExtendedPart
 	private Text createText(Composite parent, String tooltip) {
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setText("");
 		text.setToolTipText(tooltip);
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		text.addKeyListener(new KeyAdapter() {
@@ -776,7 +775,6 @@ public class ExtendedComparisonScanUI extends Composite implements IExtendedPart
 	private void createButtonSubtractReference(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Subtract the reference spectrum.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SUBTRACT_SCAN_DEFAULT, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -820,7 +818,6 @@ public class ExtendedComparisonScanUI extends Composite implements IExtendedPart
 	private void createButtonOptimizedSpectrum(Composite parent) {
 
 		Button button = new Button(parent, SWT.TOGGLE);
-		button.setText("");
 		button.setToolTipText("Use the optimized mass spectrum if available.");
 		button.setSelection(useOptimizedSpectrum);
 		updateButtonOptimized(button);
@@ -865,7 +862,6 @@ public class ExtendedComparisonScanUI extends Composite implements IExtendedPart
 	private void createButtonMirroredSpectrum(Composite parent) {
 
 		Button button = new Button(parent, SWT.TOGGLE);
-		button.setText("");
 		button.setToolTipText("Show the reference in mirrored modus.");
 		updateButtonMirrored(button);
 		button.addSelectionListener(new SelectionAdapter() {
@@ -890,7 +886,6 @@ public class ExtendedComparisonScanUI extends Composite implements IExtendedPart
 	private void createButtonDifferenceSpectrum(Composite parent) {
 
 		Button button = new Button(parent, SWT.TOGGLE);
-		button.setText("");
 		button.setToolTipText("Show both unknown and reference in difference modus.");
 		updateButtonDifference(button);
 		button.addSelectionListener(new SelectionAdapter() {
@@ -915,7 +910,6 @@ public class ExtendedComparisonScanUI extends Composite implements IExtendedPart
 	private void createButtonShiftReferenceSpectrum(Composite parent) {
 
 		Button button = new Button(parent, SWT.TOGGLE);
-		button.setText("");
 		button.setToolTipText("Shift the reference spectrum.");
 		updateButtonShiftReference(button);
 		button.addSelectionListener(new SelectionAdapter() {

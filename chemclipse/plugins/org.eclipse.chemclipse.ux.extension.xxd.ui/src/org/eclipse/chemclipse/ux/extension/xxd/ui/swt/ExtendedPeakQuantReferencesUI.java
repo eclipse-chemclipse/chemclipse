@@ -177,7 +177,6 @@ public class ExtendedPeakQuantReferencesUI extends Composite implements IExtende
 	private Combo createComboQuantReferences(Composite parent) {
 
 		Combo combo = new Combo(parent, SWT.NONE);
-		combo.setText("");
 		combo.setToolTipText("Select a quantitation reference or type in a new reference name.");
 		combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
@@ -202,7 +201,6 @@ public class ExtendedPeakQuantReferencesUI extends Composite implements IExtende
 	private Button createButtonAdd(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText("Add the quantitation reference.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ADD, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

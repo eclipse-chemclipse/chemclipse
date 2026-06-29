@@ -211,7 +211,6 @@ public class SettingsPreferencesPage<T> extends WizardPage {
 	private void createButtonDOI(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText(ExtensionMessages.openInExternalBrowser);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EXTERNAL_BROWSER, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -328,7 +327,6 @@ public class SettingsPreferencesPage<T> extends WizardPage {
 	private void addLabelNoOption(Composite parent) {
 
 		Label label = new Label(parent, SWT.NONE);
-		label.setText("");
 		label.setToolTipText("The option remember the settings is not available here.");
 		label.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 	}
@@ -354,7 +352,6 @@ public class SettingsPreferencesPage<T> extends WizardPage {
 	private void addButtonRestoreDefaults(Composite parent, SelectionListener selectionListener) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("");
 		button.setToolTipText(ExtensionMessages.resetDefaults);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_RESET, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {

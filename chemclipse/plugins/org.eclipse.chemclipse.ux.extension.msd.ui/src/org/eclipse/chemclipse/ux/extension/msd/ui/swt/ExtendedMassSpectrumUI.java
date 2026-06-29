@@ -297,7 +297,6 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 	private Button createButtonToggleChartGrid(Composite parent) {
 
 		Button button = new Button(parent, SWT.TOGGLE);
-		button.setText("");
 		setButtonImage(button, IApplicationImage.IMAGE_GRID, "Show", "Hide", "Chart Grid", false);
 		button.addSelectionListener(new SelectionAdapter() {
 
