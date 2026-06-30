@@ -22,6 +22,7 @@ import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.swt.ui.components.identification.SynonymsEditUI;
 import org.eclipse.chemclipse.support.text.ValueFormat;
 import org.eclipse.chemclipse.ux.extension.ui.swt.ColumnIndicesEditUI;
+import org.eclipse.chemclipse.ux.extension.ui.swt.FlavorMarkersEditUI;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.IMessageProvider;
@@ -85,6 +86,7 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 		createTabGeneral(tabFolder);
 		createTabSynonyms(tabFolder);
 		createTabColumnIndices(tabFolder);
+		createTabFlavorMarkers(tabFolder);
 
 		return container;
 	}
@@ -191,6 +193,20 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 
 		SynonymsEditUI synonymsEditUI = new SynonymsEditUI(composite, SWT.NONE);
 		synonymsEditUI.update(massSpectrum.getLibraryInformation());
+
+		tabItem.setControl(composite);
+	}
+
+	private void createTabFlavorMarkers(TabFolder tabFolder) {
+
+		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
+		tabItem.setText("Flavor");
+
+		Composite composite = new Composite(tabFolder, SWT.NONE);
+		composite.setLayout(new FillLayout());
+
+		FlavorMarkersEditUI flavorMarkersEditUI = new FlavorMarkersEditUI(composite, SWT.NONE);
+		flavorMarkersEditUI.update(massSpectrum.getLibraryInformation());
 
 		tabItem.setControl(composite);
 	}

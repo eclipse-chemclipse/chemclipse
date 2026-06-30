@@ -10,7 +10,7 @@
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
-package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider;
+package org.eclipse.chemclipse.ux.extension.ui.internal.provider;
 
 import org.eclipse.chemclipse.model.identifier.IFlavorMarker;
 import org.eclipse.chemclipse.support.ui.swt.AbstractRecordTableComparator;
@@ -23,12 +23,8 @@ public class FlavorMarkerComparator extends AbstractRecordTableComparator {
 
 		int sortOrder = 0;
 		if(e1 instanceof IFlavorMarker marker1 && e2 instanceof IFlavorMarker marker2) {
-
 			switch(getPropertyIndex()) {
 				case 0:
-					/*
-					 * Checked is ranked higher than unchecked, hence reverse order here.
-					 */
 					sortOrder = Boolean.compare(marker2.isManuallyVerified(), marker1.isManuallyVerified());
 					break;
 				case 1:
