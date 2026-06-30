@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2025 Lablicate GmbH.
+ * Copyright (c) 2021, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -39,6 +39,9 @@ public class XmlReader110 {
 
 	}
 
+	/**
+	 * Attention: This builds a full DOM tree which is expensive.
+	 */
 	public static MzMLType getMzML(File file) throws SAXException, IOException, JAXBException, ParserConfigurationException {
 
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -64,6 +67,23 @@ public class XmlReader110 {
 		if(cvParam.getUnitAccession().equals("UO:0000031") && cvParam.getUnitName().equals("minute")) {
 			multiplicator = (float)IChromatogramOverview.MINUTE_CORRELATION_FACTOR;
 		}
+		return multiplicator;
+	}
+
+	public static float getTimeMultiplicator(String unitAccession, String unitName) {
+
+		float multiplicator = 1f;
+
+		if("UO:0000028".equals(unitAccession) && "millisecond".equals(unitName)) {
+			multiplicator = 1f;
+		}
+		if("UO:0000010".equals(unitAccession) && "second".equals(unitName)) {
+			multiplicator = (float)IChromatogramOverview.SECOND_CORRELATION_FACTOR;
+		}
+		if("UO:0000031".equals(unitAccession) && "minute".equals(unitName)) {
+			multiplicator = (float)IChromatogramOverview.MINUTE_CORRELATION_FACTOR;
+		}
+
 		return multiplicator;
 	}
 }

@@ -12,7 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.converter.supplier.mzml.io;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.support.history.EditInformation;
@@ -22,7 +24,9 @@ import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.InstrumentC
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.MzMLType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ParamGroupType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ProcessingMethodType;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ReferenceableParamGroupListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ReferenceableParamGroupRefType;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ReferenceableParamGroupType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SampleListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SampleType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SoftwareType;
@@ -52,12 +56,16 @@ public class MetadataReader110 {
 			}
 		}
 
+		Map<String, ReferenceableParamGroupType> paramGroups = buildParamGroupMap(mzML);
 		for(InstrumentConfigurationType instrument : mzML.getInstrumentConfigurationList().getInstrumentConfiguration()) {
 
 			List<ReferenceableParamGroupRefType> referenceableParamGroupRef = instrument.getReferenceableParamGroupRef();
 			if(referenceableParamGroupRef != null) {
 				for(ReferenceableParamGroupRefType referenceableParamGroupRefType : referenceableParamGroupRef) {
-					readInstrument(referenceableParamGroupRefType.getRef().getCvParam(), chromatogram);
+					ReferenceableParamGroupType group = paramGroups.get(referenceableParamGroupRefType.getRef());
+					if(group != null) {
+						readInstrument(group.getCvParam(), chromatogram);
+					}
 				}
 			}
 
@@ -76,6 +84,19 @@ public class MetadataReader110 {
 		}
 
 		return chromatogram;
+	}
+
+	// In a streaming implementation all automatic IDREFs are lost so save them for reconnection later.
+	public static Map<String, ReferenceableParamGroupType> buildParamGroupMap(MzMLType mzML) {
+
+		Map<String, ReferenceableParamGroupType> map = new HashMap<>();
+		ReferenceableParamGroupListType groupList = mzML.getReferenceableParamGroupList();
+		if(groupList != null) {
+			for(ReferenceableParamGroupType group : groupList.getReferenceableParamGroup()) {
+				map.put(group.getId(), group);
+			}
+		}
+		return map;
 	}
 
 	private static void readInstrument(List<CVParamType> cvParams, IChromatogram chromatogram) {

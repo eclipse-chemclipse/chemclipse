@@ -13,9 +13,16 @@
 package org.eclipse.chemclipse.msd.converter.supplier.mzml.io;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
+import java.util.Map;
 import java.util.zip.DataFormatException;
+
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -40,6 +47,7 @@ import org.eclipse.chemclipse.msd.model.implementation.RegularMassSpectrum;
 import org.eclipse.chemclipse.support.history.EditInformation;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.BinaryReader110;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.MetadataReader110;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.XmlHelper;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.XmlReader110;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.BinaryDataArrayType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.CVParamType;
@@ -52,87 +60,173 @@ import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.PrecursorTy
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ProcessingMethodType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ProductType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ReferenceableParamGroupRefType;
-import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.RunType;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ReferenceableParamGroupType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ScanType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SelectedIonListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SoftwareType;
-import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SpectrumListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SpectrumType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.UserParamType;
 import org.eclipse.core.runtime.IProgressMonitor;
+
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 
 public class ChromatogramMSDReaderVersion110 extends AbstractChromatogramReader implements IChromatogramMSDReader {
 
 	private static final Logger logger = Logger.getLogger(ChromatogramMSDReaderVersion110.class);
 
-	private MzMLType mzML;
-
-	public ChromatogramMSDReaderVersion110(MzMLType mzML) {
-
-		this.mzML = mzML;
-	}
-
 	@Override
 	public IChromatogramOverview readOverview(File file, IProgressMonitor monitor) throws IOException {
 
 		IVendorChromatogramMSD chromatogram = null;
-		chromatogram = new VendorChromatogramMSD();
-		MetadataReader110.readMetadata(mzML, chromatogram);
-		readTIC(mzML.getRun(), chromatogram);
+		try {
+			MzMLType mzMLwithoutRun = XmlHelper.parseFiltered(file, MzMLType.class, "mzML", "run");
+			chromatogram = new VendorChromatogramMSD();
+			MetadataReader110.readMetadata(mzMLwithoutRun, chromatogram);
+		} catch(IOException | JAXBException | XMLStreamException e) {
+			logger.error(e);
+		}
+
+		readChromatograms(file, chromatogram, true);
 		return chromatogram;
 	}
 
 	@Override
 	public IChromatogramMSD read(File file, IProgressMonitor monitor) throws IOException {
 
-		IVendorChromatogramMSD chromatogram = new VendorChromatogramMSD();
-		chromatogram.setFile(file);
-		MetadataReader110.readMetadata(mzML, chromatogram);
-		readSpectrum(mzML, chromatogram, monitor);
-		readEditHistory(mzML, chromatogram);
+		IVendorChromatogramMSD chromatogram = null;
+		MzMLType mzMLwithoutRun = null;
+		try {
+			mzMLwithoutRun = XmlHelper.parseFiltered(file, MzMLType.class, "mzML", "run");
+			chromatogram = new VendorChromatogramMSD();
+			chromatogram.setFile(file);
+			MetadataReader110.readMetadata(mzMLwithoutRun, chromatogram);
+			readEditHistory(mzMLwithoutRun, chromatogram);
+		} catch(IOException | JAXBException | XMLStreamException e) {
+			logger.error(e);
+		}
+
+		if(mzMLwithoutRun == null || chromatogram == null) {
+			return chromatogram;
+		}
+
+		readSpectra(file, mzMLwithoutRun, chromatogram, monitor);
+		if(chromatogram.getNumberOfScans() == 0) {
+			readChromatograms(file, chromatogram, false);
+		}
+
 		return chromatogram;
 	}
 
-	private void readTIC(RunType run, IVendorChromatogramMSD chromatogram) {
+	private void readSpectra(File file, MzMLType mzML, IVendorChromatogramMSD chromatogram, IProgressMonitor monitor) {
 
-		for(ChromatogramType chromatogramType : run.getChromatogramList().getChromatogram()) {
-			if(chromatogramType.getCvParam().stream().anyMatch(n -> //
-			n.getAccession().equals("MS:1000235") && n.getName().equals("total ion current chromatogram"))) {
-				chromatogram.setDataName(chromatogramType.getId());
-				Pair<double[], double[]> binaryData = readBinaryData(chromatogramType);
-				XmlChromatogramReader.addTotalSignals(binaryData.getValue(), binaryData.getKey(), chromatogram);
+		try {
+			XMLInputFactory factory = XMLInputFactory.newFactory();
+			XMLStreamReader reader = factory.createXMLStreamReader(new FileInputStream(file));
+
+			JAXBContext context = JAXBContext.newInstance(SpectrumType.class);
+			Unmarshaller spectrumUnmarshaller = context.createUnmarshaller();
+
+			int cycleNumber = isMultiStageMassSpectrum(mzML) ? 1 : 0;
+			Map<String, ReferenceableParamGroupType> paramGroups = MetadataReader110.buildParamGroupMap(mzML);
+
+			while(reader.hasNext()) {
+				if(monitor.isCanceled()) {
+					return;
+				}
+				if(reader.isStartElement()) {
+					String localName = reader.getLocalName();
+					if("spectrumList".equals(localName)) {
+						int spectrumCount = IProgressMonitor.UNKNOWN;
+						String countAttr = reader.getAttributeValue(null, "count");
+						if(countAttr != null) {
+							try {
+								spectrumCount = Integer.parseInt(countAttr);
+							} catch(NumberFormatException e) {
+								logger.warn(e);
+							}
+						}
+						monitor.beginTask(ConverterMessages.readScans, spectrumCount);
+						reader.next();
+						continue;
+					}
+					if("spectrum".equals(localName)) {
+						JAXBElement<SpectrumType> element = spectrumUnmarshaller.unmarshal(reader, SpectrumType.class);
+						SpectrumType spectrum = element.getValue();
+						if(spectrum.getCvParam().stream().noneMatch(n -> n.getAccession().equals("MS:1000806") && n.getName().equals("absorption spectrum"))) {
+							readSpectrum(element.getValue(), cycleNumber, chromatogram, paramGroups);
+						}
+						monitor.worked(1);
+						// no reader.next() as unmarshal already advanced past </spectrum>
+						continue;
+					}
+				}
+				reader.next();
 			}
+			reader.close();
+		} catch(XMLStreamException e) {
+			logger.error(e);
+		} catch(JAXBException e) {
+			logger.error(e);
+		} catch(FileNotFoundException e) {
+			logger.error(e);
 		}
 	}
 
-	private void readSpectrum(MzMLType mzML, IVendorChromatogramMSD chromatogram, IProgressMonitor monitor) {
+	private void readChromatograms(File file, IVendorChromatogramMSD chromatogram, boolean overview) {
 
-		SpectrumListType spectrumList = mzML.getRun().getSpectrumList();
-		if(spectrumList == null) {
-			readTIC(mzML.getRun(), chromatogram);
-			readSRM(mzML.getRun(), chromatogram);
-			return;
+		try {
+			XMLInputFactory factory = XMLInputFactory.newFactory();
+			XMLStreamReader reader = factory.createXMLStreamReader(new FileInputStream(file));
+
+			JAXBContext context;
+
+			context = JAXBContext.newInstance(ChromatogramType.class);
+
+			Unmarshaller chromatogramUnmarshaller = context.createUnmarshaller();
+
+			while(reader.hasNext()) {
+				int event = reader.next();
+				if(event == XMLStreamConstants.START_ELEMENT && "chromatogram".equals(reader.getLocalName())) {
+					JAXBElement<ChromatogramType> element = chromatogramUnmarshaller.unmarshal(reader, ChromatogramType.class);
+					readTIC(element.getValue(), chromatogram);
+					if(!overview) {
+						readSRM(element.getValue(), chromatogram);
+					}
+				}
+			}
+			reader.close();
+		} catch(JAXBException | FileNotFoundException | XMLStreamException e) {
+			logger.error(e);
 		}
-		monitor.beginTask(ConverterMessages.readScans, spectrumList.getCount().intValue());
-		int cycleNumber = isMultiStageMassSpectrum(mzML) ? 1 : 0;
-		for(SpectrumType spectrum : mzML.getRun().getSpectrumList().getSpectrum()) {
-			if(monitor.isCanceled()) {
-				return;
-			}
-			IRegularMassSpectrum massSpectrum = readMassSpectrum(spectrum);
-			if(massSpectrum.getMassSpectrometer() < 2) {
-				cycleNumber++;
-			}
-			if(cycleNumber >= 1) {
-				massSpectrum.setCycleNumber(cycleNumber);
-			}
-			setRetentionTime(spectrum, massSpectrum);
-			massSpectrum.setIdentifier(spectrum.getId());
-			setReferencedPolarity(spectrum, massSpectrum);
-			readIons(spectrum, massSpectrum, chromatogram);
-			chromatogram.addScan(massSpectrum);
-			monitor.worked(1);
+	}
+
+	private void readTIC(ChromatogramType chromatogramType, IVendorChromatogramMSD chromatogram) {
+
+		if(chromatogramType.getCvParam().stream().anyMatch(n -> //
+		n.getAccession().equals("MS:1000235") && n.getName().equals("total ion current chromatogram"))) {
+			chromatogram.setDataName(chromatogramType.getId());
+			Pair<double[], double[]> binaryData = readBinaryData(chromatogramType);
+			XmlChromatogramReader.addTotalSignals(binaryData.getValue(), binaryData.getKey(), chromatogram);
 		}
+	}
+
+	private void readSpectrum(SpectrumType spectrum, int cycleNumber, IVendorChromatogramMSD chromatogram, Map<String, ReferenceableParamGroupType> paramGroups) {
+
+		IRegularMassSpectrum massSpectrum = readMassSpectrum(spectrum);
+		if(massSpectrum.getMassSpectrometer() < 2) {
+			cycleNumber++;
+		}
+		if(cycleNumber >= 1) {
+			massSpectrum.setCycleNumber(cycleNumber);
+		}
+		setRetentionTime(spectrum, massSpectrum);
+		massSpectrum.setIdentifier(spectrum.getId());
+		setReferencedPolarity(spectrum, massSpectrum, paramGroups);
+		readIons(spectrum, massSpectrum, chromatogram);
+		chromatogram.addScan(massSpectrum);
 	}
 
 	public static void setRetentionTime(SpectrumType spectrum, IRegularMassSpectrum massSpectrum) {
@@ -162,34 +256,32 @@ public class ChromatogramMSDReaderVersion110 extends AbstractChromatogramReader 
 		}
 	}
 
-	private void readSRM(RunType run, IVendorChromatogramMSD chromatogram) {
+	private void readSRM(ChromatogramType chromatogramType, IVendorChromatogramMSD chromatogram) {
 
-		for(ChromatogramType chromatogramType : run.getChromatogramList().getChromatogram()) {
-			if(chromatogramType.getCvParam().stream().anyMatch(n -> //
-			n.getAccession().equals("MS:1001473") && n.getName().equals("selected reaction monitoring chromatogram"))) {
-				IVendorChromatogramMSD referencedChromatogram = new VendorChromatogramMSD();
-				referencedChromatogram.setDataName(chromatogramType.getId());
+		if(chromatogramType.getCvParam().stream().anyMatch(n -> //
+		n.getAccession().equals("MS:1001473") && n.getName().equals("selected reaction monitoring chromatogram"))) {
+			IVendorChromatogramMSD referencedChromatogram = new VendorChromatogramMSD();
+			referencedChromatogram.setDataName(chromatogramType.getId());
 
-				Pair<double[], double[]> binaryData = readBinaryData(chromatogramType);
+			Pair<double[], double[]> binaryData = readBinaryData(chromatogramType);
 
-				double precursorIon = getPrecursorIon(chromatogramType);
-				double productIon = getProductIon(chromatogramType);
-				double collisionEnergy = getCollisionEnergy(chromatogramType);
-				IIonTransition ionTransition = new IonTransition(precursorIon, productIon, collisionEnergy, 1, 1, 0);
-				chromatogram.getIonTransitionSettings().getIonTransitions().add(ionTransition);
+			double precursorIon = getPrecursorIon(chromatogramType);
+			double productIon = getProductIon(chromatogramType);
+			double collisionEnergy = getCollisionEnergy(chromatogramType);
+			IIonTransition ionTransition = new IonTransition(precursorIon, productIon, collisionEnergy, 1, 1, 0);
+			chromatogram.getIonTransitionSettings().getIonTransitions().add(ionTransition);
 
-				addIonSRM(binaryData.getValue(), binaryData.getKey(), ionTransition, referencedChromatogram);
+			addIonSRM(binaryData.getValue(), binaryData.getKey(), ionTransition, referencedChromatogram);
 
-				for(CVParamType cvParam : chromatogramType.getCvParam()) {
-					for(IScan scan : referencedChromatogram.getScans()) {
-						if(scan instanceof IRegularMassSpectrum massSpectrum) {
-							setPolarity(cvParam, massSpectrum);
-						}
+			for(CVParamType cvParam : chromatogramType.getCvParam()) {
+				for(IScan scan : referencedChromatogram.getScans()) {
+					if(scan instanceof IRegularMassSpectrum massSpectrum) {
+						setPolarity(cvParam, massSpectrum);
 					}
 				}
-
-				chromatogram.getReferencedChromatograms().add(referencedChromatogram);
 			}
+
+			chromatogram.getReferencedChromatograms().add(referencedChromatogram);
 		}
 	}
 
@@ -360,14 +452,17 @@ public class ChromatogramMSDReaderVersion110 extends AbstractChromatogramReader 
 		}
 	}
 
-	private static void setReferencedPolarity(SpectrumType spectrum, IRegularMassSpectrum massSpectrum) {
+	private static void setReferencedPolarity(SpectrumType spectrum, IRegularMassSpectrum massSpectrum, Map<String, ReferenceableParamGroupType> paramGroups) {
 
 		if(spectrum.getReferenceableParamGroupRef() == null) {
 			return;
 		}
-		List<ReferenceableParamGroupRefType> groupTypes = spectrum.getReferenceableParamGroupRef();
-		for(ReferenceableParamGroupRefType groupType : groupTypes) {
-			for(CVParamType cvParam : groupType.getRef().getCvParam()) {
+		for(ReferenceableParamGroupRefType groupType : spectrum.getReferenceableParamGroupRef()) {
+			ReferenceableParamGroupType group = paramGroups.get(groupType.getRef());
+			if(group == null) {
+				continue;
+			}
+			for(CVParamType cvParam : group.getCvParam()) {
 				setPolarity(cvParam, massSpectrum);
 			}
 		}

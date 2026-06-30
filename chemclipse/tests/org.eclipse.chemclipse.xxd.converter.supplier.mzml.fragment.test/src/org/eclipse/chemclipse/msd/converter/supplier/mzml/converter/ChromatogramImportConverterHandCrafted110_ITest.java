@@ -17,8 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.File;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.model.IVendorChromatogramMSD;
-import org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.model.VendorChromatogramMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.wsd.converter.supplier.mzml.converter.model.IVendorChromatogramWSD;
 import org.eclipse.chemclipse.wsd.converter.supplier.mzml.converter.model.VendorChromatogramWSD;
@@ -32,7 +30,6 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 @TestInstance(Lifecycle.PER_CLASS)
 public class ChromatogramImportConverterHandCrafted110_ITest {
 
-	private IVendorChromatogramMSD chromatogramMSD;
 	private IVendorChromatogramWSD chromatogramWSD;
 
 	@BeforeAll
@@ -41,8 +38,7 @@ public class ChromatogramImportConverterHandCrafted110_ITest {
 		File importFile = new File("testData/files/import/PDA.mzML");
 		ChromatogramImportConverter converter = new ChromatogramImportConverter();
 		IProcessingInfo<IChromatogram> processingInfo = converter.convert(importFile, new NullProgressMonitor());
-		chromatogramMSD = (VendorChromatogramMSD)processingInfo.getProcessingResult(); // TODO: there actually is none
-		chromatogramWSD = (VendorChromatogramWSD)chromatogramMSD.getReferencedChromatograms().get(0);
+		chromatogramWSD = (VendorChromatogramWSD)processingInfo.getProcessingResult();
 	}
 
 	@Test
@@ -84,7 +80,7 @@ public class ChromatogramImportConverterHandCrafted110_ITest {
 	@Test
 	public void testTotalSignal() {
 
-		assertEquals(225.0f, chromatogramWSD.getTotalSignal(), 0, "Total Signal");
+		assertEquals(1800f, chromatogramWSD.getTotalSignal(), 0, "Total Signal");
 	}
 
 	@Test

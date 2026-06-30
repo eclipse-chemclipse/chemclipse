@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.zip.DataFormatException;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.chemclipse.converter.io.AbstractChromatogramReader;
 import org.eclipse.chemclipse.converter.l10n.ConverterMessages;
@@ -57,24 +59,26 @@ import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v10.SpectrumDesc
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v10.SpectrumType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v10.UserParamType;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.xml.sax.SAXException;
+
+import jakarta.xml.bind.JAXBException;
 
 public class ChromatogramMSDReaderVersion10 extends AbstractChromatogramReader implements IChromatogramMSDReader {
 
 	private static final Logger logger = Logger.getLogger(ChromatogramMSDReaderVersion10.class);
 
-	private MzMLType mzML;
-
-	public ChromatogramMSDReaderVersion10(MzMLType mzML) {
-
-		this.mzML = mzML;
-	}
-
 	@Override
 	public IChromatogramOverview readOverview(File file, IProgressMonitor monitor) throws IOException {
 
 		IVendorChromatogramMSD chromatogram = null;
-		chromatogram = new VendorChromatogramMSD();
-		readTIC(mzML.getRun(), chromatogram);
+		try {
+			MzMLType mzML = XmlReader10.getMzML(file);
+			chromatogram = new VendorChromatogramMSD();
+			readTIC(mzML.getRun(), chromatogram);
+		} catch(SAXException | IOException | JAXBException
+				| ParserConfigurationException e) {
+			logger.error(e);
+		}
 		return chromatogram;
 	}
 
@@ -82,13 +86,19 @@ public class ChromatogramMSDReaderVersion10 extends AbstractChromatogramReader i
 	public IChromatogramMSD read(File file, IProgressMonitor monitor) throws IOException {
 
 		IVendorChromatogramMSD chromatogram = null;
-		chromatogram = new VendorChromatogramMSD();
-		chromatogram.setFile(file);
-		readContact(mzML, chromatogram);
-		readSample(mzML, chromatogram);
-		readInstrument(mzML, chromatogram);
-		readEditHistory(mzML, chromatogram);
-		readSpectrum(mzML, chromatogram, monitor);
+		try {
+			MzMLType mzML = XmlReader10.getMzML(file);
+			chromatogram = new VendorChromatogramMSD();
+			chromatogram.setFile(file);
+			readContact(mzML, chromatogram);
+			readSample(mzML, chromatogram);
+			readInstrument(mzML, chromatogram);
+			readEditHistory(mzML, chromatogram);
+			readSpectrum(mzML, chromatogram, monitor);
+		} catch(SAXException | IOException | JAXBException
+				| ParserConfigurationException e) {
+			logger.error(e);
+		}
 		return chromatogram;
 	}
 

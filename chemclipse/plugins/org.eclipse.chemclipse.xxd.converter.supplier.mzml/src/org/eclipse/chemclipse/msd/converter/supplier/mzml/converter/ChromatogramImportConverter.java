@@ -17,9 +17,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Serializable;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.chemclipse.converter.chromatogram.AbstractChromatogramImportConverter;
 import org.eclipse.chemclipse.logging.core.Logger;
@@ -36,9 +33,6 @@ import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.XmlReader10;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.XmlReader110;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.xml.sax.SAXException;
-
-import jakarta.xml.bind.JAXBException;
 
 public class ChromatogramImportConverter extends AbstractChromatogramImportConverter<IChromatogram> {
 
@@ -53,51 +47,37 @@ public class ChromatogramImportConverter extends AbstractChromatogramImportConve
 
 		IProcessingInfo<IChromatogram> processingInfo = super.validate(file);
 		if(!processingInfo.hasErrorMessages()) {
-			Serializable serializable = getMzML(file, processingInfo);
-			if(serializable instanceof org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.MzMLType mzML) {
-				IChromatogramMSDReader chromatogramReaderMSD = new ChromatogramMSDReaderVersion110(mzML);
-				if(chromatogramReaderMSD != null) {
-					importChromatogramMSD(chromatogramReaderMSD, file, monitor, processingInfo);
-				}
-				IChromatogramWSDReader chromatogramReaderWSD = new ChromatogramWSDReaderVersion110(mzML);
-				if(chromatogramReaderWSD != null) {
-					importChromatogramWSD(chromatogramReaderWSD, file, monitor, processingInfo);
-				}
-			} else if(serializable instanceof org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v10.MzMLType mzML) {
-				IChromatogramMSDReader chromatogramReaderMSD = new ChromatogramMSDReaderVersion10(mzML);
-				if(chromatogramReaderMSD != null) {
-					importChromatogramMSD(chromatogramReaderMSD, file, monitor, processingInfo);
-				}
+			String version = getVersion(file, processingInfo);
+			if(XmlReader110.VERSION.equals(version)) {
+				IChromatogramMSDReader chromatogramReaderMSD = new ChromatogramMSDReaderVersion110();
+				importChromatogramMSD(chromatogramReaderMSD, file, monitor, processingInfo);
+				IChromatogramWSDReader chromatogramReaderWSD = new ChromatogramWSDReaderVersion110();
+				importChromatogramWSD(chromatogramReaderWSD, file, monitor, processingInfo);
+			} else if(XmlReader10.VERSION.equals(version)) {
+				IChromatogramMSDReader chromatogramReaderMSD = new ChromatogramMSDReaderVersion10();
+				importChromatogramMSD(chromatogramReaderMSD, file, monitor, processingInfo);
 			}
 		}
 		return processingInfo;
 	}
 
-	private Serializable getMzML(File file, IProcessingInfo<?> processingInfo) {
+	private String getVersion(File file, IProcessingInfo<?> processingInfo) {
 
 		try (final FileReader fileReader = new FileReader(file)) {
 			final char[] charBuffer = new char[500];
 			fileReader.read(charBuffer);
 			final String header = new String(charBuffer);
 			if(header.contains(XmlReader110.VERSION)) {
-				org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.MzMLType mzML = XmlReader110.getMzML(file);
-				return mzML;
+				return XmlReader110.VERSION;
 			} else if(header.contains(XmlReader10.VERSION)) {
-				org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v10.MzMLType mzML = XmlReader10.getMzML(file);
-				return mzML;
+				return XmlReader10.VERSION;
 			} else {
 				processingInfo.addErrorMessage(DESCRIPTION, "Unknown version");
 			}
-		} catch(FileNotFoundException ex) {
-			logger.error(ex);
-		} catch(IOException ex) {
-			logger.error(ex);
-		} catch(SAXException ex) {
-			logger.error(ex);
-		} catch(JAXBException ex) {
-			logger.error(ex);
-		} catch(ParserConfigurationException ex) {
-			logger.error(ex);
+		} catch(FileNotFoundException e) {
+			logger.error(e);
+		} catch(IOException e) {
+			logger.error(e);
 		}
 		return null;
 	}
@@ -107,6 +87,9 @@ public class ChromatogramImportConverter extends AbstractChromatogramImportConve
 		monitor.subTask(IMPORT_CHROMATOGRAM);
 		try {
 			IChromatogramMSD chromatogram = chromatogramReaderMSD.read(file, monitor);
+			if(chromatogram.getNumberOfScans() == 0) {
+				return;
+			}
 			if(processingInfo.getProcessingResult() == null) {
 				processingInfo.setProcessingResult(chromatogram);
 			} else {
@@ -127,6 +110,9 @@ public class ChromatogramImportConverter extends AbstractChromatogramImportConve
 		monitor.subTask(IMPORT_CHROMATOGRAM);
 		try {
 			IChromatogramWSD chromatogram = chromatogramReaderWSD.read(file, monitor);
+			if(chromatogram.getNumberOfScans() == 0) {
+				return;
+			}
 			if(processingInfo.getProcessingResult() == null) {
 				processingInfo.setProcessingResult(chromatogram);
 			} else {
@@ -143,17 +129,13 @@ public class ChromatogramImportConverter extends AbstractChromatogramImportConve
 
 		IProcessingInfo<IChromatogramOverview> processingInfo = super.validate(file);
 		if(!processingInfo.hasErrorMessages()) {
-			Serializable serializable = getMzML(file, processingInfo);
-			if(serializable instanceof org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.MzMLType mzML) {
-				IChromatogramMSDReader chromatogramReaderMSD = new ChromatogramMSDReaderVersion110(mzML);
-				if(chromatogramReaderMSD != null) {
-					readOverviewMSD(file, chromatogramReaderMSD, monitor, processingInfo);
-				}
-			} else if(serializable instanceof org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v10.MzMLType mzML) {
-				IChromatogramMSDReader chromatogramReaderMSD = new ChromatogramMSDReaderVersion10(mzML);
-				if(chromatogramReaderMSD != null) {
-					readOverviewMSD(file, chromatogramReaderMSD, monitor, processingInfo);
-				}
+			String version = getVersion(file, processingInfo);
+			if(XmlReader110.VERSION.equals(version)) {
+				IChromatogramMSDReader chromatogramReaderMSD = new ChromatogramMSDReaderVersion110();
+				readOverviewMSD(file, chromatogramReaderMSD, monitor, processingInfo);
+			} else if(XmlReader10.VERSION.equals(version)) {
+				IChromatogramMSDReader chromatogramReaderMSD = new ChromatogramMSDReaderVersion10();
+				readOverviewMSD(file, chromatogramReaderMSD, monitor, processingInfo);
 			}
 		}
 		return processingInfo;
