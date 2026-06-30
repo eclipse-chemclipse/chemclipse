@@ -6,17 +6,17 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
-package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
+package org.eclipse.chemclipse.ux.extension.ui.swt;
 
 import org.eclipse.chemclipse.support.ui.provider.ListContentProvider;
 import org.eclipse.chemclipse.support.ui.swt.ExtendedTableViewer;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.ColumnIndicesComparator;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.ColumnIndicesLabelProvider;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.ColumnIndicesListFilter;
+import org.eclipse.chemclipse.ux.extension.ui.internal.provider.ColumnIndicesComparator;
+import org.eclipse.chemclipse.ux.extension.ui.internal.provider.ColumnIndicesLabelProvider;
+import org.eclipse.chemclipse.ux.extension.ui.internal.provider.ColumnIndicesListFilter;
 import org.eclipse.swt.widgets.Composite;
 
 public class ColumnIndicesListUI extends ExtendedTableViewer {
