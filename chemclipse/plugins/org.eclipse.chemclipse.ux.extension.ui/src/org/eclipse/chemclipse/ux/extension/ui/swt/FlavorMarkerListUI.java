@@ -6,20 +6,20 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
-package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
+package org.eclipse.chemclipse.ux.extension.ui.swt;
 
 import java.util.List;
 
 import org.eclipse.chemclipse.support.ui.provider.ListContentProvider;
 import org.eclipse.chemclipse.support.ui.swt.ExtendedTableViewer;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.FlavorMarkerComparator;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.FlavorMarkerEditingSupport;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.FlavorMarkerLabelProvider;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.FlavorMarkerListFilter;
+import org.eclipse.chemclipse.ux.extension.ui.internal.provider.FlavorMarkerComparator;
+import org.eclipse.chemclipse.ux.extension.ui.internal.provider.FlavorMarkerEditingSupport;
+import org.eclipse.chemclipse.ux.extension.ui.internal.provider.FlavorMarkerLabelProvider;
+import org.eclipse.chemclipse.ux.extension.ui.internal.provider.FlavorMarkerListFilter;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.widgets.Composite;
 
