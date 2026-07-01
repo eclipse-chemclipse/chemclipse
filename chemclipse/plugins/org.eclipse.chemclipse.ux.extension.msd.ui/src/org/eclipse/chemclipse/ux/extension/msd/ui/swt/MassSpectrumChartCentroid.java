@@ -147,14 +147,16 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 		deleteSeries();
 		List<IBarSeriesData> barSeriesDataList = new ArrayList<>();
 		if(combinedMassSpectrum != null) {
+			combinedMassSpectrum.normalize(1000);
 			IBarSeriesData barSeriesData = new BarSeriesData(getMassSpectrum(combinedMassSpectrum, "Combined", false));
 			barSeriesData.getSettings().setBarOverlay(true);
 			barSeriesDataList.add(barSeriesData);
 		}
 		if(mirroredMassSpectrum != null) {
+			mirroredMassSpectrum.normalize(1000);
 			IBarSeriesData barSeriesData = new BarSeriesData(getMassSpectrum(mirroredMassSpectrum, "Mirrored", true));
 			IBarSeriesSettings settings = barSeriesData.getSettings();
-			settings.setBarColor(getDisplay().getSystemColor(SWT.COLOR_RED));
+			settings.setBarColor(getDisplay().getSystemColor(SWT.COLOR_BLACK));
 			settings.setBarOverlay(true);
 			barSeriesDataList.add(barSeriesData);
 		}
