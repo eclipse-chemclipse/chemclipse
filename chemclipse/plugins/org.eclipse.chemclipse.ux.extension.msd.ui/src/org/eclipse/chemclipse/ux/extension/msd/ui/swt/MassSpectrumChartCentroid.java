@@ -71,6 +71,7 @@ import org.eclipse.swtchart.extensions.axisconverter.PercentageConverter;
 import org.eclipse.swtchart.extensions.barcharts.BarChart;
 import org.eclipse.swtchart.extensions.barcharts.BarSeriesData;
 import org.eclipse.swtchart.extensions.barcharts.IBarSeriesData;
+import org.eclipse.swtchart.extensions.barcharts.IBarSeriesSettings;
 import org.eclipse.swtchart.extensions.core.BaseChart;
 import org.eclipse.swtchart.extensions.core.IChartSettings;
 import org.eclipse.swtchart.extensions.core.IPrimaryAxisSettings;
@@ -135,9 +136,47 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 			ISeriesData seriesData = getMassSpectrum(massSpectrum);
 			IBarSeriesData barSeriesData = new BarSeriesData(seriesData);
 			barSeriesDataList.add(barSeriesData);
+			modifyRangeRestriction(false);
 			addSeriesData(barSeriesDataList, MAX_NUMBER_MZ);
 			updateMenu();
 		}
+	}
+
+	public void update(IScanMSD combinedMassSpectrum, IScanMSD mirroredMassSpectrum) {
+
+		deleteSeries();
+		List<IBarSeriesData> barSeriesDataList = new ArrayList<>();
+		if(combinedMassSpectrum != null) {
+			IBarSeriesData barSeriesData = new BarSeriesData(getMassSpectrum(combinedMassSpectrum, "Combined", false));
+			barSeriesData.getSettings().setBarOverlay(true);
+			barSeriesDataList.add(barSeriesData);
+		}
+		if(mirroredMassSpectrum != null) {
+			IBarSeriesData barSeriesData = new BarSeriesData(getMassSpectrum(mirroredMassSpectrum, "Mirrored", true));
+			IBarSeriesSettings settings = barSeriesData.getSettings();
+			settings.setBarColor(getDisplay().getSystemColor(SWT.COLOR_RED));
+			settings.setBarOverlay(true);
+			barSeriesDataList.add(barSeriesData);
+		}
+		modifyRangeRestriction(mirroredMassSpectrum != null);
+		if(!barSeriesDataList.isEmpty()) {
+			addSeriesData(barSeriesDataList, MAX_NUMBER_MZ);
+		}
+	}
+
+	private void modifyRangeRestriction(boolean mirrored) {
+
+		IChartSettings chartSettings = getChartSettings();
+		RangeRestriction rangeRestriction = chartSettings.getRangeRestriction();
+		rangeRestriction.setExtendTypeY(RangeRestriction.ExtendType.RELATIVE);
+		if(mirrored) {
+			rangeRestriction.setExtendMinY(0.25d);
+			rangeRestriction.setExtendMaxY(0.25d);
+		} else {
+			rangeRestriction.setExtendMinY(0.0d);
+			rangeRestriction.setExtendMaxY(0.1d);
+		}
+		applySettings(chartSettings);
 	}
 
 	private void initialize() {
@@ -304,15 +343,40 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 		@Override
 		public void paintControl(PaintEvent e) {
 
-			List<double[]> barSeriesValues = getVisibleBarSeriesValues();
-			barSeriesValues.sort((a, b) -> Double.compare(b[1], a[1]));
-			int limit = Math.min(LABEL_COUNT, barSeriesValues.size());
-			for(int i = 0; i < limit; i++) {
-				double[] entry = barSeriesValues.get(i);
+			List<double[]> positiveValues = new ArrayList<>();
+			List<double[]> negativeValues = new ArrayList<>();
+			for(double[] entry : getVisibleBarSeriesValues()) {
+				if(entry[1] >= 0) {
+					positiveValues.add(entry);
+				} else {
+					negativeValues.add(entry);
+				}
+			}
+			/*
+			 * Positive series: label above bar tip.
+			 */
+			positiveValues.sort((a, b) -> Double.compare(b[1], a[1]));
+			int limitPositive = Math.min(LABEL_COUNT, positiveValues.size());
+			for(int i = 0; i < limitPositive; i++) {
+				double[] entry = positiveValues.get(i);
 				String label = decimalFormatMZ.format(entry[0]);
 				Point labelSize = e.gc.textExtent(label);
 				int x = (int)(entry[2] + 0.5d - labelSize.x / 2.0d);
 				int y = (int)entry[3] - labelSize.y;
+				e.gc.drawText(label, x, y, true);
+			}
+			/*
+			 * Mirrored (negative) series: label below bar tip.
+			 * Sort ascending so the most intense (most negative) peaks come first.
+			 */
+			negativeValues.sort((a, b) -> Double.compare(a[1], b[1]));
+			int limitNegative = Math.min(LABEL_COUNT, negativeValues.size());
+			for(int i = 0; i < limitNegative; i++) {
+				double[] entry = negativeValues.get(i);
+				String label = decimalFormatMZ.format(entry[0]);
+				Point labelSize = e.gc.textExtent(label);
+				int x = (int)(entry[2] + 0.5d - labelSize.x / 2.0d);
+				int y = (int)entry[3];
 				e.gc.drawText(label, x, y, true);
 			}
 		}
@@ -348,6 +412,11 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 
 	private ISeriesData getMassSpectrum(IScanMSD massSpectrum) {
 
+		return getMassSpectrum(massSpectrum, "Mass Spectrum", false);
+	}
+
+	private ISeriesData getMassSpectrum(IScanMSD massSpectrum, String id, boolean mirrored) {
+
 		List<IIon> ions = massSpectrum.getIons();
 		int size = ions.size();
 		double[] xSeries = new double[size];
@@ -356,10 +425,10 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 		for(int i = 0; i < size; i++) {
 			IIon ion = ions.get(i);
 			xSeries[i] = ion.getIon();
-			ySeries[i] = ion.getAbundance();
+			ySeries[i] = mirrored ? ion.getAbundance() * -1 : ion.getAbundance();
 		}
 
-		return new SeriesData(xSeries, ySeries, "Mass Spectrum");
+		return new SeriesData(xSeries, ySeries, id);
 	}
 
 	private void addMassSpectrumExport(IChartSettings chartSettings) {
@@ -393,6 +462,7 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 					if(massSpectrum == null) {
 						return;
 					}
+
 					FileDialog fileDialog = new FileDialog(shell, SWT.SAVE);
 					fileDialog.setText("Mass Spectrum Export");
 					fileDialog.setFileName("Mass Spectrum." + supplier.getFileExtension());
@@ -404,7 +474,6 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 						ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);
 						try {
 							dialog.run(true, true, monitor -> {
-
 								IProcessingInfo<File> convert = MassSpectrumConverter.convert(file, massSpectrum, false, supplier.getId(), monitor);
 								ProcessingInfoPartSupport.getInstance().update(convert);
 							});
