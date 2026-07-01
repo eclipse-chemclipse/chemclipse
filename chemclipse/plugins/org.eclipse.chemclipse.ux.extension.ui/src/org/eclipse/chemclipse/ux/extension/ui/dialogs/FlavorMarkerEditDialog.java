@@ -107,7 +107,6 @@ public class FlavorMarkerEditDialog extends TitleAreaDialog {
 		textLiteratureReference.set(createTextMultiLine(composite, flavorMarker != null ? flavorMarker.getLiteratureReference() : ""));
 
 		createSeparator(composite);
-
 		createThresholdSection(composite);
 
 		return container;
@@ -172,6 +171,7 @@ public class FlavorMarkerEditDialog extends TitleAreaDialog {
 		labelContent.setText("Content:");
 
 		Text textContent = new Text(toolbar, SWT.BORDER);
+		textContent.setToolTipText("Use e.g.: 5.5");
 		textContent.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		textThresholdContent.set(textContent);
 
@@ -179,6 +179,7 @@ public class FlavorMarkerEditDialog extends TitleAreaDialog {
 		labelUnit.setText("Unit:");
 
 		Text textUnit = new Text(toolbar, SWT.BORDER);
+		textUnit.setToolTipText("Use e.g.: (µg/kg Water)");
 		textUnit.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		textThresholdUnit.set(textUnit);
 

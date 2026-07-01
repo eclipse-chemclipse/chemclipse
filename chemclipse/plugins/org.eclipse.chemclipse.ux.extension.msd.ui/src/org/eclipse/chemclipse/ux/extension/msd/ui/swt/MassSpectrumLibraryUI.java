@@ -128,14 +128,12 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 
 	private void createButtonToggleToolbarInfo(Composite parent) {
 
-		Button button = createButtonToggleToolbar(parent, toolbarInfo, IMAGE_INFO, TOOLTIP_INFO);
-		buttonToolbarInfo.set(button);
+		buttonToolbarInfo.set(createButtonToggleToolbar(parent, toolbarInfo, IMAGE_INFO, TOOLTIP_INFO));
 	}
 
 	private void createButtonToggleToolbarSearch(Composite parent) {
 
-		Button button = createButtonToggleToolbar(parent, toolbarSearch, IMAGE_SEARCH, TOOLTIP_SEARCH);
-		buttonToolbarSearch.set(button);
+		buttonToolbarSearch.set(createButtonToggleToolbar(parent, toolbarSearch, IMAGE_SEARCH, TOOLTIP_SEARCH));
 	}
 
 	private void createButtonSettings(Composite parent) {
