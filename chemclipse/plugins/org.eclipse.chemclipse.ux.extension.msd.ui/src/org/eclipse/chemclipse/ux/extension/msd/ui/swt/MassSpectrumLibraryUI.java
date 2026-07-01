@@ -92,7 +92,6 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 		setLayout(new FillLayout());
 
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 		composite.setLayout(new GridLayout(1, true));
 		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 
@@ -114,7 +113,6 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 	private void createToolbarMain(Composite parent) {
 
 		Composite composite = new Composite(parent, SWT.NONE);
-		composite.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 		GridData gridDataStatus = new GridData(GridData.FILL_HORIZONTAL);
 		gridDataStatus.horizontalAlignment = SWT.END;
 		composite.setLayoutData(gridDataStatus);
@@ -159,7 +157,6 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 	private void createToolbarSearch(Composite parent) {
 
 		SearchSupportUI searchSupportUI = new SearchSupportUI(parent, SWT.NONE);
-		searchSupportUI.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 		searchSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		searchSupportUI.setSearchListener((searchText, caseSensitive) -> {
 

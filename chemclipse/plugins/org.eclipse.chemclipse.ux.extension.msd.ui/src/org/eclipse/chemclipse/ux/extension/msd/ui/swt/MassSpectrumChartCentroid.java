@@ -56,15 +56,22 @@ import org.eclipse.core.commands.Command;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swtchart.IAxis.Position;
+import org.eclipse.swtchart.ICustomPaintListener;
+import org.eclipse.swtchart.IPlotArea;
+import org.eclipse.swtchart.ISeries;
 import org.eclipse.swtchart.extensions.axisconverter.PercentageConverter;
 import org.eclipse.swtchart.extensions.barcharts.BarChart;
 import org.eclipse.swtchart.extensions.barcharts.BarSeriesData;
 import org.eclipse.swtchart.extensions.barcharts.IBarSeriesData;
+import org.eclipse.swtchart.extensions.core.BaseChart;
 import org.eclipse.swtchart.extensions.core.IChartSettings;
 import org.eclipse.swtchart.extensions.core.IPrimaryAxisSettings;
 import org.eclipse.swtchart.extensions.core.ISecondaryAxisSettings;
@@ -89,10 +96,14 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 	private ICommandService commandService = PlatformUI.getWorkbench().getService(ICommandService.class);
 
 	private static final int MAX_NUMBER_MZ = 50000;
+	private static final int LABEL_COUNT = 5;
 
 	public enum LabelOption {
 		NOMIMAL, EXACT, CUSTOM;
 	}
+
+	private final DecimalFormat decimalFormatMZ = new DecimalFormat("0", new DecimalFormatSymbols(Locale.ENGLISH));
+	private final LabelPaintListener labelPaintListener = new LabelPaintListener();
 
 	private IScanMSD massSpectrum = null;
 
@@ -154,7 +165,16 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 
 		setPrimaryAxisSet(chartSettings);
 		addSecondaryAxisSet(chartSettings);
+
+		Color white = getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND);
+		chartSettings.setBackground(white);
+		chartSettings.setBackgroundChart(white);
+		chartSettings.setBackgroundPlotArea(white);
+
 		applySettings(chartSettings);
+
+		IPlotArea plotArea = getBaseChart().getPlotArea();
+		plotArea.addCustomPaintListener(labelPaintListener);
 	}
 
 	private void updateMenu() {
@@ -277,6 +297,53 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 		secondaryAxisSettingsY.setPosition(Position.Secondary);
 		secondaryAxisSettingsY.setDecimalFormat(new DecimalFormat(("0.00"), new DecimalFormatSymbols(Locale.ENGLISH)));
 		chartSettings.getSecondaryAxisSettingsListY().add(secondaryAxisSettingsY);
+	}
+
+	private class LabelPaintListener implements ICustomPaintListener {
+
+		@Override
+		public void paintControl(PaintEvent e) {
+
+			List<double[]> barSeriesValues = getVisibleBarSeriesValues();
+			barSeriesValues.sort((a, b) -> Double.compare(b[1], a[1]));
+			int limit = Math.min(LABEL_COUNT, barSeriesValues.size());
+			for(int i = 0; i < limit; i++) {
+				double[] entry = barSeriesValues.get(i);
+				String label = decimalFormatMZ.format(entry[0]);
+				Point labelSize = e.gc.textExtent(label);
+				int x = (int)(entry[2] + 0.5d - labelSize.x / 2.0d);
+				int y = (int)entry[3] - labelSize.y;
+				e.gc.drawText(label, x, y, true);
+			}
+		}
+
+		@Override
+		public boolean drawBehindSeries() {
+
+			return false;
+		}
+	}
+
+	private List<double[]> getVisibleBarSeriesValues() {
+
+		List<double[]> values = new ArrayList<>();
+		BaseChart baseChart = getBaseChart();
+		int widthPlotArea = baseChart.getPlotArea().getSize().x;
+		ISeries<?>[] seriesArray = baseChart.getSeriesSet().getSeries();
+		for(ISeries<?> series : seriesArray) {
+			if(series != null) {
+				double[] xSeries = series.getXSeries();
+				double[] ySeries = series.getYSeries();
+				int size = xSeries.length;
+				for(int i = 0; i < size; i++) {
+					Point point = series.getPixelCoordinates(i);
+					if(point.x >= 0 && point.x <= widthPlotArea) {
+						values.add(new double[]{xSeries[i], ySeries[i], point.x, point.y});
+					}
+				}
+			}
+		}
+		return values;
 	}
 
 	private ISeriesData getMassSpectrum(IScanMSD massSpectrum) {

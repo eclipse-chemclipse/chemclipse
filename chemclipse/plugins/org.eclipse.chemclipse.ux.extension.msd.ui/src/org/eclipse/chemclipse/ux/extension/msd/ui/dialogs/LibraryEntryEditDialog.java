@@ -21,6 +21,7 @@ import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.swt.ui.components.identification.SynonymsEditUI;
 import org.eclipse.chemclipse.support.text.ValueFormat;
+import org.eclipse.chemclipse.ux.extension.msd.ui.swt.IonsEditUI;
 import org.eclipse.chemclipse.ux.extension.ui.swt.ColumnIndicesEditUI;
 import org.eclipse.chemclipse.ux.extension.ui.swt.FlavorMarkersEditUI;
 import org.eclipse.core.databinding.validation.IValidator;
@@ -79,11 +80,13 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 		setTitle("Library Entry");
 		setMessage("Edit the library entry.", IMessageProvider.INFORMATION);
 		Composite container = (Composite)super.createDialogArea(parent);
+		container.setBackgroundMode(SWT.INHERIT_DEFAULT);
 
 		TabFolder tabFolder = new TabFolder(container, SWT.BOTTOM);
 		tabFolder.setLayoutData(new GridData(GridData.FILL_BOTH));
 
 		createTabGeneral(tabFolder);
+		createTabIons(tabFolder);
 		createTabSynonyms(tabFolder);
 		createTabColumnIndices(tabFolder);
 		createTabFlavorMarkers(tabFolder);
@@ -137,7 +140,7 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 	@Override
 	protected Point getInitialSize() {
 
-		return new Point(500, 650);
+		return new Point(700, 700);
 	}
 
 	private void createTabGeneral(TabFolder tabFolder) {
@@ -179,6 +182,20 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 
 		createLabel(composite, "Comments:");
 		textComments.set(createTextMultiLine(composite, libraryInformation != null ? libraryInformation.getComments() : ""));
+
+		tabItem.setControl(composite);
+	}
+
+	private void createTabIons(TabFolder tabFolder) {
+
+		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
+		tabItem.setText("Ions");
+
+		Composite composite = new Composite(tabFolder, SWT.NONE);
+		composite.setLayout(new FillLayout());
+
+		IonsEditUI ionsEditUI = new IonsEditUI(composite, SWT.NONE);
+		ionsEditUI.update(massSpectrum);
 
 		tabItem.setControl(composite);
 	}
