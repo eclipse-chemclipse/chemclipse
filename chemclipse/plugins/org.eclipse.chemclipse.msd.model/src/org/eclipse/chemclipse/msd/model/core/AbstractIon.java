@@ -30,12 +30,11 @@ public abstract class AbstractIon implements IIon {
 	 * Renew the serialVersionUID any time you have changed some fields or
 	 * methods.
 	 */
-	private static final long serialVersionUID = -2481473608026036078L;
+	private static final long serialVersionUID = -2481473608026036079L;
 	private static final int MAX_PRECISION = 6;
 
 	private double ion = 0.0d;
 	private float abundance = 0.0f;
-	private IIonTransition ionTransition;
 
 	protected AbstractIon(double ion) {
 
@@ -58,27 +57,6 @@ public abstract class AbstractIon implements IIon {
 		setAbundance(abundance);
 	}
 
-	protected AbstractIon(double ion, float abundance, IIonTransition ionTransition) throws NullPointerException {
-
-		/*
-		 * Why is setIon(ion) ... used here instead of this.ion = ion?<br/> The
-		 * methods setIon(float ion) and setAbundance(float abundance) are
-		 * overridden by AbstractSupplierIon. Why?<br/> We do not
-		 * actually know which range of ion and abundance values each supplier
-		 * does support. Therefore the methods are overridden in
-		 * AbstractSupplierIon.<br/> Depending on the value range each
-		 * implementation of ISupplierIon has declared, the values will
-		 * be accepted or an exception will be thrown.
-		 */
-		setIon(ion);
-		setAbundance(abundance);
-		if(ionTransition != null) {
-			this.ionTransition = ionTransition;
-		} else {
-			throw new NullPointerException("The given ion transition instance should be not null.");
-		}
-	}
-
 	protected AbstractIon(IIon ion) throws IllegalArgumentException {
 
 		/*
@@ -96,26 +74,6 @@ public abstract class AbstractIon implements IIon {
 			setAbundance(ion.getAbundance());
 		} else {
 			throw new IllegalArgumentException("The given ion instance should be not null.");
-		}
-	}
-
-	protected AbstractIon(IIon ion, IIonTransition ionTransition) throws IllegalArgumentException {
-
-		/*
-		 * Why is setIon(ion) ... used here instead of this.ion = ion?<br/> The
-		 * methods setIon(float ion) and setAbundance(float abundance) are
-		 * overridden by AbstractSupplierIon. Why?<br/> We do not
-		 * actually know which range of ion and abundance values each supplier
-		 * does support. Therefore the methods are overridden in
-		 * AbstractSupplierIon.<br/> Depending on the value range each
-		 * implementation of ISupplierIon has declared, the values will
-		 * be accepted or an exception will be thrown.
-		 */
-		this(ion);
-		if(ionTransition != null) {
-			this.ionTransition = ionTransition;
-		} else {
-			throw new IllegalArgumentException("The given ion transition instance should be not null.");
 		}
 	}
 
@@ -199,12 +157,6 @@ public abstract class AbstractIon implements IIon {
 		return true;
 	}
 
-	@Override
-	public IIonTransition getIonTransition() {
-
-		return ionTransition;
-	}
-
 	/**
 	 * Compares the mass/charge ration of two ions. Returns the
 	 * following values: a.compareTo(b) 0 a == b : 28 == 28 -1 a &lt; b : 18 &lt; 28
@@ -235,17 +187,13 @@ public abstract class AbstractIon implements IIon {
 			return false;
 		}
 		AbstractIon other = (AbstractIon)otherObject;
-		return ion == other.getIon() && abundance == other.getAbundance() && ionTransition == other.getIonTransition();
+		return ion == other.getIon() && abundance == other.getAbundance();
 	}
 
 	@Override
 	public int hashCode() {
 
-		int ionTransitionHashCode = 0;
-		if(ionTransition != null) {
-			ionTransitionHashCode = ionTransition.hashCode();
-		}
-		return 7 * Double.valueOf(ion).hashCode() + 11 * Float.valueOf(abundance).hashCode() + ionTransitionHashCode;
+		return 7 * Double.valueOf(ion).hashCode() + 11 * Float.valueOf(abundance).hashCode();
 	}
 
 	@Override
@@ -257,8 +205,6 @@ public abstract class AbstractIon implements IIon {
 		builder.append("ion=" + ion);
 		builder.append(",");
 		builder.append("abundance=" + abundance);
-		builder.append(",");
-		builder.append("ionTransition=" + ionTransition);
 		builder.append("]");
 		return builder.toString();
 	}

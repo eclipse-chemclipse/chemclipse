@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -20,6 +20,7 @@ import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.IVendorChromato
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.IVendorScan;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.VendorChromatogram;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
+import org.eclipse.chemclipse.msd.model.core.IIonMSn;
 import org.eclipse.chemclipse.msd.model.core.IIonTransition;
 import org.eclipse.chemclipse.msd.model.core.Polarity;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
@@ -89,7 +90,8 @@ public class ChromatogramImportConverterTinyMzXML30_ITest {
 		assertEquals(Polarity.NEGATIVE, massSpectrum.getPolarity(), "Polarity");
 		assertEquals(369, massSpectrum.getRetentionTime());
 
-		IIonTransition ionTransition = massSpectrum.getIons().iterator().next().getIonTransition();
+		IIonMSn ionMSn = (IIonMSn)massSpectrum.getIons().iterator().next();
+		IIonTransition ionTransition = ionMSn.getIonTransition();
 		assertEquals(0, ionTransition.getCollisionEnergy(), 0);
 		assertEquals(91, ionTransition.getQ1Ion());
 		assertEquals(91, ionTransition.getQ3Ion(), 0);

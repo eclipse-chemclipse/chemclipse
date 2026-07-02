@@ -19,6 +19,7 @@ import org.eclipse.chemclipse.fsd.model.core.IScanSignalFSD;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.types.DataType;
 import org.eclipse.chemclipse.msd.model.core.IIon;
+import org.eclipse.chemclipse.msd.model.core.IIonMSn;
 import org.eclipse.chemclipse.msd.model.core.IIonTransition;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
@@ -166,7 +167,7 @@ public class ScanLabelProvider extends ColumnLabelProvider implements ITableLabe
 	private String getTandemMSD(Object element, int columnIndex) {
 
 		String text = "";
-		if(element instanceof IIon ion) {
+		if(element instanceof IIonMSn ion) {
 			IIonTransition ionTransition = ion.getIonTransition();
 			switch(columnIndex) {
 				case 0:

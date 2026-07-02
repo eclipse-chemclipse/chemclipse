@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2025 Lablicate GmbH.
+ * Copyright (c) 2020, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.eclipse.chemclipse.msd.model.core.AbstractIon;
 import org.eclipse.chemclipse.msd.model.core.IIon;
+import org.eclipse.chemclipse.msd.model.core.IIonMSn;
 import org.eclipse.chemclipse.msd.model.core.IIonTransition;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.support.text.ValueFormat;
@@ -36,14 +37,16 @@ public class ScanSupport {
 
 		String label = "";
 		if(ion != null) {
-			IIonTransition ionTransition = ion.getIonTransition();
 			StringBuilder builder = new StringBuilder();
-			if(ionTransition != null) {
-				builder.append(ionTransition.getQ1Ion());
-				builder.append(" > ");
-				builder.append(ValueFormat.getDecimalFormatEnglish("0.0").format(ion.getIon()));
-				builder.append(" @");
-				builder.append((int)ionTransition.getCollisionEnergy());
+			if(ion instanceof IIonMSn ionMSn) {
+				IIonTransition ionTransition = ionMSn.getIonTransition();
+				if(ionTransition != null) {
+					builder.append(ionTransition.getQ1Ion());
+					builder.append(" > ");
+					builder.append(ValueFormat.getDecimalFormatEnglish("0.0").format(ion.getIon()));
+					builder.append(" @");
+					builder.append((int)ionTransition.getCollisionEnergy());
+				}
 			} else {
 				builder.append(ion.getIon());
 			}

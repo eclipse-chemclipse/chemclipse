@@ -26,8 +26,10 @@ import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.msd.converter.io.IChromatogramMSDReader;
 import org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.model.IVendorChromatogramMSD;
+import org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.model.IVendorIonMSn;
 import org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.model.VendorChromatogramMSD;
 import org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.model.VendorIon;
+import org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.model.VendorIonMSn;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIonTransition;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
@@ -199,7 +201,7 @@ public class ChromatogramMSDReaderVersion110 extends AbstractChromatogramReader 
 			int retentionTime = (int)(retentionTimes[i]);
 			massSpectrum.setRetentionTime(retentionTime);
 			float intensity = (float)intensities[i];
-			VendorIon ion = new VendorIon(ionTransition.getQ3Ion(), intensity, ionTransition);
+			IVendorIonMSn ion = new VendorIonMSn(ionTransition.getQ3Ion(), intensity, ionTransition);
 			massSpectrum.addIon(ion, false);
 			chromatogram.addScan(massSpectrum);
 		}
@@ -350,7 +352,7 @@ public class ChromatogramMSDReaderVersion110 extends AbstractChromatogramReader 
 		for(int i = 0; i < ions; i++) {
 			if(selectedIon != 0) {
 				IIonTransition ionTransition = new IonTransition(selectedIon, mzs[i], collisionEnergy, 1, 1, 0);
-				massSpectrum.addIon(new VendorIon(mzs[i], (float)intensities[i], ionTransition), false);
+				massSpectrum.addIon(new VendorIonMSn(mzs[i], (float)intensities[i], ionTransition), false);
 				chromatogram.getIonTransitionSettings().getIonTransitions().add(ionTransition);
 			} else {
 				massSpectrum.addIon(new VendorIon(mzs[i], (float)intensities[i]), false);

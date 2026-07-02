@@ -21,6 +21,7 @@ import org.eclipse.chemclipse.msd.converter.supplier.mzdata.model.IVendorScan;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.model.VendorChromatogram;
 import org.eclipse.chemclipse.msd.converter.supplier.mzdata.model.VendorScan;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
+import org.eclipse.chemclipse.msd.model.core.IIonMSn;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.msd.model.core.Polarity;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
@@ -100,7 +101,8 @@ public class ChromatogramImportTiny105_ITest {
 		assertEquals(43, massSpectrum.getNumberOfIons(), "Ions");
 		assertEquals(356680, massSpectrum.getRetentionTime());
 		assertEquals(445.34668d, massSpectrum.getPrecursorIon(), 0);
-		assertEquals(35d, massSpectrum.getIons().get(0).getIonTransition().getCollisionEnergy(), 0);
+		IIonMSn ionMSn = (IIonMSn)massSpectrum.getIons().iterator().next();
+		assertEquals(35d, ionMSn.getIonTransition().getCollisionEnergy(), 0);
 		assertEquals(Polarity.POSITIVE, massSpectrum.getPolarity());
 		assertEquals(MassSpectrumType.PROFILE, massSpectrum.getMassSpectrumType());
 	}

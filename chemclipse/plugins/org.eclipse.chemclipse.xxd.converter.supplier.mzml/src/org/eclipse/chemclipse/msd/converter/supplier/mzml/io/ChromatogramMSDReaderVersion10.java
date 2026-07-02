@@ -26,6 +26,7 @@ import org.eclipse.chemclipse.msd.converter.io.IChromatogramMSDReader;
 import org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.model.IVendorChromatogramMSD;
 import org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.model.VendorChromatogramMSD;
 import org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.model.VendorIon;
+import org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.model.VendorIonMSn;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIonTransition;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
@@ -220,7 +221,7 @@ public class ChromatogramMSDReaderVersion10 extends AbstractChromatogramReader i
 		for(int i = 0; i < ions; i++) {
 			if(selectedIon != 0) {
 				IIonTransition ionTransition = new IonTransition(selectedIon, mzs[i], collisionEnergy, 1, 1, 0);
-				massSpectrum.addIon(new VendorIon(mzs[i], (float)intensities[i], ionTransition), false);
+				massSpectrum.addIon(new VendorIonMSn(mzs[i], (float)intensities[i], ionTransition), false);
 				chromatogram.getIonTransitionSettings().getIonTransitions().add(ionTransition);
 			} else {
 				massSpectrum.addIon(new VendorIon(mzs[i], (float)intensities[i]), false);

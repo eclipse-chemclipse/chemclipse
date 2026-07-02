@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2025 Lablicate GmbH.
+ * Copyright (c) 2016, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -15,6 +15,7 @@ package org.eclipse.chemclipse.msd.model.implementation;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.eclipse.chemclipse.msd.model.core.IIon;
+import org.eclipse.chemclipse.msd.model.core.IIonMSn;
 import org.eclipse.chemclipse.msd.model.core.IIonTransition;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,7 @@ public class MassSpectrum_27_Test {
 		massSpectrum.addIon(nominalIon, false);
 
 		IIonTransition ionTransition = new IonTransition(210.2d, 105.6d, 15.0d, 1.2d, 1.2d, 0);
-		IIon tripleQuadIon = new Ion(105.6d, 2789.54f, ionTransition);
+		IIonMSn tripleQuadIon = new IonMSn(105.6d, 2789.54f, ionTransition);
 		massSpectrum.addIon(tripleQuadIon, false);
 	}
 
@@ -86,7 +87,7 @@ public class MassSpectrum_27_Test {
 	public void test7() throws NullPointerException {
 
 		IIonTransition ionTransition = new IonTransition(210.2d, 105.6d, 15.0d, 1.2d, 1.2d, 0);
-		IIon tripleQuadIon = new Ion(105.6d, 5000.0f, ionTransition);
+		IIonMSn tripleQuadIon = new IonMSn(105.6d, 5000.0f, ionTransition);
 		massSpectrum.addIon(false, tripleQuadIon);
 
 		IIon ion = getIon(true);
@@ -97,7 +98,7 @@ public class MassSpectrum_27_Test {
 	public void test8() throws NullPointerException {
 
 		IIonTransition ionTransition = new IonTransition(210.2d, 105.6d, 15.0d, 1.2d, 1.2d, 0);
-		IIon tripleQuadIon = new Ion(105.6d, 5000.0f, ionTransition);
+		IIonMSn tripleQuadIon = new IonMSn(105.6d, 5000.0f, ionTransition);
 		massSpectrum.addIon(true, tripleQuadIon);
 
 		IIon ion = getIon(true);
@@ -118,7 +119,7 @@ public class MassSpectrum_27_Test {
 	public void test10() {
 
 		IIonTransition ionTransition = new IonTransition(210.2d, 106.6d, 15.0d, 1.2d, 1.2d, 0);
-		IIon tripleQuadIon = new Ion(106.6d, 7800.2f, ionTransition);
+		IIonMSn tripleQuadIon = new IonMSn(106.6d, 7800.2f, ionTransition);
 		massSpectrum.addIon(false, tripleQuadIon);
 
 		assertEquals(3, massSpectrum.getNumberOfIons());
@@ -128,11 +129,11 @@ public class MassSpectrum_27_Test {
 	private IIon getIon(boolean useTransition) {
 
 		IIon nominalIon = null;
-		IIon tripleQuadIon = null;
+		IIonMSn tripleQuadIon = null;
 
 		for(IIon ion : massSpectrum.getIons()) {
-			if(ion.getIonTransition() != null) {
-				tripleQuadIon = ion;
+			if(ion instanceof IIonMSn ionMSn && ionMSn.getIonTransition() != null) {
+				tripleQuadIon = ionMSn;
 			} else {
 				nominalIon = ion;
 			}

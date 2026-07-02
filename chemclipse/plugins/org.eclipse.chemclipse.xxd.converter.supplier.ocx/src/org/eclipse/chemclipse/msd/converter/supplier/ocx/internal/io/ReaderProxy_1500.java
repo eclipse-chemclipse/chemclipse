@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2025 Lablicate GmbH.
+ * Copyright (c) 2020, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -30,9 +30,11 @@ import org.eclipse.chemclipse.model.identifier.LibraryInformation;
 import org.eclipse.chemclipse.model.implementation.IdentificationTarget;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.io.IReaderProxy;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorIon;
+import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorIonMSn;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorScan;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorScanProxy;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.VendorIon;
+import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.VendorIonMSn;
 import org.eclipse.chemclipse.msd.model.core.IIonTransition;
 import org.eclipse.chemclipse.msd.model.core.IIonTransitionSettings;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
@@ -111,8 +113,7 @@ public class ReaderProxy_1500 extends AbstractZipReader implements IReaderProxy 
 			/*
 			 * Read Ions
 			 */
-			IVendorIon ion = readIon(dataInputStream, ionTransitionSettings);
-			massSpectrum.addIon(ion);
+			readIon(dataInputStream, ionTransitionSettings, massSpectrum);
 		}
 		/*
 		 * Identification Results
@@ -120,9 +121,7 @@ public class ReaderProxy_1500 extends AbstractZipReader implements IReaderProxy 
 		readScanIdentificationTargets(dataInputStream, massSpectrum);
 	}
 
-	private IVendorIon readIon(DataInputStream dataInputStream, IIonTransitionSettings ionTransitionSettings) throws IOException {
-
-		IVendorIon ion;
+	private void readIon(DataInputStream dataInputStream, IIonTransitionSettings ionTransitionSettings, IScanMSD massSpectrum) throws IOException {
 
 		double mz = dataInputStream.readDouble(); // m/z
 		float abundance = dataInputStream.readFloat(); // Abundance
@@ -130,8 +129,10 @@ public class ReaderProxy_1500 extends AbstractZipReader implements IReaderProxy 
 		 * Ion Transition
 		 */
 		int transition = dataInputStream.readInt();
+
 		if(transition == 0) {
-			ion = new VendorIon(mz, abundance);
+			IVendorIon ion = new VendorIon(mz, abundance);
+			massSpectrum.addIon(ion);
 		} else {
 			/*
 			 * parent m/z start, ...
@@ -149,9 +150,9 @@ public class ReaderProxy_1500 extends AbstractZipReader implements IReaderProxy 
 
 			IIonTransition ionTransition = ionTransitionSettings.getIonTransition(compoundName, filter1FirstIon, filter1LastIon, filter3FirstIon, filter3LastIon, collisionEnergy, filter1Resolution, filter3Resolution, transitionGroup);
 			ionTransition.setDwell(dwell);
-			ion = new VendorIon(mz, abundance, ionTransition);
+			IVendorIonMSn ion = new VendorIonMSn(mz, abundance, ionTransition);
+			massSpectrum.addIon(ion);
 		}
-		return ion;
 	}
 
 	private void readScanIdentificationTargets(DataInputStream dataInputStream, IScanMSD scanMSD) throws IOException {

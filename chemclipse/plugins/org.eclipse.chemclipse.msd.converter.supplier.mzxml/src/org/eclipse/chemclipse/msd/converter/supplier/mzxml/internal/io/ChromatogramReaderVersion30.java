@@ -35,6 +35,7 @@ import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.IVendorChromato
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.IVendorScan;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.VendorChromatogram;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.VendorIon;
+import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.VendorIonMSn;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.VendorScan;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
@@ -155,7 +156,7 @@ public class ChromatogramReaderVersion30 extends AbstractChromatogramReader {
 						if(msLevel >= 2) {
 							float collisionEnergy = scan.getCollisionEnergy() != null ? scan.getCollisionEnergy().floatValue() : 0f;
 							IIonTransition ionTransition = new IonTransition(massSpectrum.getPrecursorIon(), mz, collisionEnergy, 1, 1, 0);
-							massSpectrum.addIon(new VendorIon(mz, intensity, ionTransition), false);
+							massSpectrum.addIon(new VendorIonMSn(mz, intensity, ionTransition), false);
 							chromatogram.getIonTransitionSettings().getIonTransitions().add(ionTransition);
 						} else {
 							massSpectrum.addIon(new VendorIon(mz, intensity), false);

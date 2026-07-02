@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -24,6 +24,7 @@ import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.types.DataType;
 import org.eclipse.chemclipse.model.types.SignalType;
 import org.eclipse.chemclipse.msd.model.core.IIon;
+import org.eclipse.chemclipse.msd.model.core.IIonMSn;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
@@ -542,7 +543,9 @@ public class ScanChartUI extends ScrollableChart {
 			 */
 			if(scanMSD.isTandemMS()) {
 				for(IIon ion : scanMSD.getIons()) {
-					customLabels.put(ion.getIon(), ScanSupport.getLabelTandemMS(ion));
+					if(ion instanceof IIonMSn ionMSn) {
+						customLabels.put(ion.getIon(), ScanSupport.getLabelTandemMS(ionMSn));
+					}
 				}
 			}
 		}
