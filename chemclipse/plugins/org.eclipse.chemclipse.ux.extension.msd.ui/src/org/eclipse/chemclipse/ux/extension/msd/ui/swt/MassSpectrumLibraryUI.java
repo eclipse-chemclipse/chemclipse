@@ -78,6 +78,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 	private AtomicReference<InformationUI> toolbarInfo = new AtomicReference<>();
 	private AtomicReference<Button> buttonToolbarSearch = new AtomicReference<>();
 	private AtomicReference<SearchSupportUI> toolbarSearch = new AtomicReference<>();
+	private AtomicReference<Button> buttonAddEntry = new AtomicReference<>();
 	private AtomicReference<Button> buttonMergeEntries = new AtomicReference<>();
 	private AtomicReference<MassSpectrumListUI> massSpectrumListControl = new AtomicReference<>();
 
@@ -130,11 +131,12 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 		GridData gridDataStatus = new GridData(GridData.FILL_HORIZONTAL);
 		gridDataStatus.horizontalAlignment = SWT.END;
 		composite.setLayoutData(gridDataStatus);
-		composite.setLayout(new GridLayout(7, false));
+		composite.setLayout(new GridLayout(8, false));
 
 		createButtonToggleToolbarInfo(composite);
 		createButtonToggleToolbarSearch(composite);
 		createButtonLibraryImport(composite);
+		createButtonAddEntry(composite);
 		createButtonMergeEntries(composite);
 		createButtonDeleteEntries(composite);
 		createButtonHelp(composite, HelpContext.MASS_SPECTRUM_SEARCH);
@@ -230,6 +232,34 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 				}
 			}
 		});
+	}
+
+	private void createButtonAddEntry(Composite parent) {
+
+		Button button = new Button(parent, SWT.PUSH);
+		button.setToolTipText("Add a new library entry.");
+		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ADD, IApplicationImageProvider.SIZE_16x16));
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				if(massSpectra != null) {
+					RegularLibraryMassSpectrum libraryMassSpectrum = new RegularLibraryMassSpectrum();
+					LibraryEntryEditDialog dialog = new LibraryEntryEditDialog(getShell(), libraryMassSpectrum);
+					if(dialog.open() == Window.OK) {
+						if(!libraryMassSpectrum.getLibraryInformation().getName().isBlank()) {
+							massSpectra.addMassSpectrum(libraryMassSpectrum);
+							massSpectra.setDirty(true);
+							setInput();
+							resetSearch();
+							massSpectrumListControl.get().setSelection(new StructuredSelection(libraryMassSpectrum), true);
+						}
+					}
+				}
+			}
+		});
+		buttonAddEntry.set(button);
 	}
 
 	private void createButtonMergeEntries(Composite parent) {
