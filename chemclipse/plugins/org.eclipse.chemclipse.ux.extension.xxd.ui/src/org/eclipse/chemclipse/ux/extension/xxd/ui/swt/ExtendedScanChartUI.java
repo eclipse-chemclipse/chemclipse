@@ -52,6 +52,7 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageScan
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageSubtract;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ScanChartAxisIntensity;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ScanChartAxisIon;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ScanChartAxisRelativeIntensity;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.ChromatogramUpdateSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ScanDataSupport;
@@ -744,6 +745,7 @@ public class ExtendedScanChartUI extends Composite implements IExtendedPartUI {
 
 		List<Class<? extends IPreferencePage>> preferencePages = new ArrayList<>();
 		preferencePages.add(PreferencePageScans.class);
+		preferencePages.add(ScanChartAxisIon.class);
 		preferencePages.add(ScanChartAxisIntensity.class);
 		preferencePages.add(ScanChartAxisRelativeIntensity.class);
 		preferencePages.add(PreferencePageSubtract.class);
@@ -753,11 +755,27 @@ public class ExtendedScanChartUI extends Composite implements IExtendedPartUI {
 
 	void adjustAxisSettings() {
 
+		adjustAxisIons();
 		adjustAxisIntensity();
 		adjustAxisRelativeIntensity();
 
 		IChartSettings chartSettings = chartControl.get().getChartSettings();
 		chartControl.get().applySettings(chartSettings);
+	}
+
+	private void adjustAxisIons() {
+
+		IChartSettings chartSettings = chartControl.get().getChartSettings();
+		IPrimaryAxisSettings primaryAxisSettingsX = chartSettings.getPrimaryAxisSettingsX();
+		primaryAxisSettingsX.setTitle(ExtensionMessages.ion);
+
+		String positionNode = PreferenceSupplier.P_SCAN_CHART_POSITION_X_AXIS_IONS;
+		String gridLineStyleNode = PreferenceSupplier.P_SCAN_CHART_GRIDLINE_STYLE_X_AXIS_IONS;
+
+		ChartSupport.setAxisSettingsExtended(primaryAxisSettingsX, positionNode, "0", gridLineStyleNode);
+		ChartSupport.themeAxis(primaryAxisSettingsX, ExtendedScanChartUI.class.getName() + ".AxisIons");
+		primaryAxisSettingsX.setVisible(ChartSupport.getBoolean(PreferenceSupplier.P_SCAN_CHART_SHOW_X_AXIS_IONS));
+		primaryAxisSettingsX.setTitleVisible(ChartSupport.getBoolean(PreferenceSupplier.P_SCAN_CHART_SHOW_X_AXIS_TITLE_IONS));
 	}
 
 	private void adjustAxisIntensity() {
