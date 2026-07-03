@@ -300,6 +300,17 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final String P_SCAN_CHART_SHOW_Y_AXIS_TITLE_RELATIVE_INTENSITY = "scanChartShowYAxisTitleRelativeIntensity";
 	public static final boolean DEF_SCAN_CHART_SHOW_Y_AXIS_TITLE_RELATIVE_INTENSITY = true;
 
+	public static final String P_SCAN_CHART_FORMAT_Y_AXIS_INTENSITY = "scanChartFormatYAxisIntensity";
+	public static final String DEF_SCAN_CHART_FORMAT_Y_AXIS_INTENSITY = "0.0#E0";
+	public static final String P_SCAN_CHART_SHOW_Y_AXIS_INTENSITY = "scanChartShowYAxisIntensity";
+	public static final boolean DEF_SCAN_CHART_SHOW_Y_AXIS_INTENSITY = true;
+	public static final String P_SCAN_CHART_POSITION_Y_AXIS_INTENSITY = "scanChartPositionYAxisIntensity";
+	public static final String DEF_SCAN_CHART_POSITION_Y_AXIS_INTENSITY = Position.Primary.toString();
+	public static final String P_SCAN_CHART_GRIDLINE_STYLE_Y_AXIS_INTENSITY = "scanChartGridlineStyleYAxisIntensity";
+	public static final String DEF_SCAN_CHART_GRIDLINE_STYLE_Y_AXIS_INTENSITY = LineStyle.NONE.toString();
+	public static final String P_SCAN_CHART_SHOW_Y_AXIS_TITLE_INTENSITY = "scanChartShowYAxisTitleIntensity";
+	public static final boolean DEF_SCAN_CHART_SHOW_Y_AXIS_TITLE_INTENSITY = true;
+
 	public static final String P_TRACES_VIRTUAL_TABLE = "tracesVirtualTable";
 	public static final int DEF_TRACES_VIRTUAL_TABLE = 5000;
 	public static final String P_LIMIT_SIM_TRACES = "limitSimTraces";
@@ -942,6 +953,12 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		putDefault(P_SCAN_CHART_POSITION_Y_AXIS_RELATIVE_INTENSITY, DEF_SCAN_CHART_POSITION_Y_AXIS_RELATIVE_INTENSITY);
 		putDefault(P_SCAN_CHART_GRIDLINE_STYLE_Y_AXIS_RELATIVE_INTENSITY, DEF_SCAN_CHART_GRIDLINE_STYLE_Y_AXIS_RELATIVE_INTENSITY);
 		putDefault(P_SCAN_CHART_SHOW_Y_AXIS_TITLE_RELATIVE_INTENSITY, DEF_SCAN_CHART_SHOW_Y_AXIS_TITLE_RELATIVE_INTENSITY);
+
+		putDefault(P_SCAN_CHART_FORMAT_Y_AXIS_INTENSITY, DEF_SCAN_CHART_FORMAT_Y_AXIS_INTENSITY);
+		putDefault(P_SCAN_CHART_SHOW_Y_AXIS_INTENSITY, DEF_SCAN_CHART_SHOW_Y_AXIS_INTENSITY);
+		putDefault(P_SCAN_CHART_POSITION_Y_AXIS_INTENSITY, DEF_SCAN_CHART_POSITION_Y_AXIS_INTENSITY);
+		putDefault(P_SCAN_CHART_GRIDLINE_STYLE_Y_AXIS_INTENSITY, DEF_SCAN_CHART_GRIDLINE_STYLE_Y_AXIS_INTENSITY);
+		putDefault(P_SCAN_CHART_SHOW_Y_AXIS_TITLE_INTENSITY, DEF_SCAN_CHART_SHOW_Y_AXIS_TITLE_INTENSITY);
 
 		putDefault(P_TRACES_VIRTUAL_TABLE, DEF_TRACES_VIRTUAL_TABLE);
 		putDefault(P_LIMIT_SIM_TRACES, DEF_LIMIT_SIM_TRACES);

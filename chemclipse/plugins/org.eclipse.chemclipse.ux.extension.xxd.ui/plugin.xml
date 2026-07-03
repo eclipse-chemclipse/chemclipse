@@ -777,6 +777,33 @@
             The title font.
         </description>
     </fontDefinition>
+    <colorDefinition
+        categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.charts"
+        id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedScanChartUI.AxisIntensity.GridColor"
+        label="Chromatogram Chart Axis Intensity Grid Color"
+        value="192,192,192">
+        <description>
+            The color of the chart grid.
+        </description>
+    </colorDefinition>
+    <colorDefinition
+        categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.charts"
+        id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedScanChartUI.AxisIntensity.LineColor"
+        label="Scan Chart Axis Intensity Line Color"
+        value="0,0,0">
+        <description>
+            The color of the chart line.
+        </description>
+    </colorDefinition>
+    <fontDefinition
+        categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.charts"
+        id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedScanChartUI.AxisIntensity.Font"
+        label="Scan Chart Axis Intensity Font"
+        value="Verdana-bold-11">
+        <description>
+            The title font
+        </description>
+    </fontDefinition>
 </extension>
 <extension
          point="org.eclipse.ui.commands">
