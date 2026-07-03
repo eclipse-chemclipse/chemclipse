@@ -156,7 +156,7 @@ public class MassSpectrumPseudoGelUI extends Composite implements IExtendedPartU
 	private LightweightSystem createLightweightSystem(Canvas canvas) {
 
 		LightweightSystem lightweightSystem = new LightweightSystem(canvas);
-		lightweightSystem.getRootFigure().setBackgroundColor(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+		lightweightSystem.getRootFigure().setBackgroundColor(getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND));
 		return lightweightSystem;
 	}
 
