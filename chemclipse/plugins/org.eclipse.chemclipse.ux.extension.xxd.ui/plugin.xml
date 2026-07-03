@@ -534,7 +534,7 @@
         label="Peaks Chart X Axis Milliseconds Grid Color"
         value="192,192,192">
         <description>
-            The color of the chromatogram chart grid.
+            The color of the chart grid.
         </description>
     </colorDefinition>
     <colorDefinition
@@ -543,7 +543,7 @@
         label="Peaks Chart X Axis Milliseconds Line Color"
         value="0,0,0">
         <description>
-            The color of the chromatogram chart line.
+            The color of the chart line.
         </description>
     </colorDefinition>
     <fontDefinition
@@ -562,7 +562,7 @@
         label="Peaks Chart Y Axis Grid Color"
         value="192,192,192">
         <description>
-            The color of the chromatogram chart grid.
+            The color of the chart grid.
         </description>
     </colorDefinition>
     <colorDefinition
@@ -571,7 +571,7 @@
         label="Peaks Chart Y Axis Line Color"
         value="0,0,0">
         <description>
-            The color of the chromatogram chart line.
+            The color of the chart line.
         </description>
     </colorDefinition>
     <fontDefinition
@@ -590,7 +590,7 @@
         label="Peaks Chart X Axis Grid Color"
         value="192,192,192">
         <description>
-            The color of the chromatogram chart grid.
+            The color of the chart grid.
         </description>
     </colorDefinition>
     <colorDefinition
@@ -599,7 +599,7 @@
         label="Peaks Chart X Axis Line Color"
         value="0,0,0">
         <description>
-            The color of the chromatogram chart line.
+            The color of the chart line.
         </description>
     </colorDefinition>
     <fontDefinition
@@ -618,7 +618,7 @@
         label="Peaks Chart Y Axis Relative Response Grid Color"
         value="192,192,192">
         <description>
-            The color of the chromatogram chart grid.
+            The color of the chart grid.
         </description>
     </colorDefinition>
     <colorDefinition
@@ -627,7 +627,7 @@
         label="Peaks Chart Y Axis Relative Response Line Color"
         value="0,0,0">
         <description>
-            The color of the chromatogram chart line.
+            The color of the chart line.
         </description>
     </colorDefinition>
     <fontDefinition
