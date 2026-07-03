@@ -625,8 +625,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final String P_SHOW_X_AXIS_POSITION_MARKER_MINUTES = "showXAxisPositionMarkerMinutes";
 	public static final boolean DEF_SHOW_X_AXIS_POSITION_MARKER_MINUTES = true;
 
-	public static final String P_TITLE_X_AXIS_SCANS = "titleXAxisScans";
-	public static final String DEF_TITLE_X_AXIS_SCANS = "Scan";
 	public static final String P_FORMAT_X_AXIS_SCANS = "formatXAxisScans";
 	public static final String DEF_FORMAT_X_AXIS_SCANS = "0.###";
 	public static final String P_SHOW_X_AXIS_SCANS = "showXAxisScans";
@@ -1183,7 +1181,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		putDefault(P_SHOW_X_AXIS_LINE_MINUTES, DEF_SHOW_X_AXIS_LINE_MINUTES);
 		putDefault(P_SHOW_X_AXIS_POSITION_MARKER_MINUTES, DEF_SHOW_X_AXIS_POSITION_MARKER_MINUTES);
 
-		putDefault(P_TITLE_X_AXIS_SCANS, DEF_TITLE_X_AXIS_SCANS);
 		putDefault(P_FORMAT_X_AXIS_SCANS, DEF_FORMAT_X_AXIS_SCANS);
 		putDefault(P_SHOW_X_AXIS_SCANS, DEF_SHOW_X_AXIS_SCANS);
 		putDefault(P_POSITION_X_AXIS_SCANS, DEF_POSITION_X_AXIS_SCANS);

@@ -232,7 +232,6 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 	private static final String MAIN_MENU_SCAN = "org.eclipse.chemclipse.ux.extension.ui.menu.scan";
 	private static final String MENU_CONTRIBUTOR_URI = "org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI";
 
-	private String titleScans = Activator.getDefault().getPreferenceStore().getString(PreferenceSupplier.P_TITLE_X_AXIS_SCANS);
 	private ICommandService commandService = PlatformUI.getWorkbench().getService(ICommandService.class);
 
 	private AtomicReference<ProcessorToolbarUI> processorToolbarControl = new AtomicReference<>();
@@ -1698,15 +1697,14 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 			if(chromatogram != null) {
 				IChartSettings chartSettings = chromatogramChartControl.get().getChartSettings();
-				ISecondaryAxisSettings axisSettings = ChartSupport.getSecondaryAxisSettingsX(titleScans, chartSettings);
-				String title = preferenceStore.getString(PreferenceSupplier.P_TITLE_X_AXIS_SCANS);
+				ISecondaryAxisSettings axisSettings = ChartSupport.getSecondaryAxisSettingsX(ExtensionMessages.scan, chartSettings);
 
 				if(preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_X_AXIS_SCANS)) {
 					if(axisSettings == null) {
 						try {
 							int scanDelay = chromatogram.getScanDelay();
 							int scanInterval = chromatogram.getScanInterval();
-							ISecondaryAxisSettings secondaryAxisSettingsX = new SecondaryAxisSettings(title, new MillisecondsToScanNumberConverter(scanDelay, scanInterval));
+							ISecondaryAxisSettings secondaryAxisSettingsX = new SecondaryAxisSettings(ExtensionMessages.scan, new MillisecondsToScanNumberConverter(scanDelay, scanInterval));
 							secondaryAxisSettingsX.setTitleVisible(preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_X_AXIS_TITLE_SCANS));
 							setScanAxisSettings(secondaryAxisSettingsX);
 							chartSettings.getSecondaryAxisSettingsListX().add(secondaryAxisSettingsX);
@@ -1714,18 +1712,17 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 							logger.warn(e);
 						}
 					} else {
-						axisSettings.setTitle(title);
+						axisSettings.setTitle(ExtensionMessages.scan);
 						setScanAxisSettings(axisSettings);
 					}
 				} else /*
 						 * Remove
 						 */
 				if(axisSettings != null) {
-					axisSettings.setTitle(title);
+					axisSettings.setTitle(ExtensionMessages.scan);
 					chartSettings.getSecondaryAxisSettingsListX().remove(axisSettings);
 				}
 				chromatogramChartControl.get().applySettings(chartSettings);
-				titleScans = title;
 			}
 		}
 	}
