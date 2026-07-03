@@ -12,9 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.preferences;
 
-import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.DoubleFieldEditor;
 import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.ExtendedIntegerFieldEditor;
-import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.LabelFieldEditor;
 import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.SpacerFieldEditor;
 import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.SpinnerFieldEditor;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
@@ -39,7 +37,6 @@ public class PreferencePageScans extends FieldEditorPreferencePage implements IW
 	@Override
 	public void createFieldEditors() {
 
-		addField(new SpacerFieldEditor(getFieldEditorParent()));
 		addField(new SpinnerFieldEditor(PreferenceSupplier.P_SCAN_LABEL_HIGHEST_INTENSITIES, "Label Intensities:", PreferenceSupplier.MIN_SCAN_LABEL_HIGHEST_INTENSITIES, PreferenceSupplier.MAX_SCAN_LABEL_HIGHEST_INTENSITIES, getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_SCAN_LABEL_MODULO_INTENSITIES, "Add additional intensity labels", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_AUTOFOCUS_SUBTRACT_SCAN_PART, "Autofocus subtract scan part", getFieldEditorParent()));
@@ -53,15 +50,6 @@ public class PreferencePageScans extends FieldEditorPreferencePage implements IW
 		addField(new SpinnerFieldEditor(PreferenceSupplier.P_MAX_COPY_SCAN_TRACES, "Copy Traces", PreferenceSupplier.MIN_TRACES, PreferenceSupplier.MAX_TRACES, getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_SORT_COPY_TRACES, "Sort Traces", getFieldEditorParent()));
 		addField(new ComboFieldEditor(PreferenceSupplier.P_TRACES_EXPORT_OPTION, "Traces Export Option", TracesExportOption.getOptions(), getFieldEditorParent()));
-
-		addField(new SpacerFieldEditor(getFieldEditorParent()));
-		addField(new LabelFieldEditor("The primary X|Y axis scale is used to set the values.", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_SCAN_CHART_ENABLE_FIXED_RANGE_X, "Fixed range X", getFieldEditorParent()));
-		addField(new DoubleFieldEditor(PreferenceSupplier.P_SCAN_CHART_FIXED_RANGE_START_X, "Start X", PreferenceSupplier.MIN_RANGE, PreferenceSupplier.MAX_RANGE, getFieldEditorParent()));
-		addField(new DoubleFieldEditor(PreferenceSupplier.P_SCAN_CHART_FIXED_RANGE_STOP_X, "Stop X", PreferenceSupplier.MIN_RANGE, PreferenceSupplier.MAX_RANGE, getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_SCAN_CHART_ENABLE_FIXED_RANGE_Y, "Fixed range Y", getFieldEditorParent()));
-		addField(new DoubleFieldEditor(PreferenceSupplier.P_SCAN_CHART_FIXED_RANGE_START_Y, "Start Y", PreferenceSupplier.MIN_RANGE, PreferenceSupplier.MAX_RANGE, getFieldEditorParent()));
-		addField(new DoubleFieldEditor(PreferenceSupplier.P_SCAN_CHART_FIXED_RANGE_STOP_Y, "Stop Y", PreferenceSupplier.MIN_RANGE, PreferenceSupplier.MAX_RANGE, getFieldEditorParent()));
 
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
 		addField(new ExtendedIntegerFieldEditor(PreferenceSupplier.P_TRACES_VIRTUAL_TABLE, "Traces Virtual Table", PreferenceSupplier.MIN_TRACES_VIRTUAL_TABLE, PreferenceSupplier.MAX_TRACES_VIRTUAL_TABLE, getFieldEditorParent()));
