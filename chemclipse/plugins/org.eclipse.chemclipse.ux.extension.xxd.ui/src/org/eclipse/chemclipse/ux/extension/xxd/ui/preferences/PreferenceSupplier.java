@@ -272,7 +272,9 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final String P_SCAN_IDENTIFER = "scanIdentifier";
 	public static final String DEF_SCAN_IDENTIFER = "";
 	public static final String P_RESOLVE_DATABASE_UUID = "resolveDatabaseUUID";
-
+	/*
+	 * Scan Chart
+	 */
 	public static final boolean DEF_RESOLVE_DATABASE_UUID = false;
 	public static final String P_SCAN_CHART_ENABLE_FIXED_RANGE_X = "scanChartEnableFixedRangeX";
 	public static final boolean DEF_SCAN_CHART_ENABLE_FIXED_RANGE_X = false;
@@ -286,6 +288,17 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final double DEF_SCAN_CHART_FIXED_RANGE_START_Y = 0.0d;
 	public static final String P_SCAN_CHART_FIXED_RANGE_STOP_Y = "scanChartFixedRangeStopY";
 	public static final double DEF_SCAN_CHART_FIXED_RANGE_STOP_Y = 0.0d;
+
+	public static final String P_SCAN_CHART_FORMAT_Y_AXIS_RELATIVE_INTENSITY = "scanChartFormatYAxisRelativeIntensity";
+	public static final String DEF_SCAN_CHART_FORMAT_Y_AXIS_RELATIVE_INTENSITY = "0.###";
+	public static final String P_SCAN_CHART_SHOW_Y_AXIS_RELATIVE_INTENSITY = "scanChartShowYAxisRelativeIntensity";
+	public static final boolean DEF_SCAN_CHART_SHOW_Y_AXIS_RELATIVE_INTENSITY = true;
+	public static final String P_SCAN_CHART_POSITION_Y_AXIS_RELATIVE_INTENSITY = "scanChartPositionYAxisRelativeIntensity";
+	public static final String DEF_SCAN_CHART_POSITION_Y_AXIS_RELATIVE_INTENSITY = Position.Secondary.toString();
+	public static final String P_SCAN_CHART_GRIDLINE_STYLE_Y_AXIS_RELATIVE_INTENSITY = "scanChartGridlineStyleYAxisRelativeIntensity";
+	public static final String DEF_SCAN_CHART_GRIDLINE_STYLE_Y_AXIS_RELATIVE_INTENSITY = LineStyle.DOT.toString();
+	public static final String P_SCAN_CHART_SHOW_Y_AXIS_TITLE_RELATIVE_INTENSITY = "scanChartShowYAxisTitleRelativeIntensity";
+	public static final boolean DEF_SCAN_CHART_SHOW_Y_AXIS_TITLE_RELATIVE_INTENSITY = true;
 
 	public static final String P_TRACES_VIRTUAL_TABLE = "tracesVirtualTable";
 	public static final int DEF_TRACES_VIRTUAL_TABLE = 5000;
@@ -923,6 +936,12 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		putDefault(P_SCAN_CHART_ENABLE_FIXED_RANGE_Y, DEF_SCAN_CHART_ENABLE_FIXED_RANGE_Y);
 		putDefault(P_SCAN_CHART_FIXED_RANGE_START_Y, DEF_SCAN_CHART_FIXED_RANGE_START_Y);
 		putDefault(P_SCAN_CHART_FIXED_RANGE_STOP_Y, DEF_SCAN_CHART_FIXED_RANGE_STOP_Y);
+
+		putDefault(P_SCAN_CHART_FORMAT_Y_AXIS_RELATIVE_INTENSITY, DEF_SCAN_CHART_FORMAT_Y_AXIS_RELATIVE_INTENSITY);
+		putDefault(P_SCAN_CHART_SHOW_Y_AXIS_RELATIVE_INTENSITY, DEF_SCAN_CHART_SHOW_Y_AXIS_RELATIVE_INTENSITY);
+		putDefault(P_SCAN_CHART_POSITION_Y_AXIS_RELATIVE_INTENSITY, DEF_SCAN_CHART_POSITION_Y_AXIS_RELATIVE_INTENSITY);
+		putDefault(P_SCAN_CHART_GRIDLINE_STYLE_Y_AXIS_RELATIVE_INTENSITY, DEF_SCAN_CHART_GRIDLINE_STYLE_Y_AXIS_RELATIVE_INTENSITY);
+		putDefault(P_SCAN_CHART_SHOW_Y_AXIS_TITLE_RELATIVE_INTENSITY, DEF_SCAN_CHART_SHOW_Y_AXIS_TITLE_RELATIVE_INTENSITY);
 
 		putDefault(P_TRACES_VIRTUAL_TABLE, DEF_TRACES_VIRTUAL_TABLE);
 		putDefault(P_LIMIT_SIM_TRACES, DEF_LIMIT_SIM_TRACES);
