@@ -389,8 +389,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final String DEF_COLOR_X_AXIS_MILLISECONDS_PEAKS = "0,0,0";
 	public static final String P_GRIDLINE_STYLE_X_AXIS_MILLISECONDS_PEAKS = "gridlineStyleXAxisMillisecondsPeaks";
 	public static final String DEF_GRIDLINE_STYLE_X_AXIS_MILLISECONDS_PEAKS = LineStyle.DOT.toString();
-	public static final String P_GRIDLINE_COLOR_X_AXIS_MILLISECONDS_PEAKS = "gridlineColorXAxisMillisecondsPeaks";
-	public static final String DEF_GRIDLINE_COLOR_X_AXIS_MILLISECONDS_PEAKS = "192,192,192";
 
 	public static final String P_SHOW_X_AXIS_MINUTES_PEAKS = "showXAxisMinutesPeaks";
 	public static final boolean DEF_SHOW_X_AXIS_MINUTES_PEAKS = true;
@@ -400,8 +398,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final String DEF_COLOR_X_AXIS_MINUTES_PEAKS = "0,0,0";
 	public static final String P_GRIDLINE_STYLE_X_AXIS_MINUTES_PEAKS = "gridlineStyleXAxisMinutesPeaks";
 	public static final String DEF_GRIDLINE_STYLE_X_AXIS_MINUTES_PEAKS = LineStyle.DOT.toString();
-	public static final String P_GRIDLINE_COLOR_X_AXIS_MINUTES_PEAKS = "gridlineColorXAxisMinutesPeaks";
-	public static final String DEF_GRIDLINE_COLOR_X_AXIS_MINUTES_PEAKS = "192,192,192";
 
 	public static final String P_SHOW_Y_AXIS_INTENSITY_PEAKS = "showYAxisIntensityPeaks";
 	public static final boolean DEF_SHOW_Y_AXIS_INTENSITY_PEAKS = true;
@@ -1003,13 +999,11 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		putDefault(P_POSITION_X_AXIS_MILLISECONDS_PEAKS, DEF_POSITION_X_AXIS_MILLISECONDS_PEAKS);
 		putDefault(P_COLOR_X_AXIS_MILLISECONDS_PEAKS, DEF_COLOR_X_AXIS_MILLISECONDS_PEAKS);
 		putDefault(P_GRIDLINE_STYLE_X_AXIS_MILLISECONDS_PEAKS, DEF_GRIDLINE_STYLE_X_AXIS_MILLISECONDS_PEAKS);
-		putDefault(P_GRIDLINE_COLOR_X_AXIS_MILLISECONDS_PEAKS, DEF_GRIDLINE_COLOR_X_AXIS_MILLISECONDS_PEAKS);
 
 		putDefault(P_SHOW_X_AXIS_MINUTES_PEAKS, DEF_SHOW_X_AXIS_MINUTES_PEAKS);
 		putDefault(P_POSITION_X_AXIS_MINUTES_PEAKS, DEF_POSITION_X_AXIS_MINUTES_PEAKS);
 		putDefault(P_COLOR_X_AXIS_MINUTES_PEAKS, DEF_COLOR_X_AXIS_MINUTES_PEAKS);
 		putDefault(P_GRIDLINE_STYLE_X_AXIS_MINUTES_PEAKS, DEF_GRIDLINE_STYLE_X_AXIS_MINUTES_PEAKS);
-		putDefault(P_GRIDLINE_COLOR_X_AXIS_MINUTES_PEAKS, DEF_GRIDLINE_COLOR_X_AXIS_MINUTES_PEAKS);
 
 		putDefault(P_SHOW_Y_AXIS_INTENSITY_PEAKS, DEF_SHOW_Y_AXIS_INTENSITY_PEAKS);
 		putDefault(P_POSITION_Y_AXIS_INTENSITY_PEAKS, DEF_POSITION_Y_AXIS_INTENSITY_PEAKS);

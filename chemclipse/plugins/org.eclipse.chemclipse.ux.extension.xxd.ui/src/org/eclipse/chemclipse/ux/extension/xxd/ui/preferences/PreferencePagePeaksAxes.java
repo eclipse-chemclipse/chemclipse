@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -46,7 +46,6 @@ public class PreferencePagePeaksAxes extends FieldEditorPreferencePage implement
 		addField(new ComboFieldEditor(PreferenceSupplier.P_POSITION_X_AXIS_MILLISECONDS_PEAKS, "Position X Axis (Milliseconds):", ChartOptions.POSITIONS, getFieldEditorParent()));
 		addField(new ColorFieldEditor(PreferenceSupplier.P_COLOR_X_AXIS_MILLISECONDS_PEAKS, "Color X Axis (Milliseconds):", getFieldEditorParent()));
 		addField(new ComboFieldEditor(PreferenceSupplier.P_GRIDLINE_STYLE_X_AXIS_MILLISECONDS_PEAKS, "GridLine Style X Axis (Milliseconds):", ChartOptions.LINE_STYLES, getFieldEditorParent()));
-		addField(new ColorFieldEditor(PreferenceSupplier.P_GRIDLINE_COLOR_X_AXIS_MILLISECONDS_PEAKS, "GridLine Color X Axis (Milliseconds):", getFieldEditorParent()));
 
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
 		addField(new LabelFieldEditor("Minutes", getFieldEditorParent()));
@@ -54,7 +53,6 @@ public class PreferencePagePeaksAxes extends FieldEditorPreferencePage implement
 		addField(new ComboFieldEditor(PreferenceSupplier.P_POSITION_X_AXIS_MINUTES_PEAKS, "Position X Axis (Minutes):", ChartOptions.POSITIONS, getFieldEditorParent()));
 		addField(new ColorFieldEditor(PreferenceSupplier.P_COLOR_X_AXIS_MINUTES_PEAKS, "Color X Axis (Minutes):", getFieldEditorParent()));
 		addField(new ComboFieldEditor(PreferenceSupplier.P_GRIDLINE_STYLE_X_AXIS_MINUTES_PEAKS, "GridLine Style X Axis (Minutes):", ChartOptions.LINE_STYLES, getFieldEditorParent()));
-		addField(new ColorFieldEditor(PreferenceSupplier.P_GRIDLINE_COLOR_X_AXIS_MINUTES_PEAKS, "GridLine Color X Axis (Minutes):", getFieldEditorParent()));
 
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
 		addField(new LabelFieldEditor("Intensity", getFieldEditorParent()));
