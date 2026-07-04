@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.rcp.app.ui.dialogs;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.chemclipse.rcp.app.ui.provider.SelectViewContentProvider;
@@ -28,6 +29,7 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
@@ -41,8 +43,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
 import jakarta.inject.Inject;
@@ -73,7 +73,7 @@ public class SelectViewDialog extends Dialog implements ISelectionChangedListene
 	@Inject
 	private EPartService partService;
 	private List<MPart> parts;
-	private MPart selectedPart;
+	private List<MPart> selectedParts = new ArrayList<>();
 
 	@Inject
 	public SelectViewDialog(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell) {
@@ -93,15 +93,12 @@ public class SelectViewDialog extends Dialog implements ISelectionChangedListene
 	@Override
 	public void selectionChanged(SelectionChangedEvent event) {
 
-		/*
-		 * Set the selected perspective.
-		 */
-		Table table = tableViewer.getTable();
-		int index = table.getSelectionIndex();
-		if(index >= 0) {
-			TableItem item = table.getItem(index);
-			if(item.getData() instanceof MPart part) {
-				selectedPart = part;
+		selectedParts.clear();
+		if(event.getSelection() instanceof IStructuredSelection selection) {
+			for(Object element : selection.toList()) {
+				if(element instanceof MPart part) {
+					selectedParts.add(part);
+				}
 			}
 		}
 		validateSelection();
@@ -143,14 +140,16 @@ public class SelectViewDialog extends Dialog implements ISelectionChangedListene
 
 	private void selectAndActivatePart() {
 
-		if(selectedPart != null) {
-			/*
-			 * If the selected part is not in the list, create it.
-			 */
-			if(!partService.getParts().contains(selectedPart)) {
-				partService.createPart(selectedPart.getElementId());
+		MPart lastPart = null;
+		for(MPart part : selectedParts) {
+			if(!partService.getParts().contains(part)) {
+				partService.createPart(part.getElementId());
 			}
-			partService.showPart(selectedPart, PartState.ACTIVATE);
+			partService.showPart(part, PartState.VISIBLE);
+			lastPart = part;
+		}
+		if(lastPart != null) {
+			partService.showPart(lastPart, PartState.ACTIVATE);
 		}
 	}
 
@@ -192,7 +191,7 @@ public class SelectViewDialog extends Dialog implements ISelectionChangedListene
 	 */
 	private void createViewList(Composite parent) {
 
-		tableViewer = new TableViewer(parent, SWT.SINGLE | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER | SWT.FULL_SELECTION);
+		tableViewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER | SWT.FULL_SELECTION);
 		GridData gridData = new GridData(GridData.FILL_BOTH);
 		gridData.widthHint = LIST_WIDTH;
 		gridData.heightHint = LIST_HEIGHT;
@@ -223,21 +222,6 @@ public class SelectViewDialog extends Dialog implements ISelectionChangedListene
 		if(buttonOK == null) {
 			return;
 		}
-		/*
-		 * Check if an item has been selected and if it
-		 * is an instance of MPerspective.
-		 */
-		Table table = tableViewer.getTable();
-		int index = table.getSelectionIndex();
-		if(index >= 0) {
-			TableItem item = table.getItem(index);
-			if(item.getData() instanceof MPart) {
-				buttonOK.setEnabled(true);
-			} else {
-				buttonOK.setEnabled(false);
-			}
-		} else {
-			buttonOK.setEnabled(false);
-		}
+		buttonOK.setEnabled(!selectedParts.isEmpty());
 	}
 }
