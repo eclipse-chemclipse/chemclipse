@@ -32,7 +32,6 @@ import org.eclipse.swtchart.extensions.model.ICustomSeries;
 import org.eclipse.swtchart.extensions.model.IElement;
 import org.eclipse.swtchart.extensions.model.TextElement;
 import org.eclipse.swtchart.extensions.support.ElementSupport;
-import org.eclipse.swtchart.extensions.support.PointPrimary;
 import org.eclipse.swtchart.extensions.support.RectanglePrimary;
 
 public class RetentionIndexMarker extends AbstractBaseChartPaintListener {
@@ -171,7 +170,7 @@ public class RetentionIndexMarker extends AbstractBaseChartPaintListener {
 					elementRectangle.setX(rectanglePrimary.getX());
 					elementRectangle.setY(rectanglePrimary.getY());
 					elementRectangle.setWidth(rectanglePrimary.getWidth());
-					elementRectangle.setHeight(rectanglePrimary.getHeight() / 4); // TODO - fine tune scaling
+					elementRectangle.setHeight(rectanglePrimary.getHeight() / 4);
 					elementRectangle.setColor(Colors.DARK_GRAY);
 					elementRectangle.setAlpha(255);
 					customSeries.getGraphicElements().add(elementRectangle);
@@ -190,9 +189,8 @@ public class RetentionIndexMarker extends AbstractBaseChartPaintListener {
 					TextElement textElement = new TextElement();
 					textElement.setLabel(label);
 					textElement.setColor(Colors.WHITE);
-					PointPrimary pointLabel = elementSupport.convertPoint(labelX, labelY);
-					textElement.setX(pointLabel.getX());
-					textElement.setY(pointLabel.getY() - rectanglePrimary.getHeight() / 16); // TODO - fine tune scaling
+					textElement.setX(retentionTime);
+					textElement.setY(rectanglePrimary.getY() - rectanglePrimary.getHeight() / 8);
 					textElement.setRotation(0);
 					customSeries.getTextElements().add(textElement);
 				}
