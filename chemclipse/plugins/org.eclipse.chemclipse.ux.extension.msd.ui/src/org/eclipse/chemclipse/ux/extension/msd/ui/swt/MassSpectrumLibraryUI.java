@@ -83,6 +83,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 	private AtomicReference<MassSpectrumListUI> massSpectrumListControl = new AtomicReference<>();
 
 	private IMassSpectra massSpectra;
+	private Runnable dirtyListener = null;
 
 	public MassSpectrumLibraryUI(Composite parent, int style) {
 
@@ -95,6 +96,11 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 		this.massSpectra = massSpectra;
 		setInput();
 		updateLabel();
+	}
+
+	public void setDirtyListener(Runnable listener) {
+
+		this.dirtyListener = listener;
 	}
 
 	public MassSpectrumListUI getMassSpectrumListUI() {
@@ -225,7 +231,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 					IMassSpectra massSpectraImport = runnable.getMassSpectra();
 					if(massSpectraImport != null) {
 						massSpectra.addMassSpectra(massSpectraImport.getList());
-						massSpectra.setDirty(true);
+						setMassSpectraDirty();
 						setInput();
 						resetSearch();
 					}
@@ -250,7 +256,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 					if(dialog.open() == Window.OK) {
 						if(!libraryMassSpectrum.getLibraryInformation().getName().isBlank()) {
 							massSpectra.addMassSpectrum(libraryMassSpectrum);
-							massSpectra.setDirty(true);
+							setMassSpectraDirty();
 							setInput();
 							resetSearch();
 							massSpectrumListControl.get().setSelection(new StructuredSelection(libraryMassSpectrum), true);
@@ -294,7 +300,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 										massSpectra.removeMassSpectrum(scan);
 									}
 									massSpectra.addMassSpectrum(merged);
-									massSpectra.setDirty(true);
+									setMassSpectraDirty();
 									setInput();
 									resetSearch();
 									massSpectrumListControl.get().setSelection(new StructuredSelection(merged), true);
@@ -446,7 +452,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 								Object object = tableItem.getData();
 								if(object instanceof IScanMSD massSpectrum) {
 									massSpectra.removeMassSpectrum(massSpectrum);
-									massSpectra.setDirty(true);
+									setMassSpectraDirty();
 								}
 							}
 							setInput();
@@ -497,7 +503,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 						LibraryEntryEditDialog dialog = new LibraryEntryEditDialog(getShell(), libraryMassSpectrum);
 						if(dialog.open() == Window.OK) {
 							if(massSpectra != null) {
-								massSpectra.setDirty(true);
+								setMassSpectraDirty();
 							}
 							massSpectrumListUI.updateDuplicates();
 						}
@@ -526,6 +532,14 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 		}
 
 		return identificationTarget;
+	}
+
+	private void setMassSpectraDirty() {
+
+		massSpectra.setDirty(true);
+		if(dirtyListener != null) {
+			dirtyListener.run();
+		}
 	}
 
 	private void setInput() {

@@ -253,7 +253,14 @@ public class DatabaseEditor extends EditorPart implements IChemClipseEditor {
 
 	private void initializeEditor(Composite parent) {
 
-		massSpectrumLibraryControl.set(new MassSpectrumLibraryUI(parent, SWT.NONE));
+		MassSpectrumLibraryUI massSpectrumLibraryUI = new MassSpectrumLibraryUI(parent, SWT.NONE);
+		massSpectrumLibraryUI.setDirtyListener(() -> {
+			isDirty = true;
+			if(dirtyable != null) {
+				dirtyable.setDirty(true);
+			}
+		});
+		massSpectrumLibraryControl.set(massSpectrumLibraryUI);
 	}
 
 	@PostConstruct
