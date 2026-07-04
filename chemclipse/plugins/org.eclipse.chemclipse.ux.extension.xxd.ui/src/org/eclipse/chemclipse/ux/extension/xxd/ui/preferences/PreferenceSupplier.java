@@ -316,7 +316,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final String P_SCAN_CHART_POSITION_X_AXIS_IONS = "scanChartPositionXAxisIons";
 	public static final String DEF_SCAN_CHART_POSITION_X_AXIS_IONS = Position.Primary.toString();
 	public static final String P_SCAN_CHART_GRIDLINE_STYLE_X_AXIS_IONS = "scanChartGridlineStyleXAxisIons";
-	public static final String DEF_SCAN_CHART_GRIDLINE_STYLE_X_AXIS_IONS = LineStyle.NONE.toString();
+	public static final String DEF_SCAN_CHART_GRIDLINE_STYLE_X_AXIS_IONS = LineStyle.DOT.toString();
 	public static final String P_SCAN_CHART_SHOW_X_AXIS_TITLE_IONS = "scanChartShowXAxisTitleIons";
 	public static final boolean DEF_SCAN_CHART_SHOW_X_AXIS_TITLE_IONS = true;
 
