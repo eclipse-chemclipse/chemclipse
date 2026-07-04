@@ -272,7 +272,9 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final String P_SCAN_IDENTIFER = "scanIdentifier";
 	public static final String DEF_SCAN_IDENTIFER = "";
 	public static final String P_RESOLVE_DATABASE_UUID = "resolveDatabaseUUID";
-
+	/*
+	 * Scan Chart
+	 */
 	public static final boolean DEF_RESOLVE_DATABASE_UUID = false;
 	public static final String P_SCAN_CHART_ENABLE_FIXED_RANGE_X = "scanChartEnableFixedRangeX";
 	public static final boolean DEF_SCAN_CHART_ENABLE_FIXED_RANGE_X = false;
@@ -286,6 +288,37 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final double DEF_SCAN_CHART_FIXED_RANGE_START_Y = 0.0d;
 	public static final String P_SCAN_CHART_FIXED_RANGE_STOP_Y = "scanChartFixedRangeStopY";
 	public static final double DEF_SCAN_CHART_FIXED_RANGE_STOP_Y = 0.0d;
+
+	public static final String P_SCAN_CHART_FORMAT_Y_AXIS_RELATIVE_INTENSITY = "scanChartFormatYAxisRelativeIntensity";
+	public static final String DEF_SCAN_CHART_FORMAT_Y_AXIS_RELATIVE_INTENSITY = "0.###";
+	public static final String P_SCAN_CHART_SHOW_Y_AXIS_RELATIVE_INTENSITY = "scanChartShowYAxisRelativeIntensity";
+	public static final boolean DEF_SCAN_CHART_SHOW_Y_AXIS_RELATIVE_INTENSITY = true;
+	public static final String P_SCAN_CHART_POSITION_Y_AXIS_RELATIVE_INTENSITY = "scanChartPositionYAxisRelativeIntensity";
+	public static final String DEF_SCAN_CHART_POSITION_Y_AXIS_RELATIVE_INTENSITY = Position.Secondary.toString();
+	public static final String P_SCAN_CHART_GRIDLINE_STYLE_Y_AXIS_RELATIVE_INTENSITY = "scanChartGridlineStyleYAxisRelativeIntensity";
+	public static final String DEF_SCAN_CHART_GRIDLINE_STYLE_Y_AXIS_RELATIVE_INTENSITY = LineStyle.DOT.toString();
+	public static final String P_SCAN_CHART_SHOW_Y_AXIS_TITLE_RELATIVE_INTENSITY = "scanChartShowYAxisTitleRelativeIntensity";
+	public static final boolean DEF_SCAN_CHART_SHOW_Y_AXIS_TITLE_RELATIVE_INTENSITY = true;
+
+	public static final String P_SCAN_CHART_FORMAT_Y_AXIS_INTENSITY = "scanChartFormatYAxisIntensity";
+	public static final String DEF_SCAN_CHART_FORMAT_Y_AXIS_INTENSITY = "0.0#E0";
+	public static final String P_SCAN_CHART_SHOW_Y_AXIS_INTENSITY = "scanChartShowYAxisIntensity";
+	public static final boolean DEF_SCAN_CHART_SHOW_Y_AXIS_INTENSITY = true;
+	public static final String P_SCAN_CHART_POSITION_Y_AXIS_INTENSITY = "scanChartPositionYAxisIntensity";
+	public static final String DEF_SCAN_CHART_POSITION_Y_AXIS_INTENSITY = Position.Primary.toString();
+	public static final String P_SCAN_CHART_GRIDLINE_STYLE_Y_AXIS_INTENSITY = "scanChartGridlineStyleYAxisIntensity";
+	public static final String DEF_SCAN_CHART_GRIDLINE_STYLE_Y_AXIS_INTENSITY = LineStyle.NONE.toString();
+	public static final String P_SCAN_CHART_SHOW_Y_AXIS_TITLE_INTENSITY = "scanChartShowYAxisTitleIntensity";
+	public static final boolean DEF_SCAN_CHART_SHOW_Y_AXIS_TITLE_INTENSITY = true;
+
+	public static final String P_SCAN_CHART_SHOW_X_AXIS_IONS = "scanChartShowXAxisIons";
+	public static final boolean DEF_SCAN_CHART_SHOW_X_AXIS_IONS = true;
+	public static final String P_SCAN_CHART_POSITION_X_AXIS_IONS = "scanChartPositionXAxisIons";
+	public static final String DEF_SCAN_CHART_POSITION_X_AXIS_IONS = Position.Primary.toString();
+	public static final String P_SCAN_CHART_GRIDLINE_STYLE_X_AXIS_IONS = "scanChartGridlineStyleXAxisIons";
+	public static final String DEF_SCAN_CHART_GRIDLINE_STYLE_X_AXIS_IONS = LineStyle.NONE.toString();
+	public static final String P_SCAN_CHART_SHOW_X_AXIS_TITLE_IONS = "scanChartShowXAxisTitleIons";
+	public static final boolean DEF_SCAN_CHART_SHOW_X_AXIS_TITLE_IONS = true;
 
 	public static final String P_TRACES_VIRTUAL_TABLE = "tracesVirtualTable";
 	public static final int DEF_TRACES_VIRTUAL_TABLE = 5000;
@@ -365,8 +398,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final String DEF_COLOR_X_AXIS_MILLISECONDS_PEAKS = "0,0,0";
 	public static final String P_GRIDLINE_STYLE_X_AXIS_MILLISECONDS_PEAKS = "gridlineStyleXAxisMillisecondsPeaks";
 	public static final String DEF_GRIDLINE_STYLE_X_AXIS_MILLISECONDS_PEAKS = LineStyle.DOT.toString();
-	public static final String P_GRIDLINE_COLOR_X_AXIS_MILLISECONDS_PEAKS = "gridlineColorXAxisMillisecondsPeaks";
-	public static final String DEF_GRIDLINE_COLOR_X_AXIS_MILLISECONDS_PEAKS = "192,192,192";
 
 	public static final String P_SHOW_X_AXIS_MINUTES_PEAKS = "showXAxisMinutesPeaks";
 	public static final boolean DEF_SHOW_X_AXIS_MINUTES_PEAKS = true;
@@ -376,8 +407,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final String DEF_COLOR_X_AXIS_MINUTES_PEAKS = "0,0,0";
 	public static final String P_GRIDLINE_STYLE_X_AXIS_MINUTES_PEAKS = "gridlineStyleXAxisMinutesPeaks";
 	public static final String DEF_GRIDLINE_STYLE_X_AXIS_MINUTES_PEAKS = LineStyle.DOT.toString();
-	public static final String P_GRIDLINE_COLOR_X_AXIS_MINUTES_PEAKS = "gridlineColorXAxisMinutesPeaks";
-	public static final String DEF_GRIDLINE_COLOR_X_AXIS_MINUTES_PEAKS = "192,192,192";
 
 	public static final String P_SHOW_Y_AXIS_INTENSITY_PEAKS = "showYAxisIntensityPeaks";
 	public static final boolean DEF_SHOW_Y_AXIS_INTENSITY_PEAKS = true;
@@ -625,8 +654,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final String P_SHOW_X_AXIS_POSITION_MARKER_MINUTES = "showXAxisPositionMarkerMinutes";
 	public static final boolean DEF_SHOW_X_AXIS_POSITION_MARKER_MINUTES = true;
 
-	public static final String P_TITLE_X_AXIS_SCANS = "titleXAxisScans";
-	public static final String DEF_TITLE_X_AXIS_SCANS = "Scan";
 	public static final String P_FORMAT_X_AXIS_SCANS = "formatXAxisScans";
 	public static final String DEF_FORMAT_X_AXIS_SCANS = "0.###";
 	public static final String P_SHOW_X_AXIS_SCANS = "showXAxisScans";
@@ -926,6 +953,23 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		putDefault(P_SCAN_CHART_FIXED_RANGE_START_Y, DEF_SCAN_CHART_FIXED_RANGE_START_Y);
 		putDefault(P_SCAN_CHART_FIXED_RANGE_STOP_Y, DEF_SCAN_CHART_FIXED_RANGE_STOP_Y);
 
+		putDefault(P_SCAN_CHART_FORMAT_Y_AXIS_RELATIVE_INTENSITY, DEF_SCAN_CHART_FORMAT_Y_AXIS_RELATIVE_INTENSITY);
+		putDefault(P_SCAN_CHART_SHOW_Y_AXIS_RELATIVE_INTENSITY, DEF_SCAN_CHART_SHOW_Y_AXIS_RELATIVE_INTENSITY);
+		putDefault(P_SCAN_CHART_POSITION_Y_AXIS_RELATIVE_INTENSITY, DEF_SCAN_CHART_POSITION_Y_AXIS_RELATIVE_INTENSITY);
+		putDefault(P_SCAN_CHART_GRIDLINE_STYLE_Y_AXIS_RELATIVE_INTENSITY, DEF_SCAN_CHART_GRIDLINE_STYLE_Y_AXIS_RELATIVE_INTENSITY);
+		putDefault(P_SCAN_CHART_SHOW_Y_AXIS_TITLE_RELATIVE_INTENSITY, DEF_SCAN_CHART_SHOW_Y_AXIS_TITLE_RELATIVE_INTENSITY);
+
+		putDefault(P_SCAN_CHART_FORMAT_Y_AXIS_INTENSITY, DEF_SCAN_CHART_FORMAT_Y_AXIS_INTENSITY);
+		putDefault(P_SCAN_CHART_SHOW_Y_AXIS_INTENSITY, DEF_SCAN_CHART_SHOW_Y_AXIS_INTENSITY);
+		putDefault(P_SCAN_CHART_POSITION_Y_AXIS_INTENSITY, DEF_SCAN_CHART_POSITION_Y_AXIS_INTENSITY);
+		putDefault(P_SCAN_CHART_GRIDLINE_STYLE_Y_AXIS_INTENSITY, DEF_SCAN_CHART_GRIDLINE_STYLE_Y_AXIS_INTENSITY);
+		putDefault(P_SCAN_CHART_SHOW_Y_AXIS_TITLE_INTENSITY, DEF_SCAN_CHART_SHOW_Y_AXIS_TITLE_INTENSITY);
+
+		putDefault(P_SCAN_CHART_SHOW_X_AXIS_IONS, DEF_SCAN_CHART_SHOW_X_AXIS_IONS);
+		putDefault(P_SCAN_CHART_POSITION_X_AXIS_IONS, DEF_SCAN_CHART_POSITION_X_AXIS_IONS);
+		putDefault(P_SCAN_CHART_GRIDLINE_STYLE_X_AXIS_IONS, DEF_SCAN_CHART_GRIDLINE_STYLE_X_AXIS_IONS);
+		putDefault(P_SCAN_CHART_SHOW_X_AXIS_TITLE_IONS, DEF_SCAN_CHART_SHOW_X_AXIS_TITLE_IONS);
+
 		putDefault(P_TRACES_VIRTUAL_TABLE, DEF_TRACES_VIRTUAL_TABLE);
 		putDefault(P_LIMIT_SIM_TRACES, DEF_LIMIT_SIM_TRACES);
 		putDefault(P_HYBRID_SEARCH_MOL_WEIGHT_MIN, DEF_HYBRID_SEARCH_MOL_WEIGHT_MIN);
@@ -971,13 +1015,11 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		putDefault(P_POSITION_X_AXIS_MILLISECONDS_PEAKS, DEF_POSITION_X_AXIS_MILLISECONDS_PEAKS);
 		putDefault(P_COLOR_X_AXIS_MILLISECONDS_PEAKS, DEF_COLOR_X_AXIS_MILLISECONDS_PEAKS);
 		putDefault(P_GRIDLINE_STYLE_X_AXIS_MILLISECONDS_PEAKS, DEF_GRIDLINE_STYLE_X_AXIS_MILLISECONDS_PEAKS);
-		putDefault(P_GRIDLINE_COLOR_X_AXIS_MILLISECONDS_PEAKS, DEF_GRIDLINE_COLOR_X_AXIS_MILLISECONDS_PEAKS);
 
 		putDefault(P_SHOW_X_AXIS_MINUTES_PEAKS, DEF_SHOW_X_AXIS_MINUTES_PEAKS);
 		putDefault(P_POSITION_X_AXIS_MINUTES_PEAKS, DEF_POSITION_X_AXIS_MINUTES_PEAKS);
 		putDefault(P_COLOR_X_AXIS_MINUTES_PEAKS, DEF_COLOR_X_AXIS_MINUTES_PEAKS);
 		putDefault(P_GRIDLINE_STYLE_X_AXIS_MINUTES_PEAKS, DEF_GRIDLINE_STYLE_X_AXIS_MINUTES_PEAKS);
-		putDefault(P_GRIDLINE_COLOR_X_AXIS_MINUTES_PEAKS, DEF_GRIDLINE_COLOR_X_AXIS_MINUTES_PEAKS);
 
 		putDefault(P_SHOW_Y_AXIS_INTENSITY_PEAKS, DEF_SHOW_Y_AXIS_INTENSITY_PEAKS);
 		putDefault(P_POSITION_Y_AXIS_INTENSITY_PEAKS, DEF_POSITION_Y_AXIS_INTENSITY_PEAKS);
@@ -1185,7 +1227,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		putDefault(P_SHOW_X_AXIS_LINE_MINUTES, DEF_SHOW_X_AXIS_LINE_MINUTES);
 		putDefault(P_SHOW_X_AXIS_POSITION_MARKER_MINUTES, DEF_SHOW_X_AXIS_POSITION_MARKER_MINUTES);
 
-		putDefault(P_TITLE_X_AXIS_SCANS, DEF_TITLE_X_AXIS_SCANS);
 		putDefault(P_FORMAT_X_AXIS_SCANS, DEF_FORMAT_X_AXIS_SCANS);
 		putDefault(P_SHOW_X_AXIS_SCANS, DEF_SHOW_X_AXIS_SCANS);
 		putDefault(P_POSITION_X_AXIS_SCANS, DEF_POSITION_X_AXIS_SCANS);

@@ -46,9 +46,14 @@ import org.eclipse.chemclipse.ux.extension.ui.swt.ChartGridSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.chemclipse.ux.extension.ui.swt.ISettingsHandler;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.charts.ChartSupport;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.l10n.ExtensionMessages;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageScans;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageSubtract;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ScanChartAxisIntensity;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ScanChartAxisIon;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ScanChartAxisRelativeIntensity;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.ChromatogramUpdateSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ScanDataSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.wizards.SubtractScanWizard;
@@ -73,7 +78,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtchart.IAxis;
 import org.eclipse.swtchart.Range;
+import org.eclipse.swtchart.extensions.axisconverter.PercentageConverter;
 import org.eclipse.swtchart.extensions.core.BaseChart;
+import org.eclipse.swtchart.extensions.core.IChartSettings;
+import org.eclipse.swtchart.extensions.core.IPrimaryAxisSettings;
+import org.eclipse.swtchart.extensions.core.ISecondaryAxisSettings;
+import org.eclipse.swtchart.extensions.core.SecondaryAxisSettings;
 
 public class ExtendedScanChartUI extends Composite implements IExtendedPartUI {
 
@@ -238,19 +248,21 @@ public class ExtendedScanChartUI extends Composite implements IExtendedPartUI {
 
 		this.scan = scan;
 
-		IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-		ScanDataSupport scanDataSupport = new ScanDataSupport();
 		scanFilterUI.get().setInput(scan);
 		scanIdentifierControl.get().setInput(scan);
 		scanWebIdentifierUI.get().setInput(scan);
+		ScanDataSupport scanDataSupport = new ScanDataSupport();
 		toolbarInfo.get().setText(scanDataSupport.getScanLabel(scan));
 		setDetectorSignalType(scan);
 		updateScanChart(scan);
 		updateInfoLabels();
 		updateButtons();
+		adjustAxisSettings();
 		/*
 		 * Set a fixed range on demand.
 		 */
+		IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
+
 		boolean isFixedRangeX = preferenceStore.getBoolean(PreferenceSupplier.P_SCAN_CHART_ENABLE_FIXED_RANGE_X);
 		boolean isFixedRangeY = preferenceStore.getBoolean(PreferenceSupplier.P_SCAN_CHART_ENABLE_FIXED_RANGE_Y);
 
@@ -310,6 +322,7 @@ public class ExtendedScanChartUI extends Composite implements IExtendedPartUI {
 		enableChartGrid(chartControl, buttonChartGrid.get(), IMAGE_CHART_GRID, new ChartGridSupport());
 
 		updateButtons();
+		adjustAxisSettings();
 	}
 
 	private void createToolbarMain(Composite parent) {
@@ -710,6 +723,7 @@ public class ExtendedScanChartUI extends Composite implements IExtendedPartUI {
 			scanIdentifierControl.get().updateIdentifier();
 			tracesClipboardControl.get().updateOption();
 			fireUpdate();
+			adjustAxisSettings();
 		};
 
 		Button button = createSettingsButtonBasic(parent);
@@ -731,9 +745,88 @@ public class ExtendedScanChartUI extends Composite implements IExtendedPartUI {
 
 		List<Class<? extends IPreferencePage>> preferencePages = new ArrayList<>();
 		preferencePages.add(PreferencePageScans.class);
+		preferencePages.add(ScanChartAxisIon.class);
+		preferencePages.add(ScanChartAxisIntensity.class);
+		preferencePages.add(ScanChartAxisRelativeIntensity.class);
 		preferencePages.add(PreferencePageSubtract.class);
 
 		return preferencePages;
+	}
+
+	void adjustAxisSettings() {
+
+		adjustAxisIons();
+		adjustAxisIntensity();
+		adjustAxisRelativeIntensity();
+
+		IChartSettings chartSettings = chartControl.get().getChartSettings();
+		chartControl.get().applySettings(chartSettings);
+	}
+
+	private void adjustAxisIons() {
+
+		IChartSettings chartSettings = chartControl.get().getChartSettings();
+		IPrimaryAxisSettings primaryAxisSettingsX = chartSettings.getPrimaryAxisSettingsX();
+		primaryAxisSettingsX.setTitle(ExtensionMessages.ion);
+
+		String positionNode = PreferenceSupplier.P_SCAN_CHART_POSITION_X_AXIS_IONS;
+		String gridLineStyleNode = PreferenceSupplier.P_SCAN_CHART_GRIDLINE_STYLE_X_AXIS_IONS;
+
+		ChartSupport.setAxisSettingsExtended(primaryAxisSettingsX, positionNode, "0", gridLineStyleNode);
+		ChartSupport.themeAxis(primaryAxisSettingsX, ExtendedScanChartUI.class.getName() + ".AxisIons");
+		primaryAxisSettingsX.setVisible(ChartSupport.getBoolean(PreferenceSupplier.P_SCAN_CHART_SHOW_X_AXIS_IONS));
+		primaryAxisSettingsX.setTitleVisible(ChartSupport.getBoolean(PreferenceSupplier.P_SCAN_CHART_SHOW_X_AXIS_TITLE_IONS));
+	}
+
+	private void adjustAxisIntensity() {
+
+		IChartSettings chartSettings = chartControl.get().getChartSettings();
+		IPrimaryAxisSettings primaryAxisSettingsY = chartSettings.getPrimaryAxisSettingsY();
+		primaryAxisSettingsY.setTitle(ExtensionMessages.intensity);
+
+		String positionNode = PreferenceSupplier.P_SCAN_CHART_POSITION_Y_AXIS_INTENSITY;
+		String patternNode = PreferenceSupplier.P_SCAN_CHART_FORMAT_Y_AXIS_INTENSITY;
+		String gridLineStyleNode = PreferenceSupplier.P_SCAN_CHART_GRIDLINE_STYLE_Y_AXIS_INTENSITY;
+
+		ChartSupport.setAxisSettingsExtended(primaryAxisSettingsY, positionNode, patternNode, gridLineStyleNode);
+		ChartSupport.themeAxis(primaryAxisSettingsY, ExtendedScanChartUI.class.getName() + ".AxisIntensity");
+		primaryAxisSettingsY.setVisible(ChartSupport.getBoolean(PreferenceSupplier.P_SCAN_CHART_SHOW_Y_AXIS_INTENSITY));
+		primaryAxisSettingsY.setTitleVisible(ChartSupport.getBoolean(PreferenceSupplier.P_SCAN_CHART_SHOW_Y_AXIS_TITLE_INTENSITY));
+	}
+
+	private void adjustAxisRelativeIntensity() {
+
+		IChartSettings chartSettings = chartControl.get().getChartSettings();
+		ISecondaryAxisSettings axisSettings = ChartSupport.getSecondaryAxisSettingsY(ExtensionMessages.relativeIntensity, chartSettings);
+
+		String positionNode = PreferenceSupplier.P_SCAN_CHART_POSITION_Y_AXIS_RELATIVE_INTENSITY;
+		String patternNode = PreferenceSupplier.P_SCAN_CHART_FORMAT_Y_AXIS_RELATIVE_INTENSITY;
+		String gridLineStyleNode = PreferenceSupplier.P_SCAN_CHART_GRIDLINE_STYLE_Y_AXIS_RELATIVE_INTENSITY;
+
+		boolean isShowAxis = ChartSupport.getBoolean(PreferenceSupplier.P_SCAN_CHART_SHOW_Y_AXIS_RELATIVE_INTENSITY);
+		boolean isShowAxisTitle = ChartSupport.getBoolean(PreferenceSupplier.P_SCAN_CHART_SHOW_Y_AXIS_TITLE_RELATIVE_INTENSITY);
+
+		if(isShowAxis) {
+			if(axisSettings == null) {
+				ISecondaryAxisSettings secondaryAxisSettingsY = new SecondaryAxisSettings(ExtensionMessages.relativeIntensity, new PercentageConverter(SWT.VERTICAL, true));
+				ChartSupport.setAxisSettingsExtended(secondaryAxisSettingsY, positionNode, patternNode, gridLineStyleNode);
+				ChartSupport.themeAxis(secondaryAxisSettingsY, ExtendedScanChartUI.class.getName() + ".AxisRelativeIntensity");
+				secondaryAxisSettingsY.setTitleVisible(isShowAxisTitle);
+				chartSettings.getSecondaryAxisSettingsListY().add(secondaryAxisSettingsY);
+			} else {
+				ChartSupport.setAxisSettingsExtended(axisSettings, positionNode, patternNode, gridLineStyleNode);
+				ChartSupport.themeAxis(axisSettings, ExtendedScanChartUI.class.getName() + ".AxisRelativeIntensity");
+				axisSettings.setTitle(ExtensionMessages.relativeIntensity);
+				axisSettings.setVisible(true);
+				axisSettings.setTitleVisible(isShowAxisTitle);
+			}
+		} else {
+			if(axisSettings != null) {
+				axisSettings.setTitle(ExtensionMessages.relativeIntensity);
+				axisSettings.setVisible(false);
+				axisSettings.setTitleVisible(isShowAxisTitle);
+			}
+		}
 	}
 
 	private void createSaveButton(Composite parent) {
