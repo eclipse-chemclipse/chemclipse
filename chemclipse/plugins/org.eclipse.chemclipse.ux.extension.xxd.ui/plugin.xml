@@ -120,6 +120,12 @@
             name="Chromatogram">
       </page>
       <page
+            category="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePage"
+            class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogramHeatmap"
+            id="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageChromatogramHeatmap"
+            name="Chromatogram Heatmap">
+      </page>
+      <page
             category="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageChromatogram"
             class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ChromatogramAxisMilliseconds"
             id="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.chromatogramAxisMilliseconds"

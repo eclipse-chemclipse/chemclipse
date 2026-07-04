@@ -30,7 +30,7 @@ import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.support.ChromatogramHeatmapData;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.support.ChromatogramHeatmapSupport;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogram;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogramHeatmap;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ChromatogramDataSupport;
 import org.eclipse.chemclipse.wsd.model.core.selection.IChromatogramSelectionWSD;
@@ -312,7 +312,7 @@ public class ChromatogramHeatmapUI extends Composite implements IExtendedPartUI 
 
 	private void createButtonSettings(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePageChromatogram.class), (Display display) -> {
+		createSettingsButton(parent, Arrays.asList(PreferencePageChromatogramHeatmap.class), (Display display) -> {
 			setScaleValues();
 			updateHeatmap();
 		});
