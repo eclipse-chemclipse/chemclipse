@@ -36,6 +36,7 @@ import org.eclipse.chemclipse.msd.converter.supplier.ocx.io.IChromatogramMSDZipW
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
+import org.eclipse.chemclipse.msd.model.core.IIonMSn;
 import org.eclipse.chemclipse.msd.model.core.IIonTransition;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
@@ -344,22 +345,24 @@ public class ChromatogramWriter_0903 extends AbstractChromatogramWriter implemen
 			/*
 			 * Ion Transition
 			 */
-			IIonTransition ionTransition = ion.getIonTransition();
-			if(ionTransition == null) {
-				dataOutputStream.writeInt(0); // No ion transition available
-			} else {
-				/*
-				 * parent m/z start, ...
-				 */
-				dataOutputStream.writeInt(1); // Ion transition available
-				dataOutputStream.writeDouble(ionTransition.getQ1StartIon()); // parent m/z start
-				dataOutputStream.writeDouble(ionTransition.getQ1StopIon()); // parent m/z stop
-				dataOutputStream.writeDouble(ionTransition.getQ3StartIon()); // daughter m/z start
-				dataOutputStream.writeDouble(ionTransition.getQ3StopIon()); // daughter m/z stop
-				dataOutputStream.writeDouble(ionTransition.getCollisionEnergy()); // collision energy
-				dataOutputStream.writeDouble(ionTransition.getQ1Resolution()); // q1 resolution
-				dataOutputStream.writeDouble(ionTransition.getQ3Resolution()); // q3 resolution
-				dataOutputStream.writeInt(ionTransition.getTransitionGroup()); // transition group
+			if(ion instanceof IIonMSn ionMSn) {
+				IIonTransition ionTransition = ionMSn.getIonTransition();
+				if(ionTransition == null) {
+					dataOutputStream.writeInt(0); // No ion transition available
+				} else {
+					/*
+					 * parent m/z start, ...
+					 */
+					dataOutputStream.writeInt(1); // Ion transition available
+					dataOutputStream.writeDouble(ionTransition.getQ1StartIon()); // parent m/z start
+					dataOutputStream.writeDouble(ionTransition.getQ1StopIon()); // parent m/z stop
+					dataOutputStream.writeDouble(ionTransition.getQ3StartIon()); // daughter m/z start
+					dataOutputStream.writeDouble(ionTransition.getQ3StopIon()); // daughter m/z stop
+					dataOutputStream.writeDouble(ionTransition.getCollisionEnergy()); // collision energy
+					dataOutputStream.writeDouble(ionTransition.getQ1Resolution()); // q1 resolution
+					dataOutputStream.writeDouble(ionTransition.getQ3Resolution()); // q3 resolution
+					dataOutputStream.writeInt(ionTransition.getTransitionGroup()); // transition group
+				}
 			}
 		}
 	}

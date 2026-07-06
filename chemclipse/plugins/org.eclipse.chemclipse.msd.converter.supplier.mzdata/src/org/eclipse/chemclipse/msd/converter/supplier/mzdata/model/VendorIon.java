@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2025 Lablicate GmbH.
+ * Copyright (c) 2014, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -13,7 +13,6 @@
 package org.eclipse.chemclipse.msd.converter.supplier.mzdata.model;
 
 import org.eclipse.chemclipse.msd.model.core.AbstractIon;
-import org.eclipse.chemclipse.msd.model.core.IIonTransition;
 
 public class VendorIon extends AbstractIon implements IVendorIon {
 
@@ -21,15 +20,10 @@ public class VendorIon extends AbstractIon implements IVendorIon {
 	 * Renew the serialVersionUID any time you have changed some fields or
 	 * methods.
 	 */
-	private static final long serialVersionUID = 2317506100290058045L;
+	private static final long serialVersionUID = 2317506100290058046L;
 
 	public VendorIon(double ion, float abundance) {
 
 		super(ion, abundance);
-	}
-
-	public VendorIon(double ion, float abundance, IIonTransition ionTransition) {
-
-		super(ion, abundance, ionTransition);
 	}
 }

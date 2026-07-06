@@ -27,6 +27,7 @@ import org.eclipse.chemclipse.model.support.ChromatogramSupport;
 import org.eclipse.chemclipse.model.support.HeaderUtil;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
+import org.eclipse.chemclipse.msd.model.core.IIonMSn;
 import org.eclipse.chemclipse.msd.model.core.IIonTransition;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
@@ -74,7 +75,7 @@ public class TandemDataSupport {
 					 */
 					for(TraceTandemMSD trace : traces) {
 						for(IIon ion : scanMSD.getIons()) {
-							if(matches(trace, ion)) {
+							if(ion instanceof IIonMSn ionMSn && matches(trace, ionMSn)) {
 								/*
 								 * Collect
 								 */
@@ -123,7 +124,7 @@ public class TandemDataSupport {
 		return chromatograms;
 	}
 
-	private static boolean matches(TraceTandemMSD trace, IIon ion) {
+	private static boolean matches(TraceTandemMSD trace, IIonMSn ion) {
 
 		IIonTransition ionTransition = ion.getIonTransition();
 		if(ionTransition != null) {

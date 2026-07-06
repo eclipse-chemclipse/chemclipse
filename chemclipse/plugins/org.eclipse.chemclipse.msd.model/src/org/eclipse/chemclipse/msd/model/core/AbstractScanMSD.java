@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -21,6 +21,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.eclipse.chemclipse.logging.core.Logger;
@@ -726,7 +727,7 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 		int limit = (ionsList.size() > 30) ? 30 : ionsList.size();
 		for(int i = 0; i < limit; i++) {
 			IIon ion = ionsList.get(i);
-			if(ion.getIonTransition() != null) {
+			if(ion instanceof IIonMSn ionMSn && ionMSn.getIonTransition() != null) {
 				return true;
 			}
 		}
@@ -912,25 +913,25 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 
 	private boolean checkIon(IIon ion1, IIon ion2) {
 
-		if(ion1 != null && ion2 != null) {
-			if(ion1.getIon() == ion2.getIon()) {
-				/*
-				 * If it is the same ion, the ion transitions could be different.
-				 */
-				IIonTransition ionTransition1 = ion1.getIonTransition();
-				IIonTransition ionTransition2 = ion2.getIonTransition();
-				if(ionTransition1 == null && ionTransition2 == null) {
-					return true;
-				} else {
-					if(ionTransition1 == null) {
-						return ionTransition2.equals(ionTransition1);
-					} else {
-						return ionTransition1.equals(ionTransition2);
-					}
-				}
-			}
+		if(ion1 == null || ion2 == null) {
+			return false;
 		}
 
-		return false;
+		if(Double.compare(ion1.getIon(), ion2.getIon()) != 0) {
+			return false;
+		}
+
+		// Both MSn: compare transitions too
+		if(ion1 instanceof IIonMSn msnIon1 && ion2 instanceof IIonMSn msnIon2) {
+			return Objects.equals(msnIon1.getIonTransition(), msnIon2.getIonTransition());
+		}
+
+		// Mixed MS1/MSn at same m/z are NOT the same ion
+		if((ion1 instanceof IIonMSn) ^ (ion2 instanceof IIonMSn)) {
+			return false;
+		}
+
+		// Both are MS1 ions at same m/z
+		return true;
 	}
 }

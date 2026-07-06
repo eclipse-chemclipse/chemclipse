@@ -16,6 +16,7 @@ import org.eclipse.chemclipse.csd.model.core.IScanCSD;
 import org.eclipse.chemclipse.fsd.model.core.IScanSignalFSD;
 import org.eclipse.chemclipse.model.types.DataType;
 import org.eclipse.chemclipse.msd.model.core.IIon;
+import org.eclipse.chemclipse.msd.model.core.IIonMSn;
 import org.eclipse.chemclipse.msd.model.core.IIonTransition;
 import org.eclipse.chemclipse.support.ui.swt.AbstractRecordTableComparator;
 import org.eclipse.chemclipse.vsd.model.core.ISignalVSD;
@@ -91,7 +92,7 @@ public class ScanTableComparator extends AbstractRecordTableComparator {
 	private int getTandemMSD(Object e1, Object e2) {
 
 		int sortOrder = 0;
-		if(e1 instanceof IIon ion1 && e2 instanceof IIon ion2) {
+		if(e1 instanceof IIonMSn ion1 && e2 instanceof IIonMSn ion2) {
 			IIonTransition ionTransition1 = ion1.getIonTransition();
 			IIonTransition ionTransition2 = ion2.getIonTransition();
 

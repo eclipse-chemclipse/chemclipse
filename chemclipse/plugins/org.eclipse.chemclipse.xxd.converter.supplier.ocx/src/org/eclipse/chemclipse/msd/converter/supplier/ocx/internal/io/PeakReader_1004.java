@@ -45,6 +45,7 @@ import org.eclipse.chemclipse.model.quantitation.IQuantitationEntry;
 import org.eclipse.chemclipse.msd.converter.io.IPeakReader;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorIon;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.VendorIon;
+import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.VendorIonMSn;
 import org.eclipse.chemclipse.msd.model.core.IIonTransition;
 import org.eclipse.chemclipse.msd.model.core.IIonTransitionSettings;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
@@ -195,8 +196,7 @@ public class PeakReader_1004 extends AbstractZipReader implements IPeakReader {
 			/*
 			 * Read Ions
 			 */
-			IVendorIon ion = readIon(dataInputStream, ionTransitionSettings);
-			massSpectrum.addIon(ion);
+			readIon(dataInputStream, ionTransitionSettings, massSpectrum);
 		}
 		/*
 		 * Identification Results
@@ -246,9 +246,7 @@ public class PeakReader_1004 extends AbstractZipReader implements IPeakReader {
 		}
 	}
 
-	private IVendorIon readIon(DataInputStream dataInputStream, IIonTransitionSettings ionTransitionSettings) throws IOException {
-
-		IVendorIon ion;
+	private void readIon(DataInputStream dataInputStream, IIonTransitionSettings ionTransitionSettings, IScanMSD massSpectrum) throws IOException {
 
 		double mz = dataInputStream.readDouble(); // m/z
 		float abundance = dataInputStream.readFloat(); // Abundance
@@ -256,8 +254,10 @@ public class PeakReader_1004 extends AbstractZipReader implements IPeakReader {
 		 * Ion Transition
 		 */
 		int transition = dataInputStream.readInt();
+
 		if(transition == 0) {
-			ion = new VendorIon(mz, abundance);
+			IVendorIon ion = new VendorIon(mz, abundance);
+			massSpectrum.addIon(ion);
 		} else {
 			/*
 			 * parent m/z start, ...
@@ -272,9 +272,9 @@ public class PeakReader_1004 extends AbstractZipReader implements IPeakReader {
 			int transitionGroup = dataInputStream.readInt(); // transition group
 
 			IIonTransition ionTransition = ionTransitionSettings.getIonTransition(filter1FirstIon, filter1LastIon, filter3FirstIon, filter3LastIon, collisionEnergy, filter1Resolution, filter3Resolution, transitionGroup);
-			ion = new VendorIon(mz, abundance, ionTransition);
+			VendorIonMSn ion = new VendorIonMSn(mz, abundance, ionTransition);
+			massSpectrum.addIon(ion);
 		}
-		return ion;
 	}
 
 	private List<IIntegrationEntry> readIntegrationEntries(DataInputStream dataInputStream) throws IOException {

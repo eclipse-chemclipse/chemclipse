@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -14,7 +14,7 @@ package org.eclipse.chemclipse.msd.model.implementation;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.eclipse.chemclipse.msd.model.core.IIon;
+import org.eclipse.chemclipse.msd.model.core.IIonMSn;
 import org.eclipse.chemclipse.msd.model.core.IIonTransition;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.junit.jupiter.api.BeforeAll;
@@ -35,7 +35,7 @@ public class MassSpectrum_31_Test {
 		massSpectrum.addIon(new Ion(85.43d, 3000.5f));
 		massSpectrum.addIon(new Ion(104.12d, 120000.4f));
 		IIonTransition ionTransition = new IonTransition(53.2d, 32, 10.0, 1.2d, 1.2d, 1);
-		IIon ion = new Ion(32.63d, 890520.4f, ionTransition);
+		IIonMSn ion = new IonMSn(32.63d, 890520.4f, ionTransition);
 		massSpectrum.addIon(ion);
 		massSpectrum.addIon(new Ion(105.73d, 120000.4f));
 		massSpectrum.addIon(new Ion(28.24d, 33000.5f));

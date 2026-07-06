@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -15,7 +15,7 @@ package org.eclipse.chemclipse.msd.model.core;
 import org.eclipse.core.runtime.IAdaptable;
 
 /**
- * This Interface declares a simple ion.<br/>
+ * This Interface declares a simple MS1 ion.<br/>
  * For example:<br/>
  * Nitrogen: N2<br/>
  * ion -> 28.00<br/>
@@ -74,12 +74,4 @@ public interface IIon extends IIonSerializable, IAdaptable, Comparable<IIon> {
 	 * @return true if the value is valid
 	 */
 	boolean setAbundance(float abundance);
-
-	/**
-	 * Returns the ion transition.
-	 * If no triple quadrupole / ion transition is used, null will be returned.
-	 *
-	 * @return {@link IIonTransition}
-	 */
-	IIonTransition getIonTransition();
 }

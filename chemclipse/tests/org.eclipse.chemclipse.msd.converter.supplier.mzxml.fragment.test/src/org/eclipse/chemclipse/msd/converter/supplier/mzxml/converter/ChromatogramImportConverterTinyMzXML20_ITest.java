@@ -20,6 +20,7 @@ import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.IVendorChromato
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.IVendorScan;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.model.VendorChromatogram;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
+import org.eclipse.chemclipse.msd.model.core.IIonMSn;
 import org.eclipse.chemclipse.msd.model.core.IIonTransition;
 import org.eclipse.chemclipse.msd.model.core.Polarity;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
@@ -97,7 +98,8 @@ public class ChromatogramImportConverterTinyMzXML20_ITest {
 		assertEquals(2, massSpectrum.getMassSpectrometer(), "MS");
 		assertEquals(445.3500061035156, massSpectrum.getPrecursorIon(), 0, "Precursor");
 
-		IIonTransition ionTransition = massSpectrum.getHighestIon().getIonTransition();
+		IIonMSn ionMSn = (IIonMSn)massSpectrum.getHighestIon();
+		IIonTransition ionTransition = ionMSn.getIonTransition();
 		assertEquals(35, ionTransition.getCollisionEnergy(), 0, "CE");
 		assertEquals(445, ionTransition.getQ1Ion(), 0, "Q1");
 		assertEquals(531.1, ionTransition.getQ3Ion(), 0, "Q2");
