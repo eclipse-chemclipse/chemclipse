@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -208,7 +208,7 @@ public abstract class AbstractPeakIntegrationResult implements IPeakIntegrationR
 	@Override
 	public int hashCode() {
 
-		return Double.valueOf(integratedArea).hashCode() + Float.valueOf(tailing).hashCode() + Integer.valueOf(width).hashCode() + integratorType.hashCode() + peakType.hashCode() + modelDescription.hashCode() + Float.valueOf(sn).hashCode() + Integer.valueOf(startRetentionTime).hashCode() + Integer.valueOf(stopRetentionTime).hashCode() + Float.valueOf(purity).hashCode() + integratedTraces.hashCode();
+		return Double.hashCode(integratedArea) + Float.hashCode(tailing) + Integer.hashCode(width) + integratorType.hashCode() + peakType.hashCode() + modelDescription.hashCode() + Float.hashCode(sn) + Integer.hashCode(startRetentionTime) + Integer.hashCode(stopRetentionTime) + Float.hashCode(purity) + integratedTraces.hashCode();
 	}
 
 	@Override

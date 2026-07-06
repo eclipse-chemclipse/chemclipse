@@ -59,7 +59,7 @@ public class Slope implements ISlope {
 	@Override
 	public int hashCode() {
 
-		return 7 * Double.valueOf(slope).hashCode();
+		return 7 * Double.hashCode(slope);
 	}
 
 	@Override

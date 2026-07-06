@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -20,6 +20,7 @@ public class RawPeak implements IRawPeak {
 	private int stopScan = 0;
 
 	public RawPeak(int startScan, int maximumScan, int stopScan) {
+
 		if(startScan < maximumScan && maximumScan < stopScan) {
 			this.startScan = startScan;
 			this.maximumScan = maximumScan;
@@ -79,7 +80,7 @@ public class RawPeak implements IRawPeak {
 	@Override
 	public int hashCode() {
 
-		return 7 * Integer.valueOf(startScan).hashCode() + 11 * Integer.valueOf(maximumScan).hashCode() + 13 * Integer.valueOf(stopScan).hashCode();
+		return 7 * Integer.hashCode(startScan) + 11 * Integer.hashCode(maximumScan) + 13 * Integer.hashCode(stopScan);
 	}
 
 	@Override

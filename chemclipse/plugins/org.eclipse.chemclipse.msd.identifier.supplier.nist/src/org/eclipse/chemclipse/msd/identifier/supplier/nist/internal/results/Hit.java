@@ -152,7 +152,7 @@ public class Hit {
 	@Override
 	public int hashCode() {
 
-		return 7 * name.hashCode() + 11 * formula.hashCode() + 13 * Float.valueOf(matchFactor).hashCode() + 17 * Float.valueOf(reverseMatchFactor).hashCode() + 13 * Float.valueOf(probability).hashCode() + 11 * cas.hashCode() + 7 * Integer.valueOf(molecularWeight).hashCode();
+		return 7 * name.hashCode() + 11 * formula.hashCode() + 13 * Float.hashCode(matchFactor) + 17 * Float.hashCode(reverseMatchFactor) + 13 * Float.hashCode(probability) + 11 * cas.hashCode() + 7 * Integer.hashCode(molecularWeight);
 	}
 
 	@Override

@@ -97,7 +97,7 @@ public class LinearEquation implements IEquation {
 	@Override
 	public int hashCode() {
 
-		return 7 * Double.valueOf(a).hashCode() + 11 * Double.valueOf(b).hashCode();
+		return 7 * Double.hashCode(a) + 11 * Double.hashCode(b);
 	}
 
 	@Override

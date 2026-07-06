@@ -77,7 +77,7 @@ public class ScanRange implements IScanRange {
 	@Override
 	public int hashCode() {
 
-		return 7 * Integer.valueOf(getStartScan()).hashCode() + 11 * Integer.valueOf(getStopScan()).hashCode();
+		return 7 * Integer.hashCode(getStartScan()) + 11 * Integer.hashCode(getStopScan());
 	}
 
 	@Override

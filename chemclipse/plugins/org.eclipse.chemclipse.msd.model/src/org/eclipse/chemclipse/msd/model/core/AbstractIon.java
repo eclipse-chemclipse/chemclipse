@@ -193,7 +193,7 @@ public abstract class AbstractIon implements IIon {
 	@Override
 	public int hashCode() {
 
-		return 7 * Double.valueOf(ion).hashCode() + 11 * Float.valueOf(abundance).hashCode();
+		return 7 * Double.hashCode(ion) + 11 * Float.hashCode(abundance);
 	}
 
 	@Override

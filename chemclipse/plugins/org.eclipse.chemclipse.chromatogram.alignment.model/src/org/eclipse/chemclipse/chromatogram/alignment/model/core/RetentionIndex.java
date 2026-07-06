@@ -141,7 +141,7 @@ public class RetentionIndex implements IRetentionIndex, Comparable<IRetentionInd
 	public int hashCode() {
 
 		// index, retentionTime, name
-		return 7 * Double.valueOf(index).hashCode() + 9 * Integer.valueOf(retentionTime).hashCode() + 11 * name.hashCode();
+		return 7 * Double.hashCode(index) + 9 * Integer.hashCode(retentionTime) + 11 * name.hashCode();
 	}
 
 	@Override

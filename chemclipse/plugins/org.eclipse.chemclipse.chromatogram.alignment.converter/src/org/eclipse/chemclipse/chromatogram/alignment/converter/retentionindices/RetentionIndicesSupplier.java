@@ -150,7 +150,7 @@ public class RetentionIndicesSupplier implements IRetentionIndicesSupplier {
 	@Override
 	public int hashCode() {
 
-		return id.hashCode() + description.hashCode() + filterName.hashCode() + fileExtension.hashCode() + Boolean.valueOf(exportable).hashCode() + Boolean.valueOf(importable).hashCode();
+		return id.hashCode() + description.hashCode() + filterName.hashCode() + fileExtension.hashCode() + Boolean.hashCode(exportable) + Boolean.hashCode(importable);
 	}
 
 	@Override

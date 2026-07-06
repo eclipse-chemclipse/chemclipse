@@ -505,7 +505,7 @@ public abstract class AbstractLibraryInformation implements ILibraryInformation 
 	@Override
 	public int hashCode() {
 
-		return 7 * name.hashCode() + 11 * getCasNumber().hashCode() + 13 * comments.hashCode() + 11 * miscellaneous.hashCode() + 7 * formula.hashCode() + 11 * Double.valueOf(molWeight).hashCode();
+		return 7 * name.hashCode() + 11 * getCasNumber().hashCode() + 13 * comments.hashCode() + 11 * miscellaneous.hashCode() + 7 * formula.hashCode() + 11 * Double.hashCode(molWeight);
 	}
 
 	@Override

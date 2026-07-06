@@ -92,7 +92,7 @@ public class TargetTrace {
 	@Override
 	public int hashCode() {
 
-		return 7 * Integer.valueOf(ion).hashCode() + 11 * name.hashCode();
+		return 7 * Integer.hashCode(ion) + 11 * name.hashCode();
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -195,7 +195,7 @@ public abstract class AbstractSupplier implements ISupplierSetter {
 	@Override
 	public int hashCode() {
 
-		return id.hashCode() + description.hashCode() + filterName.hashCode() + fileExtension.hashCode() + fileName.hashCode() + directoryExtension.hashCode() + Boolean.valueOf(exportable).hashCode() + Boolean.valueOf(importable).hashCode();
+		return id.hashCode() + description.hashCode() + filterName.hashCode() + fileExtension.hashCode() + fileName.hashCode() + directoryExtension.hashCode() + Boolean.hashCode(exportable) + Boolean.hashCode(importable);
 	}
 
 	@Override

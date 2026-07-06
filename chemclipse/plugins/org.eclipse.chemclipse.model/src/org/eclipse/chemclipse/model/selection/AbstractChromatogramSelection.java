@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2025 Lablicate GmbH.
+ * Copyright (c) 2012, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -408,7 +408,7 @@ public abstract class AbstractChromatogramSelection implements IChromatogramSele
 	@Override
 	public int hashCode() {
 
-		return 7 * getChromatogram().hashCode() + 11 * Integer.valueOf(getStartRetentionTime()).hashCode() + 13 * Integer.valueOf(getStopRetentionTime()).hashCode();
+		return 7 * getChromatogram().hashCode() + 11 * Integer.hashCode(getStartRetentionTime()) + 13 * Integer.hashCode(getStopRetentionTime());
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -86,7 +86,7 @@ public abstract class AbstractTotalScanSignal implements ITotalScanSignal {
 	@Override
 	public int hashCode() {
 
-		return 7 * Integer.valueOf(getRetentionTime()).hashCode() + 9 * Float.valueOf(getRetentionIndex()).hashCode() + 11 * Float.valueOf(getTotalSignal()).hashCode();
+		return 7 * Integer.hashCode(getRetentionTime()) + 9 * Float.hashCode(getRetentionIndex()) + 11 * Float.hashCode(getTotalSignal());
 	}
 
 	@Override

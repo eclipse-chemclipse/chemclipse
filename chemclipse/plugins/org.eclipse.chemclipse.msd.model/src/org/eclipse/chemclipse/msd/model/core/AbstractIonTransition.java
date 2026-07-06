@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2025 Lablicate GmbH.
+ * Copyright (c) 2013, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -202,7 +202,7 @@ public abstract class AbstractIonTransition implements IIonTransition {
 	@Override
 	public int hashCode() {
 
-		return compoundName.hashCode() + 7 * Double.valueOf(q1StartIon).hashCode() + 11 * Double.valueOf(q1StopIon).hashCode() + 13 * Double.valueOf(q3StartIon).hashCode() + 17 * Double.valueOf(q3StopIon).hashCode() + 13 * Double.valueOf(collisionEnergy).hashCode() + 11 * Integer.valueOf(transitionGroup).hashCode() + 7 * Double.valueOf(q1Resolution).hashCode() + 11 * Double.valueOf(q3Resolution).hashCode();
+		return compoundName.hashCode() + 7 * Double.hashCode(q1StartIon) + 11 * Double.hashCode(q1StopIon) + 13 * Double.hashCode(q3StartIon) + 17 * Double.hashCode(q3StopIon) + 13 * Double.hashCode(collisionEnergy) + 11 * Integer.hashCode(transitionGroup) + 7 * Double.hashCode(q1Resolution) + 11 * Double.hashCode(q3Resolution);
 	}
 
 	@Override
