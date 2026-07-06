@@ -16,7 +16,9 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
@@ -30,6 +32,7 @@ import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.implementation.IdentificationTarget;
 import org.eclipse.chemclipse.model.notifier.UpdateNotifier;
 import org.eclipse.chemclipse.model.support.CalculationType;
+import org.eclipse.chemclipse.msd.model.core.DuplicateDetection;
 import org.eclipse.chemclipse.msd.model.core.ICombinedMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
@@ -44,6 +47,7 @@ import org.eclipse.chemclipse.msd.swt.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
+import org.eclipse.chemclipse.support.ui.provider.AbstractLabelProvider;
 import org.eclipse.chemclipse.swt.ui.components.InformationUI;
 import org.eclipse.chemclipse.swt.ui.components.SearchSupportUI;
 import org.eclipse.chemclipse.swt.ui.preferences.PreferencePageSystem;
@@ -53,6 +57,8 @@ import org.eclipse.chemclipse.ux.extension.msd.ui.help.HelpContext;
 import org.eclipse.chemclipse.ux.extension.msd.ui.internal.runnables.LibraryImportRunnable;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
@@ -64,6 +70,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
@@ -79,10 +86,16 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 	private AtomicReference<Button> buttonToolbarSearch = new AtomicReference<>();
 	private AtomicReference<SearchSupportUI> toolbarSearch = new AtomicReference<>();
 	private AtomicReference<Button> buttonAddEntry = new AtomicReference<>();
-	private AtomicReference<Button> buttonMergeEntries = new AtomicReference<>();
+	private AtomicReference<Button> buttonDeleteEntries = new AtomicReference<>();
+	private AtomicReference<Button> buttonSelectionMergeEntries = new AtomicReference<>();
+	private AtomicReference<Button> buttonAutoMergeEntries = new AtomicReference<>();
+	private AtomicReference<ComboViewer> comboDuplicateDetection = new AtomicReference<>();
 	private AtomicReference<MassSpectrumListUI> massSpectrumListControl = new AtomicReference<>();
 
-	private IMassSpectra massSpectra;
+	private IMassSpectra massSpectra = null;
+	private DuplicateDetection duplicateDetection = DuplicateDetection.NONE;
+	private Map<String, List<IScanMSD>> duplicateGroupMap = new HashMap<>();
+
 	private Runnable dirtyListener = null;
 
 	public MassSpectrumLibraryUI(Composite parent, int style) {
@@ -129,6 +142,8 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 		enableToolbar(toolbarInfo, buttonToolbarInfo.get(), IApplicationImage.IMAGE_INFO, TOOLTIP_INFO, true);
 		enableToolbar(toolbarSearch, buttonToolbarSearch.get(), IMAGE_SEARCH, TOOLTIP_SEARCH, false);
 		massSpectrumListControl.get().setEditEnabled(false);
+		comboDuplicateDetection.get().setSelection(new StructuredSelection(duplicateDetection));
+		updateWidgets();
 	}
 
 	private void createToolbarMain(Composite parent) {
@@ -137,13 +152,15 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 		GridData gridDataStatus = new GridData(GridData.FILL_HORIZONTAL);
 		gridDataStatus.horizontalAlignment = SWT.END;
 		composite.setLayoutData(gridDataStatus);
-		composite.setLayout(new GridLayout(8, false));
+		composite.setLayout(new GridLayout(10, false));
 
 		createButtonToggleToolbarInfo(composite);
 		createButtonToggleToolbarSearch(composite);
 		createButtonLibraryImport(composite);
 		createButtonAddEntry(composite);
-		createButtonMergeEntries(composite);
+		createComboDuplicateDetection(composite);
+		createButtonSelectionMergeEntries(composite);
+		createButtonAutoMergeEntries(composite);
 		createButtonDeleteEntries(composite);
 		createButtonHelp(composite, HelpContext.MASS_SPECTRUM_SEARCH);
 		createButtonSettings(composite);
@@ -191,7 +208,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 	private void createButtonLibraryImport(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Select a library");
+		button.setToolTipText("Import a library");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_IMPORT, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -232,6 +249,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 					if(massSpectraImport != null) {
 						massSpectra.addMassSpectra(massSpectraImport.getList());
 						setMassSpectraDirty();
+						updateDuplicates();
 						setInput();
 						resetSearch();
 					}
@@ -257,6 +275,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 						if(!libraryMassSpectrum.getLibraryInformation().getName().isBlank()) {
 							massSpectra.addMassSpectrum(libraryMassSpectrum);
 							setMassSpectraDirty();
+							updateDuplicates();
 							setInput();
 							resetSearch();
 							massSpectrumListControl.get().setSelection(new StructuredSelection(libraryMassSpectrum), true);
@@ -268,10 +287,144 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 		buttonAddEntry.set(button);
 	}
 
-	private void createButtonMergeEntries(Composite parent) {
+	private void createComboDuplicateDetection(Composite parent) {
+
+		ComboViewer comboViewer = new ComboViewer(parent, SWT.READ_ONLY);
+		comboViewer.setContentProvider(ArrayContentProvider.getInstance());
+		comboViewer.setLabelProvider(new AbstractLabelProvider() {
+
+			@Override
+			public String getText(Object element) {
+
+				if(element instanceof DuplicateDetection detection) {
+					return detection.label();
+				}
+				return null;
+			}
+		});
+
+		Combo combo = comboViewer.getCombo();
+		combo.setToolTipText("Select duplicate detection mode.");
+		comboViewer.setInput(DuplicateDetection.values());
+		comboViewer.addSelectionChangedListener(event -> {
+
+			if(comboViewer.getStructuredSelection().getFirstElement() instanceof DuplicateDetection selection) {
+				duplicateDetection = selection;
+				updateDuplicates();
+				updateWidgets();
+			}
+
+		});
+
+		comboDuplicateDetection.set(comboViewer);
+	}
+
+	private void updateDuplicates() {
+
+		/*
+		 * Clear the current map.
+		 * Validate that mass spectra exist.
+		 */
+		duplicateGroupMap.clear();
+		if(massSpectra == null) {
+			return;
+		}
+		/*
+		 * Validate that duplicates shall be detected.
+		 */
+		if(duplicateDetection == DuplicateDetection.NONE) {
+			return;
+		}
+		/*
+		 * Run calculation
+		 */
+		for(IScanMSD scan : massSpectra.getList()) {
+			ILibraryInformation libraryInformation = getLibraryInformation(scan);
+			if(libraryInformation != null) {
+				String key;
+				switch(duplicateDetection) {
+					case NAME:
+						key = libraryInformation.getName();
+						break;
+					case CAS:
+						key = libraryInformation.getCasNumber();
+						break;
+					default:
+						key = null;
+						break;
+				}
+				/*
+				 * Check
+				 */
+				if(key != null && !key.isBlank()) {
+					duplicateGroupMap.computeIfAbsent(key, k -> new ArrayList<>()).add(scan);
+				}
+			}
+		}
+		/*
+		 * Clean and update list control.
+		 */
+		duplicateGroupMap.entrySet().removeIf(e -> e.getValue().size() < 2);
+		massSpectrumListControl.get().updateDuplicateHints(duplicateDetection, duplicateGroupMap.keySet());
+	}
+
+	private ILibraryInformation getLibraryInformation(IScanMSD scan) {
+
+		if(scan instanceof IRegularLibraryMassSpectrum libraryMassSpectrum) {
+			return libraryMassSpectrum.getLibraryInformation();
+		}
+
+		return IIdentificationTarget.getLibraryInformation(scan);
+	}
+
+	private void createButtonAutoMergeEntries(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setEnabled(false);
+		button.setToolTipText("Auto-merge duplicate library entries.");
+		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EXECUTE, IApplicationImageProvider.SIZE_16x16));
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				if(massSpectra != null) {
+					if(!duplicateGroupMap.isEmpty()) {
+						List<List<IScanMSD>> duplicateGroups = new ArrayList<>(duplicateGroupMap.values());
+						MassSpectrumMergeDialog dialog = new MassSpectrumMergeDialog(getShell(), duplicateGroups, true);
+						if(dialog.open() == Window.OK) {
+							List<List<IScanMSD>> toMergeGroups = dialog.getGroupsToMerge();
+							for(List<IScanMSD> toMerge : toMergeGroups) {
+								if(toMerge.size() >= 2) {
+									IRegularLibraryMassSpectrum massSpectrumMerged = mergeSelectedMassSpectra(toMerge);
+									for(IScanMSD scan : toMerge) {
+										massSpectra.removeMassSpectrum(scan);
+									}
+									massSpectra.addMassSpectrum(massSpectrumMerged);
+								}
+							}
+							if(!toMergeGroups.isEmpty()) {
+								setMassSpectraDirty();
+								updateDuplicates();
+								setInput();
+								resetSearch();
+							}
+						}
+					} else {
+						MessageBox messageBox = new MessageBox(getShell(), SWT.ICON_INFORMATION | SWT.OK);
+						messageBox.setText("No Duplicates");
+						messageBox.setMessage("No duplicate library entries found.");
+						messageBox.open();
+					}
+				}
+			}
+		});
+
+		buttonAutoMergeEntries.set(button);
+	}
+
+	private void createButtonSelectionMergeEntries(Composite parent) {
+
+		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Merge the selected library entries.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_MERGE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -301,6 +454,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 									}
 									massSpectra.addMassSpectrum(merged);
 									setMassSpectraDirty();
+									updateDuplicates();
 									setInput();
 									resetSearch();
 									massSpectrumListControl.get().setSelection(new StructuredSelection(merged), true);
@@ -311,7 +465,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 				}
 			}
 		});
-		buttonMergeEntries.set(button);
+		buttonSelectionMergeEntries.set(button);
 	}
 
 	private IRegularLibraryMassSpectrum mergeSelectedMassSpectra(List<IScanMSD> selected) {
@@ -431,7 +585,6 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 	private void createButtonDeleteEntries(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setEnabled(false);
 		button.setToolTipText("Delete the library entry.");
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DELETE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -453,6 +606,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 								if(object instanceof IScanMSD massSpectrum) {
 									massSpectra.removeMassSpectrum(massSpectrum);
 									setMassSpectraDirty();
+									updateDuplicates();
 								}
 							}
 							setInput();
@@ -462,6 +616,8 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 				}
 			}
 		});
+
+		buttonDeleteEntries.set(button);
 	}
 
 	private void createLibraryTable(Composite parent) {
@@ -485,11 +641,11 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 				 */
 				massSpectrumListUI.getTable().setFocus();
 			}
-			Button mergeButton = buttonMergeEntries.get();
-			if(mergeButton != null) {
-				mergeButton.setEnabled(massSpectrumListUI.getTable().getSelectionCount() >= 2);
-			}
+			updateWidgets();
 		});
+		/*
+		 * Edit Dialog
+		 */
 		massSpectrumListUI.getTable().addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -504,8 +660,8 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 						if(dialog.open() == Window.OK) {
 							if(massSpectra != null) {
 								setMassSpectraDirty();
+								updateDuplicates();
 							}
-							massSpectrumListUI.updateDuplicates();
 						}
 					}
 				}
@@ -518,7 +674,6 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 	private IIdentificationTarget getIdentificationTarget(IScanMSD scanMSD) {
 
 		IIdentificationTarget identificationTarget = null;
-
 		ILibraryInformation libraryInformation = null;
 		if(scanMSD instanceof IRegularLibraryMassSpectrum libraryMassSpectrum) {
 			libraryInformation = libraryMassSpectrum.getLibraryInformation();
@@ -534,6 +689,14 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 		return identificationTarget;
 	}
 
+	private void updateWidgets() {
+
+		int selection = massSpectrumListControl.get().getTable().getSelectionCount();
+		buttonSelectionMergeEntries.get().setEnabled(selection >= 2);
+		buttonDeleteEntries.get().setEnabled(selection >= 1);
+		buttonAutoMergeEntries.get().setEnabled(!duplicateGroupMap.isEmpty());
+	}
+
 	private void setMassSpectraDirty() {
 
 		massSpectra.setDirty(true);
@@ -545,6 +708,8 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 	private void setInput() {
 
 		massSpectrumListControl.get().setInput(massSpectra);
+		massSpectrumListControl.get().updateDuplicateHints(duplicateDetection, duplicateGroupMap.keySet());
+		updateWidgets();
 	}
 
 	private void resetSearch() {

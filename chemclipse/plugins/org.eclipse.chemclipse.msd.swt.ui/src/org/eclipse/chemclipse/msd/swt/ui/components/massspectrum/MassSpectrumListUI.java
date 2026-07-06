@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.chemclipse.logging.core.Logger;
+import org.eclipse.chemclipse.msd.model.core.DuplicateDetection;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.implementation.MassSpectra;
@@ -58,7 +59,6 @@ public class MassSpectrumListUI extends ExtendedTableViewer {
 	public static final String INCHI = "InChI";
 	public static final String REFERENCE_IDENTIFIER = "Reference Identifier";
 	public static final String COMMENTS = "Comments";
-	public static final String SPLASH = "Splash";
 
 	private String[] titles = {//
 			NAME, //
@@ -74,8 +74,7 @@ public class MassSpectrumListUI extends ExtendedTableViewer {
 			SMILES, //
 			INCHI, //
 			REFERENCE_IDENTIFIER, //
-			COMMENTS, //
-			SPLASH //
+			COMMENTS //
 	};
 	private int[] bounds = {//
 			300, //
@@ -91,8 +90,7 @@ public class MassSpectrumListUI extends ExtendedTableViewer {
 			100, //
 			100, //
 			100, //
-			100, //
-			300 //
+			100 //
 	};
 
 	private MassSpectrumListLabelProvider labelProvider = new MassSpectrumListLabelProvider();
@@ -196,9 +194,9 @@ public class MassSpectrumListUI extends ExtendedTableViewer {
 		updateInput(massSpectra);
 	}
 
-	public void updateDuplicates() {
+	public void updateDuplicateHints(DuplicateDetection duplicateDetection, Set<String> duplicateGroups) {
 
-		labelProvider.setInput(massSpectra);
+		labelProvider.updateDuplicateHints(duplicateDetection, duplicateGroups);
 		refresh();
 	}
 
@@ -208,7 +206,6 @@ public class MassSpectrumListUI extends ExtendedTableViewer {
 			boolean massiveData = isMassiveData(massSpectra);
 			super.setInput(null); // Can only enable the hash look up before input has been set
 			setLabelAndContentProviders(massiveData);
-			labelProvider.setInput(massSpectra);
 			super.setInput(massSpectra);
 			setItemCount(massSpectra.size());
 		}

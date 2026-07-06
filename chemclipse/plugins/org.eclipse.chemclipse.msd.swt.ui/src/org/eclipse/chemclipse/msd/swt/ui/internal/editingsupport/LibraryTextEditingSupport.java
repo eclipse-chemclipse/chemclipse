@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2025 Lablicate GmbH.
+ * Copyright (c) 2016, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -17,7 +17,6 @@ import java.text.DecimalFormat;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
-import org.eclipse.chemclipse.msd.model.splash.SplashFactory;
 import org.eclipse.chemclipse.msd.swt.ui.components.massspectrum.MassSpectrumListUI;
 import org.eclipse.chemclipse.support.text.ValueFormat;
 import org.eclipse.chemclipse.support.ui.swt.ExtendedTableViewer;
@@ -40,7 +39,6 @@ public class LibraryTextEditingSupport extends EditingSupport {
 		this.tableViewer = tableViewer;
 		this.columnLabel = columnLabel;
 		this.decimalFormat = ValueFormat.getDecimalFormatEnglish();
-
 		cellEditor = new TextCellEditor(tableViewer.getTable());
 	}
 
@@ -62,7 +60,6 @@ public class LibraryTextEditingSupport extends EditingSupport {
 		Object object = null;
 		if(element instanceof IRegularLibraryMassSpectrum libraryMassSpectrum) {
 			ILibraryInformation libraryInformation = libraryMassSpectrum.getLibraryInformation();
-
 			switch(columnLabel) {
 				case MassSpectrumListUI.NAME:
 					object = libraryInformation.getName();
@@ -94,11 +91,9 @@ public class LibraryTextEditingSupport extends EditingSupport {
 				case MassSpectrumListUI.COMMENTS:
 					object = libraryInformation.getComments();
 					break;
-				case MassSpectrumListUI.SPLASH:
-					object = new SplashFactory(libraryMassSpectrum).getSplash();
-					break;
 			}
 		}
+
 		return object;
 	}
 
@@ -139,10 +134,9 @@ public class LibraryTextEditingSupport extends EditingSupport {
 				case MassSpectrumListUI.COMMENTS:
 					libraryInformation.setComments(value.toString());
 					break;
-				case MassSpectrumListUI.SPLASH:
-					// calculated property
-					break;
 			}
+
+			// tableViewer.updateInput();
 			tableViewer.refresh();
 		}
 	}

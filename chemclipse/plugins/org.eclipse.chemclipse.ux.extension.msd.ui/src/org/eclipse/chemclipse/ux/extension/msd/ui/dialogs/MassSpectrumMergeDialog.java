@@ -13,6 +13,7 @@
 package org.eclipse.chemclipse.ux.extension.msd.ui.dialogs;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -25,6 +26,7 @@ import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.support.CombinedNominalMassSpectrumCalculator;
 import org.eclipse.chemclipse.msd.model.support.ICombinedMassSpectrumCalculator;
 import org.eclipse.chemclipse.ux.extension.msd.ui.swt.MassSpectrumChartCentroid;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -47,8 +49,13 @@ import org.eclipse.swt.widgets.TableColumn;
 
 public class MassSpectrumMergeDialog extends TitleAreaDialog {
 
-	private final List<IScanMSD> massSpectra;
+	private static final int SKIP_ID = IDialogConstants.CLIENT_ID + 1;
+
+	private List<IScanMSD> massSpectra;
 	private List<IScanMSD> checkedMassSpectra = new ArrayList<>();
+	private List<List<IScanMSD>> groups;
+	private int currentGroupIndex = 0;
+	private List<List<IScanMSD>> groupsToMerge = new ArrayList<>();
 
 	private AtomicReference<CheckboxTableViewer> tableControl = new AtomicReference<>();
 	private AtomicReference<MassSpectrumChartCentroid> chartControl = new AtomicReference<>();
@@ -57,6 +64,13 @@ public class MassSpectrumMergeDialog extends TitleAreaDialog {
 
 		super(parentShell);
 		this.massSpectra = massSpectra;
+	}
+
+	public MassSpectrumMergeDialog(Shell parentShell, List<List<IScanMSD>> groups, boolean autoMerge) {
+
+		super(parentShell);
+		this.groups = groups;
+		this.massSpectra = groups.isEmpty() ? Collections.emptyList() : groups.get(0);
 	}
 
 	@Override
@@ -69,7 +83,11 @@ public class MassSpectrumMergeDialog extends TitleAreaDialog {
 	@Override
 	protected Control createDialogArea(Composite parent) {
 
-		setTitle("Merge Mass Spectra");
+		if(isAutoMergeMode()) {
+			updateGroupTitle();
+		} else {
+			setTitle("Merge Mass Spectra");
+		}
 		setMessage("Check entries to include in the merge. Select an entry to preview it (red) against the combined spectrum (blue).", IMessageProvider.INFORMATION);
 		Composite container = (Composite)super.createDialogArea(parent);
 		container.setBackgroundMode(SWT.INHERIT_DEFAULT);
@@ -93,17 +111,52 @@ public class MassSpectrumMergeDialog extends TitleAreaDialog {
 	}
 
 	@Override
+	protected void createButtonsForButtonBar(Composite parent) {
+
+		if(isAutoMergeMode()) {
+			createButton(parent, IDialogConstants.OK_ID, "Merge", true);
+			createButton(parent, SKIP_ID, "Skip", false);
+			createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+		} else {
+			super.createButtonsForButtonBar(parent);
+		}
+	}
+
+	@Override
+	protected void buttonPressed(int buttonId) {
+
+		if(buttonId == SKIP_ID) {
+			skipPressed();
+		} else {
+			super.buttonPressed(buttonId);
+		}
+	}
+
+	@Override
 	protected void okPressed() {
 
 		CheckboxTableViewer tableViewer = tableControl.get();
 		if(tableViewer != null) {
-			for(Object element : tableViewer.getCheckedElements()) {
-				if(element instanceof IScanMSD scan) {
-					checkedMassSpectra.add(scan);
+			if(isAutoMergeMode()) {
+				List<IScanMSD> checked = new ArrayList<>();
+				for(Object element : tableViewer.getCheckedElements()) {
+					if(element instanceof IScanMSD scan) {
+						checked.add(scan);
+					}
 				}
+				if(checked.size() >= 2) {
+					groupsToMerge.add(checked);
+				}
+				advanceOrClose();
+			} else {
+				for(Object element : tableViewer.getCheckedElements()) {
+					if(element instanceof IScanMSD scan) {
+						checkedMassSpectra.add(scan);
+					}
+				}
+				super.okPressed();
 			}
 		}
-		super.okPressed();
 	}
 
 	@Override
@@ -121,6 +174,52 @@ public class MassSpectrumMergeDialog extends TitleAreaDialog {
 	public List<IScanMSD> getCheckedMassSpectra() {
 
 		return checkedMassSpectra;
+	}
+
+	public List<List<IScanMSD>> getGroupsToMerge() {
+
+		return groupsToMerge;
+	}
+
+	private boolean isAutoMergeMode() {
+
+		return groups != null;
+	}
+
+	private void skipPressed() {
+
+		advanceOrClose();
+	}
+
+	private void advanceOrClose() {
+
+		currentGroupIndex++;
+		if(currentGroupIndex < groups.size()) {
+			loadCurrentGroup();
+		} else {
+			setReturnCode(OK);
+			close();
+		}
+	}
+
+	private void loadCurrentGroup() {
+
+		List<IScanMSD> group = groups.get(currentGroupIndex);
+		CheckboxTableViewer tableViewer = tableControl.get();
+		if(tableViewer != null) {
+			tableViewer.setInput(group);
+			tableViewer.setAllChecked(true);
+			if(!group.isEmpty()) {
+				tableViewer.getTable().select(0);
+			}
+			updateChart();
+		}
+		updateGroupTitle();
+	}
+
+	private void updateGroupTitle() {
+
+		setTitle("Merge Mass Spectra (" + (currentGroupIndex + 1) + " / " + groups.size() + ")");
 	}
 
 	private void createTable(Composite parent) {
