@@ -13,21 +13,16 @@
 package org.eclipse.chemclipse.msd.swt.ui.internal.provider;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.Collections;
 import java.util.Set;
 
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.preferences.PreferenceSupplier;
-import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
+import org.eclipse.chemclipse.msd.model.core.DuplicateDetection;
 import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
-import org.eclipse.chemclipse.msd.model.splash.SplashFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
@@ -38,61 +33,19 @@ import org.eclipse.swt.graphics.Image;
 
 public class MassSpectrumListLabelProvider extends AbstractChemClipseLabelProvider {
 
-	private Set<IScanMSD> duplicateEntries = new HashSet<>();
+	private DuplicateDetection duplicateDetection = DuplicateDetection.NONE;
+	private Set<String> duplicateGroups = Collections.emptySet();
 
-	public void setInput(IMassSpectra massSpectra) {
+	public void updateDuplicateHints(DuplicateDetection duplicateDetection, Set<String> duplicateGroups) {
 
-		duplicateEntries.clear();
-		if(massSpectra != null) {
-			/*
-			 * Collect
-			 */
-			Map<String, List<IScanMSD>> nameEntryMap = new HashMap<>();
-			Map<String, List<IScanMSD>> casEntryMap = new HashMap<>();
-			for(IScanMSD scan : massSpectra.getList()) {
-				ILibraryInformation info = getLibraryInformation(scan);
-				if(info != null) {
-					String name = info.getName();
-					if(name != null && !name.isBlank()) {
-						nameEntryMap.computeIfAbsent(name.toLowerCase(), k -> new ArrayList<>()).add(scan);
-					}
-					String cas = info.getCasNumber();
-					if(cas != null && !cas.isBlank()) {
-						casEntryMap.computeIfAbsent(cas, k -> new ArrayList<>()).add(scan);
-					}
-				}
-			}
-			/*
-			 * Map by Name
-			 */
-			for(List<IScanMSD> list : nameEntryMap.values()) {
-				if(list.size() > 1) {
-					duplicateEntries.addAll(list);
-				}
-			}
-			/*
-			 * Map by CAS#
-			 */
-			for(List<IScanMSD> list : casEntryMap.values()) {
-				if(list.size() > 1) {
-					duplicateEntries.addAll(list);
-				}
-			}
-		}
-	}
-
-	private ILibraryInformation getLibraryInformation(IScanMSD scan) {
-
-		if(scan instanceof IRegularLibraryMassSpectrum libraryMassSpectrum) {
-			return libraryMassSpectrum.getLibraryInformation();
-		}
-		return IIdentificationTarget.getLibraryInformation(scan);
+		this.duplicateDetection = duplicateDetection;
+		this.duplicateGroups = duplicateGroups != null ? duplicateGroups : Collections.emptySet();
 	}
 
 	@Override
 	public Color getBackground(Object element) {
 
-		if(element instanceof IScanMSD scan && duplicateEntries.contains(scan)) {
+		if(element instanceof IRegularLibraryMassSpectrum scan && isDuplicate(scan)) {
 			return Colors.LIGHT_YELLOW;
 		}
 		return super.getBackground(element);
@@ -102,7 +55,7 @@ public class MassSpectrumListLabelProvider extends AbstractChemClipseLabelProvid
 	public Image getColumnImage(Object element, int columnIndex) {
 
 		if(columnIndex == 0) {
-			if(element instanceof IScanMSD scan && duplicateEntries.contains(scan)) {
+			if(element instanceof IRegularLibraryMassSpectrum scan && isDuplicate(scan)) {
 				return ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_STATUS_WARN, IApplicationImageProvider.SIZE_16x16);
 			}
 			return ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_STATUS_OK, IApplicationImageProvider.SIZE_16x16);
@@ -234,14 +187,25 @@ public class MassSpectrumListLabelProvider extends AbstractChemClipseLabelProvid
 					text = libraryInformation.getComments();
 				}
 				break;
-			case 14:
-				if(massSpectrum != null) {
-					text = new SplashFactory(massSpectrum).getSplash();
-				}
-				break;
 			default:
 				text = "n.v.";
 		}
 		return text;
+	}
+
+	private boolean isDuplicate(IRegularLibraryMassSpectrum scanMSD) {
+
+		if(duplicateGroups.isEmpty()) {
+			return false;
+		}
+
+		switch(duplicateDetection) {
+			case NAME:
+				return duplicateGroups.contains(scanMSD.getLibraryInformation().getName());
+			case CAS:
+				return duplicateGroups.contains(scanMSD.getLibraryInformation().getCasNumber());
+			default:
+				return false;
+		}
 	}
 }
