@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -20,6 +20,7 @@ public abstract class AbstractChromatogramIntegrationResult implements IChromato
 	private double ion;
 
 	public AbstractChromatogramIntegrationResult(double ion, double chromatogramArea, double backgroundArea) {
+
 		this.ion = ion;
 		this.chromatogramArea = chromatogramArea;
 		this.backgroundArea = backgroundArea;
@@ -77,7 +78,7 @@ public abstract class AbstractChromatogramIntegrationResult implements IChromato
 	@Override
 	public int hashCode() {
 
-		return Double.valueOf(chromatogramArea).hashCode() + Double.valueOf(chromatogramArea).hashCode() + integratorType.hashCode() + Double.valueOf(ion).hashCode();
+		return Double.hashCode(chromatogramArea) + Double.hashCode(chromatogramArea) + integratorType.hashCode() + Double.hashCode(ion);
 	}
 
 	@Override

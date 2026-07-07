@@ -66,7 +66,7 @@ public class Point implements IPoint {
 	@Override
 	public int hashCode() {
 
-		return Double.valueOf(x).hashCode() + Double.valueOf(y).hashCode();
+		return Double.hashCode(x) + Double.hashCode(y);
 	}
 
 	@Override

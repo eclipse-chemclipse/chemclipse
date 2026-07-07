@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -333,10 +333,10 @@ public class ExtractedWavelengthSignal implements IExtractedWavelengthSignal {
 	@Override
 	public int hashCode() {
 
-		return 7 * Integer.valueOf(startWavelength).hashCode() + //
-				9 * Integer.valueOf(stopWavelength).hashCode() + //
-				11 * Integer.valueOf(getNumberOfWavelengthValues()).hashCode() + //
-				13 * Float.valueOf(getTotalSignal()).hashCode();
+		return 7 * Integer.hashCode(startWavelength) + //
+				9 * Integer.hashCode(stopWavelength) + //
+				11 * Integer.hashCode(getNumberOfWavelengthValues()) + //
+				13 * Float.hashCode(getTotalSignal());
 	}
 
 	@Override

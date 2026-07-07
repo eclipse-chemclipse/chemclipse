@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2025 Lablicate GmbH.
+ * Copyright (c) 2014, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -80,7 +80,7 @@ public class RetentionIndexEntry implements IRetentionIndexEntry {
 	@Override
 	public int hashCode() {
 
-		return 7 * Integer.valueOf(retentionTime).hashCode() + 11 * Float.valueOf(retentionIndex).hashCode();
+		return 7 * Integer.hashCode(retentionTime) + 11 * Float.hashCode(retentionIndex);
 	}
 
 	@Override

@@ -76,7 +76,7 @@ public class IonRange implements IIonRange {
 	@Override
 	public int hashCode() {
 
-		return 7 * Integer.valueOf(getStartIon()).hashCode() + 11 * Integer.valueOf(getStopIon()).hashCode();
+		return 7 * Integer.hashCode(getStartIon()) + 11 * Integer.hashCode(getStopIon());
 	}
 
 	@Override

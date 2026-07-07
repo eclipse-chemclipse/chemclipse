@@ -78,7 +78,7 @@ public class RetentionTimeRange implements IRetentionTimeRange {
 	@Override
 	public int hashCode() {
 
-		return 7 * Integer.valueOf(startRetentionTime).hashCode() + 11 * Integer.valueOf(stopRetentionTime).hashCode();
+		return 7 * Integer.hashCode(startRetentionTime) + 11 * Integer.hashCode(stopRetentionTime);
 	}
 
 	@Override

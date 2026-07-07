@@ -940,7 +940,7 @@ public abstract class AbstractChromatogram extends AbstractMeasurementTarget imp
 	public int hashCode() {
 
 		// for performance reason we here only take some basic information into account
-		return 7 * Integer.valueOf(getNumberOfScans()).hashCode() + 7 * Integer.valueOf(getStartRetentionTime()).hashCode() + 9 * Integer.valueOf(getStopRetentionTime()).hashCode();
+		return 7 * Integer.hashCode(getNumberOfScans()) + 7 * Integer.hashCode(getStartRetentionTime()) + 9 * Integer.hashCode(getStopRetentionTime());
 	}
 
 	@Override

@@ -76,7 +76,7 @@ public class BackgroundAbundanceRange implements IBackgroundAbundanceRange {
 	@Override
 	public int hashCode() {
 
-		return 7 * Float.valueOf(getStartBackgroundAbundance()).hashCode() + 11 * Float.valueOf(getStopBackgroundAbundance()).hashCode();
+		return 7 * Float.hashCode(getStartBackgroundAbundance()) + 11 * Float.hashCode(getStopBackgroundAbundance());
 	}
 
 	@Override

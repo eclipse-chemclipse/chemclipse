@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -363,9 +363,9 @@ public class ExtractedIonSignal implements IExtractedIonSignal {
 	@Override
 	public int hashCode() {
 
-		return 7 * Integer.valueOf(startIon).hashCode() + //
-				9 * Integer.valueOf(stopIon).hashCode() + //
-				11 * Integer.valueOf(getNumberOfIonValues()).hashCode() + //
+		return 7 * Integer.hashCode(startIon) + //
+				9 * Integer.hashCode(stopIon) + //
+				11 * Integer.hashCode(getNumberOfIonValues()) + //
 				13 * Float.valueOf(getTotalSignal()).hashCode();
 	}
 

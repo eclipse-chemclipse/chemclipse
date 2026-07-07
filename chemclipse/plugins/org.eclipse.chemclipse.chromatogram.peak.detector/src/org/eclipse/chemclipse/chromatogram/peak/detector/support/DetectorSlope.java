@@ -51,7 +51,7 @@ public class DetectorSlope extends Slope implements IDetectorSlope {
 	@Override
 	public int hashCode() {
 
-		return 7 * Integer.valueOf(retentionTime).hashCode();
+		return 7 * Integer.hashCode(retentionTime);
 	}
 
 	@Override

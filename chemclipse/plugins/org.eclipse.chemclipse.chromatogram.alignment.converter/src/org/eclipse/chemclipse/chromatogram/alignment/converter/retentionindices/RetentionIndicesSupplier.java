@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.alignment.converter.retentionindices;
 
+import java.util.Objects;
+
 public class RetentionIndicesSupplier implements IRetentionIndicesSupplier {
 
 	private String id = "";
@@ -150,7 +152,7 @@ public class RetentionIndicesSupplier implements IRetentionIndicesSupplier {
 	@Override
 	public int hashCode() {
 
-		return id.hashCode() + description.hashCode() + filterName.hashCode() + fileExtension.hashCode() + Boolean.valueOf(exportable).hashCode() + Boolean.valueOf(importable).hashCode();
+		return Objects.hash(id, description, filterName, fileExtension, exportable, importable);
 	}
 
 	@Override

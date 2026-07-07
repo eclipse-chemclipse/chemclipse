@@ -798,7 +798,7 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 	@Override
 	public int hashCode() {
 
-		return 7 * Double.valueOf(getBasePeak()).hashCode() + 11 * Float.valueOf(getBasePeakAbundance()).hashCode() + 13 * Float.valueOf(getNumberOfIons()).hashCode() + 15 * Float.valueOf(getTotalSignal()).hashCode() + 13 * Boolean.valueOf(isNormalized).hashCode() + 11 * Float.valueOf(normalizationBase).hashCode();
+		return 7 * Double.hashCode(getBasePeak()) + 11 * Float.hashCode(getBasePeakAbundance()) + 13 * Float.hashCode(getNumberOfIons()) + 15 * Float.hashCode(getTotalSignal()) + 13 * Boolean.hashCode(isNormalized) + 11 * Float.hashCode(normalizationBase);
 	}
 
 	@Override
