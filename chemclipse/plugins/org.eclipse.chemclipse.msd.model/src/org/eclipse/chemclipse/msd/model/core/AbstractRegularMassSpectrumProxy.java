@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2025 Lablicate GmbH.
+ * Copyright (c) 2015, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -16,6 +16,7 @@ package org.eclipse.chemclipse.msd.model.core;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.chemclipse.model.notifier.UpdateNotifier;
 import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -275,6 +276,7 @@ public abstract class AbstractRegularMassSpectrumProxy extends AbstractRegularMa
 		if(isProxy) {
 			isProxy = false;
 			importIons(monitor);
+			UpdateNotifier.update(this);
 		}
 	}
 }
