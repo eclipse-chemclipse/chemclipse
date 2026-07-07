@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.alignment.model.core;
 
+import java.util.Objects;
+
 public class RetentionIndex implements IRetentionIndex, Comparable<IRetentionIndex> {
 
 	public static final int MIN_RETENTION_TIME = 0;
@@ -140,8 +142,7 @@ public class RetentionIndex implements IRetentionIndex, Comparable<IRetentionInd
 	@Override
 	public int hashCode() {
 
-		// index, retentionTime, name
-		return 7 * Double.hashCode(index) + 9 * Integer.hashCode(retentionTime) + 11 * name.hashCode();
+		return Objects.hash(index, retentionTime, name);
 	}
 
 	@Override
