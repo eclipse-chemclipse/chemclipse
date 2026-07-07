@@ -87,18 +87,24 @@ public class CasSupport {
 
 	public static boolean verifyChecksum(int cas) {
 
-		if(cas >= 0 && cas <= MAX_ID) {
-			/*
-			 * The last char is the checksum.
-			 */
+		if(cas == 0) {
+			return true;
+		}
+
+		if(cas > 0) {
 			String casNumber = Integer.toString(cas);
 			int length = casNumber.length() - 1;
-			int checksum = calculateChecksumFromPrefix(casNumber.substring(0, length));
-
-			char character = casNumber.charAt(length);
-			if(Character.isDigit(character)) {
-				int casChecksum = Integer.parseInt(Character.toString(character));
-				return casChecksum == checksum;
+			String prefix = casNumber.substring(0, length);
+			if(!prefix.isBlank() && Integer.parseInt(prefix) <= MAX_ID) {
+				/*
+				 * The last char is the checksum.
+				 */
+				int checksum = calculateChecksumFromPrefix(prefix);
+				char character = casNumber.charAt(length);
+				if(Character.isDigit(character)) {
+					int casChecksum = Integer.parseInt(Character.toString(character));
+					return casChecksum == checksum;
+				}
 			}
 		}
 
