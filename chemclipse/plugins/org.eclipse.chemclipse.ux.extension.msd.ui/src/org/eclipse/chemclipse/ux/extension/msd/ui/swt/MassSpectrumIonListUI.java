@@ -19,7 +19,7 @@ import org.eclipse.chemclipse.ux.extension.msd.ui.internal.provider.IonLabelProv
 import org.eclipse.chemclipse.ux.extension.msd.ui.internal.provider.IonListFilter;
 import org.eclipse.swt.widgets.Composite;
 
-public class IonListUI extends ExtendedTableViewer {
+public class MassSpectrumIonListUI extends ExtendedTableViewer {
 
 	private static final String[] TITLES = IonLabelProvider.TITLES;
 	private static final int[] BOUNDS = IonLabelProvider.BOUNDS;
@@ -28,7 +28,7 @@ public class IonListUI extends ExtendedTableViewer {
 	private final IonComparator comparator = new IonComparator();
 	private final IonListFilter listFilter = new IonListFilter();
 
-	public IonListUI(Composite parent, int style) {
+	public MassSpectrumIonListUI(Composite parent, int style) {
 
 		super(parent, style);
 		createColumns();

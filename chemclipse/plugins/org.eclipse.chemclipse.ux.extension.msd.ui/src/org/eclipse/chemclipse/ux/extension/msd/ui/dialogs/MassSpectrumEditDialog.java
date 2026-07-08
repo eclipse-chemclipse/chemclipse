@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-public class IonEditDialog extends TitleAreaDialog {
+public class MassSpectrumEditDialog extends TitleAreaDialog {
 
 	private AtomicReference<Text> textIon = new AtomicReference<>();
 	private AtomicReference<Text> textAbundance = new AtomicReference<>();
@@ -36,7 +36,7 @@ public class IonEditDialog extends TitleAreaDialog {
 	private final IIon ion;
 	private IIon result = null;
 
-	public IonEditDialog(Shell parentShell, IIon ion) {
+	public MassSpectrumEditDialog(Shell parentShell, IIon ion) {
 
 		super(parentShell);
 		this.ion = ion;

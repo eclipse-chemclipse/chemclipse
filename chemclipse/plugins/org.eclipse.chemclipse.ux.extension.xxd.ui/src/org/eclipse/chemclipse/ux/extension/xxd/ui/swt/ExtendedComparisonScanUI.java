@@ -13,7 +13,6 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
 
-import static org.eclipse.chemclipse.msd.model.preferences.PreferenceSupplier.getMassSpectrum;
 import static org.eclipse.chemclipse.msd.model.preferences.PreferenceSupplier.isUseNominalMZ;
 import static org.eclipse.chemclipse.msd.model.preferences.PreferenceSupplier.isUseNormalizedScan;
 
@@ -804,7 +803,7 @@ public class ExtendedComparisonScanUI extends Composite implements IExtendedPart
 		MassSpectrumFilterSettings settings = new MassSpectrumFilterSettings();
 		settings.setUseNominalMasses(isUseNominalMZ());
 		settings.setUseNormalize(isUseNormalizedScan());
-		settings.setSubtractMassSpectrum(getMassSpectrum(scanReference));
+		settings.setSubtractMassSpectrum(scanReference);
 		/*
 		 * Subtract
 		 */

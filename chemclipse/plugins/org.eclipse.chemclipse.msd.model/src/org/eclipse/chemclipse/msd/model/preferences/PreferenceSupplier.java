@@ -15,10 +15,8 @@ package org.eclipse.chemclipse.msd.model.preferences;
 
 import org.eclipse.chemclipse.model.support.CalculationType;
 import org.eclipse.chemclipse.msd.model.Activator;
-import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
-import org.eclipse.chemclipse.msd.model.implementation.Ion;
-import org.eclipse.chemclipse.msd.model.implementation.ScanMSD;
+import org.eclipse.chemclipse.msd.model.support.MassSpectrumIO;
 import org.eclipse.chemclipse.support.preferences.AbstractPreferenceSupplier;
 import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
 
@@ -42,8 +40,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final String P_DELETE_TARGETS_OPTIMIZE_SCAN = "deleteTargetsOptimizeScan";
 	public static final boolean DEF_DELETE_TARGETS_OPTIMIZE_SCAN = true;
 
-	private static final String DELIMITER_ION_ABUNDANCE = ":";
-	private static final String DELIMITER_IONS = ";";
 	/*
 	 * It is the mass spectrum that is used only by the session.
 	 */
@@ -152,42 +148,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		return INSTANCE().getBoolean(P_USE_PEAKS_INSTEAD_OF_SCANS, DEF_USE_PEAKS_INSTEAD_OF_SCANS);
 	}
 
-	public static String getMassSpectrum(IScanMSD massSpectrum) {
-
-		StringBuilder builder = new StringBuilder();
-		if(massSpectrum != null) {
-			for(IIon ion : massSpectrum.getIons()) {
-				builder.append(ion.getIon());
-				builder.append(DELIMITER_ION_ABUNDANCE);
-				builder.append(ion.getAbundance());
-				builder.append(DELIMITER_IONS);
-			}
-		}
-		return builder.toString();
-	}
-
-	public static IScanMSD getMassSpectrum(String value) {
-
-		if(value != null && !value.isEmpty()) {
-			ScanMSD scanMSD = new ScanMSD();
-			String[] ions = value.split(DELIMITER_IONS);
-			for(String ion : ions) {
-				String[] fragment = ion.split(DELIMITER_ION_ABUNDANCE);
-				if(fragment.length == 2) {
-					/*
-					 * Add the mass fragment
-					 */
-					double mz = Double.parseDouble(fragment[0]);
-					float abundance = Float.parseFloat(fragment[1]);
-					IIon subtractIon = new Ion(mz, abundance);
-					scanMSD.addIon(subtractIon);
-				}
-			}
-			return scanMSD;
-		}
-		return null;
-	}
-
 	public static void setCopyTracesClipboard(int number) {
 
 		INSTANCE().putInteger(P_COPY_TRACES_CLIPBOARD, number);
@@ -205,11 +165,11 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 
 	private static IScanMSD getSubtractMassSpectrum() {
 
-		return getMassSpectrum(INSTANCE().get(P_SUBTRACT_MASS_SPECTRUM, DEF_SUBTRACT_MASS_SPECTRUM));
+		return MassSpectrumIO.getMassSpectrum(INSTANCE().get(P_SUBTRACT_MASS_SPECTRUM, DEF_SUBTRACT_MASS_SPECTRUM));
 	}
 
 	private static void setSubtractMassSpectrum(IScanMSD massSpectrum) {
 
-		INSTANCE().put(P_SUBTRACT_MASS_SPECTRUM, getMassSpectrum(massSpectrum));
+		INSTANCE().put(P_SUBTRACT_MASS_SPECTRUM, MassSpectrumIO.getMassSpectrum(massSpectrum));
 	}
 }

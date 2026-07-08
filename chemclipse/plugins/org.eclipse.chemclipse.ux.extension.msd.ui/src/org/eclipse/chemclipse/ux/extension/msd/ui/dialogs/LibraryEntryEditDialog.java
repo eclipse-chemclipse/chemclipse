@@ -21,7 +21,7 @@ import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.swt.ui.components.identification.SynonymsEditUI;
 import org.eclipse.chemclipse.support.text.ValueFormat;
-import org.eclipse.chemclipse.ux.extension.msd.ui.swt.IonsEditUI;
+import org.eclipse.chemclipse.ux.extension.msd.ui.swt.MassSpectrumEditor;
 import org.eclipse.chemclipse.ux.extension.ui.swt.ColumnIndicesEditUI;
 import org.eclipse.chemclipse.ux.extension.ui.swt.FlavorMarkersEditUI;
 import org.eclipse.core.databinding.validation.IValidator;
@@ -194,7 +194,7 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 		Composite composite = new Composite(tabFolder, SWT.NONE);
 		composite.setLayout(new FillLayout());
 
-		IonsEditUI ionsEditUI = new IonsEditUI(composite, SWT.NONE);
+		MassSpectrumEditor ionsEditUI = new MassSpectrumEditor(composite, SWT.NONE);
 		ionsEditUI.update(massSpectrum);
 
 		tabItem.setControl(composite);
@@ -273,8 +273,9 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 		Text text = new Text(parent, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.WRAP);
 		text.setText(value != null ? value : "");
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
-		gridData.heightHint = 60;
+		gridData.heightHint = 200;
 		text.setLayoutData(gridData);
+
 		return text;
 	}
 

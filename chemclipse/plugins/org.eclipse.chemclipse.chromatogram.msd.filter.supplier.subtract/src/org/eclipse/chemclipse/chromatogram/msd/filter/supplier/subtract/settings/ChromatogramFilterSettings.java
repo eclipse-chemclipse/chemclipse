@@ -14,16 +14,16 @@ package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.setting
 
 import org.eclipse.chemclipse.chromatogram.filter.settings.AbstractChromatogramFilterSettings;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
-import org.eclipse.chemclipse.msd.model.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.msd.model.implementation.ScanMSD;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
 public class ChromatogramFilterSettings extends AbstractChromatogramFilterSettings {
 
-	@JsonProperty(value = "Subtract Mass Spectrum", defaultValue = "18:200;28:1000;32:500")
+	@JsonProperty(value = "Subtract Mass Spectrum", defaultValue = "")
 	@JsonPropertyDescription(value = "This is the mass spectrum used for subtraction.")
-	private String subtractMassSpectrum = "18:200;28:1000;32:500";
+	private IScanMSD subtractMassSpectrum = new ScanMSD();
 	@JsonProperty(value = "Use Nominal Mass", defaultValue = "true")
 	@JsonPropertyDescription(value = "Use the nominal mass schema.")
 	private boolean useNominalMasses = true;
@@ -31,14 +31,14 @@ public class ChromatogramFilterSettings extends AbstractChromatogramFilterSettin
 	@JsonPropertyDescription(value = "Normalize the intensities.")
 	private boolean useNormalize = true;
 
-	public void setSubtractMassSpectrum(String subtractMassSpectrum) {
-
-		this.subtractMassSpectrum = subtractMassSpectrum;
-	}
-
 	public IScanMSD getSubtractMassSpectrum() {
 
-		return PreferenceSupplier.getMassSpectrum(subtractMassSpectrum);
+		return subtractMassSpectrum;
+	}
+
+	public void setSubtractMassSpectrum(IScanMSD subtractMassSpectrum) {
+
+		this.subtractMassSpectrum = subtractMassSpectrum;
 	}
 
 	public boolean isUseNominalMasses() {
