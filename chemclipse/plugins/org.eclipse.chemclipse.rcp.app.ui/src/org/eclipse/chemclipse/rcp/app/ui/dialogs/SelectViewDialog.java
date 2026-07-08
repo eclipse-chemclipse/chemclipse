@@ -13,7 +13,10 @@
 package org.eclipse.chemclipse.rcp.app.ui.dialogs;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.chemclipse.rcp.app.ui.provider.SelectViewContentProvider;
 import org.eclipse.chemclipse.rcp.app.ui.provider.SelectViewFilter;
@@ -72,7 +75,6 @@ public class SelectViewDialog extends Dialog implements ISelectionChangedListene
 	private EModelService modelService;
 	@Inject
 	private EPartService partService;
-	private List<MPart> parts;
 	private List<MPart> selectedParts = new ArrayList<>();
 
 	@Inject
@@ -87,7 +89,6 @@ public class SelectViewDialog extends Dialog implements ISelectionChangedListene
 
 		super.configureShell(shell);
 		shell.setText("Select View");
-		parts = modelService.findElements(application, null, MPart.class);
 	}
 
 	@Override
@@ -202,7 +203,6 @@ public class SelectViewDialog extends Dialog implements ISelectionChangedListene
 		 */
 		tableViewer.setLabelProvider(ContextInjectionFactory.make(SelectViewLabelProvider.class, eclipseContext));
 		tableViewer.setContentProvider(new SelectViewContentProvider());
-		tableViewer.setInput(parts);
 		selectViewFilter = new SelectViewFilter();
 		selectViewFilter.setCaseInsensitive(true);
 		tableViewer.addFilter(selectViewFilter);
@@ -211,6 +211,22 @@ public class SelectViewDialog extends Dialog implements ISelectionChangedListene
 		 * Select the perspective in double click.
 		 */
 		tableViewer.addDoubleClickListener(event -> okPressed());
+		/*
+		 * Input (Sorted)
+		 */
+		Map<String, MPart> partMap = new HashMap<>();
+		for(MPart part : modelService.findElements(application, null, MPart.class)) {
+			partMap.put(part.getElementId(), part);
+		}
+		List<MPart> parts = new ArrayList<>(partMap.values());
+		Collections.sort(parts, (p1, p2) -> getPartLabel(p1).compareTo(getPartLabel(p2)));
+		tableViewer.setInput(parts);
+	}
+
+	private String getPartLabel(MPart part) {
+
+		String label = part.getLabel();
+		return label != null ? label : "";
 	}
 
 	/**
