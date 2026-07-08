@@ -158,14 +158,12 @@ public abstract class AbstractIon implements IIon {
 	}
 
 	/**
-	 * Compares the mass/charge ration of two ions. Returns the
-	 * following values: a.compareTo(b) 0 a == b : 28 == 28 -1 a &lt; b : 18 &lt; 28
-	 * +1 a &gt; b : 28 &gt; 18
+	 * Compares the mass/charge ration of two ions.
 	 */
 	@Override
 	public int compareTo(IIon other) {
 
-		return (int)(this.ion - other.getIon());
+		return Double.compare(this.ion, other.getIon());
 	}
 
 	@Override
