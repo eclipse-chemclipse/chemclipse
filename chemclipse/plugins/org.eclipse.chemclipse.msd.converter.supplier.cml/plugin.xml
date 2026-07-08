@@ -22,7 +22,7 @@
             description="Reads and writes Chemical Markup Language (CML) mass spectra."
             fileExtension=".cml"
             exportConverter="org.eclipse.chemclipse.msd.converter.supplier.cml.converter.MassSpectrumExportConverter"
-            filterName="Chemical Markup Language (*cml)"
+            filterName="Chemical Markup Language (*.cml)"
             id="org.eclipse.chemclipse.msd.converter.supplier.cml.spectrum"
             importContentMatcher="org.eclipse.chemclipse.msd.converter.supplier.cml.converter.MassSpectrumFileContentMatcher"
             importConverter="org.eclipse.chemclipse.msd.converter.supplier.cml.converter.MassSpectrumImportConverter"
