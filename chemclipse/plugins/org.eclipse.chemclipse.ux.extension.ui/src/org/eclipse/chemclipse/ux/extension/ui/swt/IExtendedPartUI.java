@@ -15,7 +15,9 @@ package org.eclipse.chemclipse.ux.extension.ui.swt;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
@@ -276,13 +278,18 @@ public interface IExtendedPartUI {
 
 	default Button createSettingsButton(Composite parent, Supplier<List<Class<? extends IPreferencePage>>> supplierPreferencePages, ISettingsHandler settingsHandler, boolean sortByTitle) {
 
+		return createSettingsButton(parent, supplierPreferencePages, settingsHandler, sortByTitle, true);
+	}
+
+	default Button createSettingsButton(Composite parent, Supplier<List<Class<? extends IPreferencePage>>> supplierPreferencePages, ISettingsHandler settingsHandler, boolean sortByTitle, boolean removeDuplicates) {
+
 		Button button = createSettingsButtonBasic(parent);
 		button.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 
-				showPreferencesDialog(event, supplierPreferencePages.get(), settingsHandler, sortByTitle);
+				showPreferencesDialog(event, supplierPreferencePages.get(), settingsHandler, sortByTitle, removeDuplicates);
 			}
 		});
 
@@ -303,31 +310,52 @@ public interface IExtendedPartUI {
 
 	default void showPreferencesDialog(SelectionEvent event, List<Class<? extends IPreferencePage>> preferencePages, ISettingsHandler settingsHandler, boolean sortByTitle) {
 
+		showPreferencesDialog(event, preferencePages, settingsHandler, sortByTitle, true);
+	}
+
+	default void showPreferencesDialog(SelectionEvent event, List<Class<? extends IPreferencePage>> preferencePages, ISettingsHandler settingsHandler, boolean sortByTitle, boolean removeDuplicates) {
+
 		if(!preferencePages.isEmpty()) {
 			/*
 			 * Collect the pages
 			 */
 			List<IPreferencePage> pages = new ArrayList<>();
+			Set<String> canonicalNames = new HashSet<>();
 			for(Class<? extends IPreferencePage> page : preferencePages) {
 				try {
+					/*
+					 * Filter duplicates
+					 */
+					String canonicalName = page.getCanonicalName();
+					if(removeDuplicates) {
+						if(canonicalNames.contains(canonicalName)) {
+							continue;
+						}
+					}
+					/*
+					 * Add the page
+					 */
 					IPreferencePage preferencePage = page.getConstructor().newInstance();
 					String title = preferencePage.getTitle();
 					if(title == null || title.isEmpty() || title.isBlank()) {
 						preferencePage.setTitle("--");
 					}
 					pages.add(preferencePage);
+					canonicalNames.add(canonicalName);
 				} catch(Exception exception) {
 					logger.warn(exception);
 				}
 			}
 			/*
-			 * Add the pages.
+			 * Sort by name.
 			 */
 			PreferenceManager preferenceManager = new PreferenceManager();
 			if(sortByTitle) {
 				Collections.sort(pages, (p1, p2) -> p1.getTitle().compareTo(p2.getTitle()));
 			}
-
+			/*
+			 * Add the pages.
+			 */
 			int i = 1;
 			for(IPreferencePage preferencePage : pages) {
 				preferenceManager.addToRoot(new PreferenceNode(Integer.toString(i++), preferencePage));
@@ -338,7 +366,6 @@ public interface IExtendedPartUI {
 			PreferenceDialog preferenceDialog = new PreferenceDialog(event.display.getActiveShell(), preferenceManager);
 			preferenceDialog.create();
 			preferenceDialog.setMessage(TITLE_SETTINGS);
-
 			if(preferenceDialog.open() == Window.OK) {
 				try {
 					if(settingsHandler != null) {
