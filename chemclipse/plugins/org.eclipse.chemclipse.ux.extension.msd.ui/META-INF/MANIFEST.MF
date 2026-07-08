@@ -40,6 +40,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.nebula.visualization.xygraph;bundle-version="3.1.1",
  org.eclipse.chemclipse.xxd.process.ui;bundle-version="0.9.0",
  org.eclipse.chemclipse.msd.identifier;bundle-version="0.9.0",
+ com.fasterxml.jackson.core.jackson-databind;bundle-version="2.9.2",
  org.eclipse.core.databinding;bundle-version="1.6.200"
 Bundle-RequiredExecutionEnvironment: JavaSE-21
 Bundle-ActivationPolicy: lazy
@@ -47,6 +48,7 @@ Bundle-Vendor: ChemClipse
 Export-Package: org.eclipse.chemclipse.ux.extension.msd.ui.editors,
  org.eclipse.chemclipse.ux.extension.msd.ui.parts,
  org.eclipse.chemclipse.ux.extension.msd.ui.provider,
+ org.eclipse.chemclipse.ux.extension.msd.ui.services,
  org.eclipse.chemclipse.ux.extension.msd.ui.support,
  org.eclipse.chemclipse.ux.extension.msd.ui.swt,
  org.eclipse.chemclipse.ux.extension.msd.ui.views,
@@ -55,4 +57,5 @@ Import-Package: jakarta.annotation;version="2.1.1",
  jakarta.inject;version="2.0.1",
  org.osgi.service.event;version="[1.0.0,2.0.0)"
 Bundle-Localization: OSGI-INF/l10n/bundle
-Service-Component: OSGI-INF/org.eclipse.chemclipse.ux.extension.msd.ui.processors.ResetDatabaseCacheProcessSupplier.xml
+Service-Component: OSGI-INF/org.eclipse.chemclipse.ux.extension.msd.ui.processors.ResetDatabaseCacheProcessSupplier.xml,
+ OSGI-INF/org.eclipse.chemclipse.ux.extension.msd.ui.services.ScanAnnotationServiceMSD.xml

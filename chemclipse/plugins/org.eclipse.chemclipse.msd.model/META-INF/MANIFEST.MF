@@ -17,6 +17,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.chemclipse.chromatogram.xxd.calculator;bundle-version="0.8.0",
  org.eclipse.chemclipse.processing,
  com.fasterxml.jackson.core.jackson-annotations;bundle-version="2.12.1",
+ com.fasterxml.jackson.core.jackson-core;bundle-version="2.12.1",
+ com.fasterxml.jackson.core.jackson-databind;bundle-version="2.12.1",
  org.apache.commons.math3;bundle-version="3.6.1",
  org.apache.commons.commons-codec;bundle-version="1.15.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-21
@@ -31,10 +33,13 @@ Export-Package: org.eclipse.chemclipse.msd.model.core,
  org.eclipse.chemclipse.msd.model.noise,
  org.eclipse.chemclipse.msd.model.notifier,
  org.eclipse.chemclipse.msd.model.preferences,
+ org.eclipse.chemclipse.msd.model.serializer,
+ org.eclipse.chemclipse.msd.model.service,
  org.eclipse.chemclipse.msd.model.splash,
  org.eclipse.chemclipse.msd.model.statistics,
  org.eclipse.chemclipse.msd.model.support,
  org.eclipse.chemclipse.msd.model.util,
  org.eclipse.chemclipse.msd.model.xic
 Automatic-Module-Name: org.eclipse.chemclipse.msd.model
-Service-Component: OSGI-INF/org.eclipse.chemclipse.msd.model.system.ModelProcessorMSD.xml
+Service-Component: OSGI-INF/org.eclipse.chemclipse.msd.model.service.ScanSerializationServiceMSD.xml,
+ OSGI-INF/org.eclipse.chemclipse.msd.model.system.ModelProcessorMSD.xml

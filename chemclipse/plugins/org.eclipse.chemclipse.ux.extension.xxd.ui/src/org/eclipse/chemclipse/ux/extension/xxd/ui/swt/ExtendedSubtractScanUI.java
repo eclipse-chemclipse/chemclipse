@@ -13,7 +13,6 @@
 package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
 
 import static org.eclipse.chemclipse.msd.model.preferences.PreferenceSupplier.getCalculationType;
-import static org.eclipse.chemclipse.msd.model.preferences.PreferenceSupplier.getCopyTracesClipboard;
 import static org.eclipse.chemclipse.msd.model.preferences.PreferenceSupplier.getSessionSubtractMassSpectrum;
 import static org.eclipse.chemclipse.msd.model.preferences.PreferenceSupplier.isUseNormalizedScan;
 import static org.eclipse.chemclipse.msd.model.preferences.PreferenceSupplier.isUsePeaksInsteadOfScans;
@@ -35,7 +34,7 @@ import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 import org.eclipse.chemclipse.msd.model.support.FilterSupport;
-import org.eclipse.chemclipse.msd.model.support.ScanSupport;
+import org.eclipse.chemclipse.msd.model.support.MassSpectrumIO;
 import org.eclipse.chemclipse.msd.swt.ui.support.DatabaseFileSupport;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
@@ -347,8 +346,7 @@ public class ExtendedSubtractScanUI extends Composite implements IExtendedPartUI
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
-				int maxCopyTraces = getCopyTracesClipboard();
-				String traces = ScanSupport.extractTracesText(scanMSD, maxCopyTraces);
+				String traces = MassSpectrumIO.getMassSpectrum(scanMSD);
 				TextTransfer textTransfer = TextTransfer.getInstance();
 				Object[] data = new Object[]{traces};
 				Transfer[] dataTypes = new Transfer[]{textTransfer};
