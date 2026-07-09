@@ -19,8 +19,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.exceptions.ReferenceMustNotBeNullException;
@@ -38,6 +40,7 @@ import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
+import org.eclipse.chemclipse.msd.model.implementation.MassSpectra;
 import org.eclipse.chemclipse.msd.model.implementation.RegularLibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.model.support.CombinedNominalMassSpectrumCalculator;
 import org.eclipse.chemclipse.msd.model.support.ICombinedMassSpectrumCalculator;
@@ -90,6 +93,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 	private AtomicReference<Button> buttonSelectionMergeEntries = new AtomicReference<>();
 	private AtomicReference<Button> buttonAutoMergeEntries = new AtomicReference<>();
 	private AtomicReference<ComboViewer> comboDuplicateDetection = new AtomicReference<>();
+	private AtomicReference<Button> buttonShowDuplicatesOnly = new AtomicReference<>();
 	private AtomicReference<MassSpectrumListUI> massSpectrumListControl = new AtomicReference<>();
 
 	private IMassSpectra massSpectra = null;
@@ -152,13 +156,14 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 		GridData gridDataStatus = new GridData(GridData.FILL_HORIZONTAL);
 		gridDataStatus.horizontalAlignment = SWT.END;
 		composite.setLayoutData(gridDataStatus);
-		composite.setLayout(new GridLayout(10, false));
+		composite.setLayout(new GridLayout(11, false));
 
 		createButtonToggleToolbarInfo(composite);
 		createButtonToggleToolbarSearch(composite);
 		createButtonLibraryImport(composite);
 		createButtonAddEntry(composite);
 		createComboDuplicateDetection(composite);
+		createButtonShowDuplicatesOnly(composite);
 		createButtonSelectionMergeEntries(composite);
 		createButtonAutoMergeEntries(composite);
 		createButtonDeleteEntries(composite);
@@ -311,12 +316,30 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 			if(comboViewer.getStructuredSelection().getFirstElement() instanceof DuplicateDetection selection) {
 				duplicateDetection = selection;
 				updateDuplicates();
-				updateWidgets();
+				setInput();
 			}
 
 		});
 
 		comboDuplicateDetection.set(comboViewer);
+	}
+
+	private void createButtonShowDuplicatesOnly(Composite parent) {
+
+		Button button = new Button(parent, SWT.TOGGLE);
+		button.setToolTipText("Show duplicates only.");
+		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_BOOKMARK, IApplicationImageProvider.SIZE_16x16));
+		button.setSelection(false);
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				setInput();
+			}
+		});
+
+		buttonShowDuplicatesOnly.set(button);
 	}
 
 	private void updateDuplicates() {
@@ -695,6 +718,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 		buttonSelectionMergeEntries.get().setEnabled(selection >= 2);
 		buttonDeleteEntries.get().setEnabled(selection >= 1);
 		buttonAutoMergeEntries.get().setEnabled(!duplicateGroupMap.isEmpty());
+		buttonShowDuplicatesOnly.get().setEnabled(!duplicateGroupMap.isEmpty());
 	}
 
 	private void setMassSpectraDirty() {
@@ -707,7 +731,23 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 
 	private void setInput() {
 
-		massSpectrumListControl.get().setInput(massSpectra);
+		IMassSpectra input;
+		Button button = buttonShowDuplicatesOnly.get();
+		if(button != null && button.getSelection() && !duplicateGroupMap.isEmpty()) {
+			MassSpectra filtered = new MassSpectra();
+			if(massSpectra != null) {
+				Set<IScanMSD> duplicateSet = duplicateGroupMap.values().stream().flatMap(List::stream).collect(Collectors.toSet());
+				for(IScanMSD scan : massSpectra.getList()) {
+					if(duplicateSet.contains(scan)) {
+						filtered.addMassSpectrum(scan);
+					}
+				}
+			}
+			input = filtered;
+		} else {
+			input = massSpectra;
+		}
+		massSpectrumListControl.get().setInput(input);
 		massSpectrumListControl.get().updateDuplicateHints(duplicateDetection, duplicateGroupMap.keySet());
 		updateWidgets();
 	}
