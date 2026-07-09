@@ -345,24 +345,22 @@ public class ChromatogramWriter_0803 extends AbstractChromatogramWriter implemen
 			/*
 			 * Ion Transition
 			 */
-			if(ion instanceof IIonMSn ionMSn) {
+			if(ion instanceof IIonMSn ionMSn && ionMSn.getIonTransition() != null) {
+				/*
+				 * parent m/z start, ...
+				 */
+				dataOutputStream.writeInt(1); // Ion transition available
 				IIonTransition ionTransition = ionMSn.getIonTransition();
-				if(ionTransition == null) {
-					dataOutputStream.writeInt(0); // No ion transition available
-				} else {
-					/*
-					 * parent m/z start, ...
-					 */
-					dataOutputStream.writeInt(1); // Ion transition available
-					dataOutputStream.writeDouble(ionTransition.getQ1StartIon()); // parent m/z start
-					dataOutputStream.writeDouble(ionTransition.getQ1StopIon()); // parent m/z stop
-					dataOutputStream.writeDouble(ionTransition.getQ3StartIon()); // daughter m/z start
-					dataOutputStream.writeDouble(ionTransition.getQ3StopIon()); // daughter m/z stop
-					dataOutputStream.writeDouble(ionTransition.getCollisionEnergy()); // collision energy
-					dataOutputStream.writeDouble(ionTransition.getQ1Resolution()); // q1 resolution
-					dataOutputStream.writeDouble(ionTransition.getQ3Resolution()); // q3 resolution
-					dataOutputStream.writeInt(ionTransition.getTransitionGroup()); // transition group
-				}
+				dataOutputStream.writeDouble(ionTransition.getQ1StartIon()); // parent m/z start
+				dataOutputStream.writeDouble(ionTransition.getQ1StopIon()); // parent m/z stop
+				dataOutputStream.writeDouble(ionTransition.getQ3StartIon()); // daughter m/z start
+				dataOutputStream.writeDouble(ionTransition.getQ3StopIon()); // daughter m/z stop
+				dataOutputStream.writeDouble(ionTransition.getCollisionEnergy()); // collision energy
+				dataOutputStream.writeDouble(ionTransition.getQ1Resolution()); // q1 resolution
+				dataOutputStream.writeDouble(ionTransition.getQ3Resolution()); // q3 resolution
+				dataOutputStream.writeInt(ionTransition.getTransitionGroup()); // transition group
+			} else {
+				dataOutputStream.writeInt(0); // No ion transition available
 			}
 		}
 	}
