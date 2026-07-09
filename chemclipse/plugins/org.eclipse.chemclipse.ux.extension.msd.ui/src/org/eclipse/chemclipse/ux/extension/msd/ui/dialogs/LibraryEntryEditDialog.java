@@ -19,6 +19,7 @@ import org.eclipse.chemclipse.model.cas.CasValidator;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
+import org.eclipse.chemclipse.msd.swt.ui.components.identification.CasNumbersEditUI;
 import org.eclipse.chemclipse.msd.swt.ui.components.identification.SynonymsEditUI;
 import org.eclipse.chemclipse.support.text.ValueFormat;
 import org.eclipse.chemclipse.ux.extension.msd.ui.swt.MassSpectrumEditor;
@@ -88,6 +89,7 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 		createTabGeneral(tabFolder);
 		createTabIons(tabFolder);
 		createTabSynonyms(tabFolder);
+		createTabCasNumbers(tabFolder);
 		createTabColumnIndices(tabFolder);
 		createTabFlavorMarkers(tabFolder);
 
@@ -210,6 +212,20 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 
 		SynonymsEditUI synonymsEditUI = new SynonymsEditUI(composite, SWT.NONE);
 		synonymsEditUI.update(massSpectrum.getLibraryInformation());
+
+		tabItem.setControl(composite);
+	}
+
+	private void createTabCasNumbers(TabFolder tabFolder) {
+
+		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
+		tabItem.setText("CAS");
+
+		Composite composite = new Composite(tabFolder, SWT.NONE);
+		composite.setLayout(new FillLayout());
+
+		CasNumbersEditUI casNumbersEditUI = new CasNumbersEditUI(composite, SWT.NONE);
+		casNumbersEditUI.update(massSpectrum.getLibraryInformation());
 
 		tabItem.setControl(composite);
 	}
