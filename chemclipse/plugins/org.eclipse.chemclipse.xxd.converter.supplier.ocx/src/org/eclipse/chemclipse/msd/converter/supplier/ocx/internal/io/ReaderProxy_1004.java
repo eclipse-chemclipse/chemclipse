@@ -29,6 +29,7 @@ import org.eclipse.chemclipse.model.identifier.LibraryInformation;
 import org.eclipse.chemclipse.model.implementation.IdentificationTarget;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.io.IReaderProxy;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorIon;
+import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorIonMSn;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorScan;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorScanProxy;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.VendorIon;
@@ -130,7 +131,7 @@ public class ReaderProxy_1004 extends AbstractZipReader implements IReaderProxy 
 			int transitionGroup = dataInputStream.readInt(); // transition group
 
 			IIonTransition ionTransition = ionTransitionSettings.getIonTransition(filter1FirstIon, filter1LastIon, filter3FirstIon, filter3LastIon, collisionEnergy, filter1Resolution, filter3Resolution, transitionGroup);
-			VendorIonMSn ion = new VendorIonMSn(mz, abundance, ionTransition);
+			IVendorIonMSn ion = new VendorIonMSn(mz, abundance, ionTransition);
 			massSpectrum.addIon(ion);
 		}
 	}

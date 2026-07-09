@@ -51,6 +51,7 @@ import org.eclipse.chemclipse.msd.converter.supplier.ocx.io.ChromatogramReaderMS
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.io.IReaderProxy;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorChromatogram;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorIon;
+import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorIonMSn;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorScan;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorScanProxy;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.VendorChromatogram;
@@ -688,7 +689,7 @@ public class ChromatogramReader_1502 extends AbstractChromatogramReader {
 
 			IIonTransition ionTransition = ionTransitionSettings.getIonTransition(compoundName, filter1FirstIon, filter1LastIon, filter3FirstIon, filter3LastIon, collisionEnergy, filter1Resolution, filter3Resolution, transitionGroup);
 			ionTransition.setDwell(dwell);
-			VendorIonMSn ion = new VendorIonMSn(mz, abundance, ionTransition);
+			IVendorIonMSn ion = new VendorIonMSn(mz, abundance, ionTransition);
 			massSpectrum.addIon(ion);
 		}
 	}

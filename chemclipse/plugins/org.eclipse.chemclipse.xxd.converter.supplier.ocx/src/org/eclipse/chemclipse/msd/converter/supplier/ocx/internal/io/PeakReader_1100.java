@@ -46,6 +46,7 @@ import org.eclipse.chemclipse.model.quantitation.IQuantitationEntry;
 import org.eclipse.chemclipse.model.quantitation.InternalStandard;
 import org.eclipse.chemclipse.msd.converter.io.IPeakReader;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorIon;
+import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.IVendorIonMSn;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.VendorIon;
 import org.eclipse.chemclipse.msd.converter.supplier.ocx.model.chromatogram.VendorIonMSn;
 import org.eclipse.chemclipse.msd.model.core.IIonTransition;
@@ -337,7 +338,7 @@ public class PeakReader_1100 extends AbstractZipReader implements IPeakReader {
 
 			IIonTransition ionTransition = ionTransitionSettings.getIonTransition(compoundName, filter1FirstIon, filter1LastIon, filter3FirstIon, filter3LastIon, collisionEnergy, filter1Resolution, filter3Resolution, transitionGroup);
 			ionTransition.setDwell(dwell);
-			VendorIonMSn ion = new VendorIonMSn(mz, abundance, ionTransition);
+			IVendorIonMSn ion = new VendorIonMSn(mz, abundance, ionTransition);
 			massSpectrum.addIon(ion);
 		}
 	}
