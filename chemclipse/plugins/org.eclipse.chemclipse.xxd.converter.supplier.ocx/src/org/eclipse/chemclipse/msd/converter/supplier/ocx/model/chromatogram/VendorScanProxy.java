@@ -65,7 +65,6 @@ public class VendorScanProxy extends AbstractRegularMassSpectrumProxy implements
 	public IVendorScan makeDeepCopy() throws CloneNotSupportedException {
 
 		IVendorScanProxy massSpectrum = (IVendorScanProxy)super.clone();
-		IVendorIon chemClipseIon;
 		/*
 		 * The instance variables have been copied by super.clone();.<br/> The
 		 * ions in the ion list need not to be removed via
@@ -75,8 +74,8 @@ public class VendorScanProxy extends AbstractRegularMassSpectrumProxy implements
 		 * Make a deep copy of all ions.
 		 */
 		for(IIon ion : getIons()) {
-			chemClipseIon = new VendorIon(ion.getIon(), ion.getAbundance());
-			massSpectrum.addIon(chemClipseIon);
+			IVendorIon vendorIon = new VendorIon(ion.getIon(), ion.getAbundance());
+			massSpectrum.addIon(vendorIon, false);
 		}
 		return massSpectrum;
 	}
