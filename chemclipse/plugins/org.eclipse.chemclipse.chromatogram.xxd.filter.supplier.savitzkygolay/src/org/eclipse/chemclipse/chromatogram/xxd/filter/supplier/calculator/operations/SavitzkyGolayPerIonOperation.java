@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2025 Lablicate GmbH.
+ * Copyright (c) 2022, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -71,10 +71,13 @@ public class SavitzkyGolayPerIonOperation extends AbstractOperation implements I
 
 		try {
 			previousScans = new ArrayList<>();
+			monitor.beginTask("Copy Scans", chromatogramSelection.getChromatogram().getNumberOfScans());
 			for(IScan scan : chromatogramSelection.getChromatogram().getScans()) {
 				IScanMSD scanMSD = (IScanMSD)scan;
 				previousScans.add(scanMSD.makeDeepCopy());
+				monitor.worked(1);
 			}
+			monitor.done();
 			ExtractedMatrix extractedMatrix = new ExtractedMatrix(chromatogramSelection);
 			double[][] matrix = extractedMatrix.getMatrix();
 			SavitzkyGolayProcessor.apply(matrix, filterSettings);

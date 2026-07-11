@@ -100,7 +100,7 @@ public abstract class AbstractPeakMassSpectrum extends AbstractRegularMassSpectr
 		for(IIon ion : ions) {
 			abundance = (ion.getAbundance() / actualPercentageIntensity) * 100.0f;
 			peakIon = new PeakIon(ion.getIon(), abundance);
-			addIon(peakIon);
+			addIon(peakIon, false);
 		}
 	}
 

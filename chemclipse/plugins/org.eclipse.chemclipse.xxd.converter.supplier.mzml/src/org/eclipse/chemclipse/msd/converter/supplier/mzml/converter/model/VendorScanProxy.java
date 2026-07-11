@@ -84,7 +84,7 @@ public class VendorScanProxy extends AbstractRegularMassSpectrumProxy implements
 		IVendorScanProxy massSpectrum = (IVendorScanProxy)super.clone();
 		for(IIon ion : getIons()) {
 			IVendorIon vendorIon = new VendorIon(ion.getIon(), ion.getAbundance());
-			massSpectrum.addIon(vendorIon);
+			massSpectrum.addIon(vendorIon, false);
 		}
 		return massSpectrum;
 	}
