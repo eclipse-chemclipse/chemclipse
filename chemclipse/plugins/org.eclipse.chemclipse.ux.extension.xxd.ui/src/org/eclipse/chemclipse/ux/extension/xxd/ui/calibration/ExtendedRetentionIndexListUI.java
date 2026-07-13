@@ -144,7 +144,6 @@ public class ExtendedRetentionIndexListUI extends Composite implements IExtended
 	private void createToolbarMain(Composite parent) {
 
 		Composite composite = new Composite(parent, SWT.NONE);
-		composite.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 		GridData gridDataStatus = new GridData(GridData.FILL_HORIZONTAL);
 		gridDataStatus.horizontalAlignment = SWT.END;
 		composite.setLayoutData(gridDataStatus);
@@ -317,13 +316,11 @@ public class ExtendedRetentionIndexListUI extends Composite implements IExtended
 	private Composite createToolbarInfoTop(Composite parent) {
 
 		Composite composite = new Composite(parent, SWT.NONE);
-		composite.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		composite.setLayoutData(gridData);
 		composite.setLayout(new GridLayout(1, false));
 
 		labelInfoTop = new Label(composite, SWT.NONE);
-		labelInfoTop.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 		labelInfoTop.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		return composite;
@@ -340,13 +337,11 @@ public class ExtendedRetentionIndexListUI extends Composite implements IExtended
 	private Composite createToolbarInfoBottom(Composite parent) {
 
 		Composite composite = new Composite(parent, SWT.NONE);
-		composite.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		composite.setLayoutData(gridData);
 		composite.setLayout(new GridLayout(1, false));
 
 		labelInfoBottom = new Label(composite, SWT.NONE);
-		labelInfoBottom.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 		labelInfoBottom.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		return composite;

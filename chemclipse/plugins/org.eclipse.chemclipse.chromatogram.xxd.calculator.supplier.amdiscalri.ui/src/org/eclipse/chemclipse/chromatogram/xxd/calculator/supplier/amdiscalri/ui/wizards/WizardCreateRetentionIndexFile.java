@@ -22,14 +22,10 @@ import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
 import org.eclipse.chemclipse.csd.model.core.selection.IChromatogramSelectionCSD;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
-import org.eclipse.chemclipse.model.types.DataType;
 import org.eclipse.chemclipse.msd.converter.chromatogram.ChromatogramConverterMSD;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
-import org.eclipse.chemclipse.support.l10n.SupportMessages;
 import org.eclipse.chemclipse.support.ui.wizards.AbstractWizard;
-import org.eclipse.chemclipse.ux.extension.ui.provider.ISupplierEditorSupport;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.editors.ProjectExplorerSupportFactory;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.versions.VersionConstants;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -51,6 +47,8 @@ public class WizardCreateRetentionIndexFile extends AbstractWizard {
 	private PagePeakSelection pagePeakSelection;
 	private PagePeakAssignment pagePeakAssignment;
 	private PageCalibrationTable pageCalibrationTable;
+
+	private File calibrationFile;
 
 	public WizardCreateRetentionIndexFile() {
 
@@ -150,17 +148,11 @@ public class WizardCreateRetentionIndexFile extends AbstractWizard {
 		} catch(Exception e) {
 			logger.warn(e);
 		}
-		runOpenEditor(calibrationFile, monitor);
+		this.calibrationFile = calibrationFile;
 	}
 
-	private void runOpenEditor(File file, IProgressMonitor monitor) {
+	public File getCalibrationFile() {
 
-		monitor.subTask(SupportMessages.taskOpenEditor);
-		ISupplierEditorSupport supplierEditorSupport = new ProjectExplorerSupportFactory(DataType.CAL).getInstanceEditorSupport();
-		getShell().getDisplay().asyncExec(() -> {
-			if(!supplierEditorSupport.openEditor(file)) {
-				logger.warn("Failed to open editor.");
-			}
-		});
+		return calibrationFile;
 	}
 }

@@ -9,14 +9,17 @@
       </fragment>
    </extension>
    <extension
-         point="org.eclipse.ui.editors">
-      <editor
-            class="org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.ui.editors.EditorCalibration"
-            extensions="cal"
-            icon="icons/16x16/report.gif"
-            id="org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.ui.editors.editorCalibration"
-            name="Retention Index Calibration">
-      </editor>
+         point="org.eclipse.core.runtime.adapters">
+      <factory
+            adaptableType="org.eclipse.chemclipse.ux.extension.xxd.ui.internal.editors.CalibrationFileSupplier"
+            class="org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.ui.internal.provider.CalibrationFileEditorAdapterFactory">
+         <adapter
+               type="org.eclipse.chemclipse.ux.extension.ui.provider.ISupplierFileEditorSupport">
+         </adapter>
+         <adapter
+               type="org.eclipse.chemclipse.ux.extension.ui.editors.EditorDescriptor">
+         </adapter>
+      </factory>
    </extension>
    <extension
          point="org.eclipse.ui.preferencePages">

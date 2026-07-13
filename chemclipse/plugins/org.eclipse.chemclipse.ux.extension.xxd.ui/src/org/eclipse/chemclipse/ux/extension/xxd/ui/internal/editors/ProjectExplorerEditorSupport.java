@@ -25,12 +25,14 @@ import org.eclipse.chemclipse.model.types.DataType;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
 import org.eclipse.chemclipse.ux.extension.ui.provider.AbstractSupplierFileEditorSupport;
 import org.eclipse.chemclipse.ux.extension.ui.provider.ISupplierEditorSupport;
+import org.eclipse.chemclipse.ux.extension.ui.provider.ISupplierFileEditorSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.l10n.ExtensionMessages;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ui.IWorkbenchPage;
@@ -95,6 +97,17 @@ public class ProjectExplorerEditorSupport extends AbstractSupplierFileEditorSupp
 
 	@Override
 	public boolean openEditor(final File file, Map<HeaderField, String> headerMap, boolean batch) {
+
+		/*
+		 * A supplier may know how to open its own editor (e.g. a pure E4 part contributed
+		 * by a downstream plugin). Prefer that over the legacy IDE editor registry lookup below.
+		 */
+		for(ISupplier supplier : getSuppliers(file)) {
+			ISupplierFileEditorSupport delegate = Adapters.adapt(supplier, ISupplierFileEditorSupport.class);
+			if(delegate != null) {
+				return delegate.openEditor(file, headerMap, batch);
+			}
+		}
 
 		boolean success = false;
 		try {
