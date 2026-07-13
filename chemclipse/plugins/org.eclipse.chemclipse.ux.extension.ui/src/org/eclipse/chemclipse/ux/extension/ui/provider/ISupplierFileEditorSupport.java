@@ -29,6 +29,7 @@ import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
 import org.eclipse.chemclipse.processing.converter.ISupplierFileIdentifier;
 import org.eclipse.chemclipse.support.events.IPerspectiveAndViewIds;
+import org.eclipse.chemclipse.support.ui.activator.ContextAddon;
 import org.eclipse.chemclipse.support.ui.workbench.EditorSupport;
 import org.eclipse.chemclipse.ux.extension.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.ui.editors.IChromatogramEditor;
@@ -93,7 +94,7 @@ public interface ISupplierFileEditorSupport extends ISupplierFileIdentifier {
 
 		EModelService modelService = Activator.getDefault().getModelService();
 		MApplication application = Activator.getDefault().getApplication();
-		EPartService partService = Activator.getDefault().getPartService();
+		EPartService partService = ContextAddon.getWindowPartService();
 
 		if(modelService != null && application != null && partService != null) {
 			/*
