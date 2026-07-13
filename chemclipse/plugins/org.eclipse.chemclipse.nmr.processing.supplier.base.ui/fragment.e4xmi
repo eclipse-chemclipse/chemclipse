@@ -4,6 +4,7 @@
   <imports xsi:type="commands:Command" xmi:id="_bnIWoIgsEemJaOKd7Cy7Ww" elementId="org.eclipse.chemclipse.rcp.app.ui.command.opensnippet"/>
   <imports xsi:type="commands:Command" xmi:id="_39AKkIgtEemJaOKd7Cy7Ww" elementId="org.eclipse.chemclipse.rcp.app.ui.command.about"/>
   <imports xsi:type="commands:Command" xmi:id="_e_bZ8LgVEemNgNx3khJk0g" elementId="chemclipse.command.opentoolmenu"/>
+  <imports xsi:type="basic:Part" xmi:id="_UWzLCmLzK2sGFls42PeBMM" elementId="org.eclipse.chemclipse.processing.ui.parts.ProcessingInfoPart"/>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_TnMOYFHjEemRK6ILagu1xg" featurename="children" parentElementId="org.eclipse.chemclipse.rcp.app.ui.perspectivestack.main">
     <elements xsi:type="advanced:Perspective" xmi:id="_hYtdgFHjEemRK6ILagu1xg" elementId="org.eclipse.chemclipse.nmr.processing.supplier.base.ui.perspective.nmr" label="NMR" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/scan-nmr.gif">
       <children xsi:type="basic:PartSashContainer" xmi:id="_sjhwIFHjEemRK6ILagu1xg" elementId="org.eclipse.chemclipse.nmr.processing.supplier.base.ui.partsashcontainer.0" horizontal="true">
@@ -24,7 +25,7 @@
               <children xsi:type="menu:DirectToolItem" xmi:id="_uLHAsIeTEemBGvwXZ3o29g" elementId="org.eclipse.chemclipse.nmr.processing.supplier.base.ui.directtoolitem.settings" label="Settings" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/scalable/configure.svg" tooltip="Change Settings" contributionURI="bundleclass://org.eclipse.chemclipse.nmr.processing.supplier.base.ui/org.eclipse.chemclipse.nmr.processing.supplier.base.ui.NMRDataExplorerView$NMRDataExplorerSettingsHandler"/>
             </toolbar>
           </children>
-          <children xsi:type="advanced:Placeholder" xmi:id="_FnyLcH60EfGedfK6XgzykQ" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.processinginfo" ref="_90gcYH6zEfGedfK6XgzykQ"/>
+          <children xsi:type="advanced:Placeholder" xmi:id="_ilgI4H69EfGIa8dTpAI4NB" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.processinginfo" ref="_UWzLCmLzK2sGFls42PeBMM"/>
         </children>
         <children xsi:type="advanced:Placeholder" xmi:id="_3Cm-IFHjEemRK6ILagu1xg" elementId="org.eclipse.ui.editorss" containerData="80" ref="_wQ-SQFHjEemRK6ILagu1xg"/>
       </children>
@@ -33,8 +34,5 @@
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_qO-VUIgiEemJaOKd7Cy7Ww" featurename="snippets" parentElementId="org.eclipse.chemclipse.rcp.ide.application">
     <elements xsi:type="basic:Part" xmi:id="_whn_IIgiEemJaOKd7Cy7Ww" elementId="org.eclipse.chemclipse.nmr.processing.supplier.base.ui.inputpart.multispektrumanalysis" contributionURI="bundleclass://org.eclipse.chemclipse.nmr.processing.supplier.base.ui/org.eclipse.chemclipse.nmr.processing.supplier.base.ui.MultiSpectrumEditor" label="Multi Spektrum Analysis" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/chromatogramOverlay.gif" closeable="true"/>
     <elements xsi:type="basic:Part" xmi:id="_0rxAALgUEemNgNx3khJk0g" elementId="org.eclipse.chemclipse.nmr.processing.supplier.base.ui.part.batchjob" contributionURI="bundleclass://org.eclipse.chemclipse.nmr.processing.supplier.base.ui/org.eclipse.chemclipse.nmr.processing.supplier.base.ui.NMRBatchJob" label="BatchJob" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/batchprocess.gif"/>
-  </fragments>
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_3g-o0H6zEfGedfK6XgzykQ" featurename="sharedElements" parentElementId="org.eclipse.chemclipse.rcp.app.ui.trimmedwindow.main">
-    <elements xsi:type="basic:Part" xmi:id="_90gcYH6zEfGedfK6XgzykQ" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.processinginfo" contributionURI="bundleclass://org.eclipse.chemclipse.processing.ui/org.eclipse.chemclipse.processing.ui.parts.ProcessingInfoPart" label="Feedback" iconURI="platform:/plugin/org.eclipse.jface/icons/full/message_info.svg"/>
   </fragments>
 </fragment:ModelFragments>
