@@ -273,16 +273,39 @@ public class TraceFactory {
 			if(clazz.equals(TraceGenericDelta.class)) {
 				String[] traces = line.split(ITrace.SEPARATOR_TRACE_ITEM);
 				for(String trace : traces) {
-					String part = trace.trim();
-					addTraceSpecific(part, content, elements, clazz);
-				}
-			} else if(clazz.equals(TraceTandemMSD.class)) {
-				T trace = parseTrace(line, clazz);
-				if(trace != null) {
-					elements.add(trace);
+					addTraceSpecific(trace.trim(), content, elements, clazz);
 				}
 			} else {
-				if(!line.contains(ITrace.SEPARATOR_TRACE_ITEM)) {
+				if(line.contains(ITrace.SEPARATOR_TRACE_ITEM)) {
+					String[] traces = line.split(ITrace.SEPARATOR_TRACE_ITEM);
+					for(String trace : traces) {
+						if(trace.contains(ITrace.INFIX_RANGE_SIMPLE) || trace.contains(ITrace.INFIX_RANGE_STANDARD)) {
+							addTraceSpecific(trace.trim(), content, elements, clazz);
+						} else if(trace.contains(ITrace.INFIX_TANDEM_MS_CE)) {
+							addTraceSpecific(trace.trim(), content, elements, clazz);
+						} else {
+							if(trace.contains(ITrace.SEPARATOR_TRACE_RANGE)) {
+								/*
+								 * Special case:
+								 * 0 - 0
+								 * 55 - 120
+								 */
+								if(isSupportGeneric(clazz)) {
+									addTraceRange(trace, elements, clazz);
+								}
+							} else {
+								String part = trace.trim();
+								if(isTraceInteger(part)) {
+									if(isSupportGeneric(clazz)) {
+										addTraceGeneric(trace, elements, clazz);
+									}
+								} else {
+									addTraceSpecific(part, content, elements, clazz);
+								}
+							}
+						}
+					}
+				} else {
 					if(isSupportGeneric(clazz)) {
 						if(line.contains(ITrace.SEPARATOR_TRACE_RANGE)) {
 							/*
@@ -320,31 +343,10 @@ public class TraceFactory {
 						}
 					} else {
 						String trace = line.trim();
-						if(trace.contains(ITrace.INFIX_RANGE_SIMPLE) || (!trace.contains(ITrace.SEPARATOR_TRACE_RANGE) && !trace.contains(" "))) {
+						if(trace.contains(ITrace.INFIX_TANDEM_MS_CE)) {
 							addTraceSpecific(trace, content, elements, clazz);
-						}
-					}
-				} else {
-					String[] traces = line.split(ITrace.SEPARATOR_TRACE_ITEM);
-					for(String trace : traces) {
-						if(trace.contains(ITrace.SEPARATOR_TRACE_RANGE)) {
-							/*
-							 * Special case:
-							 * 0 - 0
-							 * 55 - 120
-							 */
-							if(isSupportGeneric(clazz)) {
-								addTraceRange(trace, elements, clazz);
-							}
-						} else {
-							String part = trace.trim();
-							if(isTraceInteger(part)) {
-								if(isSupportGeneric(clazz)) {
-									addTraceGeneric(trace, elements, clazz);
-								}
-							} else {
-								addTraceSpecific(part, content, elements, clazz);
-							}
+						} else if((trace.contains(ITrace.INFIX_RANGE_SIMPLE) || trace.contains(ITrace.INFIX_RANGE_STANDARD)) || (!trace.contains(ITrace.SEPARATOR_TRACE_RANGE) && !trace.contains(" "))) {
+							addTraceSpecific(trace, content, elements, clazz);
 						}
 					}
 				}
@@ -726,18 +728,20 @@ public class TraceFactory {
 
 	private static <T extends ITrace> void addTraceSpecific(String part, String content, List<T> elements, Class<T> clazz) {
 
-		if(containsRangeMarker(part)) {
-			if(containsUnitMarkerPPM(content)) {
-				if(isSupportHighResMSD(clazz)) {
-					addTraceSpecific(part, elements, clazz);
+		if(!part.isBlank()) {
+			if(containsRangeMarker(part)) {
+				if(containsUnitMarkerPPM(content)) {
+					if(isSupportHighResMSD(clazz)) {
+						addTraceSpecific(part, elements, clazz);
+					}
+				} else {
+					if(isSupportHighRes(clazz)) {
+						addTraceSpecific(part, elements, clazz);
+					}
 				}
 			} else {
-				if(isSupportHighRes(clazz)) {
-					addTraceSpecific(part, elements, clazz);
-				}
+				addTraceSpecific(part, elements, clazz);
 			}
-		} else {
-			addTraceSpecific(part, elements, clazz);
 		}
 	}
 
