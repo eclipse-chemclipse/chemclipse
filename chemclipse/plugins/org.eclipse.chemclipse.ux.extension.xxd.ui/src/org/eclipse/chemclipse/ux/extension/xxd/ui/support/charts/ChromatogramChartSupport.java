@@ -29,6 +29,7 @@ import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IMarkedTrace;
 import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IScan;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignalExtractor;
@@ -150,6 +151,11 @@ public class ChromatogramChartSupport {
 	public ILineSeriesData getLineSeriesDataBaseline(IChromatogram chromatogram, String seriesId, DisplayType dataType, Color color, IMarkedTraces<? extends IMarkedTrace> signals) {
 
 		return getLineSeriesData(chromatogram, seriesId, dataType, Derivative.NONE, color, signals);
+	}
+
+	public ILineSeriesData getLineSeriesData(IChromatogram chromatogram, String seriesId, DisplayType displayType, Color color) {
+
+		return getLineSeriesData(chromatogram, seriesId, displayType, color, new MarkedTraces());
 	}
 
 	public ILineSeriesData getLineSeriesData(IChromatogram chromatogram, String seriesId, DisplayType displayType, Color color, IMarkedTraces<? extends IMarkedTrace> signals) {
