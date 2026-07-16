@@ -25,12 +25,15 @@ import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.core.support.HeaderField;
 import org.eclipse.chemclipse.model.support.ChromatogramSupport;
 import org.eclipse.chemclipse.model.support.HeaderUtil;
+import org.eclipse.chemclipse.msd.model.core.AbstractIon;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IIonMSn;
 import org.eclipse.chemclipse.msd.model.core.IIonTransition;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
+import org.eclipse.chemclipse.msd.model.implementation.IonMSn;
+import org.eclipse.chemclipse.msd.model.implementation.IonTransition;
 import org.eclipse.chemclipse.msd.model.implementation.RegularMassSpectrum;
 import org.eclipse.chemclipse.support.text.ValueFormat;
 import org.eclipse.chemclipse.support.traces.TraceTandemMSD;
@@ -118,10 +121,44 @@ public class TandemDataSupport {
 			enforceFullTimeRange = true; // needed to map all traces
 			Map<Integer, List<IIon>> scanIonsMap = new HashMap<>();
 			collectTraces(new ArrayList<>(traces), scanRangesMap, retentionTimes, scanIonsMap);
+			condenseTraces(scanIonsMap);
 			createReferenceChromatogram(chromatograms, chromatogramMSD, retentionTimes, scanIonsMap, headerField, "Multiple Traces", enforceFullTimeRange);
 		}
 
 		return chromatograms;
+	}
+
+	private static void condenseTraces(Map<Integer, List<IIon>> scanIonsMap) {
+
+		for(Map.Entry<Integer, List<IIon>> entry : scanIonsMap.entrySet()) {
+			Map<String, IIon> ionMap = new HashMap<>();
+			List<IIon> ions = entry.getValue();
+			for(IIon ion : ions) {
+				if(ion instanceof IIonMSn ionMSn) {
+					IIonTransition ionTransition = ionMSn.getIonTransition();
+					double parent = ionTransition.getQ1Ion();
+					int daughter = AbstractIon.getIon(ionTransition.getQ3Ion());
+					int collisionEnergy = (int)ionTransition.getCollisionEnergy();
+					String tandemIdentifier = Double.toString(parent) + "_" + Integer.toString(daughter) + "_" + Integer.toString(collisionEnergy);
+					IIon ionMapped = ionMap.get(tandemIdentifier);
+					if(ionMapped == null) {
+						double filter1Resolution = ionTransition.getQ1Resolution();
+						double filter3Resolution = ionTransition.getQ3Resolution();
+						int transitionGroup = ionTransition.getTransitionGroup();
+						IIonTransition ionTransitionCopy = new IonTransition(parent, daughter, collisionEnergy, filter1Resolution, filter3Resolution, transitionGroup);
+						ionMapped = new IonMSn(daughter, ion.getAbundance(), ionTransitionCopy);
+						ionMap.put(tandemIdentifier, ionMapped);
+					} else {
+						ionMapped.setAbundance(ionMapped.getAbundance() + ion.getAbundance());
+					}
+				}
+			}
+			/*
+			 * Clean Ions
+			 */
+			ions.clear();
+			ions.addAll(ionMap.values());
+		}
 	}
 
 	private static boolean matches(TraceTandemMSD trace, IIonMSn ion) {
