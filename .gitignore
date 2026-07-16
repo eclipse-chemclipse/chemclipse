@@ -6,6 +6,3 @@ workspace/
 .polyglot.*
 *.tycho
 .tycho-consumer-pom.xml
-
-# Tests
-/chemclipse/tests/org.eclipse.chemclipse.rcp.app.fragment.test/*.pdf
