@@ -177,7 +177,7 @@ public class MassSpectrumWriterVersion110 implements IMassSpectraWriter {
 	private ParamGroupType createFileContent(IRegularMassSpectrum regularMassSpectrum) {
 
 		ParamGroupType fileContent = new ParamGroupType();
-		fileContent.getCvParam().add(XmlWriter110.createSpectrumDimension(regularMassSpectrum));
+		fileContent.getCvParam().add(XmlWriter110.createMassSpectrumDimension(regularMassSpectrum));
 		fileContent.getCvParam().add(XmlWriter110.createSpectrumType(regularMassSpectrum));
 		return fileContent;
 	}
@@ -257,7 +257,7 @@ public class MassSpectrumWriterVersion110 implements IMassSpectraWriter {
 			boolean compression = PreferenceSupplier.getMassSpectraSaveCompression();
 			spectrum.setBinaryDataArrayList(XmlWriter110.createFullSpectrumBinaryDataArrayList(scanMSD, compression));
 			if(scanMSD instanceof IRegularMassSpectrum massSpectrum) {
-				spectrum.getCvParam().add(XmlWriter110.createSpectrumDimension(massSpectrum));
+				spectrum.getCvParam().add(XmlWriter110.createMassSpectrumDimension(massSpectrum));
 				if(massSpectrum.getPolarity() != Polarity.NONE) {
 					spectrum.getCvParam().add(XmlWriter110.createPolarity(massSpectrum));
 				}

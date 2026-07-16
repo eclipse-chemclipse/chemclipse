@@ -119,6 +119,14 @@ public class ChromatogramMSDReaderVersion110 extends AbstractChromatogramReader 
 			if(monitor.isCanceled()) {
 				return;
 			}
+			if(spectrum.getCvParam().stream().anyMatch(n -> //
+			n.getAccession().equals("MS:1000804") && n.getName().equals("electromagnetic radiation spectrum"))) {
+				continue;
+			}
+			if(spectrum.getCvParam().stream().anyMatch(n -> //
+			n.getAccession().equals("MS:1000806") && n.getName().equals("absorption spectrum"))) {
+				continue;
+			}
 			IRegularMassSpectrum massSpectrum = readMassSpectrum(spectrum);
 			if(massSpectrum.getMassSpectrometer() < 2) {
 				cycleNumber++;
@@ -328,6 +336,7 @@ public class ChromatogramMSDReaderVersion110 extends AbstractChromatogramReader 
 
 		double[] intensities = null;
 		double[] mzs = null;
+
 		for(BinaryDataArrayType binaryDataArrayType : spectrum.getBinaryDataArrayList().getBinaryDataArray()) {
 			try {
 				Pair<String, double[]> binaryData = BinaryReader110.parseBinaryData(binaryDataArrayType);

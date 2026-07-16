@@ -82,6 +82,11 @@ public class ChromatogramWSDReaderVersion110 extends AbstractChromatogramReader 
 
 		int i = 1;
 		for(SpectrumType spectrum : run.getSpectrumList().getSpectrum()) {
+			if(spectrum.getCvParam().stream().noneMatch(n -> //
+			("MS:1000804".equals(n.getAccession()) && "electromagnetic radiation spectrum".equals(n.getName())) || //
+					("MS:1000806".equals(n.getAccession()) && "absorption spectrum".equals(n.getName())))) {
+				continue;
+			}
 			double[] wavelengths = new double[0];
 			double[] intensities = new double[0];
 			for(BinaryDataArrayType binaryDataArrayType : spectrum.getBinaryDataArrayList().getBinaryDataArray()) {

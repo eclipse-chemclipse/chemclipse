@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024, 2025 Lablicate GmbH.
+ * Copyright (c) 2024, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -39,6 +39,8 @@ import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.msd.model.core.Polarity;
+import org.eclipse.chemclipse.wsd.model.core.IScanSignalWSD;
+import org.eclipse.chemclipse.wsd.model.core.IScanWSD;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.BinaryDataArrayListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.BinaryDataArrayType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.CVListType;
@@ -319,12 +321,22 @@ public class XmlWriter110 {
 		return cvParamCombination;
 	}
 
-	public static CVParamType createTotalIonCurrrentType() {
+	public static CVParamType createTotalIonCurrrentChromatogramType() {
 
 		CVParamType cvParam = new CVParamType();
 		cvParam.setCvRef(MS);
 		cvParam.setAccession("MS:1000235");
 		cvParam.setName("total ion current chromatogram");
+		cvParam.setValue("");
+		return cvParam;
+	}
+
+	public static CVParamType createAbsorptionChromatogramType() {
+
+		CVParamType cvParam = new CVParamType();
+		cvParam.setCvRef(MS);
+		cvParam.setAccession("MS:1000812");
+		cvParam.setName("absorption chromatogram");
 		cvParam.setValue("");
 		return cvParam;
 	}
@@ -341,7 +353,7 @@ public class XmlWriter110 {
 		return cvParamIons;
 	}
 
-	public static CVParamType createSpectrumDimension(IRegularMassSpectrum massSpectrum) {
+	public static CVParamType createMassSpectrumDimension(IRegularMassSpectrum massSpectrum) {
 
 		CVParamType cvParamSpectrum = new CVParamType();
 		if(massSpectrum.getMassSpectrometer() == 1) {
@@ -355,6 +367,44 @@ public class XmlWriter110 {
 		}
 		cvParamSpectrum.setValue("");
 		return cvParamSpectrum;
+	}
+
+	public static CVParamType createWavelengthSpectrumType() {
+
+		CVParamType cvParamSpectrum = new CVParamType();
+		cvParamSpectrum.setCvRef(MS);
+		cvParamSpectrum.setAccession("MS:1000804");
+		cvParamSpectrum.setName("electromagnetic radiation spectrum");
+		return cvParamSpectrum;
+	}
+
+	public static CVParamType createWavelengthScanRangeLowest(IScanWSD spectrum) {
+
+		CVParamType cvParamRangeLowest = new CVParamType();
+		cvParamRangeLowest.setCvRef(MS);
+		cvParamRangeLowest.setAccession("MS:1000619");
+		cvParamRangeLowest.setName("lowest observed wavelength");
+		cvParamRangeLowest.setValue(String.valueOf(spectrum.getWavelengthBounds().getLowestWavelength().getWavelength()));
+		setUnitNanometer(cvParamRangeLowest);
+		return cvParamRangeLowest;
+	}
+
+	public static CVParamType createWavelengthScanRangeHighest(IScanWSD spectrum) {
+
+		CVParamType cvParamRangeHighest = new CVParamType();
+		cvParamRangeHighest.setCvRef(MS);
+		cvParamRangeHighest.setAccession("MS:1000618");
+		cvParamRangeHighest.setName("highest observed wavelength");
+		cvParamRangeHighest.setValue(String.valueOf(spectrum.getWavelengthBounds().getLowestWavelength().getWavelength()));
+		setUnitNanometer(cvParamRangeHighest);
+		return cvParamRangeHighest;
+	}
+
+	private static void setUnitNanometer(CVParamType cvParam) {
+
+		cvParam.setUnitAccession("UO:0000018");
+		cvParam.setUnitName("nanometer");
+		cvParam.setUnitCvRef(XmlWriter110.UO);
 	}
 
 	public static CVParamType createMassSpectrumType() {
@@ -501,15 +551,15 @@ public class XmlWriter110 {
 		BinaryDataArrayListType binaryDataArrayList = new BinaryDataArrayListType();
 		binaryDataArrayList.setCount(BigInteger.valueOf(2));
 		binaryDataArrayList.getBinaryDataArray().add(createIonsBinaryDataArrayType(ions, compression));
-		binaryDataArrayList.getBinaryDataArray().add(createAbundancesBinaryDataArrayType(abundances, compression));
+		binaryDataArrayList.getBinaryDataArray().add(createIntensityBinaryDataArrayType(abundances, compression));
 		return binaryDataArrayList;
 	}
 
-	private static BinaryDataArrayType createAbundancesBinaryDataArrayType(float[] abundances, boolean compression) {
+	private static BinaryDataArrayType createIntensityBinaryDataArrayType(float[] abundances, boolean compression) {
 
-		BinaryDataArrayType abundancesBinaryDataArrayType = XmlWriter110.createBinaryData(abundances, compression);
-		abundancesBinaryDataArrayType.getCvParam().add(XmlWriter110.createIntensityArrayType());
-		return abundancesBinaryDataArrayType;
+		BinaryDataArrayType intensityBinaryDataArrayType = XmlWriter110.createBinaryData(abundances, compression);
+		intensityBinaryDataArrayType.getCvParam().add(XmlWriter110.createIntensityArrayType());
+		return intensityBinaryDataArrayType;
 	}
 
 	private static BinaryDataArrayType createIonsBinaryDataArrayType(double[] ions, boolean compression) {
@@ -517,5 +567,40 @@ public class XmlWriter110 {
 		BinaryDataArrayType ionsBinaryDataArrayType = XmlWriter110.createBinaryData(ions, compression);
 		ionsBinaryDataArrayType.getCvParam().add(XmlWriter110.createIonType());
 		return ionsBinaryDataArrayType;
+	}
+
+	public static BinaryDataArrayListType createFullSpectrumBinaryDataArrayList(IScanWSD scanWSD, boolean compression) {
+
+		List<IScanSignalWSD> scanSignals = scanWSD.getScanSignals();
+		double[] wavelength = new double[scanSignals.size()];
+		float[] absorbance = new float[scanSignals.size()];
+		int i = 0;
+		for(IScanSignalWSD scanSignal : scanSignals) {
+			wavelength[i] = scanSignal.getWavelength();
+			absorbance[i] = scanSignal.getAbsorbance();
+			i++;
+		}
+		BinaryDataArrayListType binaryDataArrayList = new BinaryDataArrayListType();
+		binaryDataArrayList.setCount(BigInteger.valueOf(2));
+		binaryDataArrayList.getBinaryDataArray().add(createWavelengthBinaryDataArrayType(wavelength, compression));
+		binaryDataArrayList.getBinaryDataArray().add(createIntensityBinaryDataArrayType(absorbance, compression));
+		return binaryDataArrayList;
+	}
+
+	private static BinaryDataArrayType createWavelengthBinaryDataArrayType(double[] wavelengths, boolean compression) {
+
+		BinaryDataArrayType ionsBinaryDataArrayType = XmlWriter110.createBinaryData(wavelengths, compression);
+		ionsBinaryDataArrayType.getCvParam().add(XmlWriter110.createWavelengthType());
+		return ionsBinaryDataArrayType;
+	}
+
+	private static CVParamType createWavelengthType() {
+
+		CVParamType cvParamWavelength = new CVParamType();
+		cvParamWavelength.setCvRef(MS);
+		cvParamWavelength.setAccession("MS:1000617");
+		cvParamWavelength.setName("wavelength array");
+		setUnitNanometer(cvParamWavelength);
+		return cvParamWavelength;
 	}
 }

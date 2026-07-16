@@ -14,33 +14,30 @@
 package org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.io;
 
 import java.io.File;
-import java.io.IOException;
 
-import org.eclipse.chemclipse.converter.exceptions.FileIsNotWriteableException;
 import org.eclipse.chemclipse.converter.io.AbstractChromatogramWriter;
-import org.eclipse.chemclipse.msd.converter.io.IChromatogramMSDWriter;
-import org.eclipse.chemclipse.msd.converter.supplier.mzml.io.ChromatogramMSDWriterVersion110;
+import org.eclipse.chemclipse.model.core.IChromatogram;
+import org.eclipse.chemclipse.msd.converter.supplier.mzml.io.ChromatogramWriterVersion110;
 import org.eclipse.chemclipse.msd.converter.supplier.mzml.preferences.PreferenceSupplier;
-import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.XmlReader110;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-public class ChromatogramMSDWriter extends AbstractChromatogramWriter implements IChromatogramMSDWriter {
+public class ChromatogramWriter extends AbstractChromatogramWriter implements IChromatogramWriterMzML {
 
 	@Override
-	public void writeChromatogram(File file, IChromatogramMSD chromatogram, IProgressMonitor monitor) throws FileIsNotWriteableException, IOException {
+	public void writeChromatogram(File file, IChromatogram chromatogram, IProgressMonitor monitor) {
 
-		final IChromatogramMSDWriter chromatogramWriter = getChromatogramWriter();
+		final IChromatogramWriterMzML chromatogramWriter = getChromatogramWriter();
 		if(chromatogramWriter != null) {
 			chromatogramWriter.writeChromatogram(file, chromatogram, monitor);
 		}
 	}
 
-	private IChromatogramMSDWriter getChromatogramWriter() {
+	private IChromatogramWriterMzML getChromatogramWriter() {
 
 		String versionSave = PreferenceSupplier.getChromatogramVersionSave();
 		if(versionSave.equals(XmlReader110.VERSION)) {
-			return new ChromatogramMSDWriterVersion110();
+			return new ChromatogramWriterVersion110();
 		}
 		return null;
 	}
