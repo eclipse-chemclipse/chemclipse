@@ -56,18 +56,12 @@ public class ChromatogramImportConverter extends AbstractChromatogramImportConve
 			Serializable serializable = getMzML(file, processingInfo);
 			if(serializable instanceof org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.MzMLType mzML) {
 				IChromatogramMSDReader chromatogramReaderMSD = new ChromatogramMSDReaderVersion110(mzML);
-				if(chromatogramReaderMSD != null) {
-					importChromatogramMSD(chromatogramReaderMSD, file, monitor, processingInfo);
-				}
+				importChromatogramMSD(chromatogramReaderMSD, file, monitor, processingInfo);
 				IChromatogramWSDReader chromatogramReaderWSD = new ChromatogramWSDReaderVersion110(mzML);
-				if(chromatogramReaderWSD != null) {
-					importChromatogramWSD(chromatogramReaderWSD, file, monitor, processingInfo);
-				}
+				importChromatogramWSD(chromatogramReaderWSD, file, monitor, processingInfo);
 			} else if(serializable instanceof org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v10.MzMLType mzML) {
 				IChromatogramMSDReader chromatogramReaderMSD = new ChromatogramMSDReaderVersion10(mzML);
-				if(chromatogramReaderMSD != null) {
-					importChromatogramMSD(chromatogramReaderMSD, file, monitor, processingInfo);
-				}
+				importChromatogramMSD(chromatogramReaderMSD, file, monitor, processingInfo);
 			}
 		}
 		return processingInfo;
@@ -80,11 +74,9 @@ public class ChromatogramImportConverter extends AbstractChromatogramImportConve
 			fileReader.read(charBuffer);
 			final String header = new String(charBuffer);
 			if(header.contains(XmlReader110.VERSION)) {
-				org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.MzMLType mzML = XmlReader110.getMzML(file);
-				return mzML;
+				return XmlReader110.getMzML(file);
 			} else if(header.contains(XmlReader10.VERSION)) {
-				org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v10.MzMLType mzML = XmlReader10.getMzML(file);
-				return mzML;
+				return XmlReader10.getMzML(file);
 			} else {
 				processingInfo.addErrorMessage(DESCRIPTION, "Unknown version");
 			}
@@ -146,14 +138,10 @@ public class ChromatogramImportConverter extends AbstractChromatogramImportConve
 			Serializable serializable = getMzML(file, processingInfo);
 			if(serializable instanceof org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.MzMLType mzML) {
 				IChromatogramMSDReader chromatogramReaderMSD = new ChromatogramMSDReaderVersion110(mzML);
-				if(chromatogramReaderMSD != null) {
-					readOverviewMSD(file, chromatogramReaderMSD, monitor, processingInfo);
-				}
+				readOverviewMSD(file, chromatogramReaderMSD, monitor, processingInfo);
 			} else if(serializable instanceof org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v10.MzMLType mzML) {
 				IChromatogramMSDReader chromatogramReaderMSD = new ChromatogramMSDReaderVersion10(mzML);
-				if(chromatogramReaderMSD != null) {
-					readOverviewMSD(file, chromatogramReaderMSD, monitor, processingInfo);
-				}
+				readOverviewMSD(file, chromatogramReaderMSD, monitor, processingInfo);
 			}
 		}
 		return processingInfo;
