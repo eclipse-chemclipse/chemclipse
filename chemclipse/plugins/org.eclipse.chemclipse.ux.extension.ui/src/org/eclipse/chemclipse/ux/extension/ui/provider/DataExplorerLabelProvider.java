@@ -33,7 +33,6 @@ import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
-import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.navigator.IDescriptionProvider;
 
@@ -74,23 +73,7 @@ public class DataExplorerLabelProvider extends ColumnLabelProvider implements ID
 	}
 
 	@Override
-	public void update(ViewerCell cell) {
-
-		Object element = cell.getElement();
-		cell.setText(getText(element));
-		Image image = getIcon(element);
-		// https://github.com/eclipse-platform/eclipse.platform.swt/issues/678
-		cell.getItem().getDisplay().asyncExec(() -> {
-			if(!cell.getItem().isDisposed()) {
-				cell.setImage(image);
-			}
-		});
-		cell.setBackground(getBackground(element));
-		cell.setForeground(getForeground(element));
-		cell.setFont(getFont(element));
-	}
-
-	public Image getIcon(Object element) {
+	public Image getImage(Object element) {
 
 		if(element instanceof File file) {
 			ImageDescriptor descriptor = null;
