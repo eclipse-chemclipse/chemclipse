@@ -31,6 +31,7 @@ import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.support.ChromatogramColumnSupport;
 import org.eclipse.chemclipse.processing.DataCategory;
+import org.eclipse.chemclipse.processing.converter.ISupplier;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.IProcessingMessage;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
@@ -172,6 +173,14 @@ public abstract class AbstractChromatogramConverter<P extends IPeak, T extends I
 			List<String> availableConverterIds = converterSupport.getAvailableConverterIds(file);
 			exitloop:
 			for(String converterId : availableConverterIds) {
+				try {
+					ISupplier supplier = converterSupport.getSupplier(converterId);
+					if(!supplier.isMatchMagicNumber(file) || !supplier.isMatchContent(file)) {
+						continue;
+					}
+				} catch(NoConverterAvailableException e) {
+					continue;
+				}
 				/*
 				 * Do not use a safe runnable here, because a IChromatogram
 				 * object must be returned or null.
