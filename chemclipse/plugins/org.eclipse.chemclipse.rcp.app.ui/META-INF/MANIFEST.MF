@@ -5,6 +5,7 @@ Bundle-SymbolicName: org.eclipse.chemclipse.rcp.app.ui;singleton:=true
 Bundle-Version: 0.9.0.qualifier
 Bundle-Activator: org.eclipse.chemclipse.rcp.app.ui.Activator
 Bundle-Vendor: ChemClipse
+Eclipse-BundleShape: dir
 Export-Package: org.eclipse.chemclipse.rcp.app.ui.addons,
  org.eclipse.chemclipse.rcp.app.ui.dialogs,
  org.eclipse.chemclipse.rcp.app.ui.handlers,
