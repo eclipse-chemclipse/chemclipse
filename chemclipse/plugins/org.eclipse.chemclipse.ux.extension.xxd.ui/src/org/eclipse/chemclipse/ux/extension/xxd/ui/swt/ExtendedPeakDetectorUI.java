@@ -14,7 +14,6 @@
 package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +46,9 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.charts.ChromatogramChart;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.help.HelpContext;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.listener.BoxSelectionPaintListener;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.support.ManualPeakDetector;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ChromatogramAxisIntensity;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ChromatogramAxisMinutes;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ChromatogramAxisRelativeIntensity;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePagePeaks;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ChromatogramChartSupport;
@@ -57,6 +59,7 @@ import org.eclipse.chemclipse.vsd.model.core.IChromatogramVSD;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramPeakWSD;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.wsd.model.core.selection.IChromatogramSelectionWSD;
+import org.eclipse.jface.preference.IPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -512,7 +515,13 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePagePeaks.class), display -> applySettings());
+		List<Class<? extends IPreferencePage>> preferencePages = new ArrayList<>();
+		preferencePages.add(PreferencePagePeaks.class);
+		preferencePages.add(ChromatogramAxisMinutes.class);
+		preferencePages.add(ChromatogramAxisIntensity.class);
+		preferencePages.add(ChromatogramAxisRelativeIntensity.class);
+
+		createSettingsButton(parent, preferencePages, display -> applySettings());
 	}
 
 	private void createChromatogramChart(Composite parent) {
@@ -807,6 +816,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 	private void applySettings() {
 
 		updateChromatogramAndPeak();
+		chartControl.get().modifyAxes(true);
 	}
 
 	@Override
