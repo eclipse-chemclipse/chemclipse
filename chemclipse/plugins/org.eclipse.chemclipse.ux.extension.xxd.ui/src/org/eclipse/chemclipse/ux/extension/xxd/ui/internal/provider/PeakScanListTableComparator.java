@@ -18,6 +18,7 @@ import org.eclipse.chemclipse.fsd.model.core.IChromatogramPeakFSD;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.core.ITargetSupplier;
+import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.support.PeakClassifierSupport;
 import org.eclipse.chemclipse.model.targets.TargetSupport;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
@@ -85,96 +86,105 @@ public class PeakScanListTableComparator extends AbstractRecordTableComparator {
 				break;
 			case 4:
 				if(object1 instanceof ITargetSupplier targetSupplier1 && object2 instanceof ITargetSupplier targetSupplier2) {
+					IIdentificationTarget target1 = TargetSupport.getBestIdentificationTarget(targetSupplier1);
+					IIdentificationTarget target2 = TargetSupport.getBestIdentificationTarget(targetSupplier2);
+					float score1 = target1 != null ? target1.getComparisonResult().getRatingSupplier().getScore() : 0;
+					float score2 = target2 != null ? target2.getComparisonResult().getRatingSupplier().getScore() : 0;
+					sortOrder = Float.compare(score2, score1);
+				}
+				break;
+			case 5:
+				if(object1 instanceof ITargetSupplier targetSupplier1 && object2 instanceof ITargetSupplier targetSupplier2) {
 					String name1 = TargetSupport.getBestTargetLibraryField(targetSupplier1);
 					String name2 = TargetSupport.getBestTargetLibraryField(targetSupplier2);
 					sortOrder = org.eclipse.chemclipse.model.preferences.PreferenceSupplier.isSortCaseSensitive() ? name2.compareTo(name1) : name2.compareToIgnoreCase(name1);
 				}
 				break;
-			case 5:
+			case 6:
 				sortOrder = Integer.compare(getRelativeRetentionTime(object2), getRelativeRetentionTime(object1));
 				break;
-			case 6:
+			case 7:
 				sortOrder = Float.compare(getRetentionIndex(object2), getRetentionIndex(object1));
 				break;
-			case 7:
+			case 8:
 				sortOrder = Double.compare(getIntegratedArea(object2), getIntegratedArea(object1));
 				break;
-			case 8:
+			case 9:
 				sortOrder = Integer.compare(getStartRetentionTime(object2), getStartRetentionTime(object1));
 				break;
-			case 9:
+			case 10:
 				sortOrder = Integer.compare(getStopRetentionTime(object2), getStopRetentionTime(object1));
 				break;
-			case 10:
+			case 11:
 				sortOrder = Integer.compare(getWidth(object2), getWidth(object1));
 				break;
-			case 11:
 			case 12:
+			case 13:
 				if(object1 instanceof IChromatogramPeakMSD chromatogramPeak1 && object2 instanceof IChromatogramPeakMSD chromatogramPeak2) {
 					switch(getPropertyIndex()) {
-						case 11:
+						case 12:
 							sortOrder = chromatogramPeak2.getScanMax() - chromatogramPeak1.getScanMax();
 							break;
-						case 12:
+						case 13:
 							sortOrder = Float.compare(chromatogramPeak2.getSignalToNoiseRatio(), chromatogramPeak1.getSignalToNoiseRatio());
 							break;
 					}
 				} else if(object1 instanceof IChromatogramPeakCSD chromatogramPeak1 && object2 instanceof IChromatogramPeakCSD chromatogramPeak2) {
 					switch(getPropertyIndex()) {
-						case 11:
+						case 12:
 							sortOrder = chromatogramPeak2.getScanMax() - chromatogramPeak1.getScanMax();
 							break;
-						case 12:
+						case 13:
 							sortOrder = Float.compare(chromatogramPeak2.getSignalToNoiseRatio(), chromatogramPeak1.getSignalToNoiseRatio());
 							break;
 					}
 				} else if(object1 instanceof IChromatogramPeakWSD chromatogramPeak1 && object2 instanceof IChromatogramPeakWSD chromatogramPeak2) {
 					switch(getPropertyIndex()) {
-						case 11:
+						case 12:
 							sortOrder = chromatogramPeak2.getScanMax() - chromatogramPeak1.getScanMax();
 							break;
-						case 12:
+						case 13:
 							sortOrder = Float.compare(chromatogramPeak2.getSignalToNoiseRatio(), chromatogramPeak1.getSignalToNoiseRatio());
 							break;
 					}
 				} else if(object1 instanceof IChromatogramPeakFSD chromatogramPeak1 && object2 instanceof IChromatogramPeakFSD chromatogramPeak2) {
 					switch(getPropertyIndex()) {
-						case 11:
+						case 12:
 							sortOrder = chromatogramPeak2.getScanMax() - chromatogramPeak1.getScanMax();
 							break;
-						case 12:
+						case 13:
 							sortOrder = Float.compare(chromatogramPeak2.getSignalToNoiseRatio(), chromatogramPeak1.getSignalToNoiseRatio());
 							break;
 					}
 				}
 				break;
-			case 13:
+			case 14:
 				sortOrder = Float.compare(getLeading(object2), getLeading(object1));
 				break;
-			case 14:
+			case 15:
 				sortOrder = Float.compare(getTailing(object2), getTailing(object1));
 				break;
-			case 15:
+			case 16:
 				sortOrder = getModelDescription(object2).compareTo(getModelDescription(object1));
 				break;
-			case 16:
+			case 17:
 				sortOrder = getDetectorDescription(object2).compareTo(getDetectorDescription(object1));
 				break;
-			case 17:
+			case 18:
 				sortOrder = getIntegratorDescription(object2).compareTo(getIntegratorDescription(object1));
 				break;
-			case 18:
+			case 19:
 				sortOrder = Integer.compare(getSuggestedNumberOfComponents(object2), getSuggestedNumberOfComponents(object1));
 				break;
-			case 19:
+			case 20:
 				sortOrder = Integer.compare(getInternalStandards(object2), getInternalStandards(object1));
 				break;
-			case 20:
+			case 21:
 				String classifier1 = PeakClassifierSupport.getClassifier(object1);
 				String classifier2 = PeakClassifierSupport.getClassifier(object2);
 				sortOrder = org.eclipse.chemclipse.model.preferences.PreferenceSupplier.isSortCaseSensitive() ? classifier2.compareTo(classifier1) : classifier2.compareToIgnoreCase(classifier1);
 				break;
-			case 21:
+			case 22:
 				if(object1 instanceof IPeak peak1 && object2 instanceof IPeak peak2) {
 					sortOrder = Boolean.compare(peak2.getPeakModel().isStrictModel(), peak1.getPeakModel().isStrictModel());
 				} else {

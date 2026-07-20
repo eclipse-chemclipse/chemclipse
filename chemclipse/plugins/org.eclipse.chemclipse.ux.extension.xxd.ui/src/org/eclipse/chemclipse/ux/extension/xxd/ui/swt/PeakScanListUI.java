@@ -28,7 +28,6 @@ import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.support.ui.provider.ListContentProvider;
 import org.eclipse.chemclipse.support.ui.swt.ExtendedTableViewer;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.IdentificationTargetSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.PeakScanListEditingSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.PeakScanListFilter;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.PeakScanListLabelProvider;
@@ -145,14 +144,12 @@ public class PeakScanListUI extends ExtendedTableViewer {
 								cell.setBackground(Colors.LIGHT_YELLOW);
 								cell.setForeground(Colors.BLACK);
 							}
-							cell.setImage(IdentificationTargetSupport.getRatingSymbol(IIdentificationTarget.getIdentificationTarget(peak)));
 						} else if(element instanceof IScan scan) {
 							cell.setText(TargetSupport.getBestTargetLibraryField(scan));
 							if(hasDuplicateTarget(scan)) {
 								cell.setBackground(Colors.LIGHT_YELLOW);
 								cell.setForeground(Colors.BLACK);
 							}
-							cell.setImage(IdentificationTargetSupport.getRatingSymbol(IIdentificationTarget.getIdentificationTarget(scan)));
 						}
 					}
 				}
