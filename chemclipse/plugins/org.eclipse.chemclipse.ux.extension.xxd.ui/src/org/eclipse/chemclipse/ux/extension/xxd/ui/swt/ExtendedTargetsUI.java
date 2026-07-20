@@ -682,8 +682,8 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 
 		if(object instanceof ITargetSupplier) {
 			String dataDescription;
-			if(object instanceof IChromatogram) {
-				dataDescription = ChromatogramDataSupport.getChromatogramLabel((IChromatogram)object);
+			if(object instanceof IChromatogram chromatogram) {
+				dataDescription = ChromatogramDataSupport.getChromatogramLabel(chromatogram);
 			} else if(object instanceof IPeak peak) {
 				dataDescription = peakDataSupport.getPeakLabel(peak);
 			} else if(object instanceof IScan scan) {
