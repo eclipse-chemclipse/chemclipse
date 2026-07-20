@@ -1526,6 +1526,8 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 		chartSettings.addHandledEventProcessor(new PeakSelectionHandler(this));
 		chartSettings.addHandledEventProcessor(new ScanSelectionArrowKeyHandler(this, SWT.ARROW_LEFT));
 		chartSettings.addHandledEventProcessor(new ScanSelectionArrowKeyHandler(this, SWT.ARROW_RIGHT));
+		chartSettings.addHandledEventProcessor(new PeakSelectionArrowKeyHandler(this, SWT.ARROW_DOWN));
+		chartSettings.addHandledEventProcessor(new PeakSelectionArrowKeyHandler(this, SWT.ARROW_UP));
 		chartSettings.addHandledEventProcessor(new ChromatogramMoveArrowKeyHandler(this, SWT.ARROW_LEFT));
 		chartSettings.addHandledEventProcessor(new ChromatogramMoveArrowKeyHandler(this, SWT.ARROW_RIGHT));
 		chartSettings.addHandledEventProcessor(new ChromatogramMoveArrowKeyHandler(this, SWT.ARROW_UP));
