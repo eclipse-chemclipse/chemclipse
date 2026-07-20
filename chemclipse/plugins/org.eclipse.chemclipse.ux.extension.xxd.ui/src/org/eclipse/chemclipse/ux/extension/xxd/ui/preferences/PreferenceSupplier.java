@@ -290,7 +290,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final double DEF_SCAN_CHART_FIXED_RANGE_STOP_Y = 0.0d;
 
 	public static final String P_SCAN_CHART_FORMAT_Y_AXIS_RELATIVE_INTENSITY = "scanChartFormatYAxisRelativeIntensity";
-	public static final String DEF_SCAN_CHART_FORMAT_Y_AXIS_RELATIVE_INTENSITY = "0.###";
+	public static final String DEF_SCAN_CHART_FORMAT_Y_AXIS_RELATIVE_INTENSITY = "0";
 	public static final String P_SCAN_CHART_SHOW_Y_AXIS_RELATIVE_INTENSITY = "scanChartShowYAxisRelativeIntensity";
 	public static final boolean DEF_SCAN_CHART_SHOW_Y_AXIS_RELATIVE_INTENSITY = true;
 	public static final String P_SCAN_CHART_POSITION_Y_AXIS_RELATIVE_INTENSITY = "scanChartPositionYAxisRelativeIntensity";
