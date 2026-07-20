@@ -13,8 +13,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
@@ -31,11 +32,19 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.ux.extension.ui.support.PartSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.charts.ChartSupport;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.charts.ChromatogramChart;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.listener.SplitSelectionPaintListener;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.support.ManualPeakDetector;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.l10n.ExtensionMessages;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ChromatogramAxisIntensity;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ChromatogramAxisMinutes;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ChromatogramAxisRelativeIntensity;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePagePeaks;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageScans;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.PeakDataSupport;
+import org.eclipse.jface.preference.IPreferencePage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -49,10 +58,15 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swtchart.IAxis;
 import org.eclipse.swtchart.IPlotArea;
 import org.eclipse.swtchart.Range;
+import org.eclipse.swtchart.extensions.axisconverter.MillisecondsToMinuteConverter;
+import org.eclipse.swtchart.extensions.axisconverter.PercentageConverter;
 import org.eclipse.swtchart.extensions.core.BaseChart;
 import org.eclipse.swtchart.extensions.core.IChartSettings;
 import org.eclipse.swtchart.extensions.core.IKeyboardSupport;
 import org.eclipse.swtchart.extensions.core.IMouseSupport;
+import org.eclipse.swtchart.extensions.core.IPrimaryAxisSettings;
+import org.eclipse.swtchart.extensions.core.ISecondaryAxisSettings;
+import org.eclipse.swtchart.extensions.core.SecondaryAxisSettings;
 import org.eclipse.swtchart.extensions.events.AbstractHandledEventProcessor;
 
 public class ExtendedPeakChartUI extends Composite implements IExtendedPartUI {
@@ -413,7 +427,14 @@ public class ExtendedPeakChartUI extends Composite implements IExtendedPartUI {
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePagePeaks.class, PreferencePageScans.class), display -> applySettings());
+		List<Class<? extends IPreferencePage>> preferencePages = new ArrayList<>();
+		preferencePages.add(PreferencePagePeaks.class);
+		preferencePages.add(PreferencePageScans.class);
+		preferencePages.add(ChromatogramAxisMinutes.class);
+		preferencePages.add(ChromatogramAxisIntensity.class);
+		preferencePages.add(ChromatogramAxisRelativeIntensity.class);
+
+		createSettingsButton(parent, preferencePages, display -> applySettings());
 	}
 
 	private void createPeakChart(Composite parent) {
@@ -423,6 +444,7 @@ public class ExtendedPeakChartUI extends Composite implements IExtendedPartUI {
 		/*
 		 * Chart Settings
 		 */
+		adjustAxisSettings();
 		IChartSettings chartSettings = peakChart.getChartSettings();
 		chartSettings.setCreateMenu(true);
 		chartSettings.setShowPositionMarker(true);
@@ -446,6 +468,7 @@ public class ExtendedPeakChartUI extends Composite implements IExtendedPartUI {
 	private void applySettings() {
 
 		updatePeaks();
+		adjustAxisSettings();
 	}
 
 	private void setDetectionType(String detectionType) {
@@ -675,5 +698,109 @@ public class ExtendedPeakChartUI extends Composite implements IExtendedPartUI {
 		this.peakSplitted2 = null;
 		buttonAddPeak.setEnabled(false);
 		splitSelectionPaintListener.reset();
+	}
+
+	private void adjustAxisSettings() {
+
+		adjustAxisMinutes();
+		adjustAxisIntensity();
+		adjustAxisRelativeIntensity();
+
+		IChartSettings chartSettings = peakChart.getChartSettings();
+		peakChart.applySettings(chartSettings);
+	}
+
+	private void adjustAxisIntensity() {
+
+		IChartSettings chartSettings = peakChart.getChartSettings();
+		IPrimaryAxisSettings primaryAxisSettingsY = chartSettings.getPrimaryAxisSettingsY();
+		primaryAxisSettingsY.setTitle(ExtensionMessages.intensity);
+
+		String positionNode = PreferenceSupplier.P_POSITION_Y_AXIS_INTENSITY;
+		String patternNode = PreferenceSupplier.P_FORMAT_Y_AXIS_INTENSITY;
+		String gridLineStyleNode = PreferenceSupplier.P_GRIDLINE_STYLE_Y_AXIS_INTENSITY;
+
+		ChartSupport.setAxisSettingsExtended(primaryAxisSettingsY, positionNode, patternNode, gridLineStyleNode);
+		ChartSupport.themeAxis(primaryAxisSettingsY, ChromatogramChart.class.getName() + ".AxisIntensity");
+		primaryAxisSettingsY.setVisible(ChartSupport.getBoolean(PreferenceSupplier.P_SHOW_Y_AXIS_INTENSITY));
+		primaryAxisSettingsY.setTitleVisible(ChartSupport.getBoolean(PreferenceSupplier.P_SHOW_Y_AXIS_TITLE_INTENSITY));
+	}
+
+	private void adjustAxisRelativeIntensity() {
+
+		IChartSettings chartSettings = peakChart.getChartSettings();
+		ISecondaryAxisSettings axisSettings = ChartSupport.getSecondaryAxisSettingsY(ExtensionMessages.relativeIntensity, chartSettings);
+
+		String positionNode = PreferenceSupplier.P_POSITION_Y_AXIS_RELATIVE_INTENSITY;
+		String patternNode = PreferenceSupplier.P_FORMAT_Y_AXIS_RELATIVE_INTENSITY;
+		String gridLineStyleNode = PreferenceSupplier.P_GRIDLINE_STYLE_Y_AXIS_RELATIVE_INTENSITY;
+
+		boolean isShowAxis = ChartSupport.getBoolean(PreferenceSupplier.P_SHOW_Y_AXIS_RELATIVE_INTENSITY);
+		boolean isShowAxisTitle = ChartSupport.getBoolean(PreferenceSupplier.P_SHOW_Y_AXIS_TITLE_RELATIVE_INTENSITY);
+
+		if(isShowAxis) {
+			if(axisSettings == null) {
+				ISecondaryAxisSettings secondaryAxisSettingsY = new SecondaryAxisSettings(ExtensionMessages.relativeIntensity, new PercentageConverter(SWT.VERTICAL, true));
+				ChartSupport.setAxisSettingsExtended(secondaryAxisSettingsY, positionNode, patternNode, gridLineStyleNode);
+				ChartSupport.themeAxis(secondaryAxisSettingsY, ChromatogramChart.class.getName() + ".AxisRelativeIntensity");
+				secondaryAxisSettingsY.setTitleVisible(isShowAxisTitle);
+				chartSettings.getSecondaryAxisSettingsListY().add(secondaryAxisSettingsY);
+			} else {
+				ChartSupport.setAxisSettingsExtended(axisSettings, positionNode, patternNode, gridLineStyleNode);
+				ChartSupport.themeAxis(axisSettings, ChromatogramChart.class.getName() + ".AxisRelativeIntensity");
+				axisSettings.setTitle(ExtensionMessages.relativeIntensity);
+				axisSettings.setVisible(true);
+				axisSettings.setTitleVisible(isShowAxisTitle);
+			}
+		} else {
+			if(axisSettings != null) {
+				axisSettings.setTitle(ExtensionMessages.relativeIntensity);
+				axisSettings.setVisible(false);
+				axisSettings.setTitleVisible(isShowAxisTitle);
+			}
+		}
+	}
+
+	private void adjustAxisMinutes() {
+
+		IChartSettings chartSettings = peakChart.getChartSettings();
+		ISecondaryAxisSettings axisSettings = ChartSupport.getSecondaryAxisSettingsX(ExtensionMessages.minutes, chartSettings);
+
+		String positionNode = PreferenceSupplier.P_POSITION_X_AXIS_MINUTES;
+		String patternNode = PreferenceSupplier.P_FORMAT_X_AXIS_MINUTES;
+		String gridLineStyleNode = PreferenceSupplier.P_GRIDLINE_STYLE_X_AXIS_MINUTES;
+		boolean isShowAxis = ChartSupport.getBoolean(PreferenceSupplier.P_SHOW_X_AXIS_MINUTES);
+		boolean isShowAxisTitle = ChartSupport.getBoolean(PreferenceSupplier.P_SHOW_X_AXIS_TITLE_MINUTES);
+
+		boolean drawAxisLine = ChartSupport.getBoolean(PreferenceSupplier.P_SHOW_X_AXIS_LINE_MINUTES);
+		boolean drawPositionMarker = ChartSupport.getBoolean(PreferenceSupplier.P_SHOW_X_AXIS_POSITION_MARKER_MINUTES);
+
+		if(isShowAxis) {
+			if(axisSettings == null) {
+				ISecondaryAxisSettings secondaryAxisSettingsX = new SecondaryAxisSettings(ExtensionMessages.minutes, new MillisecondsToMinuteConverter());
+				ChartSupport.setAxisSettingsExtended(secondaryAxisSettingsX, positionNode, patternNode, gridLineStyleNode);
+				ChartSupport.themeAxis(secondaryAxisSettingsX, ChromatogramChart.class.getName() + ".AxisMinutes");
+				secondaryAxisSettingsX.setTitleVisible(isShowAxisTitle);
+				secondaryAxisSettingsX.setDrawAxisLine(drawAxisLine);
+				secondaryAxisSettingsX.setDrawPositionMarker(drawPositionMarker);
+				chartSettings.getSecondaryAxisSettingsListX().add(secondaryAxisSettingsX);
+			} else {
+				ChartSupport.setAxisSettingsExtended(axisSettings, positionNode, patternNode, gridLineStyleNode);
+				ChartSupport.themeAxis(axisSettings, ChromatogramChart.class.getName() + ".AxisMinutes");
+				axisSettings.setTitle(ExtensionMessages.minutes);
+				axisSettings.setVisible(true);
+				axisSettings.setTitleVisible(isShowAxisTitle);
+				axisSettings.setDrawAxisLine(drawAxisLine);
+				axisSettings.setDrawPositionMarker(drawPositionMarker);
+			}
+		} else {
+			if(axisSettings != null) {
+				axisSettings.setTitle(ExtensionMessages.minutes);
+				axisSettings.setVisible(false);
+				axisSettings.setTitleVisible(isShowAxisTitle);
+				axisSettings.setDrawAxisLine(drawAxisLine);
+				axisSettings.setDrawPositionMarker(drawPositionMarker);
+			}
+		}
 	}
 }
