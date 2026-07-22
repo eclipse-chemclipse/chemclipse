@@ -144,7 +144,7 @@ public interface IProcessMethod extends IProcessEntryContainer {
 			return false;
 		}
 
-		if(getProfiles().equals(other.getProfiles())) {
+		if(!getProfiles().equals(other.getProfiles())) {
 			return false;
 		}
 
