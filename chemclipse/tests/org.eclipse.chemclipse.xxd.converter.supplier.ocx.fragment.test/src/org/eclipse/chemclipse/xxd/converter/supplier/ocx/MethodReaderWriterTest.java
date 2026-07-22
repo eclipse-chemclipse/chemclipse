@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -18,11 +18,10 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
@@ -32,11 +31,10 @@ import org.eclipse.chemclipse.processing.methods.ProcessEntry;
 import org.eclipse.chemclipse.processing.methods.ProcessMethod;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.methods.MethodExportConverter;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.methods.MethodImportConverter;
-import org.junit.jupiter.api.Disabled;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.jupiter.api.Test;
 
-@Disabled // TODO
-public class MethodReaderTest {
+public class MethodReaderWriterTest {
 
 	private static final String FIRST_STREAM_SUPPORT_FORMAT = "Format_v0.0.3.ocm";
 	private static final String[] FORMAT_FILES = {"Format_v0.0.1.ocm", "Format_v0.0.2.ocm", FIRST_STREAM_SUPPORT_FORMAT};
@@ -44,11 +42,11 @@ public class MethodReaderTest {
 	MethodExportConverter exportConverter = new MethodExportConverter();
 
 	@Test
-	public void testRead() throws URISyntaxException {
+	public void testRead() {
 
 		boolean stream = false;
 		for(String filename : FORMAT_FILES) {
-			File file = getFile(filename);
+			File file = new File("testData/files/methods/" + filename);
 			if(FIRST_STREAM_SUPPORT_FORMAT.equals(filename)) {
 				stream = true;
 			}
@@ -59,17 +57,10 @@ public class MethodReaderTest {
 		}
 	}
 
-	private File getFile(String filename) throws URISyntaxException {
-
-		URL url = MethodReaderTest.class.getResource("/files/methods/" + filename);
-		File file = new File(url.toURI());
-		return file;
-	}
-
 	private IProcessMethod checkRead(File file, boolean withStream) {
 
-		try {
-			IProcessingInfo<IProcessMethod> result = withStream ? converter.readFrom(new FileInputStream(file), file.getName(), null) : converter.convert(file, null);
+		try (BufferedInputStream stream = new BufferedInputStream(new FileInputStream(file))) {
+			IProcessingInfo<IProcessMethod> result = withStream ? converter.readFrom(stream, file.getName(), new NullProgressMonitor()) : converter.convert(file, new NullProgressMonitor());
 			checkResult(file.getAbsolutePath(), result, withStream ? "stream api" : "file api");
 			return result.getProcessingResult();
 		} catch(IOException e) {
@@ -102,7 +93,7 @@ public class MethodReaderTest {
 		assertTrue(read.contentEquals(checkRead(tempFile, true), true), "result read from file differs from stream!");
 		assertNotEquals(System.identityHashCode(method), System.identityHashCode(read), "not different objects!");
 		assertEquals(method.getUUID(), read.getUUID());
-		assertEquals(method.getName(), read.getName());
+		assertEquals(method.getName(), read.getSourceFile().getName());
 		assertEquals(method.getOperator(), read.getOperator());
 		assertEquals(method.getNumberOfEntries(), read.getNumberOfEntries(), "number of entries mismatched");
 		ProcessEntry subEntry = (ProcessEntry)read.getEntries().get(1);
@@ -110,9 +101,10 @@ public class MethodReaderTest {
 	}
 
 	@Test
-	public void testNestedMethodRead() throws URISyntaxException, IOException {
+	public void testNestedMethodRead() throws IOException {
 
-		IProcessingInfo<IProcessMethod> convert = converter.convert(getFile("ChromIdentMethod.ocm"), null);
+		File file = new File("testData/files/methods/" + "ChromIdentMethod.ocm");
+		IProcessingInfo<IProcessMethod> convert = converter.convert(file, new NullProgressMonitor());
 		checkResult("ChromIdentMethod.ocm", convert, "nested");
 		IProcessMethod result = convert.getProcessingResult();
 		assertEquals(3, result.getNumberOfEntries());
