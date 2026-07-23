@@ -754,9 +754,11 @@ public class ExtendedScanChartUI extends Composite implements IExtendedPartUI {
 
 	void adjustAxisSettings() {
 
-		adjustAxisIons();
-		adjustAxisIntensity();
-		adjustAxisRelativeIntensity();
+		if(scan instanceof IScanMSD) {
+			adjustAxisIons();
+			adjustAxisIntensity();
+			adjustAxisRelativeIntensity();
+		}
 
 		IChartSettings chartSettings = chartControl.get().getChartSettings();
 		chartControl.get().applySettings(chartSettings);
