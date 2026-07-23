@@ -837,6 +837,87 @@
             The title font
         </description>
     </fontDefinition>
+    <colorDefinition
+        categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.charts"
+        id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedScanChartUI.AxisMilliseconds.GridColor"
+        label="Scan Chart Axis Milliseconds Grid Color"
+        value="192,192,192">
+        <description>
+            The color of the chart grid.
+        </description>
+    </colorDefinition>
+    <colorDefinition
+        categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.charts"
+        id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedScanChartUI.AxisMilliseconds.LineColor"
+        label="Scan Chart Axis Milliseconds Line Color"
+        value="0,0,0">
+        <description>
+            The color of the chart line.
+        </description>
+    </colorDefinition>
+    <fontDefinition
+        categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.charts"
+        id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedScanChartUI.AxisMilliseconds.Font"
+        label="Scan Chart Axis Milliseconds Font"
+        value="Verdana-bold-11">
+        <description>
+            The title font
+        </description>
+    </fontDefinition>
+    <colorDefinition
+        categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.charts"
+        id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedScanChartUI.AxisMinutes.GridColor"
+        label="Scan Chart Axis Minutes Grid Color"
+        value="192,192,192">
+        <description>
+            The color of the chart grid.
+        </description>
+    </colorDefinition>
+    <colorDefinition
+        categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.charts"
+        id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedScanChartUI.AxisMinutes.LineColor"
+        label="Scan Chart Axis Minutes Line Color"
+        value="0,0,0">
+        <description>
+            The color of the chart line.
+        </description>
+    </colorDefinition>
+    <fontDefinition
+        categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.charts"
+        id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedScanChartUI.AxisMinutes.Font"
+        label="Scan Chart Axis Minutes Font"
+        value="Verdana-bold-11">
+        <description>
+            The title font
+        </description>
+    </fontDefinition>
+    <colorDefinition
+        categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.charts"
+        id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedScanChartUI.AxisWavelengths.GridColor"
+        label="Scan Chart Axis Wavelengths Grid Color"
+        value="192,192,192">
+        <description>
+            The color of the chart grid.
+        </description>
+    </colorDefinition>
+    <colorDefinition
+        categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.charts"
+        id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedScanChartUI.AxisWavelengths.LineColor"
+        label="Scan Chart Axis Wavelengths Line Color"
+        value="0,0,0">
+        <description>
+            The color of the chart line.
+        </description>
+    </colorDefinition>
+    <fontDefinition
+        categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.charts"
+        id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ExtendedScanChartUI.AxisWavelengths.Font"
+        label="Scan Chart Axis Wavelengths Font"
+        value="Verdana-bold-11">
+        <description>
+            The title font
+        </description>
+    </fontDefinition>
 </extension>
 <extension
          point="org.eclipse.ui.commands">
