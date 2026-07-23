@@ -320,6 +320,17 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final String P_SCAN_CHART_SHOW_X_AXIS_TITLE_IONS = "scanChartShowXAxisTitleIons";
 	public static final boolean DEF_SCAN_CHART_SHOW_X_AXIS_TITLE_IONS = true;
 
+	public static final String P_SCAN_CHART_SHOW_X_AXIS_WAVELENGTHS = "scanChartShowXAxisWavelengths";
+	public static final boolean DEF_SCAN_CHART_SHOW_X_AXIS_WAVELENGTHS = true;
+	public static final String P_SCAN_CHART_POSITION_X_AXIS_WAVELENGTHS = "scanChartPositionXAxisWavelengths";
+	public static final String DEF_SCAN_CHART_POSITION_X_AXIS_WAVELENGTHS = Position.Primary.toString();
+	public static final String P_SCAN_CHART_FORMAT_X_AXIS_WAVELENGTHS = "scanChartFormatXAxisWavelengths";
+	public static final String DEF_SCAN_CHART_FORMAT_X_AXIS_WAVELENGTHS = "0";
+	public static final String P_SCAN_CHART_GRIDLINE_STYLE_X_AXIS_WAVELENGTHS = "scanChartGridlineStyleXAxisWavelengths";
+	public static final String DEF_SCAN_CHART_GRIDLINE_STYLE_X_AXIS_WAVELENGTHS = LineStyle.DOT.toString();
+	public static final String P_SCAN_CHART_SHOW_X_AXIS_TITLE_WAVELENGTHS = "scanChartShowXAxisTitleWavelengths";
+	public static final boolean DEF_SCAN_CHART_SHOW_X_AXIS_TITLE_WAVELENGTHS = true;
+
 	public static final String P_TRACES_VIRTUAL_TABLE = "tracesVirtualTable";
 	public static final int DEF_TRACES_VIRTUAL_TABLE = 5000;
 	public static final String P_LIMIT_SIM_TRACES = "limitSimTraces";
@@ -969,6 +980,12 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		putDefault(P_SCAN_CHART_POSITION_X_AXIS_IONS, DEF_SCAN_CHART_POSITION_X_AXIS_IONS);
 		putDefault(P_SCAN_CHART_GRIDLINE_STYLE_X_AXIS_IONS, DEF_SCAN_CHART_GRIDLINE_STYLE_X_AXIS_IONS);
 		putDefault(P_SCAN_CHART_SHOW_X_AXIS_TITLE_IONS, DEF_SCAN_CHART_SHOW_X_AXIS_TITLE_IONS);
+
+		putDefault(P_SCAN_CHART_SHOW_X_AXIS_WAVELENGTHS, DEF_SCAN_CHART_SHOW_X_AXIS_WAVELENGTHS);
+		putDefault(P_SCAN_CHART_POSITION_X_AXIS_WAVELENGTHS, DEF_SCAN_CHART_POSITION_X_AXIS_WAVELENGTHS);
+		putDefault(P_SCAN_CHART_FORMAT_X_AXIS_WAVELENGTHS, DEF_SCAN_CHART_FORMAT_X_AXIS_WAVELENGTHS);
+		putDefault(P_SCAN_CHART_GRIDLINE_STYLE_X_AXIS_WAVELENGTHS, DEF_SCAN_CHART_GRIDLINE_STYLE_X_AXIS_WAVELENGTHS);
+		putDefault(P_SCAN_CHART_SHOW_X_AXIS_TITLE_WAVELENGTHS, DEF_SCAN_CHART_SHOW_X_AXIS_TITLE_WAVELENGTHS);
 
 		putDefault(P_TRACES_VIRTUAL_TABLE, DEF_TRACES_VIRTUAL_TABLE);
 		putDefault(P_LIMIT_SIM_TRACES, DEF_LIMIT_SIM_TRACES);

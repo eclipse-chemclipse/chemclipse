@@ -47,12 +47,15 @@ import org.eclipse.chemclipse.ux.extension.ui.swt.ISettingsHandler;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.charts.ChartSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.l10n.ExtensionMessages;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ChromatogramAxisMilliseconds;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ChromatogramAxisSeconds;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageScans;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageSubtract;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ScanChartAxisIntensity;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ScanChartAxisIon;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ScanChartAxisRelativeIntensity;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ScanChartAxisWavelength;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.ChromatogramUpdateSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ScanDataSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.wizards.SubtractScanWizard;
@@ -77,6 +80,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtchart.IAxis;
 import org.eclipse.swtchart.Range;
+import org.eclipse.swtchart.extensions.axisconverter.MillisecondsToMinuteConverter;
 import org.eclipse.swtchart.extensions.axisconverter.PercentageConverter;
 import org.eclipse.swtchart.extensions.core.BaseChart;
 import org.eclipse.swtchart.extensions.core.IChartSettings;
@@ -745,10 +749,12 @@ public class ExtendedScanChartUI extends Composite implements IExtendedPartUI {
 		List<Class<? extends IPreferencePage>> preferencePages = new ArrayList<>();
 		preferencePages.add(PreferencePageScans.class);
 		preferencePages.add(ScanChartAxisIon.class);
+		preferencePages.add(ScanChartAxisWavelength.class);
 		preferencePages.add(ScanChartAxisIntensity.class);
 		preferencePages.add(ScanChartAxisRelativeIntensity.class);
+		preferencePages.add(ChromatogramAxisSeconds.class);
+		preferencePages.add(ChromatogramAxisMilliseconds.class);
 		preferencePages.add(PreferencePageSubtract.class);
-
 		return preferencePages;
 	}
 
@@ -756,6 +762,15 @@ public class ExtendedScanChartUI extends Composite implements IExtendedPartUI {
 
 		if(scan instanceof IScanMSD) {
 			adjustAxisIons();
+			adjustAxisIntensity();
+			adjustAxisRelativeIntensity();
+		} else if(scan instanceof IScanCSD) {
+			adjustAxisMinutes();
+			adjustAxisMiliseconds();
+			adjustAxisIntensity();
+			adjustAxisRelativeIntensity();
+		} else if(scan instanceof IScanWSD) {
+			adjustAxisWavelengths();
 			adjustAxisIntensity();
 			adjustAxisRelativeIntensity();
 		}
@@ -828,6 +843,81 @@ public class ExtendedScanChartUI extends Composite implements IExtendedPartUI {
 				axisSettings.setTitleVisible(isShowAxisTitle);
 			}
 		}
+	}
+
+	private void adjustAxisMiliseconds() {
+
+		IChartSettings chartSettings = chartControl.get().getChartSettings();
+		IPrimaryAxisSettings primaryAxisSettingsX = chartSettings.getPrimaryAxisSettingsX();
+		primaryAxisSettingsX.setTitle(ExtensionMessages.miliseconds);
+
+		String positionNode = PreferenceSupplier.P_POSITION_X_AXIS_MILLISECONDS;
+		String patternNode = PreferenceSupplier.P_FORMAT_X_AXIS_MILLISECONDS;
+		String gridLineStyleNode = PreferenceSupplier.P_GRIDLINE_STYLE_X_AXIS_MILLISECONDS;
+
+		ChartSupport.setAxisSettingsExtended(primaryAxisSettingsX, positionNode, patternNode, gridLineStyleNode);
+		ChartSupport.themeAxis(primaryAxisSettingsX, ExtendedScanChartUI.class.getName() + ".AxisMilliseconds");
+		primaryAxisSettingsX.setVisible(ChartSupport.getBoolean(PreferenceSupplier.P_SHOW_X_AXIS_MILLISECONDS));
+		primaryAxisSettingsX.setTitleVisible(ChartSupport.getBoolean(PreferenceSupplier.P_SHOW_X_AXIS_TITLE_MILLISECONDS));
+	}
+
+	private void adjustAxisMinutes() {
+
+		IChartSettings chartSettings = chartControl.get().getChartSettings();
+		ISecondaryAxisSettings axisSettings = ChartSupport.getSecondaryAxisSettingsX(ExtensionMessages.minutes, chartSettings);
+
+		String positionNode = PreferenceSupplier.P_POSITION_X_AXIS_MINUTES;
+		String patternNode = PreferenceSupplier.P_FORMAT_X_AXIS_MINUTES;
+		String gridLineStyleNode = PreferenceSupplier.P_GRIDLINE_STYLE_X_AXIS_MINUTES;
+		boolean isShowAxis = ChartSupport.getBoolean(PreferenceSupplier.P_SHOW_X_AXIS_MINUTES);
+		boolean isShowAxisTitle = ChartSupport.getBoolean(PreferenceSupplier.P_SHOW_X_AXIS_TITLE_MINUTES);
+
+		boolean drawAxisLine = ChartSupport.getBoolean(PreferenceSupplier.P_SHOW_X_AXIS_LINE_MINUTES);
+		boolean drawPositionMarker = ChartSupport.getBoolean(PreferenceSupplier.P_SHOW_X_AXIS_POSITION_MARKER_MINUTES);
+
+		if(isShowAxis) {
+			if(axisSettings == null) {
+				ISecondaryAxisSettings secondaryAxisSettingsX = new SecondaryAxisSettings(ExtensionMessages.minutes, new MillisecondsToMinuteConverter());
+				ChartSupport.setAxisSettingsExtended(secondaryAxisSettingsX, positionNode, patternNode, gridLineStyleNode);
+				ChartSupport.themeAxis(secondaryAxisSettingsX, ExtendedScanChartUI.class.getName() + ".AxisMinutes");
+				secondaryAxisSettingsX.setTitleVisible(isShowAxisTitle);
+				secondaryAxisSettingsX.setDrawAxisLine(drawAxisLine);
+				secondaryAxisSettingsX.setDrawPositionMarker(drawPositionMarker);
+				chartSettings.getSecondaryAxisSettingsListX().add(secondaryAxisSettingsX);
+			} else {
+				ChartSupport.setAxisSettingsExtended(axisSettings, positionNode, patternNode, gridLineStyleNode);
+				ChartSupport.themeAxis(axisSettings, ExtendedScanChartUI.class.getName() + ".AxisMinutes");
+				axisSettings.setTitle(ExtensionMessages.minutes);
+				axisSettings.setVisible(true);
+				axisSettings.setTitleVisible(isShowAxisTitle);
+				axisSettings.setDrawAxisLine(drawAxisLine);
+				axisSettings.setDrawPositionMarker(drawPositionMarker);
+			}
+		} else {
+			if(axisSettings != null) {
+				axisSettings.setTitle(ExtensionMessages.minutes);
+				axisSettings.setVisible(false);
+				axisSettings.setTitleVisible(isShowAxisTitle);
+				axisSettings.setDrawAxisLine(drawAxisLine);
+				axisSettings.setDrawPositionMarker(drawPositionMarker);
+			}
+		}
+	}
+
+	private void adjustAxisWavelengths() {
+
+		IChartSettings chartSettings = chartControl.get().getChartSettings();
+		IPrimaryAxisSettings primaryAxisSettingsX = chartSettings.getPrimaryAxisSettingsX();
+		primaryAxisSettingsX.setTitle(ExtensionMessages.wavelength);
+
+		String positionNode = PreferenceSupplier.P_SCAN_CHART_POSITION_X_AXIS_WAVELENGTHS;
+		String patternNode = PreferenceSupplier.P_SCAN_CHART_FORMAT_X_AXIS_WAVELENGTHS;
+		String gridLineStyleNode = PreferenceSupplier.P_SCAN_CHART_GRIDLINE_STYLE_X_AXIS_WAVELENGTHS;
+
+		ChartSupport.setAxisSettingsExtended(primaryAxisSettingsX, positionNode, patternNode, gridLineStyleNode);
+		ChartSupport.themeAxis(primaryAxisSettingsX, ExtendedScanChartUI.class.getName() + ".AxisWavelengths");
+		primaryAxisSettingsX.setVisible(ChartSupport.getBoolean(PreferenceSupplier.P_SCAN_CHART_SHOW_X_AXIS_WAVELENGTHS));
+		primaryAxisSettingsX.setTitleVisible(ChartSupport.getBoolean(PreferenceSupplier.P_SCAN_CHART_SHOW_X_AXIS_TITLE_WAVELENGTHS));
 	}
 
 	private void createSaveButton(Composite parent) {
