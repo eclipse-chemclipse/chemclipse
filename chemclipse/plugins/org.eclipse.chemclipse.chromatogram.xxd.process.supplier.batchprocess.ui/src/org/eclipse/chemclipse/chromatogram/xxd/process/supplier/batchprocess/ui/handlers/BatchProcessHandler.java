@@ -12,7 +12,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.process.supplier.batchprocess.ui.handlers;
 
+import java.io.File;
+
 import org.eclipse.chemclipse.chromatogram.xxd.process.supplier.batchprocess.ui.wizards.WizardProcessor;
+import org.eclipse.chemclipse.logging.core.Logger;
+import org.eclipse.chemclipse.model.types.DataType;
+import org.eclipse.chemclipse.ux.extension.ui.provider.ISupplierEditorSupport;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.editors.ProjectExplorerSupportFactory;
 import org.eclipse.e4.core.contexts.Active;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -20,10 +26,23 @@ import org.eclipse.swt.widgets.Shell;
 
 public class BatchProcessHandler {
 
+	private static final Logger logger = Logger.getLogger(BatchProcessHandler.class);
+
 	@Execute
 	public void execute(@Active Shell shell) {
 
-		WizardDialog wizardDialog = new WizardDialog(shell, new WizardProcessor());
+		WizardProcessor wizard = new WizardProcessor();
+		WizardDialog wizardDialog = new WizardDialog(shell, wizard);
 		wizardDialog.open();
+		/*
+		 * The wizard dialog is closed at this point, so the E4 part service can resolve the active window.
+		 */
+		File batchProcessFile = wizard.getBatchProcessFile();
+		if(batchProcessFile != null) {
+			ISupplierEditorSupport supplierEditorSupport = new ProjectExplorerSupportFactory(DataType.OBJ).getInstanceEditorSupport();
+			if(!supplierEditorSupport.openEditor(batchProcessFile)) {
+				logger.warn("Failed to open editor.");
+			}
+		}
 	}
 }
