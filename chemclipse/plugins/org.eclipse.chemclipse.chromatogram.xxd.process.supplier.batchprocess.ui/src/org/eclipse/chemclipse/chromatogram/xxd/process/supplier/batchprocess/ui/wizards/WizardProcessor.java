@@ -17,11 +17,7 @@ import java.io.File;
 import org.eclipse.chemclipse.chromatogram.xxd.process.supplier.batchprocess.io.JobWriter;
 import org.eclipse.chemclipse.chromatogram.xxd.process.supplier.batchprocess.model.BatchProcessJob;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.types.DataType;
-import org.eclipse.chemclipse.support.l10n.SupportMessages;
 import org.eclipse.chemclipse.support.ui.wizards.AbstractWizard;
-import org.eclipse.chemclipse.ux.extension.ui.provider.ISupplierEditorSupport;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.editors.ProjectExplorerSupportFactory;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -31,6 +27,8 @@ public class WizardProcessor extends AbstractWizard {
 
 	private PageDataType pageDataType;
 	private BatchProcessWizardElements wizardElements;
+
+	private File batchProcessFile;
 
 	public WizardProcessor() {
 
@@ -61,7 +59,12 @@ public class WizardProcessor extends AbstractWizard {
 			logger.warn(e);
 		}
 
-		runOpenEditor(file, monitor);
+		this.batchProcessFile = file;
+	}
+
+	public File getBatchProcessFile() {
+
+		return batchProcessFile;
 	}
 
 	private BatchProcessJob createBatchProcessJob() {
@@ -70,16 +73,5 @@ public class WizardProcessor extends AbstractWizard {
 		batchProcessJob.setDataType(pageDataType.getDataType());
 
 		return batchProcessJob;
-	}
-
-	private void runOpenEditor(File file, IProgressMonitor monitor) {
-
-		monitor.subTask(SupportMessages.taskOpenEditor);
-		ISupplierEditorSupport supplierEditorSupport = new ProjectExplorerSupportFactory(DataType.OBJ).getInstanceEditorSupport();
-		getShell().getDisplay().asyncExec(() -> {
-			if(!supplierEditorSupport.openEditor(file)) {
-				logger.warn("Failed to open editor.");
-			}
-		});
 	}
 }
