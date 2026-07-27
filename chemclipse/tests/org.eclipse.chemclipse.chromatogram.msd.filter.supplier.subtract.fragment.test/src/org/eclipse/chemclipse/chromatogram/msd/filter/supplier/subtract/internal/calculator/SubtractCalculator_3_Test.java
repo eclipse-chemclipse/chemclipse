@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -28,7 +28,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 @TestInstance(Lifecycle.PER_CLASS)
 public class SubtractCalculator_3_Test {
 
-	private SubtractCalculator subtractCalculator = new SubtractCalculator();;
+	private SubtractCalculator subtractCalculator = new SubtractCalculator();
 	private IScanMSD targetMassSpectrum;
 	private Map<Double, Float> subtractMassSpectrumMap;
 
