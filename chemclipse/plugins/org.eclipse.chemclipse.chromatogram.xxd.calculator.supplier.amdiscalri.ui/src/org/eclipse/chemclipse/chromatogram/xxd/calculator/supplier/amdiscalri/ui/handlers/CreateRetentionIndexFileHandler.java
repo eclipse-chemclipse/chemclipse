@@ -14,11 +14,10 @@ package org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.u
 
 import java.io.File;
 
+import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.ui.internal.provider.CalibrationFileEditorSupport;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.ui.wizards.WizardCreateRetentionIndexFile;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.types.DataType;
-import org.eclipse.chemclipse.ux.extension.ui.provider.ISupplierEditorSupport;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.editors.ProjectExplorerSupportFactory;
+import org.eclipse.chemclipse.ux.extension.ui.provider.ISupplierFileEditorSupport;
 import org.eclipse.e4.core.contexts.Active;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -45,7 +44,7 @@ public class CreateRetentionIndexFileHandler {
 		 * The wizard dialog is closed at this point, so the E4 part service can resolve the active window.
 		 */
 		if(calibrationFile != null) {
-			ISupplierEditorSupport supplierEditorSupport = new ProjectExplorerSupportFactory(DataType.CAL).getInstanceEditorSupport();
+			ISupplierFileEditorSupport supplierEditorSupport = new CalibrationFileEditorSupport();
 			if(!supplierEditorSupport.openEditor(calibrationFile)) {
 				logger.warn("Failed to open editor.");
 			}

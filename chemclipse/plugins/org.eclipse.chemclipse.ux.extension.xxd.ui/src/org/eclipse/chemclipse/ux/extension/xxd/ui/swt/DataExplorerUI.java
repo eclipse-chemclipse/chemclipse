@@ -23,7 +23,7 @@ import org.eclipse.chemclipse.ux.extension.ui.model.DataExplorerTreeSettings;
 import org.eclipse.chemclipse.ux.extension.ui.provider.ISupplierFileEditorSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.MultiDataExplorerTreeUI;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.editors.ProjectExplorerSupportFactory;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.editors.ProjectExplorerEditorSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.GenericSupplierEditorSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.SupplierEditorSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePage;
@@ -140,7 +140,7 @@ public class DataExplorerUI extends MultiDataExplorerTreeUI {
 		 * CAL
 		 */
 		if(preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_DATA_CAL)) {
-			editorSupportList.add(new ProjectExplorerSupportFactory(DataType.CAL).getInstanceEditorSupport());
+			editorSupportList.add(new ProjectExplorerEditorSupport(DataType.CAL));
 		}
 		/*
 		 * PCR
@@ -170,7 +170,7 @@ public class DataExplorerUI extends MultiDataExplorerTreeUI {
 		 * OBJ
 		 */
 		if(preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_BATCHJOBS)) {
-			editorSupportList.add(new ProjectExplorerSupportFactory(DataType.OBJ).getInstanceEditorSupport());
+			editorSupportList.add(new ProjectExplorerEditorSupport(DataType.OBJ));
 		}
 
 		editorSupportList.add(new GenericSupplierEditorSupport(supplierFileIdentifier, () -> context));
