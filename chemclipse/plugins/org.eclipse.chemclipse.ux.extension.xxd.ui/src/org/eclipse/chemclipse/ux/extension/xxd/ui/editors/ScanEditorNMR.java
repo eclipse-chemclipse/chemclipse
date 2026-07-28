@@ -59,6 +59,7 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.support.ui.workbench.EditorSupport;
+import org.eclipse.chemclipse.support.ui.workbench.XmiSupport;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.ux.extension.ui.editors.IScanEditorNMR;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.l10n.ExtensionMessages;
@@ -198,7 +199,7 @@ public class ScanEditorNMR implements IScanEditorNMR {
 		if(object instanceof IComplexSignalMeasurement<?>) {
 			selection = new DataNMRSelection();
 			String label = addToSelection((IComplexSignalMeasurement<?>)object, selection);
-			part.setLabel(label);
+			part.setLabel(XmiSupport.removeInvalidCharacters(label));
 			Display.getDefault().asyncExec(this::updateSelection);
 		}
 	}

@@ -36,6 +36,7 @@ import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.support.events.IPerspectiveAndViewIds;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.chemclipse.support.ui.workbench.EditorSupport;
+import org.eclipse.chemclipse.support.ui.workbench.XmiSupport;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.ux.extension.msd.ui.support.DatabaseImportRunnable;
 import org.eclipse.chemclipse.ux.extension.msd.ui.swt.MassSpectrumLibraryUI;
@@ -202,7 +203,7 @@ public class DatabaseEditor implements IChemClipseEditor {
 	private void createPages(Composite parent) {
 
 		if(massSpectra != null && massSpectra.getMassSpectrum(1) != null) {
-			part.setLabel(("".equals(massSpectra.getName())) ? massSpectrumFile.getName() : massSpectra.getName());
+			part.setLabel(XmiSupport.removeInvalidCharacters(("".equals(massSpectra.getName())) ? massSpectrumFile.getName() : massSpectra.getName()));
 			createEditorPage(parent);
 		} else {
 			part.setLabel("Database Editor");

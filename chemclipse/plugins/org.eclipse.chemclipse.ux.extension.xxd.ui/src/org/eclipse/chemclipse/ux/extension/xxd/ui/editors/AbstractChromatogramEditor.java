@@ -55,6 +55,7 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.support.settings.UserManagement;
 import org.eclipse.chemclipse.support.ui.workbench.EditorSupport;
+import org.eclipse.chemclipse.support.ui.workbench.XmiSupport;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.ux.extension.ui.editors.IChromatogramEditor;
 import org.eclipse.chemclipse.ux.extension.ui.parts.AbstractUpdater;
@@ -271,8 +272,12 @@ public abstract class AbstractChromatogramEditor extends AbstractUpdater<Extende
 		setControl(extendedChromatogramUI);
 
 		if(chromatogramSelection != null) {
-			part.setLabel(ChromatogramDataSupport.getChromatogramEditorLabel(chromatogramSelection, false));
-			part.setTooltip(ChromatogramDataSupport.getReferenceLabel(chromatogramSelection.getChromatogram(), 0, false));
+			/*
+			 * The label and tooltip are built from vendor data, which may contain
+			 * characters that the workbench model is unable to serialize to XML.
+			 */
+			part.setLabel(XmiSupport.removeInvalidCharacters(ChromatogramDataSupport.getChromatogramEditorLabel(chromatogramSelection, false)));
+			part.setTooltip(XmiSupport.removeInvalidCharacters(ChromatogramDataSupport.getReferenceLabel(chromatogramSelection.getChromatogram(), 0, false)));
 			chromatogramSelection.update(true);
 		}
 	}
