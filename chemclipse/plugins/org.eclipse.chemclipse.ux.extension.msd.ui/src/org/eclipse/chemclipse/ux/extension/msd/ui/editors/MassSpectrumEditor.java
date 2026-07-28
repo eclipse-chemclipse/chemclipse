@@ -40,6 +40,7 @@ import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.support.events.IPerspectiveAndViewIds;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.chemclipse.support.ui.workbench.EditorSupport;
+import org.eclipse.chemclipse.support.ui.workbench.XmiSupport;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.ux.extension.msd.ui.internal.support.MassSpectrumImportRunnable;
 import org.eclipse.chemclipse.ux.extension.msd.ui.swt.ExtendedMassSpectrumUI;
@@ -293,7 +294,7 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 				}
 			}
 		}
-		part.setLabel(name);
+		part.setLabel(XmiSupport.removeInvalidCharacters(name));
 	}
 
 	public void registerEvent(String topic, String property) {

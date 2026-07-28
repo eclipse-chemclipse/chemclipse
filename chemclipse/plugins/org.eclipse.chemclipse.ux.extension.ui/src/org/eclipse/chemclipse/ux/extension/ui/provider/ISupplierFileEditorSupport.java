@@ -31,6 +31,7 @@ import org.eclipse.chemclipse.processing.converter.ISupplierFileIdentifier;
 import org.eclipse.chemclipse.support.events.IPerspectiveAndViewIds;
 import org.eclipse.chemclipse.support.ui.activator.ContextAddon;
 import org.eclipse.chemclipse.support.ui.workbench.EditorSupport;
+import org.eclipse.chemclipse.support.ui.workbench.XmiSupport;
 import org.eclipse.chemclipse.ux.extension.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.ui.editors.IChromatogramEditor;
 import org.eclipse.chemclipse.ux.extension.ui.preferences.PreferenceSupplierDataExplorer;
@@ -161,13 +162,13 @@ public interface ISupplierFileEditorSupport extends ISupplierFileIdentifier {
 							} else if(object instanceof IChromatogramVSD) {
 								type = " [VSD]";
 							}
-							part.setLabel(chromatogram.getName() + type);
+							part.setLabel(XmiSupport.removeInvalidCharacters(chromatogram.getName() + type));
 						} else if(object instanceof IMassSpectra massSpectra) {
-							part.setLabel(massSpectra.getName());
+							part.setLabel(XmiSupport.removeInvalidCharacters(massSpectra.getName()));
 						} else if(object instanceof ISpectrumVSD) {
 							part.setLabel("VSD");
 						} else if(object instanceof IMeasurement measurement) {
-							part.setLabel(measurement.getDataName());
+							part.setLabel(XmiSupport.removeInvalidCharacters(measurement.getDataName()));
 						}
 					} else {
 						part.setObject(null);
