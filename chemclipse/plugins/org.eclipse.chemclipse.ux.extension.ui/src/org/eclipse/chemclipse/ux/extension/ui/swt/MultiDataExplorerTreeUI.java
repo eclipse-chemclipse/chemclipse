@@ -59,6 +59,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.preference.IPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -68,6 +69,8 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
@@ -456,6 +459,17 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 			}
 		});
 
+		treeViewer.getTree().addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+
+				if(e.keyCode == SWT.F5) {
+					treeViewer.refresh();
+				}
+			}
+		});
+
 		tabFolder.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -517,7 +531,8 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 	private void updateFileAndFolders(DataExplorerTreeUI dataExplorerTreeUI, MenuManager menuManager) {
 
 		TreeViewer treeViewer = dataExplorerTreeUI.getTreeViewer();
-		menuManager.add(new Action(ExtensionMessages.scanForFilesystemUpdates, ApplicationImageFactory.getInstance().getImageDescriptor(IApplicationImage.IMAGE_REFRESH, IApplicationImageProvider.SIZE_16x16)) {
+		ImageDescriptor image = ApplicationImageFactory.getInstance().getImageDescriptor(IApplicationImage.IMAGE_REFRESH, IApplicationImageProvider.SIZE_16x16);
+		menuManager.add(new Action(ExtensionMessages.scanForFilesystemUpdates + "\tF5", image) { //$NON-NLS-1$
 
 			@Override
 			public void run() {
