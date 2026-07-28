@@ -14,11 +14,10 @@ package org.eclipse.chemclipse.chromatogram.xxd.process.supplier.batchprocess.ui
 
 import java.io.File;
 
+import org.eclipse.chemclipse.chromatogram.xxd.process.supplier.batchprocess.ui.internal.provider.BatchJobFileEditorSupport;
 import org.eclipse.chemclipse.chromatogram.xxd.process.supplier.batchprocess.ui.wizards.WizardProcessor;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.types.DataType;
-import org.eclipse.chemclipse.ux.extension.ui.provider.ISupplierEditorSupport;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.editors.ProjectExplorerSupportFactory;
+import org.eclipse.chemclipse.ux.extension.ui.provider.ISupplierFileEditorSupport;
 import org.eclipse.e4.core.contexts.Active;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -39,7 +38,7 @@ public class BatchProcessHandler {
 		 */
 		File batchProcessFile = wizard.getBatchProcessFile();
 		if(batchProcessFile != null) {
-			ISupplierEditorSupport supplierEditorSupport = new ProjectExplorerSupportFactory(DataType.OBJ).getInstanceEditorSupport();
+			ISupplierFileEditorSupport supplierEditorSupport = new BatchJobFileEditorSupport();
 			if(!supplierEditorSupport.openEditor(batchProcessFile)) {
 				logger.warn("Failed to open editor.");
 			}
