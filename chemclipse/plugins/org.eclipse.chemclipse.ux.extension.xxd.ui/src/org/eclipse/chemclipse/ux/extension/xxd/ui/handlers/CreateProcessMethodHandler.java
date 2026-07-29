@@ -46,9 +46,9 @@ public class CreateProcessMethodHandler {
 			FileDialog fileDialog = new FileDialog(shell, SWT.SAVE);
 			fileDialog.setOverwrite(true);
 			fileDialog.setText(ExtensionMessages.processMethod);
-			fileDialog.setFilterExtensions(MethodConverter.FILTER_EXTENSION);
-			fileDialog.setFilterNames(MethodConverter.FILTER_NAME);
-			fileDialog.setFileName(MethodConverter.FILE_NAME);
+			fileDialog.setFilterExtensions(MethodConverter.getFilterExtensions());
+			fileDialog.setFilterNames(MethodConverter.getFilterNames());
+			fileDialog.setFileName(MethodConverter.getFileName());
 			fileDialog.setFilterPath(MethodConverter.getUserMethodDirectory().getAbsolutePath());
 
 			String pathname = fileDialog.open();

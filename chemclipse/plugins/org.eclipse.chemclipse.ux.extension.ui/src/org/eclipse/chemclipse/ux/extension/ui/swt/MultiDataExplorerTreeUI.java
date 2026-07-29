@@ -609,7 +609,7 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 		if(files.length >= 1) {
 			if(files[0] instanceof File file) {
 				if(file.isFile()) {
-					if(file.getName().endsWith(MethodConverter.FILE_EXTENSION)) {
+					if(file.getName().endsWith(MethodConverter.getFileExtension())) {
 						menuManager.add(new Action(ExtensionMessages.setAsActiveMethod, ApplicationImageFactory.getInstance().getImageDescriptor(IApplicationImage.IMAGE_METHOD, IApplicationImageProvider.SIZE_16x16)) {
 
 							@Override

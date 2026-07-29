@@ -223,7 +223,7 @@ public class MetaProcessorSettingsAdapterFactory implements IAdapterFactory, Set
 		File file = processMethod.getSourceFile();
 		if(file != null) {
 			if(file.exists()) {
-				if(file.getName().endsWith(MethodConverter.FILE_EXTENSION)) {
+				if(file.getName().endsWith(MethodConverter.getFileExtension())) {
 					try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
 						try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
 							MethodConverter.store(byteArrayOutputStream, "", processMethod, new ProcessingInfo<>(), new NullProgressMonitor());

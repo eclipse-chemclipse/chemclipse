@@ -17,9 +17,27 @@ import java.io.FilenameFilter;
 
 public class MethodFilenameFilter implements FilenameFilter {
 
+	private final String[] fileExtensions = MethodConverter.getFileExtensions();
+
 	@Override
 	public boolean accept(File dir, String name) {
 
-		return name.endsWith(".ocm") || name.endsWith(".OCM");
+		return isMethodFile(name, fileExtensions);
+	}
+
+	public static boolean isMethodFile(String name) {
+
+		return isMethodFile(name, MethodConverter.getFileExtensions());
+	}
+
+	private static boolean isMethodFile(String name, String[] fileExtensions) {
+
+		String fileName = name.toLowerCase();
+		for(String fileExtension : fileExtensions) {
+			if(!fileExtension.isEmpty() && fileName.endsWith(fileExtension.toLowerCase())) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
