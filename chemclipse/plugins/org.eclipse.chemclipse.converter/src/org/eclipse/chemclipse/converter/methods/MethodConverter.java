@@ -25,6 +25,7 @@ import org.eclipse.chemclipse.converter.core.Converter;
 import org.eclipse.chemclipse.converter.core.IFileContentMatcher;
 import org.eclipse.chemclipse.converter.core.IMagicNumberMatcher;
 import org.eclipse.chemclipse.converter.core.NoFileContentMatcher;
+import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException;
 import org.eclipse.chemclipse.converter.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
@@ -65,13 +66,24 @@ public class MethodConverter {
 	public static IProcessingInfo<IProcessMethod> convert(final File file, IProgressMonitor monitor) {
 
 		MethodConverterSupport converterSupport = getMethodConverterSupport();
-		for(ISupplier supplier : converterSupport.getSupplier()) {
+		try {
+			for(String converterId : converterSupport.getAvailableConverterIds(file)) {
+				try {
+					ISupplier supplier = converterSupport.getSupplier(converterId);
+					if(!supplier.isImportable() || !supplier.isMatchMagicNumber(file) || !supplier.isMatchContent(file)) {
+						continue;
+					}
+				} catch(NoConverterAvailableException e) {
+					continue;
+				}
 
-			IProcessingInfo<IProcessMethod> processinInfo = convert(file, supplier.getId(), monitor);
-			IProcessMethod processMethod = processinInfo.getProcessingResult();
-			if(processMethod != null) {
-				return processinInfo;
+				IProcessingInfo<IProcessMethod> processingInfo = convert(file, converterId, monitor);
+				if(processingInfo.getProcessingResult() != null) {
+					return processingInfo;
+				}
 			}
+		} catch(NoConverterAvailableException e) {
+			logger.warn(e);
 		}
 
 		return getNoImportConverterAvailableProcessingInfo(file);
@@ -106,6 +118,9 @@ public class MethodConverter {
 		SubMonitor subMonitor = SubMonitor.convert(monitor, list.size() * 100);
 		IProcessingInfo<IProcessMethod> errors = getNoImportConverterAvailableProcessingInfo(nameHint);
 		for(ISupplier supplier : list) {
+			if(!supplier.isImportable()) {
+				continue;
+			}
 			IMethodImportConverter converter = getMethodImportConverter(supplier.getId());
 			if(converter == null) {
 				continue;
