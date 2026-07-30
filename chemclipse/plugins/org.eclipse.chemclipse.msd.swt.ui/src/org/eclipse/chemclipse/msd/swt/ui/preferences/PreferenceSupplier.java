@@ -42,6 +42,9 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final String P_MASS_SPECTRUM_SHOW_METHODS_TOOLBAR = "massSpectrumShowMethodsToolbar";
 	public static final boolean DEF_MASS_SPECTRUM_SHOW_METHODS_TOOLBAR = false;
 
+	public static final String P_MASS_SPECTRUM_SHOW_RELATIVE_INTENSITY = "massSpectrumShowRelativeIntensity";
+	public static final boolean DEF_MASS_SPECTRUM_SHOW_RELATIVE_INTENSITY = false;
+
 	public static IPreferenceSupplier INSTANCE() {
 
 		return INSTANCE(PreferenceSupplier.class);
@@ -62,6 +65,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		putDefault(P_LIBRARY_MSD_LIMIT_SORTING, Integer.toString(DEF_LIBRARY_MSD_LIMIT_SORTING));
 		putDefault(PreferenceSupplier.P_SHOW_MASS_SPECTRUM_SELECTION_COMBO, PreferenceSupplier.DEF_SHOW_MASS_SPECTRUM_SELECTION_COMBO);
 		putDefault(PreferenceSupplier.P_MASS_SPECTRUM_SHOW_METHODS_TOOLBAR, PreferenceSupplier.DEF_MASS_SPECTRUM_SHOW_METHODS_TOOLBAR);
+		putDefault(PreferenceSupplier.P_MASS_SPECTRUM_SHOW_RELATIVE_INTENSITY, PreferenceSupplier.DEF_MASS_SPECTRUM_SHOW_RELATIVE_INTENSITY);
 	}
 
 	public static String getPathMassSpectrumLibraries() {
@@ -87,5 +91,10 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static boolean isMethodToolbarVisible() {
 
 		return INSTANCE().getBoolean(P_MASS_SPECTRUM_SHOW_METHODS_TOOLBAR);
+	}
+
+	public static boolean isRelativeIntensityAxisVisible() {
+
+		return INSTANCE().getBoolean(P_MASS_SPECTRUM_SHOW_RELATIVE_INTENSITY);
 	}
 }

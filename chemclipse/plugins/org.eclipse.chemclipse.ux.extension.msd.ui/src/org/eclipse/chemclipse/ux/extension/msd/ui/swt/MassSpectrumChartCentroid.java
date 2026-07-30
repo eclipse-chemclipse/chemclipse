@@ -30,6 +30,7 @@ import org.eclipse.chemclipse.msd.converter.massspectrum.MassSpectrumConverterSu
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
+import org.eclipse.chemclipse.msd.swt.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
 import org.eclipse.chemclipse.processing.core.DefaultProcessingResult;
 import org.eclipse.chemclipse.processing.core.ICategories;
@@ -218,7 +219,9 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 		rangeRestriction.setExtendMaxY(0.1d);
 
 		setPrimaryAxisSet(chartSettings);
-		addSecondaryAxisSet(chartSettings);
+		if(PreferenceSupplier.isRelativeIntensityAxisVisible()) {
+			addSecondaryAxisSet(chartSettings);
+		}
 
 		Color white = getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND);
 		chartSettings.setBackground(white);
