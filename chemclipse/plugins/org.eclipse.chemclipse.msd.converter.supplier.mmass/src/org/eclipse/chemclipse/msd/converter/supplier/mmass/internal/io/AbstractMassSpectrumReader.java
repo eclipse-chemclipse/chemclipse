@@ -224,8 +224,12 @@ public abstract class AbstractMassSpectrumReader extends AbstractMassSpectraRead
 				massSpectrumPeak.setIon(Double.parseDouble(mz));
 				String intensity = peakElement.getAttribute("intensity");
 				massSpectrumPeak.setAbundance(Double.parseDouble(intensity));
-				String sn = peakElement.getAttribute("sn");
-				massSpectrumPeak.setSignalToNoise(Double.parseDouble(sn));
+				try {
+					String sn = peakElement.getAttribute("sn");
+					massSpectrumPeak.setSignalToNoise(Double.parseDouble(sn));
+				} catch(NumberFormatException e) {
+					// empty String
+				}
 				massSpectrum.getPeaks().add(massSpectrumPeak);
 			}
 		}
