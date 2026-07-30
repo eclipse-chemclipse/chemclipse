@@ -130,6 +130,7 @@ public class RetentionIndexMarker extends AbstractBaseChartPaintListener {
 				GC gc = e.gc;
 				Color colorBackground = gc.getBackground();
 				Color colorForeground = gc.getForeground();
+				int lineStyle = gc.getLineStyle();
 
 				if(retentionIndex > 0) {
 
@@ -195,6 +196,7 @@ public class RetentionIndexMarker extends AbstractBaseChartPaintListener {
 					customSeries.getTextElements().add(textElement);
 				}
 
+				gc.setLineStyle(lineStyle);
 				gc.setBackground(colorBackground);
 				gc.setForeground(colorForeground);
 			}
