@@ -44,6 +44,7 @@ import org.eclipse.chemclipse.processing.supplier.IProcessorPreferences;
 import org.eclipse.chemclipse.processing.supplier.ProcessExecutionContext;
 import org.eclipse.chemclipse.processing.system.ProcessSettingsSupport;
 import org.eclipse.chemclipse.processing.ui.support.ProcessingInfoPartSupport;
+import org.eclipse.chemclipse.support.formats.MagnitudeScaledDecimalFormat;
 import org.eclipse.chemclipse.ux.extension.msd.ui.handlers.DynamicHandler;
 import org.eclipse.chemclipse.ux.extension.msd.ui.internal.provider.UpdateMenuEntry;
 import org.eclipse.chemclipse.ux.extension.ui.editors.ProcessorSupplierMenuEntry;
@@ -98,12 +99,13 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 
 	private static final int MAX_NUMBER_MZ = 50000;
 	private static final int LABEL_COUNT = 5;
+	private static final DecimalFormatSymbols ENGLISH_SYMBOLS = new DecimalFormatSymbols(Locale.ENGLISH);
 
 	public enum LabelOption {
 		NOMIMAL, EXACT, CUSTOM;
 	}
 
-	private final DecimalFormat decimalFormatMZ = new DecimalFormat("0", new DecimalFormatSymbols(Locale.ENGLISH));
+	private final DecimalFormat decimalFormatMZ = new DecimalFormat("0", ENGLISH_SYMBOLS);
 	private final LabelPaintListener labelPaintListener = new LabelPaintListener();
 
 	private IScanMSD massSpectrum = null;
@@ -138,6 +140,7 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 			barSeriesDataList.add(barSeriesData);
 			modifyRangeRestriction(false);
 			addSeriesData(barSeriesDataList, MAX_NUMBER_MZ);
+			updateAxis();
 			updateMenu();
 		}
 	}
@@ -164,6 +167,16 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 		if(!barSeriesDataList.isEmpty()) {
 			addSeriesData(barSeriesDataList, MAX_NUMBER_MZ);
 		}
+	}
+
+	private void updateAxis() {
+
+		IChartSettings chartSettings = getChartSettings();
+		IPrimaryAxisSettings primaryAxisSettingsY = chartSettings.getPrimaryAxisSettingsY();
+		int exponent = MagnitudeScaledDecimalFormat.orderOfMagnitude(massSpectrum.getHighestAbundance().getAbundance());
+		primaryAxisSettingsY.setDecimalFormat(new MagnitudeScaledDecimalFormat("0.#", ENGLISH_SYMBOLS, exponent));
+		primaryAxisSettingsY.setHorizontalLabel("×10" + MagnitudeScaledDecimalFormat.toSuperscript(String.valueOf(exponent)));
+		applySettings(chartSettings);
 	}
 
 	private void modifyRangeRestriction(boolean mirrored) {
@@ -325,18 +338,17 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 
 		IPrimaryAxisSettings primaryAxisSettingsX = chartSettings.getPrimaryAxisSettingsX();
 		primaryAxisSettingsX.setTitle("m/z");
-		primaryAxisSettingsX.setDecimalFormat(new DecimalFormat(("0.0##"), new DecimalFormatSymbols(Locale.ENGLISH)));
+		primaryAxisSettingsX.setDecimalFormat(new DecimalFormat(("0"), ENGLISH_SYMBOLS));
 
 		IPrimaryAxisSettings primaryAxisSettingsY = chartSettings.getPrimaryAxisSettingsY();
 		primaryAxisSettingsY.setTitle("Intensity");
-		primaryAxisSettingsY.setDecimalFormat(new DecimalFormat(("0.0#E0"), new DecimalFormatSymbols(Locale.ENGLISH)));
 	}
 
 	private void addSecondaryAxisSet(IChartSettings chartSettings) {
 
 		ISecondaryAxisSettings secondaryAxisSettingsY = new SecondaryAxisSettings("Relative Intensity [%]", new PercentageConverter(SWT.VERTICAL, true));
 		secondaryAxisSettingsY.setPosition(Position.Secondary);
-		secondaryAxisSettingsY.setDecimalFormat(new DecimalFormat(("0.00"), new DecimalFormatSymbols(Locale.ENGLISH)));
+		secondaryAxisSettingsY.setDecimalFormat(new DecimalFormat(("0"), ENGLISH_SYMBOLS));
 		chartSettings.getSecondaryAxisSettingsListY().add(secondaryAxisSettingsY);
 	}
 

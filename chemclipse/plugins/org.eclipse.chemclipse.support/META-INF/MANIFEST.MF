@@ -11,6 +11,7 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.chemclipse.support.comparator,
  org.eclipse.chemclipse.support.events,
  org.eclipse.chemclipse.support.files,
+ org.eclipse.chemclipse.support.formats,
  org.eclipse.chemclipse.support.history,
  org.eclipse.chemclipse.support.l10n,
  org.eclipse.chemclipse.support.literature,
