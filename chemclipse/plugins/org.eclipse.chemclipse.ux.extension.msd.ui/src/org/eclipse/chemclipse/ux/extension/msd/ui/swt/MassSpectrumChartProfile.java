@@ -35,6 +35,7 @@ import org.eclipse.chemclipse.msd.converter.massspectrum.MassSpectrumConverterSu
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
+import org.eclipse.chemclipse.msd.swt.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
 import org.eclipse.chemclipse.processing.core.DefaultProcessingResult;
 import org.eclipse.chemclipse.processing.core.ICategories;
@@ -49,6 +50,7 @@ import org.eclipse.chemclipse.processing.supplier.IProcessorPreferences;
 import org.eclipse.chemclipse.processing.supplier.ProcessExecutionContext;
 import org.eclipse.chemclipse.processing.system.ProcessSettingsSupport;
 import org.eclipse.chemclipse.processing.ui.support.ProcessingInfoPartSupport;
+import org.eclipse.chemclipse.support.formats.MagnitudeScaledDecimalFormat;
 import org.eclipse.chemclipse.ux.extension.msd.ui.handlers.DynamicHandler;
 import org.eclipse.chemclipse.ux.extension.msd.ui.internal.provider.UpdateMenuEntry;
 import org.eclipse.chemclipse.ux.extension.ui.editors.ProcessorSupplierMenuEntry;
@@ -97,6 +99,7 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 	private static final Logger logger = Logger.getLogger(MassSpectrumChartProfile.class);
 
 	private static final int MAX_NUMBER_MZ = 25000;
+	private static final DecimalFormatSymbols ENGLISH_SYMBOLS = new DecimalFormatSymbols(Locale.ENGLISH);
 
 	private IScanMSD massSpectrum = null;
 
@@ -146,9 +149,20 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 				createAnnotations(standaloneMassSpectrum);
 			}
 			addSeriesData(lineSeriesDataList, MAX_NUMBER_MZ);
+			updateAxis();
 			updateMenu();
 			UpdateNotifier.update(massSpectrum);
 		}
+	}
+
+	private void updateAxis() {
+
+		IChartSettings chartSettings = getChartSettings();
+		IPrimaryAxisSettings primaryAxisSettingsY = chartSettings.getPrimaryAxisSettingsY();
+		int exponent = MagnitudeScaledDecimalFormat.orderOfMagnitude(massSpectrum.getHighestAbundance().getAbundance());
+		primaryAxisSettingsY.setDecimalFormat(new MagnitudeScaledDecimalFormat("0.#", ENGLISH_SYMBOLS, exponent));
+		primaryAxisSettingsY.setHorizontalLabel("×10" + MagnitudeScaledDecimalFormat.toSuperscript(String.valueOf(exponent)));
+		applySettings(chartSettings);
 	}
 
 	private void initialize() {
@@ -176,7 +190,9 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 		rangeRestriction.setExtendMaxY(0.5d);
 
 		setPrimaryAxisSet(chartSettings);
-		addSecondaryAxisSet(chartSettings);
+		if(PreferenceSupplier.isRelativeIntensityAxisVisible()) {
+			addSecondaryAxisSet(chartSettings);
+		}
 		applySettings(chartSettings);
 	}
 
@@ -294,18 +310,17 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 
 		IPrimaryAxisSettings primaryAxisSettingsX = chartSettings.getPrimaryAxisSettingsX();
 		primaryAxisSettingsX.setTitle("m/z");
-		primaryAxisSettingsX.setDecimalFormat(new DecimalFormat(("0.0##"), new DecimalFormatSymbols(Locale.ENGLISH)));
+		primaryAxisSettingsX.setDecimalFormat(new DecimalFormat(("0"), ENGLISH_SYMBOLS));
 
 		IPrimaryAxisSettings primaryAxisSettingsY = chartSettings.getPrimaryAxisSettingsY();
 		primaryAxisSettingsY.setTitle("Intensity");
-		primaryAxisSettingsY.setDecimalFormat(new DecimalFormat(("0.0#E0"), new DecimalFormatSymbols(Locale.ENGLISH)));
 	}
 
 	private void addSecondaryAxisSet(IChartSettings chartSettings) {
 
 		ISecondaryAxisSettings secondaryAxisSettingsY = new SecondaryAxisSettings("Relative Intensity [%]", new PercentageConverter(SWT.VERTICAL, true));
 		secondaryAxisSettingsY.setPosition(Position.Secondary);
-		secondaryAxisSettingsY.setDecimalFormat(new DecimalFormat(("0.00"), new DecimalFormatSymbols(Locale.ENGLISH)));
+		secondaryAxisSettingsY.setDecimalFormat(new DecimalFormat(("0"), ENGLISH_SYMBOLS));
 		chartSettings.getSecondaryAxisSettingsListY().add(secondaryAxisSettingsY);
 	}
 
