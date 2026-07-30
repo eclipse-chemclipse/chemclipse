@@ -81,6 +81,7 @@ import org.eclipse.chemclipse.support.comparator.SortOrder;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.support.text.ValueFormat;
 import org.eclipse.chemclipse.swt.ui.components.InformationUI;
+import org.eclipse.chemclipse.swt.ui.marker.TargetMarker;
 import org.eclipse.chemclipse.swt.ui.marker.PositionMarker;
 import org.eclipse.chemclipse.swt.ui.marker.RetentionIndexMarker;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
@@ -274,6 +275,7 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 
 	private List<ISeparationColumn> separationColumns = SeparationColumnFactory.getSeparationColumns();
 	private RetentionIndexMarker retentionIndexMarker;
+	private TargetMarker targetMarker;
 
 	private MApplication application = Activator.getDefault().getApplication();
 	private IEventBroker eventBroker = Activator.getDefault().getEventBroker();
@@ -799,6 +801,7 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 		}
 
 		updateMappedRetentionIndices();
+		updateTargetMarker();
 	}
 
 	private void clearPeakAndScanLabels() {
@@ -1489,6 +1492,11 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 		retentionIndexMarker = new RetentionIndexMarker(chromatogramChart.getBaseChart());
 		plotArea.addCustomPaintListener(retentionIndexMarker);
 		/*
+		 * Target Marker
+		 */
+		targetMarker = new TargetMarker(chromatogramChart.getBaseChart());
+		plotArea.addCustomPaintListener(targetMarker);
+		/*
 		 * Some converter have an option to set analysis segments while parsing the chromatogram data.
 		 * Via the preferences it's defined, whether these segements shall be displayed be default.
 		 */
@@ -1768,6 +1776,28 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 			 */
 			retentionIndexMarker.clear();
 			retentionIndexMarker.setDraw(false);
+		}
+	}
+
+	private void updateTargetMarker() {
+
+		if(chromatogramSelection != null) {
+			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
+			targetMarker.clear();
+			for(IPeak peak : ChromatogramDataSupport.getPeaks(chromatogram)) {
+				int retentionTime = peak.getPeakModel().getRetentionTimeAtPeakMaximum();
+				float peakMaximum = peak.getPeakModel().getPeakMaximum().getTotalSignal();
+				boolean identified = !peak.getTargets().isEmpty();
+				targetMarker.addPeak(retentionTime, peakMaximum, identified);
+			}
+			for(IScan scan : ChromatogramDataSupport.getIdentifiedScans(chromatogram)) {
+				if(!scan.getTargets().isEmpty()) {
+					targetMarker.addScan(scan.getRetentionTime(), scan.getTotalSignal());
+				}
+			}
+			targetMarker.setDraw(true);
+		} else {
+			targetMarker.clear();
 		}
 	}
 
