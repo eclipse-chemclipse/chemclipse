@@ -130,9 +130,9 @@ public class ExtendedEditHistoryUI extends Composite implements IExtendedPartUI 
 					FileDialog fileDialog = new FileDialog(e.display.getActiveShell(), SWT.SAVE);
 					fileDialog.setOverwrite(true);
 					fileDialog.setText(ExtensionMessages.processMethod);
-					fileDialog.setFilterExtensions(MethodConverter.FILTER_EXTENSION);
-					fileDialog.setFilterNames(MethodConverter.FILTER_NAME);
-					fileDialog.setFileName(MethodConverter.FILE_NAME);
+					fileDialog.setFilterExtensions(MethodConverter.getFilterExtensions());
+					fileDialog.setFilterNames(MethodConverter.getFilterNames());
+					fileDialog.setFileName(MethodConverter.getFileName());
 					fileDialog.setFilterPath(MethodConverter.getUserMethodDirectory().getAbsolutePath());
 
 					String pathname = fileDialog.open();
@@ -142,7 +142,8 @@ public class ExtendedEditHistoryUI extends Composite implements IExtendedPartUI 
 						 * Method
 						 */
 						String name = file.getName();
-						name = name.endsWith(MethodConverter.FILE_EXTENSION) ? name.substring(0, name.length() - MethodConverter.FILE_EXTENSION.length()) : name;
+						String fileExtension = MethodConverter.getFileExtension();
+						name = name.endsWith(fileExtension) ? name.substring(0, name.length() - fileExtension.length()) : name;
 						Set<DataCategory> dataCategories = new HashSet<>(Arrays.asList(DataCategory.chromatographyCategories()));
 						ProcessMethod processMethod = new ProcessMethod(dataCategories);
 						processMethod.setName(name);

@@ -182,7 +182,8 @@ public class MethodProcessTypeSupplier implements IProcessTypeSupplier, BundleTr
 	private List<IProcessSupplier<?>> parseBundleMethods(Bundle bundle) {
 
 		List<IProcessSupplier<?>> processSupplierList = new ArrayList<>();
-		Enumeration<URL> entries = bundle.findEntries(PROCESSORS_ENTRY_PATH, "*" + MethodConverter.FILE_EXTENSION, true);
+		String fileExtension = MethodConverter.getFileExtension();
+		Enumeration<URL> entries = bundle.findEntries(PROCESSORS_ENTRY_PATH, "*" + fileExtension, true);
 
 		if(entries != null) {
 			while(entries.hasMoreElements()) {
@@ -195,7 +196,7 @@ public class MethodProcessTypeSupplier implements IProcessTypeSupplier, BundleTr
 						String urlPath = url.getPath();
 						File sourceFile = PathResolver.getFile(bundle, urlPath);
 
-						String path = url.getPath().replace(PROCESSORS_ENTRY_PATH, "").replace(MethodConverter.FILE_EXTENSION, "");
+						String path = url.getPath().replace(PROCESSORS_ENTRY_PATH, "").replace(fileExtension, "");
 						String externalForm = url.toExternalForm();
 						IProcessingInfo<IProcessMethod> processingInfo = MethodConverter.load(inputStream, externalForm, null);
 						IProcessMethod processMethod = processingInfo.getProcessingResult();
@@ -229,7 +230,7 @@ public class MethodProcessTypeSupplier implements IProcessTypeSupplier, BundleTr
 			File[] listFiles = systemMethodFolder.listFiles();
 			if(listFiles != null) {
 				for(File file : listFiles) {
-					if(file.isFile() && file.getName().toLowerCase().endsWith(MethodConverter.FILE_EXTENSION)) {
+					if(file.isFile() && MethodFilenameFilter.isMethodFile(file.getName())) {
 						try {
 							try (InputStream inputStream = new FileInputStream(file)) {
 								IProcessingInfo<IProcessMethod> load = MethodConverter.load(inputStream, file.getAbsolutePath(), null);

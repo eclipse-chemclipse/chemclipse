@@ -18,12 +18,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.chemclipse.converter.core.Converter;
 import org.eclipse.chemclipse.converter.core.IFileContentMatcher;
 import org.eclipse.chemclipse.converter.core.IMagicNumberMatcher;
 import org.eclipse.chemclipse.converter.core.NoFileContentMatcher;
+import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException;
 import org.eclipse.chemclipse.converter.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
@@ -43,16 +45,12 @@ public class MethodConverter {
 
 	public static final String DEFAULT_METHOD_CONVERTER_ID = "org.eclipse.chemclipse.xxd.converter.supplier.chemclipse.processMethodSupplier";
 
-	public static final String DESCRIPTION = "Process Method";
-	public static final String FILE_EXTENSION = ".ocm";
-	public static final String FILE_NAME = DESCRIPTION.replaceAll("\\s", "") + FILE_EXTENSION;
-	public static final String FILTER_EXTENSION = "*" + FILE_EXTENSION;
-	public static final String FILTER_NAME = DESCRIPTION + " (*" + FILE_EXTENSION + ")";
+	private static final String NAME_IMPORT = "Method Import Converter";
+	private static final String NAME_EXPORT = "Method Export Converter";
+
 	/*
 	 * 5MB should be enough for all cases and don't hurt much...
 	 */
-	private static final String NAME_IMPORT = "Method Import Converter";
-	private static final String NAME_EXPORT = "Method Export Converter";
 	private static final int STREAM_BUFFER_SIZE = 1024 * 1024 * 5;
 
 	private static final Logger logger = Logger.getLogger(MethodConverter.class);
@@ -68,13 +66,24 @@ public class MethodConverter {
 	public static IProcessingInfo<IProcessMethod> convert(final File file, IProgressMonitor monitor) {
 
 		MethodConverterSupport converterSupport = getMethodConverterSupport();
-		for(ISupplier supplier : converterSupport.getSupplier()) {
+		try {
+			for(String converterId : converterSupport.getAvailableConverterIds(file)) {
+				try {
+					ISupplier supplier = converterSupport.getSupplier(converterId);
+					if(!supplier.isImportable() || !supplier.isMatchMagicNumber(file) || !supplier.isMatchContent(file)) {
+						continue;
+					}
+				} catch(NoConverterAvailableException e) {
+					continue;
+				}
 
-			IProcessingInfo<IProcessMethod> processinInfo = convert(file, supplier.getId(), monitor);
-			IProcessMethod processMethod = processinInfo.getProcessingResult();
-			if(processMethod != null) {
-				return processinInfo;
+				IProcessingInfo<IProcessMethod> processingInfo = convert(file, converterId, monitor);
+				if(processingInfo.getProcessingResult() != null) {
+					return processingInfo;
+				}
 			}
+		} catch(NoConverterAvailableException e) {
+			logger.warn(e);
 		}
 
 		return getNoImportConverterAvailableProcessingInfo(file);
@@ -109,6 +118,9 @@ public class MethodConverter {
 		SubMonitor subMonitor = SubMonitor.convert(monitor, list.size() * 100);
 		IProcessingInfo<IProcessMethod> errors = getNoImportConverterAvailableProcessingInfo(nameHint);
 		for(ISupplier supplier : list) {
+			if(!supplier.isImportable()) {
+				continue;
+			}
 			IMethodImportConverter converter = getMethodImportConverter(supplier.getId());
 			if(converter == null) {
 				continue;
@@ -197,26 +209,139 @@ public class MethodConverter {
 
 	private static IConfigurationElement getConfigurationElement(final String converterId) {
 
-		if("".equals(converterId)) {
+		if(converterId == null || converterId.isEmpty()) {
 			return null;
 		}
-		IExtensionRegistry registry = Platform.getExtensionRegistry();
-		IConfigurationElement[] elements = registry.getConfigurationElementsFor(EXTENSION_POINT);
-		for(IConfigurationElement element : elements) {
-			if(element.getAttribute(Converter.ID).equals(converterId)) {
+		for(IConfigurationElement element : getConfigurationElements()) {
+			if(converterId.equals(element.getAttribute(Converter.ID))) {
 				return element;
 			}
 		}
 		return null;
 	}
 
+	/**
+	 * Returns the contributions of the process method supplier extension point. The default
+	 * converter is listed first, hence it is preselected in file dialogs and preferred on import.
+	 */
+	private static List<IConfigurationElement> getConfigurationElements() {
+
+		List<IConfigurationElement> elements = new ArrayList<>();
+		IExtensionRegistry registry = Platform.getExtensionRegistry();
+		if(registry != null) {
+			for(IConfigurationElement element : registry.getConfigurationElementsFor(EXTENSION_POINT)) {
+				if(DEFAULT_METHOD_CONVERTER_ID.equals(element.getAttribute(Converter.ID))) {
+					elements.add(0, element);
+				} else {
+					elements.add(element);
+				}
+			}
+		}
+		return elements;
+	}
+
+	/**
+	 * Returns the file extension of the default method converter.
+	 */
+	public static String getFileExtension() {
+
+		return getFileExtension(DEFAULT_METHOD_CONVERTER_ID);
+	}
+
+	/**
+	 * Returns the file extension of the given method converter.
+	 */
+	public static String getFileExtension(String converterId) {
+
+		return getFileExtension(getConfigurationElement(converterId));
+	}
+
+	/**
+	 * Returns the file extensions of all registered method converters.
+	 */
+	public static String[] getFileExtensions() {
+
+		List<String> fileExtensions = new ArrayList<>();
+		for(IConfigurationElement element : getConfigurationElements()) {
+			fileExtensions.add(getFileExtension(element));
+		}
+		return fileExtensions.toArray(new String[fileExtensions.size()]);
+	}
+
+	/**
+	 * Returns the default file name of the default method converter
+	 * or an empty string if the converter defines no default file name.
+	 */
+	public static String getFileName() {
+
+		return getFileName(DEFAULT_METHOD_CONVERTER_ID);
+	}
+
+	/**
+	 * Returns the default file name of the given method converter
+	 * or an empty string if the converter defines no default file name.
+	 */
+	public static String getFileName(String converterId) {
+
+		IConfigurationElement element = getConfigurationElement(converterId);
+		String fileName = getAttribute(element, Converter.FILE_NAME);
+		if(fileName.isEmpty()) {
+			return fileName;
+		}
+		String fileExtension = getFileExtension(element);
+		return fileName.toLowerCase().endsWith(fileExtension.toLowerCase()) ? fileName : fileName + fileExtension;
+	}
+
+	/**
+	 * Returns the file dialog filter extensions of all registered method converters.
+	 */
+	public static String[] getFilterExtensions() {
+
+		List<String> filterExtensions = new ArrayList<>();
+		for(IConfigurationElement element : getConfigurationElements()) {
+			filterExtensions.add("*" + getFileExtension(element));
+		}
+		return filterExtensions.toArray(new String[filterExtensions.size()]);
+	}
+
+	/**
+	 * Returns the file dialog filter names of all registered method converters.
+	 * The order matches {@link #getFilterExtensions()}.
+	 */
+	public static String[] getFilterNames() {
+
+		List<String> filterNames = new ArrayList<>();
+		for(IConfigurationElement element : getConfigurationElements()) {
+			filterNames.add(getAttribute(element, Converter.FILTER_NAME));
+		}
+		return filterNames.toArray(new String[filterNames.size()]);
+	}
+
+	private static String getFileExtension(IConfigurationElement element) {
+
+		String fileExtension = getAttribute(element, Converter.FILE_EXTENSION);
+		if(fileExtension.isEmpty() || fileExtension.startsWith(".")) {
+			return fileExtension;
+		}
+		return "." + fileExtension;
+	}
+
+	private static String getAttribute(IConfigurationElement element, String name) {
+
+		if(element != null) {
+			String value = element.getAttribute(name);
+			if(value != null) {
+				return value;
+			}
+		}
+		return "";
+	}
+
 	public static MethodConverterSupport getMethodConverterSupport() {
 
 		MethodSupplier supplier;
 		MethodConverterSupport converterSupport = new MethodConverterSupport();
-		IExtensionRegistry registry = Platform.getExtensionRegistry();
-		IConfigurationElement[] extensions = registry.getConfigurationElementsFor(EXTENSION_POINT);
-		for(IConfigurationElement element : extensions) {
+		for(IConfigurationElement element : getConfigurationElements()) {
 
 			supplier = new MethodSupplier();
 			supplier.setFileExtension(element.getAttribute(Converter.FILE_EXTENSION));

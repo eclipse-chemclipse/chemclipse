@@ -459,9 +459,9 @@ public class MethodSupportUI extends Composite implements IExtendedPartUI {
 		FileDialog fileDialog = new FileDialog(getShell(), SWT.SAVE);
 		fileDialog.setOverwrite(true);
 		fileDialog.setText(ExtensionMessages.processMethod);
-		fileDialog.setFileName(MethodConverter.FILE_NAME);
-		fileDialog.setFilterExtensions(MethodConverter.FILTER_EXTENSION);
-		fileDialog.setFilterNames(MethodConverter.FILTER_NAME);
+		fileDialog.setFileName(MethodConverter.getFileName());
+		fileDialog.setFilterExtensions(MethodConverter.getFilterExtensions());
+		fileDialog.setFilterNames(MethodConverter.getFilterNames());
 		fileDialog.setFilterPath(MethodConverter.getUserMethodDirectory().getAbsolutePath());
 
 		File file = null;

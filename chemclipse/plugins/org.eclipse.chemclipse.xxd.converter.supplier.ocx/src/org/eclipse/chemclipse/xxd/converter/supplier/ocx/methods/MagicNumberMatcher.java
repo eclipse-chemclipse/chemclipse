@@ -22,6 +22,6 @@ public class MagicNumberMatcher extends AbstractMagicNumberMatcher {
 	@Override
 	public boolean checkFileFormat(File file) {
 
-		return checkFileExtension(file, MethodConverter.FILE_EXTENSION);
+		return checkFileExtension(file, MethodConverter.getFileExtension());
 	}
 }

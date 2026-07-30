@@ -343,9 +343,9 @@ public class ProcessMethodToolbar extends ToolBar {
 
 						FileDialog fileDialog = new FileDialog(toolBar.getShell(), SWT.OPEN);
 						fileDialog.setText("Select Process Method File");
-						fileDialog.setFileName(MethodConverter.FILE_NAME);
-						fileDialog.setFilterExtensions(MethodConverter.FILTER_EXTENSION);
-						fileDialog.setFilterNames(MethodConverter.FILTER_NAME);
+						fileDialog.setFileName(MethodConverter.getFileName());
+						fileDialog.setFilterExtensions(MethodConverter.getFilterExtensions());
+						fileDialog.setFilterNames(MethodConverter.getFilterNames());
 
 						String filePath = fileDialog.open();
 						if(filePath != null) {

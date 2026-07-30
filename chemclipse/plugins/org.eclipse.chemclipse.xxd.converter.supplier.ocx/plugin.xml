@@ -65,6 +65,7 @@
             description="Reads and writes process methods."
             exportConverter="org.eclipse.chemclipse.xxd.converter.supplier.ocx.methods.MethodExportConverter"
             fileExtension=".ocm"
+            fileName="ProcessMethod"
             filterName="Process Method (*.ocm)"
             id="org.eclipse.chemclipse.xxd.converter.supplier.chemclipse.processMethodSupplier"
             importConverter="org.eclipse.chemclipse.xxd.converter.supplier.ocx.methods.MethodImportConverter"
