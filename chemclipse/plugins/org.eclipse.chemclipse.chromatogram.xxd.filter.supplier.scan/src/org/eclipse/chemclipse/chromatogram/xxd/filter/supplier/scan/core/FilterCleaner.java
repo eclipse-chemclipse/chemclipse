@@ -61,12 +61,14 @@ public class FilterCleaner extends AbstractChromatogramFilter {
 		/*
 		 * Iterate through all selected scans and mark those to be removed.
 		 */
+		SubMonitor subMonitorLoad = SubMonitor.convert(monitor, "Check scans.", stopScan - startScan);
 		for(int scan = startScan; scan <= stopScan; scan++) {
 			IScan chromatogramScan = chromatogram.getScan(scan);
 			if(chromatogramScan instanceof IScanMSD scanMSD) {
 				/*
 				 * MSD
 				 */
+				scanMSD.enforceLoadScanProxy();
 				if(scanMSD.isEmpty()) {
 					scansToRemove.add(scan);
 				}
@@ -85,11 +87,12 @@ public class FilterCleaner extends AbstractChromatogramFilter {
 					scansToRemove.add(scan);
 				}
 			}
+			subMonitorLoad.worked(1);
 		}
 		/*
 		 * Use a remove counter, because each time a scan will be removed, the chromatogram contains one scan less.
 		 */
-		SubMonitor subMonitor = SubMonitor.convert(monitor, "Remove empty scans from chromatogram.", 100);
+		SubMonitor subMonitorRemove = SubMonitor.convert(monitor, "Remove empty scans.", scansToRemove.size());
 		try {
 			int removeCounter = 0;
 			for(Integer scan : scansToRemove) {
@@ -97,9 +100,9 @@ public class FilterCleaner extends AbstractChromatogramFilter {
 				chromatogram.removeScan(scan);
 				removeCounter++;
 			}
-			subMonitor.worked(1);
+			subMonitorRemove.worked(1);
 		} finally {
-			SubMonitor.done(subMonitor);
+			SubMonitor.done(subMonitorRemove);
 		}
 
 		chromatogram.recalculateScanNumbers();
