@@ -212,13 +212,15 @@ public class DatabaseConverter {
 	 */
 	private static IDatabaseImportConverter getDatabaseImportConverter(final String converterId) {
 
-		IConfigurationElement element = getConfigurationElement(converterId);
 		IDatabaseImportConverter instance = null;
-		if(element != null) {
-			try {
-				instance = (IDatabaseImportConverter)element.createExecutableExtension(Converter.IMPORT_CONVERTER);
-			} catch(CoreException e) {
-				logger.error(e);
+		IConfigurationElement element = getConfigurationElement(converterId);
+		if(isImportable(element)) {
+			if(element != null) {
+				try {
+					instance = (IDatabaseImportConverter)element.createExecutableExtension(Converter.IMPORT_CONVERTER);
+				} catch(CoreException e) {
+					logger.error(e);
+				}
 			}
 		}
 		return instance;
@@ -233,13 +235,15 @@ public class DatabaseConverter {
 	 */
 	private static <T> IDatabaseExportConverter getDatabaseExportConverter(final String converterId) {
 
-		IConfigurationElement element = getConfigurationElement(converterId);
 		IDatabaseExportConverter instance = null;
-		if(element != null) {
-			try {
-				instance = (IDatabaseExportConverter)element.createExecutableExtension(Converter.EXPORT_CONVERTER);
-			} catch(CoreException e) {
-				logger.error(e);
+		IConfigurationElement element = getConfigurationElement(converterId);
+		if(isExportable(element)) {
+			if(element != null) {
+				try {
+					instance = (IDatabaseExportConverter)element.createExecutableExtension(Converter.EXPORT_CONVERTER);
+				} catch(CoreException e) {
+					logger.error(e);
+				}
 			}
 		}
 		return instance;
@@ -254,9 +258,10 @@ public class DatabaseConverter {
 	 */
 	private static IConfigurationElement getConfigurationElement(final String converterId) {
 
-		if("".equals(converterId)) {
+		if(converterId == null || converterId.isBlank()) {
 			return null;
 		}
+
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
 		IConfigurationElement[] elements = registry.getConfigurationElementsFor(EXTENSION_POINT);
 		for(IConfigurationElement element : elements) {
@@ -302,8 +307,8 @@ public class DatabaseConverter {
 				supplier.setId(element.getAttribute(Converter.ID));
 				supplier.setDescription(element.getAttribute(Converter.DESCRIPTION));
 				supplier.setFilterName(element.getAttribute(Converter.FILTER_NAME));
-				supplier.setExportable(Boolean.valueOf(element.getAttribute(Converter.IS_EXPORTABLE)));
-				supplier.setImportable(Boolean.valueOf(element.getAttribute(Converter.IS_IMPORTABLE)));
+				supplier.setExportable(isExportable(element));
+				supplier.setImportable(isImportable(element));
 				supplier.setMagicNumberMatcher(getMagicNumberMatcher(element));
 				supplier.setFileContentMatcher(getFileContentMatcher(element));
 				databaseConverterSupport.add(supplier);
@@ -351,5 +356,39 @@ public class DatabaseConverter {
 		IProcessingMessage processingMessage = new ProcessingMessage(MessageType.WARN, "Database Import Converter", "There is no suitable converter available to load the mass spectra from the file: " + file.getAbsolutePath());
 		processingInfo.addMessage(processingMessage);
 		return processingInfo;
+	}
+
+	private static boolean isImportable(IConfigurationElement element) {
+
+		boolean result = false;
+		if(element != null) {
+			result = Boolean.valueOf(element.getAttribute(Converter.IS_IMPORTABLE)) && getDatabaseImportConverter(element, Converter.IMPORT_CONVERTER) instanceof IDatabaseImportConverter;
+		}
+		return result;
+	}
+
+	private static boolean isExportable(IConfigurationElement element) {
+
+		boolean result = false;
+		if(element != null) {
+			result = Boolean.valueOf(element.getAttribute(Converter.IS_EXPORTABLE)) && getDatabaseImportConverter(element, Converter.EXPORT_CONVERTER) instanceof IDatabaseExportConverter;
+		}
+		return result;
+	}
+
+	private static Object getDatabaseImportConverter(IConfigurationElement element, String attribute) {
+
+		Object instance = null;
+		if(element != null) {
+			String value = element.getAttribute(attribute);
+			if(value != null) {
+				try {
+					instance = element.createExecutableExtension(attribute);
+				} catch(CoreException e) {
+					logger.warn("The DatabaseConverter with the id = '" + element.getAttribute(Converter.ID) + "' and attribute = '" + attribute + "' can't be created -> " + e);
+				}
+			}
+		}
+		return instance;
 	}
 }
