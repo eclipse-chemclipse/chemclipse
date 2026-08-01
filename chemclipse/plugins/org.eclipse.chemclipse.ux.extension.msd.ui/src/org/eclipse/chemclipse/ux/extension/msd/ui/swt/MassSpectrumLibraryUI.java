@@ -25,6 +25,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import org.eclipse.chemclipse.logging.core.Logger;
+import org.eclipse.chemclipse.model.cas.CasSupport;
 import org.eclipse.chemclipse.model.exceptions.ReferenceMustNotBeNullException;
 import org.eclipse.chemclipse.model.identifier.ComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IColumnIndexMarker;
@@ -89,6 +90,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 	private AtomicReference<Button> buttonToolbarSearch = new AtomicReference<>();
 	private AtomicReference<SearchSupportUI> toolbarSearch = new AtomicReference<>();
 	private AtomicReference<Button> buttonAddEntry = new AtomicReference<>();
+	private AtomicReference<Button> buttonCleanUp = new AtomicReference<>();
 	private AtomicReference<Button> buttonDeleteEntries = new AtomicReference<>();
 	private AtomicReference<Button> buttonSelectionMergeEntries = new AtomicReference<>();
 	private AtomicReference<Button> buttonAutoMergeEntries = new AtomicReference<>();
@@ -156,7 +158,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 		GridData gridDataStatus = new GridData(GridData.FILL_HORIZONTAL);
 		gridDataStatus.horizontalAlignment = SWT.END;
 		composite.setLayoutData(gridDataStatus);
-		composite.setLayout(new GridLayout(11, false));
+		composite.setLayout(new GridLayout(12, false));
 
 		createButtonToggleToolbarInfo(composite);
 		createButtonToggleToolbarSearch(composite);
@@ -166,6 +168,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 		createButtonShowDuplicatesOnly(composite);
 		createButtonSelectionMergeEntries(composite);
 		createButtonAutoMergeEntries(composite);
+		createButtonCleanUp(composite);
 		createButtonDeleteEntries(composite);
 		createButtonHelp(composite, HelpContext.MASS_SPECTRUM_SEARCH);
 		createButtonSettings(composite);
@@ -603,6 +606,57 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 				setter.accept(existing + "; " + addition);
 			}
 		}
+	}
+
+	private void createButtonCleanUp(Composite parent) {
+
+		Button button = new Button(parent, SWT.PUSH);
+		button.setToolTipText("Clean up the mass spectrum library.");
+		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_CALCULATE, IApplicationImageProvider.SIZE_16x16));
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				if(massSpectra != null) {
+					MessageBox messageBox = new MessageBox(getShell(), SWT.ICON_QUESTION | SWT.YES | SWT.NO);
+					messageBox.setText("Clean up library?");
+					messageBox.setMessage("Would you like to clean up the mass spectrum library?");
+					if(messageBox.open() == SWT.YES) {
+						/*
+						 * Clean Up Library
+						 */
+						int removed = 0;
+						for(IScanMSD scan : massSpectra.getList()) {
+							ILibraryInformation libraryInformation = getLibraryInformation(scan);
+							if(libraryInformation != null) {
+								List<String> invalid = new ArrayList<>();
+								for(String cas : libraryInformation.getCasNumbers()) {
+									if(!CasSupport.isValid(cas)) {
+										invalid.add(cas);
+									}
+								}
+								for(String cas : invalid) {
+									libraryInformation.deleteCasNumber(cas);
+								}
+								removed += invalid.size();
+							}
+						}
+						setMassSpectraDirty();
+						setInput();
+						/*
+						 * Show details of clean up operation.
+						 */
+						MessageBox resultBox = new MessageBox(getShell(), SWT.ICON_INFORMATION | SWT.OK);
+						resultBox.setText("Clean up library");
+						resultBox.setMessage("Removed CAS numbers: " + removed);
+						resultBox.open();
+					}
+				}
+			}
+		});
+
+		buttonCleanUp.set(button);
 	}
 
 	private void createButtonDeleteEntries(Composite parent) {
