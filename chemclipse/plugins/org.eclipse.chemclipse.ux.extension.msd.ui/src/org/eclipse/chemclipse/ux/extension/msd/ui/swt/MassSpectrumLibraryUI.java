@@ -21,30 +21,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.cas.CasSupport;
 import org.eclipse.chemclipse.model.exceptions.ReferenceMustNotBeNullException;
 import org.eclipse.chemclipse.model.identifier.ComparisonResult;
-import org.eclipse.chemclipse.model.identifier.IColumnIndexMarker;
-import org.eclipse.chemclipse.model.identifier.IFlavorMarker;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.implementation.IdentificationTarget;
 import org.eclipse.chemclipse.model.notifier.UpdateNotifier;
-import org.eclipse.chemclipse.model.support.CalculationType;
 import org.eclipse.chemclipse.msd.model.core.DuplicateDetection;
-import org.eclipse.chemclipse.msd.model.core.ICombinedMassSpectrum;
-import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.implementation.MassSpectra;
 import org.eclipse.chemclipse.msd.model.implementation.RegularLibraryMassSpectrum;
-import org.eclipse.chemclipse.msd.model.support.CombinedNominalMassSpectrumCalculator;
-import org.eclipse.chemclipse.msd.model.support.ICombinedMassSpectrumCalculator;
+import org.eclipse.chemclipse.msd.model.support.LibrarySupport;
 import org.eclipse.chemclipse.msd.swt.ui.components.massspectrum.MassSpectrumListUI;
 import org.eclipse.chemclipse.msd.swt.ui.preferences.PreferencePage;
 import org.eclipse.chemclipse.msd.swt.ui.preferences.PreferenceSupplier;
@@ -421,7 +414,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 							List<List<IScanMSD>> toMergeGroups = dialog.getGroupsToMerge();
 							for(List<IScanMSD> toMerge : toMergeGroups) {
 								if(toMerge.size() >= 2) {
-									IRegularLibraryMassSpectrum massSpectrumMerged = mergeSelectedMassSpectra(toMerge);
+									IRegularLibraryMassSpectrum massSpectrumMerged = LibrarySupport.merge(toMerge);
 									for(IScanMSD scan : toMerge) {
 										massSpectra.removeMassSpectrum(scan);
 									}
@@ -474,7 +467,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 							if(dialog.open() == Window.OK) {
 								List<IScanMSD> toMerge = dialog.getCheckedMassSpectra();
 								if(toMerge.size() >= 2) {
-									IRegularLibraryMassSpectrum merged = mergeSelectedMassSpectra(toMerge);
+									IRegularLibraryMassSpectrum merged = LibrarySupport.merge(toMerge);
 									for(IScanMSD scan : toMerge) {
 										massSpectra.removeMassSpectrum(scan);
 									}
@@ -492,120 +485,6 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 			}
 		});
 		buttonSelectionMergeEntries.set(button);
-	}
-
-	private IRegularLibraryMassSpectrum mergeSelectedMassSpectra(List<IScanMSD> selected) {
-
-		ICombinedMassSpectrumCalculator calculator = new CombinedNominalMassSpectrumCalculator();
-		for(IScanMSD scan : selected) {
-			for(IIon ion : scan.getIons()) {
-				calculator.addIon(ion.getIon(), ion.getAbundance());
-			}
-		}
-		ICombinedMassSpectrum combined = calculator.createMassSpectrum(CalculationType.SUM);
-		RegularLibraryMassSpectrum merged = new RegularLibraryMassSpectrum();
-		merged.addIons(combined.getIons(), false);
-		merged.setRetentionTime(selected.get(0).getRetentionTime());
-		mergeLibraryInformation(merged.getLibraryInformation(), selected);
-		return merged;
-	}
-
-	private void mergeLibraryInformation(ILibraryInformation target, List<IScanMSD> selected) {
-
-		IScanMSD first = selected.get(0);
-		if(first instanceof IRegularLibraryMassSpectrum firstLibrary) {
-			ILibraryInformation source = firstLibrary.getLibraryInformation();
-			target.setName(source.getName());
-			target.setFormula(source.getFormula());
-			target.setSmiles(source.getSmiles());
-			target.setInChI(source.getInChI());
-			target.setInChIKey(source.getInChIKey());
-			target.setMolWeight(source.getMolWeight());
-			target.setExactMass(source.getExactMass());
-			target.setComments(source.getComments());
-			target.setMiscellaneous(source.getMiscellaneous());
-			target.setReferenceIdentifier(source.getReferenceIdentifier());
-			target.setDatabase(source.getDatabase());
-			target.setContributor(source.getContributor());
-			target.setCompoundClass(source.getCompoundClass());
-			target.setMoleculeStructure(source.getMoleculeStructure());
-			for(String cas : source.getCasNumbers()) {
-				target.addCasNumber(cas);
-			}
-			target.getSynonyms().addAll(source.getSynonyms());
-			for(IColumnIndexMarker marker : source.getColumnIndexMarkers()) {
-				target.add(marker);
-			}
-			for(IFlavorMarker marker : source.getFlavorMarkers()) {
-				target.add(marker);
-			}
-		}
-		for(int i = 1; i < selected.size(); i++) {
-			IScanMSD scan = selected.get(i);
-			if(scan instanceof IRegularLibraryMassSpectrum library) {
-				ILibraryInformation source = library.getLibraryInformation();
-				String name = source.getName();
-				if(!name.isEmpty() && !name.equals(target.getName())) {
-					target.getSynonyms().add(name);
-				}
-				target.getSynonyms().addAll(source.getSynonyms());
-				for(String cas : source.getCasNumbers()) {
-					if(!target.getCasNumbers().contains(cas)) {
-						target.addCasNumber(cas);
-					}
-				}
-				if(target.getFormula().isEmpty()) {
-					target.setFormula(source.getFormula());
-				}
-				if(target.getSmiles().isEmpty()) {
-					target.setSmiles(source.getSmiles());
-				}
-				if(target.getInChI().isEmpty()) {
-					target.setInChI(source.getInChI());
-				}
-				if(target.getInChIKey().isEmpty()) {
-					target.setInChIKey(source.getInChIKey());
-				}
-				if(target.getMolWeight() == 0) {
-					target.setMolWeight(source.getMolWeight());
-				}
-				if(target.getExactMass() == 0) {
-					target.setExactMass(source.getExactMass());
-				}
-				if(target.getDatabase().isEmpty()) {
-					target.setDatabase(source.getDatabase());
-				}
-				if(target.getContributor().isEmpty()) {
-					target.setContributor(source.getContributor());
-				}
-				if(target.getCompoundClass().isEmpty()) {
-					target.setCompoundClass(source.getCompoundClass());
-				}
-				if(target.getMoleculeStructure().isEmpty()) {
-					target.setMoleculeStructure(source.getMoleculeStructure());
-				}
-				mergeTextField(target.getComments(), source.getComments(), target::setComments);
-				mergeTextField(target.getMiscellaneous(), source.getMiscellaneous(), target::setMiscellaneous);
-				mergeTextField(target.getReferenceIdentifier(), source.getReferenceIdentifier(), target::setReferenceIdentifier);
-				for(IColumnIndexMarker marker : source.getColumnIndexMarkers()) {
-					target.add(marker);
-				}
-				for(IFlavorMarker marker : source.getFlavorMarkers()) {
-					target.add(marker);
-				}
-			}
-		}
-	}
-
-	private void mergeTextField(String existing, String addition, Consumer<String> setter) {
-
-		if(!addition.isEmpty()) {
-			if(existing.isEmpty()) {
-				setter.accept(addition);
-			} else if(!existing.contains(addition)) {
-				setter.accept(existing + "; " + addition);
-			}
-		}
 	}
 
 	private void createButtonCleanUp(Composite parent) {

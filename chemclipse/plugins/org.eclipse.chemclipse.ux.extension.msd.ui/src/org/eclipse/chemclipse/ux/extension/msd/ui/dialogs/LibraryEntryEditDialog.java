@@ -53,6 +53,7 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 	private AtomicReference<Text> textCasNumber = new AtomicReference<>();
 	private AtomicReference<Text> textSmiles = new AtomicReference<>();
 	private AtomicReference<Text> textRetentionTime = new AtomicReference<>();
+	private AtomicReference<Text> textRetentionIndex = new AtomicReference<>();
 	private AtomicReference<Text> textMolWeight = new AtomicReference<>();
 	private AtomicReference<Text> textExactMass = new AtomicReference<>();
 	private AtomicReference<Text> textFormula = new AtomicReference<>();
@@ -116,6 +117,13 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 			} catch(NumberFormatException e) {
 			}
 			/*
+			 * Retention Index
+			 */
+			try {
+				libraryInformation.setRetentionIndex((float)Double.parseDouble(textRetentionIndex.get().getText().trim()));
+			} catch(NumberFormatException e) {
+			}
+			/*
 			 * Mol Weight
 			 */
 			try {
@@ -166,6 +174,9 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 
 		createLabel(composite, "Retention Time [min]:");
 		textRetentionTime.set(createText(composite, libraryInformation != null ? decimalFormat.format(massSpectrum.getRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR) : ""));
+
+		createLabel(composite, "Retention Index:");
+		textRetentionIndex.set(createText(composite, libraryInformation != null ? decimalFormat.format(libraryInformation.getRetentionIndex()) : ""));
 
 		createLabel(composite, "Mol Weight (MW):");
 		textMolWeight.set(createText(composite, libraryInformation != null ? decimalFormat.format(libraryInformation.getMolWeight()) : ""));
