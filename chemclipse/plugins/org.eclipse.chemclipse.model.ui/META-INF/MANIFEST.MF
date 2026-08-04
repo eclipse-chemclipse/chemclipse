@@ -10,7 +10,8 @@ Export-Package: org.eclipse.chemclipse.model.ui.dialogs,
 Bundle-Activator: org.eclipse.chemclipse.model.ui.Activator
 Bundle-Vendor: ChemClipse
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.ui;bundle-version="3.5.1",
+ org.eclipse.swt,
+ org.eclipse.jface,
  org.eclipse.chemclipse.logging;bundle-version="0.8.0",
  org.eclipse.chemclipse.model;bundle-version="0.8.0",
  org.eclipse.chemclipse.support;bundle-version="0.8.0",
