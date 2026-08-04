@@ -242,15 +242,19 @@ public class ChromatogramChartSupport {
 
 	private ILineSeriesData getLineSeriesData(IChromatogram chromatogram, int startScan, int stopScan, String seriesId, DisplayType displayType, Derivative derivative, Color color, IMarkedTraces<ITrace> signals, boolean baseline, boolean useRetentionIndex) {
 
-		IBaselineModel baselineModel = null;
+		IBaselineModel baselineModel = chromatogram.getBaselineModel();
 		if(baseline) {
-			if(chromatogram instanceof IChromatogramWSD chromatogramWSD && signals != null) {
-				if(!signals.isEmpty()) {
+			/*
+			 * Specific baseline for WSD.
+			 */
+			if(chromatogram instanceof IChromatogramWSD chromatogramWSD) {
+				if(signals != null && !signals.isEmpty()) {
 					double wavelength = signals.iterator().next().getValue();
-					baselineModel = chromatogramWSD.getBaselineModel(wavelength);
+					IBaselineModel baselineModelTrace = chromatogramWSD.getBaselineModel(wavelength);
+					if(baselineModelTrace != null) {
+						baselineModel = baselineModelTrace;
+					}
 				}
-			} else {
-				baselineModel = chromatogram.getBaselineModel();
 			}
 		}
 
