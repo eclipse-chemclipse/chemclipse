@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2025 Lablicate GmbH.
+ * Copyright (c) 2013, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IScan;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelengths;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.wsd.model.xwc.IExtractedSingleWavelengthSignal;
 import org.eclipse.chemclipse.wsd.model.xwc.IExtractedWavelengthSignal;
 
@@ -58,9 +59,5 @@ public interface IScanWSD extends IScan {
 
 	IWavelengthBounds getWavelengthBounds();
 
-	/**
-	 * 
-	 * @return total intensity count (TIC) excepted excluded wavelengths
-	 */
-	float getTotalSignal(IMarkedWavelengths excludedWavelenths);
+	float getTotalSignal(IMarkedTraces<ITrace> excludedWavelenths);
 }

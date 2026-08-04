@@ -24,6 +24,7 @@ import org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.pro
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.settings.PeakIntegrationSettings;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
+import org.eclipse.chemclipse.msd.model.util.MarkedTracesSupportMSD;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -100,7 +101,7 @@ public class TrapezoidPeakIntegrator_4_Test extends DefaultPeakTestCase {
 		results = integrator.integrate(peaks, peakIntegrationSettings, new NullProgressMonitor());
 		result = results.getPeakIntegrationResult(0);
 		assertEquals(285326.9905462646d, result.getIntegratedArea(), 0, "Integrated Peak Area");
-		assertTrue(result.getIntegratedTraces().containsAll(peakIntegrationSettings.getMarkedTraces().getTraces()));
+		assertTrue(result.getIntegratedTraces().containsAll(MarkedTracesSupportMSD.getTracesAsInteger(peakIntegrationSettings.getMarkedTraces())));
 	}
 
 	@Test
@@ -111,6 +112,6 @@ public class TrapezoidPeakIntegrator_4_Test extends DefaultPeakTestCase {
 		results = integrator.integrate(peaks, peakIntegrationSettings, new NullProgressMonitor());
 		result = results.getPeakIntegrationResult(0);
 		assertEquals(531480.5905462648d, result.getIntegratedArea(), 0, "Integrated Peak Area");
-		assertTrue(result.getIntegratedTraces().containsAll(peakIntegrationSettings.getMarkedTraces().getTraces()));
+		assertTrue(result.getIntegratedTraces().containsAll(MarkedTracesSupportMSD.getTracesAsInteger(peakIntegrationSettings.getMarkedTraces())));
 	}
 }

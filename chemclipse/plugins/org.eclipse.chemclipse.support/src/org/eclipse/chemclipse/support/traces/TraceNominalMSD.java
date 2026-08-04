@@ -21,6 +21,15 @@ import java.util.Objects;
  */
 public class TraceNominalMSD extends TraceGeneric {
 
+	public TraceNominalMSD() {
+
+	}
+
+	public TraceNominalMSD(double mz) {
+
+		setMZ(mz);
+	}
+
 	public int getMZ() {
 
 		return getValueAsInt();

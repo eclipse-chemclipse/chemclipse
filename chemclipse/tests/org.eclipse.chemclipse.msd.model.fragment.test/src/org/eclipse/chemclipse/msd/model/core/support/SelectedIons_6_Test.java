@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -14,7 +14,11 @@ package org.eclipse.chemclipse.msd.model.core.support;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -23,18 +27,18 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 @TestInstance(Lifecycle.PER_CLASS)
 public class SelectedIons_6_Test {
 
-	private IMarkedIons selectedIons;
+	private IMarkedTraces<ITrace> selectedIons;
 
 	@BeforeAll
 	public void setUp() {
 
-		selectedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
-		selectedIons.add(new MarkedIon(28.68301303f));
+		selectedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
+		selectedIons.add(new TraceNominalMSD(28.68301303f));
 	}
 
 	@Test
 	public void testContains_1() {
 
-		assertFalse(selectedIons.contains(new MarkedIon(28.8f)));
+		assertFalse(selectedIons.contains(new TraceNominalMSD(28.8f)));
 	}
 }

@@ -26,16 +26,18 @@ import java.util.Set;
 
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.AbstractScan;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.msd.model.core.comparator.IonCombinedComparator;
 import org.eclipse.chemclipse.msd.model.core.comparator.IonComparatorMode;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
 import org.eclipse.chemclipse.msd.model.implementation.ImmutableZeroIon;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.ScanMSD;
+import org.eclipse.chemclipse.msd.model.util.MarkedTracesSupportMSD;
 import org.eclipse.chemclipse.msd.model.xic.ExtractedIonSignal;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 /**
  * The class {@code AbstractScanMSD} controls the basic operations for all types
@@ -253,14 +255,14 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 	}
 
 	@Override
-	public AbstractScanMSD removeIons(IMarkedIons markedIons) {
+	public AbstractScanMSD removeIons(IMarkedTraces<ITrace> markedIons) {
 
 		if(markedIons == null) {
 			// TODO maybe log warning?
 			return this;
 		}
 
-		Set<Integer> nominalIons = markedIons.getIonsNominal();
+		Set<Integer> nominalIons = MarkedTracesSupportMSD.getTracesAsInteger(markedIons);
 		MarkedTraceModus markedTraceModus = markedIons.getMarkedTraceModus();
 		switch(markedTraceModus) {
 			case INCLUDE:
@@ -308,7 +310,7 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 	}
 
 	@Override
-	public float getTotalSignal(IMarkedIons markedIons) {
+	public float getTotalSignal(IMarkedTraces<ITrace> markedIons) {
 
 		float totalSignal = 0;
 		/*
@@ -329,9 +331,9 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 		return totalSignal;
 	}
 
-	private static boolean useIon(IIon ion, IMarkedIons filterIons) {
+	private static boolean useIon(IIon ion, IMarkedTraces<ITrace> filterIons) {
 
-		Set<Integer> ionNominal = filterIons.getIonsNominal();
+		Set<Integer> ionNominal = MarkedTracesSupportMSD.getTracesAsInteger(filterIons);
 		switch(filterIons.getMarkedTraceModus()) {
 			case EXCLUDE:
 				return ionNominal.contains(AbstractIon.getIon(ion.getIon()));
@@ -583,7 +585,7 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 	}
 
 	@Override
-	public IScanMSD getMassSpectrum(IMarkedIons excludedIons) {
+	public IScanMSD getMassSpectrum(IMarkedTraces<ITrace> excludedIons) {
 
 		IScanMSD massSpectrum;
 		try {
@@ -601,14 +603,14 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 	 * @param excludedIons
 	 * @return IMassSpectrum
 	 */
-	private IScanMSD createNewMassSpectrum(IMarkedIons excludedIons) {
+	private IScanMSD createNewMassSpectrum(IMarkedTraces<ITrace> excludedIons) {
 
 		if(excludedIons == null) {
-			excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
+			excludedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
 		}
 		IScanMSD massSpectrum = new ScanMSD();
 		IIon ion;
-		Set<Integer> excludedIonsNominal = excludedIons.getIonsNominal();
+		Set<Integer> excludedIonsNominal = MarkedTracesSupportMSD.getTracesAsInteger(excludedIons);
 		for(IIon actualIon : ionsList) {
 			int mz = (int)actualIon.getIon();
 			if(!excludedIonsNominal.contains(mz)) {

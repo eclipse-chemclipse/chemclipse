@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -13,14 +13,14 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.wsd.model.xwc;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignal;
 import org.eclipse.chemclipse.model.signals.TotalScanSignalExtractor;
 import org.eclipse.chemclipse.model.signals.TotalScanSignals;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelengths;
-import org.eclipse.chemclipse.model.wavelengths.MarkedWavelengths;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.wsd.model.core.IScanWSD;
 import org.eclipse.chemclipse.wsd.model.core.selection.IChromatogramSelectionWSD;
@@ -49,7 +49,7 @@ public class TotalWavelengthSignalExtractor extends TotalScanSignalExtractor imp
 		return initializeTotalWavelengthSignals(startScan, stopScan, null);
 	}
 
-	private ITotalScanSignals initializeTotalWavelengthSignals(int startScan, int stopScan, IMarkedWavelengths excludedWavelengths) {
+	private ITotalScanSignals initializeTotalWavelengthSignals(int startScan, int stopScan, IMarkedTraces<ITrace> excludedWavelengths) {
 
 		if(startScan > stopScan) {
 			throw new IllegalArgumentException("The start scan " + startScan + " must be lower or equal the stop scan " + stopScan + ".");
@@ -76,7 +76,7 @@ public class TotalWavelengthSignalExtractor extends TotalScanSignalExtractor imp
 	}
 
 	@Override
-	public ITotalScanSignals getTotalWavelengthSignals(IChromatogramSelectionWSD chromatogramSelection, IMarkedWavelengths excludedWavelengths) {
+	public ITotalScanSignals getTotalWavelengthSignals(IChromatogramSelectionWSD chromatogramSelection, IMarkedTraces<ITrace> excludedWavelengths) {
 
 		if(chromatogramSelection == null || chromatogramSelection.getChromatogram() != chromatogram) {
 			return new TotalScanSignals(0, chromatogram);
@@ -94,7 +94,7 @@ public class TotalWavelengthSignalExtractor extends TotalScanSignalExtractor imp
 	}
 
 	@Override
-	public ITotalScanSignals getTotalScanSignals(int startScan, int stopScan, MarkedWavelengths excludedWavelengths) {
+	public ITotalScanSignals getTotalScanSignals(int startScan, int stopScan, IMarkedTraces<ITrace> excludedWavelengths) {
 
 		if(startScan > stopScan) {
 			throw new IllegalArgumentException("The start scan " + startScan + " must be lower or equal the stop scan " + stopScan + ".");

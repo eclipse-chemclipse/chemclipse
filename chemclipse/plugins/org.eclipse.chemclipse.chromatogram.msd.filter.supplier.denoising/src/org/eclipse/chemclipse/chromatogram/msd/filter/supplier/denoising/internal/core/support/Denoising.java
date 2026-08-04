@@ -17,16 +17,17 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.chemclipse.logging.core.Logger;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.exceptions.AnalysisSupportException;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.ICombinedMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.chemclipse.msd.model.exceptions.FilterException;
 import org.eclipse.chemclipse.msd.model.exceptions.NoExtractedIonSignalStoredException;
 import org.eclipse.chemclipse.msd.model.noise.Calculator;
 import org.eclipse.chemclipse.msd.model.noise.INoiseSegmentMSD;
+import org.eclipse.chemclipse.msd.model.util.MarkedTracesSupportMSD;
 import org.eclipse.chemclipse.msd.model.xic.ExtractedIonSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.ExtractedIonSignalsModifier;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
@@ -35,6 +36,7 @@ import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignals;
 import org.eclipse.chemclipse.numeric.statistics.Calculations;
 import org.eclipse.chemclipse.rcp.app.undo.UndoContextFactory;
 import org.eclipse.chemclipse.support.comparator.SortOrder;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.OperationHistoryFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -59,7 +61,7 @@ public class Denoising {
 	 * @param chromatogramSelection
 	 * @throws FilterException
 	 */
-	public static List<ICombinedMassSpectrum> applyDenoisingFilter(IChromatogramSelectionMSD chromatogramSelection, IMarkedIons ionsToRemove, IMarkedIons ionsToPreserve, boolean adjustThresholdTransitions, int numberOfUsedIonsForCoefficient, int segmentWidth, IProgressMonitor monitor) throws FilterException {
+	public static List<ICombinedMassSpectrum> applyDenoisingFilter(IChromatogramSelectionMSD chromatogramSelection, IMarkedTraces<ITrace> ionsToRemove, IMarkedTraces<ITrace> ionsToPreserve, boolean adjustThresholdTransitions, int numberOfUsedIonsForCoefficient, int segmentWidth, IProgressMonitor monitor) throws FilterException {
 
 		List<ICombinedMassSpectrum> noiseMassSpectra = new ArrayList<>();
 		SubMonitor subMonitor = SubMonitor.convert(monitor, "Denoising", 8);
@@ -149,7 +151,7 @@ public class Denoising {
 	 * @param ionsToRemove
 	 * @param monitor
 	 */
-	private static IExtractedIonSignals removeIonsInScanRange(IExtractedIonSignals extractedIonSignals, IMarkedIons ionsToRemove) {
+	private static IExtractedIonSignals removeIonsInScanRange(IExtractedIonSignals extractedIonSignals, IMarkedTraces<ITrace> ionsToRemove) {
 
 		int startScan = extractedIonSignals.getStartScan();
 		int stopScan = extractedIonSignals.getStopScan();
@@ -168,9 +170,9 @@ public class Denoising {
 	/**
 	 * Sets the selected ions from the given extracted ion signal to zero signal intensity.
 	 */
-	private static void removeIons(IExtractedIonSignal extractedIonSignal, IMarkedIons selectedIons) {
+	private static void removeIons(IExtractedIonSignal extractedIonSignal, IMarkedTraces<ITrace> selectedIons) {
 
-		for(int ion : selectedIons.getIonsNominal()) {
+		for(int ion : MarkedTracesSupportMSD.getTracesAsInteger(selectedIons)) {
 			extractedIonSignal.setAbundance(ion, 0.0f, true);
 		}
 	}
@@ -309,7 +311,7 @@ public class Denoising {
 	 *
 	 * @return
 	 */
-	private static List<ICombinedMassSpectrum> subtractNoiseMassSpectraFromSegments(IExtractedIonSignals extractedIonSignals, List<INoiseSegmentMSD> noiseSegments, IMarkedIons ionsToPreserve, int numberOfUsedIonsForCoefficient, IProgressMonitor monitor) {
+	private static List<ICombinedMassSpectrum> subtractNoiseMassSpectraFromSegments(IExtractedIonSignals extractedIonSignals, List<INoiseSegmentMSD> noiseSegments, IMarkedTraces<ITrace> ionsToPreserve, int numberOfUsedIonsForCoefficient, IProgressMonitor monitor) {
 
 		List<ICombinedMassSpectrum> noiseMassSpectra = new ArrayList<>();
 		Calculator calculator = new Calculator();

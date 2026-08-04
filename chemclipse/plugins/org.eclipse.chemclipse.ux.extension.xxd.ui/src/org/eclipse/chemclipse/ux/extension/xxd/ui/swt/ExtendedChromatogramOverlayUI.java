@@ -30,20 +30,14 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.chemclipse.csd.model.core.selection.IChromatogramSelectionCSD;
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IMarkedTrace;
 import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IScan;
-import org.eclipse.chemclipse.model.core.MarkedTrace;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.model.traces.NamedTrace;
 import org.eclipse.chemclipse.model.traces.NamedTraces;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelengths;
-import org.eclipse.chemclipse.model.wavelengths.MarkedWavelengths;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
@@ -51,6 +45,8 @@ import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.support.traces.TraceFactory;
 import org.eclipse.chemclipse.support.traces.TraceGeneric;
 import org.eclipse.chemclipse.support.traces.TraceHighResMSD;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
+import org.eclipse.chemclipse.support.traces.TraceRasteredWSD;
 import org.eclipse.chemclipse.support.traces.TraceType;
 import org.eclipse.chemclipse.support.ui.provider.AbstractLabelProvider;
 import org.eclipse.chemclipse.support.validators.TraceValidator;
@@ -740,8 +736,8 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				availableSeriesIds.add(seriesId);
 				selectionSeries.add(seriesId);
 				if(!baseChart.isSeriesContained(seriesId)) {
-					IMarkedIons markedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
-					markedIons.add(ion);
+					IMarkedTraces<ITrace> markedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
+					markedIons.add(new TraceNominalMSD(ion));
 					ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(chromatogram, seriesId, displayType, derivative, color, markedIons);
 					lineSeriesData.getSettings().setDescription("m/z " + Integer.toString(ion) + " (" + description + ")");
 					lineSeriesDataList.add(lineSeriesData);
@@ -765,8 +761,8 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 						availableSeriesIds.add(seriesId);
 						selectionSeries.add(seriesId);
 						if(!baseChart.isSeriesContained(seriesId)) {
-							IMarkedIons markedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
-							markedIons.add(ion);
+							IMarkedTraces<ITrace> markedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
+							markedIons.add(new TraceNominalMSD(ion));
 							ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(referencedChromatogram, seriesId, displayType, derivative, color, markedIons);
 							lineSeriesData.getSettings().setDescription("m/z " + Integer.toString(ion) + " (" + description + ")");
 							lineSeriesDataList.add(lineSeriesData);
@@ -842,10 +838,10 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		/*
 		 * XSC
 		 */
-		IMarkedTraces<IMarkedTrace> markedTraces = new MarkedTraces(MarkedTraceModus.INCLUDE);
+		IMarkedTraces<ITrace> markedTraces = new MarkedTraces(MarkedTraceModus.INCLUDE);
 		List<Number> wavenumbers = getSelectedTraces(true);
 		for(Number wavenumber : wavenumbers) {
-			markedTraces.add(new MarkedTrace(wavenumber.intValue()));
+			markedTraces.add(new TraceRasteredWSD(wavenumber.intValue()));
 		}
 
 		if(chromatogram instanceof IChromatogramVSD) {
@@ -902,8 +898,8 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				availableSeriesIds.add(seriesId);
 				selectionSeries.add(seriesId);
 				if(!baseChart.isSeriesContained(seriesId)) {
-					IMarkedTraces<IMarkedTrace> markedTraces = new MarkedTraces(MarkedTraceModus.INCLUDE);
-					markedTraces.add(new MarkedTrace(wavenumber));
+					IMarkedTraces<ITrace> markedTraces = new MarkedTraces(MarkedTraceModus.INCLUDE);
+					markedTraces.add(new TraceRasteredWSD(wavenumber));
 					ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(chromatogram, seriesId, displayType, derivative, color, markedTraces);
 					lineSeriesData.getSettings().setDescription("Wavenumber " + Integer.toString(wavenumber) + " (" + description + ")");
 					lineSeriesDataList.add(lineSeriesData);
@@ -927,8 +923,8 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 						availableSeriesIds.add(seriesId);
 						selectionSeries.add(seriesId);
 						if(!baseChart.isSeriesContained(seriesId)) {
-							IMarkedTraces<IMarkedTrace> markedTraces = new MarkedTraces(MarkedTraceModus.INCLUDE);
-							markedTraces.add(new MarkedTrace(wavenumber));
+							IMarkedTraces<ITrace> markedTraces = new MarkedTraces(MarkedTraceModus.INCLUDE);
+							markedTraces.add(new TraceRasteredWSD(wavenumber));
 							ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(referencedChromatogram, seriesId, displayType, derivative, color, markedTraces);
 							lineSeriesData.getSettings().setDescription("Wavenumber " + Integer.toString(wavenumber) + " (" + description + ")");
 							lineSeriesDataList.add(lineSeriesData);
@@ -958,9 +954,8 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				availableSeriesIds.add(seriesId);
 				selectionSeries.add(seriesId);
 				color = chromatogramChartSupport.getSeriesColor(seriesId);
-				IMarkedWavelengths markedWavelengths = new MarkedWavelengths();
-				markedWavelengths.add(wavelength);
-
+				IMarkedTraces<ITrace> markedWavelengths = new MarkedTraces(MarkedTraceModus.INCLUDE);
+				markedWavelengths.add(new TraceRasteredWSD(wavelength));
 				if(!baseChart.isSeriesContained(seriesId)) {
 					ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(chromatogram, seriesId, displayType, derivative, color, markedWavelengths);
 					lineSeriesData.getSettings().setDescription(Float.toString(wavelength) + " nm (" + description + ")");
@@ -984,9 +979,8 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 						availableSeriesIds.add(seriesId);
 						selectionSeries.add(seriesId);
 						color = chromatogramChartSupport.getSeriesColor(seriesId);
-						IMarkedWavelengths markedWavelengths = new MarkedWavelengths();
-						markedWavelengths.add(wavelength);
-
+						IMarkedTraces<ITrace> markedWavelengths = new MarkedTraces(MarkedTraceModus.INCLUDE);
+						markedWavelengths.add(new TraceRasteredWSD(wavelength));
 						if(!baseChart.isSeriesContained(seriesId)) {
 							ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(referencedChromatogram, seriesId, displayType, derivative, color, markedWavelengths);
 							lineSeriesData.getSettings().setDescription(Float.toString(wavelength) + " nm (" + description + ")");
@@ -1042,9 +1036,8 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				availableSeriesIds.add(seriesId);
 				selectionSeries.add(seriesId);
 				Color color = chromatogramChartSupport.getSeriesColor(seriesId);
-				IMarkedWavelengths markedWavelengths = new MarkedWavelengths();
-				markedWavelengths.add(wavelength);
-
+				IMarkedTraces<ITrace> markedWavelengths = new MarkedTraces(MarkedTraceModus.INCLUDE);
+				markedWavelengths.add(new TraceRasteredWSD(wavelength));
 				if(!baseChart.isSeriesContained(seriesId)) {
 					ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(chromatogram, seriesId, displayType, derivative, color, markedWavelengths);
 					lineSeriesData.getSettings().setDescription(Float.toString(wavelength) + " nm (" + description + ")");
@@ -1063,16 +1056,14 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 			String description = ChromatogramDataSupport.getReferenceLabel(referencedChromatogram, j, false);
 			String referenceChromatogramName = chromatogramName + ChromatogramChartSupport.REFERENCE_MARKER + j + 1;
 			for(float wavelength : referencedChromatogramWSD.getWavelengths()) {
-
 				String seriesId = referenceChromatogramName + OverlayChartSupport.OVERLAY_START_MARKER + displayType + OverlayChartSupport.DELIMITER_SIGNAL_DERIVATIVE + derivative + OverlayChartSupport.DELIMITER_SIGNAL_DERIVATIVE + wavelength + OverlayChartSupport.OVERLAY_STOP_MARKER;
 				availableSeriesIds.add(seriesId);
 				selectionSeries.add(seriesId);
 				Color color = chromatogramChartSupport.getSeriesColor(seriesId);
-				IMarkedWavelengths markedWavelengths = new MarkedWavelengths();
-				markedWavelengths.add(wavelength);
-
+				IMarkedTraces<ITrace> markedTraces = new MarkedTraces(MarkedTraceModus.INCLUDE);
+				markedTraces.add(new TraceRasteredWSD(wavelength));
 				if(!baseChart.isSeriesContained(seriesId)) {
-					ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(referencedChromatogram, seriesId, displayType, derivative, color, markedWavelengths);
+					ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(referencedChromatogram, seriesId, displayType, derivative, color, markedTraces);
 					lineSeriesData.getSettings().setDescription(Float.toString(wavelength) + " nm (" + description + ")");
 					lineSeriesDataList.add(lineSeriesData);
 				}
@@ -1182,10 +1173,10 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		/*
 		 * BPC, XIC, TSC
 		 */
-		IMarkedIons markedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
+		IMarkedTraces<ITrace> markedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
 		List<Number> ions = getSelectedTraces(true);
 		for(Number ion : ions) {
-			markedIons.add(ion.intValue());
+			markedIons.add(new TraceNominalMSD(ion.intValue()));
 		}
 
 		if(chromatogram instanceof IChromatogramMSD) {
@@ -1233,7 +1224,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 
 		BaseChart baseChart = chartControl.get().getBaseChart();
 		Derivative derivative = getSelectedDerivative();
-		IMarkedWavelengths markedWavelengths = new MarkedWavelengths();
+		IMarkedTraces<ITrace> markedWavelengths = new MarkedTraces(MarkedTraceModus.INCLUDE);
 		/*
 		 * Max Plot
 		 */

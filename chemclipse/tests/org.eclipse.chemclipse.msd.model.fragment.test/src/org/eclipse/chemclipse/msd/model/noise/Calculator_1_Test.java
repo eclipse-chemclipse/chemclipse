@@ -18,13 +18,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.msd.model.core.ICombinedMassSpectrum;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
 import org.eclipse.chemclipse.msd.model.implementation.CombinedMassSpectrum;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -71,10 +72,7 @@ public class Calculator_1_Test {
 		noiseMassSpectrum.addIon(new Ion(104.0f, 15000.0f));
 		noiseMassSpectrum.addIon(new Ion(201.0f, 8900.0f));
 		noiseMassSpectra.add(noiseMassSpectrum);
-		IMarkedIons ionsToPreserve = new MarkedIons(MarkedTraceModus.INCLUDE);
-		// ionsToPreserve.add(103);
-		// ionsToPreserve.add(104);
-		// ionsToPreserve.add(201);
+		IMarkedTraces<ITrace> ionsToPreserve = new MarkedTraces(MarkedTraceModus.INCLUDE);
 		noiseMassSpectrum = calculator.getNoiseMassSpectrum(noiseMassSpectra, ionsToPreserve);
 		extractedIonSignal = noiseMassSpectrum.getExtractedIonSignal();
 	}

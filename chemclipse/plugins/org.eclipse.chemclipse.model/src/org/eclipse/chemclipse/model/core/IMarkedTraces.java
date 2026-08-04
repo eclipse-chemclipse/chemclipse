@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -15,9 +15,12 @@ package org.eclipse.chemclipse.model.core;
 
 import java.util.Set;
 
-public interface IMarkedTraces<S extends IMarkedTrace> extends Set<S> {
+import org.eclipse.chemclipse.support.traces.ITrace;
+
+public interface IMarkedTraces<S extends ITrace> extends Set<S> {
+
+	double TOTAL_SIGNAL = ISignal.TOTAL_INTENSITY;
+	int TOTAL_SIGNAL_AS_INT = (int)Math.round(TOTAL_SIGNAL);
 
 	MarkedTraceModus getMarkedTraceModus();
-
-	Set<Integer> getTraces();
 }

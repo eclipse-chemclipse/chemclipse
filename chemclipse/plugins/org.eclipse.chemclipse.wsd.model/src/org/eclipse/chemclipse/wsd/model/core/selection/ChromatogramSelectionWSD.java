@@ -14,6 +14,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.wsd.model.core.selection;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
@@ -21,15 +23,15 @@ import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.model.notifier.UpdateNotifier;
 import org.eclipse.chemclipse.model.selection.AbstractChromatogramSelection;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelengths;
-import org.eclipse.chemclipse.model.wavelengths.MarkedWavelengths;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceRasteredWSD;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.wsd.model.core.IScanSignalWSD;
 import org.eclipse.chemclipse.wsd.model.core.IScanWSD;
 
 public class ChromatogramSelectionWSD extends AbstractChromatogramSelection implements IChromatogramSelectionWSD {
 
-	private IMarkedWavelengths selectedWavelengths;
+	private List<ITrace> selectedWavelengths = new ArrayList<>();
 
 	public ChromatogramSelectionWSD(IChromatogramWSD chromatogram) throws ChromatogramIsNullException {
 
@@ -53,9 +55,9 @@ public class ChromatogramSelectionWSD extends AbstractChromatogramSelection impl
 
 		Optional<IScan> scan = chromatogram.getScans().stream().findFirst();
 		if(!scan.isEmpty() && scan.get() instanceof IScanWSD scanWSD) {
-			selectedWavelengths = new MarkedWavelengths();
+			selectedWavelengths.clear();
 			for(IScanSignalWSD signal : scanWSD.getScanSignals()) {
-				selectedWavelengths.add(signal.getWavelength());
+				selectedWavelengths.add(new TraceRasteredWSD(signal.getWavelength()));
 			}
 		}
 	}
@@ -150,13 +152,13 @@ public class ChromatogramSelectionWSD extends AbstractChromatogramSelection impl
 	}
 
 	@Override
-	public IMarkedWavelengths getSelectedWavelengths() {
+	public List<ITrace> getSelectedWavelengths() {
 
 		return selectedWavelengths;
 	}
 
 	@Override
-	public void setSelectedWavelengths(IMarkedWavelengths selectedWavelengths) {
+	public void setSelectedWavelengths(List<ITrace> selectedWavelengths) {
 
 		this.selectedWavelengths = selectedWavelengths;
 	}

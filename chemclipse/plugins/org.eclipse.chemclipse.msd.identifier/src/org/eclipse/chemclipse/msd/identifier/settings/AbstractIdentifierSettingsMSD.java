@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -13,15 +13,16 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.identifier.settings;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.identifier.AbstractIdentifierDeltaPenaltyCalculationSettings;
 import org.eclipse.chemclipse.msd.identifier.comparison.IMassSpectrumComparator;
 import org.eclipse.chemclipse.msd.identifier.comparison.IMassSpectrumComparisonSupplier;
 import org.eclipse.chemclipse.msd.identifier.comparison.MassSpectrumComparator;
 import org.eclipse.chemclipse.msd.identifier.comparison.MassSpectrumComparatorDynamicSettingProperty;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
 import org.eclipse.chemclipse.support.settings.ComboSettingsProperty;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -34,7 +35,7 @@ public class AbstractIdentifierSettingsMSD extends AbstractIdentifierDeltaPenalt
 	@ComboSettingsProperty(MassSpectrumComparatorDynamicSettingProperty.class)
 	private String massSpectrumComparatorId = DEFAULT_COMPARATOR_ID;
 	@JsonIgnore
-	private IMarkedIons excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
+	private IMarkedTraces<ITrace> excludedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
 	@JsonIgnore
 	private IMassSpectrumComparator comparator = null; // The comparator will be created dynamically.
 
@@ -52,7 +53,7 @@ public class AbstractIdentifierSettingsMSD extends AbstractIdentifierDeltaPenalt
 	}
 
 	@Override
-	public IMarkedIons getExcludedIons() {
+	public IMarkedTraces<ITrace> getExcludedIons() {
 
 		return excludedIons;
 	}

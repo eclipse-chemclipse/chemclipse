@@ -53,7 +53,6 @@ import org.eclipse.chemclipse.model.support.RetentionIndexMath;
 import org.eclipse.chemclipse.model.targets.ITargetDisplaySettings;
 import org.eclipse.chemclipse.model.targets.TargetReference;
 import org.eclipse.chemclipse.model.targets.TargetReferenceType;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelengths;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 import org.eclipse.chemclipse.processing.DataCategory;
@@ -80,10 +79,11 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.support.comparator.SortOrder;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.support.text.ValueFormat;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.swt.ui.components.InformationUI;
-import org.eclipse.chemclipse.swt.ui.marker.TargetMarker;
 import org.eclipse.chemclipse.swt.ui.marker.PositionMarker;
 import org.eclipse.chemclipse.swt.ui.marker.RetentionIndexMarker;
+import org.eclipse.chemclipse.swt.ui.marker.TargetMarker;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.swt.ui.preferences.PreferencePageSystem;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
@@ -390,8 +390,8 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 	private void updateWavelengths() {
 
 		if(chromatogramSelection instanceof IChromatogramSelectionWSD chromatogramSelectionWSD) {
-			IMarkedWavelengths selectedWavelengths = chromatogramSelectionWSD.getSelectedWavelengths();
-			if(selectedWavelengths != null && selectedWavelengths.getWavelengths().size() == 1) {
+			List<ITrace> selectedWavelengths = chromatogramSelectionWSD.getSelectedWavelengths();
+			if(selectedWavelengths != null && selectedWavelengths.size() == 1) {
 				displayType = DisplayType.SWC;
 			} else {
 				displayType = DisplayType.TIC;

@@ -14,7 +14,8 @@ package org.eclipse.chemclipse.msd.model.core;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
@@ -34,7 +35,7 @@ public interface IChromatogramMSD extends IChromatogram, IChromatogramPeaksMSD {
 	 * kind of ISupplierMassSpectrum. If no scan is available, null will be
 	 * returned.
 	 */
-	IScanMSD getScan(int scan, IMarkedIons excludedIons);
+	IScanMSD getScan(int scan, IMarkedTraces<ITrace> excludedIons);
 
 	/**
 	 * Returns a supplier scan mass spectrum or null, if no supplier

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -14,7 +14,9 @@ package org.eclipse.chemclipse.msd.model.core.support;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.exceptions.PeakException;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignals;
@@ -26,6 +28,7 @@ import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.implementation.PeakMassSpectrum;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -38,7 +41,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 public class PeakBuilder_17_Test {
 
 	private IScanRange scanRange;
-	private IMarkedIons excludedIons;
+	private IMarkedTraces<ITrace> excludedIons;
 	private IBackgroundAbundanceRange backgroundAbundanceRange;
 	private IPeakMassSpectrum peakMassSpectrum;
 	private ITotalScanSignals totalIonSignals;
@@ -48,7 +51,7 @@ public class PeakBuilder_17_Test {
 	public void setUp() {
 
 		scanRange = new ScanRange(1, 20);
-		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
+		excludedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
 		backgroundAbundanceRange = new BackgroundAbundanceRange(20.0f, 40.0f);
 		peakMassSpectrum = new PeakMassSpectrum();
 		totalIonSignals = new TotalScanSignals(200);

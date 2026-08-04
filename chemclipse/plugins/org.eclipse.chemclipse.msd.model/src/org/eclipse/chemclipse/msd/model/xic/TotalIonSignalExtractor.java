@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2025 Lablicate GmbH.
+ * Copyright (c) 2012, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -13,6 +13,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
@@ -24,7 +25,7 @@ import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public class TotalIonSignalExtractor extends TotalScanSignalExtractor implements ITotalIonSignalExtractor {
 
@@ -37,7 +38,7 @@ public class TotalIonSignalExtractor extends TotalScanSignalExtractor implements
 	}
 
 	@Override
-	public ITotalScanSignals getTotalIonSignals(int startScan, int stopScan, IMarkedIons excludedIons) {
+	public ITotalScanSignals getTotalIonSignals(int startScan, int stopScan, IMarkedTraces<ITrace> excludedIons) {
 
 		/*
 		 * Change the order of start and stop scan if necessary.
@@ -55,7 +56,7 @@ public class TotalIonSignalExtractor extends TotalScanSignalExtractor implements
 	}
 
 	@Override
-	public ITotalScanSignals getTotalIonSignals(IChromatogramSelectionMSD chromatogramSelection, IMarkedIons excludedIons) {
+	public ITotalScanSignals getTotalIonSignals(IChromatogramSelectionMSD chromatogramSelection, IMarkedTraces<ITrace> excludedIons) {
 
 		/*
 		 * If the chromatogram selection is null, return an empty
@@ -95,7 +96,7 @@ public class TotalIonSignalExtractor extends TotalScanSignalExtractor implements
 	}
 
 	@Override
-	public ITotalScanSignals getTotalIonSignals(IMarkedIons excludedIons) {
+	public ITotalScanSignals getTotalIonSignals(IMarkedTraces<ITrace> excludedIons) {
 
 		return initializeTotalIonSignals(excludedIons);
 	}
@@ -111,7 +112,7 @@ public class TotalIonSignalExtractor extends TotalScanSignalExtractor implements
 	 * @param excludedIons
 	 * @return {@link ITotalScanSignals}
 	 */
-	private ITotalScanSignals initializeTotalIonSignals(int startScan, int stopScan, IMarkedIons excludedIons) {
+	private ITotalScanSignals initializeTotalIonSignals(int startScan, int stopScan, IMarkedTraces<ITrace> excludedIons) {
 
 		if(startScan > stopScan) {
 			throw new IllegalArgumentException("The start scan " + startScan + " must be lower or equal the stop scan " + stopScan + ".");
@@ -146,7 +147,7 @@ public class TotalIonSignalExtractor extends TotalScanSignalExtractor implements
 	 * @param excludedIons
 	 * @return {@link ITotalScanSignals}
 	 */
-	private ITotalScanSignals initializeTotalIonSignals(IMarkedIons excludedIons) {
+	private ITotalScanSignals initializeTotalIonSignals(IMarkedTraces<ITrace> excludedIons) {
 
 		ITotalScanSignal totalIonSignal;
 		ITotalScanSignals signals = new TotalScanSignals(chromatogram.getNumberOfScans(), chromatogram);

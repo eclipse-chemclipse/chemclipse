@@ -14,11 +14,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.selection;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.model.notifier.UpdateNotifier;
 import org.eclipse.chemclipse.model.selection.AbstractChromatogramSelection;
@@ -28,9 +28,8 @@ import org.eclipse.chemclipse.msd.model.core.IIonTransitionSettings;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.support.IMarkedIonTransitions;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.chemclipse.msd.model.core.support.MarkedIonTransitions;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 /**
  * You can define within a {@link ChromatogramSelectionMSD} instance a certain view
@@ -42,8 +41,8 @@ import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
  */
 public class ChromatogramSelectionMSD extends AbstractChromatogramSelection implements IChromatogramSelectionMSD {
 
-	private IMarkedIons selectedIons;
-	private IMarkedIons excludedIons;
+	private List<ITrace> selectedIons;
+	private List<ITrace> excludedIons;
 	private IMarkedIonTransitions markedIonTransitions;
 
 	private static final Logger logger = Logger.getLogger(ChromatogramSelectionMSD.class);
@@ -59,8 +58,8 @@ public class ChromatogramSelectionMSD extends AbstractChromatogramSelection impl
 		/*
 		 * Create instances of selected and excluded ions.
 		 */
-		selectedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
-		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
+		selectedIons = new ArrayList<>();
+		excludedIons = new ArrayList<>();
 		/*
 		 * Marked ion transitions.
 		 */
@@ -110,13 +109,13 @@ public class ChromatogramSelectionMSD extends AbstractChromatogramSelection impl
 	}
 
 	@Override
-	public IMarkedIons getExcludedIons() {
+	public List<ITrace> getExcludedIons() {
 
 		return excludedIons;
 	}
 
 	@Override
-	public IMarkedIons getSelectedIons() {
+	public List<ITrace> getSelectedIons() {
 
 		return selectedIons;
 	}

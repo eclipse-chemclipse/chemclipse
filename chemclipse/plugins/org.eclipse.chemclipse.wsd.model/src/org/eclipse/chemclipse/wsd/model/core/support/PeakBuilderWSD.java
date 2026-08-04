@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -15,8 +15,10 @@ package org.eclipse.chemclipse.wsd.model.core.support;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IPeakIntensityValues;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.model.exceptions.PeakException;
 import org.eclipse.chemclipse.model.implementation.PeakIntensityValues;
@@ -30,11 +32,12 @@ import org.eclipse.chemclipse.model.signals.TotalScanSignalsModifier;
 import org.eclipse.chemclipse.model.support.BackgroundAbundanceRange;
 import org.eclipse.chemclipse.model.support.IBackgroundAbundanceRange;
 import org.eclipse.chemclipse.model.support.IScanRange;
-import org.eclipse.chemclipse.model.wavelengths.MarkedWavelengths;
 import org.eclipse.chemclipse.numeric.core.IPoint;
 import org.eclipse.chemclipse.numeric.core.Point;
 import org.eclipse.chemclipse.numeric.equations.Equations;
 import org.eclipse.chemclipse.numeric.equations.LinearEquation;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceRasteredWSD;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramPeakWSD;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.wsd.model.core.IPeakModelWSD;
@@ -111,13 +114,17 @@ public class PeakBuilderWSD {
 		return new ChromatogramPeakWSD(peakModel, chromatogram);
 	}
 
-	public static IChromatogramPeakWSD createPeak(IChromatogramWSD chromatogram, IScanRange scanRange, boolean calculatePeakIncludedBackground, Set<Integer> includedWavelengths, MarkedTraceModus filterMode) throws PeakException {
+	public static IChromatogramPeakWSD createPeak(IChromatogramWSD chromatogram, IScanRange scanRange, boolean calculatePeakIncludedBackground, Set<Integer> includedWavelengths, MarkedTraceModus markedTraceModus) throws PeakException {
 
 		/*
 		 * Get the total signals and determine the start and stop background
 		 * abundance.
 		 */
-		ITotalScanSignals totalWavelengthSignals = getTotalIonSignals(chromatogram, scanRange, new MarkedWavelengths(includedWavelengths, filterMode));
+		IMarkedTraces<ITrace> markedTraces = new MarkedTraces(markedTraceModus);
+		for(int wavelength : includedWavelengths) {
+			markedTraces.add(new TraceRasteredWSD(wavelength));
+		}
+		ITotalScanSignals totalWavelengthSignals = getTotalWavelengthsSignals(chromatogram, scanRange, markedTraces);
 		/*
 		 * Retrieve the start and stop signals of the peak to calculate its
 		 * chromatogram and eventually peak internal background, if the start
@@ -158,9 +165,9 @@ public class PeakBuilderWSD {
 		return new ChromatogramPeakWSD(peakModel, chromatogram);
 	}
 
-	private static ITotalScanSignals getTotalIonSignals(IChromatogramWSD chromatogram, IScanRange scanRange, MarkedWavelengths excludedWavelengths) {
+	private static ITotalScanSignals getTotalWavelengthsSignals(IChromatogramWSD chromatogram, IScanRange scanRange, IMarkedTraces<ITrace> markedWavelengths) {
 
-		if(chromatogram == null || scanRange == null || excludedWavelengths == null) {
+		if(chromatogram == null || scanRange == null || markedWavelengths == null) {
 			throw new PeakException("The given values must not be null.");
 		}
 		/*
@@ -168,7 +175,7 @@ public class PeakBuilderWSD {
 		 */
 		try {
 			ITotalWavelengthSignalExtractor totalWavelengthSignalExtractor = new TotalWavelengthSignalExtractor(chromatogram);
-			return totalWavelengthSignalExtractor.getTotalScanSignals(scanRange.getStartScan(), scanRange.getStopScan(), excludedWavelengths);
+			return totalWavelengthSignalExtractor.getTotalScanSignals(scanRange.getStartScan(), scanRange.getStopScan(), markedWavelengths);
 		} catch(ChromatogramIsNullException e) {
 			throw new PeakException("The chromatogram must not be null.");
 		}

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -13,12 +13,14 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.core.selection;
 
+import java.util.List;
+
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.support.IMarkedIonTransitions;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 /**
  * Get the selected chromatogram values. The {@link IChromatogramSelectionMSD} represents a selected part of a chromatogram, e.g. to integrate only between
@@ -67,14 +69,14 @@ public interface IChromatogramSelectionMSD extends IChromatogramSelection {
 	 *
 	 * @return IMarkedIons
 	 */
-	IMarkedIons getSelectedIons();
+	List<ITrace> getSelectedIons();
 
 	/**
 	 * Returns a list of excluded ions.
 	 *
 	 * @return IMarkedIons
 	 */
-	IMarkedIons getExcludedIons();
+	List<ITrace> getExcludedIons();
 
 	/**
 	 * Returns the instance of selected ion transitions.

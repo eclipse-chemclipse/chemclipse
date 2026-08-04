@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -14,12 +14,12 @@
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.settings;
 
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings.peaks.AbstractPeakIntegrationSettings;
-import org.eclipse.chemclipse.model.core.IMarkedTrace;
 import org.eclipse.chemclipse.model.core.IMarkedTraces;
-import org.eclipse.chemclipse.model.core.MarkedTrace;
 import org.eclipse.chemclipse.support.settings.DoubleSettingsProperty;
 import org.eclipse.chemclipse.support.settings.LabelProperty;
 import org.eclipse.chemclipse.support.settings.StringSettingsProperty;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 import org.eclipse.chemclipse.support.util.TraceSettingUtil;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -45,10 +45,10 @@ public class PeakIntegrationSettings extends AbstractPeakIntegrationSettings {
 	 * empty, TIC will be integrated.
 	 */
 	@JsonIgnore
-	private IMarkedTraces<IMarkedTrace> markedTraces = null;
+	private IMarkedTraces<ITrace> markedTraces = null;
 
 	@Override
-	public IMarkedTraces<IMarkedTrace> getMarkedTraces() {
+	public IMarkedTraces<ITrace> getMarkedTraces() {
 
 		if(markedTraces == null) {
 			markedTraces = super.getMarkedTraces();
@@ -56,7 +56,7 @@ public class PeakIntegrationSettings extends AbstractPeakIntegrationSettings {
 				TraceSettingUtil traceSettingUtil = new TraceSettingUtil();
 				int[] traces = traceSettingUtil.extractTraces(traceSettingUtil.deserialize(tracesToIntegrate));
 				for(int trace : traces) {
-					markedTraces.add(new MarkedTrace(trace));
+					markedTraces.add(new TraceNominalMSD(trace));
 				}
 			}
 		}

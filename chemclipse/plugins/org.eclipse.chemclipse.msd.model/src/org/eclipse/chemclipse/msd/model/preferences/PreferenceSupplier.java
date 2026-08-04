@@ -14,11 +14,11 @@
 package org.eclipse.chemclipse.msd.model.preferences;
 
 import org.eclipse.chemclipse.model.support.CalculationType;
-import org.eclipse.chemclipse.msd.model.Activator;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.support.MassSpectrumIO;
 import org.eclipse.chemclipse.support.preferences.AbstractPreferenceSupplier;
 import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
+import org.osgi.framework.FrameworkUtil;
 
 public class PreferenceSupplier extends AbstractPreferenceSupplier {
 
@@ -53,7 +53,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	@Override
 	public String getPreferenceNode() {
 
-		return Activator.getContext().getBundle().getSymbolicName();
+		return FrameworkUtil.getBundle(PreferenceSupplier.class).getSymbolicName();
 	}
 
 	@Override

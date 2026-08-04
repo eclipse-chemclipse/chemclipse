@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -28,15 +28,16 @@ import org.eclipse.chemclipse.chromatogram.msd.peak.detector.settings.AbstractPe
 import org.eclipse.chemclipse.chromatogram.peak.detector.core.FilterMode;
 import org.eclipse.chemclipse.chromatogram.peak.detector.model.Threshold;
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.model.DetectorType;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIon;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.support.settings.FloatSettingsProperty;
 import org.eclipse.chemclipse.support.settings.IntSettingsProperty;
 import org.eclipse.chemclipse.support.settings.IntSettingsProperty.Validation;
 import org.eclipse.chemclipse.support.settings.LabelProperty;
 import org.eclipse.chemclipse.support.settings.serialization.WindowSizeDeserializer;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -84,32 +85,38 @@ public class PeakDetectorSettingsMSD extends AbstractPeakDetectorSettingsMSD {
 	private boolean optimizeBaseline = false;
 
 	@JsonIgnore
-	public Collection<IMarkedIons> getFilterIons() {
+	public Collection<IMarkedTraces<ITrace>> getFilterIons() {
 
-		MarkedTraceModus ionMarkMode;
+		MarkedTraceModus markedTraceModus;
 		switch(getFilterMode()) {
 			case EXCLUDE:
-				ionMarkMode = MarkedTraceModus.INCLUDE;
+				markedTraceModus = MarkedTraceModus.INCLUDE;
 				break;
 			case INCLUDE:
-				ionMarkMode = MarkedTraceModus.EXCLUDE;
+				markedTraceModus = MarkedTraceModus.EXCLUDE;
 				break;
 			default:
 				throw new IllegalArgumentException("Unsupported filter mode " + getFilterMode());
 		}
-		Set<MarkedIon> ions = parseIons(filterIonsString).stream().map(e -> new MarkedIon(e.doubleValue())).collect(Collectors.toSet());
+		/*
+		 * Selection
+		 */
+		Set<ITrace> traces = parseIons(filterIonsString).stream().map(e -> new TraceNominalMSD(e.doubleValue())).collect(Collectors.toSet());
 		if(isUseIndividualTraces()) {
-			List<IMarkedIons> list = new ArrayList<>();
-			for(MarkedIon ion : ions) {
-				MarkedIons ionlist = new MarkedIons(ionMarkMode);
-				ionlist.add(ion);
-				list.add(ionlist);
+			List<IMarkedTraces<ITrace>> list = new ArrayList<>();
+			for(ITrace trace : traces) {
+				IMarkedTraces<ITrace> markedTraces = new MarkedTraces(markedTraceModus);
+				markedTraces.add(trace);
+				list.add(markedTraces);
 			}
 			return list;
 		} else {
-			MarkedIons ionlist = new MarkedIons(ionMarkMode);
-			ionlist.addAll(ions);
-			return Collections.singleton(ionlist);
+			/*
+			 * Combined Traces
+			 */
+			IMarkedTraces<ITrace> markedTraces = new MarkedTraces(markedTraceModus);
+			markedTraces.addAll(traces);
+			return Collections.singleton(markedTraces);
 		}
 	}
 
@@ -178,6 +185,7 @@ public class PeakDetectorSettingsMSD extends AbstractPeakDetectorSettingsMSD {
 		if(StringUtils.isBlank(filterIonsString)) {
 			return Collections.emptyList();
 		}
+
 		List<Number> ionNumbers = new ArrayList<>();
 		String[] split = filterIonsString.trim().split("[\\s.,;]+");
 		for(String value : split) {

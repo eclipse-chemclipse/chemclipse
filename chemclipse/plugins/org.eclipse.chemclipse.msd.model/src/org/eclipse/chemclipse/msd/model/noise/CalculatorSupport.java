@@ -14,18 +14,19 @@
 package org.eclipse.chemclipse.msd.model.noise;
 
 import org.eclipse.chemclipse.logging.core.Logger;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.support.CalculationType;
 import org.eclipse.chemclipse.model.support.IAnalysisSegment;
 import org.eclipse.chemclipse.model.support.IScanRange;
 import org.eclipse.chemclipse.model.support.ScanRange;
 import org.eclipse.chemclipse.model.support.SegmentValidatorClassic;
 import org.eclipse.chemclipse.msd.model.core.ICombinedMassSpectrum;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.chemclipse.msd.model.exceptions.FilterException;
 import org.eclipse.chemclipse.msd.model.exceptions.NoExtractedIonSignalStoredException;
 import org.eclipse.chemclipse.msd.model.support.CombinedNominalMassSpectrumCalculator;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignals;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public class CalculatorSupport {
 
@@ -100,8 +101,11 @@ public class CalculatorSupport {
 	/*
 	 * Returns a combined mass spectrum.
 	 */
-	public ICombinedMassSpectrum getNoiseMassSpectrum(CombinedNominalMassSpectrumCalculator combinedMassSpectrumCalculator, IMarkedIons ionsToPreserve) {
+	public ICombinedMassSpectrum getNoiseMassSpectrum(CombinedNominalMassSpectrumCalculator combinedMassSpectrumCalculator, IMarkedTraces<ITrace> ionsToPreserve) {
 
+		/*
+		 * That's correct here to remove the ions to preserve from the noise mass spectrum.
+		 */
 		combinedMassSpectrumCalculator.removeIons(ionsToPreserve);
 		ICombinedMassSpectrum noiseMassSpectrum = combinedMassSpectrumCalculator.createMassSpectrum(CalculationType.SUM);
 		noiseMassSpectrum.normalize(NORMALIZATION_FACTOR);

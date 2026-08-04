@@ -17,18 +17,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.chemclipse.logging.core.Logger;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.exceptions.AnalysisSupportException;
 import org.eclipse.chemclipse.model.support.AnalysisSupport;
 import org.eclipse.chemclipse.model.support.IAnalysisSegment;
 import org.eclipse.chemclipse.model.support.ScanRange;
 import org.eclipse.chemclipse.msd.model.core.ICombinedMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IIon;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.chemclipse.msd.model.exceptions.FilterException;
 import org.eclipse.chemclipse.msd.model.support.CombinedNominalMassSpectrumCalculator;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignals;
 import org.eclipse.chemclipse.numeric.statistics.Calculations;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public class Calculator {
 
@@ -51,12 +52,12 @@ public class Calculator {
 	 * Calculates a noise mass spectrum, normalized to 1000 by the given noise
 	 * mass spectra.
 	 */
-	public ICombinedMassSpectrum getNoiseMassSpectrum(List<ICombinedMassSpectrum> noiseMassSpectra, IMarkedIons ionsToPreserve) {
+	public ICombinedMassSpectrum getNoiseMassSpectrum(List<ICombinedMassSpectrum> noiseMassSpectra, IMarkedTraces<ITrace> ionsToPreserve) {
 
-		CombinedNominalMassSpectrumCalculator combinedMassSpectrumCalculator = new CombinedNominalMassSpectrumCalculator();
 		/*
 		 * Iterate through all given noise mass spectra.
 		 */
+		CombinedNominalMassSpectrumCalculator combinedMassSpectrumCalculator = new CombinedNominalMassSpectrumCalculator();
 		for(ICombinedMassSpectrum noiseMassSpectrum : noiseMassSpectra) {
 			/*
 			 * Add the value of each ion to the combined mass spectrum
@@ -72,7 +73,7 @@ public class Calculator {
 	/**
 	 * Calculates the noise segments. May return null.
 	 */
-	public List<INoiseSegmentMSD> getNoiseSegments(IExtractedIonSignals extractedIonSignals, IMarkedIons ionsToPreserve, int segmentWidth) throws FilterException {
+	public List<INoiseSegmentMSD> getNoiseSegments(IExtractedIonSignals extractedIonSignals, IMarkedTraces<ITrace> ionsToPreserve, int segmentWidth) throws FilterException {
 
 		/*
 		 * Check the scan range.
@@ -100,7 +101,7 @@ public class Calculator {
 	 * "An Integrated Method for Spectrum Extraction and Compound Identification from Gas Chromatography/Mass Spectrometry Data"
 	 * .
 	 */
-	private List<INoiseSegmentMSD> calculateNoiseSegments(List<IAnalysisSegment> analysisSegments, IExtractedIonSignals extractedIonSignals, IMarkedIons ionsToPreserve) {
+	private List<INoiseSegmentMSD> calculateNoiseSegments(List<IAnalysisSegment> analysisSegments, IExtractedIonSignals extractedIonSignals, IMarkedTraces<ITrace> ionsToPreserve) {
 
 		@SuppressWarnings("unused")
 		int rejected = 0;

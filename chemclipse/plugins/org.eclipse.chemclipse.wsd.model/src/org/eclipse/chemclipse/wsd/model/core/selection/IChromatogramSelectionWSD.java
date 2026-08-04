@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2025 Lablicate GmbH.
+ * Copyright (c) 2013, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -14,8 +14,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.wsd.model.core.selection;
 
+import java.util.List;
+
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelengths;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.wsd.model.core.IScanWSD;
 
@@ -58,9 +60,9 @@ public interface IChromatogramSelectionWSD extends IChromatogramSelection {
 	 *
 	 * @return Wavelengths
 	 */
-	IMarkedWavelengths getSelectedWavelengths();
+	List<ITrace> getSelectedWavelengths();
 
-	void setSelectedWavelengths(IMarkedWavelengths selectedWavelengths);
+	void setSelectedWavelengths(List<ITrace> selectedWavelengths);
 
 	/**
 	 * Populate the list with wavelengths from the first scan of the given chromatogram.

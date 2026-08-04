@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -23,16 +23,19 @@ import org.eclipse.chemclipse.chromatogram.xxd.baseline.detector.settings.IBasel
 import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
 import org.eclipse.chemclipse.csd.model.core.selection.IChromatogramSelectionCSD;
 import org.eclipse.chemclipse.model.baseline.IBaselineModel;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
+import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignalExtractor;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignalExtractor;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelengths;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.wsd.model.core.selection.IChromatogramSelectionWSD;
 import org.eclipse.chemclipse.wsd.model.xwc.ExtractedSingleWavelengthSignalExtractor;
@@ -126,7 +129,8 @@ public abstract class AbstractBaselineSignalDetector extends AbstractBaselineDet
 		IExtractedSingleWavelengthSignalExtractor extractor = new ExtractedSingleWavelengthSignalExtractor(chromatogramWSD, false);
 		int startScan = chromatogramWSD.getScanNumber(chromatogramSelection.getStartRetentionTime());
 		int stopScan = chromatogramWSD.getScanNumber(chromatogramSelection.getStopRetentionTime());
-		IMarkedWavelengths markedWavelenghts = chromatogramSelection.getSelectedWavelengths();
+		IMarkedTraces<ITrace> markedWavelenghts = new MarkedTraces(MarkedTraceModus.INCLUDE);
+		markedWavelenghts.addAll(chromatogramSelection.getSelectedWavelengths());
 		List<IExtractedSingleWavelengthSignals> extractedSingleWavelengthSignals = extractor.getExtractedWavelengthSignals(startScan, stopScan, markedWavelenghts);
 		/*
 		 * 2. step - process signals - each wavelength separately

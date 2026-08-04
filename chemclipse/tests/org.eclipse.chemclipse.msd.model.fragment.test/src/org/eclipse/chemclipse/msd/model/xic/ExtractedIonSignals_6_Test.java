@@ -16,7 +16,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.support.IScanRange;
@@ -24,10 +26,9 @@ import org.eclipse.chemclipse.model.support.ScanRange;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIon;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -40,7 +41,7 @@ public class ExtractedIonSignals_6_Test {
 	private ITotalScanSignals totalIonSignals;
 	private ITotalScanSignal totalIonSignal;
 	private IScanMSD massSpectrum;
-	private IMarkedIons excludedIons;
+	private IMarkedTraces<ITrace> excludedIons;
 
 	@BeforeAll
 	public void setUp() {
@@ -130,7 +131,7 @@ public class ExtractedIonSignals_6_Test {
 	@Test
 	public void testGetScan_1() {
 
-		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
+		excludedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
 		massSpectrum = extractedIonSignals.getScan(26, excludedIons);
 		assertEquals(6, massSpectrum.getIons().size());
 		assertEquals(4290.0f, massSpectrum.getTotalSignal(), 0);
@@ -147,9 +148,9 @@ public class ExtractedIonSignals_6_Test {
 	@Test
 	public void testGetScan_3() {
 
-		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
-		excludedIons.add(new MarkedIon(25));
-		excludedIons.add(new MarkedIon(30));
+		excludedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
+		excludedIons.add(new TraceNominalMSD(25));
+		excludedIons.add(new TraceNominalMSD(30));
 		massSpectrum = extractedIonSignals.getScan(26, excludedIons);
 		assertEquals(4, massSpectrum.getIons().size());
 		assertEquals(2860.0f, massSpectrum.getTotalSignal(), 0);
@@ -158,12 +159,12 @@ public class ExtractedIonSignals_6_Test {
 	@Test
 	public void testGetScan_4() {
 
-		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
-		excludedIons.add(new MarkedIon(25));
-		excludedIons.add(new MarkedIon(26));
-		excludedIons.add(new MarkedIon(27));
-		excludedIons.add(new MarkedIon(28));
-		excludedIons.add(new MarkedIon(30));
+		excludedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
+		excludedIons.add(new TraceNominalMSD(25));
+		excludedIons.add(new TraceNominalMSD(26));
+		excludedIons.add(new TraceNominalMSD(27));
+		excludedIons.add(new TraceNominalMSD(28));
+		excludedIons.add(new TraceNominalMSD(30));
 		massSpectrum = extractedIonSignals.getScan(26, excludedIons);
 		assertEquals(1, massSpectrum.getIons().size());
 		assertEquals(754.0f, massSpectrum.getTotalSignal(), 0);
@@ -172,13 +173,13 @@ public class ExtractedIonSignals_6_Test {
 	@Test
 	public void testGetScan_5() {
 
-		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
-		excludedIons.add(new MarkedIon(25));
-		excludedIons.add(new MarkedIon(26));
-		excludedIons.add(new MarkedIon(27));
-		excludedIons.add(new MarkedIon(28));
-		excludedIons.add(new MarkedIon(29));
-		excludedIons.add(new MarkedIon(30));
+		excludedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
+		excludedIons.add(new TraceNominalMSD(25));
+		excludedIons.add(new TraceNominalMSD(26));
+		excludedIons.add(new TraceNominalMSD(27));
+		excludedIons.add(new TraceNominalMSD(28));
+		excludedIons.add(new TraceNominalMSD(29));
+		excludedIons.add(new TraceNominalMSD(30));
 		massSpectrum = extractedIonSignals.getScan(26, excludedIons);
 		assertEquals(0, massSpectrum.getIons().size());
 		assertEquals(0.0f, massSpectrum.getTotalSignal(), 0);

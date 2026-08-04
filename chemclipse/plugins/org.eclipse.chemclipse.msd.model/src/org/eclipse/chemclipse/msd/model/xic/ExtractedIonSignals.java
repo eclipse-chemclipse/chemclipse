@@ -17,7 +17,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.chemclipse.logging.core.Logger;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
@@ -28,11 +30,11 @@ import org.eclipse.chemclipse.model.support.ScanRange;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
 import org.eclipse.chemclipse.msd.model.exceptions.NoExtractedIonSignalStoredException;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.ScanMSD;
+import org.eclipse.chemclipse.msd.model.util.MarkedTracesSupportMSD;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 /**
  * This class stores {@link ExtractedIonSignal} objects from each scan of a
@@ -196,12 +198,12 @@ public class ExtractedIonSignals implements IExtractedIonSignals {
 	@Override
 	public IScanMSD getScan(int scan) {
 
-		IMarkedIons excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
+		IMarkedTraces<ITrace> excludedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
 		return getScan(scan, excludedIons);
 	}
 
 	@Override
-	public IScanMSD getScan(int scan, IMarkedIons excludedIons) {
+	public IScanMSD getScan(int scan, IMarkedTraces<ITrace> excludedIons) {
 
 		IExtractedIonSignal extractedIonSignal;
 		/*
@@ -226,7 +228,7 @@ public class ExtractedIonSignals implements IExtractedIonSignals {
 		/*
 		 * Add the ions.
 		 */
-		Set<Integer> excludedIonsNominal = excludedIons.getIonsNominal();
+		Set<Integer> excludedIonsNominal = MarkedTracesSupportMSD.getTracesAsInteger(excludedIons);
 		for(int ion = startIon; ion <= stopIon; ion++) {
 			/*
 			 * Do nothing if the ion is listed in the excluded mass

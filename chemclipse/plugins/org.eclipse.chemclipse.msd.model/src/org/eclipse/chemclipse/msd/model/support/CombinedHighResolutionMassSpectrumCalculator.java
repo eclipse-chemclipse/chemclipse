@@ -19,12 +19,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.support.CalculationType;
 import org.eclipse.chemclipse.msd.model.core.ICombinedMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IIon;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.chemclipse.msd.model.implementation.CombinedMassSpectrum;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
+import org.eclipse.chemclipse.msd.model.util.MarkedTracesSupportMSD;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public class CombinedHighResolutionMassSpectrumCalculator extends CombinedMassSpectrumCalculator {
 
@@ -57,13 +59,13 @@ public class CombinedHighResolutionMassSpectrumCalculator extends CombinedMassSp
 	}
 
 	@Override
-	public void addIons(List<IIon> ions, IMarkedIons excludedIons) {
+	public void addIons(List<IIon> ions, IMarkedTraces<ITrace> excludedIons) {
 
 		if(ions == null || excludedIons == null) {
 			return;
 		}
 
-		Set<Integer> excludedIonsNominal = excludedIons.getIonsNominal();
+		Set<Integer> excludedIonsNominal = MarkedTracesSupportMSD.getTracesAsInteger(excludedIons);
 		for(IIon ion : ions) {
 			int mz = (int)ion.getIon();
 			if(!excludedIonsNominal.contains(mz)) {
@@ -79,12 +81,12 @@ public class CombinedHighResolutionMassSpectrumCalculator extends CombinedMassSp
 	}
 
 	@Override
-	public void removeIons(IMarkedIons excludedIons) {
+	public void removeIons(IMarkedTraces<ITrace> excludedIons) {
 
 		if(excludedIons == null) {
 			return;
 		}
-		Set<Integer> excludedIonsNominal = excludedIons.getIonsNominal();
+		Set<Integer> excludedIonsNominal = MarkedTracesSupportMSD.getTracesAsInteger(excludedIons);
 		List<Double> mzs = new ArrayList<>(combinedMassSpectrum.keySet());
 		for(double mz : mzs) {
 			int nominal = (int)mz;

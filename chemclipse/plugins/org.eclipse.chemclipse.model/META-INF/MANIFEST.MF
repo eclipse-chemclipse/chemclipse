@@ -62,8 +62,7 @@ Export-Package: org.eclipse.chemclipse.model.baseline,
  org.eclipse.chemclipse.model.traces,
  org.eclipse.chemclipse.model.types,
  org.eclipse.chemclipse.model.updates,
- org.eclipse.chemclipse.model.validators,
- org.eclipse.chemclipse.model.wavelengths
+ org.eclipse.chemclipse.model.validators
 Service-Component: OSGI-INF/org.eclipse.chemclipse.model.service.ColumnMappingSerializationService.xml,
  OSGI-INF/org.eclipse.chemclipse.model.service.FileHeaderDataSerializationService.xml,
  OSGI-INF/org.eclipse.chemclipse.model.service.TimeRangesSerializationService.xml,

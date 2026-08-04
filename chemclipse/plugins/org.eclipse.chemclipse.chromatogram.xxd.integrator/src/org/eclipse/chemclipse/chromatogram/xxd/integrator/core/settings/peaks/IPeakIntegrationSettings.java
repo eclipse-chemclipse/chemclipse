@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2025 Lablicate GmbH.
+ * Copyright (c) 2011, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -13,9 +13,9 @@
 package org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings.peaks;
 
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings.IIntegrationSettings;
-import org.eclipse.chemclipse.model.core.IMarkedTrace;
 import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IPeak;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public interface IPeakIntegrationSettings extends IIntegrationSettings {
 
@@ -41,7 +41,7 @@ public interface IPeakIntegrationSettings extends IIntegrationSettings {
 	 * 
 	 * @return {@link IMarkedTraces}
 	 */
-	IMarkedTraces<IMarkedTrace> getMarkedTraces();
+	IMarkedTraces<ITrace> getMarkedTraces();
 
 	/**
 	 * Returns an IAreaSupport instance.<br/>

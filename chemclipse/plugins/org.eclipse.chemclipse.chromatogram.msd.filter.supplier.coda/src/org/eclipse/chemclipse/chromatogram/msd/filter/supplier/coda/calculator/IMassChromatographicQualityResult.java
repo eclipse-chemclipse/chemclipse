@@ -12,15 +12,16 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.coda.calculator;
 
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public interface IMassChromatographicQualityResult {
 
 	/**
-	 * Returns an {@link IMarkedIons} object.<br/>
+	 * Returns an {@link IMarkedTraces<ITrace>} object.<br/>
 	 * The object stores, which ion values should not be used.
 	 */
-	IMarkedIons getExcludedIons();
+	IMarkedTraces<ITrace> getExcludedIons();
 
 	/**
 	 * Returns the data reduction value.

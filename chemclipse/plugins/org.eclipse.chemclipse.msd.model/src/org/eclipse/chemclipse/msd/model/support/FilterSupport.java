@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2025 Lablicate GmbH.
+ * Copyright (c) 2013, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -14,7 +14,9 @@ package org.eclipse.chemclipse.msd.model.support;
 
 import java.util.List;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.support.CalculationType;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
@@ -22,8 +24,7 @@ import org.eclipse.chemclipse.msd.model.core.ICombinedMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public class FilterSupport {
 
@@ -37,7 +38,7 @@ public class FilterSupport {
 	 * @param excludedIons
 	 * @return {@link IScanMSD}
 	 */
-	public static IScanMSD getCombinedMassSpectrum(IChromatogramSelectionMSD chromatogramSelection, IMarkedIons excludedIons, boolean useNormalize, CalculationType calculationType, boolean usePeaksInsteadOfScans) {
+	public static IScanMSD getCombinedMassSpectrum(IChromatogramSelectionMSD chromatogramSelection, IMarkedTraces<ITrace> excludedIons, boolean useNormalize, CalculationType calculationType, boolean usePeaksInsteadOfScans) {
 
 		if(chromatogramSelection == null || chromatogramSelection.getChromatogram() == null) {
 			return null;
@@ -92,7 +93,7 @@ public class FilterSupport {
 	 * @param calculationType
 	 * @return
 	 */
-	public static IScanMSD getCombinedMassSpectrum(List<IScanMSD> massSpectra, IMarkedIons excludedIons, boolean useNormalize, CalculationType calculationType) {
+	public static IScanMSD getCombinedMassSpectrum(List<IScanMSD> massSpectra, IMarkedTraces<ITrace> excludedIons, boolean useNormalize, CalculationType calculationType) {
 
 		if(massSpectra.isEmpty()) {
 			return null;
@@ -119,7 +120,7 @@ public class FilterSupport {
 	 * @param excludedIons
 	 * @return
 	 */
-	public static IScanMSD getCombinedMassSpectrum(IScanMSD massSpectrum1, IScanMSD massSpectrum2, IMarkedIons excludedIons, boolean useNormalize, CalculationType calculationType) {
+	public static IScanMSD getCombinedMassSpectrum(IScanMSD massSpectrum1, IScanMSD massSpectrum2, IMarkedTraces<ITrace> excludedIons, boolean useNormalize, CalculationType calculationType) {
 
 		/*
 		 * Both mass spectrum 1 and 2 shall be not null.
@@ -147,7 +148,7 @@ public class FilterSupport {
 		return getMassSpectrum(massSpectrumCalculator, useNormalize, calculationType);
 	}
 
-	private static void addIonsToCalculator(IScanMSD massSpectrum, IMarkedIons excludedIons, CombinedNominalMassSpectrumCalculator massSpectrumCalculator, boolean useNormalize, CalculationType calculationType) {
+	private static void addIonsToCalculator(IScanMSD massSpectrum, IMarkedTraces<ITrace> excludedIons, CombinedNominalMassSpectrumCalculator massSpectrumCalculator, boolean useNormalize, CalculationType calculationType) {
 
 		IScanMSD massSpectrumCalculated = getCalculatedMassSpectrum(massSpectrum, excludedIons, useNormalize, calculationType);
 		massSpectrumCalculator.addIons(massSpectrumCalculated.getIons(), excludedIons);
@@ -161,7 +162,7 @@ public class FilterSupport {
 	 * @param excludedIons
 	 * @return {@link IScanMSD}
 	 */
-	public static IScanMSD getCalculatedMassSpectrum(IScanMSD massSpectrum, IMarkedIons excludedIons, boolean useNormalize, CalculationType calculationType) {
+	public static IScanMSD getCalculatedMassSpectrum(IScanMSD massSpectrum, IMarkedTraces<ITrace> excludedIons, boolean useNormalize, CalculationType calculationType) {
 
 		if(massSpectrum == null) {
 			return null;
@@ -177,15 +178,15 @@ public class FilterSupport {
 	 * Validates the excluded ions.
 	 * 
 	 * @param excludedIons
-	 * @return {@link IMarkedIons}
+	 * @return {@link IMarkedTraces<ITrace>}
 	 */
-	private static IMarkedIons validateExcludedIons(IMarkedIons excludedIons) {
+	private static IMarkedTraces<ITrace> validateExcludedIons(IMarkedTraces<ITrace> excludedIons) {
 
 		/*
 		 * Test excludedIons.<br/> If null create a new instance.
 		 */
 		if(excludedIons == null) {
-			excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
+			excludedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
 		}
 		return excludedIons;
 	}

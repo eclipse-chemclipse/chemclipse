@@ -22,29 +22,28 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.chemclipse.csd.model.core.selection.IChromatogramSelectionCSD;
 import org.eclipse.chemclipse.model.baseline.IBaselineModel;
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IMarkedTrace;
 import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IScan;
+import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignalExtractor;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.signals.TotalScanSignalExtractor;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelengths;
-import org.eclipse.chemclipse.model.wavelengths.MarkedWavelengths;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIon;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
+import org.eclipse.chemclipse.msd.model.util.MarkedTracesSupportMSD;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
 import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.support.traces.TraceHighResMSD;
+import org.eclipse.chemclipse.support.traces.TraceRasteredWSD;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
 import org.eclipse.chemclipse.swt.ui.support.IColorScheme;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
@@ -148,7 +147,7 @@ public class ChromatogramChartSupport {
 		return getLineSeriesData(chromatogramSelection, seriesId, dataType, Derivative.NONE, color, true, timeIntervalSelection);
 	}
 
-	public ILineSeriesData getLineSeriesDataBaseline(IChromatogram chromatogram, String seriesId, DisplayType dataType, Color color, IMarkedTraces<? extends IMarkedTrace> signals) {
+	public ILineSeriesData getLineSeriesDataBaseline(IChromatogram chromatogram, String seriesId, DisplayType dataType, Color color, IMarkedTraces<ITrace> signals) {
 
 		return getLineSeriesData(chromatogram, seriesId, dataType, Derivative.NONE, color, signals);
 	}
@@ -158,12 +157,12 @@ public class ChromatogramChartSupport {
 		return getLineSeriesData(chromatogram, seriesId, displayType, color, new MarkedTraces());
 	}
 
-	public ILineSeriesData getLineSeriesData(IChromatogram chromatogram, String seriesId, DisplayType displayType, Color color, IMarkedTraces<? extends IMarkedTrace> signals) {
+	public ILineSeriesData getLineSeriesData(IChromatogram chromatogram, String seriesId, DisplayType displayType, Color color, IMarkedTraces<ITrace> signals) {
 
 		return getLineSeriesData(chromatogram, seriesId, displayType, color, signals, false);
 	}
 
-	public ILineSeriesData getLineSeriesData(IChromatogram chromatogram, String seriesId, DisplayType displayType, Color color, IMarkedTraces<? extends IMarkedTrace> signals, boolean useRetentionIndex) {
+	public ILineSeriesData getLineSeriesData(IChromatogram chromatogram, String seriesId, DisplayType displayType, Color color, IMarkedTraces<ITrace> signals, boolean useRetentionIndex) {
 
 		return getLineSeriesData(chromatogram, seriesId, displayType, Derivative.NONE, color, signals, false, useRetentionIndex);
 	}
@@ -178,7 +177,7 @@ public class ChromatogramChartSupport {
 		return getLineSeriesData(chromatogramSelection, seriesId, dataType, derivative, color, false, timeIntervalSelection);
 	}
 
-	public ILineSeriesData getLineSeriesData(IChromatogramSelection chromatogramSelection, String seriesId, DisplayType dataType, Derivative derivative, Color color, IMarkedTraces<? extends IMarkedTrace> signals, boolean baseline) {
+	public ILineSeriesData getLineSeriesData(IChromatogramSelection chromatogramSelection, String seriesId, DisplayType dataType, Derivative derivative, Color color, IMarkedTraces<ITrace> signals, boolean baseline) {
 
 		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		int startScan = chromatogram.getScanNumber(chromatogramSelection.getStartRetentionTime());
@@ -186,12 +185,12 @@ public class ChromatogramChartSupport {
 		return getLineSeriesData(chromatogram, startScan, stopScan, seriesId, dataType, derivative, color, signals, baseline, false);
 	}
 
-	public ILineSeriesData getLineSeriesData(IChromatogram chromatogram, String seriesId, DisplayType displayType, Derivative derivative, Color color, IMarkedTraces<? extends IMarkedTrace> signals) {
+	public ILineSeriesData getLineSeriesData(IChromatogram chromatogram, String seriesId, DisplayType displayType, Derivative derivative, Color color, IMarkedTraces<ITrace> signals) {
 
 		return getLineSeriesData(chromatogram, seriesId, displayType, derivative, color, signals, false, false);
 	}
 
-	public ILineSeriesData getLineSeriesData(IChromatogram chromatogram, String seriesId, DisplayType displayType, Derivative derivative, Color color, IMarkedTraces<? extends IMarkedTrace> signals, boolean baseline, boolean useRetentionIndex) {
+	public ILineSeriesData getLineSeriesData(IChromatogram chromatogram, String seriesId, DisplayType displayType, Derivative derivative, Color color, IMarkedTraces<ITrace> signals, boolean baseline, boolean useRetentionIndex) {
 
 		int startScan = 1;
 		int stopScan = chromatogram.getNumberOfScans();
@@ -241,13 +240,13 @@ public class ChromatogramChartSupport {
 		return lineSeriesData;
 	}
 
-	private ILineSeriesData getLineSeriesData(IChromatogram chromatogram, int startScan, int stopScan, String seriesId, DisplayType displayType, Derivative derivative, Color color, IMarkedTraces<? extends IMarkedTrace> signals, boolean baseline, boolean useRetentionIndex) {
+	private ILineSeriesData getLineSeriesData(IChromatogram chromatogram, int startScan, int stopScan, String seriesId, DisplayType displayType, Derivative derivative, Color color, IMarkedTraces<ITrace> signals, boolean baseline, boolean useRetentionIndex) {
 
 		IBaselineModel baselineModel = null;
 		if(baseline) {
-			if(chromatogram instanceof IChromatogramWSD chromatogramWSD && signals instanceof IMarkedWavelengths markedWavelengths) {
-				if(!markedWavelengths.isEmpty()) {
-					double wavelength = markedWavelengths.iterator().next().getTrace();
+			if(chromatogram instanceof IChromatogramWSD chromatogramWSD && signals != null) {
+				if(!signals.isEmpty()) {
+					double wavelength = signals.iterator().next().getValue();
 					baselineModel = chromatogramWSD.getBaselineModel(wavelength);
 				}
 			} else {
@@ -523,22 +522,23 @@ public class ChromatogramChartSupport {
 		 * Select which series shall be displayed.
 		 */
 		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
-		IMarkedTraces<?> markedSignals = null;
+		IMarkedTraces<ITrace> markedSignals = new MarkedTraces(MarkedTraceModus.INCLUDE);
 
 		if(chromatogramSelection instanceof IChromatogramSelectionMSD chromatogramSelectionMSD) {
 			if(dataType.equals(DisplayType.SIC) || dataType.equals(DisplayType.XIC)) {
-				markedSignals = chromatogramSelectionMSD.getSelectedIons();
+				markedSignals.addAll(chromatogramSelectionMSD.getSelectedIons());
 			} else if(dataType.equals(DisplayType.TSC)) {
-				markedSignals = chromatogramSelectionMSD.getExcludedIons();
+				markedSignals.addAll(chromatogramSelectionMSD.getExcludedIons());
 			}
 		} else if(chromatogramSelection instanceof IChromatogramSelectionWSD chromatogramSelectionWSD) {
 			if(dataType.equals(DisplayType.SWC) || dataType.equals(DisplayType.XWC)) {
-				IMarkedWavelengths markedWavelengths = chromatogramSelectionWSD.getSelectedWavelengths();
-				return getLineSeriesData(chromatogram, seriesId, dataType, derivative, color, markedWavelengths);
+				markedSignals.addAll(chromatogramSelectionWSD.getSelectedWavelengths());
+				return getLineSeriesData(chromatogram, seriesId, dataType, derivative, color, markedSignals);
 			} else if(dataType.equals(DisplayType.MPC)) {
-				IMarkedWavelengths markedWavelengths = new MarkedWavelengths();
-				markedWavelengths.add(chromatogramSelectionWSD.getChromatogram().getWavelengths());
-				return getLineSeriesData(chromatogram, seriesId, dataType, derivative, color, markedWavelengths);
+				for(float wavelength : chromatogramSelectionWSD.getChromatogram().getWavelengths()) {
+					markedSignals.add(new TraceRasteredWSD(wavelength));
+				}
+				return getLineSeriesData(chromatogram, seriesId, dataType, derivative, color, markedSignals);
 			}
 		} else if(dataType.equals(DisplayType.TSC)) {
 		} else if(dataType.equals(DisplayType.BPC)) {
@@ -558,7 +558,7 @@ public class ChromatogramChartSupport {
 		return getLineSeriesData(chromatogram, startScan, stopScan, seriesId, dataType, derivative, color, markedSignals, baseline, false);
 	}
 
-	private double getIntensity(IScan scan, DisplayType dataType, IMarkedTraces<? extends IMarkedTrace> signals) {
+	private double getIntensity(IScan scan, DisplayType dataType, IMarkedTraces<ITrace> signals) {
 
 		double intensity = Double.NaN;
 
@@ -572,39 +572,39 @@ public class ChromatogramChartSupport {
 				}
 			}
 		} else if(dataType.equals(DisplayType.XIC)) {
-			if(scan instanceof IScanMSD scanMSD && signals instanceof IMarkedIons markedIons) {
+			if(scan instanceof IScanMSD scanMSD && signals != null) {
 				IExtractedIonSignal extractedIonSignal = scanMSD.getExtractedIonSignal();
 				intensity = 0.0d;
-				for(IMarkedIon markedIon : markedIons) {
-					intensity += extractedIonSignal.getAbundance(markedIon.castTrace());
+				for(int ion : MarkedTracesSupportMSD.getTracesAsInteger(signals)) {
+					intensity += extractedIonSignal.getAbundance(ion);
 				}
 			}
 		} else if(dataType.equals(DisplayType.SIC)) {
-			if(scan instanceof IScanMSD scanMSD && signals instanceof IMarkedIons markedIons) {
+			if(scan instanceof IScanMSD scanMSD && signals != null) {
 				IExtractedIonSignal extractedIonSignal = scanMSD.getExtractedIonSignal();
 				intensity = 0.0d;
-				Iterator<IMarkedIon> it = markedIons.iterator();
+				Iterator<Integer> it = MarkedTracesSupportMSD.getTracesAsInteger(signals).iterator();
 				if(it.hasNext()) {
-					intensity = extractedIonSignal.getAbundance(it.next().castTrace());
+					intensity = extractedIonSignal.getAbundance(it.next());
 				}
 			}
 		} else if(dataType.equals(DisplayType.TSC)) {
-			if(scan instanceof IScanMSD scanMSD && signals instanceof IMarkedIons markedIons) {
+			if(scan instanceof IScanMSD scanMSD && signals != null) {
 				IExtractedIonSignal extractedIonSignal = scanMSD.getExtractedIonSignal();
 				intensity = scanMSD.getTotalSignal();
-				for(IMarkedIon markedIon : markedIons) {
-					intensity -= extractedIonSignal.getAbundance(markedIon.castTrace());
+				for(int ion : MarkedTracesSupportMSD.getTracesAsInteger(signals)) {
+					intensity -= extractedIonSignal.getAbundance(ion);
 				}
 			}
 		} else if(dataType.equals(DisplayType.SWC) | dataType.equals(DisplayType.XWC)) {
-			if(scan instanceof IScanWSD scanWSD && signals instanceof IMarkedWavelengths markedWavelengths) {
+			if(scan instanceof IScanWSD scanWSD && signals != null) {
 				/*
 				 * Get the extracted wavelength map.
 				 */
 				IExtractedWavelengthSignal extractedWavelengthSignal = scanWSD.getExtractedWavelengthSignal();
 				Set<Integer> wavelengths = new HashSet<>();
-				for(double wavelength : markedWavelengths.getWavelengths()) {
-					wavelengths.add((int)Math.round(wavelength));
+				for(ITrace signal : signals) {
+					wavelengths.add((int)Math.round(signal.getValue()));
 				}
 				/*
 				 * This fails when running in SWC modus - needs adjustment.
@@ -645,8 +645,8 @@ public class ChromatogramChartSupport {
 			/*
 			 * Wavenumber
 			 */
-			if(scan instanceof IScanVSD scanVSD) {
-				Set<Integer> traces = signals.getTraces();
+			if(scan instanceof IScanVSD scanVSD && signals != null) {
+				Set<Integer> traces = signals.stream().map(t -> (int)Math.round(t.getValue())).collect(Collectors.toSet());
 				intensity = 0;
 				for(ISignalVSD scanSignal : scanVSD.getProcessedSignals()) {
 					int wavenumber = (int)Math.round(scanSignal.getWavenumber());
@@ -659,8 +659,8 @@ public class ChromatogramChartSupport {
 			/*
 			 * Wavenumber
 			 */
-			if(scan instanceof IScanVSD scanVSD) {
-				Set<Integer> traces = signals.getTraces();
+			if(scan instanceof IScanVSD scanVSD && signals != null) {
+				Set<Integer> traces = signals.stream().map(t -> (int)Math.round(t.getValue())).collect(Collectors.toSet());
 				for(ISignalVSD scanSignal : scanVSD.getProcessedSignals()) {
 					int wavenumber = (int)Math.round(scanSignal.getWavenumber());
 					if(traces.contains(wavenumber)) {

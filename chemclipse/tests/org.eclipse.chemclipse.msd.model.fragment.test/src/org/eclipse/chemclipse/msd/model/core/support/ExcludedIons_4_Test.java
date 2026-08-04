@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -16,56 +16,61 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.msd.model.core.AbstractIon;
+import org.eclipse.chemclipse.msd.model.util.MarkedTracesSupportMSD;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 import org.junit.jupiter.api.Test;
 
 public class ExcludedIons_4_Test {
 
-	private IMarkedIons excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
+	private IMarkedTraces<ITrace> excludedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
 
 	@Test
 	public void testContains_1() {
 
-		assertFalse(excludedIons.getIonsNominal().contains(AbstractIon.getIon(5.0f)));
+		assertFalse(MarkedTracesSupportMSD.getTracesAsInteger(excludedIons).contains(AbstractIon.getIon(5.0f)));
 	}
 
 	@Test
 	public void testContains_2() {
 
-		excludedIons.add(new MarkedIon(5.2f));
-		assertTrue(excludedIons.getIonsNominal().contains(AbstractIon.getIon(5.0f)));
+		excludedIons.add(new TraceNominalMSD(5.2f));
+		assertTrue(MarkedTracesSupportMSD.getTracesAsInteger(excludedIons).contains(AbstractIon.getIon(5.0f)));
 	}
 
 	@Test
 	public void testContains_3() {
 
-		excludedIons.add(new MarkedIon(5.3f));
-		excludedIons.remove(new MarkedIon(5.2f));
-		assertTrue(excludedIons.getIonsNominal().contains(AbstractIon.getIon(5.0f)));
+		excludedIons.add(new TraceNominalMSD(5.3f));
+		excludedIons.remove(new TraceNominalMSD(5.2f));
+		assertTrue(MarkedTracesSupportMSD.getTracesAsInteger(excludedIons).contains(AbstractIon.getIon(5.0f)));
 	}
 
 	@Test
 	public void testContains_4() {
 
-		excludedIons.add(new MarkedIon(10.4f));
-		excludedIons.add(new MarkedIon(5.3f));
-		excludedIons.add(new MarkedIon(20.2f));
-		assertTrue(excludedIons.getIonsNominal().contains(AbstractIon.getIon(20.3f)));
+		excludedIons.add(new TraceNominalMSD(10.4f));
+		excludedIons.add(new TraceNominalMSD(5.3f));
+		excludedIons.add(new TraceNominalMSD(20.2f));
+		assertTrue(MarkedTracesSupportMSD.getTracesAsInteger(excludedIons).contains(AbstractIon.getIon(20.3f)));
 	}
 
 	@Test
 	public void testSize_9() {
 
-		excludedIons.add(new MarkedIon(58.4f));
-		excludedIons.add(new MarkedIon(48.3f));
-		excludedIons.add(new MarkedIon(372.2f));
-		assertEquals(3, excludedIons.getIonsNominal().size());
+		excludedIons.add(new TraceNominalMSD(58.4f));
+		excludedIons.add(new TraceNominalMSD(48.3f));
+		excludedIons.add(new TraceNominalMSD(372.2f));
+		assertEquals(3, MarkedTracesSupportMSD.getTracesAsInteger(excludedIons).size());
 	}
 
 	@Test
 	public void testSize_10() {
 
-		assertEquals(0, excludedIons.getIonsNominal().size());
+		assertEquals(0, MarkedTracesSupportMSD.getTracesAsInteger(excludedIons).size());
 	}
 }

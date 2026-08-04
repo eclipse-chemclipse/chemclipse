@@ -14,12 +14,13 @@ package org.eclipse.chemclipse.msd.model.implementation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIon;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +30,7 @@ import org.junit.jupiter.api.Test;
 public class MassSpectrum_20_Test {
 
 	private IScanMSD massSpectrum;
-	private IMarkedIons excludedIons;
+	private IMarkedTraces<ITrace> excludedIons;
 
 	@BeforeEach
 	public void setUp() {
@@ -45,7 +46,7 @@ public class MassSpectrum_20_Test {
 		massSpectrum.addIon(ion);
 		ion = new Ion(28.2f, 33000.5f);
 		massSpectrum.addIon(ion);
-		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
+		excludedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
 	}
 
 	@Test
@@ -57,15 +58,15 @@ public class MassSpectrum_20_Test {
 	@Test
 	public void testGetTotalIonSignal_2() {
 
-		excludedIons.add(new MarkedIon(104));
+		excludedIons.add(new TraceNominalMSD(104));
 		assertEquals(1122021.5f, massSpectrum.getTotalSignal(excludedIons), 0);
 	}
 
 	@Test
 	public void testGetTotalIonSignal_3() {
 
-		excludedIons.add(new MarkedIon(104));
-		excludedIons.add(new MarkedIon(86));
+		excludedIons.add(new TraceNominalMSD(104));
+		excludedIons.add(new TraceNominalMSD(86));
 		assertEquals(1122021.5f, massSpectrum.getTotalSignal(excludedIons), 0);
 	}
 
@@ -84,11 +85,11 @@ public class MassSpectrum_20_Test {
 	@Test
 	public void testGetTotalIonSignal_6() {
 
-		excludedIons.add(new MarkedIon(45));
-		excludedIons.add(new MarkedIon(104));
-		excludedIons.add(new MarkedIon(32));
-		excludedIons.add(new MarkedIon(105));
-		excludedIons.add(new MarkedIon(28));
+		excludedIons.add(new TraceNominalMSD(45));
+		excludedIons.add(new TraceNominalMSD(104));
+		excludedIons.add(new TraceNominalMSD(32));
+		excludedIons.add(new TraceNominalMSD(105));
+		excludedIons.add(new TraceNominalMSD(28));
 		/*
 		 * Why do we have a total ion signal here? Because the float ion value
 		 * will be rounded Math.round() and so only 104.1 and 28.2 will be

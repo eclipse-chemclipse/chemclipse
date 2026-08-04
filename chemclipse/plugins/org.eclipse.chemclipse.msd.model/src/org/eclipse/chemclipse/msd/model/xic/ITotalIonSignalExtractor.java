@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2025 Lablicate GmbH.
+ * Copyright (c) 2012, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -12,10 +12,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.xic;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignalExtractor;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public interface ITotalIonSignalExtractor extends ITotalScanSignalExtractor {
 
@@ -43,7 +44,7 @@ public interface ITotalIonSignalExtractor extends ITotalScanSignalExtractor {
 	 * @param excludedIons
 	 * @return {@link ITotalScanSignals}
 	 */
-	ITotalScanSignals getTotalIonSignals(IMarkedIons excludedIons);
+	ITotalScanSignals getTotalIonSignals(IMarkedTraces<ITrace> excludedIons);
 
 	/**
 	 * Returns the total ion signals of the parent chromatogram between the
@@ -60,7 +61,7 @@ public interface ITotalIonSignalExtractor extends ITotalScanSignalExtractor {
 	 * @param excludedIons
 	 * @return {@link ITotalScanSignals}
 	 */
-	ITotalScanSignals getTotalIonSignals(int startScan, int stopScan, IMarkedIons excludedIons);
+	ITotalScanSignals getTotalIonSignals(int startScan, int stopScan, IMarkedTraces<ITrace> excludedIons);
 
 	/**
 	 * Takes an {@link IChromatogramSelectionMSD} object as an argument and returns
@@ -77,5 +78,5 @@ public interface ITotalIonSignalExtractor extends ITotalScanSignalExtractor {
 	 * @param excludedIons
 	 * @return {@link ITotalScanSignals}
 	 */
-	ITotalScanSignals getTotalIonSignals(IChromatogramSelectionMSD chromatogramSelection, IMarkedIons excludedIons);
+	ITotalScanSignals getTotalIonSignals(IChromatogramSelectionMSD chromatogramSelection, IMarkedTraces<ITrace> excludedIons);
 }

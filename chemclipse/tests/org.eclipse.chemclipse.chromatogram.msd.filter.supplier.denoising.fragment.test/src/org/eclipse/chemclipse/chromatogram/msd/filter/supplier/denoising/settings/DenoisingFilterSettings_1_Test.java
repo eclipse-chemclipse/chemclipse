@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2025 Lablicate GmbH.
+ * Copyright (c) 2010, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -17,8 +17,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
+import org.eclipse.chemclipse.msd.model.util.MarkedTracesSupportMSD;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 import org.eclipse.chemclipse.support.util.TraceSettingUtil;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +40,7 @@ public class DenoisingFilterSettings_1_Test {
 	public void testGetIonsToRemove_2() {
 
 		TraceSettingUtil settingIon = new TraceSettingUtil();
-		assertEquals(4, new MarkedIons(settingIon.extractTraces(settingIon.deserialize(settings.getIonsToRemove())), MarkedTraceModus.INCLUDE).getIonsNominal().size(), "IonsToRemove Size");
+		assertEquals(4, MarkedTracesSupportMSD.getTracesAsInteger(getMarkedTraces(settingIon.extractTraces(settingIon.deserialize(settings.getIonsToRemove())))).size(), "IonsToRemove Size");
 	}
 
 	@Test
@@ -49,7 +53,7 @@ public class DenoisingFilterSettings_1_Test {
 	public void testGetIonsToPreserve_2() {
 
 		TraceSettingUtil settingIon = new TraceSettingUtil();
-		assertEquals(2, new MarkedIons(settingIon.extractTraces(settingIon.deserialize(settings.getIonsToPreserve())), MarkedTraceModus.INCLUDE).getIonsNominal().size(), "IonsToPreserve Size");
+		assertEquals(2, MarkedTracesSupportMSD.getTracesAsInteger(getMarkedTraces(settingIon.extractTraces(settingIon.deserialize(settings.getIonsToPreserve())))).size(), "IonsToPreserve Size");
 	}
 
 	@Test
@@ -90,5 +94,15 @@ public class DenoisingFilterSettings_1_Test {
 
 		settings.setNumberOfUsedIonsForCoefficient(-1);
 		assertEquals(1, settings.getNumberOfUsedIonsForCoefficient(), "NumberOfUsedIonsForCoefficient");
+	}
+
+	private IMarkedTraces<ITrace> getMarkedTraces(int[] traces) {
+
+		IMarkedTraces<ITrace> markedTraces = new MarkedTraces(MarkedTraceModus.INCLUDE);
+		for(int trace : traces) {
+			markedTraces.add(new TraceNominalMSD(trace));
+		}
+
+		return markedTraces;
 	}
 }

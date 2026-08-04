@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -15,7 +15,9 @@ package org.eclipse.chemclipse.msd.model.core.support;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.support.BackgroundAbundanceRange;
 import org.eclipse.chemclipse.model.support.IBackgroundAbundanceRange;
 import org.eclipse.chemclipse.model.support.IScanRange;
@@ -25,6 +27,8 @@ import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -48,12 +52,12 @@ public class PeakBuilder_9_Test extends PeakBuilderTestCase {
 
 		super.setUp();
 		IScanRange scanRange = new ScanRange(2, 16);
-		IMarkedIons excludedExcludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
-		excludedExcludedIons.add(new MarkedIon(43));
-		excludedExcludedIons.add(new MarkedIon(18));
-		excludedExcludedIons.add(new MarkedIon(28));
+		IMarkedTraces<ITrace> excludedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
+		excludedIons.add(new TraceNominalMSD(43));
+		excludedIons.add(new TraceNominalMSD(18));
+		excludedIons.add(new TraceNominalMSD(28));
 		IBackgroundAbundanceRange backgroundAbundanceRange = new BackgroundAbundanceRange(0, 145.48741f);
-		peak = PeakBuilderMSD.createPeak(chromatogram, scanRange, backgroundAbundanceRange, excludedExcludedIons);
+		peak = PeakBuilderMSD.createPeak(chromatogram, scanRange, backgroundAbundanceRange, excludedIons);
 	}
 
 	@Test

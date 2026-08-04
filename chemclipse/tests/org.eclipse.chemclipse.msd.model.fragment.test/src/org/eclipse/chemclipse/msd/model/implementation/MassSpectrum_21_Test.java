@@ -14,12 +14,13 @@ package org.eclipse.chemclipse.msd.model.implementation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIon;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -32,7 +33,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 public class MassSpectrum_21_Test {
 
 	private ScanMSD massSpectrum;
-	private IMarkedIons excludedIons;
+	private IMarkedTraces<ITrace> excludedIons;
 
 	@BeforeAll
 	public void setUp() {
@@ -48,7 +49,7 @@ public class MassSpectrum_21_Test {
 		massSpectrum.addIon(ion);
 		ion = new Ion(28.2f, 33000.5f);
 		massSpectrum.addIon(ion);
-		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
+		excludedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
 	}
 
 	@Test
@@ -60,8 +61,8 @@ public class MassSpectrum_21_Test {
 	@Test
 	public void testGetTotalIonSignal_2() {
 
-		excludedIons.add(new MarkedIon(104));
-		excludedIons.add(new MarkedIon(28));
+		excludedIons.add(new TraceNominalMSD(104));
+		excludedIons.add(new TraceNominalMSD(28));
 		IScanMSD ms = massSpectrum.getMassSpectrum(excludedIons);
 		assertEquals(1089021.0f, ms.getTotalSignal(), 0);
 		assertEquals(3, ms.getNumberOfIons());

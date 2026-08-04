@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -13,15 +13,16 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.identifier.settings;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public interface IExcludedIonsSettings extends IIdentifierSettings {
 
 	/**
 	 * Returns the excludedIons instance.
 	 * 
-	 * @return {@link IMarkedIons}
+	 * @return {@link IMarkedTraces<ITrace>}
 	 */
-	IMarkedIons getExcludedIons();
+	IMarkedTraces<ITrace> getExcludedIons();
 }

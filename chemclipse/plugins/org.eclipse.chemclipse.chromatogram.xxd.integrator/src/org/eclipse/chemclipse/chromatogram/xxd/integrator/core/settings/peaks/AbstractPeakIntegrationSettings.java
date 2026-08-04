@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2025 Lablicate GmbH.
+ * Copyright (c) 2011, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -17,11 +17,12 @@ import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings.AbstractIntegrationSettings;
 import org.eclipse.chemclipse.csd.model.core.IPeakCSD;
-import org.eclipse.chemclipse.model.core.IMarkedTrace;
 import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IPeak;
+import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.wsd.model.core.IPeakWSD;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -29,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public abstract class AbstractPeakIntegrationSettings extends AbstractIntegrationSettings implements IPeakIntegrationSettings, IReportDecider {
 
 	@JsonIgnore
-	private IMarkedTraces<IMarkedTrace> markedTraces = new MarkedTraces();
+	private IMarkedTraces<ITrace> markedTraces = new MarkedTraces(MarkedTraceModus.INCLUDE);
 	@JsonIgnore
 	private IAreaSupport areaSupport;
 	@JsonIgnore
@@ -80,7 +81,7 @@ public abstract class AbstractPeakIntegrationSettings extends AbstractIntegratio
 	}
 
 	@Override
-	public IMarkedTraces<IMarkedTrace> getMarkedTraces() {
+	public IMarkedTraces<ITrace> getMarkedTraces() {
 
 		return markedTraces;
 	}
