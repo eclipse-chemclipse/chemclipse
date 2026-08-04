@@ -6,7 +6,8 @@ Bundle-SymbolicName: org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.bas
 Bundle-Version: 0.9.0.qualifier
 Bundle-Activator: org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.baselinesubtract.ui.Activator
 Bundle-Vendor: Chemclipse
-Require-Bundle: org.eclipse.ui,
+Require-Bundle: org.eclipse.swt,
+ org.eclipse.jface,
  org.eclipse.core.runtime,
  org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.baselinesubtract;bundle-version="0.8.0",
  org.eclipse.chemclipse.processing;bundle-version="0.8.0",

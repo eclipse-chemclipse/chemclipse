@@ -6,7 +6,7 @@ Bundle-SymbolicName: org.eclipse.chemclipse.chromatogram.xxd.report.supplier.pdf
 Bundle-Version: 0.9.0.qualifier
 Bundle-Activator: org.eclipse.chemclipse.chromatogram.xxd.report.supplier.pdf.ui.Activator
 Bundle-Vendor: ChemClipse
-Require-Bundle: org.eclipse.ui,
+Require-Bundle: org.eclipse.swt,
  org.eclipse.core.runtime,
  org.eclipse.chemclipse.rcp.ui.icons;bundle-version="0.9.0",
  org.eclipse.chemclipse.support.ui;bundle-version="0.9.0",
