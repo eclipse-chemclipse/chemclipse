@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2025 Lablicate GmbH.
+ * Copyright (c) 2021, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -14,8 +14,10 @@ package org.eclipse.chemclipse.msd.model.core.support;
 
 import java.util.List;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IPeakIntensityValues;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.core.support.PeakMerger;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.support.BackgroundAbundanceRange;
@@ -28,6 +30,7 @@ import org.eclipse.chemclipse.msd.model.implementation.PeakMSD;
 import org.eclipse.chemclipse.msd.model.implementation.PeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.implementation.PeakModelMSD;
 import org.eclipse.chemclipse.msd.model.support.CombinedNominalMassSpectrumCalculator;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public class PeakMergerMSD extends PeakMerger {
 
@@ -63,7 +66,7 @@ public class PeakMergerMSD extends PeakMerger {
 	private static IScanMSD mergeMassSpectra(List<? extends IPeakMSD> peaks, CalculationType calculationType) {
 
 		CombinedNominalMassSpectrumCalculator massSpectrumCalculator = new CombinedNominalMassSpectrumCalculator();
-		IMarkedIons excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
+		IMarkedTraces<ITrace> excludedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
 
 		for(IPeakMSD peak : peaks) {
 			/*

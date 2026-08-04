@@ -22,12 +22,13 @@ import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.coda.calculator.M
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.coda.exceptions.CodaCalculatorException;
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.coda.exceptions.FilterException;
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.coda.settings.FilterSettings;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public class ChromatogramFilterMSD extends AbstractChromatogramFilterMSD {
@@ -59,7 +60,7 @@ public class ChromatogramFilterMSD extends AbstractChromatogramFilterMSD {
 		/*
 		 * Try to get the ions, that should be excluded.
 		 */
-		IMarkedIons excludedIons;
+		IMarkedTraces<ITrace> excludedIons;
 		try {
 			IMassChromatographicQualityResult result = MassChromatographicQualityCalculator.calculate(chromatogramSelection, filterSettings.getCodaThreshold(), MOVING_AVERAGE_WINDOW);
 			excludedIons = result.getExcludedIons();

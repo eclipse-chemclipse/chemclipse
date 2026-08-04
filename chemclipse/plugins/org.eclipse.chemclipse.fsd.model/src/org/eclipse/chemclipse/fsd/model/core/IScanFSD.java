@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -16,8 +16,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IScan;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelengths;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public interface IScanFSD extends IScan {
 
@@ -47,5 +48,5 @@ public interface IScanFSD extends IScan {
 
 	boolean hasScanSignals();
 
-	float getTotalSignal(IMarkedWavelengths excludedWavelenths);
+	float getTotalSignal(IMarkedTraces<ITrace> excludedWavelenths);
 }

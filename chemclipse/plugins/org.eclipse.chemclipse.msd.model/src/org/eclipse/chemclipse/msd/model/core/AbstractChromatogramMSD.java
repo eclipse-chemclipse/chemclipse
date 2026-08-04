@@ -20,6 +20,7 @@ import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.NoiseCalcul
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.model.core.AbstractChromatogram;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IMeasurementResult;
 import org.eclipse.chemclipse.model.core.INoiseCalculator;
 import org.eclipse.chemclipse.model.core.IScan;
@@ -28,9 +29,9 @@ import org.eclipse.chemclipse.model.results.NoiseSegmentMeasurementResult;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.model.updates.IChromatogramUpdateListener;
 import org.eclipse.chemclipse.msd.model.core.selection.ChromatogramSelectionMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.chemclipse.msd.model.implementation.ImmutableZeroIon;
 import org.eclipse.chemclipse.msd.model.implementation.IonTransitionSettings;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
@@ -124,7 +125,7 @@ public abstract class AbstractChromatogramMSD extends AbstractChromatogram imple
 	}
 
 	@Override
-	public IScanMSD getScan(int scan, IMarkedIons excludedIons) {
+	public IScanMSD getScan(int scan, IMarkedTraces<ITrace> excludedIons) {
 
 		IScanMSD scanMSD = getScan(scan);
 		if(scanMSD == null) {

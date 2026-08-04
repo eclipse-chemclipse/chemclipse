@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -9,6 +9,7 @@
  * 
  * Contributors:
  * Jan Holy - initial API and implementation
+ * Philip Wenig - refactor traces
  *******************************************************************************/
 package org.eclipse.chemclipse.wsd.model.xwc;
 
@@ -19,8 +20,8 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelength;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelengths;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.wsd.model.core.selection.IChromatogramSelectionWSD;
 
 public interface IExtractedSingleWavelengthSignalExtractor {
@@ -64,7 +65,7 @@ public interface IExtractedSingleWavelengthSignalExtractor {
 	 *         first is the shortest wavelength and last is longest wavelength.
 	 *         if parameter join signal is to true signal for each wavelength is return together, otherwise intervals are saved separately
 	 */
-	List<IExtractedSingleWavelengthSignals> getExtractedWavelengthSignals(int startScan, int stopScan, IMarkedWavelengths markedWavelengths);
+	List<IExtractedSingleWavelengthSignals> getExtractedWavelengthSignals(int startScan, int stopScan, IMarkedTraces<ITrace> markedWavelengths);
 
 	/**
 	 * return list of signals for all marked wavelength
@@ -75,7 +76,7 @@ public interface IExtractedSingleWavelengthSignalExtractor {
 	 *         first is the shortest wavelength and last is longest wavelength.
 	 *         if parameter join signal is to true signal for each wavelength is return together, otherwise intervals are saved separately
 	 */
-	List<IExtractedSingleWavelengthSignals> getExtractedWavelengthSignals(IMarkedWavelengths markedWavelengths);
+	List<IExtractedSingleWavelengthSignals> getExtractedWavelengthSignals(IMarkedTraces<ITrace> markedWavelengths);
 
 	/**
 	 * signal start and finish in interval between startScan and stopScan
@@ -85,7 +86,7 @@ public interface IExtractedSingleWavelengthSignalExtractor {
 	 * @param markedWavelength
 	 * @return signal
 	 */
-	Optional<IExtractedSingleWavelengthSignals> getExtractWavelengthContinuousSignal(int startScan, int stopScan, IMarkedWavelength markedWavelength);
+	Optional<IExtractedSingleWavelengthSignals> getExtractWavelengthContinuousSignal(int startScan, int stopScan, IMarkedTraces<ITrace> markedWavelength);
 
 	/**
 	 * 
@@ -94,7 +95,7 @@ public interface IExtractedSingleWavelengthSignalExtractor {
 	 * @param markedWavelength
 	 * @return signal
 	 */
-	Optional<IExtractedSingleWavelengthSignals> getExtractWavelengthContinuousSignal(IMarkedWavelength markedWavelength);
+	Optional<IExtractedSingleWavelengthSignals> getExtractWavelengthContinuousSignal(IMarkedTraces<ITrace> markedWavelength);
 
 	/**
 	 * if set true, signal, which has some wavelength, will be storage together and missing signal will be interpolated

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2025 Lablicate GmbH.
+ * Copyright (c) 2015, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -16,7 +16,8 @@ package org.eclipse.chemclipse.msd.model.core;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
@@ -151,7 +152,7 @@ public abstract class AbstractRegularMassSpectrumProxy extends AbstractRegularMa
 	}
 
 	@Override
-	public AbstractRegularMassSpectrumProxy removeIons(IMarkedIons excludedIons) {
+	public AbstractRegularMassSpectrumProxy removeIons(IMarkedTraces<ITrace> excludedIons) {
 
 		checkProxyAndImportOnDemand();
 		super.removeIons(excludedIons);
@@ -159,7 +160,7 @@ public abstract class AbstractRegularMassSpectrumProxy extends AbstractRegularMa
 	}
 
 	@Override
-	public float getTotalSignal(IMarkedIons excludedIons) {
+	public float getTotalSignal(IMarkedTraces<ITrace> excludedIons) {
 
 		checkProxyAndImportOnDemand();
 		return super.getTotalSignal(excludedIons);
@@ -250,7 +251,7 @@ public abstract class AbstractRegularMassSpectrumProxy extends AbstractRegularMa
 	}
 
 	@Override
-	public IScanMSD getMassSpectrum(IMarkedIons excludedIons) {
+	public IScanMSD getMassSpectrum(IMarkedTraces<ITrace> excludedIons) {
 
 		checkProxyAndImportOnDemand();
 		return super.getMassSpectrum(excludedIons);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2025 Lablicate GmbH.
+ * Copyright (c) 2011, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -17,22 +17,23 @@ import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.coda.exceptions.CodaCalculatorException;
 import org.eclipse.chemclipse.logging.core.Logger;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIon;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
 import org.eclipse.chemclipse.msd.model.xic.ExtractedIonSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignals;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 
 public class MassChromatographicQualityResult implements IMassChromatographicQualityResult {
 
 	private static final Logger logger = Logger.getLogger(MassChromatographicQualityResult.class);
 	private float dataReductionValue;
-	private IMarkedIons excludedIons;
+	private IMarkedTraces<ITrace> excludedIons;
 
 	/**
 	 * Create a new mass chromatographic quality result object.
@@ -48,12 +49,12 @@ public class MassChromatographicQualityResult implements IMassChromatographicQua
 		/*
 		 * Create a new excluded ions object.
 		 */
-		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
+		excludedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
 		calculateMassChromatographicQuality(chromatogramSelection, codaThreshold, windowSize, excludedIons);
 	}
 
 	@Override
-	public IMarkedIons getExcludedIons() {
+	public IMarkedTraces<ITrace> getExcludedIons() {
 
 		return excludedIons;
 	}
@@ -64,14 +65,13 @@ public class MassChromatographicQualityResult implements IMassChromatographicQua
 		return dataReductionValue;
 	}
 
-	// ---------------------------------private methods
 	/**
 	 * Calculates all representative values.<br/>
 	 * MCQValue<br/>
 	 * DataReductionValue<br/>
 	 * ExcludedIons
 	 */
-	private void calculateMassChromatographicQuality(IChromatogramSelectionMSD chromatogramSelection, float codaThreshold, int windowSize, IMarkedIons excludedIons) {
+	private void calculateMassChromatographicQuality(IChromatogramSelectionMSD chromatogramSelection, float codaThreshold, int windowSize, IMarkedTraces<ITrace> excludedIons) {
 
 		assert (chromatogramSelection != null) : "The chromatogram selection must not be null.";
 		assert (chromatogramSelection.getChromatogram() != null) : "The chromatogram must not be null.";
@@ -90,7 +90,7 @@ public class MassChromatographicQualityResult implements IMassChromatographicQua
 				 * Add the ion value to the excluded ion list?
 				 */
 				if(mcq < codaThreshold) {
-					excludedIons.add(new MarkedIon(ion));
+					excludedIons.add(new TraceNominalMSD(ion));
 				}
 				/*
 				 * Use mcqs to determine the data reduction value.

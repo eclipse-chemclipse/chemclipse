@@ -16,13 +16,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.selection.ChromatogramSelection;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelengths;
-import org.eclipse.chemclipse.model.wavelengths.MarkedWavelengths;
 import org.eclipse.chemclipse.msd.model.core.AbstractIon;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
@@ -30,8 +30,9 @@ import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
+import org.eclipse.chemclipse.support.traces.TraceRasteredWSD;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
 import org.eclipse.chemclipse.swt.ui.support.IColorScheme;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
@@ -157,8 +158,8 @@ public class PeakTracesUI extends ScrollableChart {
 		traces.addAll(extractTraces(massSpectrum));
 
 		for(Integer trace : traces) {
-			IMarkedIons markedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
-			markedIons.add(trace);
+			IMarkedTraces<ITrace> markedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
+			markedIons.add(new TraceNominalMSD(trace));
 			ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(chromatogramSelection, Integer.toString(trace), DisplayType.SIC, Derivative.NONE, colors.getColor(), markedIons, false);
 			ILineSeriesSettings lineSeriesSettings = lineSeriesData.getSettings();
 			if(trace == selectedTrace) {
@@ -191,8 +192,8 @@ public class PeakTracesUI extends ScrollableChart {
 			traces.addAll(extractTraces(scanWSD));
 
 			for(Integer trace : traces) {
-				IMarkedWavelengths markedWavelengths = new MarkedWavelengths();
-				markedWavelengths.add(trace);
+				IMarkedTraces<ITrace> markedWavelengths = new MarkedTraces(MarkedTraceModus.INCLUDE);
+				markedWavelengths.add(new TraceRasteredWSD(trace));
 				ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(chromatogramSelection, Integer.toString(trace), DisplayType.SWC, Derivative.NONE, colors.getColor(), markedWavelengths, false);
 				ILineSeriesSettings lineSeriesSettings = lineSeriesData.getSettings();
 				if(trace == selectedTrace) {

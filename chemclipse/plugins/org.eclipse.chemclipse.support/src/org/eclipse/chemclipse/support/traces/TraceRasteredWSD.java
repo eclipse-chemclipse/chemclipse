@@ -21,6 +21,15 @@ import java.util.Objects;
  */
 public class TraceRasteredWSD extends AbstractTrace {
 
+	public TraceRasteredWSD() {
+
+	}
+
+	public TraceRasteredWSD(double wavelength) {
+
+		setWavelength(wavelength);
+	}
+
 	public int getWavelength() {
 
 		return getValueAsInt();

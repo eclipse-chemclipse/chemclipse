@@ -14,9 +14,10 @@ package org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.pr
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings.IBaselineSupport;
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings.IIntegrationSettings;
@@ -32,7 +33,6 @@ import org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.set
 import org.eclipse.chemclipse.csd.model.core.IChromatogramPeakCSD;
 import org.eclipse.chemclipse.csd.model.core.IPeakCSD;
 import org.eclipse.chemclipse.model.core.IIntegrationEntry;
-import org.eclipse.chemclipse.model.core.IMarkedTrace;
 import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IPeakModel;
@@ -46,7 +46,9 @@ import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
 import org.eclipse.chemclipse.msd.model.core.support.IIonPercentages;
 import org.eclipse.chemclipse.msd.model.core.support.IonPercentages;
+import org.eclipse.chemclipse.msd.model.util.MarkedTracesSupportMSD;
 import org.eclipse.chemclipse.support.l10n.TranslationSupport;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramPeakWSD;
 import org.eclipse.chemclipse.wsd.model.core.IPeakModelWSD;
 import org.eclipse.chemclipse.wsd.model.core.IPeakWSD;
@@ -227,11 +229,10 @@ public class PeakIntegrator extends AbstractIntegrator {
 	private List<IIntegrationEntry> calculateIntegratedArea(IPeak peak, PeakIntegrationSettings peakIntegrationSettings) {
 
 		IBaselineSupport baselineSupport = peakIntegrationSettings.getBaselineSupport();
-		IMarkedTraces<IMarkedTrace> markedTraces = peakIntegrationSettings.getMarkedTraces();
+		IMarkedTraces<ITrace> markedTraces = peakIntegrationSettings.getMarkedTraces();
 		boolean includeBackground = peakIntegrationSettings.isIncludeBackground();
 		boolean useAreaConstraint = peakIntegrationSettings.isUseAreaConstraint();
 		double scaleFactor = peakIntegrationSettings.getScaleFactor();
-
 		List<IIntegrationEntry> integrationEntries = new ArrayList<>();
 		if(peak instanceof IPeakMSD peakMSD) {
 			/*
@@ -240,10 +241,9 @@ public class PeakIntegrator extends AbstractIntegrator {
 			IPeakModelMSD peakModel = peakMSD.getPeakModel();
 			IPeakMassSpectrum massSpectrum = peakModel.getPeakMassSpectrum();
 			double integratedAreaTIC = calculateTICPeakArea(peak, baselineSupport, includeBackground, useAreaConstraint);
-
 			IIntegrationEntry integrationEntry;
-			if(!markedTraces.isEmpty() && !markedTraces.getTraces().contains(IMarkedTrace.TOTAL_SIGNAL_AS_INT)) {
-				Set<Integer> ions = markedTraces.getTraces();
+			Set<Integer> ions = MarkedTracesSupportMSD.getTracesAsInteger(markedTraces);
+			if(!ions.isEmpty() && !ions.contains(IMarkedTraces.TOTAL_SIGNAL_AS_INT)) {
 				IIonPercentages ionPercentages = new IonPercentages(massSpectrum);
 				/*
 				 * Calculate the percentage integrated area for each selected ion.
@@ -271,12 +271,11 @@ public class PeakIntegrator extends AbstractIntegrator {
 			 */
 			IPeakModelWSD peakModel = peakWSD.getPeakModel();
 			double integratedAreaTIC = calculateTICPeakArea(peak, baselineSupport, includeBackground, useAreaConstraint);
-
 			IScan scan = peakModel.getPeakMaximum();
 			IIntegrationEntry integrationEntry;
 			if(scan instanceof IScanWSD scanWSD) {
-				if(!markedTraces.isEmpty() && !markedTraces.getTraces().contains(IMarkedTrace.TOTAL_SIGNAL_AS_INT)) {
-					Set<Integer> wavelengths = markedTraces.getTraces();
+				Set<Integer> wavelengths = getTracesAsInteger(markedTraces);
+				if(!wavelengths.isEmpty() && !wavelengths.contains(IMarkedTraces.TOTAL_SIGNAL_AS_INT)) {
 					WavelengthPercentages wavelengthPercentages = new WavelengthPercentages(scanWSD);
 					/*
 					 * Calculate the percentage integrated area for each selected ion.
@@ -295,6 +294,11 @@ public class PeakIntegrator extends AbstractIntegrator {
 		}
 
 		return integrationEntries;
+	}
+
+	private Set<Integer> getTracesAsInteger(Collection<ITrace> traces) {
+
+		return traces.stream().map(t -> (int)Math.round(t.getValue())).collect(Collectors.toSet());
 	}
 
 	/**
@@ -436,8 +440,7 @@ public class PeakIntegrator extends AbstractIntegrator {
 		/*
 		 * Selected ions.
 		 */
-		IMarkedTraces<IMarkedTrace> markedTraces = peakIntegrationSettings.getMarkedTraces();
-		Set<Integer> markedTraceSet = getMarkedTraceSet(markedTraces);
+		IMarkedTraces<ITrace> markedTraces = peakIntegrationSettings.getMarkedTraces();
 		PeakIntegrationResult result = new PeakIntegrationResult();
 		result.setIntegratedArea(integratedArea);
 		result.setIntegratorType(INTEGRATOR_DESCRIPTION);
@@ -461,7 +464,7 @@ public class PeakIntegrator extends AbstractIntegrator {
 			result.setStopRetentionTime(peakMSD.getPeakModel().getStopRetentionTime());
 			result.setTailing(peakMSD.getPeakModel().getTailing());
 			result.setWidth(peakMSD.getPeakModel().getWidthByInflectionPoints());
-			result.addIntegratedTraces(markedTraceSet);
+			result.addIntegratedTraces(MarkedTracesSupportMSD.getTracesAsInteger(markedTraces));
 		} else if(peak instanceof IPeakCSD peakCSD) {
 			result.setStartRetentionTime(peakCSD.getPeakModel().getStartRetentionTime());
 			result.setStopRetentionTime(peakCSD.getPeakModel().getStopRetentionTime());
@@ -472,7 +475,7 @@ public class PeakIntegrator extends AbstractIntegrator {
 			result.setStopRetentionTime(peakWSD.getPeakModel().getStopRetentionTime());
 			result.setTailing(peakWSD.getPeakModel().getTailing());
 			result.setWidth(peakWSD.getPeakModel().getWidthByInflectionPoints());
-			result.addIntegratedTraces(markedTraceSet);
+			result.addIntegratedTraces(getTracesAsInteger(markedTraces));
 		}
 
 		return result;
@@ -494,23 +497,6 @@ public class PeakIntegrator extends AbstractIntegrator {
 		peakIntegrationSumResult.setSN(0.0f);
 		peakIntegrationSumResult.setTailing(0.0f);
 		peakIntegrationSumResult.setWidth(0);
-	}
-
-	/**
-	 * Returns a list of the integrated ions.
-	 * 
-	 * @param selectedIons
-	 * @return List<Integer>
-	 */
-	private Set<Integer> getMarkedTraceSet(IMarkedTraces<IMarkedTrace> markedTraces) {
-
-		Set<Integer> result;
-		if(markedTraces == null) {
-			result = new HashSet<>();
-		} else {
-			result = markedTraces.getTraces();
-		}
-		return result;
 	}
 
 	private double calculateIntegratedArea(List<? extends IIntegrationEntry> integrationEntries) {

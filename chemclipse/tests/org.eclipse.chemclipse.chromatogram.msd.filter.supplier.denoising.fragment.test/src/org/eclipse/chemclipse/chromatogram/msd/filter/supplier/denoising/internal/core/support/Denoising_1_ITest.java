@@ -16,12 +16,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.msd.model.core.ICombinedMassSpectrum;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIon;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
 import org.eclipse.chemclipse.msd.model.exceptions.FilterException;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -38,15 +39,15 @@ public class Denoising_1_ITest extends ChromatogramImporterTestCase {
 	public void setUp() throws FilterException {
 
 		super.setUp();
-		IMarkedIons ionsToRemove = new MarkedIons(MarkedTraceModus.INCLUDE);
-		ionsToRemove.add(new MarkedIon(18));
-		ionsToRemove.add(new MarkedIon(28));
-		ionsToRemove.add(new MarkedIon(32));
-		ionsToRemove.add(new MarkedIon(84));
-		ionsToRemove.add(new MarkedIon(207));
-		IMarkedIons ionsToPreserve = new MarkedIons(MarkedTraceModus.INCLUDE);
-		ionsToPreserve.add(new MarkedIon(103));
-		ionsToPreserve.add(new MarkedIon(103));
+		IMarkedTraces<ITrace> ionsToRemove = new MarkedTraces(MarkedTraceModus.INCLUDE);
+		ionsToRemove.add(new TraceNominalMSD(18));
+		ionsToRemove.add(new TraceNominalMSD(28));
+		ionsToRemove.add(new TraceNominalMSD(32));
+		ionsToRemove.add(new TraceNominalMSD(84));
+		ionsToRemove.add(new TraceNominalMSD(207));
+		IMarkedTraces<ITrace> ionsToPreserve = new MarkedTraces(MarkedTraceModus.INCLUDE);
+		ionsToPreserve.add(new TraceNominalMSD(103));
+		ionsToPreserve.add(new TraceNominalMSD(103));
 		noiseMassSpectra = Denoising.applyDenoisingFilter(chromatogramSelection, ionsToRemove, ionsToPreserve, true, 1, 13, new NullProgressMonitor());
 	}
 

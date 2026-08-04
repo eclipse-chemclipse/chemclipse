@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -16,7 +16,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.exceptions.PeakException;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
@@ -28,6 +30,8 @@ import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.implementation.ChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.RegularMassSpectrum;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -42,7 +46,7 @@ public class PeakBuilder_24_Test {
 	private ITotalScanSignals totalIonSignals;
 	private IScanRange scanRange;
 	private IChromatogramMSD chromatogram;
-	private IMarkedIons excludedIons;
+	private IMarkedTraces<ITrace> excludedIons;
 
 	@BeforeAll
 	public void setUp() {
@@ -60,9 +64,9 @@ public class PeakBuilder_24_Test {
 			chromatogram.addScan(massSpectrum);
 		}
 		chromatogram.recalculateRetentionTimes();
-		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
-		excludedIons.add(new MarkedIon(34));
-		excludedIons.add(new MarkedIon(36));
+		excludedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
+		excludedIons.add(new TraceNominalMSD(34));
+		excludedIons.add(new TraceNominalMSD(36));
 	}
 
 	@Test

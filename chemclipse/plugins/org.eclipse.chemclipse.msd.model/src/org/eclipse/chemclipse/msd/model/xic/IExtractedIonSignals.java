@@ -15,13 +15,14 @@ package org.eclipse.chemclipse.msd.model.xic;
 
 import java.util.List;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.model.support.IScanRange;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.chemclipse.msd.model.exceptions.NoExtractedIonSignalStoredException;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public interface IExtractedIonSignals {
 
@@ -89,7 +90,7 @@ public interface IExtractedIonSignals {
 	 * excluded ions.<br/>
 	 * If no mass spectrum is available, null will be returned.
 	 */
-	IScanMSD getScan(int scan, IMarkedIons excludedIons);
+	IScanMSD getScan(int scan, IMarkedTraces<ITrace> excludedIons);
 
 	/**
 	 * Returns the lowest start ion (ion).

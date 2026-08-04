@@ -16,9 +16,10 @@ package org.eclipse.chemclipse.msd.model.core;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IScan;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 /**
  * The interface IMassSpectrum extends Serializable to enable an automated
@@ -68,7 +69,7 @@ public interface IScanMSD extends IScan, IMassSpectrumCloneable, IMassSpectrumNo
 	 *
 	 * @return float - total ion current
 	 */
-	float getTotalSignal(IMarkedIons excludedIons);
+	float getTotalSignal(IMarkedTraces<ITrace> excludedIons);
 
 	/**
 	 * Returns an IExtractedIonSignal object.<br/>
@@ -183,13 +184,13 @@ public interface IScanMSD extends IScan, IMassSpectrumCloneable, IMassSpectrumNo
 	IScanMSD removeAllIons();
 
 	/**
-	 * Removes the ions stored in {@link IMarkedIons} from
+	 * Removes the ions stored in {@link IMarkedTraces<ITrace>} from
 	 * the actual mass spectrum. Think of stored mass over charge ratios (ion):
 	 * 42.7, 43.3, 43.4.<br/>
 	 * When removeIon(43) is called, they will be removed depending on
 	 * the rounding algorithm in AbstractIon.getIon(float ion).
 	 */
-	IScanMSD removeIons(IMarkedIons markedIons);
+	IScanMSD removeIons(IMarkedTraces<ITrace> markedIons);
 
 	/**
 	 * Removes all ions from the actual mass spectrum with the given
@@ -249,11 +250,11 @@ public interface IScanMSD extends IScan, IMassSpectrumCloneable, IMassSpectrumNo
 
 	/**
 	 * Returns a copy of the actual mass spectrum corrected by the given
-	 * {@link IMarkedIons}.<br/>
+	 * {@link IMarkedTraces<ITrace>}.<br/>
 	 * The copy does not consists of ions stored in the excluded mass
 	 * fragment list.
 	 */
-	IScanMSD getMassSpectrum(IMarkedIons excludedIons);
+	IScanMSD getMassSpectrum(IMarkedTraces<ITrace> excludedIons);
 
 	/**
 	 * Returns false, if no ions are stored in this mass spectrum.

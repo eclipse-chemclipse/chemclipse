@@ -9,6 +9,7 @@
  * 
  * Contributors:
  * Matthias Mailänder - initial API and implementation
+ * Philip Wenig - refactor traces
  *******************************************************************************/
 package org.eclipse.chemclipse.fsd.model.core.selection;
 
@@ -18,16 +19,19 @@ import org.eclipse.chemclipse.fsd.model.core.IChromatogramFSD;
 import org.eclipse.chemclipse.fsd.model.core.IScanFSD;
 import org.eclipse.chemclipse.fsd.model.core.IScanSignalFSD;
 import org.eclipse.chemclipse.model.core.IChromatogram;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IScan;
+import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.model.notifier.UpdateNotifier;
 import org.eclipse.chemclipse.model.selection.AbstractChromatogramSelection;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelengths;
-import org.eclipse.chemclipse.model.wavelengths.MarkedWavelengths;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceRasteredWSD;
 
 public class ChromatogramSelectionFSD extends AbstractChromatogramSelection implements IChromatogramSelectionFSD {
 
-	private IMarkedWavelengths selectedWavelengths;
+	private IMarkedTraces<ITrace> selectedWavelengths = new MarkedTraces(MarkedTraceModus.INCLUDE);
 
 	public ChromatogramSelectionFSD(IChromatogramFSD chromatogram) throws ChromatogramIsNullException {
 
@@ -51,9 +55,9 @@ public class ChromatogramSelectionFSD extends AbstractChromatogramSelection impl
 
 		Optional<IScan> scan = chromatogram.getScans().stream().findFirst();
 		if(!scan.isEmpty() && scan.get() instanceof IScanFSD scanFSD) {
-			selectedWavelengths = new MarkedWavelengths();
+			selectedWavelengths.clear();
 			for(IScanSignalFSD signal : scanFSD.getScanSignals()) {
-				selectedWavelengths.add(signal.getWavelength());
+				selectedWavelengths.add(new TraceRasteredWSD(signal.getWavelength()));
 			}
 		}
 	}

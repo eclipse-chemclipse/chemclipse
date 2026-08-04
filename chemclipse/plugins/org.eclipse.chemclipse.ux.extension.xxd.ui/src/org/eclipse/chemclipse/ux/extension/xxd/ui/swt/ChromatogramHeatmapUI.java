@@ -17,13 +17,16 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
+import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelengths;
-import org.eclipse.chemclipse.model.wavelengths.MarkedWavelengths;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceRasteredWSD;
 import org.eclipse.chemclipse.support.ui.provider.AbstractLabelProvider;
 import org.eclipse.chemclipse.swt.ui.components.InformationUI;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
@@ -89,9 +92,10 @@ public class ChromatogramHeatmapUI extends Composite implements IExtendedPartUI 
 			IChromatogramSelectionWSD chromatogramSelectionWSD = (IChromatogramSelectionWSD)chromatogramSelection;
 			if(mouseEvent.button == 1) {
 				float clickedWavelength = (float)intensityGraphFigure.getYAxis().getPositionValue(mouseEvent.y, false);
-				IMarkedWavelengths markedWavelengths = new MarkedWavelengths();
-				markedWavelengths.add(clickedWavelength);
-				chromatogramSelectionWSD.setSelectedWavelengths(markedWavelengths);
+				IMarkedTraces<ITrace> markedWavelengths = new MarkedTraces(MarkedTraceModus.INCLUDE);
+				ITrace trace = new TraceRasteredWSD(clickedWavelength);
+				markedWavelengths.add(trace);
+				chromatogramSelectionWSD.setSelectedWavelengths(Arrays.asList(trace));
 				chromatogramSelectionWSD.fireUpdateChange(true);
 				toolbarInfo.get().setText("Selected wavelength: " + Math.round(clickedWavelength) + " nm");
 			} else if(mouseEvent.button == 3) {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2025 Lablicate GmbH.
+ * Copyright (c) 2013, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -15,13 +15,15 @@ package org.eclipse.chemclipse.wsd.model.core;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.chemclipse.model.core.AbstractScan;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelengths;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.wsd.model.comparator.WavelengthCombinedComparator;
 import org.eclipse.chemclipse.wsd.model.comparator.WavelengthComparatorMode;
 import org.eclipse.chemclipse.wsd.model.core.implementation.ScanSignalWSD;
@@ -139,7 +141,7 @@ public abstract class AbstractScanWSD extends AbstractScan implements IScanWSD {
 	}
 
 	@Override
-	public float getTotalSignal(IMarkedWavelengths markedWavelengths) {
+	public float getTotalSignal(IMarkedTraces<ITrace> markedWavelengths) {
 
 		float totalSignal = 0;
 		/*
@@ -159,9 +161,15 @@ public abstract class AbstractScanWSD extends AbstractScan implements IScanWSD {
 		return totalSignal;
 	}
 
-	private static boolean useWavelength(IScanSignalWSD scan, IMarkedWavelengths filterWavelengths) {
+	private static boolean useWavelength(IScanSignalWSD scan, IMarkedTraces<ITrace> filterWavelengths) {
 
-		Set<Float> wavelengths = filterWavelengths.getWavelengths();
+		Set<Float> wavelengths = new HashSet<>();
+		for(ITrace trace : filterWavelengths) {
+			wavelengths.add((float)trace.getValue());
+		}
+		/*
+		 * Apply
+		 */
 		switch(filterWavelengths.getMarkedTraceModus()) {
 			case EXCLUDE:
 				return wavelengths.contains(scan.getWavelength());

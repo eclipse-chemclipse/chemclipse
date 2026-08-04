@@ -13,13 +13,12 @@
 package org.eclipse.chemclipse.model.core;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
-public class MarkedTraces extends ArrayList<IMarkedTrace> implements IMarkedTraces<IMarkedTrace> {
+import org.eclipse.chemclipse.support.traces.ITrace;
 
-	private static final long serialVersionUID = -7575358523289086994L;
+public class MarkedTraces extends ArrayList<ITrace> implements IMarkedTraces<ITrace> {
 
+	private static final long serialVersionUID = -3071089214262731218L;
 	private MarkedTraceModus markedTraceModus;
 
 	public MarkedTraces() {
@@ -36,17 +35,5 @@ public class MarkedTraces extends ArrayList<IMarkedTrace> implements IMarkedTrac
 	public MarkedTraceModus getMarkedTraceModus() {
 
 		return markedTraceModus;
-	}
-
-	@Override
-	public Set<Integer> getTraces() {
-
-		Set<Integer> traces = new HashSet<>();
-
-		for(IMarkedTrace markedTrace : this) {
-			traces.add(markedTrace.castTrace());
-		}
-
-		return traces;
 	}
 }

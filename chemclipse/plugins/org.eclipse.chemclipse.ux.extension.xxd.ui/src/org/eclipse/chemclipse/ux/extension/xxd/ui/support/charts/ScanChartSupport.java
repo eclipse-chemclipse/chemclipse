@@ -22,13 +22,14 @@ import java.util.TreeSet;
 import org.eclipse.chemclipse.csd.model.core.IScanCSD;
 import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IScan;
+import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelength;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelengths;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.comparator.IonValueComparator;
 import org.eclipse.chemclipse.support.comparator.SortOrder;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.DisplayType;
 import org.eclipse.chemclipse.vsd.model.core.IScanVSD;
 import org.eclipse.chemclipse.vsd.model.core.ISignalVSD;
@@ -62,7 +63,7 @@ public class ScanChartSupport {
 		return lineSeriesData;
 	}
 
-	public ILineSeriesData getLineSeriesDataPoint(IScan scan, boolean mirrored, String seriesId, DisplayType displayType, IMarkedTraces<?> markedSignals) {
+	public ILineSeriesData getLineSeriesDataPoint(IScan scan, boolean mirrored, String seriesId, DisplayType displayType, IMarkedTraces<ITrace> markedSignals) {
 
 		List<IScan> scans = new ArrayList<>();
 		scans.add(scan);
@@ -71,17 +72,21 @@ public class ScanChartSupport {
 
 	public ILineSeriesData getLineSeriesDataPoint(List<IScan> scans, boolean mirrored, String seriesId) {
 
-		IMarkedTraces<?> markedSignals = null;
+		IMarkedTraces<ITrace> markedSignals = new MarkedTraces(MarkedTraceModus.INCLUDE);
 		return getLineSeriesDataPoint(scans, mirrored, seriesId, DisplayType.TIC, markedSignals);
 	}
 
 	public ILineSeriesData getLineSeriesDataPoint(List<IScan> scans, boolean mirrored, String seriesId, DisplayType displayType, IChromatogramSelection chromatogramSelection) {
 
-		IMarkedTraces<?> markedSignals = null;
+		List<ITrace> traces = new ArrayList<ITrace>();
 		if(displayType.equals(DisplayType.SWC)) {
-			markedSignals = ((IChromatogramSelectionWSD)chromatogramSelection).getSelectedWavelengths();
+			traces = ((IChromatogramSelectionWSD)chromatogramSelection).getSelectedWavelengths();
 		}
-		return getLineSeriesDataPoint(scans, mirrored, seriesId, displayType, markedSignals);
+
+		IMarkedTraces<ITrace> markedTraces = new MarkedTraces(MarkedTraceModus.INCLUDE);
+		markedTraces.addAll(traces);
+
+		return getLineSeriesDataPoint(scans, mirrored, seriesId, displayType, markedTraces);
 	}
 
 	public ILineSeriesData getLineSeriesDataPoint(IScan scan, boolean mirrored, String seriesId, DisplayType displayType, IChromatogramSelection chromatogramSelection) {
@@ -89,7 +94,7 @@ public class ScanChartSupport {
 		return getLineSeriesDataPoint(Collections.singletonList(scan), mirrored, seriesId, displayType, chromatogramSelection);
 	}
 
-	public ILineSeriesData getLineSeriesDataPoint(List<IScan> scans, boolean mirrored, String seriesId, DisplayType displayType, IMarkedTraces<?> markedSignals) {
+	public ILineSeriesData getLineSeriesDataPoint(List<IScan> scans, boolean mirrored, String seriesId, DisplayType displayType, IMarkedTraces<ITrace> markedSignals) {
 
 		List<Double> xSeries = new ArrayList<>(scans.size());
 		List<Double> ySeries = new ArrayList<>(scans.size());
@@ -101,10 +106,10 @@ public class ScanChartSupport {
 					ySeries.add((double)((mirrored) ? scan.getTotalSignal() * -1 : scan.getTotalSignal()));
 				}
 			} else if(displayType.equals(DisplayType.SWC)) {
-				if(scan instanceof IScanWSD scanWSD && markedSignals instanceof IMarkedWavelengths markedWavelengths) {
-					Iterator<IMarkedWavelength> markedWavelengthsIterator = markedWavelengths.iterator();
+				if(scan instanceof IScanWSD scanWSD && markedSignals != null && !markedSignals.isEmpty()) {
+					Iterator<ITrace> markedWavelengthsIterator = markedSignals.iterator();
 					if(markedWavelengthsIterator.hasNext()) {
-						float trace = (float)markedWavelengthsIterator.next().getTrace();
+						float trace = (float)markedWavelengthsIterator.next().getValue();
 						Optional<IScanSignalWSD> scanSignal = scanWSD.getScanSignal(trace);
 						if(scanSignal.isPresent()) {
 							xSeries.add((double)scan.getRetentionTime());

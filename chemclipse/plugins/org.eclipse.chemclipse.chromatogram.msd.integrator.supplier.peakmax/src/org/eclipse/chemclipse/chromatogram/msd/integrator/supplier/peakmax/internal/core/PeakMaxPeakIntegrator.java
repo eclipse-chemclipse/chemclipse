@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2025 Lablicate GmbH.
+ * Copyright (c) 2012, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -28,7 +28,6 @@ import org.eclipse.chemclipse.chromatogram.xxd.integrator.result.PeakIntegration
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.result.PeakIntegrationResults;
 import org.eclipse.chemclipse.csd.model.core.IChromatogramPeakCSD;
 import org.eclipse.chemclipse.model.core.IIntegrationEntry;
-import org.eclipse.chemclipse.model.core.IMarkedTrace;
 import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IPeakModel;
@@ -40,6 +39,8 @@ import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.support.IIonPercentages;
 import org.eclipse.chemclipse.msd.model.core.support.IonPercentages;
+import org.eclipse.chemclipse.msd.model.util.MarkedTracesSupportMSD;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramPeakWSD;
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -181,7 +182,7 @@ public class PeakMaxPeakIntegrator implements IPeakMaxPeakIntegrator {
 	 * 
 	 * @return List<IIntegrationEntry>
 	 */
-	private List<IIntegrationEntry> calculateIntegratedArea(IPeak peak, IMarkedTraces<IMarkedTrace> markedTraces, boolean useAreaConstraint) {
+	private List<IIntegrationEntry> calculateIntegratedArea(IPeak peak, IMarkedTraces<ITrace> markedTraces, boolean useAreaConstraint) {
 
 		List<IIntegrationEntry> integrationEntries = new ArrayList<>();
 		IIntegrationEntry integrationEntry;
@@ -189,7 +190,7 @@ public class PeakMaxPeakIntegrator implements IPeakMaxPeakIntegrator {
 		IPeakModel peakModel = peak.getPeakModel();
 		IScan scan = peakModel.getPeakMaximum();
 		double integratedAreaTIC = calculateTICPeakArea(peak, useAreaConstraint);
-		Set<Integer> selectedIonsNominal = markedTraces.getTraces();
+		Set<Integer> selectedIonsNominal = MarkedTracesSupportMSD.getTracesAsInteger(markedTraces);
 		/*
 		 * Use the selected ions if:<br/> the size is greater 0
 		 * (means, ions have been selected)<br/> and<br/> the selected
@@ -251,7 +252,7 @@ public class PeakMaxPeakIntegrator implements IPeakMaxPeakIntegrator {
 		/*
 		 * Selected ions.
 		 */
-		IMarkedTraces<IMarkedTrace> selectedIons = peakIntegrationSettings.getMarkedTraces();
+		IMarkedTraces<ITrace> selectedIons = peakIntegrationSettings.getMarkedTraces();
 		Set<Integer> integratedIons = getIntegratedIons(selectedIons);
 		PeakIntegrationResult result = new PeakIntegrationResult();
 		result.setIntegratedArea(integratedArea);
@@ -315,13 +316,13 @@ public class PeakMaxPeakIntegrator implements IPeakMaxPeakIntegrator {
 	 * @param markedTraces
 	 * @return List<Integer>
 	 */
-	private Set<Integer> getIntegratedIons(IMarkedTraces<IMarkedTrace> markedTraces) {
+	private Set<Integer> getIntegratedIons(IMarkedTraces<ITrace> markedTraces) {
 
 		Set<Integer> result;
 		if(markedTraces == null) {
 			result = new HashSet<>();
 		} else {
-			result = markedTraces.getTraces();
+			result = MarkedTracesSupportMSD.getTracesAsInteger(markedTraces);
 		}
 		return result;
 	}

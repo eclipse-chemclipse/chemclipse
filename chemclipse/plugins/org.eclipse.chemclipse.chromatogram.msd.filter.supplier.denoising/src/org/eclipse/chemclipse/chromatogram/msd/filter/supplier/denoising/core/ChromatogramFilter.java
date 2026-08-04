@@ -22,16 +22,18 @@ import org.eclipse.chemclipse.chromatogram.msd.filter.core.chromatogram.Abstract
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.denoising.internal.core.support.Denoising;
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.denoising.result.DenoisingFilterResult;
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.denoising.settings.FilterSettings;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IMeasurementResult;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.implementation.MeasurementResult;
 import org.eclipse.chemclipse.msd.model.core.ICombinedMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
 import org.eclipse.chemclipse.msd.model.exceptions.FilterException;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 import org.eclipse.chemclipse.support.util.TraceSettingUtil;
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -47,8 +49,8 @@ public class ChromatogramFilter extends AbstractChromatogramFilterMSD {
 			if(chromatogramFilterSettings instanceof FilterSettings filterSettings) {
 				try {
 					TraceSettingUtil ionSettingsUtil = new TraceSettingUtil();
-					IMarkedIons ionsToRemove = new MarkedIons(ionSettingsUtil.extractTraces(ionSettingsUtil.deserialize(filterSettings.getIonsToRemove())), MarkedTraceModus.INCLUDE);
-					IMarkedIons ionsToPreserve = new MarkedIons(ionSettingsUtil.extractTraces(ionSettingsUtil.deserialize(filterSettings.getIonsToPreserve())), MarkedTraceModus.INCLUDE);
+					IMarkedTraces<ITrace> ionsToRemove = getMarkedTraces(ionSettingsUtil.extractTraces(ionSettingsUtil.deserialize(filterSettings.getIonsToRemove())));
+					IMarkedTraces<ITrace> ionsToPreserve = getMarkedTraces(ionSettingsUtil.extractTraces(ionSettingsUtil.deserialize(filterSettings.getIonsToPreserve())));
 					boolean adjustThresholdTransitions = filterSettings.isAdjustThresholdTransitions();
 					int numberOfUsedIonsForCoefficient = filterSettings.getNumberOfUsedIonsForCoefficient();
 					int segmentWidth = filterSettings.getSegmentWidth();
@@ -65,5 +67,15 @@ public class ChromatogramFilter extends AbstractChromatogramFilterMSD {
 			}
 		}
 		return processingInfo;
+	}
+
+	private IMarkedTraces<ITrace> getMarkedTraces(int[] traces) {
+
+		IMarkedTraces<ITrace> markedTraces = new MarkedTraces(MarkedTraceModus.INCLUDE);
+		for(int trace : traces) {
+			markedTraces.add(new TraceNominalMSD(trace));
+		}
+
+		return markedTraces;
 	}
 }

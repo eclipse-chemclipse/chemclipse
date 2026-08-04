@@ -17,18 +17,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.msd.model.core.IIon;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class CombinedNominalMassSpectrumCalculator_2_Test {
 
 	private CombinedNominalMassSpectrumCalculator combinedMassSpectrumCalculator;
-	private IMarkedIons excludedIons;
+	private IMarkedTraces<ITrace> excludedIons;
 	private List<IIon> ions;
 
 	@BeforeEach
@@ -36,7 +37,7 @@ public class CombinedNominalMassSpectrumCalculator_2_Test {
 
 		combinedMassSpectrumCalculator = new CombinedNominalMassSpectrumCalculator();
 		ions = new ArrayList<>();
-		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
+		excludedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
 	}
 
 	@Test

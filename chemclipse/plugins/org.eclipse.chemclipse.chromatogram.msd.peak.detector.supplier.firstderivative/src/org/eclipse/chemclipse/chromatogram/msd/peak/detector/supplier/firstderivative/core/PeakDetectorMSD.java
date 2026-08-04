@@ -20,13 +20,11 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.eclipse.chemclipse.chromatogram.msd.peak.detector.core.IPeakDetectorMSD;
 import org.eclipse.chemclipse.chromatogram.msd.peak.detector.settings.IPeakDetectorSettingsMSD;
 import org.eclipse.chemclipse.chromatogram.msd.peak.detector.supplier.firstderivative.Activator;
 import org.eclipse.chemclipse.chromatogram.msd.peak.detector.supplier.firstderivative.settings.PeakDetectorSettingsMSD;
-import org.eclipse.chemclipse.chromatogram.peak.detector.core.FilterMode;
 import org.eclipse.chemclipse.chromatogram.peak.detector.model.Threshold;
 import org.eclipse.chemclipse.chromatogram.peak.detector.support.IRawPeak;
 import org.eclipse.chemclipse.chromatogram.xxd.calculator.core.noise.NoiseChromatogramSupport;
@@ -37,8 +35,8 @@ import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderiv
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.support.IFirstDerivativeDetectorSlope;
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.support.IFirstDerivativeDetectorSlopes;
 import org.eclipse.chemclipse.logging.core.Logger;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IScan;
-import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.model.core.PeakType;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
@@ -50,9 +48,8 @@ import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
 import org.eclipse.chemclipse.msd.model.core.support.PeakBuilderMSD;
+import org.eclipse.chemclipse.msd.model.util.MarkedTracesSupportMSD;
 import org.eclipse.chemclipse.msd.model.xic.ITotalIonSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.TotalIonSignalExtractor;
 import org.eclipse.chemclipse.numeric.core.IPoint;
@@ -63,6 +60,7 @@ import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.MessageType;
 import org.eclipse.chemclipse.processing.core.ProcessingMessage;
 import org.eclipse.chemclipse.support.l10n.TranslationSupport;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.e4.core.services.translation.TranslationService;
@@ -128,9 +126,9 @@ public class PeakDetectorMSD extends BasePeakDetector implements IPeakDetectorMS
 	public List<IChromatogramPeakMSD> detectPeaks(IChromatogramSelectionMSD chromatogramSelection, PeakDetectorSettingsMSD peakDetectorSettings, List<INoiseSegment> noiseSegments, IProgressMonitor monitor) {
 
 		List<IChromatogramPeakMSD> extractPeaks = new ArrayList<>();
-		Collection<IMarkedIons> filterIons = peakDetectorSettings.getFilterIons();
+		Collection<IMarkedTraces<ITrace>> filterIons = peakDetectorSettings.getFilterIons();
 		IChromatogramMSD chromatogram = chromatogramSelection.getChromatogram();
-		for(IMarkedIons ions : filterIons) {
+		for(IMarkedTraces<ITrace> ions : filterIons) {
 			Threshold threshold = peakDetectorSettings.getThreshold();
 			int windowSize = peakDetectorSettings.getMovingAverageWindowSize();
 			List<IRawPeak> rawPeaks = new ArrayList<>();
@@ -188,7 +186,7 @@ public class PeakDetectorMSD extends BasePeakDetector implements IPeakDetectorMS
 			}
 			List<IChromatogramPeakMSD> peaks = extractPeaks(rawPeaks, chromatogram, peakDetectorSettings, ions);
 			if(peakDetectorSettings.isUseIndividualTraces()) {
-				String classifier = "Trace " + ions.getIonsNominal().iterator().next();
+				String classifier = "Trace " + MarkedTracesSupportMSD.getTracesAsInteger(ions).iterator().next();
 				for(IChromatogramPeakMSD msd : peaks) {
 					msd.addClassifier(classifier);
 				}
@@ -207,10 +205,10 @@ public class PeakDetectorMSD extends BasePeakDetector implements IPeakDetectorMS
 	 * @param chromatogram
 	 * @return List<IChromatogramPeakCSD>
 	 */
-	private List<IChromatogramPeakMSD> extractPeaks(List<IRawPeak> rawPeaks, IChromatogramMSD chromatogram, PeakDetectorSettingsMSD peakDetectorSettings, IMarkedIons ions) {
+	private List<IChromatogramPeakMSD> extractPeaks(List<IRawPeak> rawPeaks, IChromatogramMSD chromatogram, PeakDetectorSettingsMSD peakDetectorSettings, IMarkedTraces<ITrace> ions) {
 
 		List<IChromatogramPeakMSD> peaks = new ArrayList<>();
-		Set<Integer> traces = ions.getIonsNominal().stream().map(e -> e.intValue()).collect(Collectors.toSet());
+		Set<Integer> traces = MarkedTracesSupportMSD.getTracesAsInteger(ions);
 		DetectorType detectorType = peakDetectorSettings.getDetectorType();
 		boolean optimizeBaseline = peakDetectorSettings.isOptimizeBaseline();
 
@@ -263,7 +261,7 @@ public class PeakDetectorMSD extends BasePeakDetector implements IPeakDetectorMS
 	 * @param windowSize
 	 * @return {@link IFirstDerivativeDetectorSlopes}
 	 */
-	public static IFirstDerivativeDetectorSlopes getFirstDerivativeSlopes(IChromatogramSelectionMSD chromatogramSelection, int windowSize, IMarkedIons filterIons) {
+	public static IFirstDerivativeDetectorSlopes getFirstDerivativeSlopes(IChromatogramSelectionMSD chromatogramSelection, int windowSize, IMarkedTraces<ITrace> filterIons) {
 
 		IChromatogramMSD chromatogram = chromatogramSelection.getChromatogram();
 		try {
@@ -302,33 +300,6 @@ public class PeakDetectorMSD extends BasePeakDetector implements IPeakDetectorMS
 		}
 	}
 
-	static IMarkedIons getIonFilter(Collection<Number> filterIons, FilterMode mode) {
-
-		return new MarkedIons(buildIons(filterIons), buildFilterMode(mode));
-	}
-
-	private static int[] buildIons(Collection<Number> filterIons) {
-
-		int[] result = new int[filterIons.size()];
-		int cnt = 0;
-		Iterator<Number> it = filterIons.iterator();
-		while(it.hasNext()) {
-			result[cnt++] = it.next().intValue();
-		}
-		return result;
-	}
-
-	private static MarkedTraceModus buildFilterMode(FilterMode mode) {
-
-		switch(mode) {
-			case EXCLUDE:
-				return MarkedTraceModus.EXCLUDE;
-			case INCLUDE:
-				return MarkedTraceModus.INCLUDE;
-		}
-		throw new IllegalArgumentException("Unknown mode " + mode);
-	}
-
 	/**
 	 * Checks that the peak is not null and that it matches
 	 * the min S/N requirements.
@@ -341,7 +312,7 @@ public class PeakDetectorMSD extends BasePeakDetector implements IPeakDetectorMS
 		return (peak != null && peak.getSignalToNoiseRatio() >= peakDetectorSettings.getMinimumSignalToNoiseRatio());
 	}
 
-	protected ScanRange optimizeBaseline(IChromatogramMSD chromatogram, int startScan, int centerScan, int stopScan, IMarkedIons ions) {
+	protected ScanRange optimizeBaseline(IChromatogramMSD chromatogram, int startScan, int centerScan, int stopScan, IMarkedTraces<ITrace> ions) {
 
 		/*
 		 * Right and left baseline optimization
@@ -352,7 +323,7 @@ public class PeakDetectorMSD extends BasePeakDetector implements IPeakDetectorMS
 		return new ScanRange(startScanOptimized, stopScanOptimized);
 	}
 
-	protected float getScanSignal(IChromatogramMSD chromatogram, int scanNumber, IMarkedIons ions) {
+	protected float getScanSignal(IChromatogramMSD chromatogram, int scanNumber, IMarkedTraces<ITrace> ions) {
 
 		IScan scan = chromatogram.getScan(scanNumber);
 		if(scan instanceof IScanMSD scanMSD) {
@@ -361,7 +332,7 @@ public class PeakDetectorMSD extends BasePeakDetector implements IPeakDetectorMS
 		return scan.getTotalSignal();
 	}
 
-	private int optimizeRightBaseline(IChromatogramMSD chromatogram, int startScan, int centerScan, int stopScan, IMarkedIons ions) {
+	private int optimizeRightBaseline(IChromatogramMSD chromatogram, int startScan, int centerScan, int stopScan, IMarkedTraces<ITrace> ions) {
 
 		IPoint p1 = new Point(getRetentionTime(chromatogram, startScan), getScanSignal(chromatogram, startScan, ions));
 		IPoint p2 = new Point(getRetentionTime(chromatogram, stopScan), getScanSignal(chromatogram, stopScan, ions));
@@ -381,7 +352,7 @@ public class PeakDetectorMSD extends BasePeakDetector implements IPeakDetectorMS
 		return stopScanOptimized;
 	}
 
-	private int optimizeLeftBaseline(IChromatogramMSD chromatogram, int startScan, int centerScan, int stopScan, IMarkedIons ions) {
+	private int optimizeLeftBaseline(IChromatogramMSD chromatogram, int startScan, int centerScan, int stopScan, IMarkedTraces<ITrace> ions) {
 
 		IPoint p1 = new Point(getRetentionTime(chromatogram, startScan), getScanSignal(chromatogram, startScan, ions));
 		IPoint p2 = new Point(getRetentionTime(chromatogram, stopScan), getScanSignal(chromatogram, stopScan, ions));

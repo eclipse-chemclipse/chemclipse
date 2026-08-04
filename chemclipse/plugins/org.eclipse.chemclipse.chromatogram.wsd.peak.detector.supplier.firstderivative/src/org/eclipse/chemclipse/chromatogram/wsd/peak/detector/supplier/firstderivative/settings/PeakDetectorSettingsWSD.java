@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -26,16 +26,16 @@ import org.eclipse.chemclipse.chromatogram.peak.detector.core.FilterMode;
 import org.eclipse.chemclipse.chromatogram.peak.detector.model.Threshold;
 import org.eclipse.chemclipse.chromatogram.wsd.peak.detector.settings.AbstractPeakDetectorWSDSettings;
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.model.DetectorType;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelength;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelengths;
-import org.eclipse.chemclipse.model.wavelengths.MarkedWavelength;
-import org.eclipse.chemclipse.model.wavelengths.MarkedWavelengths;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.support.settings.FloatSettingsProperty;
 import org.eclipse.chemclipse.support.settings.IntSettingsProperty;
 import org.eclipse.chemclipse.support.settings.IntSettingsProperty.Validation;
 import org.eclipse.chemclipse.support.settings.LabelProperty;
 import org.eclipse.chemclipse.support.settings.serialization.WindowSizeDeserializer;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceRasteredWSD;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -179,7 +179,7 @@ public class PeakDetectorSettingsWSD extends AbstractPeakDetectorWSDSettings {
 	}
 
 	@JsonIgnore
-	public Collection<IMarkedWavelengths> getFilterWavelengths() {
+	public Collection<IMarkedTraces<ITrace>> getFilterWavelengths() {
 
 		MarkedTraceModus markedTraceModus;
 		switch(getFilterMode()) {
@@ -195,19 +195,19 @@ public class PeakDetectorSettingsWSD extends AbstractPeakDetectorWSDSettings {
 		/*
 		 * Calculate the wavelengths to be used.
 		 */
-		Set<IMarkedWavelength> parsedWavelengths = parseWavelengths(filterWavelengths).stream().map(e -> new MarkedWavelength(e.doubleValue())).collect(Collectors.toSet());
+		Set<ITrace> traces = parseWavelengths(filterWavelengths).stream().map(e -> new TraceRasteredWSD(e.doubleValue())).collect(Collectors.toSet());
 		if(isIndividualWavelengths()) {
-			List<IMarkedWavelengths> listedWavelengths = new ArrayList<>();
-			for(IMarkedWavelength wavelength : parsedWavelengths) {
-				IMarkedWavelengths markedWavelengths = new MarkedWavelengths(markedTraceModus);
-				markedWavelengths.add(wavelength);
-				listedWavelengths.add(markedWavelengths);
+			List<IMarkedTraces<ITrace>> list = new ArrayList<>();
+			for(ITrace trace : traces) {
+				IMarkedTraces<ITrace> markedTraces = new MarkedTraces(markedTraceModus);
+				markedTraces.add(trace);
+				list.add(markedTraces);
 			}
-			return listedWavelengths;
+			return list;
 		} else {
-			IMarkedWavelengths markedWavelengths = new MarkedWavelengths(markedTraceModus);
-			markedWavelengths.addAll(parsedWavelengths);
-			return Collections.singleton(markedWavelengths);
+			IMarkedTraces<ITrace> markedTraces = new MarkedTraces(markedTraceModus);
+			markedTraces.addAll(traces);
+			return Collections.singleton(markedTraces);
 		}
 	}
 

@@ -17,8 +17,10 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.chemclipse.model.baseline.IBaselineModel;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IPeakIntensityValues;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.core.PeakType;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.model.exceptions.PeakException;
@@ -47,6 +49,8 @@ import org.eclipse.chemclipse.numeric.core.IPoint;
 import org.eclipse.chemclipse.numeric.core.Point;
 import org.eclipse.chemclipse.numeric.equations.Equations;
 import org.eclipse.chemclipse.numeric.equations.LinearEquation;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 
 public class PeakBuilderMSD {
 
@@ -82,7 +86,7 @@ public class PeakBuilderMSD {
 		 * Get the total signals and determine the start and stop background
 		 * abundance.
 		 */
-		ITotalScanSignals totalIonSignals = getTotalIonSignals(chromatogram, scanRange, new MarkedIons(includedIons, filterMode));
+		ITotalScanSignals totalIonSignals = getTotalIonSignals(chromatogram, scanRange, getMarkedTraces(includedIons, filterMode));
 		/*
 		 * Retrieve the start and stop signals of the peak to calculate its
 		 * chromatogram and eventually peak internal background, if the start
@@ -125,7 +129,7 @@ public class PeakBuilderMSD {
 		 */
 		ITotalScanSignals peakIntensityTotalIonSignals = adjustTotalIonSignals(totalIonSignals, backgroundEquation);
 		IPeakIntensityValues peakIntensityValues = getPeakIntensityValues(peakIntensityTotalIonSignals);
-		IPeakMassSpectrum peakMassSpectrum = getPeakMassSpectrum(chromatogram, totalIonSignals, backgroundEquation, new MarkedIons(includedIons, filterMode));
+		IPeakMassSpectrum peakMassSpectrum = getPeakMassSpectrum(chromatogram, totalIonSignals, backgroundEquation, getMarkedTraces(includedIons, filterMode));
 		/*
 		 * Create the peak.
 		 */
@@ -144,7 +148,7 @@ public class PeakBuilderMSD {
 		/*
 		 * Calculate the intensity values.
 		 */
-		ITotalScanSignals totalIonSignals = getTotalIonSignals(chromatogram, scanRange, new MarkedIons(includedIons, filterMode));
+		ITotalScanSignals totalIonSignals = getTotalIonSignals(chromatogram, scanRange, getMarkedTraces(includedIons, filterMode));
 		float firstSignal = totalIonSignals.getFirstTotalScanSignal().getTotalSignal();
 		float lastSignal = totalIonSignals.getLastTotalScanSignal().getTotalSignal();
 		startIntensity = startIntensity <= firstSignal ? startIntensity : firstSignal;
@@ -152,7 +156,7 @@ public class PeakBuilderMSD {
 		LinearEquation backgroundEquation = getBackgroundEquation(totalIonSignals, scanRange, new BackgroundAbundanceRange(startIntensity, stopIntensity));
 		ITotalScanSignals peakIntensityTotalIonSignals = adjustTotalIonSignals(totalIonSignals, backgroundEquation);
 		IPeakIntensityValues peakIntensityValues = getPeakIntensityValues(peakIntensityTotalIonSignals);
-		IPeakMassSpectrum peakMassSpectrum = getPeakMassSpectrum(chromatogram, totalIonSignals, backgroundEquation, new MarkedIons(includedIons, filterMode));
+		IPeakMassSpectrum peakMassSpectrum = getPeakMassSpectrum(chromatogram, totalIonSignals, backgroundEquation, getMarkedTraces(includedIons, filterMode));
 		/*
 		 * Create the peak.
 		 */
@@ -327,7 +331,7 @@ public class PeakBuilderMSD {
 	 * Only total ion signals without the given ions will be
 	 * considered.
 	 */
-	public static IChromatogramPeakMSD createPeak(IChromatogramMSD chromatogram, IScanRange scanRange, IMarkedIons excludedIons) throws PeakException {
+	public static IChromatogramPeakMSD createPeak(IChromatogramMSD chromatogram, IScanRange scanRange, IMarkedTraces<ITrace> excludedIons) throws PeakException {
 
 		validateChromatogram(chromatogram);
 		validateScanRange(scanRange);
@@ -368,7 +372,7 @@ public class PeakBuilderMSD {
 	 * Only total ion signals without the given ions will be
 	 * considered.
 	 */
-	public static IChromatogramPeakMSD createPeak(IChromatogramMSD chromatogram, IScanRange scanRange, IBackgroundAbundanceRange backgroundAbundanceRange, IMarkedIons excludedIons) throws PeakException {
+	public static IChromatogramPeakMSD createPeak(IChromatogramMSD chromatogram, IScanRange scanRange, IBackgroundAbundanceRange backgroundAbundanceRange, IMarkedTraces<ITrace> excludedIons) throws PeakException {
 
 		validateChromatogram(chromatogram);
 		validateScanRange(scanRange);
@@ -501,7 +505,7 @@ public class PeakBuilderMSD {
 	/**
 	 * Returns the peak mass spectrum from the given values.
 	 */
-	protected static IPeakMassSpectrum getPeakMassSpectrum(IExtractedIonSignals extractedIonSignals, IChromatogramMSD chromatogram, ITotalScanSignals totalIonSignals, LinearEquation backgroundEquation, IMarkedIons excludedIons) throws PeakException {
+	protected static IPeakMassSpectrum getPeakMassSpectrum(IExtractedIonSignals extractedIonSignals, IChromatogramMSD chromatogram, ITotalScanSignals totalIonSignals, LinearEquation backgroundEquation, IMarkedTraces<ITrace> excludedIons) throws PeakException {
 
 		if(extractedIonSignals == null || chromatogram == null || totalIonSignals == null || backgroundEquation == null) {
 			throw new PeakException("The extractedIonSignals, chromatogram, totalIonSignals or backgroundEquation must not be null.");
@@ -537,7 +541,7 @@ public class PeakBuilderMSD {
 	/**
 	 * Returns the peak mass spectrum from the given values.
 	 */
-	protected static IPeakMassSpectrum getPeakMassSpectrum(IChromatogramMSD chromatogram, ITotalScanSignals totalIonSignals, LinearEquation backgroundEquation, IMarkedIons excludedIons) throws PeakException {
+	protected static IPeakMassSpectrum getPeakMassSpectrum(IChromatogramMSD chromatogram, ITotalScanSignals totalIonSignals, LinearEquation backgroundEquation, IMarkedTraces<ITrace> excludedIons) throws PeakException {
 
 		if(chromatogram == null || totalIonSignals == null || backgroundEquation == null) {
 			throw new PeakException("The chromatogram, totalIonSignals or backgroundEquation must not be null.");
@@ -652,7 +656,7 @@ public class PeakBuilderMSD {
 	 * Returns a {@link ITotalScanSignals} object from the given chromatogram and
 	 * scan range.
 	 */
-	protected static ITotalScanSignals getTotalIonSignals(IChromatogramMSD chromatogram, IScanRange scanRange, IMarkedIons excludedIons) throws PeakException {
+	protected static ITotalScanSignals getTotalIonSignals(IChromatogramMSD chromatogram, IScanRange scanRange, IMarkedTraces<ITrace> excludedIons) throws PeakException {
 
 		if(chromatogram == null || scanRange == null || excludedIons == null) {
 			throw new PeakException("The given values must not be null.");
@@ -833,7 +837,7 @@ public class PeakBuilderMSD {
 	 * Checks the excluded ions and throws an exception is something
 	 * is wrong.
 	 */
-	protected static void validateExcludedIons(IMarkedIons excludedIons) throws PeakException {
+	protected static void validateExcludedIons(IMarkedTraces<ITrace> excludedIons) throws PeakException {
 
 		if(excludedIons == null) {
 			throw new PeakException("The excluded ions must not be null.");
@@ -859,5 +863,15 @@ public class PeakBuilderMSD {
 		if(extractedIonSignals == null) {
 			throw new PeakException("The extracted ion signals instance must not be null.");
 		}
+	}
+
+	private static IMarkedTraces<ITrace> getMarkedTraces(Set<Integer> ions, MarkedTraceModus markedTraceModus) {
+
+		IMarkedTraces<ITrace> markedTraces = new MarkedTraces(markedTraceModus);
+		for(int ion : ions) {
+			markedTraces.add(new TraceNominalMSD(ion));
+		}
+
+		return markedTraces;
 	}
 }

@@ -15,10 +15,11 @@ package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.ionremover.core;
 import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.ionremover.settings.ITraceRemoverFilterSettings;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.support.traces.TraceFactory;
 import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 
@@ -26,16 +27,20 @@ public class ScanProcessor {
 
 	public void apply(List<IScanMSD> massSpectra, ITraceRemoverFilterSettings traceRemoverFilterSettings) {
 
-		IMarkedIons markedIons = getMarkedIons(traceRemoverFilterSettings.getIonsToRemove(), traceRemoverFilterSettings.getMarkedTraceModus());
+		/*
+		 * Prepare
+		 */
+		MarkedTraceModus markedTraceModus = traceRemoverFilterSettings.getMarkedTraceModus();
+		IMarkedTraces<ITrace> markedIons = new MarkedTraces(markedTraceModus);
+		for(int ion : getIonsList(traceRemoverFilterSettings.getIonsToRemove())) {
+			markedIons.add(new TraceNominalMSD(ion));
+		}
+		/*
+		 * Apply
+		 */
 		for(IScanMSD massSpectrum : massSpectra) {
 			massSpectrum.removeIons(markedIons);
 		}
-	}
-
-	private IMarkedIons getMarkedIons(String ions, MarkedTraceModus markedTraceModus) {
-
-		int[] ionsList = getIonsList(ions);
-		return new MarkedIons(ionsList, markedTraceModus);
 	}
 
 	private int[] getIonsList(String ions) {

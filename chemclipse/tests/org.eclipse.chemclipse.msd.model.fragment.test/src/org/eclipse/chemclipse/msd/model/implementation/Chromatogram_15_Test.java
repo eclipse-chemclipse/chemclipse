@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -14,15 +14,17 @@ package org.eclipse.chemclipse.msd.model.implementation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIon;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
+import org.eclipse.chemclipse.msd.model.util.MarkedTracesSupportMSD;
 import org.eclipse.chemclipse.msd.model.xic.ITotalIonSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.TotalIonSignalExtractor;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +35,7 @@ public class Chromatogram_15_Test {
 
 	private ChromatogramMSD chromatogram;
 	private ITotalScanSignals signals;
-	private IMarkedIons excludedIons;
+	private IMarkedTraces<ITrace> excludedIons;
 	private ITotalIonSignalExtractor totalIonSignalExtractor;
 
 	@BeforeEach
@@ -51,7 +53,7 @@ public class Chromatogram_15_Test {
 			chromatogram.addScan(supplierMassSpectrum);
 		}
 		// ------------------------------Scan 1-100
-		excludedIons = new MarkedIons(MarkedTraceModus.INCLUDE);
+		excludedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
 
 		totalIonSignalExtractor = new TotalIonSignalExtractor(chromatogram);
 	}
@@ -86,7 +88,7 @@ public class Chromatogram_15_Test {
 	@Test
 	public void testGetTotalIonSignals_1() {
 
-		excludedIons.add(1, 50);
+		MarkedTracesSupportMSD.add(excludedIons, 1, 50);
 		signals = totalIonSignalExtractor.getTotalIonSignals(20, 50, excludedIons);
 		assertEquals(0.0f, signals.getTotalScanSignal(20).getTotalSignal(), 0);
 	}
@@ -94,7 +96,7 @@ public class Chromatogram_15_Test {
 	@Test
 	public void testGetTotalIonSignals_2() {
 
-		excludedIons.add(26, 50);
+		MarkedTracesSupportMSD.add(excludedIons, 26, 50);
 		signals = totalIonSignalExtractor.getTotalIonSignals(20, 50, excludedIons);
 		assertEquals(325.0f, signals.getTotalScanSignal(20).getTotalSignal(), 0);
 	}
@@ -109,7 +111,7 @@ public class Chromatogram_15_Test {
 	@Test
 	public void testGetTotalIonSignals_4() {
 
-		excludedIons.add(new MarkedIon(26));
+		excludedIons.add(new TraceNominalMSD(26));
 		signals = totalIonSignalExtractor.getTotalIonSignals(20, 50, excludedIons);
 		assertEquals(1249.0f, signals.getTotalScanSignal(20).getTotalSignal(), 0);
 	}

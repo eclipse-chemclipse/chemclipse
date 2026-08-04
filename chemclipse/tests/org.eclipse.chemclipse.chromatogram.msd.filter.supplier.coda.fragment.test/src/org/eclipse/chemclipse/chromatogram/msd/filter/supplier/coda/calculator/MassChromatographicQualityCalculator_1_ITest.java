@@ -20,12 +20,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.io.File;
 
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.coda.exceptions.CodaCalculatorException;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.msd.converter.chromatogram.ChromatogramConverterMSD;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.ChromatogramSelectionMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -57,7 +58,7 @@ public class MassChromatographicQualityCalculator_1_ITest {
 		assertNotNull(result);
 		float drv = result.getDataReductionValue();
 		assertEquals(0.87713313f, drv, 0, "Data reduction value");
-		IMarkedIons exludedIons = result.getExcludedIons();
+		IMarkedTraces<ITrace> exludedIons = result.getExcludedIons();
 		assertNotNull(exludedIons);
 	}
 

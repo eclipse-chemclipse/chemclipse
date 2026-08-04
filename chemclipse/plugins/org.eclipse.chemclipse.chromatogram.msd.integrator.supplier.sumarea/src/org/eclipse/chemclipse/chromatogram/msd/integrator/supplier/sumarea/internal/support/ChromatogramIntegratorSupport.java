@@ -26,16 +26,19 @@ import org.eclipse.chemclipse.chromatogram.xxd.integrator.result.IChromatogramIn
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.result.IChromatogramIntegrationResults;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IIntegrationEntry;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.model.implementation.IntegrationEntry;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIons;
+import org.eclipse.chemclipse.msd.model.util.MarkedTracesSupportMSD;
 import org.eclipse.chemclipse.msd.model.xic.ExtractedIonSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignalExtractor;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignals;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 import org.eclipse.chemclipse.support.util.TraceSettingUtil;
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -61,8 +64,8 @@ public class ChromatogramIntegratorSupport {
 			/*
 			 * Selected Ions (size == 0 : integrate all)
 			 */
-			IMarkedIons selectedIons = getSelectedIons(chromatogramIntegrationSettings);
-			Set<Integer> selectedIonsNominal = selectedIons.getIonsNominal();
+			IMarkedTraces<ITrace> selectedIons = getSelectedIons(chromatogramIntegrationSettings);
+			Set<Integer> selectedIonsNominal = MarkedTracesSupportMSD.getTracesAsInteger(selectedIons);
 			if(selectedIonsNominal.isEmpty() || selectedIonsNominal.contains(0)) {
 				integrateAll = true;
 			}
@@ -132,10 +135,14 @@ public class ChromatogramIntegratorSupport {
 		return new IntegrationEntry(ion, backgroundArea);
 	}
 
-	private IMarkedIons getSelectedIons(ChromatogramIntegrationSettings chromatogramIntegrationSettings) {
+	private IMarkedTraces<ITrace> getSelectedIons(ChromatogramIntegrationSettings chromatogramIntegrationSettings) {
 
 		String ions = chromatogramIntegrationSettings.getSelectedIons();
 		TraceSettingUtil ionSettingUtil = new TraceSettingUtil();
-		return new MarkedIons(ionSettingUtil.extractTraces(ionSettingUtil.deserialize(ions)), MarkedTraceModus.INCLUDE);
+		IMarkedTraces<ITrace> markedTraces = new MarkedTraces(MarkedTraceModus.INCLUDE);
+		for(int mz : ionSettingUtil.extractTraces(ionSettingUtil.deserialize(ions))) {
+			markedTraces.add(new TraceNominalMSD(mz));
+		}
+		return markedTraces;
 	}
 }

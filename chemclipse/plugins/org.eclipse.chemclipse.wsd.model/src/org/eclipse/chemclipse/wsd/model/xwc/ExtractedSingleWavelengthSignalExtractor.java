@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -13,21 +13,25 @@
 package org.eclipse.chemclipse.wsd.model.xwc;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IScan;
+import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelength;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelengths;
-import org.eclipse.chemclipse.model.wavelengths.MarkedWavelengths;
 import org.eclipse.chemclipse.numeric.core.Point;
 import org.eclipse.chemclipse.numeric.equations.Equations;
 import org.eclipse.chemclipse.numeric.equations.LinearEquation;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceRasteredWSD;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.wsd.model.core.IScanWSD;
 import org.eclipse.chemclipse.wsd.model.core.selection.IChromatogramSelectionWSD;
@@ -67,12 +71,12 @@ public class ExtractedSingleWavelengthSignalExtractor implements IExtractedSingl
 	}
 
 	@Override
-	public List<IExtractedSingleWavelengthSignals> getExtractedWavelengthSignals(int startScan, int stopScan, IMarkedWavelengths markedWavelengths) {
+	public List<IExtractedSingleWavelengthSignals> getExtractedWavelengthSignals(int startScan, int stopScan, IMarkedTraces<ITrace> markedWavelengths) {
 
 		return getExtractedWavelengthSignals(startScan, stopScan, markedWavelengths, joinSignal);
 	}
 
-	private List<IExtractedSingleWavelengthSignals> getExtractedWavelengthSignals(int startScan, int stopScan, IMarkedWavelengths markedWavelengths, boolean join) {
+	private List<IExtractedSingleWavelengthSignals> getExtractedWavelengthSignals(int startScan, int stopScan, IMarkedTraces<ITrace> markedWavelengths, boolean join) {
 
 		if(startScan > stopScan) {
 			int tmp = startScan;
@@ -87,7 +91,7 @@ public class ExtractedSingleWavelengthSignalExtractor implements IExtractedSingl
 			extractedWavelengthSignals.add(new ExtractedSingleWavelengthSignals(0, Float.NaN, chromatogram));
 			return extractedWavelengthSignals;
 		}
-		Iterator<Float> itWavelengths = markedWavelengths.getWavelengths().stream().sorted().iterator();
+		Iterator<Float> itWavelengths = markedWavelengths.stream().map(t -> (float)t.getValue()).sorted().iterator();
 		while(itWavelengths.hasNext()) {
 			float wavelength = itWavelengths.next();
 			SortedMap<Integer, IExtractedSingleWavelengthSignal> extractedSignalsMap = null;
@@ -195,26 +199,38 @@ public class ExtractedSingleWavelengthSignalExtractor implements IExtractedSingl
 	@Override
 	public List<IExtractedSingleWavelengthSignals> getExtractedWavelengthSignals() {
 
-		IMarkedWavelengths markedWavelengths = new MarkedWavelengths();
+		Set<Float> wavelengths = new HashSet<>();
 		chromatogram.getScans().forEach(s -> {
 			IScanWSD scanWSD = (IScanWSD)s;
-			scanWSD.getScanSignals().forEach(signal -> markedWavelengths.add(signal.getWavelength()));
+			scanWSD.getScanSignals().forEach(signal -> wavelengths.add(signal.getWavelength()));
 		});
-		return getExtractedWavelengthSignals(1, chromatogram.getNumberOfScans(), markedWavelengths, joinSignal);
+
+		IMarkedTraces<ITrace> markedTraces = new MarkedTraces(MarkedTraceModus.INCLUDE);
+		for(float wavelength : wavelengths) {
+			markedTraces.add(new TraceRasteredWSD(wavelength));
+		}
+
+		return getExtractedWavelengthSignals(1, chromatogram.getNumberOfScans(), markedTraces, joinSignal);
 	}
 
 	@Override
 	public List<IExtractedSingleWavelengthSignals> getExtractedWavelengthSignals(int startScan, int stopScan) {
 
-		IMarkedWavelengths markedWavelengths = new MarkedWavelengths();
+		Set<Float> wavelengths = new HashSet<>();
 		for(int i = startScan; i <= stopScan; i++) {
-			chromatogram.getScan(i).getScanSignals().forEach(signal -> markedWavelengths.add(signal.getWavelength()));
+			chromatogram.getScan(i).getScanSignals().forEach(signal -> wavelengths.add(signal.getWavelength()));
 		}
-		return getExtractedWavelengthSignals(startScan, stopScan, markedWavelengths, joinSignal);
+
+		IMarkedTraces<ITrace> markedTraces = new MarkedTraces(MarkedTraceModus.INCLUDE);
+		for(float wavelength : wavelengths) {
+			markedTraces.add(new TraceRasteredWSD(wavelength));
+		}
+
+		return getExtractedWavelengthSignals(startScan, stopScan, markedTraces, joinSignal);
 	}
 
 	@Override
-	public List<IExtractedSingleWavelengthSignals> getExtractedWavelengthSignals(IMarkedWavelengths markedWavelengths) {
+	public List<IExtractedSingleWavelengthSignals> getExtractedWavelengthSignals(IMarkedTraces<ITrace> markedWavelengths) {
 
 		return getExtractedWavelengthSignals(1, chromatogram.getNumberOfScans(), markedWavelengths, joinSignal);
 	}
@@ -226,11 +242,11 @@ public class ExtractedSingleWavelengthSignalExtractor implements IExtractedSingl
 	}
 
 	@Override
-	public Optional<IExtractedSingleWavelengthSignals> getExtractWavelengthContinuousSignal(int startScan, int stopScan, IMarkedWavelength markedWavelength) {
+	public Optional<IExtractedSingleWavelengthSignals> getExtractWavelengthContinuousSignal(int startScan, int stopScan, IMarkedTraces<ITrace> markedWavelength) {
 
-		IMarkedWavelengths markedWavelengths = new MarkedWavelengths();
-		markedWavelengths.add(markedWavelength);
-		List<IExtractedSingleWavelengthSignals> extracetedSignals = getExtractedWavelengthSignals(startScan, stopScan, markedWavelengths, joinSignal);
+		IMarkedTraces<ITrace> markedTraces = new MarkedTraces(MarkedTraceModus.INCLUDE);
+		markedTraces.addAll(markedWavelength);
+		List<IExtractedSingleWavelengthSignals> extracetedSignals = getExtractedWavelengthSignals(startScan, stopScan, markedTraces, joinSignal);
 		if(extracetedSignals.size() == 1) {
 			IExtractedSingleWavelengthSignals extracetedSignal = extracetedSignals.get(0);
 			if(extracetedSignal.getStartScan() == startScan && extracetedSignal.getStopScan() == stopScan) {
@@ -241,7 +257,7 @@ public class ExtractedSingleWavelengthSignalExtractor implements IExtractedSingl
 	}
 
 	@Override
-	public Optional<IExtractedSingleWavelengthSignals> getExtractWavelengthContinuousSignal(IMarkedWavelength markedWavelength) {
+	public Optional<IExtractedSingleWavelengthSignals> getExtractWavelengthContinuousSignal(IMarkedTraces<ITrace> markedWavelength) {
 
 		return getExtractWavelengthContinuousSignal(1, chromatogram.getNumberOfScans(), markedWavelength);
 	}

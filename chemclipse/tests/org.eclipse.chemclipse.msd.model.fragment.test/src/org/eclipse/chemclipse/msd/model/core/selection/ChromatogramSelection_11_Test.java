@@ -16,12 +16,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
 import java.util.Set;
 
 import org.easymock.EasyMock;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
-import org.eclipse.chemclipse.msd.model.core.support.IMarkedIons;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIon;
+import org.eclipse.chemclipse.msd.model.util.MarkedTracesSupportMSD;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -53,20 +55,20 @@ public class ChromatogramSelection_11_Test {
 	@Test
 	public void testGetSelectedIons_1() {
 
-		IMarkedIons selectedIons = chromatogramSelection.getSelectedIons();
+		List<ITrace> selectedIons = chromatogramSelection.getSelectedIons();
 		assertNotNull(selectedIons);
 	}
 
 	@Test
 	public void testGetSelectedIons_2() {
 
-		IMarkedIons selectedIons;
+		List<ITrace> selectedIons;
 		selectedIons = chromatogramSelection.getSelectedIons();
-		selectedIons.add(new MarkedIon(43));
-		selectedIons.add(new MarkedIon(104));
+		selectedIons.add(new TraceNominalMSD(43));
+		selectedIons.add(new TraceNominalMSD(104));
 		selectedIons = chromatogramSelection.getSelectedIons();
 		assertNotNull(selectedIons);
-		Set<Integer> selectedIonsNominal = selectedIons.getIonsNominal();
+		Set<Integer> selectedIonsNominal = MarkedTracesSupportMSD.getTracesAsInteger(selectedIons);
 		assertTrue(selectedIonsNominal.contains(43));
 		assertTrue(selectedIonsNominal.contains(104));
 		assertFalse(selectedIonsNominal.contains(42));
@@ -76,20 +78,20 @@ public class ChromatogramSelection_11_Test {
 	@Test
 	public void testGetExcludedIons_1() {
 
-		IMarkedIons excludedIons = chromatogramSelection.getExcludedIons();
+		List<ITrace> excludedIons = chromatogramSelection.getExcludedIons();
 		assertNotNull(excludedIons);
 	}
 
 	@Test
 	public void testGetExcludedIons_2() {
 
-		IMarkedIons excludedIons;
+		List<ITrace> excludedIons;
 		excludedIons = chromatogramSelection.getExcludedIons();
-		excludedIons.add(new MarkedIon(18));
-		excludedIons.add(new MarkedIon(28));
+		excludedIons.add(new TraceNominalMSD(18));
+		excludedIons.add(new TraceNominalMSD(28));
 		excludedIons = chromatogramSelection.getExcludedIons();
 		assertNotNull(excludedIons);
-		Set<Integer> excludedIonsNominal = excludedIons.getIonsNominal();
+		Set<Integer> excludedIonsNominal = MarkedTracesSupportMSD.getTracesAsInteger(excludedIons);
 		assertFalse(excludedIonsNominal.contains(43));
 		assertFalse(excludedIonsNominal.contains(104));
 		assertTrue(excludedIonsNominal.contains(18));

@@ -35,6 +35,7 @@ import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderiv
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.support.IFirstDerivativeDetectorSlope;
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.support.IFirstDerivativeDetectorSlopes;
 import org.eclipse.chemclipse.logging.core.Logger;
+import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.model.exceptions.PeakException;
@@ -44,7 +45,6 @@ import org.eclipse.chemclipse.model.signals.TotalScanSignalsModifier;
 import org.eclipse.chemclipse.model.support.INoiseSegment;
 import org.eclipse.chemclipse.model.support.IScanRange;
 import org.eclipse.chemclipse.model.support.ScanRange;
-import org.eclipse.chemclipse.model.wavelengths.IMarkedWavelengths;
 import org.eclipse.chemclipse.numeric.core.IPoint;
 import org.eclipse.chemclipse.numeric.core.Point;
 import org.eclipse.chemclipse.numeric.equations.Equations;
@@ -53,6 +53,7 @@ import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.MessageType;
 import org.eclipse.chemclipse.processing.core.ProcessingMessage;
 import org.eclipse.chemclipse.support.l10n.TranslationSupport;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramPeakWSD;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.wsd.model.core.IScanWSD;
@@ -112,9 +113,9 @@ public class PeakDetectorWSD extends BasePeakDetector implements IPeakDetectorWS
 	public List<IChromatogramPeakWSD> detectPeaks(IChromatogramSelectionWSD chromatogramSelection, PeakDetectorSettingsWSD peakDetectorSettings, List<INoiseSegment> noiseSegments, IProgressMonitor monitor) {
 
 		List<IChromatogramPeakWSD> extractPeaks = new ArrayList<>();
-		Collection<IMarkedWavelengths> filterWavelengths = peakDetectorSettings.getFilterWavelengths();
+		Collection<IMarkedTraces<ITrace>> filterWavelengths = peakDetectorSettings.getFilterWavelengths();
 		IChromatogramWSD chromatogram = chromatogramSelection.getChromatogram();
-		for(IMarkedWavelengths wavelengths : filterWavelengths) {
+		for(IMarkedTraces<ITrace> wavelengths : filterWavelengths) {
 			Threshold threshold = peakDetectorSettings.getThreshold();
 			int windowSize = peakDetectorSettings.getMovingAverageWindowSize();
 			List<IRawPeak> rawPeaks = new ArrayList<>();
@@ -187,10 +188,10 @@ public class PeakDetectorWSD extends BasePeakDetector implements IPeakDetectorWS
 	 * Builds from each raw peak a valid {@link IChromatogramPeakMSD} and adds it to the
 	 * chromatogram.
 	 */
-	private List<IChromatogramPeakWSD> extractPeaks(List<IRawPeak> rawPeaks, IChromatogramWSD chromatogram, PeakDetectorSettingsWSD peakDetectorSettings, IMarkedWavelengths wavelengths) {
+	private List<IChromatogramPeakWSD> extractPeaks(List<IRawPeak> rawPeaks, IChromatogramWSD chromatogram, PeakDetectorSettingsWSD peakDetectorSettings, IMarkedTraces<ITrace> wavelengths) {
 
 		List<IChromatogramPeakWSD> peaks = new ArrayList<>();
-		Set<Integer> traces = wavelengths.getWavelengths().stream().map(Float::intValue).collect(Collectors.toSet());
+		Set<Integer> traces = wavelengths.stream().map(t -> (int)Math.round(t.getValue())).collect(Collectors.toSet());
 		DetectorType detectorType = peakDetectorSettings.getDetectorType();
 		boolean optimizeBaseline = peakDetectorSettings.isOptimizeBaseline();
 
@@ -240,7 +241,7 @@ public class PeakDetectorWSD extends BasePeakDetector implements IPeakDetectorWS
 	/**
 	 * Initializes the slope values.
 	 */
-	public static IFirstDerivativeDetectorSlopes getFirstDerivativeSlopes(IChromatogramSelectionWSD chromatogramSelection, int windowSize, IMarkedWavelengths filterWavelengths) {
+	public static IFirstDerivativeDetectorSlopes getFirstDerivativeSlopes(IChromatogramSelectionWSD chromatogramSelection, int windowSize, IMarkedTraces<ITrace> filterWavelengths) {
 
 		IChromatogramWSD chromatogram = chromatogramSelection.getChromatogram();
 		try {
@@ -293,7 +294,7 @@ public class PeakDetectorWSD extends BasePeakDetector implements IPeakDetectorWS
 		return (peak != null); // && peak.getSignalToNoiseRatio() >= minimumSignalToNoiseRatio
 	}
 
-	protected ScanRange optimizeBaseline(IChromatogramWSD chromatogram, int startScan, int centerScan, int stopScan, IMarkedWavelengths wavelengths) {
+	protected ScanRange optimizeBaseline(IChromatogramWSD chromatogram, int startScan, int centerScan, int stopScan, IMarkedTraces<ITrace> wavelengths) {
 
 		/*
 		 * Right and left baseline optimization
@@ -304,7 +305,7 @@ public class PeakDetectorWSD extends BasePeakDetector implements IPeakDetectorWS
 		return new ScanRange(startScanOptimized, stopScanOptimized);
 	}
 
-	protected float getScanSignal(IChromatogramWSD chromatogram, int scanNumber, IMarkedWavelengths wavelengths) {
+	protected float getScanSignal(IChromatogramWSD chromatogram, int scanNumber, IMarkedTraces<ITrace> wavelengths) {
 
 		IScan scan = chromatogram.getScan(scanNumber);
 		if(scan instanceof IScanWSD scanWSD) {
@@ -313,7 +314,7 @@ public class PeakDetectorWSD extends BasePeakDetector implements IPeakDetectorWS
 		return scan.getTotalSignal();
 	}
 
-	private int optimizeRightBaseline(IChromatogramWSD chromatogram, int startScan, int centerScan, int stopScan, IMarkedWavelengths wavelengths) {
+	private int optimizeRightBaseline(IChromatogramWSD chromatogram, int startScan, int centerScan, int stopScan, IMarkedTraces<ITrace> wavelengths) {
 
 		IPoint p1 = new Point(getRetentionTime(chromatogram, startScan), getScanSignal(chromatogram, startScan, wavelengths));
 		IPoint p2 = new Point(getRetentionTime(chromatogram, stopScan), getScanSignal(chromatogram, stopScan, wavelengths));
@@ -333,7 +334,7 @@ public class PeakDetectorWSD extends BasePeakDetector implements IPeakDetectorWS
 		return stopScanOptimized;
 	}
 
-	private int optimizeLeftBaseline(IChromatogramWSD chromatogram, int startScan, int centerScan, int stopScan, IMarkedWavelengths wavelengths) {
+	private int optimizeLeftBaseline(IChromatogramWSD chromatogram, int startScan, int centerScan, int stopScan, IMarkedTraces<ITrace> wavelengths) {
 
 		IPoint p1 = new Point(getRetentionTime(chromatogram, startScan), getScanSignal(chromatogram, startScan, wavelengths));
 		IPoint p2 = new Point(getRetentionTime(chromatogram, stopScan), getScanSignal(chromatogram, stopScan, wavelengths));

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -15,10 +15,10 @@
 package org.eclipse.chemclipse.chromatogram.msd.integrator.supplier.peakmax.settings;
 
 import org.eclipse.chemclipse.chromatogram.xxd.integrator.core.settings.peaks.AbstractPeakIntegrationSettings;
-import org.eclipse.chemclipse.model.core.IMarkedTrace;
 import org.eclipse.chemclipse.model.core.IMarkedTraces;
-import org.eclipse.chemclipse.msd.model.core.support.MarkedIon;
 import org.eclipse.chemclipse.support.settings.StringSettingsProperty;
+import org.eclipse.chemclipse.support.traces.ITrace;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 import org.eclipse.chemclipse.support.util.TraceSettingUtil;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -43,10 +43,10 @@ public class PeakIntegrationSettings extends AbstractPeakIntegrationSettings {
 	 * empty, TIC will be integrated.
 	 */
 	@JsonIgnore
-	private IMarkedTraces<IMarkedTrace> markedTraces = null;
+	private IMarkedTraces<ITrace> markedTraces = null;
 
 	@Override
-	public IMarkedTraces<IMarkedTrace> getMarkedTraces() {
+	public IMarkedTraces<ITrace> getMarkedTraces() {
 
 		if(markedTraces == null) {
 			markedTraces = super.getMarkedTraces();
@@ -54,7 +54,7 @@ public class PeakIntegrationSettings extends AbstractPeakIntegrationSettings {
 				TraceSettingUtil ionSettingUtil = new TraceSettingUtil();
 				int[] ions = ionSettingUtil.extractTraces(ionSettingUtil.deserialize(ionsToIntegrate));
 				for(int ion : ions) {
-					markedTraces.add(new MarkedIon(ion));
+					markedTraces.add(new TraceNominalMSD(ion));
 				}
 			}
 		}
