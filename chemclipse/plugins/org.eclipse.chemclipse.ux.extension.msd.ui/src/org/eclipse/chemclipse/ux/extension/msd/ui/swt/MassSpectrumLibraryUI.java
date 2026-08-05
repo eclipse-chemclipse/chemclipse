@@ -83,6 +83,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 	private AtomicReference<Button> buttonToolbarSearch = new AtomicReference<>();
 	private AtomicReference<SearchSupportUI> toolbarSearch = new AtomicReference<>();
 	private AtomicReference<Button> buttonAddEntry = new AtomicReference<>();
+	private AtomicReference<Button> buttonImportExcel = new AtomicReference<>();
 	private AtomicReference<Button> buttonCleanUp = new AtomicReference<>();
 	private AtomicReference<Button> buttonDeleteEntries = new AtomicReference<>();
 	private AtomicReference<Button> buttonSelectionMergeEntries = new AtomicReference<>();
@@ -151,12 +152,13 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 		GridData gridDataStatus = new GridData(GridData.FILL_HORIZONTAL);
 		gridDataStatus.horizontalAlignment = SWT.END;
 		composite.setLayoutData(gridDataStatus);
-		composite.setLayout(new GridLayout(12, false));
+		composite.setLayout(new GridLayout(13, false));
 
 		createButtonToggleToolbarInfo(composite);
 		createButtonToggleToolbarSearch(composite);
 		createButtonLibraryImport(composite);
 		createButtonAddEntry(composite);
+		createButtonImportExcel(composite);
 		createComboDuplicateDetection(composite);
 		createButtonShowDuplicatesOnly(composite);
 		createButtonSelectionMergeEntries(composite);
@@ -286,6 +288,54 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 			}
 		});
 		buttonAddEntry.set(button);
+	}
+
+	private void createButtonImportExcel(Composite parent) {
+
+		Button button = new Button(parent, SWT.PUSH);
+		button.setToolTipText("Import data from an Excel sheet (*.xlsx) to enrich library entries.");
+		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EXCEL, IApplicationImageProvider.SIZE_16x16));
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				if(massSpectra != null) {
+					FileDialog fileDialog = new FileDialog(getShell(), SWT.READ_ONLY);
+					fileDialog.setText(LibrarySupport.DESCRIPTION);
+					fileDialog.setFilterExtensions(new String[]{LibrarySupport.FILTER_EXTENSION});
+					fileDialog.setFilterNames(new String[]{LibrarySupport.FILTER_NAME});
+					fileDialog.setFilterPath(PreferenceSupplier.getPathMassSpectrumLibraries());
+					String pathname = fileDialog.open();
+					if(pathname != null) {
+						try {
+							Map<String, Map<String, String>> dataMap = LibrarySupport.readExcelData(new File(pathname));
+							if(!dataMap.isEmpty()) {
+								int updated = LibrarySupport.update(massSpectra, dataMap);
+								setMassSpectraDirty();
+								setInput();
+								MessageBox messageBox = new MessageBox(getShell(), SWT.ICON_INFORMATION | SWT.OK);
+								messageBox.setText(LibrarySupport.DESCRIPTION);
+								messageBox.setMessage("Updated " + updated + " library entries.");
+								messageBox.open();
+							} else {
+								MessageBox messageBox = new MessageBox(getShell(), SWT.ICON_WARNING | SWT.OK);
+								messageBox.setText(LibrarySupport.DESCRIPTION);
+								messageBox.setMessage("No data found in the Excel sheet. Make sure the first row contains the column headers and the first column is 'Name'.");
+								messageBox.open();
+							}
+						} catch(Exception e1) {
+							MessageBox messageBox = new MessageBox(getShell(), SWT.ICON_ERROR | SWT.OK);
+							messageBox.setText(LibrarySupport.DESCRIPTION);
+							messageBox.setMessage("Failed to read the Excel file: " + e1.getMessage());
+							messageBox.open();
+							logger.warn(e1);
+						}
+					}
+				}
+			}
+		});
+		buttonImportExcel.set(button);
 	}
 
 	private void createComboDuplicateDetection(Composite parent) {

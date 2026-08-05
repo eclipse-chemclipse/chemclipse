@@ -12,13 +12,23 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.support;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.eclipse.chemclipse.model.columns.ISeparationColumn;
 import org.eclipse.chemclipse.model.columns.SeparationColumnFactory;
+import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.identifier.ColumnIndexMarker;
 import org.eclipse.chemclipse.model.identifier.IColumnIndexMarker;
 import org.eclipse.chemclipse.model.identifier.IFlavorMarker;
@@ -26,12 +36,145 @@ import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.support.CalculationType;
 import org.eclipse.chemclipse.msd.model.core.ICombinedMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IIon;
+import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.implementation.RegularLibraryMassSpectrum;
 import org.eclipse.chemclipse.support.model.SeparationColumnType;
 
 public class LibrarySupport {
+
+	public static final String DESCRIPTION = "Excel Library Data";
+	public static final String FILE_EXTENSION = ".xlsx";
+	public static final String FILE_NAME = DESCRIPTION.replaceAll("\\s", "") + FILE_EXTENSION;
+	public static final String FILTER_EXTENSION = "*" + FILE_EXTENSION;
+	public static final String FILTER_NAME = DESCRIPTION + " (*" + FILE_EXTENSION + ")";
+
+	public static Map<String, Map<String, String>> readExcelData(File file) throws Exception {
+
+		Map<String, Map<String, String>> dataMap = new HashMap<>();
+		try (XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(file))) {
+			Sheet sheet = workbook.getSheetAt(0);
+			if(sheet == null) {
+				return dataMap;
+			}
+			/*
+			 * Header
+			 */
+			Row headerRow = sheet.getRow(0);
+			if(headerRow == null) {
+				return dataMap;
+			}
+			/*
+			 * Column Definitions
+			 */
+			Map<Integer, String> columnHeaders = new HashMap<>();
+			for(Cell cell : headerRow) {
+				String header = getCellValueAsString(cell).trim();
+				if(!header.isEmpty()) {
+					columnHeaders.put(cell.getColumnIndex(), header);
+				}
+			}
+			/*
+			 * Data
+			 */
+			int lastRow = sheet.getLastRowNum();
+			for(int i = 1; i <= lastRow; i++) {
+				Row row = sheet.getRow(i);
+				if(row == null) {
+					continue;
+				}
+
+				Cell nameCell = row.getCell(0);
+				if(nameCell == null) {
+					continue;
+				}
+
+				String name = getCellValueAsString(nameCell).trim();
+				if(name.isEmpty()) {
+					continue;
+				}
+
+				Map<String, String> rowData = new HashMap<>();
+				int lastCell = row.getLastCellNum();
+				for(int j = 1; j < lastCell; j++) {
+					String header = columnHeaders.get(j);
+					if(header == null) {
+						continue;
+					}
+					Cell cell = row.getCell(j);
+					if(cell != null) {
+						String value = getCellValueAsString(cell).trim();
+						if(!value.isEmpty()) {
+							rowData.put(header, value);
+						}
+					}
+				}
+				/*
+				 * Validation
+				 */
+				if(!rowData.isEmpty()) {
+					dataMap.put(name, rowData);
+				}
+			}
+		}
+
+		return dataMap;
+	}
+
+	private static String getCellValueAsString(Cell cell) {
+
+		if(cell == null) {
+			return "";
+		}
+		/*
+		 * Get the cell type.
+		 */
+		CellType cellType = cell.getCellType();
+		if(cellType == CellType.FORMULA) {
+			cellType = cell.getCachedFormulaResultType();
+		}
+		/*
+		 * Extract its content.
+		 */
+		switch(cellType) {
+			case STRING:
+				return cell.getStringCellValue();
+			case NUMERIC:
+				double numericValue = cell.getNumericCellValue();
+				if(numericValue == Math.floor(numericValue) && !Double.isInfinite(numericValue)) {
+					return String.valueOf((long)numericValue);
+				}
+				return String.valueOf(numericValue);
+			case BOOLEAN:
+				return String.valueOf(cell.getBooleanCellValue());
+			default:
+				return "";
+		}
+	}
+
+	public static int update(IMassSpectra massSpectra, Map<String, Map<String, String>> dataMap) {
+
+		int updated = 0;
+		if(massSpectra == null || dataMap == null || dataMap.isEmpty()) {
+			return updated;
+		}
+		/*
+		 * Enrich the library entries.
+		 */
+		for(IScanMSD scan : massSpectra.getList()) {
+			if(scan instanceof IRegularLibraryMassSpectrum libraryMassSpectrum) {
+				ILibraryInformation libraryInformation = libraryMassSpectrum.getLibraryInformation();
+				Map<String, String> rowData = dataMap.get(libraryInformation.getName());
+				if(rowData != null && !rowData.isEmpty()) {
+					updateExcelData(libraryMassSpectrum, libraryInformation, rowData);
+					updated++;
+				}
+			}
+		}
+
+		return updated;
+	}
 
 	public static IRegularLibraryMassSpectrum merge(List<IScanMSD> libraryEntriesSource) {
 
@@ -46,6 +189,59 @@ public class LibrarySupport {
 		}
 
 		return libraryMassSpectrumMerged;
+	}
+
+	private static void updateExcelData(IRegularLibraryMassSpectrum libraryMassSpectrum, ILibraryInformation libraryInformation, Map<String, String> rowData) {
+
+		for(Map.Entry<String, String> entry : rowData.entrySet()) {
+			String value = entry.getValue();
+			if(value == null || value.isEmpty()) {
+				continue;
+			}
+			/*
+			 * Set Value
+			 */
+			switch(entry.getKey()) {
+				case "Retention Time":
+					libraryMassSpectrum.setRetentionTime((int)(parseDouble(value, 0) * IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
+					break;
+				case "Retention Index":
+					libraryMassSpectrum.setRetentionIndex((float)parseDouble(value, 0));
+					break;
+				case "CAS":
+					libraryInformation.setCasNumber(value);
+					break;
+				case "MW":
+					libraryInformation.setMolWeight(parseDouble(value, 0));
+					break;
+				case "Formula":
+					libraryInformation.setFormula(value);
+					break;
+				case "SMILES":
+					libraryInformation.setSmiles(value);
+					break;
+				case "InChI":
+					libraryInformation.setInChI(value);
+					break;
+				case "Reference Identifier":
+					libraryInformation.setReferenceIdentifier(value);
+					break;
+				case "Comments":
+					libraryInformation.setComments(value);
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
+	private static double parseDouble(String value, double def) {
+
+		try {
+			return Double.parseDouble(value);
+		} catch(NumberFormatException e) {
+			return def;
+		}
 	}
 
 	private static ICombinedMassSpectrum getCombinedMassSpectrum(List<IScanMSD> scans) {

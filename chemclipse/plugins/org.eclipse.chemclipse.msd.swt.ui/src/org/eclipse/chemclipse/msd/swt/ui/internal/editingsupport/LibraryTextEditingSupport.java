@@ -67,9 +67,6 @@ public class LibraryTextEditingSupport extends EditingSupport {
 				case MassSpectrumListUI.RETENTION_TIME:
 					object = decimalFormat.format(libraryMassSpectrum.getRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
 					break;
-				case MassSpectrumListUI.RELATIVE_RETENTION_TIME:
-					object = decimalFormat.format(libraryMassSpectrum.getRelativeRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
-					break;
 				case MassSpectrumListUI.RETENTION_INDEX:
 					object = decimalFormat.format(libraryMassSpectrum.getRetentionIndex());
 					break;
@@ -109,9 +106,6 @@ public class LibraryTextEditingSupport extends EditingSupport {
 					break;
 				case MassSpectrumListUI.RETENTION_TIME:
 					libraryMassSpectrum.setRetentionTime((int)(Double.parseDouble(value.toString()) * IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
-					break;
-				case MassSpectrumListUI.RELATIVE_RETENTION_TIME:
-					libraryMassSpectrum.setRelativeRetentionTime((int)(Double.parseDouble(value.toString()) * IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
 					break;
 				case MassSpectrumListUI.RETENTION_INDEX:
 					libraryMassSpectrum.setRetentionIndex(Float.parseFloat(value.toString()));

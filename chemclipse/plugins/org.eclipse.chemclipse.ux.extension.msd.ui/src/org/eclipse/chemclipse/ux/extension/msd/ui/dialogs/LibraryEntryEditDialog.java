@@ -150,7 +150,7 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 	@Override
 	protected Point getInitialSize() {
 
-		return new Point(700, 700);
+		return new Point(700, 800);
 	}
 
 	private void createTabGeneral(TabFolder tabFolder) {
