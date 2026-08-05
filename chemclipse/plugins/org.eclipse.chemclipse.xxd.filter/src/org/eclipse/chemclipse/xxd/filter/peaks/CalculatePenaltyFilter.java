@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -23,6 +23,7 @@ import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.identifier.PenaltyCalculationSupport;
+import org.eclipse.chemclipse.model.implementation.Scan;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.processing.Processor;
 import org.eclipse.chemclipse.processing.filter.Filter;
@@ -53,11 +54,11 @@ public class CalculatePenaltyFilter extends AbstractPeakFilter<PenaltyCalculator
 	}
 
 	@Override
-	public void filterPeaks(IChromatogramSelection chromatogramSelection, PenaltyCalculatorFilterSettings configuration, ProcessExecutionContext context) throws IllegalArgumentException {
+	public void filterPeaks(IChromatogramSelection chromatogramSelection, PenaltyCalculatorFilterSettings penaltyCalculationFilterSettings, ProcessExecutionContext context) throws IllegalArgumentException {
 
 		Collection<IPeak> peaks = getReadOnlyPeaks(chromatogramSelection);
-		if(configuration == null) {
-			configuration = createConfiguration(peaks);
+		if(penaltyCalculationFilterSettings == null) {
+			penaltyCalculationFilterSettings = createConfiguration(peaks);
 		}
 
 		SubMonitor subMonitor = SubMonitor.convert(context.getProgressMonitor(), peaks.size());
@@ -67,14 +68,20 @@ public class CalculatePenaltyFilter extends AbstractPeakFilter<PenaltyCalculator
 				IComparisonResult comparisonResult = identificationTarget.getComparisonResult();
 				ILibraryInformation libraryInformation = identificationTarget.getLibraryInformation();
 				IPeakModel peakModel = peak.getPeakModel();
-				IScan scan = peakModel.getPeakMaximum();
-				int retentionTimeUnknown = scan.getRetentionTime();
-				float retentionIndexUnknown = scan.getRetentionIndex();
-				int retentionTimeReference = libraryInformation.getRetentionTime();
-				float retentionIndexReference = libraryInformation.getRetentionIndex();
-				PenaltyCalculationSupport.applyPenalty(retentionTimeUnknown, retentionIndexUnknown, retentionTimeReference, retentionIndexReference, comparisonResult, configuration);
+				IScan unknown = peakModel.getPeakMaximum();
+				IScan reference = getReference(libraryInformation);
+				PenaltyCalculationSupport.applyPenalty(unknown, reference, comparisonResult, penaltyCalculationFilterSettings);
 			}
 			subMonitor.worked(1);
 		}
+	}
+
+	private IScan getReference(ILibraryInformation libraryInformation) {
+
+		IScan reference = new Scan(1000.0f);
+		reference.setRetentionTime(libraryInformation.getRetentionTime());
+		reference.setRetentionIndex(libraryInformation.getRetentionIndex());
+
+		return reference;
 	}
 }

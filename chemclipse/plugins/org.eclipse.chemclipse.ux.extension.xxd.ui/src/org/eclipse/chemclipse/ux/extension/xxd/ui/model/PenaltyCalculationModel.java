@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2025 Lablicate GmbH.
+ * Copyright (c) 2022, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -12,47 +12,26 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.model;
 
-import org.eclipse.chemclipse.model.identifier.PenaltyCalculation;
+import org.eclipse.chemclipse.model.identifier.IPenaltyCalculationSettings;
+import org.eclipse.chemclipse.model.identifier.PenaltyCalculationSettings;
 
 public class PenaltyCalculationModel {
 
-	private PenaltyCalculation penaltyCalculation;
-	private double referenceValue;
-	private double penaltyWindow;
-	private double penaltyLevelFactor;
-	private double maxPenalty;
-
-	public PenaltyCalculationModel(PenaltyCalculation penaltyCalculation, double referenceValue, double penaltyWindow, double penaltyLevelFactor, double maxPenalty) {
-
-		this.penaltyCalculation = penaltyCalculation;
-		this.referenceValue = referenceValue;
-		this.penaltyWindow = penaltyWindow;
-		this.penaltyLevelFactor = penaltyLevelFactor;
-		this.maxPenalty = maxPenalty;
-	}
-
-	public PenaltyCalculation getPenaltyCalculation() {
-
-		return penaltyCalculation;
-	}
+	private double referenceValue = 0.0d;
+	private IPenaltyCalculationSettings penaltyCalculationSettings = new PenaltyCalculationSettings();
 
 	public double getReferenceValue() {
 
 		return referenceValue;
 	}
 
-	public double getPenaltyWindow() {
+	public void setReferenceValue(double referenceValue) {
 
-		return penaltyWindow;
+		this.referenceValue = referenceValue;
 	}
 
-	public double getPenaltyLevelFactor() {
+	public IPenaltyCalculationSettings getPenaltyCalculationSettings() {
 
-		return penaltyLevelFactor;
-	}
-
-	public double getMaxPenalty() {
-
-		return maxPenalty;
+		return penaltyCalculationSettings;
 	}
 }
