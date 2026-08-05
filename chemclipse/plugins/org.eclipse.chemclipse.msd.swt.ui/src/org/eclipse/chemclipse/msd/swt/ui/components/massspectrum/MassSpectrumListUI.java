@@ -47,7 +47,6 @@ public class MassSpectrumListUI extends ExtendedTableViewer {
 
 	public static final String NAME = "Name";
 	public static final String RETENTION_TIME = "Retention Time";
-	public static final String RELATIVE_RETENTION_TIME = "Relative Retention Time";
 	public static final String RETENTION_INDEX = "Retention Index";
 	public static final String BASE_PEAK = "Base Peak";
 	public static final String BASE_PEAK_ABUNDANCE = "Base Peak Abundance";
@@ -63,7 +62,6 @@ public class MassSpectrumListUI extends ExtendedTableViewer {
 	private String[] titles = {//
 			NAME, //
 			RETENTION_TIME, //
-			RELATIVE_RETENTION_TIME, //
 			RETENTION_INDEX, //
 			BASE_PEAK, //
 			BASE_PEAK_ABUNDANCE, //
@@ -78,7 +76,6 @@ public class MassSpectrumListUI extends ExtendedTableViewer {
 	};
 	private int[] bounds = {//
 			300, //
-			100, //
 			100, //
 			100, //
 			100, //

@@ -109,14 +109,7 @@ public class MassSpectrumListLabelProvider extends AbstractChemClipseLabelProvid
 					text = decimalFormat.format(massSpectrum.getRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
 				}
 				break;
-			case 2: // RRT
-				if(massSpectrum.getRelativeRetentionTime() == 0) {
-					text = "0";
-				} else {
-					text = decimalFormat.format(massSpectrum.getRelativeRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
-				}
-				break;
-			case 3: // RI
+			case 2: // RI
 				int retentionIndexNoPrecision = (int)massSpectrum.getRetentionIndex();
 				if(retentionIndexNoPrecision == massSpectrum.getRetentionIndex()) {
 					text = Integer.toString(retentionIndexNoPrecision);
@@ -128,7 +121,7 @@ public class MassSpectrumListLabelProvider extends AbstractChemClipseLabelProvid
 					}
 				}
 				break;
-			case 4: // Base Peak
+			case 3: // Base Peak
 				int basePeakNoPrecision = (int)massSpectrum.getBasePeak();
 				if(basePeakNoPrecision == massSpectrum.getBasePeak()) {
 					text = Integer.toString(basePeakNoPrecision);
@@ -136,7 +129,7 @@ public class MassSpectrumListLabelProvider extends AbstractChemClipseLabelProvid
 					text = decimalFormat.format(massSpectrum.getBasePeak());
 				}
 				break;
-			case 5: // Base Peak Abundance
+			case 4: // Base Peak Abundance
 				int basePeakAbundanceNoPrecision = (int)massSpectrum.getBasePeakAbundance();
 				if(basePeakAbundanceNoPrecision == massSpectrum.getBasePeakAbundance()) {
 					text = Integer.toString(basePeakAbundanceNoPrecision);
@@ -144,15 +137,15 @@ public class MassSpectrumListLabelProvider extends AbstractChemClipseLabelProvid
 					text = decimalFormat.format(massSpectrum.getBasePeakAbundance());
 				}
 				break;
-			case 6: // Number of Ions
+			case 5: // Number of Ions
 				text = Integer.toString(massSpectrum.getNumberOfIons());
 				break;
-			case 7: // CAS
+			case 6: // CAS
 				if(libraryInformation != null) {
 					text = libraryInformation.getCasNumber();
 				}
 				break;
-			case 8: // MW
+			case 7: // MW
 				if(libraryInformation != null) {
 					int molWeightNoPrecision = (int)libraryInformation.getMolWeight();
 					if(molWeightNoPrecision == libraryInformation.getMolWeight()) {
@@ -162,27 +155,27 @@ public class MassSpectrumListLabelProvider extends AbstractChemClipseLabelProvid
 					}
 				}
 				break;
-			case 9: // Formula
+			case 8: // Formula
 				if(libraryInformation != null) {
 					text = libraryInformation.getFormula();
 				}
 				break;
-			case 10:
+			case 9:
 				if(libraryInformation != null) {
 					text = libraryInformation.getSmiles();
 				}
 				break;
-			case 11:
+			case 10:
 				if(libraryInformation != null) {
 					text = libraryInformation.getInChI();
 				}
 				break;
-			case 12: // Reference Identifier
+			case 11: // Reference Identifier
 				if(libraryInformation != null) {
 					text = libraryInformation.getReferenceIdentifier();
 				}
 				break;
-			case 13:
+			case 12:
 				if(libraryInformation != null) {
 					text = libraryInformation.getComments();
 				}
