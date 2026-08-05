@@ -22,8 +22,10 @@ import org.eclipse.chemclipse.model.core.IChromatogramPeak;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IPeakModel;
 import org.eclipse.chemclipse.model.core.IScan;
+import org.eclipse.chemclipse.model.identifier.IPenaltyCalculationSettings;
 import org.eclipse.chemclipse.model.identifier.PenaltyCalculation;
 import org.eclipse.chemclipse.model.identifier.PenaltyCalculationSupport;
+import org.eclipse.chemclipse.model.implementation.Scan;
 import org.eclipse.chemclipse.model.support.RetentionIndexMap;
 import org.eclipse.chemclipse.support.text.ValueFormat;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
@@ -133,7 +135,8 @@ public class PenaltyCalculationChart extends ChromatogramChart {
 		unknownListener.reset();
 
 		if(penaltyCalculationModel != null && peak != null) {
-			PenaltyCalculation penaltyCalculation = penaltyCalculationModel.getPenaltyCalculation();
+			IPenaltyCalculationSettings penaltyCalculationSettings = penaltyCalculationModel.getPenaltyCalculationSettings();
+			PenaltyCalculation penaltyCalculation = penaltyCalculationSettings.getPenaltyCalculation();
 			switch(penaltyCalculation) {
 				case RETENTION_TIME_MS:
 					displayRetentionTimePenalty(false);
@@ -179,15 +182,15 @@ public class PenaltyCalculationChart extends ChromatogramChart {
 		} else {
 			labelUnknown += Integer.toString(retentionTimeUnknown) + " [ms]";
 		}
-		double penaltyWindow = penaltyCalculationModel.getPenaltyWindow();
-		double penaltyLevelFactor = penaltyCalculationModel.getPenaltyLevelFactor();
-		double maxPenalty = penaltyCalculationModel.getMaxPenalty();
-		double penalty;
-		if(useMinutes) {
-			penalty = PenaltyCalculationSupport.calculatePenalty(retentionTimeMinutesUnknown, retentionTimeMinutesReference, penaltyWindow, penaltyLevelFactor, maxPenalty);
-		} else {
-			penalty = PenaltyCalculationSupport.calculatePenalty(retentionTimeUnknown, retentionTimeReference, penaltyWindow, penaltyLevelFactor, maxPenalty);
-		}
+		/*
+		 * Calculate
+		 */
+		IPenaltyCalculationSettings penaltyCalculationSettings = penaltyCalculationModel.getPenaltyCalculationSettings();
+		IScan unknown = new Scan(1000.0f);
+		unknown.setRetentionTime(retentionTimeUnknown);
+		IScan reference = new Scan(1000.0f);
+		reference.setRetentionTime(retentionTimeReference);
+		double penalty = PenaltyCalculationSupport.calculatePenalty(unknown, reference, penaltyCalculationSettings);
 		String labelPenalty = "-" + decimalFormat.format(penalty) + "%";
 		/*
 		 * Marker
@@ -210,30 +213,40 @@ public class PenaltyCalculationChart extends ChromatogramChart {
 				int retentionTimeUnknown = peakMaximum.getRetentionTime();
 				String labelUnknown = "Unknown RI: " + (int)retentionIndexUnknown;
 				unknownListener.setData(retentionTimeUnknown, labelUnknown, "-- %");
-
 				double retentionIndexReference = penaltyCalculationModel.getReferenceValue();
-				int retentionTimeReference = retentionIndexMap.getRetentionTime((int)retentionIndexReference);
-				if(retentionTimeReference > -1) {
-					/*
-					 * Reference
-					 */
-					String labelReference = "Reference RI: " + (int)retentionIndexReference;
-					double penaltyWindow = penaltyCalculationModel.getPenaltyWindow();
-					double penaltyLevelFactor = penaltyCalculationModel.getPenaltyLevelFactor();
-					double maxPenalty = penaltyCalculationModel.getMaxPenalty();
-					double penalty = PenaltyCalculationSupport.calculatePenalty(retentionIndexUnknown, retentionIndexReference, penaltyWindow, penaltyLevelFactor, maxPenalty);
-					DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0.000");
-					String labelPenalty = "-" + decimalFormat.format(penalty) + "%";
-					/*
-					 * Marker
-					 * Adjust retention time if the RI is the same. Deviation could occur due to rounding operations.
-					 */
-					retentionTimeReference = ((int)retentionIndexUnknown == (int)retentionIndexReference) ? retentionTimeUnknown : retentionTimeReference;
-					referenceListener.setData(retentionTimeReference, labelReference, "100%");
-					unknownListener.setData(retentionTimeUnknown, labelUnknown, labelPenalty);
+				if(retentionIndexReference == 0) {
+					showPenalty(retentionTimeUnknown, 0, retentionIndexUnknown, (float)retentionIndexReference, labelUnknown);
+				} else {
+					int retentionTimeReference = retentionIndexMap.getRetentionTime((int)retentionIndexReference);
+					if(retentionTimeReference > -1) {
+						showPenalty(retentionTimeUnknown, retentionTimeReference, retentionIndexUnknown, (float)retentionIndexReference, labelUnknown);
+					}
 				}
 			}
 		}
+	}
+
+	private void showPenalty(int retentionTimeUnknown, int retentionTimeReference, float retentionIndexUnknown, float retentionIndexReference, String labelUnknown) {
+
+		/*
+		 * Reference
+		 */
+		String labelReference = "Reference RI: " + (int)retentionIndexReference;
+		IPenaltyCalculationSettings penaltyCalculationSettings = penaltyCalculationModel.getPenaltyCalculationSettings();
+		IScan unknown = new Scan(1000.0f);
+		unknown.setRetentionIndex(retentionIndexUnknown);
+		IScan reference = new Scan(1000.0f);
+		reference.setRetentionIndex(retentionIndexReference);
+		double penalty = PenaltyCalculationSupport.calculatePenalty(unknown, reference, penaltyCalculationSettings);
+		DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0.000");
+		String labelPenalty = "-" + decimalFormat.format(penalty) + "%";
+		/*
+		 * Marker
+		 * Adjust retention time if the RI is the same. Deviation could occur due to rounding operations.
+		 */
+		retentionTimeReference = ((int)retentionIndexUnknown == (int)retentionIndexReference) ? retentionTimeUnknown : retentionTimeReference;
+		referenceListener.setData(retentionTimeReference, labelReference, "100%");
+		unknownListener.setData(retentionTimeUnknown, labelUnknown, labelPenalty);
 	}
 
 	private double[] adjust(double[] series, double start, double stop) {

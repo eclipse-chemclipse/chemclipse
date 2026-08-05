@@ -30,15 +30,35 @@ public class PenaltyCalculationSupport {
 	 */
 	public static void applyPenalty(IScan unknown, IScan reference, IComparisonResult comparisonResult, IPenaltyCalculationSettings penaltyCalculationSettings) {
 
+		/*
+		 * Apply the penalty on demand.
+		 */
+		float penalty = calculatePenalty(unknown, reference, penaltyCalculationSettings);
+		if(penalty > 0.0f) {
+			comparisonResult.setPenalty(penalty);
+		}
+	}
+
+	/**
+	 * Calculate the penalty. It is always between 0 and 100.
+	 * 
+	 * @param unknown
+	 * @param reference
+	 * @param penaltyCalculationSettings
+	 * @return float
+	 */
+	public static float calculatePenalty(IScan unknown, IScan reference, IPenaltyCalculationSettings penaltyCalculationSettings) {
+
 		int retentionTimeUnknown = unknown.getRetentionTime();
 		float retentionIndexUnknown = unknown.getRetentionIndex();
 		int retentionTimeReference = reference.getRetentionTime();
 		float retentionIndexReference = reference.getRetentionIndex();
-		applyPenalty(retentionTimeUnknown, retentionIndexUnknown, retentionTimeReference, retentionIndexReference, comparisonResult, penaltyCalculationSettings);
+
+		return calculatePenalty(retentionTimeUnknown, retentionIndexUnknown, retentionTimeReference, retentionIndexReference, penaltyCalculationSettings);
 	}
 
 	/**
-	 * Calculate and apply the penalty on demand.
+	 * Calculate the penalty.
 	 * 
 	 * @param retentionTimeUnknown
 	 * @param retentionIndexUnknown
@@ -47,29 +67,52 @@ public class PenaltyCalculationSupport {
 	 * @param comparisonResult
 	 * @param penaltyCalculationSettings
 	 */
-	public static void applyPenalty(int retentionTimeUnknown, float retentionIndexUnknown, int retentionTimeReference, float retentionIndexReference, IComparisonResult comparisonResult, IPenaltyCalculationSettings penaltyCalculationSettings) {
+	private static float calculatePenalty(int retentionTimeUnknown, float retentionIndexUnknown, int retentionTimeReference, float retentionIndexReference, IPenaltyCalculationSettings penaltyCalculationSettings) {
 
-		final float penalty;
+		float penalty = 0.0f;
 		switch(penaltyCalculationSettings.getPenaltyCalculation()) {
 			case RETENTION_TIME_MS:
-				penalty = (float)calculatePenalty(retentionTimeUnknown, retentionTimeReference, penaltyCalculationSettings.getPenaltyWindow(), penaltyCalculationSettings.getPenaltyLevelFactor(), penaltyCalculationSettings.getMaxPenalty());
+				if(retentionTimeUnknown > 0) {
+					if(retentionTimeReference > 0) {
+						penalty = (float)calculatePenalty(retentionTimeUnknown, retentionTimeReference, penaltyCalculationSettings.getPenaltyWindow(), penaltyCalculationSettings.getPenaltyLevelFactor(), penaltyCalculationSettings.getMaxPenalty());
+					} else {
+						penalty = penaltyCalculationSettings.getPenaltyMissingReference();
+					}
+				}
 				break;
 			case RETENTION_TIME_MIN:
-				penalty = (float)calculatePenalty(retentionTimeUnknown / IChromatogramOverview.MINUTE_CORRELATION_FACTOR, retentionTimeReference / IChromatogramOverview.MINUTE_CORRELATION_FACTOR, penaltyCalculationSettings.getPenaltyWindow(), penaltyCalculationSettings.getPenaltyLevelFactor(), penaltyCalculationSettings.getMaxPenalty());
+				if(retentionTimeUnknown > 0) {
+					if(retentionTimeReference > 0) {
+						penalty = (float)calculatePenalty(retentionTimeUnknown / IChromatogramOverview.MINUTE_CORRELATION_FACTOR, retentionTimeReference / IChromatogramOverview.MINUTE_CORRELATION_FACTOR, penaltyCalculationSettings.getPenaltyWindow(), penaltyCalculationSettings.getPenaltyLevelFactor(), penaltyCalculationSettings.getMaxPenalty());
+					} else {
+						penalty = penaltyCalculationSettings.getPenaltyMissingReference();
+					}
+				}
 				break;
 			case RETENTION_INDEX:
-				penalty = (float)calculatePenalty(retentionIndexUnknown, retentionIndexReference, penaltyCalculationSettings.getPenaltyWindow(), penaltyCalculationSettings.getPenaltyLevelFactor(), penaltyCalculationSettings.getMaxPenalty());
+				if(retentionIndexUnknown > 0) {
+					if(retentionIndexReference > 0) {
+						penalty = (float)calculatePenalty(retentionIndexUnknown, retentionIndexReference, penaltyCalculationSettings.getPenaltyWindow(), penaltyCalculationSettings.getPenaltyLevelFactor(), penaltyCalculationSettings.getMaxPenalty());
+					} else {
+						penalty = penaltyCalculationSettings.getPenaltyMissingReference();
+					}
+				}
 				break;
 			default:
-				penalty = 0.0f;
 				break;
 		}
 		/*
-		 * Apply the penalty on demand.
+		 * Validation
 		 */
-		if(penalty != 0.0f) {
-			comparisonResult.setPenalty(penalty);
+		if(penalty < 0) {
+			penalty = 0;
+		} else if(penalty > 100) {
+			penalty = 100;
 		}
+		/*
+		 * Calculated Penalty
+		 */
+		return penalty;
 	}
 
 	/**
@@ -82,7 +125,7 @@ public class PenaltyCalculationSupport {
 	 * @param maxPenalty
 	 * @return double
 	 */
-	public static double calculatePenalty(double valueUnknown, double valueReference, double valueWindow, double penaltyCalculationLevelFactor, double maxPenalty) {
+	private static double calculatePenalty(double valueUnknown, double valueReference, double valueWindow, double penaltyCalculationLevelFactor, double maxPenalty) {
 
 		/*
 		 * Checks

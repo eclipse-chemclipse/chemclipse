@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -17,18 +17,8 @@ import org.eclipse.chemclipse.support.settings.FloatSettingsProperty;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 
-public class AbstractIdentifierDeltaPenaltyCalculationSettings extends AbstractIdentifierSettings implements IPenaltyCalculationSettings, IDeltaCalculationSettings {
+public class AbstractIdentifierDeltaPenaltyCalculationSettings extends AbstractIdentifierDeltaCalculationSettings implements IPenaltyCalculationSettings {
 
-	/**
-	 * Delta Calculation
-	 */
-	@JsonProperty(value = "Delta Calculation", defaultValue = "NONE")
-	@JsonPropertyDescription(value = "Select the strategy, how delta windows are applied to exclude peaks from the identification.")
-	private DeltaCalculation deltaCalculation = DeltaCalculation.NONE;
-	@JsonProperty(value = "Delta Window", defaultValue = "0")
-	@JsonPropertyDescription(value = "Identify the peak if the unknown is inside of the delta window (delta -/+).")
-	@FloatSettingsProperty(minValue = MIN_DELTA_WINDOW, maxValue = MAX_DELTA_WINDOW)
-	private float deltaWindow = 0.0f;
 	/**
 	 * Penalty Calculation
 	 */
@@ -47,30 +37,10 @@ public class AbstractIdentifierDeltaPenaltyCalculationSettings extends AbstractI
 	@JsonPropertyDescription(value = "The max penalty. Values between 0 (no penalty) and 100 (max penalty) are allowed.")
 	@FloatSettingsProperty(minValue = MIN_PENALTY_MATCH_FACTOR, maxValue = MAX_PENALTY_MATCH_FACTOR)
 	private float maxPenalty = DEF_PENALTY_MATCH_FACTOR;
-
-	@Override
-	public DeltaCalculation getDeltaCalculation() {
-
-		return deltaCalculation;
-	}
-
-	@Override
-	public void setDeltaCalculation(DeltaCalculation deltaCalculation) {
-
-		this.deltaCalculation = deltaCalculation;
-	}
-
-	@Override
-	public float getDeltaWindow() {
-
-		return deltaWindow;
-	}
-
-	@Override
-	public void setDeltaWindow(float deltaWindow) {
-
-		this.deltaWindow = deltaWindow;
-	}
+	@JsonProperty(value = "Penalty Missing Reference", defaultValue = "0")
+	@JsonPropertyDescription(value = "If for example the reference retention index is not available, add the given penalty. Values between 0 (no penalty) and 100 (max penalty) are allowed.")
+	@FloatSettingsProperty(minValue = MIN_PENALTY_MATCH_FACTOR, maxValue = MAX_PENALTY_MATCH_FACTOR)
+	private float penaltyMissingReference = 0;
 
 	@Override
 	public PenaltyCalculation getPenaltyCalculation() {
@@ -118,5 +88,17 @@ public class AbstractIdentifierDeltaPenaltyCalculationSettings extends AbstractI
 	public void setMaxPenalty(float maxPenalty) {
 
 		this.maxPenalty = maxPenalty;
+	}
+
+	@Override
+	public float getPenaltyMissingReference() {
+
+		return penaltyMissingReference;
+	}
+
+	@Override
+	public void setPenaltyMissingReference(float penaltyMissingReference) {
+
+		this.penaltyMissingReference = penaltyMissingReference;
 	}
 }

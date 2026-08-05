@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -43,6 +43,10 @@ public class PenaltyCalculatorFilterSettings implements IPenaltyCalculationSetti
 	@JsonPropertyDescription(value = "The max penalty. Values between 0 (no penalty) and 100 (max penalty) are allowed.")
 	@FloatSettingsProperty(minValue = IPenaltyCalculationSettings.MIN_PENALTY_MATCH_FACTOR, maxValue = IPenaltyCalculationSettings.MAX_PENALTY_MATCH_FACTOR)
 	private float maxPenalty = IPenaltyCalculationSettings.DEF_PENALTY_MATCH_FACTOR;
+	@JsonProperty(value = "Penalty Missing Reference", defaultValue = "0")
+	@JsonPropertyDescription(value = "If for example the reference retention index is not available, add the given penalty. Values between 0 (no penalty) and 100 (max penalty) are allowed.")
+	@FloatSettingsProperty(minValue = MIN_PENALTY_MATCH_FACTOR, maxValue = MAX_PENALTY_MATCH_FACTOR)
+	private float penaltyMissingReference = 0;
 
 	@Override
 	public PenaltyCalculation getPenaltyCalculation() {
@@ -90,6 +94,18 @@ public class PenaltyCalculatorFilterSettings implements IPenaltyCalculationSetti
 	public void setMaxPenalty(float maxPenalty) {
 
 		this.maxPenalty = maxPenalty;
+	}
+
+	@Override
+	public float getPenaltyMissingReference() {
+
+		return penaltyMissingReference;
+	}
+
+	@Override
+	public void setPenaltyMissingReference(float penaltyMissingReference) {
+
+		this.penaltyMissingReference = penaltyMissingReference;
 	}
 
 	@Override

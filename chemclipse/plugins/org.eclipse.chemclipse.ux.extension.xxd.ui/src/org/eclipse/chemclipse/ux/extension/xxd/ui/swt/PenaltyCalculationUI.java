@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import org.eclipse.chemclipse.model.identifier.IPenaltyCalculationSettings;
 import org.eclipse.chemclipse.model.identifier.PenaltyCalculation;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
@@ -42,16 +44,16 @@ import org.eclipse.swt.widgets.Text;
 
 public class PenaltyCalculationUI extends Composite {
 
-	private Button buttonClipboard;
-	private ComboViewer comboViewerPenaltyCalculation;
-	private Text textReferenceValue;
-	private Text textPenaltyWindow;
-	private Spinner spinnerPenaltyLevelFactor;
-	private Spinner spinnerMaxPenalty;
-	private Button buttonCalculate;
+	private AtomicReference<Button> buttonClipboard = new AtomicReference<>();
+	private AtomicReference<ComboViewer> comboViewerPenaltyCalculation = new AtomicReference<>();
+	private AtomicReference<Text> textReferenceValue = new AtomicReference<>();
+	private AtomicReference<Text> textPenaltyWindow = new AtomicReference<>();
+	private AtomicReference<Spinner> spinnerPenaltyLevelFactor = new AtomicReference<>();
+	private AtomicReference<Spinner> spinnerMaxPenalty = new AtomicReference<>();
+	private AtomicReference<Spinner> spinnerPenaltyMissingReference = new AtomicReference<>();
+	private AtomicReference<Button> buttonCalculate = new AtomicReference<>();
 
-	private PenaltyCalculationModel penaltyCalculationModel;
-
+	private PenaltyCalculationModel penaltyCalculationModel = new PenaltyCalculationModel();
 	private IUpdateListener updateListener;
 
 	public PenaltyCalculationUI(Composite parent, int style) {
@@ -72,32 +74,34 @@ public class PenaltyCalculationUI extends Composite {
 
 	private void createControl() {
 
-		GridLayout gridLayout = new GridLayout(7, false);
+		GridLayout gridLayout = new GridLayout(8, false);
 		gridLayout.marginWidth = 0;
 		gridLayout.marginLeft = 0;
 		gridLayout.marginRight = 0;
 		setLayout(gridLayout);
 
-		buttonClipboard = createButtonClipboard(this);
-		comboViewerPenaltyCalculation = createComboViewer(this);
-		textReferenceValue = createText(this, "Reference", 0.0d);
-		textPenaltyWindow = createText(this, "Penalty Window", 10.0d);
-		spinnerPenaltyLevelFactor = createSpinnerPenaltyLevelFactor();
-		spinnerMaxPenalty = createSpinnerMaxPenalty();
-		buttonCalculate = createButtonCalculate(this);
+		createButtonClipboard(this);
+		createComboViewer(this);
+		createTextReferenceValue(this);
+		createTextPenaltyWindow(this);
+		createSpinnerPenaltyLevelFactor(this);
+		createSpinnerMaxPenalty(this);
+		createSpinnerPenaltyMissingReference(this);
+		createButtonCalculate(this);
 
 		initialize();
 	}
 
 	private void initialize() {
 
-		comboViewerPenaltyCalculation.setInput(PenaltyCalculation.values());
-		comboViewerPenaltyCalculation.getCombo().select(0);
+		ComboViewer comboViewer = comboViewerPenaltyCalculation.get();
+		comboViewer.setInput(PenaltyCalculation.values());
+		comboViewer.getCombo().select(0);
 
 		updateWidgets();
 	}
 
-	private Button createButtonClipboard(Composite parent) {
+	private void createButtonClipboard(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Copy settings to clipboard");
@@ -119,15 +123,15 @@ public class PenaltyCalculationUI extends Composite {
 				String penaltyWindow;
 				switch(penaltyCalculation) {
 					case RETENTION_TIME_MS:
-						int retentionTimeMilliseconds = (int)getValue(textPenaltyWindow);
+						int retentionTimeMilliseconds = (int)getValueText(textPenaltyWindow);
 						penaltyWindow = Integer.toString(retentionTimeMilliseconds);
 						break;
 					case RETENTION_TIME_MIN:
-						double retentionTimeMinutes = getValue(textPenaltyWindow);
+						double retentionTimeMinutes = getValueText(textPenaltyWindow);
 						penaltyWindow = Double.toString(retentionTimeMinutes);
 						break;
 					case RETENTION_INDEX:
-						double retentionIndex = getValue(textPenaltyWindow);
+						double retentionIndex = getValueText(textPenaltyWindow);
 						penaltyWindow = Double.toString(retentionIndex);
 						break;
 					default:
@@ -138,11 +142,14 @@ public class PenaltyCalculationUI extends Composite {
 				builder.append(lineDelimiter);
 
 				builder.append("Penalty Calculation Level Factor: ");
-				builder.append(getValue(spinnerPenaltyLevelFactor));
+				builder.append(getValueSpinner(spinnerPenaltyLevelFactor));
 				builder.append(lineDelimiter);
 
 				builder.append("Max Penalty: ");
-				builder.append(getValue(spinnerMaxPenalty));
+				builder.append(getValueSpinner(spinnerMaxPenalty));
+
+				builder.append("Penalty Missing Reference: ");
+				builder.append(getValueSpinner(spinnerPenaltyMissingReference));
 
 				Object[] data = new Object[]{builder.toString()};
 
@@ -154,10 +161,10 @@ public class PenaltyCalculationUI extends Composite {
 			}
 		});
 
-		return button;
+		buttonClipboard.set(button);
 	}
 
-	private ComboViewer createComboViewer(Composite parent) {
+	private void createComboViewer(Composite parent) {
 
 		ComboViewer comboViewer = new ComboViewer(parent, SWT.READ_ONLY);
 		Combo combo = comboViewer.getCombo();
@@ -186,7 +193,17 @@ public class PenaltyCalculationUI extends Composite {
 			}
 		});
 
-		return comboViewer;
+		comboViewerPenaltyCalculation.set(comboViewer);
+	}
+
+	private void createTextReferenceValue(Composite parent) {
+
+		textReferenceValue.set(createText(parent, "Reference", 0.0d));
+	}
+
+	private void createTextPenaltyWindow(Composite parent) {
+
+		textPenaltyWindow.set(createText(this, "Penalty Window", 10.0d));
 	}
 
 	private Text createText(Composite parent, String tooltip, double selection) {
@@ -211,20 +228,28 @@ public class PenaltyCalculationUI extends Composite {
 		return text;
 	}
 
-	private Spinner createSpinnerPenaltyLevelFactor() {
+	private void createSpinnerPenaltyLevelFactor(Composite parent) {
 
 		int min = (int)IPenaltyCalculationSettings.MIN_PENALTY_LEVEL_FACTOR;
 		int max = (int)IPenaltyCalculationSettings.MAX_PENALTY_LEVEL_FACTOR;
 		int selection = (int)IPenaltyCalculationSettings.DEF_PENALTY_LEVEL_FACTOR;
-		return createSpinner(this, "Penalty Level Factor", min, max, selection);
+		spinnerPenaltyLevelFactor.set(createSpinner(parent, "Penalty Level Factor", min, max, selection));
 	}
 
-	private Spinner createSpinnerMaxPenalty() {
+	private void createSpinnerMaxPenalty(Composite parent) {
 
 		int min = (int)IPenaltyCalculationSettings.MIN_PENALTY_MATCH_FACTOR;
 		int max = (int)IPenaltyCalculationSettings.MAX_PENALTY_MATCH_FACTOR;
 		int selection = (int)IPenaltyCalculationSettings.DEF_PENALTY_MATCH_FACTOR;
-		return createSpinner(this, "Max Penalty", min, max, selection);
+		spinnerMaxPenalty.set(createSpinner(parent, "Max Penalty", min, max, selection));
+	}
+
+	private void createSpinnerPenaltyMissingReference(Composite parent) {
+
+		int min = (int)IPenaltyCalculationSettings.MIN_PENALTY_MATCH_FACTOR;
+		int max = (int)IPenaltyCalculationSettings.MAX_PENALTY_MATCH_FACTOR;
+		int selection = 0;
+		spinnerPenaltyMissingReference.set(createSpinner(parent, "Penalty Missing Reference", min, max, selection));
 	}
 
 	private Spinner createSpinner(Composite parent, String tooltip, int min, int max, int selection) {
@@ -261,7 +286,7 @@ public class PenaltyCalculationUI extends Composite {
 		return spinner;
 	}
 
-	private Button createButtonCalculate(Composite parent) {
+	private void createButtonCalculate(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
 		button.setToolTipText("Calculate");
@@ -275,12 +300,12 @@ public class PenaltyCalculationUI extends Composite {
 			}
 		});
 
-		return button;
+		buttonCalculate.set(button);
 	}
 
 	private PenaltyCalculation getPenaltySelection() {
 
-		Object object = comboViewerPenaltyCalculation.getStructuredSelection().getFirstElement();
+		Object object = comboViewerPenaltyCalculation.get().getStructuredSelection().getFirstElement();
 		if(object instanceof PenaltyCalculation penaltyCalculation) {
 			return penaltyCalculation;
 		}
@@ -290,7 +315,11 @@ public class PenaltyCalculationUI extends Composite {
 
 	private boolean validate() {
 
-		return getValue(textReferenceValue) != -1 && getValue(textPenaltyWindow) != -1 && getValue(spinnerPenaltyLevelFactor) != -1 && getValue(spinnerMaxPenalty) != -1;
+		return getValueText(textReferenceValue) != -1 && //
+				getValueText(textPenaltyWindow) != -1 && //
+				getValueSpinner(spinnerPenaltyLevelFactor) != -1 && //
+				getValueSpinner(spinnerMaxPenalty) != -1 && //
+				getValueSpinner(spinnerPenaltyMissingReference) != -1;
 	}
 
 	private void updateWidgets() {
@@ -300,13 +329,13 @@ public class PenaltyCalculationUI extends Composite {
 
 		switch(penaltyCalculation) {
 			case RETENTION_TIME_MS:
-				textReferenceValue.setToolTipText("Retention Time Reference [min]");
+				textReferenceValue.get().setToolTipText("Retention Time Reference [min]");
 				break;
 			case RETENTION_TIME_MIN:
-				textReferenceValue.setToolTipText("Retention Time Reference [min]");
+				textReferenceValue.get().setToolTipText("Retention Time Reference [min]");
 				break;
 			case RETENTION_INDEX:
-				textReferenceValue.setToolTipText("Retention Index Reference");
+				textReferenceValue.get().setToolTipText("Retention Index Reference");
 				break;
 			default:
 				enabled = false;
@@ -319,48 +348,49 @@ public class PenaltyCalculationUI extends Composite {
 
 	private void updateWidgets(boolean enabled) {
 
-		buttonClipboard.setEnabled(enabled);
-		textReferenceValue.setEnabled(enabled);
-		textPenaltyWindow.setEnabled(enabled);
-		spinnerPenaltyLevelFactor.setEnabled(enabled);
-		spinnerMaxPenalty.setEnabled(enabled);
-		buttonCalculate.setEnabled(enabled);
+		buttonClipboard.get().setEnabled(enabled);
+		textReferenceValue.get().setEnabled(enabled);
+		textPenaltyWindow.get().setEnabled(enabled);
+		spinnerPenaltyLevelFactor.get().setEnabled(enabled);
+		spinnerMaxPenalty.get().setEnabled(enabled);
+		spinnerPenaltyMissingReference.get().setEnabled(enabled);
+		buttonCalculate.get().setEnabled(enabled);
 	}
 
 	private boolean updateButtons() {
 
 		boolean enabled = validate();
-		buttonClipboard.setEnabled(enabled);
-		buttonCalculate.setEnabled(enabled);
+		buttonClipboard.get().setEnabled(enabled);
+		buttonCalculate.get().setEnabled(enabled);
 		return enabled;
 	}
 
 	private void calculate() {
 
-		penaltyCalculationModel = null;
 		if(updateButtons()) {
-			PenaltyCalculation penaltyCalculation = getPenaltySelection();
-			double referenceValue = getValue(textReferenceValue);
-			double penaltyWindow = getValue(textPenaltyWindow);
-			double penaltyLevelFactor = getValue(spinnerPenaltyLevelFactor);
-			double maxPenalty = getValue(spinnerMaxPenalty);
-			penaltyCalculationModel = new PenaltyCalculationModel(penaltyCalculation, referenceValue, penaltyWindow, penaltyLevelFactor, maxPenalty);
+			penaltyCalculationModel.setReferenceValue(getValueText(textReferenceValue));
+			IPenaltyCalculationSettings penaltyCalculationSettings = penaltyCalculationModel.getPenaltyCalculationSettings();
+			penaltyCalculationSettings.setPenaltyCalculation(getPenaltySelection());
+			penaltyCalculationSettings.setPenaltyWindow(getValueText(textPenaltyWindow));
+			penaltyCalculationSettings.setPenaltyLevelFactor(getValueSpinner(spinnerPenaltyLevelFactor));
+			penaltyCalculationSettings.setMaxPenalty(getValueSpinner(spinnerMaxPenalty));
+			penaltyCalculationSettings.setPenaltyMissingReference(getValueSpinner(spinnerPenaltyMissingReference));
 			fireUpdate();
 		}
 	}
 
-	private double getValue(Text text) {
+	private float getValueText(AtomicReference<Text> text) {
 
 		try {
-			return Double.parseDouble(text.getText().trim());
+			return (float)Double.parseDouble(text.get().getText().trim());
 		} catch(NumberFormatException e) {
 			return -1;
 		}
 	}
 
-	private double getValue(Spinner spinner) {
+	private float getValueSpinner(AtomicReference<Spinner> spinner) {
 
-		return spinner.getSelection();
+		return (float)spinner.get().getSelection();
 	}
 
 	private void fireUpdate() {
