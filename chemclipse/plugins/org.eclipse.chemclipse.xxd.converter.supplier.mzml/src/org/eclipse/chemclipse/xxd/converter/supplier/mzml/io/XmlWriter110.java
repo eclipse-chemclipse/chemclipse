@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
@@ -437,22 +437,23 @@ public class XmlWriter110 {
 		BinaryDataArrayType binaryDataArrayType = new BinaryDataArrayType();
 		if(compression) {
 			binaryDataArrayType.getCvParam().add(createZlibCompressionParamType());
-			Deflater compresser = new Deflater();
-			compresser.setInput(byteBuffer.array());
-			compresser.finish();
-			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			byte[] readBuffer = new byte[1024];
-			while(!compresser.finished()) {
-				int compressCount = compresser.deflate(readBuffer);
-				if(compressCount > 0) {
-					outputStream.write(readBuffer, 0, compressCount);
+			try (Deflater compresser = new Deflater()) {
+				compresser.setInput(byteBuffer.array());
+				compresser.finish();
+				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+				byte[] readBuffer = new byte[1024];
+				while(!compresser.finished()) {
+					int compressCount = compresser.deflate(readBuffer);
+					if(compressCount > 0) {
+						outputStream.write(readBuffer, 0, compressCount);
+					}
 				}
+				byte[] outputByteArray = outputStream.toByteArray();
+				String characters = DatatypeConverter.printBase64Binary(outputByteArray);
+				binaryDataArrayType.setEncodedLength(BigInteger.valueOf(characters.length()));
+				binaryDataArrayType.setBinary(outputByteArray);
+				compresser.end();
 			}
-			byte[] outputByteArray = outputStream.toByteArray();
-			String characters = DatatypeConverter.printBase64Binary(outputByteArray);
-			binaryDataArrayType.setEncodedLength(BigInteger.valueOf(characters.length()));
-			binaryDataArrayType.setBinary(outputByteArray);
-			compresser.end();
 		} else {
 			binaryDataArrayType.setBinary(byteBuffer.array());
 		}

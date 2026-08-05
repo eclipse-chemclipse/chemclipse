@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2025 Lablicate GmbH.
+ * Copyright (c) 2021, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
@@ -94,22 +94,23 @@ public class ChromatogramWriterVersion32 extends AbstractChromatogramWriter impl
 				boolean compression = PreferenceSupplier.getChromatogramSaveCompression();
 				if(compression) {
 					peaks.setCompressionType("zlib");
-					Deflater compresser = new Deflater();
-					compresser.setInput(byteBuffer.array());
-					compresser.finish();
-					ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-					byte[] readBuffer = new byte[1024];
-					int compressedDataLength = 0;
-					while(!compresser.finished()) {
-						int compressCount = compresser.deflate(readBuffer);
-						if(compressCount > 0) {
-							compressedDataLength += compressCount;
-							outputStream.write(readBuffer, 0, compressCount);
+					try (Deflater compresser = new Deflater()) {
+						compresser.setInput(byteBuffer.array());
+						compresser.finish();
+						ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+						byte[] readBuffer = new byte[1024];
+						int compressedDataLength = 0;
+						while(!compresser.finished()) {
+							int compressCount = compresser.deflate(readBuffer);
+							if(compressCount > 0) {
+								compressedDataLength += compressCount;
+								outputStream.write(readBuffer, 0, compressCount);
+							}
 						}
+						peaks.setCompressedLen(compressedDataLength);
+						peaks.setValue(outputStream.toByteArray());
+						compresser.end();
 					}
-					peaks.setCompressedLen(compressedDataLength);
-					peaks.setValue(outputStream.toByteArray());
-					compresser.end();
 				} else {
 					peaks.setValue(byteBuffer.array());
 				}

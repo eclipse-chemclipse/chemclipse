@@ -180,11 +180,12 @@ public abstract class AbstractMassSpectrumReader extends AbstractMassSpectraRead
 			throw new UnsupportedOperationException("Only zlib compression is supported.");
 		}
 		ByteBuffer byteBuffer = ByteBuffer.wrap(binary);
-		Inflater inflater = new Inflater();
-		inflater.setInput(byteBuffer.array());
-		byte[] byteArray = new byte[byteBuffer.capacity() * 10];
-		int decodedLength = inflater.inflate(byteArray);
-		byteBuffer = ByteBuffer.wrap(byteArray, 0, decodedLength);
+		try (Inflater inflater = new Inflater()) {
+			inflater.setInput(byteBuffer.array());
+			byte[] byteArray = new byte[byteBuffer.capacity() * 10];
+			int decodedLength = inflater.inflate(byteArray);
+			byteBuffer = ByteBuffer.wrap(byteArray, 0, decodedLength);
+		}
 		byteBuffer.order(getByteOrder(attributes));
 		return byteBuffer;
 	}

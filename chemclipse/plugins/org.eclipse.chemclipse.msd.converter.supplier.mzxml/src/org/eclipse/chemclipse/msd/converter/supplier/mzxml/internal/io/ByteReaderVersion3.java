@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -37,11 +37,12 @@ public class ByteReaderVersion3 {
 		 * Compression
 		 */
 		if(compressionType != null && compressionType.equalsIgnoreCase("zlib")) {
-			Inflater inflater = new Inflater();
-			inflater.reset();
-			inflater.setInput(byteBuffer.array());
-			byte[] byteArray = new byte[byteBuffer.capacity() * 10];
-			byteBuffer = ByteBuffer.wrap(byteArray, 0, inflater.inflate(byteArray));
+			try (Inflater inflater = new Inflater()) {
+				inflater.reset();
+				inflater.setInput(byteBuffer.array());
+				byte[] byteArray = new byte[byteBuffer.capacity() * 10];
+				byteBuffer = ByteBuffer.wrap(byteArray, 0, inflater.inflate(byteArray));
+			}
 		}
 		/*
 		 * Precision
