@@ -493,6 +493,6 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_BOOKMARK = "bookmark.png";
 	String IMAGE_INTENSITY_RANGE = "intensityRange.gif";
 	String IMAGE_OPTIMIZE_PATTERN = "optimizePattern.gif";
-	String IMAGE_BINARYDATA = "binarydata.svg";
-	String IMAGE_TRICKS = "ticks.svg";
+	String IMAGE_BINARYDATA = "binarydata.png";
+	String IMAGE_TRICKS = "tricks.png";
 }
