@@ -19,7 +19,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
@@ -49,46 +53,57 @@ public class ZipContainer implements IFileContentProvider {
 	@Override
 	public File[] getContents(File file) {
 
-		File[] contents = new File[0];
+		List<File> contents = new ArrayList<>();
 		try (ZipFile zipFile = new ZipFile(file)) {
-			contents = new File[zipFile.size()];
 			Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
 			File destinationDirectory = new File(PathHelper.getStoragePathImport(), file.getName());
 			destinationDirectory.mkdir();
-			int i = 0;
 			while(zipEntries.hasMoreElements()) {
 				ZipEntry zipEntry = zipEntries.nextElement();
+				File target = getFile(destinationDirectory, zipEntry);
+				if(target == null) {
+					continue;
+				}
 				if(zipEntry.isDirectory()) {
-					contents[i] = createDir(destinationDirectory, zipEntry);
+					contents.add(createDir(target));
 				} else {
 					InputStream zipInputStream = zipFile.getInputStream(zipEntry);
-					contents[i] = extractFile(destinationDirectory, zipEntry, zipInputStream);
+					contents.add(extractFile(target, zipInputStream));
 				}
-				i++;
 			}
 		} catch(IOException e) {
 			logger.warn(e);
 		}
-		return contents;
+		return contents.toArray(new File[0]);
 	}
 
-	private File createDir(File destinationDirectory, ZipEntry zipEntry) {
+	private File createDir(File file) {
 
-		File file = new File(getFileName(destinationDirectory, zipEntry));
 		file.mkdir();
 		return file;
 	}
 
-	private String getFileName(File destinationDirectory, ZipEntry zipEntry) {
+	private File getFile(File destinationDirectory, ZipEntry zipEntry) {
 
-		return destinationDirectory.getAbsolutePath() + File.separator + zipEntry.getName();
+		Path destinationPath = destinationDirectory.toPath().toAbsolutePath().normalize();
+		Path targetPath;
+		try {
+			targetPath = destinationPath.resolve(zipEntry.getName()).normalize();
+		} catch(InvalidPathException e) {
+			logger.warn("Skipped zip entry with an invalid name: " + zipEntry.getName());
+			return null;
+		}
+		if(!targetPath.startsWith(destinationPath)) {
+			logger.warn("Skipped zip entry outside of the destination directory: " + zipEntry.getName());
+			return null;
+		}
+		return targetPath.toFile();
 	}
 
-	private File extractFile(File destinationDirectory, ZipEntry zipEntry, InputStream zipInputStream) {
+	private File extractFile(File file, InputStream zipInputStream) {
 
 		int count;
 		byte[] data = new byte[BUFFER];
-		File file = new File(getFileName(destinationDirectory, zipEntry));
 		try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
 			try (BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream, BUFFER)) {
 				while((count = zipInputStream.read(data, 0, BUFFER)) != -1) {
