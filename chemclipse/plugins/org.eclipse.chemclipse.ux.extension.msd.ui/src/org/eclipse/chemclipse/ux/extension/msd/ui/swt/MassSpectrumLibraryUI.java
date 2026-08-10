@@ -421,6 +421,18 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 					case CAS:
 						key = libraryInformation.getCasNumber();
 						break;
+					case FORMULA:
+						key = libraryInformation.getFormula();
+						break;
+					case SMILES:
+						key = libraryInformation.getSmiles();
+						break;
+					case INCHI:
+						key = libraryInformation.getInChI();
+						break;
+					case REFERENCE_IDENTIFIER:
+						key = libraryInformation.getReferenceIdentifier();
+						break;
 					default:
 						key = null;
 						break;

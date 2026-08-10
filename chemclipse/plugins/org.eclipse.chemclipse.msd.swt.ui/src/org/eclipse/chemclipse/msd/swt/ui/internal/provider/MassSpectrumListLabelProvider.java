@@ -197,6 +197,14 @@ public class MassSpectrumListLabelProvider extends AbstractChemClipseLabelProvid
 				return duplicateGroups.contains(scanMSD.getLibraryInformation().getName());
 			case CAS:
 				return duplicateGroups.contains(scanMSD.getLibraryInformation().getCasNumber());
+			case FORMULA:
+				return duplicateGroups.contains(scanMSD.getLibraryInformation().getFormula());
+			case SMILES:
+				return duplicateGroups.contains(scanMSD.getLibraryInformation().getSmiles());
+			case INCHI:
+				return duplicateGroups.contains(scanMSD.getLibraryInformation().getInChI());
+			case REFERENCE_IDENTIFIER:
+				return duplicateGroups.contains(scanMSD.getLibraryInformation().getReferenceIdentifier());
 			default:
 				return false;
 		}
