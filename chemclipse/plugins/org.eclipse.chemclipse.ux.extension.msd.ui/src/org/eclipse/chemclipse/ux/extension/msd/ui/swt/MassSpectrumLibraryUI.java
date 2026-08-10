@@ -52,12 +52,15 @@ import org.eclipse.chemclipse.ux.extension.msd.ui.dialogs.LibraryEntryEditDialog
 import org.eclipse.chemclipse.ux.extension.msd.ui.dialogs.MassSpectrumMergeDialog;
 import org.eclipse.chemclipse.ux.extension.msd.ui.help.HelpContext;
 import org.eclipse.chemclipse.ux.extension.msd.ui.internal.runnables.LibraryImportRunnable;
+import org.eclipse.chemclipse.ux.extension.msd.ui.wizards.DatabaseCleanUpWizard;
+import org.eclipse.chemclipse.ux.extension.msd.ui.wizards.DatabaseEntryClean;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -548,38 +551,71 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 			public void widgetSelected(SelectionEvent e) {
 
 				if(massSpectra != null) {
-					MessageBox messageBox = new MessageBox(getShell(), SWT.ICON_QUESTION | SWT.YES | SWT.NO);
-					messageBox.setText("Clean up library?");
-					messageBox.setMessage("Would you like to clean up the mass spectrum library?");
-					if(messageBox.open() == SWT.YES) {
-						/*
-						 * Clean Up Library
-						 */
+					/*
+					 * Collect invalid CAS entries.
+					 */
+					List<DatabaseEntryClean> invalidEntries = new ArrayList<>();
+					for(IScanMSD scan : massSpectra.getList()) {
+						ILibraryInformation libraryInformation = getLibraryInformation(scan);
+						if(libraryInformation != null) {
+							for(String cas : libraryInformation.getCasNumbers()) {
+								if(!CasSupport.isValid(cas)) {
+									invalidEntries.add(new DatabaseEntryClean(libraryInformation.getName(), cas));
+								}
+							}
+						}
+					}
+					/*
+					 * Nothing to remove found.
+					 */
+					if(invalidEntries.isEmpty()) {
+						MessageBox messageBox = new MessageBox(getShell(), SWT.ICON_INFORMATION | SWT.OK);
+						messageBox.setText("Clean Up Library");
+						messageBox.setMessage("No invalid CAS numbers found.");
+						messageBox.open();
+						return;
+					}
+					/*
+					 * Open the wizard so the user can review and optionally remove entries before deletion.
+					 */
+					DatabaseCleanUpWizard wizard = new DatabaseCleanUpWizard(invalidEntries);
+					WizardDialog wizardDialog = new WizardDialog(getShell(), wizard);
+					if(wizardDialog.open() == Window.OK) {
+						List<DatabaseEntryClean> toDelete = wizard.getEntriesToDelete();
 						int removed = 0;
 						for(IScanMSD scan : massSpectra.getList()) {
 							ILibraryInformation libraryInformation = getLibraryInformation(scan);
 							if(libraryInformation != null) {
-								List<String> invalid = new ArrayList<>();
+								String entryName = libraryInformation.getName();
+								List<String> toRemove = new ArrayList<>();
 								for(String cas : libraryInformation.getCasNumbers()) {
-									if(!CasSupport.isValid(cas)) {
-										invalid.add(cas);
+									for(DatabaseEntryClean entry : toDelete) {
+										if(entry.getName().equals(entryName) && entry.getCasNumber().equals(cas)) {
+											toRemove.add(cas);
+											break;
+										}
 									}
 								}
-								for(String cas : invalid) {
+								for(String cas : toRemove) {
 									libraryInformation.deleteCasNumber(cas);
 								}
-								removed += invalid.size();
+								removed += toRemove.size();
 							}
 						}
-						setMassSpectraDirty();
-						setInput();
 						/*
-						 * Show details of clean up operation.
+						 * Update
 						 */
-						MessageBox resultBox = new MessageBox(getShell(), SWT.ICON_INFORMATION | SWT.OK);
-						resultBox.setText("Clean up library");
-						resultBox.setMessage("Removed CAS numbers: " + removed);
-						resultBox.open();
+						if(removed > 0) {
+							setMassSpectraDirty();
+							setInput();
+							/*
+							 * Info
+							 */
+							MessageBox resultBox = new MessageBox(getShell(), SWT.ICON_INFORMATION | SWT.OK);
+							resultBox.setText("Clean Up Library");
+							resultBox.setMessage("Removed CAS numbers: " + removed);
+							resultBox.open();
+						}
 					}
 				}
 			}
