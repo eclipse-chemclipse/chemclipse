@@ -256,7 +256,7 @@ public class MassSpectrumListUI extends ExtendedTableViewer {
 	private boolean isMassiveData(IMassSpectra massSpectra) {
 
 		if(massSpectra != null) {
-			return (massSpectra.size() > 10000);
+			return massSpectra.getList().stream().filter(f -> f.getNumberOfIons() > 10000).findAny().isPresent();
 		}
 		return false;
 	}
