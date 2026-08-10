@@ -78,7 +78,7 @@ public class ScanChartSupport {
 
 	public ILineSeriesData getLineSeriesDataPoint(List<IScan> scans, boolean mirrored, String seriesId, DisplayType displayType, IChromatogramSelection chromatogramSelection) {
 
-		List<ITrace> traces = new ArrayList<ITrace>();
+		List<ITrace> traces = new ArrayList<>();
 		if(displayType.equals(DisplayType.SWC)) {
 			traces = ((IChromatogramSelectionWSD)chromatogramSelection).getSelectedWavelengths();
 		}
