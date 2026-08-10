@@ -17,10 +17,8 @@ package org.eclipse.chemclipse.ux.extension.ui.provider;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -188,22 +186,9 @@ public class LazyFileExplorerContentProvider implements ILazyTreeContentProvider
 		} else {
 			File[] childs = getContainerContents(file);
 			Arrays.sort(childs);
-			cache.put(file, unfoldDirectories(childs));
+			cache.put(file, childs);
 		}
 		return cache.get(file);
-	}
-
-	// To avoid duplicates
-	private File[] unfoldDirectories(File[] childs) {
-
-		List<File> unfoldedChilds = new ArrayList<>();
-		for(File child : childs) {
-			unfoldedChilds.add(child);
-			if(child.isDirectory()) {
-				return unfoldedChilds.toArray(new File[0]);
-			}
-		}
-		return unfoldedChilds.toArray(childs);
 	}
 
 	private boolean hasContainerContents(File file) {
