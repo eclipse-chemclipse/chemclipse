@@ -205,6 +205,7 @@ public class XmlWriter110 {
 		byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 		byteBuffer.asFloatBuffer().put(floatBuffer);
 		BinaryDataArrayType binaryDataArrayType = createBinaryDataArray(byteBuffer, compression);
+		binaryDataArrayType.setArrayLength(BigInteger.valueOf(values.length));
 		binaryDataArrayType.getCvParam().add(createFloatParamType());
 		return binaryDataArrayType;
 	}
@@ -235,6 +236,7 @@ public class XmlWriter110 {
 		byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 		byteBuffer.asDoubleBuffer().put(doubleBuffer);
 		BinaryDataArrayType binaryDataArrayType = createBinaryDataArray(byteBuffer, compression);
+		binaryDataArrayType.setArrayLength(BigInteger.valueOf(values.length));
 		binaryDataArrayType.getCvParam().add(createDoubleParamType());
 		return binaryDataArrayType;
 	}
@@ -247,6 +249,7 @@ public class XmlWriter110 {
 	public static BinaryDataArrayType createNumpressLinearBinaryData(double[] values, boolean compression) {
 
 		BinaryDataArrayType binaryDataArrayType = createBinaryDataArray(encodeNumpressLinear(values), compression);
+		binaryDataArrayType.setArrayLength(BigInteger.valueOf(values.length));
 		binaryDataArrayType.getCvParam().add(createNumpressLinearCompressionParamType());
 		return binaryDataArrayType;
 	}
@@ -259,6 +262,7 @@ public class XmlWriter110 {
 	public static BinaryDataArrayType createNumpressSlofBinaryData(double[] values, boolean compression) {
 
 		BinaryDataArrayType binaryDataArrayType = createBinaryDataArray(encodeNumpressSlof(values), compression);
+		binaryDataArrayType.setArrayLength(BigInteger.valueOf(values.length));
 		binaryDataArrayType.getCvParam().add(createNumpressSlofCompressionParamType());
 		return binaryDataArrayType;
 	}
@@ -271,6 +275,7 @@ public class XmlWriter110 {
 	public static BinaryDataArrayType createNumpressPicBinaryData(double[] values, boolean compression) {
 
 		BinaryDataArrayType binaryDataArrayType = createBinaryDataArray(encodeNumpressPic(values), compression);
+		binaryDataArrayType.setArrayLength(BigInteger.valueOf(values.length));
 		binaryDataArrayType.getCvParam().add(createNumpressPicCompressionParamType());
 		return binaryDataArrayType;
 	}
