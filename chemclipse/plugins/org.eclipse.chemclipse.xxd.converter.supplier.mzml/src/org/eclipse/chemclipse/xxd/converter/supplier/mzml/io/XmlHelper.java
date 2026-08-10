@@ -27,6 +27,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.XMLConstants;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -48,10 +49,7 @@ public class XmlHelper {
 		JAXBContext ctx = JAXBContext.newInstance(type);
 		Unmarshaller unmarshaller = ctx.createUnmarshaller();
 
-		XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
-		xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-		xmlInputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
-
+		XMLInputFactory xmlInputFactory = createInputFactory();
 		String wrapperStart = buildWrapperStart(readRootNamespaceDeclarations(file, xmlInputFactory));
 
 		try (FileChannel channel = FileChannel.open(file.toPath(), StandardOpenOption.READ)) {
@@ -84,12 +82,9 @@ public class XmlHelper {
 	 */
 	public static <T> T parseFiltered(File file, Class<T> type, String advanceTo, String stopTag) throws IOException, JAXBException, XMLStreamException {
 
-		XMLInputFactory factory = XMLInputFactory.newFactory();
-		factory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-		factory.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
-
 		try (FileInputStream inputStream = new FileInputStream(file)) {
-			XMLStreamReader reader = factory.createXMLStreamReader(inputStream);
+			XMLInputFactory xmlInputFactory = createInputFactory();
+			XMLStreamReader reader = xmlInputFactory.createXMLStreamReader(inputStream);
 
 			if(advanceTo != null) {
 				while(reader.hasNext()) {
@@ -135,6 +130,17 @@ public class XmlHelper {
 
 			return unmarshaller.unmarshal(filteredReader, type).getValue();
 		}
+	}
+
+	private static XMLInputFactory createInputFactory() {
+
+		XMLInputFactory xmlInputFactory = XMLInputFactory.newFactory();
+		xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+		xmlInputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+		xmlInputFactory.setProperty(XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES, false);
+		xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+		xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+		return xmlInputFactory;
 	}
 
 	private static List<String[]> readRootNamespaceDeclarations(File file, XMLInputFactory xmlInputFactory) throws IOException, XMLStreamException {
