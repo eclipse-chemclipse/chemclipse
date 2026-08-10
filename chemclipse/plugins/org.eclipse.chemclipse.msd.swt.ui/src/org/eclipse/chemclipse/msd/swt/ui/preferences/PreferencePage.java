@@ -42,7 +42,6 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
 
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_MASS_SPECTRUM_SHOW_METHODS_TOOLBAR, "Show Methods Toolbar", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_MASS_SPECTRUM_SHOW_RELATIVE_INTENSITY, "Show Relative Intensity", getFieldEditorParent()));
 	}
 
 	/*
