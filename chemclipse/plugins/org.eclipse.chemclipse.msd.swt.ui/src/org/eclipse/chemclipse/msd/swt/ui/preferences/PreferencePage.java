@@ -17,7 +17,6 @@ import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.SpacerFieldEdi
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
-import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
@@ -35,12 +34,7 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 	public void createFieldEditors() {
 
 		addField(new DirectoryFieldEditor(PreferenceSupplier.P_PATH_MASS_SPECTRUM_LIBRARIES, "Path mass spectrum libraries.", getFieldEditorParent()));
-		IntegerFieldEditor libraryMSDLimitSortingEditor = new IntegerFieldEditor(PreferenceSupplier.P_LIBRARY_MSD_LIMIT_SORTING, "Disable sorting above number of entries:", getFieldEditorParent());
-		libraryMSDLimitSortingEditor.setValidRange(PreferenceSupplier.MIN_LIBRARY_MSD_LIMIT_SORTING, PreferenceSupplier.MAX_LIBRARY_MSD_LIMIT_SORTING);
-		addField(libraryMSDLimitSortingEditor);
-
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
-
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_MASS_SPECTRUM_SHOW_METHODS_TOOLBAR, "Show Methods Toolbar", getFieldEditorParent()));
 	}
 

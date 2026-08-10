@@ -18,7 +18,6 @@ import java.util.List;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.swt.ui.internal.provider.IonListLabelProvider;
 import org.eclipse.chemclipse.msd.swt.ui.internal.provider.IonListTableComparator;
-import org.eclipse.chemclipse.msd.swt.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.support.ui.provider.ListContentProvider;
 import org.eclipse.chemclipse.support.ui.swt.ExtendedTableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -99,8 +98,7 @@ public class MassSpectrumIonsListUI extends ExtendedTableViewer {
 	private boolean isMassiveData(IScanMSD massSpectrum) {
 
 		if(massSpectrum != null) {
-			int limitMassiveData = PreferenceSupplier.getLibraryMSDLimitSorting();
-			return (massSpectrum.getNumberOfIons() > limitMassiveData);
+			return (massSpectrum.getNumberOfIons() > 10000);
 		}
 		return false;
 	}
