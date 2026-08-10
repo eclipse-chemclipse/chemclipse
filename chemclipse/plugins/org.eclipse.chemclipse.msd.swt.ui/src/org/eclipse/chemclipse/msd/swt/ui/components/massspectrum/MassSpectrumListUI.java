@@ -28,7 +28,6 @@ import org.eclipse.chemclipse.msd.swt.ui.internal.provider.MassSpectrumListConte
 import org.eclipse.chemclipse.msd.swt.ui.internal.provider.MassSpectrumListFilter;
 import org.eclipse.chemclipse.msd.swt.ui.internal.provider.MassSpectrumListLabelProvider;
 import org.eclipse.chemclipse.msd.swt.ui.internal.provider.MassSpectrumListTableComparator;
-import org.eclipse.chemclipse.msd.swt.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.support.ui.swt.ExtendedTableViewer;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -257,8 +256,7 @@ public class MassSpectrumListUI extends ExtendedTableViewer {
 	private boolean isMassiveData(IMassSpectra massSpectra) {
 
 		if(massSpectra != null) {
-			int limitMassiveData = PreferenceSupplier.getLibraryMSDLimitSorting();
-			return (massSpectra.size() > limitMassiveData);
+			return massSpectra.getList().stream().filter(f -> f.getNumberOfIons() > 10000).findAny().isPresent();
 		}
 		return false;
 	}
