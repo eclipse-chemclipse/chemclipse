@@ -18,7 +18,11 @@ public enum DuplicateDetection implements ILabel {
 
 	NONE("--"), //
 	NAME("Name"), //
-	CAS("CAS");
+	CAS("CAS"), //
+	FORMULA("Formula"), //
+	SMILES("SMILES"), //
+	INCHI("InChI"), //
+	REFERENCE_IDENTIFIER("Reference Identifier");
 
 	private final String label;
 
