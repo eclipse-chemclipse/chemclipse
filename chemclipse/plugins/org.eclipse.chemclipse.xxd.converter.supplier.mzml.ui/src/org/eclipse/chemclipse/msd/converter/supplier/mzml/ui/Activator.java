@@ -12,21 +12,16 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.converter.supplier.mzml.ui;
 
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.chemclipse.msd.converter.supplier.mzml.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.support.ui.activator.AbstractActivatorUI;
 import org.osgi.framework.BundleContext;
 
-/**
- * The activator class controls the plug-in life cycle
- */
-public class Activator extends AbstractUIPlugin {
+public class Activator extends AbstractActivatorUI {
 
-	// The shared instance
 	private static Activator plugin;
 
-	/**
-	 * The constructor
-	 */
 	public Activator() {
+
 	}
 
 	@Override
@@ -34,6 +29,7 @@ public class Activator extends AbstractUIPlugin {
 
 		super.start(context);
 		plugin = this;
+		initializePreferenceStore(PreferenceSupplier.INSTANCE());
 	}
 
 	@Override
@@ -44,8 +40,6 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns the shared instance
-	 *
 	 * @return the shared instance
 	 */
 	public static Activator getDefault() {
