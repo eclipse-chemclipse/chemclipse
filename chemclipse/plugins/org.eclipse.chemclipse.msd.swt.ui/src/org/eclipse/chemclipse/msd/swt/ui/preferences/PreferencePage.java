@@ -13,7 +13,6 @@
 package org.eclipse.chemclipse.msd.swt.ui.preferences;
 
 import org.eclipse.chemclipse.msd.swt.ui.Activator;
-import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.LabelFieldEditor;
 import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.SpacerFieldEditor;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.DirectoryFieldEditor;
@@ -34,16 +33,6 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 
 	@Override
 	public void createFieldEditors() {
-
-		addField(new SpacerFieldEditor(getFieldEditorParent()));
-		addField(new LabelFieldEditor("The underlying mass spectrum will be kept untouched.", getFieldEditorParent()));
-		addField(new LabelFieldEditor("It's only how many m/z values are display in the views and lists.", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_FILTER_MASS_SPECTRUM, "Filter Mass Spectrum View", getFieldEditorParent()));
-		IntegerFieldEditor filterLimitIonsEditor = new IntegerFieldEditor(PreferenceSupplier.P_FILTER_LIMIT_IONS, "Number of Ions in View <=", getFieldEditorParent());
-		filterLimitIonsEditor.setValidRange(PreferenceSupplier.MIN_FILTER_LIMIT_IONS, PreferenceSupplier.MAX_FILTER_LIMIT_IONS);
-		addField(filterLimitIonsEditor);
-
-		addField(new SpacerFieldEditor(getFieldEditorParent()));
 
 		addField(new DirectoryFieldEditor(PreferenceSupplier.P_PATH_MASS_SPECTRUM_LIBRARIES, "Path mass spectrum libraries.", getFieldEditorParent()));
 		IntegerFieldEditor libraryMSDLimitSortingEditor = new IntegerFieldEditor(PreferenceSupplier.P_LIBRARY_MSD_LIMIT_SORTING, "Disable sorting above number of entries:", getFieldEditorParent());

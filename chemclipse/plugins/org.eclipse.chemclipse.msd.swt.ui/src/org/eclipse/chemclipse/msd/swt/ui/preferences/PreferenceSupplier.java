@@ -21,13 +21,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	/*
 	 * UI only settings.
 	 */
-	public static final String P_FILTER_MASS_SPECTRUM = "filterMassSpectrum";
-	public static final boolean DEF_FILTER_MASS_SPECTRUM = false;
-	public static final String P_FILTER_LIMIT_IONS = "filterLimitIons";
-	public static final int DEF_FILTER_LIMIT_IONS = 8000;
-	public static final int MIN_FILTER_LIMIT_IONS = 10;
-	public static final int MAX_FILTER_LIMIT_IONS = 1000000;
-
 	public static final String P_PATH_MASS_SPECTRUM_LIBRARIES = "pathMassSpectrumLibraries";
 	public static final String DEF_PATH_MASS_SPECTRUM_LIBRARIES = "";
 
@@ -59,8 +52,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	@Override
 	public void initializeDefaults() {
 
-		putDefault(P_FILTER_MASS_SPECTRUM, Boolean.toString(DEF_FILTER_MASS_SPECTRUM));
-		putDefault(P_FILTER_LIMIT_IONS, Integer.toString(DEF_FILTER_LIMIT_IONS));
 		putDefault(P_PATH_MASS_SPECTRUM_LIBRARIES, DEF_PATH_MASS_SPECTRUM_LIBRARIES);
 		putDefault(P_LIBRARY_MSD_LIMIT_SORTING, Integer.toString(DEF_LIBRARY_MSD_LIMIT_SORTING));
 		putDefault(PreferenceSupplier.P_SHOW_MASS_SPECTRUM_SELECTION_COMBO, PreferenceSupplier.DEF_SHOW_MASS_SPECTRUM_SELECTION_COMBO);

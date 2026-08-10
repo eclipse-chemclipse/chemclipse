@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2025 Lablicate GmbH.
+ * Copyright (c) 2015, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -15,9 +15,7 @@ package org.eclipse.chemclipse.msd.swt.ui.components.massspectrum;
 
 import java.util.List;
 
-import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
-import org.eclipse.chemclipse.msd.swt.ui.converter.ConverterMSD;
 import org.eclipse.chemclipse.msd.swt.ui.internal.provider.IonListLabelProvider;
 import org.eclipse.chemclipse.msd.swt.ui.internal.provider.IonListTableComparator;
 import org.eclipse.chemclipse.msd.swt.ui.preferences.PreferenceSupplier;
@@ -62,9 +60,8 @@ public class MassSpectrumIonsListUI extends ExtendedTableViewer {
 					column.getColumn().setWidth(bounds[i]);
 				}
 			}
-			List<IIon> ions = ConverterMSD.getFilteredIons(massSpectrum);
-			super.setInput(ions);
-			setItemCount(ions.size());
+			super.setInput(massSpectrum.getIons());
+			setItemCount(massSpectrum.getIons().size());
 		} else {
 			super.setInput(null);
 		}
