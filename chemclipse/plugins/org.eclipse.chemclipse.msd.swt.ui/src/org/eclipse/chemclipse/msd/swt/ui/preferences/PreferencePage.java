@@ -14,7 +14,6 @@ package org.eclipse.chemclipse.msd.swt.ui.preferences;
 
 import org.eclipse.chemclipse.msd.swt.ui.Activator;
 import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.SpacerFieldEditor;
-import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.ui.IWorkbench;
@@ -35,7 +34,6 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 
 		addField(new DirectoryFieldEditor(PreferenceSupplier.P_PATH_MASS_SPECTRUM_LIBRARIES, "Path mass spectrum libraries.", getFieldEditorParent()));
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_MASS_SPECTRUM_SHOW_METHODS_TOOLBAR, "Show Methods Toolbar", getFieldEditorParent()));
 	}
 
 	/*
