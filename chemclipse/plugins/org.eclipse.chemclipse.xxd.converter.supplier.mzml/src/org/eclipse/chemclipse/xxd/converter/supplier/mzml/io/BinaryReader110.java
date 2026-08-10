@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2025 Lablicate GmbH.
+ * Copyright (c) 2021, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -18,14 +18,15 @@ import java.nio.ByteOrder;
 import java.nio.DoubleBuffer;
 import java.nio.FloatBuffer;
 import java.util.zip.DataFormatException;
-import java.util.zip.Inflater;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.BinaryDataArrayType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.CVParamType;
 
-public class BinaryReader110 {
+import ms.numpress.MSNumpress;
+
+public class BinaryReader110 extends AbstractBinaryReader {
 
 	private BinaryReader110() {
 
@@ -35,58 +36,81 @@ public class BinaryReader110 {
 
 		double[] values = new double[0];
 		String content = "";
-		if(binaryDataArrayType.getArrayLength() == BigInteger.ZERO) {
+
+		if(BigInteger.ZERO.equals(binaryDataArrayType.getArrayLength())) {
 			return new ImmutablePair<>(content, values);
 		}
+
 		byte[] binary = binaryDataArrayType.getBinary();
 		if(binary == null) {
 			return new ImmutablePair<>(content, values);
 		}
-		ByteBuffer byteBuffer = ByteBuffer.wrap(binary);
-		boolean compressed = false;
+
+		byte[] unzippedBinary = binary;
+		boolean zipCompressed = false;
 		boolean doublePrecision = false;
+		String numpressAccession = null;
 		float multiplicator = 1f;
+
 		for(CVParamType cvParam : binaryDataArrayType.getCvParam()) {
-			if(cvParam.getAccession().equals("MS:1000574") && cvParam.getName().equals("zlib compression")) {
-				compressed = true;
+			String accession = cvParam.getAccession();
+			String name = cvParam.getName();
+
+			if("MS:1000574".equals(accession) && "zlib compression".equals(name)) {
+				zipCompressed = true;
 			}
-			if(cvParam.getAccession().equals("MS:1000521") && cvParam.getName().equals("32-bit float")) {
+
+			if(isNumpress(accession)) {
+				numpressAccession = accession;
+			}
+
+			if("MS:1000521".equals(accession) && "32-bit float".equals(name)) {
 				doublePrecision = false;
-			} else if(cvParam.getAccession().equals("MS:1000523") && cvParam.getName().equals("64-bit float")) {
+			} else if("MS:1000523".equals(accession) && "64-bit float".equals(name)) {
 				doublePrecision = true;
 			}
-			if(cvParam.getAccession().equals("MS:1000514") && cvParam.getName().equals("m/z array")) {
+
+			if("MS:1000514".equals(accession) && "m/z array".equals(name)) {
 				content = "m/z";
-			} else if(cvParam.getAccession().equals("MS:1000617") && cvParam.getName().equals("wavelength array")) {
+			} else if("MS:1000617".equals(accession) && "wavelength array".equals(name)) {
 				content = "wavelength";
-			} else if(cvParam.getAccession().equals("MS:1000515") && cvParam.getName().equals("intensity array")) {
+			} else if("MS:1000515".equals(accession) && "intensity array".equals(name)) {
 				content = "intensity";
-			} else if(cvParam.getAccession().equals("MS:1000595") && cvParam.getName().equals("time array")) {
+			} else if("MS:1000595".equals(accession) && "time array".equals(name)) {
 				content = "time";
 				multiplicator = XmlReader110.getTimeMultiplicator(cvParam);
 			}
 		}
-		if(compressed) {
-			Inflater inflater = new Inflater();
-			inflater.setInput(byteBuffer.array());
-			byte[] byteArray = new byte[byteBuffer.capacity() * 10];
-			int decodedLength = inflater.inflate(byteArray);
-			byteBuffer = ByteBuffer.wrap(byteArray, 0, decodedLength);
+
+		if(zipCompressed) {
+			unzippedBinary = inflate(unzippedBinary);
 		}
-		byteBuffer.order(ByteOrder.LITTLE_ENDIAN); // this is always the case
-		if(doublePrecision) {
-			DoubleBuffer doubleBuffer = byteBuffer.asDoubleBuffer();
-			values = new double[doubleBuffer.capacity()];
-			for(int index = 0; index < doubleBuffer.capacity(); index++) {
-				values[index] = Double.valueOf(doubleBuffer.get(index)) * multiplicator;
+
+		if(numpressAccession != null) {
+			values = MSNumpress.decode(numpressAccession, unzippedBinary, unzippedBinary.length);
+			for(int index = 0; index < values.length; index++) {
+				values[index] *= multiplicator;
 			}
+			return new ImmutablePair<>(content, values);
 		} else {
-			FloatBuffer floatBuffer = byteBuffer.asFloatBuffer();
-			values = new double[floatBuffer.capacity()];
-			for(int index = 0; index < floatBuffer.capacity(); index++) {
-				values[index] = Double.valueOf(floatBuffer.get(index)) * multiplicator;
+			ByteBuffer byteBuffer = ByteBuffer.wrap(unzippedBinary);
+			byteBuffer.order(ByteOrder.LITTLE_ENDIAN); // this is always the case
+
+			if(doublePrecision) {
+				DoubleBuffer doubleBuffer = byteBuffer.asDoubleBuffer();
+				values = new double[doubleBuffer.capacity()];
+				for(int index = 0; index < doubleBuffer.capacity(); index++) {
+					values[index] = Double.valueOf(doubleBuffer.get(index)) * multiplicator;
+				}
+			} else {
+				FloatBuffer floatBuffer = byteBuffer.asFloatBuffer();
+				values = new double[floatBuffer.capacity()];
+				for(int index = 0; index < floatBuffer.capacity(); index++) {
+					values[index] = Double.valueOf(floatBuffer.get(index)) * multiplicator;
+				}
 			}
 		}
+
 		return new ImmutablePair<>(content, values);
 	}
 }

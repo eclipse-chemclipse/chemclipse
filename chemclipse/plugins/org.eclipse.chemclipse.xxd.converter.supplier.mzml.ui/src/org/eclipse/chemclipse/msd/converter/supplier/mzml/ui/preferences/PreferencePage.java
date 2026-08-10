@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2025 Lablicate GmbH.
+ * Copyright (c) 2021, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -35,7 +35,8 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
 		addField(new ComboFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_VERSION_SAVE, "Save (*.mzML) as version:", PreferenceSupplier.getChromatogramVersions(), getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_SAVE_COMPRESSION, "Compress values", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_SAVE_COMPRESSION, "ZIP Compress values", getFieldEditorParent()));
+		addField(new ComboFieldEditor(PreferenceSupplier.P_SAVE_NUMPRESS, "MS Numpress compression:", PreferenceSupplier.getSaveNumpressOptions(), getFieldEditorParent()));
 	}
 
 	@Override

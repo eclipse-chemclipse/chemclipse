@@ -18,14 +18,22 @@ import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.XmlReader110;
 import org.osgi.framework.FrameworkUtil;
 
+import ms.numpress.MSNumpress;
+
 public class PreferenceSupplier extends AbstractPreferenceSupplier {
 
 	public static final String P_CHROMATOGRAM_VERSION_SAVE = "chromatogramVersionSave";
 	public static final String DEF_CHROMATOGRAM_VERSION_SAVE = XmlReader110.VERSION;
+
 	public static final String P_CHROMATOGRAM_SAVE_COMPRESSION = "chromatogramSaveCompression";
 	public static final boolean DEF_CHROMATOGRAM_SAVE_COMPRESSION = true;
+
+	public static final String P_SAVE_NUMPRESS = "saveNumpress";
+	public static final String DEF_SAVE_NUMPRESS = "";
+
 	public static final String P_MASS_SPECTRA_VERSION_SAVE = "massSpectrumVersionSave";
 	public static final String DEF_MASS_SPECTRA_VERSION_SAVE = XmlReader110.VERSION;
+
 	public static final String P_MASS_SPECTRA_SAVE_COMPRESSION = "massSpectraSaveCompression";
 	public static final boolean DEF_MASS_SPECTRA_SAVE_COMPRESSION = true;
 
@@ -45,6 +53,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 
 		putDefault(P_CHROMATOGRAM_VERSION_SAVE, DEF_CHROMATOGRAM_VERSION_SAVE);
 		putDefault(P_CHROMATOGRAM_SAVE_COMPRESSION, Boolean.toString(DEF_CHROMATOGRAM_SAVE_COMPRESSION));
+		putDefault(P_SAVE_NUMPRESS, DEF_SAVE_NUMPRESS);
 		putDefault(P_MASS_SPECTRA_VERSION_SAVE, DEF_MASS_SPECTRA_VERSION_SAVE);
 		putDefault(P_MASS_SPECTRA_SAVE_COMPRESSION, Boolean.toString(DEF_MASS_SPECTRA_SAVE_COMPRESSION));
 	}
@@ -83,5 +92,24 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static boolean getMassSpectraSaveCompression() {
 
 		return INSTANCE().getBoolean(P_MASS_SPECTRA_SAVE_COMPRESSION, DEF_MASS_SPECTRA_SAVE_COMPRESSION);
+	}
+
+	public static String getSaveNumpress() {
+
+		return INSTANCE().get(P_SAVE_NUMPRESS, DEF_SAVE_NUMPRESS);
+	}
+
+	public static String[][] getSaveNumpressOptions() {
+
+		return new String[][]{{"None", ""}, //
+				{"linear prediction", MSNumpress.ACC_NUMPRESS_LINEAR}, //
+				{"positive integer", MSNumpress.ACC_NUMPRESS_PIC}, //
+				{"short logged float", MSNumpress.ACC_NUMPRESS_SLOF} //
+		};
+	}
+
+	public static void setSaveNumpress(String accession) {
+
+		INSTANCE().put(P_SAVE_NUMPRESS, accession);
 	}
 }

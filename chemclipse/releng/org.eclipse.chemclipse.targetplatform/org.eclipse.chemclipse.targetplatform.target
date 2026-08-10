@@ -28,21 +28,11 @@
 	<unit id="org.eclipse.jdt.junit6.runtime"/>
 	<repository location="https://download.eclipse.org/releases/2026-06/"/>
 </location>
-<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="false" label="com.sun.xml.bind.jaxb-osgi" missingManifest="error" type="Maven">
-	<dependencies>
-		<dependency>
-			<groupId>com.sun.xml.bind</groupId>
-			<artifactId>jaxb-osgi</artifactId>
-			<version>4.0.9</version>
-			<type>jar</type>
-		</dependency>
-	</dependencies>
-</location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 	<repository location="https://download.eclipse.org/cbi/updates/license/"/>
 	<unit id="org.eclipse.license.feature.group"/>
 </location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 	<unit id="org.eclipse.babel.nls_eclipse_de.feature.group"/>
 	<repository location="https://download.eclipse.org/technology/babel/update-site/R0.20.0/2022-12/"/>
 </location>
@@ -65,6 +55,16 @@
 		<unit id="org.apache.xmlbeans"/>
 		<unit id="org.easymock"/>
 	</location>
+	<location includeDependencyDepth="none" includeDependencyScopes="compile" label="com.sun.xml.bind.jaxb-osgi" missingManifest="error" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>com.sun.xml.bind</groupId>
+				<artifactId>jaxb-osgi</artifactId>
+				<version>4.0.9</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
 	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" label="org.ejml" missingManifest="generate" type="Maven">
 		<dependencies>
 			<dependency>
@@ -83,6 +83,16 @@
 				<groupId>org.ejml</groupId>
 				<artifactId>ejml-simple</artifactId>
 				<version>0.44.0</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="none" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>se.lth.immun</groupId>
+				<artifactId>MsNumpress</artifactId>
+				<version>0.1.21</version>
 				<type>jar</type>
 			</dependency>
 		</dependencies>

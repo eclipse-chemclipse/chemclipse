@@ -254,8 +254,9 @@ public class MassSpectrumWriterVersion110 implements IMassSpectraWriter {
 			spectrum.getCvParam().add(XmlWriter110.createLowestObservedIon(scanMSD));
 			spectrum.getCvParam().add(XmlWriter110.createHighestObservedIon(scanMSD));
 			// full spectra
-			boolean compression = PreferenceSupplier.getMassSpectraSaveCompression();
-			spectrum.setBinaryDataArrayList(XmlWriter110.createFullSpectrumBinaryDataArrayList(scanMSD, compression));
+			boolean zipCompression = PreferenceSupplier.getMassSpectraSaveCompression();
+			String numpress = PreferenceSupplier.getSaveNumpress();
+			spectrum.setBinaryDataArrayList(XmlWriter110.createFullSpectrumBinaryDataArrayList(scanMSD, zipCompression, numpress));
 			if(scanMSD instanceof IRegularMassSpectrum massSpectrum) {
 				spectrum.getCvParam().add(XmlWriter110.createMassSpectrumDimension(massSpectrum));
 				if(massSpectrum.getPolarity() != Polarity.NONE) {

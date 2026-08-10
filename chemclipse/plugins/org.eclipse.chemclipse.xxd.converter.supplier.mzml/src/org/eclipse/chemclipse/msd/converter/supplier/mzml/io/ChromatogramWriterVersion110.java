@@ -237,19 +237,20 @@ public class ChromatogramWriterVersion110 extends AbstractChromatogramWriter imp
 
 	private void writeScans(IChromatogram chromatogram, SpectrumListType spectrumList, IProgressMonitor monitor) {
 
+		boolean zipCompression = PreferenceSupplier.getChromatogramSaveCompression();
+		String numpress = PreferenceSupplier.getSaveNumpress();
 		monitor.beginTask(ConverterMessages.writeScans, chromatogram.getNumberOfScans());
 		for(IScan scan : chromatogram.getScans()) {
 			SpectrumType spectrum = new SpectrumType();
 			spectrum.setId("scan=" + scan.getScanNumber());
 			spectrum.setIndex(BigInteger.valueOf((scan.getScanNumber() - 1)));
 			spectrum.setScanList(createScanList(scan));
-			boolean compression = PreferenceSupplier.getChromatogramSaveCompression();
 			if(scan instanceof IScanMSD scanMSD) {
 				spectrum.getCvParam().add(XmlWriter110.createTotalIonCurrentType(scan));
 				spectrum.getCvParam().add(XmlWriter110.createBasePeakMassType(scanMSD));
 				spectrum.getCvParam().add(XmlWriter110.createBasePeakIntensity(scanMSD));
 				// full spectra
-				spectrum.setBinaryDataArrayList(XmlWriter110.createFullSpectrumBinaryDataArrayList(scanMSD, compression));
+				spectrum.setBinaryDataArrayList(XmlWriter110.createFullSpectrumBinaryDataArrayList(scanMSD, zipCompression, numpress));
 				if(scanMSD instanceof IRegularMassSpectrum massSpectrum) {
 					spectrum.getCvParam().add(XmlWriter110.createMassSpectrumDimension(massSpectrum));
 					if(massSpectrum.getPolarity() != Polarity.NONE) {
@@ -264,7 +265,7 @@ public class ChromatogramWriterVersion110 extends AbstractChromatogramWriter imp
 				spectrum.getCvParam().add(XmlWriter110.createWavelengthScanRangeLowest(scanWSD));
 				spectrum.getCvParam().add(XmlWriter110.createWavelengthScanRangeHighest(scanWSD));
 				spectrum.setDefaultArrayLength(scanWSD.getNumberOfScanSignals());
-				spectrum.setBinaryDataArrayList(XmlWriter110.createFullSpectrumBinaryDataArrayList(scanWSD, compression));
+				spectrum.setBinaryDataArrayList(XmlWriter110.createFullSpectrumBinaryDataArrayList(scanWSD, zipCompression, numpress));
 			}
 			spectrumList.getSpectrum().add(spectrum);
 			monitor.worked(1);

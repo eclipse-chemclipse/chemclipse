@@ -59,6 +59,7 @@ import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Version;
 
 import jakarta.xml.bind.DatatypeConverter;
+import ms.numpress.MSNumpress;
 
 public class XmlWriter110 {
 
@@ -235,6 +236,42 @@ public class XmlWriter110 {
 		byteBuffer.asDoubleBuffer().put(doubleBuffer);
 		BinaryDataArrayType binaryDataArrayType = createBinaryDataArray(byteBuffer, compression);
 		binaryDataArrayType.getCvParam().add(createDoubleParamType());
+		return binaryDataArrayType;
+	}
+
+	public static BinaryDataArrayType createNumpressLinearBinaryData(float[] values, boolean compression) {
+
+		return createNumpressLinearBinaryData(toDoubleArray(values), compression);
+	}
+
+	public static BinaryDataArrayType createNumpressLinearBinaryData(double[] values, boolean compression) {
+
+		BinaryDataArrayType binaryDataArrayType = createBinaryDataArray(encodeNumpressLinear(values), compression);
+		binaryDataArrayType.getCvParam().add(createNumpressLinearCompressionParamType());
+		return binaryDataArrayType;
+	}
+
+	public static BinaryDataArrayType createNumpressSlofBinaryData(float[] values, boolean compression) {
+
+		return createNumpressSlofBinaryData(toDoubleArray(values), compression);
+	}
+
+	public static BinaryDataArrayType createNumpressSlofBinaryData(double[] values, boolean compression) {
+
+		BinaryDataArrayType binaryDataArrayType = createBinaryDataArray(encodeNumpressSlof(values), compression);
+		binaryDataArrayType.getCvParam().add(createNumpressSlofCompressionParamType());
+		return binaryDataArrayType;
+	}
+
+	public static BinaryDataArrayType createNumpressPicBinaryData(float[] values, boolean compression) {
+
+		return createNumpressPicBinaryData(toDoubleArray(values), compression);
+	}
+
+	public static BinaryDataArrayType createNumpressPicBinaryData(double[] values, boolean compression) {
+
+		BinaryDataArrayType binaryDataArrayType = createBinaryDataArray(encodeNumpressPic(values), compression);
+		binaryDataArrayType.getCvParam().add(createNumpressPicCompressionParamType());
 		return binaryDataArrayType;
 	}
 
@@ -434,11 +471,16 @@ public class XmlWriter110 {
 
 	private static BinaryDataArrayType createBinaryDataArray(ByteBuffer byteBuffer, boolean compression) {
 
+		return createBinaryDataArray(byteBuffer.array(), compression);
+	}
+
+	private static BinaryDataArrayType createBinaryDataArray(byte[] bytes, boolean compression) {
+
 		BinaryDataArrayType binaryDataArrayType = new BinaryDataArrayType();
 		if(compression) {
 			binaryDataArrayType.getCvParam().add(createZlibCompressionParamType());
 			Deflater compresser = new Deflater();
-			compresser.setInput(byteBuffer.array());
+			compresser.setInput(bytes);
 			compresser.finish();
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 			byte[] readBuffer = new byte[1024];
@@ -454,7 +496,9 @@ public class XmlWriter110 {
 			binaryDataArrayType.setBinary(outputByteArray);
 			compresser.end();
 		} else {
-			binaryDataArrayType.setBinary(byteBuffer.array());
+			String characters = DatatypeConverter.printBase64Binary(bytes);
+			binaryDataArrayType.setEncodedLength(BigInteger.valueOf(characters.length()));
+			binaryDataArrayType.setBinary(bytes);
 		}
 		return binaryDataArrayType;
 	}
@@ -465,6 +509,33 @@ public class XmlWriter110 {
 		cvParamCompression.setCvRef(MS);
 		cvParamCompression.setAccession("MS:1000574");
 		cvParamCompression.setName("zlib compression");
+		return cvParamCompression;
+	}
+
+	public static CVParamType createNumpressLinearCompressionParamType() {
+
+		CVParamType cvParamCompression = new CVParamType();
+		cvParamCompression.setCvRef(MS);
+		cvParamCompression.setAccession(MSNumpress.ACC_NUMPRESS_LINEAR);
+		cvParamCompression.setName("MS-Numpress linear prediction compression");
+		return cvParamCompression;
+	}
+
+	public static CVParamType createNumpressPicCompressionParamType() {
+
+		CVParamType cvParamCompression = new CVParamType();
+		cvParamCompression.setCvRef(MS);
+		cvParamCompression.setAccession(MSNumpress.ACC_NUMPRESS_PIC);
+		cvParamCompression.setName("MS-Numpress positive integer compression");
+		return cvParamCompression;
+	}
+
+	public static CVParamType createNumpressSlofCompressionParamType() {
+
+		CVParamType cvParamCompression = new CVParamType();
+		cvParamCompression.setCvRef(MS);
+		cvParamCompression.setAccession(MSNumpress.ACC_NUMPRESS_SLOF);
+		cvParamCompression.setName("MS-Numpress short logged float compression");
 		return cvParamCompression;
 	}
 
@@ -539,6 +610,11 @@ public class XmlWriter110 {
 
 	public static BinaryDataArrayListType createFullSpectrumBinaryDataArrayList(IScanMSD scanMSD, boolean compression) {
 
+		return createFullSpectrumBinaryDataArrayList(scanMSD, compression, "");
+	}
+
+	public static BinaryDataArrayListType createFullSpectrumBinaryDataArrayList(IScanMSD scanMSD, boolean compression, String numpress) {
+
 		List<IIon> ionList = scanMSD.getIons();
 		double[] ions = new double[ionList.size()];
 		float[] abundances = new float[ionList.size()];
@@ -550,26 +626,53 @@ public class XmlWriter110 {
 		}
 		BinaryDataArrayListType binaryDataArrayList = new BinaryDataArrayListType();
 		binaryDataArrayList.setCount(BigInteger.valueOf(2));
-		binaryDataArrayList.getBinaryDataArray().add(createIonsBinaryDataArrayType(ions, compression));
-		binaryDataArrayList.getBinaryDataArray().add(createIntensityBinaryDataArrayType(abundances, compression));
+		binaryDataArrayList.getBinaryDataArray().add(createIonsBinaryDataArrayType(ions, compression, numpress));
+		binaryDataArrayList.getBinaryDataArray().add(createIntensityBinaryDataArrayType(abundances, compression, numpress));
 		return binaryDataArrayList;
 	}
 
-	private static BinaryDataArrayType createIntensityBinaryDataArrayType(float[] abundances, boolean compression) {
+	private static BinaryDataArrayType createIntensityBinaryDataArrayType(float[] abundances, boolean compression, String numpress) {
 
-		BinaryDataArrayType intensityBinaryDataArrayType = XmlWriter110.createBinaryData(abundances, compression);
+		BinaryDataArrayType intensityBinaryDataArrayType = null;
+		if(!numpress.isEmpty()) {
+			if(MSNumpress.ACC_NUMPRESS_LINEAR.equals(numpress)) {
+				intensityBinaryDataArrayType = XmlWriter110.createNumpressLinearBinaryData(abundances, compression);
+			} else if(MSNumpress.ACC_NUMPRESS_PIC.equals(numpress)) {
+				intensityBinaryDataArrayType = XmlWriter110.createNumpressPicBinaryData(abundances, compression);
+			} else if(MSNumpress.ACC_NUMPRESS_SLOF.equals(numpress)) {
+				intensityBinaryDataArrayType = XmlWriter110.createNumpressSlofBinaryData(abundances, compression);
+			}
+		} else {
+			intensityBinaryDataArrayType = XmlWriter110.createBinaryData(abundances, compression);
+		}
 		intensityBinaryDataArrayType.getCvParam().add(XmlWriter110.createIntensityArrayType());
 		return intensityBinaryDataArrayType;
 	}
 
-	private static BinaryDataArrayType createIonsBinaryDataArrayType(double[] ions, boolean compression) {
+	private static BinaryDataArrayType createIonsBinaryDataArrayType(double[] ions, boolean compression, String numpress) {
 
-		BinaryDataArrayType ionsBinaryDataArrayType = XmlWriter110.createBinaryData(ions, compression);
+		BinaryDataArrayType ionsBinaryDataArrayType = null;
+		if(!numpress.isEmpty()) {
+			if(MSNumpress.ACC_NUMPRESS_LINEAR.equals(numpress)) {
+				ionsBinaryDataArrayType = XmlWriter110.createNumpressLinearBinaryData(ions, compression);
+			} else if(MSNumpress.ACC_NUMPRESS_PIC.equals(numpress)) {
+				ionsBinaryDataArrayType = XmlWriter110.createNumpressPicBinaryData(ions, compression);
+			} else if(MSNumpress.ACC_NUMPRESS_SLOF.equals(numpress)) {
+				ionsBinaryDataArrayType = XmlWriter110.createNumpressSlofBinaryData(ions, compression);
+			}
+		} else {
+			ionsBinaryDataArrayType = XmlWriter110.createBinaryData(ions, compression);
+		}
 		ionsBinaryDataArrayType.getCvParam().add(XmlWriter110.createIonType());
 		return ionsBinaryDataArrayType;
 	}
 
 	public static BinaryDataArrayListType createFullSpectrumBinaryDataArrayList(IScanWSD scanWSD, boolean compression) {
+
+		return createFullSpectrumBinaryDataArrayList(scanWSD, compression, "");
+	}
+
+	public static BinaryDataArrayListType createFullSpectrumBinaryDataArrayList(IScanWSD scanWSD, boolean compression, String numpress) {
 
 		List<IScanSignalWSD> scanSignals = scanWSD.getScanSignals();
 		double[] wavelength = new double[scanSignals.size()];
@@ -583,15 +686,15 @@ public class XmlWriter110 {
 		BinaryDataArrayListType binaryDataArrayList = new BinaryDataArrayListType();
 		binaryDataArrayList.setCount(BigInteger.valueOf(2));
 		binaryDataArrayList.getBinaryDataArray().add(createWavelengthBinaryDataArrayType(wavelength, compression));
-		binaryDataArrayList.getBinaryDataArray().add(createIntensityBinaryDataArrayType(absorbance, compression));
+		binaryDataArrayList.getBinaryDataArray().add(createIntensityBinaryDataArrayType(absorbance, compression, ""));
 		return binaryDataArrayList;
 	}
 
 	private static BinaryDataArrayType createWavelengthBinaryDataArrayType(double[] wavelengths, boolean compression) {
 
-		BinaryDataArrayType ionsBinaryDataArrayType = XmlWriter110.createBinaryData(wavelengths, compression);
-		ionsBinaryDataArrayType.getCvParam().add(XmlWriter110.createWavelengthType());
-		return ionsBinaryDataArrayType;
+		BinaryDataArrayType wavelengthsBinaryDataArrayType = XmlWriter110.createBinaryData(wavelengths, compression);
+		wavelengthsBinaryDataArrayType.getCvParam().add(XmlWriter110.createWavelengthType());
+		return wavelengthsBinaryDataArrayType;
 	}
 
 	private static CVParamType createWavelengthType() {
@@ -602,5 +705,43 @@ public class XmlWriter110 {
 		cvParamWavelength.setName("wavelength array");
 		setUnitNanometer(cvParamWavelength);
 		return cvParamWavelength;
+	}
+
+	private static double[] toDoubleArray(float[] values) {
+
+		double[] doubles = new double[values.length];
+		for(int i = 0; i < values.length; i++) {
+			doubles[i] = values[i];
+		}
+		return doubles;
+	}
+
+	private static byte[] encodeNumpressLinear(double[] values) {
+
+		double fixedPoint = MSNumpress.optimalLinearFixedPoint(values, values.length);
+		byte[] encoded = new byte[values.length * 5 + 8];
+		int encodedLength = MSNumpress.encodeLinear(values, values.length, encoded, fixedPoint);
+		byte[] result = new byte[encodedLength];
+		System.arraycopy(encoded, 0, result, 0, encodedLength);
+		return result;
+	}
+
+	private static byte[] encodeNumpressSlof(double[] values) {
+
+		double fixedPoint = MSNumpress.optimalSlofFixedPoint(values, values.length);
+		byte[] encoded = new byte[values.length * 2 + 8];
+		int encodedLength = MSNumpress.encodeSlof(values, values.length, encoded, fixedPoint);
+		byte[] result = new byte[encodedLength];
+		System.arraycopy(encoded, 0, result, 0, encodedLength);
+		return result;
+	}
+
+	private static byte[] encodeNumpressPic(double[] values) {
+
+		byte[] encoded = new byte[values.length * 5];
+		int encodedLength = MSNumpress.encodePic(values, values.length, encoded);
+		byte[] result = new byte[encodedLength];
+		System.arraycopy(encoded, 0, result, 0, encodedLength);
+		return result;
 	}
 }
