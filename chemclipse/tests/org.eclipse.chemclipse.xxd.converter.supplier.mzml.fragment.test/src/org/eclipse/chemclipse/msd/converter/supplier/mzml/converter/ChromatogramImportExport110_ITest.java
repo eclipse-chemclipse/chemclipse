@@ -17,71 +17,70 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.File;
+import java.util.stream.Stream;
 
 import org.eclipse.chemclipse.msd.converter.chromatogram.ChromatogramConverterMSD;
+import org.eclipse.chemclipse.msd.converter.supplier.mzml.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.versions.VersionConstants;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import ms.numpress.MSNumpress;
 
 @TestInstance(Lifecycle.PER_CLASS)
 public class ChromatogramImportExport110_ITest {
 
-	private IChromatogramMSD chromatogram;
+	private static Stream<String> numpressPreferences() {
+
+		return Stream.of("", MSNumpress.ACC_NUMPRESS_LINEAR, MSNumpress.ACC_NUMPRESS_PIC, MSNumpress.ACC_NUMPRESS_SLOF);
+	}
+
+	private IChromatogramMSD chromatogramImport;
 	private File fileExport;
 
 	@BeforeAll
 	public void setUp() {
 
-		/*
-		 * Import
-		 */
 		String extensionPointImport = VersionConstants.CONVERTER_ID_CHROMATOGRAM;
-		/*
-		 * Export/Reimport
-		 */
+		File fileImport = new File("testData/files/import/Chromatogram1.ocb");
+		IProcessingInfo<IChromatogramMSD> processingInfoImport = ChromatogramConverterMSD.getInstance().convert(fileImport, extensionPointImport, new NullProgressMonitor());
+		chromatogramImport = processingInfoImport.getProcessingResult();
+	}
+
+	@ParameterizedTest
+	@MethodSource("numpressPreferences")
+	public void testReimport(String numpressPreference) {
+
 		File directory = new File("testData/files/export");
 		directory.mkdir();
 		String extensionPointExportReimport = "org.eclipse.chemclipse.msd.converter.supplier.mzml";
 		/*
-		 * Import the chromatogram.
-		 */
-		File fileImport = new File("testData/files/import/Chromatogram1.ocb");
-		IProcessingInfo<IChromatogramMSD> processingInfoImport = ChromatogramConverterMSD.getInstance().convert(fileImport, extensionPointImport, new NullProgressMonitor());
-		IChromatogramMSD chromatogramImport = processingInfoImport.getProcessingResult();
-		/*
 		 * Export the chromatogram.
 		 */
-		fileExport = new File("testData/files/export" + File.separator + "Test.mzML");
+		PreferenceSupplier.setSaveNumpress(numpressPreference);
+		fileExport = new File("testData/files/export" + File.separator + "Test-" + numpressPreference + ".mzML");
 		IProcessingInfo<File> processingInfoExport = ChromatogramConverterMSD.getInstance().convert(fileExport, chromatogramImport, extensionPointExportReimport, new NullProgressMonitor());
 		fileExport = processingInfoExport.getProcessingResult();
 		/*
 		 * Reimport the exported chromatogram.
 		 */
 		IProcessingInfo<IChromatogramMSD> processingInfo = ChromatogramConverterMSD.getInstance().convert(fileExport, extensionPointExportReimport, new NullProgressMonitor());
-		chromatogram = processingInfo.getProcessingResult();
+		IChromatogramMSD chromatogram = processingInfo.getProcessingResult();
+
+		assertNotNull(chromatogram);
+		assertEquals(5726, chromatogram.getNumberOfScans());
 	}
 
-	@AfterAll
+	@AfterEach
 	public void tearDown() {
 
 		fileExport.delete();
-	}
-
-	@Test
-	public void testReimport_1() {
-
-		assertNotNull(chromatogram);
-	}
-
-	@Test
-	public void testReimport_2() {
-
-		assertEquals(5726, chromatogram.getNumberOfScans());
 	}
 }

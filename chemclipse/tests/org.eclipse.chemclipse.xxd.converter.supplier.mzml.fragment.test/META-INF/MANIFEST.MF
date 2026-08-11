@@ -6,6 +6,8 @@ Bundle-SymbolicName: org.eclipse.chemclipse.xxd.converter.supplier.mzml.fragment
 Bundle-Version: 0.9.0.qualifier
 Bundle-Vendor: ChemClipse
 Fragment-Host: org.eclipse.chemclipse.xxd.converter.supplier.mzml;bundle-version="0.8.0"
-Import-Package: org.junit.jupiter.api;version="5.12.2"
+Import-Package: org.junit.jupiter.api;version="6.1.0",
+ org.junit.jupiter.params;version="6.1.0",
+ org.junit.jupiter.params.provider;version="6.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-21
 Require-Bundle: org.eclipse.chemclipse.xxd.converter.supplier.ocx;bundle-version="0.9.0"
