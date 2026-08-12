@@ -274,6 +274,20 @@ public class TimeRangesChromatogramUI extends Composite implements IExtendedPart
 		return timeRangeMarker;
 	}
 
+	public void setPlotAreaMaximized(boolean plotAreaMaximized) {
+
+		Object layout = getLayout();
+		if(layout instanceof GridLayout gridLayout) {
+			int margin = plotAreaMaximized ? 0 : 5;
+			int spacing = plotAreaMaximized ? 0 : 5;
+			gridLayout.marginWidth = margin;
+			gridLayout.marginHeight = margin;
+			gridLayout.verticalSpacing = spacing;
+		}
+		setTimeRangesVisible(!plotAreaMaximized && timeRanges != null);
+		layout(true);
+	}
+
 	public void setTimeRangesVisible(boolean visible) {
 
 		TimeRangesUI timeRangesUI = rangesControl.get();
