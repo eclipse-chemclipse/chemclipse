@@ -20,6 +20,7 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-RequiredExecutionEnvironment: JavaSE-21
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.chemclipse.msd.converter.supplier.mzxml.converter,
+ org.eclipse.chemclipse.msd.converter.supplier.mzxml.model,
  org.eclipse.chemclipse.msd.converter.supplier.mzxml.preferences
 Import-Package: jakarta.xml.bind,
  jakarta.xml.bind.annotation
