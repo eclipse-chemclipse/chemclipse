@@ -31,6 +31,7 @@ import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v31.model.Ms
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v31.model.MsRun;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v31.model.ObjectFactory;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v31.model.OntologyEntry;
+import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v31.model.Operator;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v31.model.Peaks;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v31.model.PrecursorMz;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v31.model.Scan;
@@ -106,6 +107,10 @@ public class ChromatogramReaderVersion31 extends AbstractChromatogramReader {
 				OntologyEntry detector = instrument.getMsDetector();
 				if(detector != null) {
 					chromatogram.setMassDetector(detector.getTheValue());
+				}
+				Operator operator = instrument.getOperator();
+				if(operator != null) {
+					chromatogram.setOperator((operator.getFirst() + " " + operator.getLast()).trim());
 				}
 				Software software = instrument.getSoftware();
 				if(software != null) {
