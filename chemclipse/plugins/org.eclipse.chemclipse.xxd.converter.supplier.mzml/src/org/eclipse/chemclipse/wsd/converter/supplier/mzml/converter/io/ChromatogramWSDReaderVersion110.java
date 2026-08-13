@@ -32,6 +32,7 @@ import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.BinaryReader110;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.MetadataReader110;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.BinaryDataArrayType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.CVParamType;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ChromatogramListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ChromatogramType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.MzMLType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.RunType;
@@ -110,12 +111,18 @@ public class ChromatogramWSDReaderVersion110 extends AbstractChromatogramReader 
 
 	private void readSingleWavelengthSignal(RunType run, IVendorChromatogramWSD chromatogram) {
 
+		ChromatogramListType chromatogramList = run.getChromatogramList();
+		if(chromatogramList == null) {
+			return;
+		}
+
 		double[] retentionTimes = new double[0];
 		double[] intensities = new double[0];
 		float lowestWavelength = 0f;
 		float highestWavelength = 0f;
+
 		try {
-			for(ChromatogramType chromatogramType : run.getChromatogramList().getChromatogram()) {
+			for(ChromatogramType chromatogramType : chromatogramList.getChromatogram()) {
 				for(CVParamType cvParam : chromatogramType.getCvParam()) {
 					if(cvParam.getAccession().equals("MS:1000618") && cvParam.getName().equals("highest observed wavelength")) {
 						highestWavelength = Float.parseFloat(cvParam.getValue());
