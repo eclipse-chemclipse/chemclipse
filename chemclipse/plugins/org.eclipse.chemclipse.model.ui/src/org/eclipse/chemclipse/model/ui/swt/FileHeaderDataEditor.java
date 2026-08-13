@@ -126,8 +126,8 @@ public class FileHeaderDataEditor extends Composite {
 		 * Select the item.
 		 */
 		combo.setToolTipText("Header Field");
-		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
-		gridData.widthHint = 150;
+		GridData gridData = new GridData();
+		gridData.widthHint = 200;
 		combo.setLayoutData(gridData);
 		combo.addSelectionListener(new SelectionAdapter() {
 
@@ -192,8 +192,8 @@ public class FileHeaderDataEditor extends Composite {
 		spinner.setPageIncrement(1);
 		spinner.setSelection(1);
 		spinner.setToolTipText("Select the group index of the value to be extracted.");
-		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
-		gridData.widthHint = 80;
+		GridData gridData = new GridData();
+		gridData.widthHint = 50;
 		spinner.setLayoutData(gridData);
 
 		spinner.addModifyListener(e -> fileHeaderData.setGroupIndex(spinner.getSelection()));
