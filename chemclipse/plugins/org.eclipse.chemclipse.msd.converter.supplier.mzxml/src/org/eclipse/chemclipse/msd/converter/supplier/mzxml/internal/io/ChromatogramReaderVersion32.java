@@ -27,9 +27,13 @@ import org.eclipse.chemclipse.converter.l10n.ConverterMessages;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v32.model.DataProcessing;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v32.model.MsInstrument;
+import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v32.model.MsManufacturer;
+import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v32.model.MsMassAnalyzer;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v32.model.MsRun;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v32.model.MzXML;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v32.model.ObjectFactory;
+import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v32.model.OntologyEntry;
+import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v32.model.Operator;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v32.model.Peaks;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v32.model.PrecursorMz;
 import org.eclipse.chemclipse.msd.converter.supplier.mzxml.internal.v32.model.Scan;
@@ -88,10 +92,30 @@ public class ChromatogramReaderVersion32 extends AbstractChromatogramReader {
 			int cycleNumber = isTandemMeasurement ? 1 : 0;
 
 			for(MsInstrument instrument : msRun.getMsInstrument()) {
-				chromatogram.setInstrument(instrument.getMsManufacturer().getTheValue() + " " + instrument.getMsModel().getTheValue());
-				chromatogram.setIonisation(instrument.getMsIonisation().getTheValue());
-				chromatogram.setMassAnalyzer(instrument.getMsMassAnalyzer().getTheValue());
-				chromatogram.setMassDetector(instrument.getMsDetector().getTheValue());
+				MsManufacturer manufacturer = instrument.getMsManufacturer();
+				if(manufacturer != null) {
+					chromatogram.setInstrument(manufacturer.getTheValue());
+				}
+				OntologyEntry model = instrument.getMsModel();
+				if(model != null) {
+					chromatogram.setInstrument(chromatogram.getInstrument() + " " + model.getTheValue());
+				}
+				OntologyEntry ionisation = instrument.getMsIonisation();
+				if(ionisation != null) {
+					chromatogram.setIonisation(ionisation.getTheValue());
+				}
+				MsMassAnalyzer massAnalyzer = instrument.getMsMassAnalyzer();
+				if(massAnalyzer != null) {
+					chromatogram.setMassAnalyzer(massAnalyzer.getTheValue());
+				}
+				OntologyEntry detector = instrument.getMsDetector();
+				if(detector != null) {
+					chromatogram.setMassDetector(detector.getTheValue());
+				}
+				Operator operator = instrument.getOperator();
+				if(operator != null) {
+					chromatogram.setOperator((operator.getFirst() + " " + operator.getLast()).trim());
+				}
 				Software software = instrument.getSoftware();
 				if(software != null) {
 					chromatogram.setSoftware(software.getName() + " " + software.getVersion());
