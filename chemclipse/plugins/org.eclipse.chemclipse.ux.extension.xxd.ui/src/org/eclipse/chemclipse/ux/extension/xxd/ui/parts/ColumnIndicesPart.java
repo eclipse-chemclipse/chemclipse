@@ -38,6 +38,8 @@ public class ColumnIndicesPart extends AbstractLibraryInformationPart<ExtendedCo
 	@Override
 	protected boolean updateData(List<Object> objects, String topic) {
 
+		super.updateData(objects, topic);
+
 		if(objects.size() == 1) {
 			if(isChromatogramEvent(topic)) {
 				getControl().updateInput();
@@ -55,7 +57,7 @@ public class ColumnIndicesPart extends AbstractLibraryInformationPart<ExtendedCo
 	@Override
 	protected boolean isUpdateTopic(String topic) {
 
-		return isChromatogramEvent(topic) || isCloseEvent(topic);
+		return super.isUpdateTopic(topic) || isChromatogramEvent(topic) || isCloseEvent(topic);
 	}
 
 	private boolean isChromatogramEvent(String topic) {
