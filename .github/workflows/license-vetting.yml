@@ -21,7 +21,7 @@ jobs:
     uses: eclipse-dash/dash-licenses/.github/workflows/mavenLicenseCheck.yml@master
     with:
       projectId: science.chemclipse
-      javaVersion: 21
+      javaVersion: 25
       workingDirectory: chemclipse
     secrets:
       gitlabAPIToken: ${{ secrets.GITLAB_API_TOKEN }}
