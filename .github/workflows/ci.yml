@@ -22,10 +22,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        java-version: ['21', '25']
-
     steps:
 
     - name: Checkout ChemClipse
@@ -35,7 +31,7 @@ jobs:
       name: Setup Java
       with:
         distribution: 'temurin'
-        java-version: ${{ matrix.java-version }}
+        java-version: 25
 
     - name: Build with Maven
       env:
