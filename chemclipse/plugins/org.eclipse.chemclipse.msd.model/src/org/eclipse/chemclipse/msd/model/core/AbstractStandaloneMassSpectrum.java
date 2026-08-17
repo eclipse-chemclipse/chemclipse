@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2025 Lablicate GmbH.
+ * Copyright (c) 2022, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -27,7 +27,7 @@ public abstract class AbstractStandaloneMassSpectrum extends AbstractRegularMass
 	 * Renew the serialVersionUID any time you have changed some fields or
 	 * methods.
 	 */
-	private static final long serialVersionUID = 7180911179209208599L;
+	private static final long serialVersionUID = 7180911179209208600L;
 
 	private File file;
 	private String plate;
@@ -37,7 +37,9 @@ public abstract class AbstractStandaloneMassSpectrum extends AbstractRegularMass
 	private String operator;
 	private Date acquisitionDate;
 	private String instrument;
+
 	private List<IMassSpectrumPeak> peaks = new ArrayList<>();
+	private List<Double> noise = new ArrayList<>();
 
 	private final IEditHistory editHistory = new EditHistory();
 
@@ -157,5 +159,11 @@ public abstract class AbstractStandaloneMassSpectrum extends AbstractRegularMass
 	public IEditHistory getEditHistory() {
 
 		return editHistory;
+	}
+
+	@Override
+	public List<Double> getNoise() {
+
+		return noise;
 	}
 }

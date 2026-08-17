@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import org.eclipse.chemclipse.msd.model.core.AbstractScanMSD;
 import org.eclipse.chemclipse.msd.model.core.AbstractStandaloneMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
@@ -52,6 +53,13 @@ public class StandaloneMassSpectrum extends AbstractStandaloneMassSpectrum {
 			massSpectrum.addIon(defaultIon);
 		}
 		return massSpectrum;
+	}
+
+	@Override
+	public AbstractScanMSD removeIon(IIon ion) {
+
+		getNoise().clear();
+		return super.removeIon(ion);
 	}
 
 	@Override
