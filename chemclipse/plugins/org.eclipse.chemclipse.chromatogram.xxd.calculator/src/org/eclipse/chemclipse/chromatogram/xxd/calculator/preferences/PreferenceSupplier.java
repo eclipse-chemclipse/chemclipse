@@ -36,11 +36,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		return INSTANCE(PreferenceSupplier.class);
 	}
 
-	public static boolean isAvailable() {
-
-		return Activator.getContext() != null;
-	}
-
 	@Override
 	public String getPreferenceNode() {
 
