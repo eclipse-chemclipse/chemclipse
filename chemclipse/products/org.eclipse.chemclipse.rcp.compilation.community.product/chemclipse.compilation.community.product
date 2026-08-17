@@ -76,7 +76,7 @@ Contributors:
       <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4" />
       <property name="sun.awt.xembedserver" value="true" />
       <property name="org.eclipse.update.reconcile" value="false" />
-      <property name="osgi.requiredJavaVersion" value="21" />
+      <property name="osgi.requiredJavaVersion" value="25" />
    </configurations>
 
    <preferencesInfo>
