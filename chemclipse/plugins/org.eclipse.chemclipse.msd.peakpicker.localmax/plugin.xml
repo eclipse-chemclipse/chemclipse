@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.chemclipse.chromatogram.msd.filter.massSpectrumFilterSupplier">
+      <MassSpectrumFilterSupplier
+      		config="org.eclipse.chemclipse.msd.peakpicker.localmax.settings.LocalMaximaPeakPickerFilterSettings"
+            description="Sliding-window local maximum detector"
+            id="org.eclipse.chemclipse.msd.peakpicker.localmax"
+            filter="org.eclipse.chemclipse.msd.peakpicker.localmax.LocalMaximaPeakPickerFilter"
+            filterName="Local Maxima Peak Picker">
+      </MassSpectrumFilterSupplier>
+   </extension>
+</plugin>
