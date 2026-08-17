@@ -137,7 +137,7 @@ public class PageDataType extends AbstractExtendedWizardPage {
 		Button buttonBrowse = new Button(parent, SWT.PUSH);
 		buttonBrowse.setText("Browse...");
 
-		buttonBrowse.addListener(SWT.Selection, e -> {
+		buttonBrowse.addListener(SWT.Selection, _ -> {
 			String selected = openFileDialog(getShell());
 			if(selected != null) {
 				fileText.setText(selected);

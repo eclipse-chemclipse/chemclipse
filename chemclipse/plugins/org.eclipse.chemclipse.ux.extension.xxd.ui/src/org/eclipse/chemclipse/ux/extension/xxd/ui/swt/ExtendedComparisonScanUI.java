@@ -999,7 +999,7 @@ public class ExtendedComparisonScanUI extends Composite implements IExtendedPart
 				 * Dynamically show different settings, based on the selected scan type.
 				 */
 				List<Class<? extends IPreferencePage>> preferencePages = getPreferencePages();
-				showPreferencesDialog(event, preferencePages, display -> applySettings(), true);
+				showPreferencesDialog(event, preferencePages, _ -> applySettings(), true);
 				adjustAxisSettings();
 			}
 		});

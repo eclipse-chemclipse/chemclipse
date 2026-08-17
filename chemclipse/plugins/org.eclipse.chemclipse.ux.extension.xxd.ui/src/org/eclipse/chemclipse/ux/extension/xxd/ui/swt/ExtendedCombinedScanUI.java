@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -352,7 +352,7 @@ public class ExtendedCombinedScanUI extends Composite implements IExtendedPartUI
 	private ScanIdentifierUI createScanIdentifierUI(Composite parent) {
 
 		ScanIdentifierUI scanIdentifierUI = new ScanIdentifierUI(parent, SWT.NONE);
-		scanIdentifierUI.setUpdateListener(display -> {
+		scanIdentifierUI.setUpdateListener(_ -> {
 
 			if(combinedScan != null) {
 				tabFolder.setSelection(INDEX_TARGETS);
@@ -393,7 +393,7 @@ public class ExtendedCombinedScanUI extends Composite implements IExtendedPartUI
 
 	/**
 	 * If the display is set to null, no event is fired.
-	 * 
+	 *
 	 * @param display
 	 * @param scanMSD
 	 */
@@ -437,7 +437,7 @@ public class ExtendedCombinedScanUI extends Composite implements IExtendedPartUI
 	private void createButtonSettings(Composite parent) {
 
 		List<Class<? extends IPreferencePage>> preferencePages = getPreferencePages();
-		createSettingsButton(parent, preferencePages, display -> applySettings());
+		createSettingsButton(parent, preferencePages, _ -> applySettings());
 	}
 
 	private List<Class<? extends IPreferencePage>> getPreferencePages() {

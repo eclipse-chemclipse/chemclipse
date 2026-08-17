@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Lorenz Gerber - initial API and implementation
  *******************************************************************************/
@@ -260,7 +260,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 		gridData.horizontalSpan = 2;
 		sampleSpinner.setLayoutData(gridData);
 
-		sampleSpinner.addListener(SWT.Selection, e -> {
+		sampleSpinner.addListener(SWT.Selection, _ -> {
 
 			if(extractor != null && filterFile != null && !filterFile.isEmpty()) {
 				samples = extractor.filter(sampleSpinner.getSelection());
@@ -352,7 +352,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 		radioOr.addListener(SWT.Selection, radioListener);
 		radioAnd.addListener(SWT.Selection, radioListener);
 
-		includeAddBtn.addListener(SWT.Selection, e -> {
+		includeAddBtn.addListener(SWT.Selection, _ -> {
 			String text = includeText.getText().trim();
 			if(!text.isEmpty()) {
 				includeList.add(text);
@@ -365,7 +365,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 			}
 		});
 
-		includeRemoveBtn.addListener(SWT.Selection, e -> {
+		includeRemoveBtn.addListener(SWT.Selection, _ -> {
 			int idx = includeList.getSelectionIndex();
 			if(idx >= 0) {
 				includeList.remove(idx);
@@ -377,7 +377,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 			}
 		});
 
-		excludeAddBtn.addListener(SWT.Selection, e -> {
+		excludeAddBtn.addListener(SWT.Selection, _ -> {
 			String text = excludeText.getText().trim();
 			if(!text.isEmpty()) {
 				excludeList.add(text);
@@ -390,7 +390,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 			}
 		});
 
-		excludeRemoveBtn.addListener(SWT.Selection, e -> {
+		excludeRemoveBtn.addListener(SWT.Selection, _ -> {
 			int idx = excludeList.getSelectionIndex();
 			if(idx >= 0) {
 				excludeList.remove(idx);
@@ -421,7 +421,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 
 		groupViewer.setAllChecked(true);
 
-		groupViewer.addCheckStateListener(e -> {
+		groupViewer.addCheckStateListener(_ -> {
 			if(extractor != null && filterFile != null && !filterFile.isEmpty()) {
 				samples = extractor.filter(sampleSpinner.getSelection());
 				updateRankingTable();
@@ -490,7 +490,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 		applyButton = new Button(applyArea, SWT.PUSH);
 		applyButton.setText("Apply");
 		applyButton.setToolTipText("Apply changes to punishment factors and (re)load the data.");
-		applyButton.addListener(SWT.Selection, e -> {
+		applyButton.addListener(SWT.Selection, _ -> {
 			applyPunishmentSettingsToExtractor();
 			if(extractor == null) {
 				extractor = new LongFileExtractor(mainFile, filterFile, 100);
@@ -507,8 +507,9 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 	 */
 	private void applyPunishmentSettingsToExtractor() {
 
-		if(extractor == null)
+		if(extractor == null) {
 			return;
+		}
 
 		boolean useLog = chkLogTransform != null && !chkLogTransform.isDisposed() && chkLogTransform.getSelection();
 		extractor.setUseLogTransform(useLog);
@@ -528,16 +529,20 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 
 	private double parseExponent(String text, double def) {
 
-		if(text == null)
+		if(text == null) {
 			return def;
+		}
 		try {
 			double v = Double.parseDouble(text.trim());
-			if(Double.isNaN(v) || Double.isInfinite(v))
+			if(Double.isNaN(v) || Double.isInfinite(v)) {
 				return def;
-			if(v < 0.0)
+			}
+			if(v < 0.0) {
 				v = 0.0;
-			if(v > 10.0)
+			}
+			if(v > 10.0) {
 				v = 10.0;
+			}
 			return v;
 		} catch(NumberFormatException ex) {
 			return def;
@@ -732,8 +737,9 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 	 */
 	private void startLoadingData(boolean modal) {
 
-		if(extractor == null)
+		if(extractor == null) {
 			return;
+		}
 
 		setControlsEnabled(false);
 
@@ -863,28 +869,38 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 	 */
 	private void setControlsEnabled(boolean enabled) {
 
-		if(includeList != null && !includeList.isDisposed())
+		if(includeList != null && !includeList.isDisposed()) {
 			includeList.setEnabled(enabled);
-		if(excludeList != null && !excludeList.isDisposed())
+		}
+		if(excludeList != null && !excludeList.isDisposed()) {
 			excludeList.setEnabled(enabled);
-		if(groupViewer != null && !groupViewer.getTable().isDisposed())
+		}
+		if(groupViewer != null && !groupViewer.getTable().isDisposed()) {
 			groupViewer.getTable().setEnabled(enabled);
-		if(sampleSpinner != null && !sampleSpinner.isDisposed())
+		}
+		if(sampleSpinner != null && !sampleSpinner.isDisposed()) {
 			sampleSpinner.setEnabled(enabled);
+		}
 
-		if(chkCountPunish != null && !chkCountPunish.isDisposed())
+		if(chkCountPunish != null && !chkCountPunish.isDisposed()) {
 			chkCountPunish.setEnabled(enabled);
-		if(txtCountExponent != null && !txtCountExponent.isDisposed())
+		}
+		if(txtCountExponent != null && !txtCountExponent.isDisposed()) {
 			txtCountExponent.setEnabled(enabled);
-		if(chkSumPunish != null && !chkSumPunish.isDisposed())
+		}
+		if(chkSumPunish != null && !chkSumPunish.isDisposed()) {
 			chkSumPunish.setEnabled(enabled);
-		if(txtSumExponent != null && !txtSumExponent.isDisposed())
+		}
+		if(txtSumExponent != null && !txtSumExponent.isDisposed()) {
 			txtSumExponent.setEnabled(enabled);
+		}
 
-		if(applyButton != null && !applyButton.isDisposed())
+		if(applyButton != null && !applyButton.isDisposed()) {
 			applyButton.setEnabled(enabled);
+		}
 
-		if(rankingTableViewer != null && !rankingTableViewer.getTable().isDisposed())
+		if(rankingTableViewer != null && !rankingTableViewer.getTable().isDisposed()) {
 			rankingTableViewer.getTable().setEnabled(enabled);
+		}
 	}
 }

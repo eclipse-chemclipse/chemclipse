@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -231,7 +231,7 @@ public class RetentionIndexMarkerEditor extends Composite implements IChangeList
 		RetentionTimeShifterUI retentionTimeShifterUI = new RetentionTimeShifterUI(parent, SWT.NONE);
 		retentionTimeShifterUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-		retentionTimeShifterUI.setUpdateListener(display -> tableViewer.get().refresh());
+		retentionTimeShifterUI.setUpdateListener(_ -> tableViewer.get().refresh());
 
 		toolbarShift.set(retentionTimeShifterUI);
 	}
@@ -249,7 +249,7 @@ public class RetentionIndexMarkerEditor extends Composite implements IChangeList
 		gridData.grabExcessVerticalSpace = true;
 		table.setLayoutData(gridData);
 
-		retentionIndexListUI.setUpdateListener(display -> updateInput());
+		retentionIndexListUI.setUpdateListener(_ -> updateInput());
 
 		table.addSelectionListener(new SelectionAdapter() {
 
@@ -331,7 +331,7 @@ public class RetentionIndexMarkerEditor extends Composite implements IChangeList
 					fileDialog.setFilterPath(PreferenceSupplier.getListPathImportFile());
 				}
 				/*
-				 * 
+				 *
 				 */
 				String path = fileDialog.open();
 				if(path != null) {
@@ -513,7 +513,7 @@ public class RetentionIndexMarkerEditor extends Composite implements IChangeList
 
 	private void addKeyEventProcessors(Shell shell, ITableSettings tableSettings) {
 
-		tableSettings.addKeyEventProcessor((extendedTableViewer, e) -> {
+		tableSettings.addKeyEventProcessor((_, e) -> {
 
 			if(e.keyCode == SWT.DEL) {
 				deleteItems(shell);

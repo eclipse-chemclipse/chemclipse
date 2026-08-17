@@ -270,7 +270,7 @@ public class ExtendedMoleculeUI extends Composite implements IExtendedPartUI {
 	private void createMoleculeUI(Composite parent) {
 
 		MoleculeUI moleculeUI = new MoleculeUI(parent, SWT.NONE);
-		moleculeUI.setUpdateListenerUI(display -> {
+		moleculeUI.setUpdateListenerUI(_ -> {
 
 			/*
 			 * Only update the combo box if the service has been

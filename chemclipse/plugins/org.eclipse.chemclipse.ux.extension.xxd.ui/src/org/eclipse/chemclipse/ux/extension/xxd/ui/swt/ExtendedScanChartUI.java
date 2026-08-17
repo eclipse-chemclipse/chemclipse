@@ -510,7 +510,7 @@ public class ExtendedScanChartUI extends Composite implements IExtendedPartUI {
 
 		ScanFilterUI scanFilter = new ScanFilterUI(parent, SWT.NONE);
 		scanFilter.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		scanFilter.setUpdateListener(display -> {
+		scanFilter.setUpdateListener(_ -> {
 
 			updateScan(scan);
 			fireUpdate();
@@ -720,7 +720,7 @@ public class ExtendedScanChartUI extends Composite implements IExtendedPartUI {
 
 	private void createSettingsButton(Composite parent) {
 
-		ISettingsHandler settingsHandler = display -> {
+		ISettingsHandler settingsHandler = _ -> {
 
 			updateScan(scan);
 			scanIdentifierControl.get().updateIdentifier();

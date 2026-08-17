@@ -379,7 +379,7 @@ public class ExtendedFoldChangePlot extends Composite implements IExtendedPartUI
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePage.class, PreferencePageFoldChangePlot.class), display -> applySettings());
+		createSettingsButton(parent, Arrays.asList(PreferencePage.class, PreferencePageFoldChangePlot.class), _ -> applySettings());
 	}
 
 	private void applySettings() {

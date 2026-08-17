@@ -186,7 +186,7 @@ public class UserLocationsUI extends Composite {
 		PathValidator pathValidator = new PathValidator(true);
 		ControlDecoration controlDecoration = new ControlDecoration(text, SWT.LEFT | SWT.TOP);
 
-		text.addModifyListener(event -> {
+		text.addModifyListener(_ -> {
 
 			if(userLocation != null) {
 				if(validate(pathValidator, controlDecoration, text)) {

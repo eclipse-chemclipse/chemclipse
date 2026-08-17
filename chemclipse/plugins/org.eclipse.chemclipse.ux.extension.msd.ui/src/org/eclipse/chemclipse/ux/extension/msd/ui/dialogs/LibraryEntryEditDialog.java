@@ -290,7 +290,7 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		ControlDecoration controlDecoration = new ControlDecoration(text, SWT.LEFT | SWT.TOP);
-		text.addModifyListener(e -> validate(casValidator, controlDecoration, text));
+		text.addModifyListener(_ -> validate(casValidator, controlDecoration, text));
 
 		return text;
 	}

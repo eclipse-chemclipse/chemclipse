@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Lorenz Gerber - initial API and implementation
  *******************************************************************************/
@@ -74,7 +74,7 @@ public class ExtendedFilterDistributionUI extends Composite implements IExtended
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePage.class, PreferencePageScorePlot.class), display -> applySettings());
+		createSettingsButton(parent, Arrays.asList(PreferencePage.class, PreferencePageScorePlot.class), _ -> applySettings());
 	}
 
 	private void applySettings() {

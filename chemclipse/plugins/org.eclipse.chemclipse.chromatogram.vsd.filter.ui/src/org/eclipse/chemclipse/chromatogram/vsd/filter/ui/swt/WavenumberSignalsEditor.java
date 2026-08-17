@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -34,7 +34,6 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -179,7 +178,7 @@ public class WavenumberSignalsEditor extends Composite implements IChangeListene
 
 		SearchSupportUI searchSupportUI = new SearchSupportUI(parent, SWT.NONE);
 		searchSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		searchSupportUI.setSearchListener((String searchText, boolean caseSensitive) -> {
+		searchSupportUI.setSearchListener((searchText, _) -> {
 			tableViewer.get().setSearchText(searchText);
 		});
 
@@ -387,7 +386,7 @@ public class WavenumberSignalsEditor extends Composite implements IChangeListene
 
 	private void addKeyEventProcessors(Shell shell, ITableSettings tableSettings) {
 
-		tableSettings.addKeyEventProcessor((ExtendedTableViewer extendedTableViewer, KeyEvent e) -> {
+		tableSettings.addKeyEventProcessor((_, e) -> {
 			if(e.keyCode == SWT.DEL) {
 				deleteItems(shell);
 			}

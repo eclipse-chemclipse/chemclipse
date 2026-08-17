@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -114,7 +114,7 @@ public class QuantPeaksChartUI extends Composite implements IExtendedPartUI {
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePagePeaksAxes.class), display -> applySettings());
+		createSettingsButton(parent, Arrays.asList(PreferencePagePeaksAxes.class), _ -> applySettings());
 	}
 
 	private void createPeaksChart(Composite parent) {

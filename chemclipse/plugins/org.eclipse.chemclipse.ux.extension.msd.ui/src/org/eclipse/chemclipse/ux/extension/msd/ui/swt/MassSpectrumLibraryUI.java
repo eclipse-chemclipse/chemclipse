@@ -187,7 +187,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 		createSettingsButton(parent, Arrays.asList( //
 				PreferencePageSystem.class, //
 				PreferencePage.class //
-		), display -> applySettings());
+		), _ -> applySettings());
 	}
 
 	private void createToolbarInfo(Composite parent) {
@@ -360,7 +360,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 		Combo combo = comboViewer.getCombo();
 		combo.setToolTipText("Select duplicate detection mode.");
 		comboViewer.setInput(DuplicateDetection.values());
-		comboViewer.addSelectionChangedListener(event -> {
+		comboViewer.addSelectionChangedListener(_ -> {
 
 			if(comboViewer.getStructuredSelection().getFirstElement() instanceof DuplicateDetection selection) {
 				duplicateDetection = selection;
@@ -441,7 +441,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 				 * Check
 				 */
 				if(key != null && !key.isBlank()) {
-					duplicateGroupMap.computeIfAbsent(key, k -> new ArrayList<>()).add(scan);
+					duplicateGroupMap.computeIfAbsent(key, _ -> new ArrayList<>()).add(scan);
 				}
 			}
 		}

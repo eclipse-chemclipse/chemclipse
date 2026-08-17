@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Christoph Läubrich - initial API and implementation
  * Philip Wenig - refactoring Observable
@@ -114,7 +114,7 @@ public class ListEdit<V> extends EditValue<List<V>> {
 		toolbar.add(editAction);
 		toolbar.add(deleteAction);
 		ControlBuilder.gridData(toolbar.createControl(container)).verticalAlignment = SWT.TOP;
-		tableViewer.addSelectionChangedListener(sce -> deleteAction.setEnabled(!tableViewer.getStructuredSelection().isEmpty()));
+		tableViewer.addSelectionChangedListener(_ -> deleteAction.setEnabled(!tableViewer.getStructuredSelection().isEmpty()));
 	}
 
 	@SuppressWarnings("unchecked")

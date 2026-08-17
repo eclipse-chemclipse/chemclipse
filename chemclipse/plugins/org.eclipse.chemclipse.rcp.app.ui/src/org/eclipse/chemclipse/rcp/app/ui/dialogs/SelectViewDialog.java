@@ -210,7 +210,7 @@ public class SelectViewDialog extends Dialog implements ISelectionChangedListene
 		/*
 		 * Select the perspective in double click.
 		 */
-		tableViewer.addDoubleClickListener(event -> okPressed());
+		tableViewer.addDoubleClickListener(_ -> okPressed());
 		/*
 		 * Input (Sorted)
 		 */

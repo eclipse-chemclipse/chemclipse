@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - restore initial implementation, support for selection of multiple spectras
@@ -206,7 +206,7 @@ public class ExtendedNMROverlayUI extends Composite implements PropertyChangeLis
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePageOverlay.class), display -> applySettings());
+		createSettingsButton(parent, Arrays.asList(PreferencePageOverlay.class), _ -> applySettings());
 	}
 
 	private void createOverlayChart(Composite parent) {

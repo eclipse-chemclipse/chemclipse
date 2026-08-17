@@ -101,7 +101,7 @@ public class PhaseCorrectionSettingsEditorExtension implements EditorExtension {
 			GridData layoutData = new GridData(SWT.CENTER, SWT.CENTER, false, false);
 			layoutData.widthHint = 80;
 			textField.setLayoutData(layoutData);
-			pivotCombo.addSelectionChangedListener(event -> {
+			pivotCombo.addSelectionChangedListener(_ -> {
 
 				PivotPointSelection selection = (PivotPointSelection)pivotCombo.getStructuredSelection().getFirstElement();
 				if(selection != settings.getPivotPointSelection()) {

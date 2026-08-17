@@ -174,7 +174,7 @@ public class FileHeaderDataEditor extends Composite {
 		};
 
 		ControlDecoration controlDecoration = new ControlDecoration(text, SWT.LEFT | SWT.TOP);
-		text.addModifyListener(e -> {
+		text.addModifyListener(_ -> {
 
 			if(validate(validator, controlDecoration, text)) {
 				fileHeaderData.setRegularExpression(text.getText().trim());
@@ -196,7 +196,7 @@ public class FileHeaderDataEditor extends Composite {
 		gridData.widthHint = 50;
 		spinner.setLayoutData(gridData);
 
-		spinner.addModifyListener(e -> fileHeaderData.setGroupIndex(spinner.getSelection()));
+		spinner.addModifyListener(_ -> fileHeaderData.setGroupIndex(spinner.getSelection()));
 
 		spinnerControl.set(spinner);
 	}

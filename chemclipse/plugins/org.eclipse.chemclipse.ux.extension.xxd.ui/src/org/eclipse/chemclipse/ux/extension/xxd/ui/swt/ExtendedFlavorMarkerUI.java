@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -116,7 +116,7 @@ public class ExtendedFlavorMarkerUI extends LibraryInformationComposite {
 		Table table = listUI.getTable();
 		table.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		listUI.addSelectionChangedListener(event -> {
+		listUI.addSelectionChangedListener(_ -> {
 
 			Object object = listUI.getStructuredSelection().getFirstElement();
 			if(object instanceof IFlavorMarker flavorMarker) {
@@ -141,7 +141,7 @@ public class ExtendedFlavorMarkerUI extends LibraryInformationComposite {
 
 	private void createButtonSettings(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePage.class), display -> applySettings());
+		createSettingsButton(parent, Arrays.asList(PreferencePage.class), _ -> applySettings());
 	}
 
 	private void applySettings() {

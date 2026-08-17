@@ -297,7 +297,7 @@ public class ExtendedPeakTracesUI extends Composite implements IExtendedPartUI {
 		preferencePages.add(ChromatogramAxisIntensity.class);
 		preferencePages.add(ChromatogramAxisRelativeIntensity.class);
 
-		createSettingsButton(parent, preferencePages, display -> applySettings());
+		createSettingsButton(parent, preferencePages, _ -> applySettings());
 	}
 
 	private void createPeakChart(Composite parent) {

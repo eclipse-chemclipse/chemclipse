@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - content-proposal support
@@ -309,7 +309,7 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 				PreferencePageTargetsList.class, //
 				PreferencePageSystem.class, //
 				PreferencePageLists.class //
-		), display -> applySettings());
+		), _ -> applySettings());
 	}
 
 	private void createToolbarInfo(Composite parent) {
@@ -557,7 +557,7 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 
 	private void addKeyEventProcessors(Display display, ITableSettings tableSettings) {
 
-		tableSettings.addKeyEventProcessor((extendedTableViewer, e) -> {
+		tableSettings.addKeyEventProcessor((_, e) -> {
 
 			if(e.keyCode == SWT.DEL) {
 				deleteTargetsSelected(display);
@@ -884,7 +884,7 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 
 	/**
 	 * May return null.
-	 * 
+	 *
 	 * @return IScan
 	 */
 	private IScan getScan() {
@@ -903,7 +903,7 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 
 	/**
 	 * May return null.
-	 * 
+	 *
 	 * @return IScanMSD
 	 */
 	private IScanMSD getMassSpectrum() {

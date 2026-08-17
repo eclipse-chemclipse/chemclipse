@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -219,7 +219,7 @@ public class RetentionIndexUI extends Composite implements IExtendedPartUI {
 		RetentionIndexTableViewerUI tableViewer = new RetentionIndexTableViewerUI(composite, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
 		tableViewer.getTable().setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		tableViewer.setUpdateListener(display -> notifyLibraryUpdate());
+		tableViewer.setUpdateListener(_ -> notifyLibraryUpdate());
 
 		tableViewer.getTable().addSelectionListener(new SelectionAdapter() {
 

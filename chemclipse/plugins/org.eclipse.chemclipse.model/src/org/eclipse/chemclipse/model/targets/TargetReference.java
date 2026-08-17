@@ -145,7 +145,7 @@ public class TargetReference implements ITargetReference {
 	public static Predicate<ITargetReference> createVisibilityFilter(ITargetDisplaySettings targetDisplaySettings) {
 
 		if(targetDisplaySettings == null) {
-			return always -> true;
+			return _ -> true;
 		}
 
 		return targetReference -> {

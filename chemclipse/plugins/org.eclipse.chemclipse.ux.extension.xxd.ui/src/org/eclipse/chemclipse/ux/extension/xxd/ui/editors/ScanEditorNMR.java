@@ -108,7 +108,7 @@ public class ScanEditorNMR implements IScanEditorNMR {
 	public ScanEditorNMR(Composite parent, MPart part, MDirtyable dirtyable, Shell shell, ProcessorFactory filterFactory, IProcessSupplierContext context) {
 
 		this.processSupplierContext = context;
-		parent.addDisposeListener(e -> executorService.shutdownNow());
+		parent.addDisposeListener(_ -> executorService.shutdownNow());
 
 		this.part = part;
 		this.dirtyable = dirtyable;
@@ -240,7 +240,7 @@ public class ScanEditorNMR implements IScanEditorNMR {
 		TreeViewer treeViewer = measurementsUI.getTreeViewer();
 		treeViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		DynamicSettingsUI settingsUI = new DynamicSettingsUI(composite, new GridData(SWT.FILL, SWT.FILL, true, false));
-		treeViewer.addSelectionChangedListener(event -> {
+		treeViewer.addSelectionChangedListener(_ -> {
 
 			IComplexSignalMeasurement<?> measurement = measurementsUI.getSelection();
 			if(measurement instanceof Filtered) {

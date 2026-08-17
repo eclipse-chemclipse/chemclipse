@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Christoph Läubrich - initial API and implementation
  * Philip Wenig - refactoring classifier
@@ -60,7 +60,7 @@ public class ControlBuilder {
 	/**
 	 * Create a "container-composite", that is one with a gridlayout that does
 	 * not add additional spaces and is filled horizontal
-	 * 
+	 *
 	 * @return
 	 */
 	public static Composite createContainer(Composite parent) {
@@ -71,7 +71,7 @@ public class ControlBuilder {
 	/**
 	 * Create a "container-composite", that is one with a gridlayout that does
 	 * not add additional spaces and is filled horizontal
-	 * 
+	 *
 	 * @param parent
 	 * @param columns
 	 * @return
@@ -100,7 +100,7 @@ public class ControlBuilder {
 
 	/**
 	 * Creates a checkbox with the given text and initial selection
-	 * 
+	 *
 	 * @param composite
 	 * @param text
 	 * @param initialSelection
@@ -133,7 +133,7 @@ public class ControlBuilder {
 
 	public static Text onEditUpdate(Text text, Consumer<String> consumer) {
 
-		text.addModifyListener(me -> {
+		text.addModifyListener(_ -> {
 
 			if(!text.isDisposed()) {
 				consumer.accept(text.getText());
@@ -152,7 +152,7 @@ public class ControlBuilder {
 	/**
 	 * Create a "container-composite", that is one with a gridlayout that does
 	 * not add additional spaces and is filled horizontal
-	 * 
+	 *
 	 * @param parent
 	 * @param columns
 	 * @param equal
@@ -191,7 +191,7 @@ public class ControlBuilder {
 
 	/**
 	 * Creates a label suitable for a labelcontainer
-	 * 
+	 *
 	 * @param label
 	 * @param container
 	 * @return
@@ -236,7 +236,7 @@ public class ControlBuilder {
 
 	/**
 	 * Fills the control on the horizontal axis
-	 * 
+	 *
 	 * @param control
 	 * @return
 	 */
@@ -253,7 +253,7 @@ public class ControlBuilder {
 
 	/**
 	 * Maximize the control in the vertical and horizontal axis
-	 * 
+	 *
 	 * @param control
 	 * @return
 	 */
@@ -272,7 +272,7 @@ public class ControlBuilder {
 	 * Creates a container, that is meant to hold labels and components in a two
 	 * columns grid layout, in contrast to {@link #createContainer(Composite)}
 	 * and its variants, this add spacings around components
-	 * 
+	 *
 	 * @param parent
 	 * @return
 	 */
@@ -306,7 +306,7 @@ public class ControlBuilder {
 
 	/**
 	 * Sets the horizontal span of the given control
-	 * 
+	 *
 	 * @param control
 	 * @param cols
 	 * @return
@@ -327,7 +327,7 @@ public class ControlBuilder {
 	/**
 	 * Checks if a control is inside a grid-layout and thus can have
 	 * {@link GridData} layout data
-	 * 
+	 *
 	 * @param control
 	 * @return
 	 */

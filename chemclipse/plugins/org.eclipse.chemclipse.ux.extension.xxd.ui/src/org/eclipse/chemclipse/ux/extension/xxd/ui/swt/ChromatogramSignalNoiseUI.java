@@ -51,7 +51,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtchart.extensions.preferences.PreferencePage;
 
 public class ChromatogramSignalNoiseUI extends Composite implements IExtendedPartUI {
@@ -294,7 +293,7 @@ public class ChromatogramSignalNoiseUI extends Composite implements IExtendedPar
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePage.class), (Display display) -> applySettings());
+		createSettingsButton(parent, Arrays.asList(PreferencePage.class), _ -> applySettings());
 	}
 
 	private void applySettings() {

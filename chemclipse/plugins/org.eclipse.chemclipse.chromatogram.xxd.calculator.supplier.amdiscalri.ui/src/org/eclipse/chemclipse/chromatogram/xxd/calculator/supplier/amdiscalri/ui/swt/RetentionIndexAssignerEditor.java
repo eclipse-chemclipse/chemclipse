@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -405,7 +405,7 @@ public class RetentionIndexAssignerEditor extends Composite implements IChangeLi
 
 	private void addKeyEventProcessors(Shell shell, ITableSettings tableSettings) {
 
-		tableSettings.addKeyEventProcessor((extendedTableViewer, e) -> {
+		tableSettings.addKeyEventProcessor((_, e) -> {
 
 			if(e.keyCode == SWT.DEL) {
 				deleteItems(shell);

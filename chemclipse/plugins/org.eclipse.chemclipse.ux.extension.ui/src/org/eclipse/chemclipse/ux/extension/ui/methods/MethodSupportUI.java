@@ -125,7 +125,7 @@ public class MethodSupportUI extends Composite implements IExtendedPartUI {
 
 	private EventHandler createEventHandler() {
 
-		return event -> updateInput();
+		return _ -> updateInput();
 	}
 
 	private void createControl() {

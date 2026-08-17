@@ -418,7 +418,7 @@ public class WidgetItem {
 				currentSelection = null;
 			}
 		}
-		comboViewer.addSelectionChangedListener(event -> currentSelection = comboViewer.getStructuredSelection().getFirstElement());
+		comboViewer.addSelectionChangedListener(_ -> currentSelection = comboViewer.getStructuredSelection().getFirstElement());
 
 		return comboViewer;
 	}
@@ -437,7 +437,7 @@ public class WidgetItem {
 		text.setToolTipText(inputValue.getDescription());
 		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		text.setText(AbstractProcessSettings.getCleanedFileValue(getValueAsString()));
-		text.addModifyListener(e -> currentSelection = new File(text.getText()));
+		text.addModifyListener(_ -> currentSelection = new File(text.getText()));
 		text.setFocus();
 
 		Button button = new Button(composite, SWT.PUSH);
@@ -594,7 +594,7 @@ public class WidgetItem {
 		Enum<?> initialSelection = Enum.valueOf(input[0].getDeclaringClass(), getValueAsString());
 		comboViewer.setSelection(new StructuredSelection(initialSelection));
 
-		comboViewer.addSelectionChangedListener(event -> currentSelection = comboViewer.getStructuredSelection().getFirstElement());
+		comboViewer.addSelectionChangedListener(_ -> currentSelection = comboViewer.getStructuredSelection().getFirstElement());
 
 		return comboViewer;
 	}

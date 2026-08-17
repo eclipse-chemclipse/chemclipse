@@ -597,7 +597,7 @@ public class ExtendedVariableLinePlot extends Composite implements IExtendedPart
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePage.class, PreferencePageFoldChangePlot.class), display -> applySettings());
+		createSettingsButton(parent, Arrays.asList(PreferencePage.class, PreferencePageFoldChangePlot.class), _ -> applySettings());
 	}
 
 	private void applySettings() {

@@ -474,7 +474,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				PreferencePageNamedTraces.class, //
 				PreferencePageChromatogram.class, //
 				PreferencePage.class //
-		), (Display display) -> {
+		), _ -> {
 			applySettings();
 		});
 	}

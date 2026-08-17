@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Janos Binder - cleanup
@@ -71,7 +71,7 @@ public class ProcessingInfoUI {
 		tableViewer = new TableViewer(container, SWT.BORDER | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		createColumns(tableViewer);
 		setTableProvider();
-		parent.addDisposeListener(e -> clipboard.dispose());
+		parent.addDisposeListener(_ -> clipboard.dispose());
 		tableViewer.getControl().setLayoutData(new GridData(GridData.FILL_BOTH));
 		ExpandBar expandBar = new ExpandBar(container, SWT.V_SCROLL);
 		expandBar.setLayout(new FillLayout());
@@ -201,7 +201,7 @@ public class ProcessingInfoUI {
 
 	/**
 	 * Creates the columns for the peak viewer table.
-	 * 
+	 *
 	 * @param tableViewer
 	 */
 	private void createColumns(final TableViewer tableViewer) {

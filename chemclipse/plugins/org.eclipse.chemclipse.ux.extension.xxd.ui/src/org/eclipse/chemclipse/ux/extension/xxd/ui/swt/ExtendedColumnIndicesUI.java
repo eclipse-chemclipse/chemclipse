@@ -114,7 +114,7 @@ public class ExtendedColumnIndicesUI extends LibraryInformationComposite {
 
 	private void createButtonSettings(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePage.class), display -> applySettings());
+		createSettingsButton(parent, Arrays.asList(PreferencePage.class), _ -> applySettings());
 	}
 
 	private void applySettings() {

@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
@@ -334,7 +334,7 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 
 	private void createButtonSettings(Composite parent) {
 
-		createSettingsButton(parent, getPreferencePagesSupplier(), display -> massSpectrumChart.update(), false);
+		createSettingsButton(parent, getPreferencePagesSupplier(), _ -> massSpectrumChart.update(), false);
 	}
 
 	private Supplier<List<Class<? extends IPreferencePage>>> getPreferencePagesSupplier() {

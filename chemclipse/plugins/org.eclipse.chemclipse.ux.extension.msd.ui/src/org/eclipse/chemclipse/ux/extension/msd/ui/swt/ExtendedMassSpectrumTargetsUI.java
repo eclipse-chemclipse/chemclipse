@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Matthias Mailänder - adapted for MALDI
@@ -37,7 +37,6 @@ import org.eclipse.chemclipse.ux.extension.msd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.ui.support.DataUpdateSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -297,7 +296,7 @@ public class ExtendedMassSpectrumTargetsUI extends Composite implements IExtende
 
 	private void addKeyEventProcessors(Display display, ITableSettings tableSettings) {
 
-		tableSettings.addKeyEventProcessor((ExtendedTableViewer extendedTableViewer, KeyEvent e) -> {
+		tableSettings.addKeyEventProcessor((_, e) -> {
 			if(e.keyCode == SWT.DEL) {
 				deleteTargetsSelected(display);
 			} else if((e.stateMask & SWT.MOD1) == SWT.MOD1) {
@@ -440,7 +439,7 @@ public class ExtendedMassSpectrumTargetsUI extends Composite implements IExtende
 
 	/**
 	 * May return null.
-	 * 
+	 *
 	 * @return IScanMSD
 	 */
 	private IScanMSD getMassSpectrum() {

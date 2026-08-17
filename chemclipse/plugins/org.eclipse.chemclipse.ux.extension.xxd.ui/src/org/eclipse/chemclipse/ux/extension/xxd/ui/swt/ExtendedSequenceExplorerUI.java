@@ -138,7 +138,7 @@ public class ExtendedSequenceExplorerUI extends Composite implements IExtendedPa
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePageSequences.class), display -> applySettings());
+		createSettingsButton(parent, Arrays.asList(PreferencePageSequences.class), _ -> applySettings());
 	}
 
 	private Composite createToolbarSearch(Composite parent) {

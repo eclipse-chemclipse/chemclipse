@@ -89,7 +89,7 @@ public class CasNumbersEditUI extends Composite {
 		controlDecoration.setImage(FieldDecorationRegistry.getDefault().getFieldDecoration(FieldDecorationRegistry.DEC_ERROR).getImage());
 		controlDecoration.hide();
 
-		text.addModifyListener(e -> {
+		text.addModifyListener(_ -> {
 			IStatus status = casValidator.validate(text.getText().trim());
 			if(status.isOK()) {
 				controlDecoration.hide();

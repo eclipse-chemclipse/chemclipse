@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Christoph Läubrich - initial API and implementation
  * Philip Wenig - refactoring Observable
@@ -131,7 +131,7 @@ public class NMRMeasurementsUI implements PropertyChangeListener {
 			}
 		});
 		treeViewer.setContentProvider(new TreeNodeContentProvider());
-		treeViewer.addSelectionChangedListener(event -> {
+		treeViewer.addSelectionChangedListener(_ -> {
 
 			IComplexSignalMeasurement<?> measurement = getMeasurement(treeViewer.getStructuredSelection().getFirstElement());
 			if(selection != null) {
@@ -164,7 +164,7 @@ public class NMRMeasurementsUI implements PropertyChangeListener {
 
 			private void addFilter(IMenuManager mgr, Set<IComplexSignalMeasurement<?>> measurements) {
 
-				Collection<IMeasurementFilter<?>> filters = filterFactory.getProcessors(ProcessorFactory.genericClass(IMeasurementFilter.class), (filter, properties) -> filter.acceptsIMeasurements(measurements));
+				Collection<IMeasurementFilter<?>> filters = filterFactory.getProcessors(ProcessorFactory.genericClass(IMeasurementFilter.class), (filter, _) -> filter.acceptsIMeasurements(measurements));
 				Consumer<Collection<? extends IMeasurement>> consumer = filtered -> {
 
 					for(IMeasurement item : filtered) {

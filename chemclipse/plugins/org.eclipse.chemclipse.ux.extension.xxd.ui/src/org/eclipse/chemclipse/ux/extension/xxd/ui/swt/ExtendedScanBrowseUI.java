@@ -251,7 +251,7 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 				ScanChartAxisIntensity.class, //
 				ScanChartAxisRelativeIntensity.class, //
 				PreferencePageChromatogram.class //
-		), display -> applySettings());
+		), _ -> applySettings());
 	}
 
 	private void applySettings() {

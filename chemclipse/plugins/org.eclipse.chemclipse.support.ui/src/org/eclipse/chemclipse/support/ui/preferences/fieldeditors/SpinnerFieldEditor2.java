@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * IBM Corporation - initial API and implementation
  * Jan Holy - implementation
@@ -59,7 +59,7 @@ public class SpinnerFieldEditor2 extends FieldEditor {
 	private boolean isValid;
 	/**
 	 * Old text value.
-	 * 
+	 *
 	 * @since 3.4 this field is protected.
 	 */
 	protected int oldValue;
@@ -272,7 +272,7 @@ public class SpinnerFieldEditor2 extends FieldEditor {
 			spinner.setFont(parent.getFont());
 			switch(validateStrategy) {
 				case VALIDATE_ON_VALUE_MODIFICATION:
-					spinner.addModifyListener(e -> valueChanged());
+					spinner.addModifyListener(_ -> valueChanged());
 					break;
 				case VALIDATE_ON_FOCUS_LOST:
 					spinner.addKeyListener(new KeyAdapter() {
@@ -302,7 +302,7 @@ public class SpinnerFieldEditor2 extends FieldEditor {
 				default:
 					Assert.isTrue(false, "Unknown validate strategy");//$NON-NLS-1$
 			}
-			spinner.addDisposeListener(event -> spinner = null);
+			spinner.addDisposeListener(_ -> spinner = null);
 		} else {
 			checkParent(spinner, parent);
 		}

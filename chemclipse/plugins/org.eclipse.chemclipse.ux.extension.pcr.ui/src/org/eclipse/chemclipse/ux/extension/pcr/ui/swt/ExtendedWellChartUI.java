@@ -183,7 +183,7 @@ public class ExtendedWellChartUI extends Composite implements IExtendedPartUI {
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePageWellChart.class), display -> updateChart());
+		createSettingsButton(parent, Arrays.asList(PreferencePageWellChart.class), _ -> updateChart());
 	}
 
 	private void createToolbarInfo(Composite parent) {

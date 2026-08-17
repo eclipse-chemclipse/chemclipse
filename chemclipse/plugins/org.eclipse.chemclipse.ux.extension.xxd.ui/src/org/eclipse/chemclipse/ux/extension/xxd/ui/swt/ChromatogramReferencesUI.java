@@ -104,7 +104,7 @@ public class ChromatogramReferencesUI extends Composite {
 		 * Create the container
 		 */
 		ComboViewer comboViewerReferences = comboViewerReferencesControl.get();
-		comboChromatograms = new ComboContainer(chromatogramReferencesListener.andThen(t -> updateButtons()));
+		comboChromatograms = new ComboContainer(chromatogramReferencesListener.andThen(_ -> updateButtons()));
 		comboChromatograms.viewerReference.set(comboViewerReferences);
 		/*
 		 * Remove the existing change listener.

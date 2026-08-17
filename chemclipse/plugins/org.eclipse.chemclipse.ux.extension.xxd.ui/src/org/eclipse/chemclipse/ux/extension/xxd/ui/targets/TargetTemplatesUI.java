@@ -200,7 +200,7 @@ public class TargetTemplatesUI extends Composite {
 		TargetValidator targetValidator = new TargetValidator();
 		ControlDecoration controlDecoration = new ControlDecoration(text, SWT.LEFT | SWT.TOP);
 
-		text.addModifyListener(event -> {
+		text.addModifyListener(_ -> {
 
 			if(targetTemplate != null) {
 				if(validate(targetValidator, controlDecoration, text)) {

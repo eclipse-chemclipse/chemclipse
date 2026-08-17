@@ -208,7 +208,7 @@ public class DataListUI implements ConfigurableUI<DataListUIConfig> {
 	private void addFileSelectionMenu(ToolBar toolBar, ToolItem item) {
 
 		final Menu menu = new Menu(toolBar.getShell(), SWT.POP_UP);
-		toolBar.addDisposeListener(e -> menu.dispose());
+		toolBar.addDisposeListener(_ -> menu.dispose());
 
 		item.addListener(SWT.Selection, event -> {
 			if(event.detail == SWT.ARROW) {
@@ -274,7 +274,7 @@ public class DataListUI implements ConfigurableUI<DataListUIConfig> {
 		tableViewer.setInput(files);
 
 		DataExplorerLabelProvider dataExplorerLabelProvider = new DataExplorerLabelProvider(inputWizardSettings.getSupplierFileEditorSupportList());
-		composite.addDisposeListener(e -> dataExplorerLabelProvider.dispose());
+		composite.addDisposeListener(_ -> dataExplorerLabelProvider.dispose());
 
 		tableViewer.addColumn(new SimpleColumnDefinition<>("Name", 250, new ColumnLabelProvider() {
 

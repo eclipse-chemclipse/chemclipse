@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -119,7 +119,7 @@ public class PageCalibrationTable extends AbstractExtendedWizardPage {
 		Button buttonBrowse = new Button(parent, SWT.PUSH);
 		buttonBrowse.setText("Browse...");
 
-		buttonBrowse.addListener(SWT.Selection, e -> {
+		buttonBrowse.addListener(SWT.Selection, _ -> {
 			String selected = openFileDialog(getShell());
 			if(selected != null) {
 				fileText.setText(selected);
@@ -184,7 +184,7 @@ public class PageCalibrationTable extends AbstractExtendedWizardPage {
 
 	/**
 	 * May return null.
-	 * 
+	 *
 	 * @param chromatogramMSD
 	 * @param retentionTime
 	 * @return {@link IChromatogramPeakMSD}

@@ -140,7 +140,7 @@ public class ProcessingWizardPage extends WizardPage {
 
 		comboViewer.setInput(processSupplierContextMap.keySet());
 		comboViewer.setSelection(new StructuredSelection(getProcessSupplierContext()));
-		comboViewer.addSelectionChangedListener(event -> {
+		comboViewer.addSelectionChangedListener(_ -> {
 
 			processContext = (IProcessSupplierContext)comboViewer.getStructuredSelection().getFirstElement();
 			updateComboDataCategoryItems();

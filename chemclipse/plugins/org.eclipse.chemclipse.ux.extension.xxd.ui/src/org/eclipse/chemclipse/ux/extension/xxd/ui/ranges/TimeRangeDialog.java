@@ -95,7 +95,7 @@ public class TimeRangeDialog extends Dialog {
 		combo.setToolTipText("Select or type in a new name.");
 		combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-		combo.addModifyListener(e -> assignIdentifier());
+		combo.addModifyListener(_ -> assignIdentifier());
 
 		combo.setItems(timeRangeLabels.getProposals());
 		combo.setText(timeRangeLabels.getInitialValue());
@@ -115,7 +115,7 @@ public class TimeRangeDialog extends Dialog {
 
 	private void enableProposals(Combo combo) {
 
-		IContentProposalProvider contentProposalProvider = (contents, position) -> {
+		IContentProposalProvider contentProposalProvider = (contents, _) -> {
 
 			List<ContentProposal> contentProposals = new ArrayList<>();
 			if(contents != null) {

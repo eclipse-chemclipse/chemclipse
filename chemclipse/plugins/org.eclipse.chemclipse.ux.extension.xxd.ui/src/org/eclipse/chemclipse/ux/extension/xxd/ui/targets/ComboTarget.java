@@ -143,7 +143,7 @@ public class ComboTarget extends Composite {
 
 	private void enableAutoComplete(Combo combo) {
 
-		IContentProposalProvider proposalProvider = (String contents, int position) -> {
+		IContentProposalProvider proposalProvider = (contents, _) -> {
 			List<ContentProposal> list = new ArrayList<>();
 
 			// Trim search results for performance.
