@@ -275,7 +275,7 @@ public class SettingsPreferencesPage<T> extends WizardPage {
 
 	private Listener createValidationListener() {
 
-		return event -> {
+		return _ -> {
 
 			IStatus validate = settingsUI.get().getControl().validate();
 			if(validate.isOK()) {

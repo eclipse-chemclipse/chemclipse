@@ -222,7 +222,7 @@ public class PerspectiveSwitcherDialog extends Dialog implements ISelectionChang
 		/*
 		 * Select the perspective in double click.
 		 */
-		tableViewer.addDoubleClickListener(event -> okPressed());
+		tableViewer.addDoubleClickListener(_ -> okPressed());
 
 		tableViewerControl.set(tableViewer);
 	}

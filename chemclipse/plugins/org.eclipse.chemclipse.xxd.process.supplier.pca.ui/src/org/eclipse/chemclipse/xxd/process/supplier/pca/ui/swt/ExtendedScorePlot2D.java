@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Lorenz Gerber - added box selection
@@ -518,7 +518,7 @@ public class ExtendedScorePlot2D extends Composite implements IExtendedPartUI {
 	private void createPrincipalComponentUI(Composite parent) {
 
 		PrincipalComponentUI principalComponentUI = new PrincipalComponentUI(parent, SWT.NONE, PrincipalComponentUI.SPINNER_X | PrincipalComponentUI.SPINNER_Y);
-		principalComponentUI.setSelectionListener((pcX, pcY, pcZ) -> updatePlot(pcX, pcY));
+		principalComponentUI.setSelectionListener((pcX, pcY, _) -> updatePlot(pcX, pcY));
 
 		principalComponentControl.set(principalComponentUI);
 	}
@@ -542,7 +542,7 @@ public class ExtendedScorePlot2D extends Composite implements IExtendedPartUI {
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePage.class, PreferencePageScorePlot.class), display -> applySettings());
+		createSettingsButton(parent, Arrays.asList(PreferencePage.class, PreferencePageScorePlot.class), _ -> applySettings());
 	}
 
 	private void applySettings() {

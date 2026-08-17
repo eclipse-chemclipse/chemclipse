@@ -399,7 +399,7 @@ public class ExtendedTableViewer extends TableViewer implements IExtendedTableVi
 
 		TableViewerColumn tableViewerColumn = createColumn(this, definition, editEnabled);
 		tableViewerColumn.getColumn().setMoveable(true);
-		tableViewerColumn.getColumn().addListener(SWT.Move, event -> fireColumnMoved());
+		tableViewerColumn.getColumn().addListener(SWT.Move, _ -> fireColumnMoved());
 
 		tableViewerColumns.add(tableViewerColumn);
 		Comparator<C> comparator = definition.getComparator();
@@ -650,7 +650,7 @@ public class ExtendedTableViewer extends TableViewer implements IExtendedTableVi
 
 	private void registerMenuListener() {
 
-		getTable().addListener(SWT.MenuDetect, event -> {
+		getTable().addListener(SWT.MenuDetect, _ -> {
 
 			/*
 			 * Create the menu if requested.
@@ -713,7 +713,7 @@ public class ExtendedTableViewer extends TableViewer implements IExtendedTableVi
 		tableColumn.setWidth(width);
 		tableColumn.setResizable(true);
 		tableColumn.setMoveable(true);
-		tableColumn.addListener(SWT.Move, event -> fireColumnMoved());
+		tableColumn.addListener(SWT.Move, _ -> fireColumnMoved());
 		return tableViewerColumn;
 	}
 

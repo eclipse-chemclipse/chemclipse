@@ -304,7 +304,7 @@ public class ProcessMethodToolbar extends ToolBar {
 		item.setToolTipText("Add a processor.");
 		final Menu menu = new Menu(toolBar.getShell(), SWT.POP_UP);
 
-		toolBar.addDisposeListener(e -> menu.dispose());
+		toolBar.addDisposeListener(_ -> menu.dispose());
 
 		item.addListener(SWT.Selection, event -> {
 			if(event.detail == SWT.ARROW) {

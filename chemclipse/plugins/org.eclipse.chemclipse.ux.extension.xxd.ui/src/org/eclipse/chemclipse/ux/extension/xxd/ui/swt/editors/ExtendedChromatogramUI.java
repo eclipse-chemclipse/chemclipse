@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Alexander Kerner - Generics
@@ -1337,7 +1337,7 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 	private void createSeparationColumnUI(Composite parent) {
 
 		SeparationColumnUI separationColumnUI = new SeparationColumnUI(parent, SWT.NONE);
-		separationColumnUI.setColumnUpdateListener((shell, separationColumn) -> {
+		separationColumnUI.setColumnUpdateListener((_, separationColumn) -> {
 
 			if(separationColumn != null) {
 				if(chromatogramSelection != null) {
@@ -1508,7 +1508,7 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 					return chromatogramSelection.getChromatogram().getAnalysisSegments();
 				}
 				return Collections.emptyList();
-			}, always -> false);
+			}, _ -> false);
 			listener.setPaintArea(true);
 			listener.setPaintLines(true);
 			listener.setAlpha(50);

@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2024, 2025 Lablicate GmbH.
+ * Copyright (c) 2024, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -45,7 +45,7 @@ public class FileHeaderDataFieldEditor extends FieldEditor {
 		FileHeaderDataEditor editor = new FileHeaderDataEditor(parent, SWT.NONE);
 		editor.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-		editor.addChangeListener(event -> {
+		editor.addChangeListener(_ -> {
 
 			String message = editor.getMessage();
 			if(message != null) {

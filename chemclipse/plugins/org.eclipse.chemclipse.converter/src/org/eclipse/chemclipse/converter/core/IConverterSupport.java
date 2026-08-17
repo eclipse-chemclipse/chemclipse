@@ -29,7 +29,7 @@ public interface IConverterSupport {
 
 	public static final Predicate<ISupplier> EXPORT_SUPPLIER = supplier -> supplier.isExportable();
 	public static final Predicate<ISupplier> IMPORT_SUPPLIER = supplier -> supplier.isImportable();
-	public static final Predicate<ISupplier> ALL_SUPPLIER = supplier -> true;
+	public static final Predicate<ISupplier> ALL_SUPPLIER = _ -> true;
 
 	/**
 	 * Returns the filter extension which are actually registered at the

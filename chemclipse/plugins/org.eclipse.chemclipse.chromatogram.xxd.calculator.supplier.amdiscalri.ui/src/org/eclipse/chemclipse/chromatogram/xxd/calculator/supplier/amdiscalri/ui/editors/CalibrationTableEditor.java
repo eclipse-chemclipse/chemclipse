@@ -165,11 +165,11 @@ public class CalibrationTableEditor extends FieldEditor {
 	private void createButtons(Composite composite) {
 
 		buttonAdd = createButton(composite, "Add", "Add a new calibration file."); //$NON-NLS-1$
-		buttonAdd.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> addPressed()));
+		buttonAdd.addSelectionListener(SelectionListener.widgetSelectedAdapter(_ -> addPressed()));
 		buttonRemove = createButton(composite, "Remove", "Remove the selected calibration file."); //$NON-NLS-1$
-		buttonRemove.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> removePressed()));
+		buttonRemove.addSelectionListener(SelectionListener.widgetSelectedAdapter(_ -> removePressed()));
 		buttonClear = createButton(composite, "Clear", "Remove all calibration files."); //$NON-NLS-1$
-		buttonClear.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> clearPressed()));
+		buttonClear.addSelectionListener(SelectionListener.widgetSelectedAdapter(_ -> clearPressed()));
 	}
 
 	private Button createButton(Composite parent, String text, String tooltip) {
@@ -274,7 +274,7 @@ public class CalibrationTableEditor extends FieldEditor {
 			compositeButtons.setLayout(layout);
 
 			createButtons(compositeButtons);
-			compositeButtons.addDisposeListener(event -> {
+			compositeButtons.addDisposeListener(_ -> {
 				buttonAdd = null;
 				buttonRemove = null;
 				buttonClear = null;
@@ -292,7 +292,7 @@ public class CalibrationTableEditor extends FieldEditor {
 
 		if(calibrationFileListUI == null) {
 			calibrationFileListUI = new CalibrationFileListUI(parent, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL | SWT.H_SCROLL);
-			calibrationFileListUI.getTable().addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> selectionChanged()));
+			calibrationFileListUI.getTable().addSelectionListener(SelectionListener.widgetSelectedAdapter(_ -> selectionChanged()));
 		} else {
 			checkParent(calibrationFileListUI.getTable(), parent);
 		}

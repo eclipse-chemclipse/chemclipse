@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -120,7 +120,7 @@ public class PageCalibrationSettings extends AbstractExtendedWizardPage {
 
 		textPathRetentionIndexFile = new Text(composite, SWT.BORDER);
 		textPathRetentionIndexFile.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		textPathRetentionIndexFile.addModifyListener(e -> {
+		textPathRetentionIndexFile.addModifyListener(_ -> {
 
 			wizardElements.setPathRetentionIndexFile(textPathRetentionIndexFile.getText().trim());
 			validateSelection();

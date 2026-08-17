@@ -48,7 +48,7 @@ public interface IProcessSupplierContext {
 	static Predicate<IProcessSupplier<?>> forDataTypes(Iterable<DataCategory> dataTypes) {
 
 		if(dataTypes == null) {
-			return test -> true;
+			return _ -> true;
 		}
 
 		return processSupplier -> {

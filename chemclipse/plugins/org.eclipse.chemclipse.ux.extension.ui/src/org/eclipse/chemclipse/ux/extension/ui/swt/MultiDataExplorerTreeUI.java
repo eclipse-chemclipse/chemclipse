@@ -297,7 +297,7 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, getPreferencePages(), display -> {
+		createSettingsButton(parent, getPreferencePages(), _ -> {
 
 			updateUserLocations();
 			setSupplierFileEditorSupport();
@@ -441,7 +441,7 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 		TreeViewer treeViewer = dataExplorerTreeUI.getTreeViewer();
 		treeViewer.getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		ISelectionChangedListener selectionChangedListener = event -> {
+		ISelectionChangedListener selectionChangedListener = _ -> {
 
 			Object[] array = treeViewer.getStructuredSelection().toArray();
 			File[] files = new File[array.length];
@@ -452,7 +452,7 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 		};
 
 		treeViewer.addSelectionChangedListener(selectionChangedListener);
-		treeViewer.addDoubleClickListener(event -> {
+		treeViewer.addDoubleClickListener(_ -> {
 
 			if(dataExplorerTreeUI.getTreeViewer().getStructuredSelection().getFirstElement() instanceof File file) {
 				handleDoubleClick(file);
@@ -494,7 +494,7 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 		TreeViewer treeViewer = dataExplorerTreeUI.getTreeViewer();
 		MenuManager menuManager = new MenuManager("#ViewerMenu"); //$NON-NLS-1$
 		menuManager.setRemoveAllWhenShown(true);
-		menuManager.addMenuListener(mgr -> {
+		menuManager.addMenuListener(_ -> {
 
 			/*
 			 * Menu Entries

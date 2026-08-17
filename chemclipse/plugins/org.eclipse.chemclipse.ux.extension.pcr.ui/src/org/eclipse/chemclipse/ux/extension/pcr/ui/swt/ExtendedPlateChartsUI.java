@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Matthias Mailänder - add color compensation
@@ -138,7 +138,7 @@ public class ExtendedPlateChartsUI extends Composite implements IExtendedPartUI 
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePagePlateChart.class), display -> updateChart());
+		createSettingsButton(parent, Arrays.asList(PreferencePagePlateChart.class), _ -> updateChart());
 	}
 
 	private void createResetButton(Composite parent) {

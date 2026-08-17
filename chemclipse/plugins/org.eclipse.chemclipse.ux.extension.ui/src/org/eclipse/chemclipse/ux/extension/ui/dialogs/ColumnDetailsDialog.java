@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -87,7 +87,7 @@ public class ColumnDetailsDialog extends TitleAreaDialog {
 		text.setText(nameMap.getOrDefault(separationColumnType, ""));
 		text.setToolTipText("Column Name");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		text.addModifyListener(e -> nameMap.put(separationColumnType, text.getText().trim()));
+		text.addModifyListener(_ -> nameMap.put(separationColumnType, text.getText().trim()));
 	}
 
 	@Override

@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -121,7 +121,7 @@ public class ExtendedQuantSignalsListUI extends Composite implements IExtendedPa
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePagePeaksAxes.class), display -> applySettings());
+		createSettingsButton(parent, Arrays.asList(PreferencePagePeaksAxes.class), _ -> applySettings());
 	}
 
 	private void createToolbarInfo(Composite parent) {
@@ -258,7 +258,7 @@ public class ExtendedQuantSignalsListUI extends Composite implements IExtendedPa
 
 	private void addKeyEventProcessors(Shell shell, ITableSettings tableSettings) {
 
-		tableSettings.addKeyEventProcessor((extendedTableViewer, e) -> {
+		tableSettings.addKeyEventProcessor((_, e) -> {
 
 			if(e.keyCode == SWT.DEL) {
 				deleteSignals(shell);

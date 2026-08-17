@@ -56,7 +56,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 
 public class ChromatogramHeatmapUI extends Composite implements IExtendedPartUI {
 
@@ -316,7 +315,7 @@ public class ChromatogramHeatmapUI extends Composite implements IExtendedPartUI 
 
 	private void createButtonSettings(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePageChromatogramHeatmap.class), (Display display) -> {
+		createSettingsButton(parent, Arrays.asList(PreferencePageChromatogramHeatmap.class), (_) -> {
 			setScaleValues();
 			updateHeatmap();
 		});
@@ -349,7 +348,7 @@ public class ChromatogramHeatmapUI extends Composite implements IExtendedPartUI 
 		intensityScaleUI.setMaximum(PreferenceSupplier.MAX_HEATMAP_SCALE_INTENSITY);
 		intensityScaleUI.setToolTipText(tooltip);
 		intensityScaleUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		intensityScaleUI.setUpdateListener((int selection) -> updateHeatmap());
+		intensityScaleUI.setUpdateListener((_) -> updateHeatmap());
 
 		return intensityScaleUI;
 	}

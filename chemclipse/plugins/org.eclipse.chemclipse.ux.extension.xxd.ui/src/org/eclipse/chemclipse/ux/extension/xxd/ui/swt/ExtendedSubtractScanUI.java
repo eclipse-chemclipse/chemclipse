@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -403,7 +403,7 @@ public class ExtendedSubtractScanUI extends Composite implements IExtendedPartUI
 		preferencePages.add(ScanChartAxisRelativeIntensity.class);
 		preferencePages.add(PreferencePageSubtract.class);
 
-		createSettingsButton(parent, preferencePages, display -> applySettings());
+		createSettingsButton(parent, preferencePages, _ -> applySettings());
 	}
 
 	private void applySettings() {
@@ -442,7 +442,7 @@ public class ExtendedSubtractScanUI extends Composite implements IExtendedPartUI
 
 	/**
 	 * If the display is set to null, no event is fired.
-	 * 
+	 *
 	 * @param display
 	 * @param scanMSD
 	 */

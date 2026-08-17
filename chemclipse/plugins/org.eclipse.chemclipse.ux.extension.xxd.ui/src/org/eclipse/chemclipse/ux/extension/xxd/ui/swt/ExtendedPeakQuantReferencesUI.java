@@ -233,7 +233,7 @@ public class ExtendedPeakQuantReferencesUI extends Composite implements IExtende
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePageQuantitation.class), display -> applySettings());
+		createSettingsButton(parent, Arrays.asList(PreferencePageQuantitation.class), _ -> applySettings());
 	}
 
 	private void createTable(Composite parent) {

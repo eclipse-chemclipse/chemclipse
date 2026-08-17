@@ -239,8 +239,8 @@ public class MassSpectrumMergeDialog extends TitleAreaDialog {
 		tableViewer.setLabelProvider(new MassSpectrumLabelProvider());
 		tableViewer.setInput(massSpectra);
 
-		tableViewer.addCheckStateListener(e -> updateChart());
-		tableViewer.addSelectionChangedListener(e -> updateChart());
+		tableViewer.addCheckStateListener(_ -> updateChart());
+		tableViewer.addSelectionChangedListener(_ -> updateChart());
 
 		tableControl.set(tableViewer);
 	}

@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -238,7 +238,7 @@ public class ExtendedHeaderDataUI extends Composite implements IExtendedPartUI {
 		tabItem.setText("Miscellaneous");
 
 		Text text = new Text(tabFolder, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP);
-		text.addModifyListener(e -> {
+		text.addModifyListener(_ -> {
 
 			if(measurementInfo != null) {
 				measurementInfo.setMiscInfo(text.getText().trim());
@@ -255,7 +255,7 @@ public class ExtendedHeaderDataUI extends Composite implements IExtendedPartUI {
 		tabItem.setText("Findings");
 
 		editor = new SWTEditor(tabFolder, SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP);
-		editor.addModifyListener(e -> {
+		editor.addModifyListener(_ -> {
 
 			if(measurementInfo != null) {
 				measurementInfo.setFindings(editor.getText().trim());

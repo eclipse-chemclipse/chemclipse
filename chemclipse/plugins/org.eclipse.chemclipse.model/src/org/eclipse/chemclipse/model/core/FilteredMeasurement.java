@@ -506,7 +506,7 @@ public class FilteredMeasurement<FilteredType extends IMeasurement, ConfigType> 
 						if(reference != null) {
 							ProcessorFactory service = bundleContext.getService(reference);
 							if(service != null) {
-								Collection<Filter<ConfigType>> filters = service.getProcessors(ProcessorFactory.genericClass(Filter.class), (filter, properties) -> filter.getID().equals(filterID));
+								Collection<Filter<ConfigType>> filters = service.getProcessors(ProcessorFactory.genericClass(Filter.class), (filter, _) -> filter.getID().equals(filterID));
 								for(Filter<ConfigType> filter : filters) {
 									this.filter = filter;
 								}

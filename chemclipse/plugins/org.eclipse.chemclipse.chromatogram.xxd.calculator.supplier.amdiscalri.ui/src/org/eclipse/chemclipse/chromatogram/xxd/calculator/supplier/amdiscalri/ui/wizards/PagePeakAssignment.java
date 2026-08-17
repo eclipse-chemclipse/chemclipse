@@ -199,7 +199,7 @@ public class PagePeakAssignment extends AbstractExtendedWizardPage {
 		combo.setItems(availableStandards);
 		combo.setToolTipText("Start Index");
 
-		combo.addModifyListener(arg0 -> setStartIndexName(combo));
+		combo.addModifyListener(_ -> setStartIndexName(combo));
 
 		return combo;
 	}
@@ -217,7 +217,7 @@ public class PagePeakAssignment extends AbstractExtendedWizardPage {
 		combo.setItems(availableStandards);
 		combo.setToolTipText("Stop Index");
 
-		combo.addModifyListener(arg0 -> setStopIndexName(combo));
+		combo.addModifyListener(_ -> setStopIndexName(combo));
 
 		return combo;
 	}
@@ -297,7 +297,7 @@ public class PagePeakAssignment extends AbstractExtendedWizardPage {
 		gridData.grabExcessHorizontalSpace = true;
 		gridData.heightHint = 100;
 		peakTableViewerUI.getTable().setLayoutData(gridData);
-		peakTableViewerUI.addSelectionChangedListener(event -> {
+		peakTableViewerUI.addSelectionChangedListener(_ -> {
 
 			IPeak selectedPeak = getSelectedPeak();
 			if(selectedPeak != null) {
@@ -561,7 +561,7 @@ public class PagePeakAssignment extends AbstractExtendedWizardPage {
 
 	private void enableAutoComplete(Combo combo) {
 
-		IContentProposalProvider proposalProvider = (contents, position) -> {
+		IContentProposalProvider proposalProvider = (contents, _) -> {
 
 			List<ContentProposal> list = new ArrayList<>();
 			if(contents != null) {

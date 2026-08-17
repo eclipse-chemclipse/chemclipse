@@ -310,7 +310,7 @@ public class ExtendedRetentionIndexListUI extends Composite implements IExtended
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePageSystem.class, PreferencePage.class), display -> applySettings());
+		createSettingsButton(parent, Arrays.asList(PreferencePageSystem.class, PreferencePage.class), _ -> applySettings());
 	}
 
 	private Composite createToolbarInfoTop(Composite parent) {
@@ -330,7 +330,7 @@ public class ExtendedRetentionIndexListUI extends Composite implements IExtended
 
 		RetentionIndexUI retentionIndexUI = new RetentionIndexUI(parent, SWT.NONE);
 		retentionIndexUI.setLayoutData(new GridData(GridData.FILL_BOTH));
-		retentionIndexUI.setUpdateListener(display -> updateLabel());
+		retentionIndexUI.setUpdateListener(_ -> updateLabel());
 		return retentionIndexUI;
 	}
 

@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -401,7 +401,7 @@ public class ExtendedScanTableUI extends Composite implements IExtendedPartUI {
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePageScans.class), display -> applySettings());
+		createSettingsButton(parent, Arrays.asList(PreferencePageScans.class), _ -> applySettings());
 	}
 
 	private void createToolbarInfoTop(Composite parent) {
@@ -426,7 +426,7 @@ public class ExtendedScanTableUI extends Composite implements IExtendedPartUI {
 
 		SearchSupportUI searchSupportUI = new SearchSupportUI(parent, SWT.NONE);
 		searchSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		searchSupportUI.setSearchListener((searchText, caseSensitive) -> applySearch());
+		searchSupportUI.setSearchListener((_, _) -> applySearch());
 
 		toolbarSearch.set(searchSupportUI);
 	}

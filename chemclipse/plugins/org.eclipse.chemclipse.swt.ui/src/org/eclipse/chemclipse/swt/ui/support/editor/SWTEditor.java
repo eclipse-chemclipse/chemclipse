@@ -128,7 +128,7 @@ public class SWTEditor extends Composite {
 			initResources();
 			createToolBar();
 			styledText = new StyledText(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-			addDisposeListener(e -> releaseResources());
+			addDisposeListener(_ -> releaseResources());
 		}
 		/*
 		 * Layout
@@ -165,29 +165,29 @@ public class SWTEditor extends Composite {
 		boldControl = new ToolItem(styleToolBar, SWT.CHECK);
 		boldControl.setImage(imageBold);
 		boldControl.setToolTipText(getResourceString("Bold")); //$NON-NLS-1$
-		boldControl.addSelectionListener(widgetSelectedAdapter(event -> setStyle(BOLD)));
+		boldControl.addSelectionListener(widgetSelectedAdapter(_ -> setStyle(BOLD)));
 
 		italicControl = new ToolItem(styleToolBar, SWT.CHECK);
 		italicControl.setImage(imageItalic);
 		italicControl.setToolTipText(getResourceString("Italic")); //$NON-NLS-1$
-		italicControl.addSelectionListener(widgetSelectedAdapter(event -> setStyle(ITALIC)));
+		italicControl.addSelectionListener(widgetSelectedAdapter(_ -> setStyle(ITALIC)));
 
 		underlineControl = new ToolItem(styleToolBar, SWT.CHECK);
 		underlineControl.setImage(imageUnderline);
 		underlineControl.setToolTipText(getResourceString("Underline")); //$NON-NLS-1$
-		underlineControl.addSelectionListener(widgetSelectedAdapter(event -> setStyle(UNDERLINE)));
+		underlineControl.addSelectionListener(widgetSelectedAdapter(_ -> setStyle(UNDERLINE)));
 
 		strikeoutControl = new ToolItem(styleToolBar, SWT.CHECK);
 		strikeoutControl.setImage(imageStrikeout);
 		strikeoutControl.setToolTipText(getResourceString("Strikeout")); //$NON-NLS-1$
-		strikeoutControl.addSelectionListener(widgetSelectedAdapter(event -> setStyle(STRIKEOUT)));
+		strikeoutControl.addSelectionListener(widgetSelectedAdapter(_ -> setStyle(STRIKEOUT)));
 
 		new ToolItem(styleToolBar, SWT.SEPARATOR);
 
 		clearControl = new ToolItem(styleToolBar, SWT.PUSH);
 		clearControl.setImage(imageClear);
 		clearControl.setToolTipText(getResourceString("Clear Formatting")); //$NON-NLS-1$
-		clearControl.addSelectionListener(widgetSelectedAdapter(event -> clearFormatting()));
+		clearControl.addSelectionListener(widgetSelectedAdapter(_ -> clearFormatting()));
 
 	}
 
@@ -300,12 +300,12 @@ public class SWTEditor extends Composite {
 
 	void installListeners() {
 
-		styledText.addCaretListener(event -> {
+		styledText.addCaretListener(_ -> {
 			updateToolBar();
 		});
 		styledText.addListener(SWT.KeyDown, this::handleKeyDown);
 		styledText.addVerifyListener(this::handleVerifyText);
-		styledText.addModifyListener(event -> handleModify());
+		styledText.addModifyListener(_ -> handleModify());
 	}
 
 	Image loadImage(Display display, String fileName) {

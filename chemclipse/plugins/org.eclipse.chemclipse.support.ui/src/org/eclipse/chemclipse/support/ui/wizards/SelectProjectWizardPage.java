@@ -153,7 +153,7 @@ public class SelectProjectWizardPage extends AbstractExtendedWizardPage {
 		 */
 		projectNameText = new Text(composite, SWT.BORDER);
 		projectNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		projectNameText.addModifyListener(e -> validateTextSelection());
+		projectNameText.addModifyListener(_ -> validateTextSelection());
 		/*
 		 * Set default choice
 		 */

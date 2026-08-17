@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -230,7 +230,7 @@ public class PageLibrarySearch extends AbstractExtendedWizardPage implements IEx
 			}
 		});
 
-		targetListUI.addSelectionChangedListener(event -> {
+		targetListUI.addSelectionChangedListener(_ -> {
 
 			IIdentificationTarget identificationTarget = getIdentificationTarget();
 			ILibraryInformation libraryInformation = (identificationTarget != null) ? identificationTarget.getLibraryInformation() : null;

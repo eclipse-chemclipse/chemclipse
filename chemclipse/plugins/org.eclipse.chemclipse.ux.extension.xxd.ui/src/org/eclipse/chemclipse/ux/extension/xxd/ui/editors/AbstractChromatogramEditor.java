@@ -119,7 +119,7 @@ public abstract class AbstractChromatogramEditor extends AbstractUpdater<Extende
 	private final ObjectChangedListener<IMeasurementResult<?>> updateMeasurementResult = new MeasurementResultListener();
 	private final IProcessSupplierContext processSupplierContext;
 
-	private final ObjectChangedListener<Object> updateMenuListener = (type, newObject, oldObject) -> {
+	private final ObjectChangedListener<Object> updateMenuListener = (_, _, _) -> {
 
 		if(extendedChromatogramUI != null) {
 			extendedChromatogramUI.updateMenu();
@@ -403,7 +403,7 @@ public abstract class AbstractChromatogramEditor extends AbstractUpdater<Extende
 
 	/**
 	 * Could be also null if not set yet.
-	 * 
+	 *
 	 * @return String
 	 */
 	private synchronized String getSupplierID(Map<?, ?> map) {

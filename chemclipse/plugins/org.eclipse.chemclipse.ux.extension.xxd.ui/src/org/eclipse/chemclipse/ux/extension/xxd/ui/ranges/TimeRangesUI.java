@@ -332,7 +332,7 @@ public class TimeRangesUI extends Composite implements IExtendedPartUI {
 
 	private void createButtonSettings(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePageTimeRanges.class), display -> applySettings());
+		createSettingsButton(parent, Arrays.asList(PreferencePageTimeRanges.class), _ -> applySettings());
 	}
 
 	private void applySettings() {

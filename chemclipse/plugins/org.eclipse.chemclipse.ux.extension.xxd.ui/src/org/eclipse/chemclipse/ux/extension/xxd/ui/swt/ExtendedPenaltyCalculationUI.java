@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -28,7 +28,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtchart.extensions.preferences.PreferencePage;
 
 public class ExtendedPenaltyCalculationUI extends Composite implements IExtendedPartUI {
@@ -148,7 +147,7 @@ public class ExtendedPenaltyCalculationUI extends Composite implements IExtended
 		createSettingsButton(parent, Arrays.asList( //
 				PreferencePagePeakTraces.class, //
 				PreferencePage.class //
-		), (Display display) -> applySettings());
+		), _ -> applySettings());
 	}
 
 	private void applySettings() {

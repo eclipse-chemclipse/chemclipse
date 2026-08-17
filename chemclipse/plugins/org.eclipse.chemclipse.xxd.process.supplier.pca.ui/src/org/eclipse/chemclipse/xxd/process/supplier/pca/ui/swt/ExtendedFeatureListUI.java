@@ -438,7 +438,7 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePage.class), display -> applySettings());
+		createSettingsButton(parent, Arrays.asList(PreferencePage.class), _ -> applySettings());
 	}
 
 	private void applySettings() {

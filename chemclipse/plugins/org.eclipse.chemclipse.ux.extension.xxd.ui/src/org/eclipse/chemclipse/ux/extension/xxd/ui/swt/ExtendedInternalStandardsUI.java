@@ -513,7 +513,7 @@ public class ExtendedInternalStandardsUI extends Composite implements IExtendedP
 
 	private void addKeyEventProcessors(Shell shell, ITableSettings tableSettings) {
 
-		tableSettings.addKeyEventProcessor((extendedTableViewer, e) -> {
+		tableSettings.addKeyEventProcessor((_, e) -> {
 
 			if(e.keyCode == SWT.DEL) {
 				/*

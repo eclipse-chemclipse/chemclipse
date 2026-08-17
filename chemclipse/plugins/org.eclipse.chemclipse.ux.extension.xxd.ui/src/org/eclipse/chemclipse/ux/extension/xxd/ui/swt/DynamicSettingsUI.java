@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Christoph Läubrich - initial API and implementation
  * Philip Wenig - refactoring Observable
@@ -33,7 +33,7 @@ public class DynamicSettingsUI {
 
 		this.parent = parent;
 		this.layoutData = layoutData;
-		parent.addDisposeListener(e -> disposeCurrent());
+		parent.addDisposeListener(_ -> disposeCurrent());
 	}
 
 	public <T, C> void setActiveContext(FilterContext<T, C> context, PropertyChangeListener observer) {
@@ -49,7 +49,7 @@ public class DynamicSettingsUI {
 					composite.setLayoutData(layoutData);
 					PropertyChangeSupport extension = editorExtension.createExtension(composite);
 					if(observer != null) {
-						composite.addDisposeListener(e -> extension.removePropertyChangeListener(observer));
+						composite.addDisposeListener(_ -> extension.removePropertyChangeListener(observer));
 						extension.addPropertyChangeListener(observer);
 					}
 				}

@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Jan Holy - initial API and implementation
  *******************************************************************************/
@@ -190,13 +190,13 @@ public abstract class TableViewerFieldEditor<Value> extends FieldEditor {
 		box.setLayout(layout);
 		GridLayoutFactory.fillDefaults().applyTo(box);
 		newButton = createButton(box, "New");
-		newButton.addListener(SWT.Selection, e -> addItem());
+		newButton.addListener(SWT.Selection, _ -> addItem());
 		removeButton = createButton(box, "Remove");
-		removeButton.addListener(SWT.Selection, e -> removeItem());
+		removeButton.addListener(SWT.Selection, _ -> removeItem());
 		upButton = createButton(box, "Up");
-		upButton.addListener(SWT.Selection, e -> moveUp());
+		upButton.addListener(SWT.Selection, _ -> moveUp());
 		downButton = createButton(box, "Down");
-		downButton.addListener(SWT.Selection, e -> moveDown());
+		downButton.addListener(SWT.Selection, _ -> moveDown());
 		return box;
 	}
 

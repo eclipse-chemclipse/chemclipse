@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -275,7 +275,7 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 		Text text = new Text(parent, SWT.BORDER);
 		text.setToolTipText("Operator");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		text.addModifyListener(e -> {
+		text.addModifyListener(_ -> {
 
 			if(quantitationDatabase != null) {
 				quantitationDatabase.setOperator(text.getText().trim());
@@ -294,7 +294,7 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 		Text text = new Text(parent, SWT.BORDER);
 		text.setToolTipText("Description");
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		text.addModifyListener(e -> {
+		text.addModifyListener(_ -> {
 
 			if(quantitationDatabase != null) {
 				quantitationDatabase.setDescription(text.getText().trim());
@@ -472,7 +472,7 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePageQuantitation.class, PreferencePageQuantitationAxes.class), display -> applySettings());
+		createSettingsButton(parent, Arrays.asList(PreferencePageQuantitation.class, PreferencePageQuantitationAxes.class), _ -> applySettings());
 	}
 
 	private void deleteCompounds(Shell shell) {
@@ -536,7 +536,7 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 		QuantCompoundListUI listUI = new QuantCompoundListUI(parent, SWT.VIRTUAL | SWT.BORDER | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
 		Table table = listUI.getTable();
 		table.setLayoutData(new GridData(GridData.FILL_BOTH));
-		listUI.addSelectionChangedListener(event -> {
+		listUI.addSelectionChangedListener(_ -> {
 
 			Object object = listUI.getStructuredSelection().getFirstElement();
 			if(object instanceof IQuantitationCompound quantitationCompound) {
@@ -581,7 +581,7 @@ public class ExtendedQuantCompoundListUI extends Composite implements IExtendedP
 
 	private void addKeyEventProcessors(Shell shell, ITableSettings tableSettings) {
 
-		tableSettings.addKeyEventProcessor((extendedTableViewer, e) -> {
+		tableSettings.addKeyEventProcessor((_, e) -> {
 
 			if(e.keyCode == SWT.DEL) {
 				deleteCompounds(shell);

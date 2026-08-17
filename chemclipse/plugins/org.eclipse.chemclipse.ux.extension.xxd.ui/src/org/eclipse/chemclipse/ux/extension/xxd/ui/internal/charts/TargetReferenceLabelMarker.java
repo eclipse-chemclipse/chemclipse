@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Christoph Läubrich - initial API and implementation
  * Philip Wenig - refactoring target label support
@@ -93,7 +93,7 @@ public class TargetReferenceLabelMarker implements ICustomPaintListener {
 
 	/**
 	 * Returns an unmodifiable list of the contained target labels.
-	 * 
+	 *
 	 * @return {@link List}
 	 */
 	public List<TargetLabel> getTargetLabels() {
@@ -140,7 +140,7 @@ public class TargetReferenceLabelMarker implements ICustomPaintListener {
 
 	/**
 	 * Returns the series reference.
-	 * 
+	 *
 	 * @param chart
 	 * @return the series for the given chart to use as a reference
 	 */
@@ -316,7 +316,7 @@ public class TargetReferenceLabelMarker implements ICustomPaintListener {
 
 	private Predicate<ITargetReference> setTargetReferences(Collection<? extends TargetReference> targetReferences) {
 
-		return setTargetReferences(targetReferences, always -> true);
+		return setTargetReferences(targetReferences, _ -> true);
 	}
 
 	private Predicate<ITargetReference> setTargetReferences(Collection<? extends TargetReference> targetReferences, Predicate<ITargetReference> activeFilter) {

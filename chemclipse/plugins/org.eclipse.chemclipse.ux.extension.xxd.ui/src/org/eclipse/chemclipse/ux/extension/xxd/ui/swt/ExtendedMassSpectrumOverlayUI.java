@@ -49,7 +49,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swtchart.extensions.core.BaseChart;
 import org.eclipse.swtchart.extensions.core.IChartSettings;
@@ -183,7 +182,7 @@ public class ExtendedMassSpectrumOverlayUI extends Composite implements IExtende
 
 	private void createSettingsButton(Composite parent) {
 
-		createSettingsButton(parent, Arrays.asList(PreferencePageOverlay.class), (Display display) -> applySettings());
+		createSettingsButton(parent, Arrays.asList(PreferencePageOverlay.class), _ -> applySettings());
 	}
 
 	private void createOverlayChart(Composite parent) {

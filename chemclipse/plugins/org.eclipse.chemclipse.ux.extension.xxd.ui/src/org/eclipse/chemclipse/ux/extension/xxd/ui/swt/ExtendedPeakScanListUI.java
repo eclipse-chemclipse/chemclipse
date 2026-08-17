@@ -445,7 +445,7 @@ public class ExtendedPeakScanListUI extends Composite implements IExtendedPartUI
 
 	private void addKeyEventProcessors(ITableSettings tableSettings) {
 
-		tableSettings.addKeyEventProcessor((extendedTableViewer, e) -> {
+		tableSettings.addKeyEventProcessor((_, e) -> {
 
 			if(matchesKeyPress("InternalStandard", e)) {
 				modifyInternalStandards();
@@ -1008,7 +1008,7 @@ public class ExtendedPeakScanListUI extends Composite implements IExtendedPartUI
 				PreferencePageScans.class, //
 				PreferencePageTargets.class, //
 				PreferencePageLists.class //
-		), display -> applySettings());
+		), _ -> applySettings());
 	}
 
 	private void updateLabel() {

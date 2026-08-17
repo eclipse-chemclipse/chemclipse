@@ -175,7 +175,7 @@ public class ExtendedMeasurementResultUI extends Composite implements IExtendedP
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.grabExcessHorizontalSpace = true;
 		combo.setLayoutData(gridData);
-		comboViewer.addSelectionChangedListener(event -> {
+		comboViewer.addSelectionChangedListener(_ -> {
 
 			Object object = comboViewer.getStructuredSelection().getFirstElement();
 			if(object instanceof IMeasurementResult<?> measurementResult) {

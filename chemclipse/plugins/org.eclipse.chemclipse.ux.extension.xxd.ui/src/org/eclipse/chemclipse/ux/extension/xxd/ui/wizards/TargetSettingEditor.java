@@ -150,7 +150,7 @@ public class TargetSettingEditor {
 
 		comboViewer.setInput(DisplayOption.values());
 		comboViewer.setSelection(new StructuredSelection(targetDisplaySettings.getDisplayOption()));
-		comboViewer.addSelectionChangedListener(event -> {
+		comboViewer.addSelectionChangedListener(_ -> {
 
 			targetDisplaySettings.setDisplayOption((DisplayOption)comboViewer.getStructuredSelection().getFirstElement());
 			fireUpdate();
@@ -195,7 +195,7 @@ public class TargetSettingEditor {
 
 		comboViewer.setInput(LibraryField.values());
 		comboViewer.setSelection(new StructuredSelection(targetDisplaySettings.getLibraryField()));
-		comboViewer.addSelectionChangedListener(event -> {
+		comboViewer.addSelectionChangedListener(_ -> {
 
 			targetDisplaySettings.setLibraryField((LibraryField)comboViewer.getStructuredSelection().getFirstElement());
 			listControl.get().refresh();
@@ -211,7 +211,7 @@ public class TargetSettingEditor {
 		comboViewer.setContentProvider(ArrayContentProvider.getInstance());
 		comboViewer.setInput(new Object[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
 		comboViewer.setSelection(new StructuredSelection(targetDisplaySettings.getCollisionDetectionDepth()));
-		comboViewer.addSelectionChangedListener(event -> {
+		comboViewer.addSelectionChangedListener(_ -> {
 
 			targetDisplaySettings.setCollisionDetectionDepth(((Integer)comboViewer.getStructuredSelection().getFirstElement()));
 			fireUpdate();
@@ -308,7 +308,7 @@ public class TargetSettingEditor {
 		gridData.widthHint = 80;
 		spinner.setLayoutData(gridData);
 
-		spinner.addModifyListener(e -> {
+		spinner.addModifyListener(_ -> {
 
 			selectHighestTargets(spinner.getSelection());
 			listControl.get().refresh();

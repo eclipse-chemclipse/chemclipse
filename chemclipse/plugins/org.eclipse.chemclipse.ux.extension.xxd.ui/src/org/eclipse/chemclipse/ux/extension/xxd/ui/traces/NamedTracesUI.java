@@ -216,7 +216,7 @@ public class NamedTracesUI extends Composite {
 		TraceValidator traceValidator = new TraceValidator();
 		ControlDecoration controlDecoration = new ControlDecoration(text, SWT.LEFT | SWT.TOP);
 
-		text.addModifyListener(event -> {
+		text.addModifyListener(_ -> {
 
 			if(namedTrace != null) {
 				if(validate(traceValidator, controlDecoration, text)) {
