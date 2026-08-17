@@ -233,8 +233,8 @@ public class MassSpectrumEditor extends Composite implements IChangeListener {
 			fileDialog.setFilterExtensions(converterSupport.getFilterExtensions());
 			fileDialog.setFilterNames(converterSupport.getFilterNames());
 		} catch(NoConverterAvailableException e) {
-			fileDialog.setFilterExtensions(new String[]{"*.*"});
-			fileDialog.setFilterNames(new String[]{"All Files"});
+			fileDialog.setFilterExtensions("*.*");
+			fileDialog.setFilterNames("All Files");
 		}
 
 		fileDialog.setFilterPath(PreferenceSupplier.getPathMassSpectrumLibraries());
