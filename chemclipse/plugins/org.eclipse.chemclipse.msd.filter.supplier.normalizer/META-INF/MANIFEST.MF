@@ -13,7 +13,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.chemclipse.chromatogram.filter,
  org.eclipse.chemclipse.numeric
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Bundle-Vendor: Chemclipse
 Export-Package: org.eclipse.chemclipse.msd.filter.supplier.normalizer.core,
  org.eclipse.chemclipse.msd.filter.supplier.normalizer.settings

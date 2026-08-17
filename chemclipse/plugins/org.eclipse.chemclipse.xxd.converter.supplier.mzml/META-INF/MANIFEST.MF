@@ -21,7 +21,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.glassfish.hk2.osgi-resource-locator;bundle-version="1.0.4",
  com.sun.xml.bind.jaxb-osgi;bundle-version="4.0.6",
  wrapped.se.lth.immun.MsNumpress;bundle-version="0.1.21"
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Bundle-ActivationPolicy: lazy
 Import-Package: jakarta.xml.bind,
  jakarta.xml.bind.annotation,

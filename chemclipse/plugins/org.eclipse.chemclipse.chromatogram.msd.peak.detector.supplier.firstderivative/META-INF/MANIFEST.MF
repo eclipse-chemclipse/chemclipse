@@ -21,7 +21,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative,
  org.apache.commons.lang3;bundle-version="3.17.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Export-Package: org.eclipse.chemclipse.chromatogram.msd.peak.detector.supplier.firstderivative.core,
  org.eclipse.chemclipse.chromatogram.msd.peak.detector.supplier.firstderivative.settings
 Bundle-Vendor: ChemClipse

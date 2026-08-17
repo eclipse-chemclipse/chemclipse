@@ -8,4 +8,4 @@ Bundle-Vendor: ChemClipse
 Fragment-Host: org.eclipse.chemclipse.model;bundle-version="0.8.0"
 Import-Package: org.junit.jupiter.api;version="[6.0.0,7.0.0)",
  org.junit.jupiter.api.function;version="[6.0.0,7.0.0)"
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25

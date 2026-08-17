@@ -14,7 +14,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.apache.commons.lang3;bundle-version="3.1.0",
  wrapped.org.ejml.ejml-simple;bundle-version="0.43.0",
  wrapped.org.ejml.ejml-core;bundle-version="0.43.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Bundle-ActivationPolicy: lazy
 Import-Package: com.fasterxml.jackson.annotation;version="[2.18.0,3.0.0)"
 Export-Package: org.eclipse.chemclipse.nmr.processing.apodization,

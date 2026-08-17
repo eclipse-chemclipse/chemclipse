@@ -17,7 +17,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.apache.commons.commons-codec;bundle-version="1.16.0",
  org.glassfish.hk2.osgi-resource-locator;bundle-version="1.0.4",
  com.sun.xml.bind.jaxb-osgi;bundle-version="4.0.5"
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.chemclipse.msd.converter.supplier.mzxml.converter,
  org.eclipse.chemclipse.msd.converter.supplier.mzxml.model,
