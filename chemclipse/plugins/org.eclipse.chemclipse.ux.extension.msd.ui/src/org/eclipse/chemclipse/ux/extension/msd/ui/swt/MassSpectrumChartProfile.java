@@ -141,6 +141,8 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 			if(massSpectrum instanceof IStandaloneMassSpectrum standaloneMassSpectrum) {
 				LineSeriesData peakLineSeriesData = getPeaks(standaloneMassSpectrum);
 				lineSeriesDataList.add(peakLineSeriesData);
+				LineSeriesData noiseLineSeriesData = getNoise(standaloneMassSpectrum);
+				lineSeriesDataList.add(noiseLineSeriesData);
 				createAnnotations(standaloneMassSpectrum);
 			}
 			addSeriesData(lineSeriesDataList, MAX_NUMBER_MZ);
@@ -326,7 +328,7 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 
 	private LineSeriesData getPeaks(IStandaloneMassSpectrum massSpectrum) {
 
-		ISeriesData peakSeriesData = createPeakSeries("Peaks", massSpectrum, 0, 0);
+		ISeriesData peakSeriesData = createPeakSeries("Peaks", massSpectrum);
 		LineSeriesData peakSeries = new LineSeriesData(peakSeriesData);
 		ILineSeriesSettings lineSeriesSettings = peakSeries.getLineSeriesSettings();
 		lineSeriesSettings.setEnableArea(false);
@@ -338,7 +340,7 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 		return peakSeries;
 	}
 
-	public static ISeriesData createPeakSeries(String id, IStandaloneMassSpectrum massSpectrum, double yOffset, double xOffset) {
+	public static ISeriesData createPeakSeries(String id, IStandaloneMassSpectrum massSpectrum) {
 
 		List<IMassSpectrumPeak> peaks = massSpectrum.getPeaks();
 		int size = peaks.size();
@@ -346,8 +348,37 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 		double[] ySeries = new double[size];
 		int index = 0;
 		for(IMassSpectrumPeak peak : peaks) {
-			xSeries[index] = peak.getIon() + xOffset;
-			ySeries[index] = peak.getAbundance() + yOffset;
+			xSeries[index] = peak.getIon();
+			ySeries[index] = peak.getAbundance();
+			index++;
+		}
+		return new SeriesData(xSeries, ySeries, id);
+	}
+
+	private LineSeriesData getNoise(IStandaloneMassSpectrum massSpectrum) {
+
+		ISeriesData noiseSeriesData = createNoiseSeries("Noise", massSpectrum);
+		LineSeriesData noiseSeries = new LineSeriesData(noiseSeriesData);
+		ILineSeriesSettings lineSeriesSettings = noiseSeries.getLineSeriesSettings();
+		lineSeriesSettings.setEnableArea(false);
+		lineSeriesSettings.setLineWidth(2);
+		lineSeriesSettings.setLineStyle(LineStyle.DOT);
+		lineSeriesSettings.setSymbolType(PlotSymbolType.NONE);
+		lineSeriesSettings.setLineColor(getDisplay().getSystemColor(SWT.COLOR_BLACK));
+		lineSeriesSettings.setSymbolColor(getDisplay().getSystemColor(SWT.COLOR_BLACK));
+		return noiseSeries;
+	}
+
+	public static ISeriesData createNoiseSeries(String id, IStandaloneMassSpectrum massSpectrum) {
+
+		List<Double> noiseList = massSpectrum.getNoise();
+		int size = Math.min(noiseList.size(), massSpectrum.getNumberOfIons());
+		double[] xSeries = new double[size];
+		double[] ySeries = new double[size];
+		int index = 0;
+		for(int i = 0; i < size; i++) {
+			xSeries[index] = massSpectrum.getIons().get(index).getIon();
+			ySeries[index] = noiseList.get(index);
 			index++;
 		}
 		return new SeriesData(xSeries, ySeries, id);
