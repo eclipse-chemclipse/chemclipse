@@ -8,4 +8,4 @@ Bundle-Vendor: Chemclipse
 Fragment-Host: org.eclipse.chemclipse.xxd.converter.supplier.ocx;bundle-version="0.8.0"
 Import-Package: org.eclipse.chemclipse.converter,
  org.junit.jupiter.api;version="5.13.4"
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25

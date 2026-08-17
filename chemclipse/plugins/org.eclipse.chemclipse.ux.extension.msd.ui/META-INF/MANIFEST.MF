@@ -42,7 +42,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.chemclipse.msd.identifier;bundle-version="0.9.0",
  com.fasterxml.jackson.core.jackson-databind;bundle-version="2.9.2",
  org.eclipse.core.databinding;bundle-version="1.6.200"
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: ChemClipse
 Export-Package: org.eclipse.chemclipse.ux.extension.msd.ui.editors,

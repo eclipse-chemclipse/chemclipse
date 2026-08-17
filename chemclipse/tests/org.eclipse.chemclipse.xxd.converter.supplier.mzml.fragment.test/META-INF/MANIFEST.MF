@@ -9,5 +9,5 @@ Fragment-Host: org.eclipse.chemclipse.xxd.converter.supplier.mzml;bundle-version
 Import-Package: org.junit.jupiter.api;version="6.1.0",
  org.junit.jupiter.params;version="6.1.0",
  org.junit.jupiter.params.provider;version="6.1.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Require-Bundle: org.eclipse.chemclipse.xxd.converter.supplier.ocx;bundle-version="0.9.0"

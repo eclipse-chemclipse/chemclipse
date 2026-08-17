@@ -7,7 +7,7 @@ Bundle-Version: 0.9.0.qualifier
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.chemclipse.support;bundle-version="0.8.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Export-Package: org.eclipse.chemclipse.chromatogram.alignment.model.core,
  org.eclipse.chemclipse.chromatogram.alignment.model.exceptions
 Bundle-Vendor: ChemClipse

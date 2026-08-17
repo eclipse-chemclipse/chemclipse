@@ -8,7 +8,7 @@ Bundle-Vendor: ChemClipse
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.chemclipse.logging;bundle-version="0.8.0",
  org.apache.pdfbox;bundle-version="3.0.7"
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.chemclipse.pdfbox.extensions.core,
  org.eclipse.chemclipse.pdfbox.extensions.elements,

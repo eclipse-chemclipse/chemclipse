@@ -14,7 +14,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.chemclipse.chromatogram.wsd.identifier;bundle-version="0.9.0",
  org.apache.httpcomponents.client5.httpclient5;bundle-version="5.4.4",
  org.apache.httpcomponents.core5.httpcore5;bundle-version="5.3.4"
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Bundle-Vendor: ChemClipse
 Bundle-ActivationPolicy: lazy
 Import-Package: jakarta.xml.bind;version="[4.0.0,5.0.0)",

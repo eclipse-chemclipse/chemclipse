@@ -25,7 +25,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.apache.poi.ooxml.schemas;bundle-version="5.5.1",
  org.apache.commons.commons-compress;bundle-version="1.28.0",
  org.apache.xmlbeans;bundle-version="5.3.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.chemclipse.msd.model.core,
  org.eclipse.chemclipse.msd.model.core.comparator,
