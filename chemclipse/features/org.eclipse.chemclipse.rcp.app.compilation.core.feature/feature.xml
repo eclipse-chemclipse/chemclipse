@@ -312,4 +312,8 @@
          id="org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.entropy.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.chemclipse.msd.calculator.noise.feature"
+         version="0.0.0"/>
+
 </feature>
