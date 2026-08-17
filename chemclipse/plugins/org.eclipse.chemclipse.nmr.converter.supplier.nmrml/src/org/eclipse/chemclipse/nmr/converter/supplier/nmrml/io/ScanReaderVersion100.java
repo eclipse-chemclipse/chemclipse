@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
@@ -91,10 +91,11 @@ public class ScanReaderVersion100 {
 			BinaryDataArrayType fidData = acquisition1D.getFidData();
 			ByteBuffer byteBuffer = ByteBuffer.wrap(fidData.getValue());
 			if(fidData.isCompressed()) {
-				Inflater inflater = new Inflater();
-				inflater.setInput(fidData.getValue());
-				byte[] byteArray = new byte[fidData.getEncodedLength().intValue()];
-				byteBuffer = ByteBuffer.wrap(byteArray, 0, inflater.inflate(byteArray));
+				try (Inflater inflater = new Inflater()) {
+					inflater.setInput(fidData.getValue());
+					byte[] byteArray = new byte[fidData.getEncodedLength().intValue()];
+					byteBuffer = ByteBuffer.wrap(byteArray, 0, inflater.inflate(byteArray));
+				}
 			}
 			byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 			double[] buffer = null;
