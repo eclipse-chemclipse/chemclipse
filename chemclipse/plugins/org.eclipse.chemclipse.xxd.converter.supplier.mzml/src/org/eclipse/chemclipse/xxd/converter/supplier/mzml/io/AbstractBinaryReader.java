@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
@@ -22,24 +22,25 @@ public abstract class AbstractBinaryReader {
 
 	public static byte[] inflate(byte[] input) throws DataFormatException {
 
-		Inflater inflater = new Inflater();
-		inflater.setInput(input);
+		try (Inflater inflater = new Inflater()) {
+			inflater.setInput(input);
 
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		byte[] buffer = new byte[8192];
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			byte[] buffer = new byte[8192];
 
-		try {
-			while(!inflater.finished()) {
-				int count = inflater.inflate(buffer);
-				if(count > 0) {
-					outputStream.write(buffer, 0, count);
-				} else if(inflater.needsInput() || inflater.needsDictionary()) {
-					break;
+			try {
+				while(!inflater.finished()) {
+					int count = inflater.inflate(buffer);
+					if(count > 0) {
+						outputStream.write(buffer, 0, count);
+					} else if(inflater.needsInput() || inflater.needsDictionary()) {
+						break;
+					}
 				}
+				return outputStream.toByteArray();
+			} finally {
+				inflater.end();
 			}
-			return outputStream.toByteArray();
-		} finally {
-			inflater.end();
 		}
 	}
 
