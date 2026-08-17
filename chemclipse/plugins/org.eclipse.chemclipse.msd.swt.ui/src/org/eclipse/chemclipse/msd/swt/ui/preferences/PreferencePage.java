@@ -14,8 +14,10 @@ package org.eclipse.chemclipse.msd.swt.ui.preferences;
 
 import org.eclipse.chemclipse.msd.swt.ui.Activator;
 import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.SpacerFieldEditor;
+import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.swtchart.extensions.charts.ChartOptions;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
@@ -32,6 +34,7 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 	@Override
 	public void createFieldEditors() {
 
+		addField(new ComboFieldEditor(PreferenceSupplier.P_PROFILE_MASS_SPECTRUM_CHART_COMPRESSION_TYPE, "Chart compression:", ChartOptions.COMPRESSION_TYPES, getFieldEditorParent()));
 		addField(new DirectoryFieldEditor(PreferenceSupplier.P_PATH_MASS_SPECTRUM_LIBRARIES, "Path mass spectrum libraries.", getFieldEditorParent()));
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
 	}
