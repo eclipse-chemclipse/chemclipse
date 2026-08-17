@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.chemclipse.msd.calculator.noise.feature"
+      label="MALDI Noise Estimation"
+      version="0.9.0.qualifier"
+      provider-name="ChemClipse"
+      plugin="org.eclipse.chemclipse.feature.branding"
+      license-feature="org.eclipse.license"
+      license-feature-version="2.0.2.qualifier">
+
+   <description url="https://www.chemclipse.net">
+      This plugin estimates the noise of a mass spectrum.
+   </description>
+
+   <copyright url="https://www.chemclipse.net">
+      Copyright (c) 2026 Matthias Mailänder.
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <requires>
+      <import feature="org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.feature" version="0.9.0.qualifier"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.chemclipse.msd.calculator.noise"
+         version="0.0.0"/>
+
+</feature>
