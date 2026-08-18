@@ -110,6 +110,7 @@ public class MassSpectrumIdentifier {
 				try {
 					IMassSpectrumIdentifierSettings instance = (IMassSpectrumIdentifierSettings)element.createExecutableExtension(Identifier.IDENTIFIER_SETTINGS);
 					supplier.setIdentifierSettingsClass(instance.getClass());
+					supplier.getLiteratureReferences().addAll(instance.getLiteratureReferences());
 				} catch(CoreException e) {
 					logger.warn(e);
 					// settings class is optional, set null instead
