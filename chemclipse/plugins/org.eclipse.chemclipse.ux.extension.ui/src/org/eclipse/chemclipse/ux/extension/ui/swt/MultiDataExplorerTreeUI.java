@@ -41,7 +41,6 @@ import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.support.ui.provider.AbstractLabelProvider;
 import org.eclipse.chemclipse.support.ui.provider.ListContentProvider;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
-import org.eclipse.chemclipse.swt.ui.preferences.PreferencePageSystem;
 import org.eclipse.chemclipse.ux.extension.ui.help.HelpContext;
 import org.eclipse.chemclipse.ux.extension.ui.l10n.ExtensionMessages;
 import org.eclipse.chemclipse.ux.extension.ui.model.DataExplorerTreeSettings;
@@ -308,7 +307,6 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 
 		List<Class<? extends IPreferencePage>> preferencePages = new ArrayList<>();
 
-		preferencePages.add(PreferencePageSystem.class);
 		preferencePages.add(PreferencePage.class);
 		preferencePages.add(PreferencePageUserLocations.class);
 		preferencePages.addAll(addPreferencePages());
