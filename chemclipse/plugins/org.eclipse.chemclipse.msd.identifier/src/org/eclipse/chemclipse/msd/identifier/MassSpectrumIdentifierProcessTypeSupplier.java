@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2025 Lablicate GmbH.
+ * Copyright (c) 2020, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -64,6 +64,7 @@ public class MassSpectrumIdentifierProcessTypeSupplier implements IProcessTypeSu
 
 			super("MassSpectrumIdentifier." + supplier.getId(), supplier.getIdentifierName(), supplier.getDescription(), (Class<IMassSpectrumIdentifierSettings>)supplier.getSettingsClass(), parent, DataType.MSD);
 			this.supplier = supplier;
+			getLiteratureReferences().addAll(supplier.getLiteratureReferences());
 		}
 
 		@Override
