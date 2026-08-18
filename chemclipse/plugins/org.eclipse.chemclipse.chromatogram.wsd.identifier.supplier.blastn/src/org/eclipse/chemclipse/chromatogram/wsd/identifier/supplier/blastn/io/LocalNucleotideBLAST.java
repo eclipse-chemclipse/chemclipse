@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -39,6 +39,12 @@ public class LocalNucleotideBLAST extends AbstractNucleotideBLAST {
 		File fasta = File.createTempFile(chromatogram.getSampleName() + "_", ".fsa");
 		writeFASTA(chromatogram, fasta);
 		File xml = File.createTempFile(chromatogram.getSampleName() + "_", ".xml");
+		BlastOutput blastOutput = runBLAST(fasta, xml, settings);
+		transferTargets(chromatogram, blastOutput);
+	}
+
+	private static BlastOutput runBLAST(File fasta, File xml, LocalIdentifierSettings settings) throws IOException, InterruptedException {
+
 		ProcessBuilder processBuilder = buildProcess(settings, fasta, xml);
 		Process process = processBuilder.start();
 		process.getErrorStream().transferTo(loggerErrorStream());
@@ -46,8 +52,7 @@ public class LocalNucleotideBLAST extends AbstractNucleotideBLAST {
 		if(exitCode == 0) {
 			try {
 				InputSource inputSource = new InputSource(new FileInputStream(xml));
-				BlastOutput blastOutput = XmlReaderVersion1.getBlastOutput(inputSource);
-				transferTargets(chromatogram, blastOutput);
+				return XmlReaderVersion1.getBlastOutput(inputSource);
 			} catch(SAXException | IOException | JAXBException
 					| ParserConfigurationException e) {
 				logger.error(e);
