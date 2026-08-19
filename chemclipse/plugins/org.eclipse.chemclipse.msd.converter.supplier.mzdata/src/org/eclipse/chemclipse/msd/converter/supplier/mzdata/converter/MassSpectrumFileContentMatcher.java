@@ -14,49 +14,48 @@
 package org.eclipse.chemclipse.msd.converter.supplier.mzdata.converter;
 
 import java.io.File;
+import java.io.FileInputStream;
 
 import javax.xml.XMLConstants;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamReader;
 
 import org.eclipse.chemclipse.converter.core.AbstractFileContentMatcher;
-import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.io.ReaderVersion105;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 public class MassSpectrumFileContentMatcher extends AbstractFileContentMatcher {
 
 	@Override
 	public boolean checkFileFormat(File file) {
 
-		if(file.length() > HUNDRED_MB) {
-			return true;
-		}
-		boolean isValidFormat = false;
+		boolean hasRootElement = false;
+		boolean hasRetentionTime = false;
+
 		try {
-			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-			documentBuilderFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-			documentBuilderFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-			documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-			documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
-			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-			Document document = documentBuilder.parse(file);
-			NodeList root = document.getElementsByTagName(ReaderVersion105.NODE_MZ_DATA);
-			if(root.getLength() != 1) {
-				return isValidFormat;
-			}
-			NodeList spectrumList = document.getElementsByTagName(ReaderVersion105.NODE_SPECTRUM_LIST);
-			if(spectrumList.getLength() > 0) {
-				Element element = (Element)spectrumList.item(0);
-				int spectrumCount = Integer.parseInt(element.getAttribute("count"));
-				if(spectrumCount == 1) {
-					isValidFormat = true;
+			XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+			xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+			xmlInputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+			xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+			XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new FileInputStream(file));
+
+			int events = 0;
+			while(xmlStreamReader.hasNext() && events < 1000) {
+				int event = xmlStreamReader.next();
+				if(event == XMLStreamConstants.START_ELEMENT) {
+					String localName = xmlStreamReader.getLocalName();
+					if("mzData".equals(localName)) {
+						hasRootElement = true;
+					} else if("cvParam".equals(localName) && //
+							xmlStreamReader.getAttributeValue(null, "name").startsWith("time")) {
+						hasRetentionTime = true;
+					}
 				}
+				events++;
 			}
 		} catch(Exception e) {
-			// Print no exception.
+			// fail silently
 		}
-		return isValidFormat;
+
+		return hasRootElement && !hasRetentionTime;
 	}
 }

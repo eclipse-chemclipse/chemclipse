@@ -75,7 +75,7 @@ public class MassSpectrumReaderVersion105 extends AbstractMassSpectraReader {
 
 			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 			Document document = documentBuilder.parse(file);
-			NodeList nodeList = document.getElementsByTagName(ReaderVersion105.NODE_MZ_DATA);
+			NodeList nodeList = document.getElementsByTagName("mzData");
 
 			JAXBContext jaxbContext = JAXBContext.newInstance(ObjectFactory.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
