@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -27,22 +27,31 @@ public class Parameters {
 
 	@XmlElement(name = "Parameters_matrix", required = true)
 	protected String matrix;
+
 	@XmlElement(name = "Parameters_expect", required = true)
 	protected double expect;
+
 	@XmlElement(name = "Parameters_include")
 	protected Double include;
+
 	@XmlElement(name = "Parameters_sc-match", required = true)
 	protected BigInteger scMatch;
+
 	@XmlElement(name = "Parameters_sc-mismatch", required = true)
 	protected BigInteger scMismatch;
+
 	@XmlElement(name = "Parameters_gap-open", required = true)
 	protected BigInteger gapOpen;
+
 	@XmlElement(name = "Parameters_gap-extend", required = true)
 	protected BigInteger gapExtend;
+
 	@XmlElement(name = "Parameters_filter", required = true)
 	protected String filter;
+
 	@XmlElement(name = "Parameters_pattern")
 	protected String pattern;
+
 	@XmlElement(name = "Parameters_entrez-query")
 	protected String entrezQuery;
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -27,16 +27,22 @@ public class Iteration {
 
 	@XmlElement(name = "Iteration_iter-num", required = true)
 	protected BigInteger iterNum;
+
 	@XmlElement(name = "Iteration_query-ID")
 	protected String queryID;
+
 	@XmlElement(name = "Iteration_query-def")
 	protected String queryDef;
+
 	@XmlElement(name = "Iteration_query-len")
 	protected BigInteger queryLen;
+
 	@XmlElement(name = "Iteration_hits")
 	protected Hits hits;
+
 	@XmlElement(name = "Iteration_stat")
 	protected Stat stat;
+
 	@XmlElement(name = "Iteration_message")
 	protected String message;
 

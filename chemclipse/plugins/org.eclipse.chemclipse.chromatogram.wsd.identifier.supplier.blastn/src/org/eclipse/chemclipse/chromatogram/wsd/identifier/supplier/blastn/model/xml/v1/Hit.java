@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -27,14 +27,19 @@ public class Hit {
 
 	@XmlElement(name = "Hit_num", required = true)
 	protected BigInteger num;
+
 	@XmlElement(name = "Hit_id", required = true)
 	protected String id;
+
 	@XmlElement(name = "Hit_def", required = true)
 	protected String def;
+
 	@XmlElement(name = "Hit_accession", required = true)
 	protected String accession;
+
 	@XmlElement(name = "Hit_len", required = true)
 	protected BigInteger len;
+
 	@XmlElement(name = "Hit_hsps", required = true)
 	protected Hsps hsps;
 
