@@ -24,6 +24,8 @@ import org.eclipse.chemclipse.converter.core.AbstractFileContentMatcher;
 
 public class ChromatogramFileContentMatcher extends AbstractFileContentMatcher {
 
+	private static final String CV_SCAN_START_TIME = "MS:1000016";
+
 	@Override
 	public boolean checkFileFormat(File file) {
 
@@ -36,6 +38,7 @@ public class ChromatogramFileContentMatcher extends AbstractFileContentMatcher {
 			XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new FileInputStream(file));
 			boolean hasChromatogramList = false;
 			boolean hasRootElement = false;
+			boolean hasRetentionTime = false;
 			while(xmlStreamReader.hasNext()) {
 				int eventType = xmlStreamReader.next();
 				if(eventType == XMLStreamConstants.START_ELEMENT) {
@@ -44,8 +47,10 @@ public class ChromatogramFileContentMatcher extends AbstractFileContentMatcher {
 						hasRootElement = true;
 					} else if(elementName.equals("chromatogramList")) {
 						hasChromatogramList = true;
+					} else if(CV_SCAN_START_TIME.equals(xmlStreamReader.getAttributeValue(null, "accession"))) {
+						hasRetentionTime = true;
 					}
-					if(hasRootElement && hasChromatogramList) {
+					if(hasRootElement && (hasChromatogramList || hasRetentionTime)) {
 						isValidFormat = true;
 						break;
 					}

@@ -24,6 +24,8 @@ import org.eclipse.chemclipse.converter.core.AbstractFileContentMatcher;
 
 public class MassSpectrumFileContentMatcher extends AbstractFileContentMatcher {
 
+	private static final String CV_SCAN_START_TIME = "MS:1000016";
+
 	@Override
 	public boolean checkFileFormat(File file) {
 
@@ -37,6 +39,7 @@ public class MassSpectrumFileContentMatcher extends AbstractFileContentMatcher {
 			boolean hasChromatogramList = false;
 			boolean hasRootElement = false;
 			boolean hasSpectrumList = false;
+			boolean hasRetentionTime = false;
 			while(xmlStreamReader.hasNext()) {
 				int eventType = xmlStreamReader.next();
 				if(eventType == XMLStreamConstants.START_ELEMENT) {
@@ -48,10 +51,12 @@ public class MassSpectrumFileContentMatcher extends AbstractFileContentMatcher {
 						break;
 					} else if(elementName.equals("spectrumList")) {
 						hasSpectrumList = true;
+					} else if(CV_SCAN_START_TIME.equals(xmlStreamReader.getAttributeValue(null, "accession"))) {
+						hasRetentionTime = true;
 					}
 				}
 			}
-			if(hasRootElement && hasSpectrumList && !hasChromatogramList) {
+			if(hasRootElement && hasSpectrumList && !(hasChromatogramList || hasRetentionTime)) {
 				isValidFormat = true;
 			}
 			xmlStreamReader.close();
