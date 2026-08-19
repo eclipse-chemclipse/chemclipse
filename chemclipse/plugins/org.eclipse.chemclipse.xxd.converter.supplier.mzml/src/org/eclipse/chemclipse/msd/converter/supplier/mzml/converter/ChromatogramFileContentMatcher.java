@@ -29,9 +29,6 @@ public class ChromatogramFileContentMatcher extends AbstractFileContentMatcher {
 	@Override
 	public boolean checkFileFormat(File file) {
 
-		if(file.length() > HUNDRED_MB) {
-			return true;
-		}
 		boolean isValidFormat = false;
 		try {
 			XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
@@ -39,7 +36,8 @@ public class ChromatogramFileContentMatcher extends AbstractFileContentMatcher {
 			boolean hasChromatogramList = false;
 			boolean hasRootElement = false;
 			boolean hasRetentionTime = false;
-			while(xmlStreamReader.hasNext()) {
+			int events = 0;
+			while(xmlStreamReader.hasNext() && events < 1000) {
 				int eventType = xmlStreamReader.next();
 				if(eventType == XMLStreamConstants.START_ELEMENT) {
 					String elementName = xmlStreamReader.getLocalName();
@@ -55,6 +53,7 @@ public class ChromatogramFileContentMatcher extends AbstractFileContentMatcher {
 						break;
 					}
 				}
+				events++;
 			}
 			xmlStreamReader.close();
 		} catch(Exception e) {

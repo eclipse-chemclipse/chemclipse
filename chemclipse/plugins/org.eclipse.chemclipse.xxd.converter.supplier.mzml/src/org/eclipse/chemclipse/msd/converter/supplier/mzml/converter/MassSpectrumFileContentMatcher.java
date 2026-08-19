@@ -29,9 +29,6 @@ public class MassSpectrumFileContentMatcher extends AbstractFileContentMatcher {
 	@Override
 	public boolean checkFileFormat(File file) {
 
-		if(file.length() > HUNDRED_MB) {
-			return true;
-		}
 		boolean isValidFormat = false;
 		try {
 			XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
@@ -40,7 +37,8 @@ public class MassSpectrumFileContentMatcher extends AbstractFileContentMatcher {
 			boolean hasRootElement = false;
 			boolean hasSpectrumList = false;
 			boolean hasRetentionTime = false;
-			while(xmlStreamReader.hasNext()) {
+			int events = 0;
+			while(xmlStreamReader.hasNext() && events < 1000) {
 				int eventType = xmlStreamReader.next();
 				if(eventType == XMLStreamConstants.START_ELEMENT) {
 					String elementName = xmlStreamReader.getLocalName();
@@ -55,6 +53,7 @@ public class MassSpectrumFileContentMatcher extends AbstractFileContentMatcher {
 						hasRetentionTime = true;
 					}
 				}
+				events++;
 			}
 			if(hasRootElement && hasSpectrumList && !(hasChromatogramList || hasRetentionTime)) {
 				isValidFormat = true;
