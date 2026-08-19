@@ -26,6 +26,9 @@ public abstract class AbstractNucleotideBLAST {
 
 	public static void transferTargets(IChromatogramWSD chromatogram, BlastOutput blastOutput) {
 
+		if(blastOutput == null) {
+			return;
+		}
 		for(Iteration iteration : blastOutput.getIterations().getIteration()) {
 			for(Hit hit : iteration.getHits().getHit()) {
 				ILibraryInformation libraryInformation = new LibraryInformation();

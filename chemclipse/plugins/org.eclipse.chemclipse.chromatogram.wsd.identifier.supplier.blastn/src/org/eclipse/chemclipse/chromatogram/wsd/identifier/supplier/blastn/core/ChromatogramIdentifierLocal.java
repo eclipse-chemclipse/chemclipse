@@ -42,7 +42,7 @@ public class ChromatogramIdentifierLocal extends AbstractChromatogramIdentifier 
 					return processingInfo;
 				}
 				try {
-					int identifications = LocalNucleotideBLAST.run(chromatogramSelection.getChromatogram(), settings);
+					int identifications = LocalNucleotideBLAST.run(chromatogramSelection.getChromatogram(), settings, monitor);
 					processingInfo.addInfoMessage(DESCRIPTION, identifications + " targets were identified.");
 				} catch(IOException e) {
 					processingInfo.addErrorMessage(DESCRIPTION, e.getMessage());
