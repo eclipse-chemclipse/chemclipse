@@ -22,6 +22,7 @@ import java.io.PrintWriter;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v1.BlastOutput;
+import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.settings.LocalIdentifierSettings;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
@@ -74,7 +75,11 @@ public class LocalNucleotideBLAST extends AbstractNucleotideBLAST {
 
 	private static ProcessBuilder buildProcess(LocalIdentifierSettings settings, File fasta, File xml) {
 
-		ProcessBuilder processBuilder = new ProcessBuilder("blastn");
+		String pathPrefix = "";
+		if(!PreferenceSupplier.getExecutableFolder().isEmpty() && new File(PreferenceSupplier.getExecutableFolder()).exists()) {
+			pathPrefix = PreferenceSupplier.getExecutableFolder() + File.separator;
+		}
+		ProcessBuilder processBuilder = new ProcessBuilder(pathPrefix + "blastn");
 		processBuilder.command().add("-db");
 		processBuilder.command().add(settings.getDatabase());
 		processBuilder.command().add("-query");
@@ -85,7 +90,7 @@ public class LocalNucleotideBLAST extends AbstractNucleotideBLAST {
 		processBuilder.command().add("5");
 		processBuilder.command().add("-out");
 		processBuilder.command().add(xml.getAbsolutePath());
-		processBuilder.environment().put("BLASTDB", settings.getDatabaseFolder().getAbsolutePath());
+		processBuilder.environment().put("BLASTDB", PreferenceSupplier.getDatabaseFolder());
 		return processBuilder;
 	}
 
