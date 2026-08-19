@@ -18,14 +18,17 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.io.BlastDatabaseCommandReader.BlastDatabaseInfo;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v1.BlastOutput;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.settings.LocalIdentifierSettings;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -35,36 +38,81 @@ public class LocalNucleotideBLAST extends AbstractNucleotideBLAST {
 
 	private static final Logger logger = Logger.getLogger(LocalNucleotideBLAST.class);
 
-	public static int run(IChromatogramWSD chromatogram, LocalIdentifierSettings settings) throws IOException, InterruptedException {
+	public static int run(IChromatogramWSD chromatogram, LocalIdentifierSettings settings, IProgressMonitor monitor) throws IOException, InterruptedException {
 
 		File fasta = File.createTempFile(chromatogram.getSampleName() + "_", ".fsa");
 		writeFASTA(chromatogram, fasta);
 		File xml = File.createTempFile(chromatogram.getSampleName() + "_", ".xml");
-		BlastOutput blastOutput = runBLAST(fasta, xml, settings);
-		transferTargets(chromatogram, blastOutput);
-		return blastOutput.getIterations().getIteration().stream() //
-							.mapToInt(iteration -> iteration.getHits().getHit().size()) //
-							.sum();
+		int numberOfHits = runBLAST(chromatogram, fasta, xml, settings, monitor);
+		return numberOfHits;
 	}
 
-	private static BlastOutput runBLAST(File fasta, File xml, LocalIdentifierSettings settings) throws IOException, InterruptedException {
+	private static int runBLAST(IChromatogramWSD chromatogram, File fasta, File xml, LocalIdentifierSettings settings, IProgressMonitor monitor) throws IOException, InterruptedException {
 
-		ProcessBuilder processBuilder = buildProcess(settings, fasta, xml);
-		Process process = processBuilder.start();
+		int numberOfHits = 0;
+		BlastDatabaseInfo databaseInfo = readDatabaseInfo(settings);
+		if(databaseInfo == null) {
+			throw new IOException("Failed to read database information.");
+		}
+		monitor.beginTask("Query Database", databaseInfo.volumes().size());
+		for(String volume : databaseInfo.volumes()) {
+			if(monitor.isCanceled()) {
+				return numberOfHits;
+			}
+			ProcessBuilder processBuilder = buildProcessBLAST(volume, databaseInfo.totalBases(), settings, fasta, xml);
+			Process process = processBuilder.start();
+			process.getErrorStream().transferTo(loggerErrorStream());
+			int exitCode = process.waitFor();
+			if(exitCode == 0) {
+				try {
+					InputSource inputSource = new InputSource(new FileInputStream(xml));
+					BlastOutput blastOutput = XmlReaderVersion1.getBlastOutput(inputSource);
+					transferTargets(chromatogram, blastOutput);
+					numberOfHits += blastOutput.getIterations().getIteration().stream() //
+												.mapToInt(iteration -> iteration.getHits().getHit().size()) //
+												.sum();
+				} catch(SAXException | IOException | JAXBException
+						| ParserConfigurationException e) {
+					logger.error(e);
+					throw new IOException("Failed to read XML.");
+				}
+			} else {
+				throw new IOException("blastn exited with errors.");
+			}
+			monitor.worked(1);
+		}
+		return numberOfHits;
+	}
+
+	private static BlastDatabaseInfo readDatabaseInfo(LocalIdentifierSettings settings) throws IOException, InterruptedException {
+
+		ProcessBuilder processBuilderDatabaseCommand = buildProcessDatabaseCommand(settings);
+		Process process = processBuilderDatabaseCommand.start();
 		process.getErrorStream().transferTo(loggerErrorStream());
 		int exitCode = process.waitFor();
 		if(exitCode == 0) {
-			try {
-				InputSource inputSource = new InputSource(new FileInputStream(xml));
-				return XmlReaderVersion1.getBlastOutput(inputSource);
-			} catch(SAXException | IOException | JAXBException
-					| ParserConfigurationException e) {
-				logger.error(e);
-				throw new IOException("Failed to read XML.");
-			}
-		} else {
-			throw new IOException("blastn exited with errors.");
+			String output = new String(process.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+			return BlastDatabaseCommandReader.parse(output);
 		}
+		return null;
+	}
+
+	private static ProcessBuilder buildProcessDatabaseCommand(LocalIdentifierSettings settings) {
+
+		String pathPrefix = "";
+		if(!PreferenceSupplier.getExecutableFolder().isEmpty() && new File(PreferenceSupplier.getExecutableFolder()).exists()) {
+			pathPrefix = PreferenceSupplier.getExecutableFolder() + File.separator;
+		}
+		ProcessBuilder processBuilder = new ProcessBuilder(pathPrefix + "blastdbcmd");
+		processBuilder.environment().put("BLASTDB", PreferenceSupplier.getDatabaseFolder());
+
+		processBuilder.command().add("-db");
+		processBuilder.command().add(settings.getDatabase());
+
+		processBuilder.command().add("-info");
+		processBuilder.command().add("-exact_length");
+
+		return processBuilder;
 	}
 
 	private static void writeFASTA(IChromatogramWSD chromatogram, File fasta) throws FileNotFoundException {
@@ -76,24 +124,33 @@ public class LocalNucleotideBLAST extends AbstractNucleotideBLAST {
 		}
 	}
 
-	private static ProcessBuilder buildProcess(LocalIdentifierSettings settings, File fasta, File xml) {
+	private static ProcessBuilder buildProcessBLAST(String volume, long totalBases, LocalIdentifierSettings settings, File fasta, File xml) {
 
 		String pathPrefix = "";
 		if(!PreferenceSupplier.getExecutableFolder().isEmpty() && new File(PreferenceSupplier.getExecutableFolder()).exists()) {
 			pathPrefix = PreferenceSupplier.getExecutableFolder() + File.separator;
 		}
 		ProcessBuilder processBuilder = new ProcessBuilder(pathPrefix + "blastn");
+		processBuilder.environment().put("BLASTDB", PreferenceSupplier.getDatabaseFolder());
+
 		processBuilder.command().add("-db");
-		processBuilder.command().add(settings.getDatabase());
+		processBuilder.command().add(volume);
+
 		processBuilder.command().add("-query");
 		processBuilder.command().add(fasta.getAbsolutePath());
+
 		processBuilder.command().add("-task");
 		processBuilder.command().add(settings.getTask().value());
+
+		processBuilder.command().add("-dbsize");
+		processBuilder.command().add(String.valueOf(totalBases));
+
 		processBuilder.command().add("-outfmt");
 		processBuilder.command().add("5");
+
 		processBuilder.command().add("-out");
 		processBuilder.command().add(xml.getAbsolutePath());
-		processBuilder.environment().put("BLASTDB", PreferenceSupplier.getDatabaseFolder());
+
 		return processBuilder;
 	}
 
