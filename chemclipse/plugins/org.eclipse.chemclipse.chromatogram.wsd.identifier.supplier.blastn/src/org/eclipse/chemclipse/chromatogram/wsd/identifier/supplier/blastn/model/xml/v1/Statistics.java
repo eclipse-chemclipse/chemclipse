@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -27,16 +27,22 @@ public class Statistics {
 
 	@XmlElement(name = "Statistics_db-num", required = true)
 	protected BigInteger dbNum;
+
 	@XmlElement(name = "Statistics_db-len", required = true)
 	protected long dbLen;
+
 	@XmlElement(name = "Statistics_hsp-len", required = true)
 	protected BigInteger hspLen;
+
 	@XmlElement(name = "Statistics_eff-space", required = true)
 	protected double effSpace;
+
 	@XmlElement(name = "Statistics_kappa", required = true)
 	protected double kappa;
+
 	@XmlElement(name = "Statistics_lambda", required = true)
 	protected double lambda;
+
 	@XmlElement(name = "Statistics_entropy", required = true)
 	protected double entropy;
 

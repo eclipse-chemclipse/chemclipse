@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -27,42 +27,61 @@ public class Hsp {
 
 	@XmlElement(name = "Hsp_num", required = true)
 	protected BigInteger num;
+
 	@XmlElement(name = "Hsp_bit-score", required = true)
 	protected double bitScore;
+
 	@XmlElement(name = "Hsp_score", required = true)
 	protected double score;
+
 	@XmlElement(name = "Hsp_evalue", required = true)
 	protected double evalue;
+
 	@XmlElement(name = "Hsp_query-from", required = true)
 	protected BigInteger queryFrom;
+
 	@XmlElement(name = "Hsp_query-to", required = true)
 	protected BigInteger queryTo;
+
 	@XmlElement(name = "Hsp_hit-from", required = true)
 	protected BigInteger hitFrom;
+
 	@XmlElement(name = "Hsp_hit-to", required = true)
 	protected BigInteger hitTo;
+
 	@XmlElement(name = "Hsp_pattern-from")
 	protected BigInteger patternFrom;
+
 	@XmlElement(name = "Hsp_pattern-to")
 	protected BigInteger patternTo;
+
 	@XmlElement(name = "Hsp_query-frame")
 	protected BigInteger queryFrame;
+
 	@XmlElement(name = "Hsp_hit-frame")
 	protected BigInteger hitFrame;
+
 	@XmlElement(name = "Hsp_identity", required = true)
 	protected BigInteger identity;
+
 	@XmlElement(name = "Hsp_positive", required = true)
 	protected BigInteger positive;
+
 	@XmlElement(name = "Hsp_gaps", required = true)
 	protected BigInteger gaps;
+
 	@XmlElement(name = "Hsp_align-len", required = true)
 	protected BigInteger alignLen;
+
 	@XmlElement(name = "Hsp_density")
 	protected BigInteger density;
+
 	@XmlElement(name = "Hsp_qseq", required = true)
 	protected String qseq;
+
 	@XmlElement(name = "Hsp_hseq", required = true)
 	protected String hseq;
+
 	@XmlElement(name = "Hsp_midline")
 	protected String midline;
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -27,24 +27,34 @@ public class BlastOutput {
 
 	@XmlElement(name = "BlastOutput_program", required = true)
 	protected String program;
+
 	@XmlElement(name = "BlastOutput_version", required = true)
 	protected String version;
+
 	@XmlElement(name = "BlastOutput_reference", required = true)
 	protected String reference;
+
 	@XmlElement(name = "BlastOutput_db", required = true)
 	protected String db;
+
 	@XmlElement(name = "BlastOutput_query-ID", required = true)
 	protected String queryID;
+
 	@XmlElement(name = "BlastOutput_query-def", required = true)
 	protected String queryDef;
+
 	@XmlElement(name = "BlastOutput_query-len", required = true)
 	protected BigInteger queryLen;
+
 	@XmlElement(name = "BlastOutput_query-seq")
 	protected String querySeq;
+
 	@XmlElement(name = "BlastOutput_param", required = true)
 	protected Param param;
+
 	@XmlElement(name = "BlastOutput_iterations", required = true)
 	protected Iterations iterations;
+
 	@XmlElement(name = "BlastOutput_mbstat")
 	protected Mbstat mbstat;
 
