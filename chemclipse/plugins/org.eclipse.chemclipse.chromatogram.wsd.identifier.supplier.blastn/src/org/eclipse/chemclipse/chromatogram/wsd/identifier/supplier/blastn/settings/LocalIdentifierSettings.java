@@ -12,7 +12,6 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.settings;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +19,6 @@ import org.eclipse.chemclipse.chromatogram.wsd.identifier.chromatogram.IChromato
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.settings.AbstractIdentifierSettingsWSD;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.support.literature.LiteratureReference;
-import org.eclipse.chemclipse.support.settings.FileSettingProperty;
-import org.eclipse.chemclipse.support.settings.FileSettingProperty.DialogType;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
@@ -30,27 +27,12 @@ public class LocalIdentifierSettings extends AbstractIdentifierSettingsWSD imple
 
 	private static final Logger logger = Logger.getLogger(LocalIdentifierSettings.class);
 
-	@JsonProperty(value = "Database Folder", defaultValue = "")
-	@JsonPropertyDescription("Select the located where update_blastdb downloaded the databases to.")
-	@FileSettingProperty(dialogType = DialogType.OPEN_DIALOG, onlyDirectory = true)
-	private File databaseFolder = null;
-
 	@JsonProperty(value = "Database", defaultValue = "16S_ribosomal_RNA")
 	@JsonPropertyDescription(value = "Select the database to query against.")
 	private String database = "16S_ribosomal_RNA";
 
 	@JsonProperty(value = "Task", defaultValue = "blastn")
 	private Task task = Task.BLASTN;
-
-	public File getDatabaseFolder() {
-
-		return databaseFolder;
-	}
-
-	public void setDatabaseFolder(File databaseFolder) {
-
-		this.databaseFolder = databaseFolder;
-	}
 
 	public String getDatabase() {
 

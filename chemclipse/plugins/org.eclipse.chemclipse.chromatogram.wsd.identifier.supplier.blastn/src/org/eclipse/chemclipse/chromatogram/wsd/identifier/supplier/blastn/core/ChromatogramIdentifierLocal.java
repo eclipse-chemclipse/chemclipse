@@ -12,11 +12,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.core;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.chromatogram.AbstractChromatogramIdentifier;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.chromatogram.IChromatogramIdentifierSettings;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.io.LocalNucleotideBLAST;
+import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.settings.LocalIdentifierSettings;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.identifier.IChromatogramIdentificationResult;
@@ -35,6 +37,10 @@ public class ChromatogramIdentifierLocal extends AbstractChromatogramIdentifier 
 		IProcessingInfo<IChromatogramIdentificationResult> processingInfo = validate(chromatogramSelection, chromatogramIdentifierSettings);
 		if(!processingInfo.hasErrorMessages()) {
 			if(chromatogramIdentifierSettings instanceof LocalIdentifierSettings settings) {
+				if(PreferenceSupplier.getDatabaseFolder().isEmpty() || !new File(PreferenceSupplier.getDatabaseFolder()).exists()) {
+					processingInfo.addErrorMessage(DESCRIPTION, "Database folder does not exist.", "Set database folder in preferences.");
+					return processingInfo;
+				}
 				try {
 					LocalNucleotideBLAST.run(chromatogramSelection.getChromatogram(), settings);
 					processingInfo.addInfoMessage(DESCRIPTION, "The chromatogram has been identified.");
