@@ -36,8 +36,8 @@ public class ChromatogramIdentifierWeb extends AbstractChromatogramIdentifier {
 		if(!processingInfo.hasErrorMessages()) {
 			if(chromatogramIdentifierSettings instanceof WebIdentifierSettings settings) {
 				try {
-					WebNucleotideBLAST.run(chromatogramSelection.getChromatogram(), settings);
-					processingInfo.addInfoMessage(DESCRIPTION, "The chromatogram has been identified.");
+					int identifications = WebNucleotideBLAST.run(chromatogramSelection.getChromatogram(), settings);
+					processingInfo.addInfoMessage(DESCRIPTION, identifications + " targets were identified.");
 				} catch(IOException e) {
 					processingInfo.addErrorMessage(DESCRIPTION, "Failed to identify chromatogram.");
 					logger.error(e);
