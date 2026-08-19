@@ -10,7 +10,7 @@
             id="org.eclipse.chemclipse.msd.converter.supplier.mzml.indexed"
             importContentMatcher="org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.ChromatogramFileContentMatcherIndexed"
             importConverter="org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.ChromatogramImportConverterIndexed"
-            importMagicNumberMatcher="org.eclipse.chemclipse.xxd.converter.supplier.mzml.converter.MagicNumberMatcher"
+            importMagicNumberMatcher="org.eclipse.chemclipse.xxd.converter.supplier.mzml.converter.MagicNumberMatcherIndexed"
             isExportable="false"
             isImportable="true">
       </ChromatogramSupplier>
