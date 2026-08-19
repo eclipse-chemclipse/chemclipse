@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -31,8 +31,8 @@ public class LocalIdentifierSettings extends AbstractIdentifierSettingsWSD imple
 	@JsonPropertyDescription(value = "Select the database to query against.")
 	private String database = "16S_ribosomal_RNA";
 
-	@JsonProperty(value = "Task", defaultValue = "blastn")
-	private Task task = Task.BLASTN;
+	@JsonProperty(value = "Task", defaultValue = "megablast")
+	private Task task = Task.MEGABLAST;
 
 	public String getDatabase() {
 
