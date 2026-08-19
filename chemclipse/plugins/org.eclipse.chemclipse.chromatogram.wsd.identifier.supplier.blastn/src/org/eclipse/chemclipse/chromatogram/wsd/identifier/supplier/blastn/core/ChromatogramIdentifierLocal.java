@@ -45,7 +45,7 @@ public class ChromatogramIdentifierLocal extends AbstractChromatogramIdentifier 
 					int identifications = LocalNucleotideBLAST.run(chromatogramSelection.getChromatogram(), settings);
 					processingInfo.addInfoMessage(DESCRIPTION, identifications + " targets were identified.");
 				} catch(IOException e) {
-					processingInfo.addErrorMessage(DESCRIPTION, "Failed to identify chromatogram.");
+					processingInfo.addErrorMessage(DESCRIPTION, e.getMessage());
 					logger.error(e);
 				} catch(InterruptedException e) {
 					processingInfo.addInfoMessage(DESCRIPTION, "Process aborted.");
