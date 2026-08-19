@@ -45,7 +45,7 @@ public class WebNucleotideBLAST extends AbstractNucleotideBLAST {
 
 	private static final Logger logger = Logger.getLogger(WebNucleotideBLAST.class);
 
-	public static void run(IChromatogramWSD chromatogram, WebIdentifierSettings settings) throws IOException, InterruptedException {
+	public static int run(IChromatogramWSD chromatogram, WebIdentifierSettings settings) throws IOException, InterruptedException {
 
 		String postData = buildPostData(settings, getFASTA(chromatogram)).toString();
 		try (CloseableHttpClient client = HttpClients.createDefault()) {
@@ -56,6 +56,9 @@ public class WebNucleotideBLAST extends AbstractNucleotideBLAST {
 					InputSource inputSource = new InputSource(new StringReader(xml));
 					BlastOutput blastOutput = XmlReaderVersion1.getBlastOutput(inputSource);
 					transferTargets(chromatogram, blastOutput);
+					return blastOutput.getIterations().getIteration().stream() //
+										.mapToInt(iteration -> iteration.getHits().getHit().size()) //
+										.sum();
 				} catch(SAXException | IOException | JAXBException
 						| ParserConfigurationException e) {
 					logger.error(e);
@@ -63,6 +66,8 @@ public class WebNucleotideBLAST extends AbstractNucleotideBLAST {
 				}
 			}
 		}
+
+		return 0;
 	}
 
 	/**

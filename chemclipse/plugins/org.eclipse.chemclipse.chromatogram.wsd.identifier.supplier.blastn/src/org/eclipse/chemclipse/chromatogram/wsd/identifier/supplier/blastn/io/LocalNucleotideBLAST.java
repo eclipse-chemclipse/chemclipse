@@ -35,13 +35,16 @@ public class LocalNucleotideBLAST extends AbstractNucleotideBLAST {
 
 	private static final Logger logger = Logger.getLogger(LocalNucleotideBLAST.class);
 
-	public static void run(IChromatogramWSD chromatogram, LocalIdentifierSettings settings) throws IOException, InterruptedException {
+	public static int run(IChromatogramWSD chromatogram, LocalIdentifierSettings settings) throws IOException, InterruptedException {
 
 		File fasta = File.createTempFile(chromatogram.getSampleName() + "_", ".fsa");
 		writeFASTA(chromatogram, fasta);
 		File xml = File.createTempFile(chromatogram.getSampleName() + "_", ".xml");
 		BlastOutput blastOutput = runBLAST(fasta, xml, settings);
 		transferTargets(chromatogram, blastOutput);
+		return blastOutput.getIterations().getIteration().stream() //
+							.mapToInt(iteration -> iteration.getHits().getHit().size()) //
+							.sum();
 	}
 
 	private static BlastOutput runBLAST(File fasta, File xml, LocalIdentifierSettings settings) throws IOException, InterruptedException {
