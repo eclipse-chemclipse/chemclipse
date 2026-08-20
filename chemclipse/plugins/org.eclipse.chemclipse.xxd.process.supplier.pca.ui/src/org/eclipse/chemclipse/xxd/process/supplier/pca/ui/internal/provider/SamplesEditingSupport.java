@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2025 Lablicate GmbH.
+ * Copyright (c) 2020, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Lorenz Gerber - Opls Target Group, prediction
@@ -100,7 +100,7 @@ public class SamplesEditingSupport extends EditingSupport {
 					break;
 				case SamplesLabelProvider.COLOR:
 					if(value instanceof RGB rgb) {
-						Color color = Colors.getColor(rgb);
+						Color color = new Color(rgb);
 						String colorRGB = Colors.getColor(color);
 						sample.setRGB(colorRGB);
 					}

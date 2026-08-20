@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -21,7 +21,6 @@ import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.graphics.RGBA;
 import org.eclipse.swt.widgets.Display;
 
 public class Colors {
@@ -51,22 +50,22 @@ public class Colors {
 	 */
 	private static final Map<Integer, Map<RGB, Color>> COLOR_MAP_RGB = new HashMap<>(); // Alpha and Colors
 
-	public static final Color LIGHT_RED = Colors.getColor(new RGB(249, 154, 152));
-	public static final Color LIGHT_GREEN = Colors.getColor(new RGB(166, 255, 139));
-	public static final Color LIGHT_YELLOW = Colors.getColor(new RGB(255, 254, 136));
+	public static final Color LIGHT_RED = new Color(249, 154, 152);
+	public static final Color LIGHT_GREEN = new Color(166, 255, 139);
+	public static final Color LIGHT_YELLOW = new Color(255, 254, 136);
 	/*
 	 * Levels 01 - 10 (light to dark)
 	 */
-	public static final Color GREEN_LEVEL_01 = Colors.getColor(new RGB(229, 255, 213));
-	public static final Color GREEN_LEVEL_02 = Colors.getColor(new RGB(204, 255, 170));
-	public static final Color GREEN_LEVEL_03 = Colors.getColor(new RGB(179, 255, 128));
-	public static final Color GREEN_LEVEL_04 = Colors.getColor(new RGB(153, 255, 85));
-	public static final Color GREEN_LEVEL_05 = Colors.getColor(new RGB(127, 255, 42));
-	public static final Color GREEN_LEVEL_06 = Colors.getColor(new RGB(102, 255, 0));
-	public static final Color GREEN_LEVEL_07 = Colors.getColor(new RGB(85, 255, 0));
-	public static final Color GREEN_LEVEL_08 = Colors.getColor(new RGB(68, 255, 0));
-	public static final Color GREEN_LEVEL_09 = Colors.getColor(new RGB(51, 255, 0));
-	public static final Color GREEN_LEVEL_10 = Colors.getColor(new RGB(34, 255, 0));
+	public static final Color GREEN_LEVEL_01 = new Color(229, 255, 213);
+	public static final Color GREEN_LEVEL_02 = new Color(204, 255, 170);
+	public static final Color GREEN_LEVEL_03 = new Color(179, 255, 128);
+	public static final Color GREEN_LEVEL_04 = new Color(153, 255, 85);
+	public static final Color GREEN_LEVEL_05 = new Color(127, 255, 42);
+	public static final Color GREEN_LEVEL_06 = new Color(102, 255, 0);
+	public static final Color GREEN_LEVEL_07 = new Color(85, 255, 0);
+	public static final Color GREEN_LEVEL_08 = new Color(68, 255, 0);
+	public static final Color GREEN_LEVEL_09 = new Color(51, 255, 0);
+	public static final Color GREEN_LEVEL_10 = new Color(34, 255, 0);
 	/*
 	 * These are system color ids, defined org.eclipse.swt.SWT. If you use own
 	 * color, dispose them, if not needed any more.
@@ -112,75 +111,70 @@ public class Colors {
 	 * Red, Green, Blue, Dark Red, Dark Green, Dark Blue
 	 */
 	public static final String COLOR_SCHEME_PUBLICATION = "Publication";
-	private static final RGB[] colorIdsGradientPublication = new RGB[]{ //
-			new RGB(255, 0, 0), //
-			new RGB(0, 255, 0), //
-			new RGB(0, 0, 255), //
-			new RGB(150, 0, 0), //
-			new RGB(0, 150, 0), //
-			new RGB(0, 0, 150) //
-	};
-	private static List<Color> colorsGradientPublication;
+	private static final List<Color> colorsGradientPublication = List.of( //
+			new Color(255, 0, 0), //
+			new Color(0, 255, 0), //
+			new Color(0, 0, 255), //
+			new Color(150, 0, 0), //
+			new Color(0, 150, 0), //
+			new Color(0, 0, 150) //
+	);
 	/*
 	 * Print
 	 */
 	public static final String COLOR_SCHEME_PRINT = "Print";
-	private static final RGB[] colorIdsGradientPrint = new RGB[]{ //
-			new RGB(0, 69, 134), //
-			new RGB(255, 66, 14), //
-			new RGB(255, 211, 32), //
-			new RGB(87, 157, 28), //
-			new RGB(126, 0, 33), //
-			new RGB(131, 202, 255), //
-			new RGB(49, 64, 4), //
-			new RGB(174, 207, 0), //
-			new RGB(75, 31, 111), //
-			new RGB(255, 149, 14) //
-	};
-	private static List<Color> colorsGradientPrint;
+	private static final List<Color> colorsGradientPrint = List.of( //
+			new Color(0, 69, 134), //
+			new Color(255, 66, 14), //
+			new Color(255, 211, 32), //
+			new Color(87, 157, 28), //
+			new Color(126, 0, 33), //
+			new Color(131, 202, 255), //
+			new Color(49, 64, 4), //
+			new Color(174, 207, 0), //
+			new Color(75, 31, 111), //
+			new Color(255, 149, 14) //
+	);
 	/*
 	 * Grayscale
 	 */
 	public static final String COLOR_SCHEME_GRAYSCALE = "Grayscale";
-	private static final RGB[] colorIdsGradientGrayscale = new RGB[]{ //
-			new RGB(26, 26, 26), // 90%
-			new RGB(51, 51, 51), // 80%
-			new RGB(77, 77, 77), // 70%
-			new RGB(102, 102, 102), // 60%
-			new RGB(128, 128, 128), // 50%
-			new RGB(153, 153, 153), // 40%
-			new RGB(179, 179, 179), // 30%
-			new RGB(204, 204, 204), // 20%
-			new RGB(230, 230, 230), // 10%
-			new RGB(236, 236, 236), // 7.5%
-			new RGB(242, 242, 242), // 5%
-			new RGB(249, 249, 249) // 2.5%
-	};
-	private static List<Color> colorsGradientGrayscale;
+	private static final List<Color> colorsGradientGrayscale = List.of( //
+			new Color(26, 26, 26), // 90%
+			new Color(51, 51, 51), // 80%
+			new Color(77, 77, 77), // 70%
+			new Color(102, 102, 102), // 60%
+			new Color(128, 128, 128), // 50%
+			new Color(153, 153, 153), // 40%
+			new Color(179, 179, 179), // 30%
+			new Color(204, 204, 204), // 20%
+			new Color(230, 230, 230), // 10%
+			new Color(236, 236, 236), // 7.5%
+			new Color(242, 242, 242), // 5%
+			new Color(249, 249, 249) // 2.5%
+	);
 	/*
 	 * Analysis
 	 */
 	public static final String COLOR_SCHEME_ANALYSIS = "Analysis";
-	private static final RGB[] colorIdsGradientAnalysis = new RGB[]{ //
-			new RGB(215, 244, 227), //
-			new RGB(175, 233, 198), //
-			new RGB(135, 222, 170), //
-			new RGB(95, 211, 141) //
-	};
-	private static List<Color> colorsGradientAnalysis;
+	private static final List<Color> colorsGradientAnalysis = List.of( //
+			new Color(215, 244, 227), //
+			new Color(175, 233, 198), //
+			new Color(135, 222, 170), //
+			new Color(95, 211, 141) //
+	);
 	/*
 	 * Noise
 	 */
 	public static final String COLOR_SCHEME_NOISE = "Noise";
-	private static final RGB[] colorIdsGradientNoise = new RGB[]{ //
-			new RGB(246, 213, 255), //
-			new RGB(238, 170, 255), //
-			new RGB(229, 128, 255), //
-			new RGB(170, 0, 212) //
-	};
-	private static List<Color> colorsGradientNoise;
+	private static final List<Color> colorsGradientNoise = List.of( //
+			new Color(246, 213, 255), //
+			new Color(238, 170, 255), //
+			new Color(229, 128, 255), //
+			new Color(170, 0, 212) //
+	);
 	/*
-	 * 
+	 *
 	 */
 	public static final String COLOR_SCHEME_UNLIMITED = "Unlimited";
 	/**
@@ -261,17 +255,6 @@ public class Colors {
 		return colorScheme;
 	}
 
-	public static Color getColor(RGB rgb) {
-
-		return getColor(rgb, ALPHA_OPAQUE);
-	}
-
-	public static Color getColor(RGBA rgba) {
-
-		RGB rgb = rgba.rgb;
-		return getColor(rgb, rgba.alpha);
-	}
-
 	public static Color getColor(RGB rgb, int alpha) {
 
 		/*
@@ -292,17 +275,6 @@ public class Colors {
 		}
 
 		return color;
-	}
-
-	public static Color getColor(int red, int green, int blue) {
-
-		return getColor(red, green, blue, ALPHA_OPAQUE);
-	}
-
-	public static Color getColor(int red, int green, int blue, int alpha) {
-
-		RGB rgb = new RGB(red, green, blue);
-		return getColor(rgb, alpha);
 	}
 
 	public static String getColor(Color color) {
@@ -356,7 +328,7 @@ public class Colors {
 	 * Creates a color array by given size.<br/>
 	 * The colors will be repeated if the size is greater than the colors
 	 * defined in colorIds.
-	 * 
+	 *
 	 * @param size
 	 */
 	private static void initializeColors() {
@@ -369,11 +341,6 @@ public class Colors {
 		colorsGradient = initialize(colorIdsGradient);
 		colorsGradientRedContrast = initialize(colorIdsGradientRedContrast);
 		colorsGradientHighContrast = initialize(colorIdsGradientHighContrast);
-		colorsGradientPublication = initialize(colorIdsGradientPublication);
-		colorsGradientPrint = initialize(colorIdsGradientPrint);
-		colorsGradientGrayscale = initialize(colorIdsGradientGrayscale);
-		colorsGradientAnalysis = initialize(colorIdsGradientAnalysis);
-		colorsGradientNoise = initialize(colorIdsGradientNoise);
 	}
 
 	private static List<Color> initialize(int[] colorIds) {
@@ -382,17 +349,6 @@ public class Colors {
 		List<Color> colors = new ArrayList<>();
 		for(int colorId : colorIds) {
 			Color color = display.getSystemColor(colorId);
-			colors.add(color);
-		}
-
-		return colors;
-	}
-
-	private static List<Color> initialize(RGB[] rgbs) {
-
-		List<Color> colors = new ArrayList<>();
-		for(RGB rgb : rgbs) {
-			Color color = getColor(rgb);
 			colors.add(color);
 		}
 
@@ -422,7 +378,7 @@ public class Colors {
 
 	/**
 	 * Alpha in the range 0 - 255.
-	 * 
+	 *
 	 * @param r
 	 * @param g
 	 * @param b
