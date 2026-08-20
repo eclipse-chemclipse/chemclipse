@@ -52,6 +52,8 @@ public class PageUtil_3_Test {
 	@AfterAll
 	public void tearDown() throws IOException {
 
+		pageUtilPT.close();
+		pageUtilMM.close();
 		document.close();
 	}
 
