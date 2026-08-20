@@ -38,6 +38,18 @@ public class WebIdentifierSettings extends AbstractIdentifierSettingsWSD impleme
 	@JsonProperty(value = "Task", defaultValue = "megablast")
 	private Task task = Task.MEGABLAST;
 
+	@JsonProperty(value = "Exclude models (XM/XR)", defaultValue = "true")
+	@JsonPropertyDescription(value = "RefSeq predicted mRNA and ncRNA")
+	private boolean excludeModels = true;
+
+	@JsonProperty(value = "Exclude uncultured / environmental", defaultValue = "true")
+	@JsonPropertyDescription(value = "Organism nodes plus the ENV division")
+	private boolean excludeUncultured = true;
+
+	@JsonProperty(value = "Type strain, neotype, etc.", defaultValue = "false")
+	@JsonPropertyDescription(value = "Limit to sequences from type material")
+	private boolean onlyTypeMaterial = false;
+
 	public String getEndpoint() {
 
 		return endpoint;
@@ -66,6 +78,36 @@ public class WebIdentifierSettings extends AbstractIdentifierSettingsWSD impleme
 	public void setTask(Task task) {
 
 		this.task = task;
+	}
+
+	public boolean isExcludeModels() {
+
+		return excludeModels;
+	}
+
+	public void setExcludeModels(boolean excludeModels) {
+
+		this.excludeModels = excludeModels;
+	}
+
+	public boolean isExcludeUncultured() {
+
+		return excludeUncultured;
+	}
+
+	public void setExcludeUncultured(boolean excludeUncultured) {
+
+		this.excludeUncultured = excludeUncultured;
+	}
+
+	public boolean isOnlyTypeMaterial() {
+
+		return onlyTypeMaterial;
+	}
+
+	public void setOnlyTypeMaterial(boolean onlyTypeMaterial) {
+
+		this.onlyTypeMaterial = onlyTypeMaterial;
 	}
 
 	@Override
