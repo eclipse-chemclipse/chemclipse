@@ -20,6 +20,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.BlastOutput2;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.ObjectFactory;
+import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.Results;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -43,5 +44,11 @@ public class XmlReaderVersion2 {
 
 		NodeList topNode = document.getElementsByTagName("BlastOutput2");
 		return (BlastOutput2)unmarshaller.unmarshal(topNode.item(0));
+	}
+
+	public static int getNumberResults(BlastOutput2 blastOutput) {
+
+		Results results = blastOutput.getReport().getReport().getResults().getResults();
+		return results.getSearch().getSearch().getHits().getHit().size();
 	}
 }

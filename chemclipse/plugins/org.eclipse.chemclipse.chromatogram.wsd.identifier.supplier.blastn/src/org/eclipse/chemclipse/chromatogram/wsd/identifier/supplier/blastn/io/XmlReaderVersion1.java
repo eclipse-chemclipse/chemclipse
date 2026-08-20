@@ -49,4 +49,11 @@ public class XmlReaderVersion1 {
 		NodeList topNode = document.getElementsByTagName("BlastOutput");
 		return (BlastOutput)unmarshaller.unmarshal(topNode.item(0));
 	}
+
+	public static int getNumberResults(BlastOutput blastOutput) {
+
+		return blastOutput.getIterations().getIteration().stream() //
+							.mapToInt(iteration -> iteration.getHits().getHit().size()) //
+							.sum();
+	}
 }

@@ -12,10 +12,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.io;
 
-import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v1.BlastOutput;
-import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v1.Hit;
-import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v1.Hsp;
-import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v1.Iteration;
+import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.BlastOutput2;
+import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.Hit;
+import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.HitDescr;
+import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.Hsp;
+import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.Report;
 import org.eclipse.chemclipse.model.identifier.ComparisonResult;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.identifier.LibraryInformation;
@@ -24,24 +25,26 @@ import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 
 public abstract class AbstractNucleotideBLAST {
 
-	public static void transferTargets(IChromatogramWSD chromatogram, BlastOutput blastOutput) {
+	public static void transferTargets(IChromatogramWSD chromatogram, BlastOutput2 blastOutput) {
 
 		if(blastOutput == null) {
 			return;
 		}
-		for(Iteration iteration : blastOutput.getIterations().getIteration()) {
-			for(Hit hit : iteration.getHits().getHit()) {
-				ILibraryInformation libraryInformation = new LibraryInformation();
-				libraryInformation.setName(hit.getDef());
-				libraryInformation.setDatabase(blastOutput.getDb());
-				libraryInformation.setMiscellaneous(hit.getId());
-				libraryInformation.setComments(hit.getAccession());
-				for(Hsp hsp : hit.getHsps().getHsp()) {
-					ComparisonResult comparisionResult = new ComparisonResult((float)hsp.getBitScore(), (float)hsp.getScore(), (float)hsp.getEvalue(), hsp.getIdentity().floatValue()); // TODO: wrong model
-					IdentificationTarget identificationTarget = new IdentificationTarget(libraryInformation, comparisionResult);
-					identificationTarget.setIdentifier(blastOutput.getVersion());
-					chromatogram.getTargets().add(identificationTarget);
-				}
+
+		Report report = blastOutput.getReport().getReport();
+		for(Hit hit : report.getResults().getResults().getSearch().getSearch().getHits().getHit()) {
+			ILibraryInformation libraryInformation = new LibraryInformation();
+			HitDescr description = hit.getDescription().getHitDescr().getFirst();
+			libraryInformation.setName(description.getTitle());
+			libraryInformation.setDatabase(report.getSearchTarget().getTarget().getDb());
+			libraryInformation.setMiscellaneous(description.getAccession());
+			libraryInformation.setReferenceIdentifier(description.getId());
+			libraryInformation.setDatabaseIndex(description.getTaxid().intValue());
+			for(Hsp hsp : hit.getHsps().getHsp()) {
+				ComparisonResult comparisionResult = new ComparisonResult((float)hsp.getBitScore(), (float)hsp.getScore(), (float)hsp.getEvalue(), hsp.getIdentity().floatValue()); // TODO: wrong model
+				IdentificationTarget identificationTarget = new IdentificationTarget(libraryInformation, comparisionResult);
+				identificationTarget.setIdentifier(report.getVersion());
+				chromatogram.getTargets().add(identificationTarget);
 			}
 		}
 	}

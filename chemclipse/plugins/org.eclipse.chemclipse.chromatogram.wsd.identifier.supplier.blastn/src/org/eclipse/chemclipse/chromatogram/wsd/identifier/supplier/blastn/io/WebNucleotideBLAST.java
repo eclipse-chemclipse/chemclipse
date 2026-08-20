@@ -30,7 +30,7 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.NameValuePair;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
-import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v1.BlastOutput;
+import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.BlastOutput2;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.settings.Task;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.settings.WebIdentifierSettings;
 import org.eclipse.chemclipse.logging.core.Logger;
@@ -56,11 +56,9 @@ public class WebNucleotideBLAST extends AbstractNucleotideBLAST {
 				String xml = retrieveXML(client, rid, settings);
 				try {
 					InputSource inputSource = new InputSource(new StringReader(xml));
-					BlastOutput blastOutput = XmlReaderVersion1.getBlastOutput(inputSource);
+					BlastOutput2 blastOutput = XmlReaderVersion2.getBlastOutput(inputSource);
 					transferTargets(chromatogram, blastOutput);
-					return blastOutput.getIterations().getIteration().stream() //
-										.mapToInt(iteration -> iteration.getHits().getHit().size()) //
-										.sum();
+					return XmlReaderVersion2.getNumberResults(blastOutput);
 				} catch(SAXException | IOException | JAXBException
 						| ParserConfigurationException e) {
 					logger.error(e);
@@ -221,7 +219,7 @@ public class WebNucleotideBLAST extends AbstractNucleotideBLAST {
 		}
 
 		BasicHttpClientResponseHandler handler = new BasicHttpClientResponseHandler();
-		String getRequest = settings.getEndpoint() + "?CMD=Get&FORMAT_TYPE=XML&RID=" + rid;
+		String getRequest = settings.getEndpoint() + "?CMD=Get&FORMAT_TYPE=XML2_S&RID=" + rid;
 		HttpGet httpGet = new HttpGet(getRequest);
 		httpGet.setHeader("User-Agent", getUserAgent());
 		return client.execute(httpGet, handler);

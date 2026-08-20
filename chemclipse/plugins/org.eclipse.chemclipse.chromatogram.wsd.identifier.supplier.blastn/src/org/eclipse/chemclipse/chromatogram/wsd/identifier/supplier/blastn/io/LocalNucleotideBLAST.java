@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.io.BlastDatabaseCommandReader.BlastDatabaseInfo;
-import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v1.BlastOutput;
+import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.BlastOutput2;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.settings.LocalIdentifierSettings;
 import org.eclipse.chemclipse.logging.core.Logger;
@@ -66,11 +66,9 @@ public class LocalNucleotideBLAST extends AbstractNucleotideBLAST {
 			if(exitCode == 0) {
 				try {
 					InputSource inputSource = new InputSource(new FileInputStream(xml));
-					BlastOutput blastOutput = XmlReaderVersion1.getBlastOutput(inputSource);
+					BlastOutput2 blastOutput = XmlReaderVersion2.getBlastOutput(inputSource);
 					transferTargets(chromatogram, blastOutput);
-					numberOfHits += blastOutput.getIterations().getIteration().stream() //
-												.mapToInt(iteration -> iteration.getHits().getHit().size()) //
-												.sum();
+					numberOfHits += XmlReaderVersion2.getNumberResults(blastOutput);
 				} catch(SAXException | IOException | JAXBException
 						| ParserConfigurationException e) {
 					logger.error(e);
@@ -146,7 +144,7 @@ public class LocalNucleotideBLAST extends AbstractNucleotideBLAST {
 		processBuilder.command().add(String.valueOf(totalBases));
 
 		processBuilder.command().add("-outfmt");
-		processBuilder.command().add("5");
+		processBuilder.command().add("16");
 
 		processBuilder.command().add("-out");
 		processBuilder.command().add(xml.getAbsolutePath());
