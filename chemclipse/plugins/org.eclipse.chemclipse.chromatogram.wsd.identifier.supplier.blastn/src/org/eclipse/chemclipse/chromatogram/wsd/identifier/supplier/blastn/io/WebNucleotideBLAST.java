@@ -14,8 +14,9 @@ package org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.io;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,11 +24,12 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
 import org.apache.hc.client5.http.impl.classic.BasicHttpClientResponseHandler;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.core5.http.ContentType;
-import org.apache.hc.core5.http.io.entity.StringEntity;
+import org.apache.hc.core5.http.NameValuePair;
+import org.apache.hc.core5.http.message.BasicNameValuePair;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v1.BlastOutput;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.settings.Task;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.settings.WebIdentifierSettings;
@@ -47,9 +49,9 @@ public class WebNucleotideBLAST extends AbstractNucleotideBLAST {
 
 	public static int run(IChromatogramWSD chromatogram, WebIdentifierSettings settings) throws IOException, InterruptedException {
 
-		String postData = buildPostData(settings, getFASTA(chromatogram)).toString();
+		List<NameValuePair> parameters = buildPostData(settings, getFASTA(chromatogram));
 		try (CloseableHttpClient client = HttpClients.createDefault()) {
-			String rid = submitSearch(client, settings, postData);
+			String rid = submitSearch(client, settings, parameters);
 			if(rid != null) {
 				String xml = retrieveXML(client, rid, settings);
 				try {
@@ -73,11 +75,11 @@ public class WebNucleotideBLAST extends AbstractNucleotideBLAST {
 	/**
 	 * @return the response ID
 	 */
-	private static String submitSearch(CloseableHttpClient client, WebIdentifierSettings settings, String postData) throws InterruptedException, IOException {
+	private static String submitSearch(CloseableHttpClient client, WebIdentifierSettings settings, List<NameValuePair> parameters) throws InterruptedException, IOException {
 
 		HttpPost request = new HttpPost(settings.getEndpoint());
 		request.setHeader("User-Agent", getUserAgent());
-		request.setEntity(new StringEntity(postData, ContentType.APPLICATION_FORM_URLENCODED));
+		request.setEntity(new UrlEncodedFormEntity(parameters, StandardCharsets.UTF_8));
 		BasicHttpClientResponseHandler handler = new BasicHttpClientResponseHandler();
 		return parseQueuedBlastInfo(client.execute(request, handler));
 	}
@@ -106,16 +108,17 @@ public class WebNucleotideBLAST extends AbstractNucleotideBLAST {
 		return null;
 	}
 
-	private static StringBuilder buildPostData(WebIdentifierSettings settings, String fasta) {
+	private static List<NameValuePair> buildPostData(WebIdentifierSettings settings, String fasta) {
 
-		StringBuilder stringBuilder = new StringBuilder("CMD=Put");
-		stringBuilder.append("&PROGRAM=");
-		stringBuilder.append(getProgram(settings));
-		stringBuilder.append("&DATABASE=");
-		stringBuilder.append(settings.getDatabase());
-		stringBuilder.append("&QUERY=");
-		stringBuilder.append(fasta);
-		return stringBuilder;
+		List<NameValuePair> parameters = new ArrayList<>();
+
+		parameters.add(new BasicNameValuePair("CMD", "Put"));
+		parameters.add(new BasicNameValuePair("PROGRAM", getProgram(settings)));
+		parameters.add(new BasicNameValuePair("DATABASE", settings.getDatabase()));
+		parameters.add(new BasicNameValuePair("QUERY", fasta));
+
+		return parameters;
+	}
 	}
 
 	private static String getProgram(WebIdentifierSettings settings) {
@@ -140,7 +143,7 @@ public class WebNucleotideBLAST extends AbstractNucleotideBLAST {
 
 		StringBuilder stringBuilder = new StringBuilder("> " + chromatogram.getSampleName() + "\n");
 		stringBuilder.append(chromatogram.getMiscInfo());
-		return URLEncoder.encode(stringBuilder.toString(), StandardCharsets.UTF_8);
+		return stringBuilder.toString();
 	}
 
 	private static String retrieveXML(CloseableHttpClient client, String rid, WebIdentifierSettings settings) throws IOException, InterruptedException {
