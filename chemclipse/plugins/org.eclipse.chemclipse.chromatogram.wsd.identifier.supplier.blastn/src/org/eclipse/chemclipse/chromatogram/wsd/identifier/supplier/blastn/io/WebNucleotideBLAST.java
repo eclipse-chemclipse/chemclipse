@@ -118,8 +118,38 @@ public class WebNucleotideBLAST extends AbstractNucleotideBLAST {
 		parameters.add(new BasicNameValuePair("DATABASE", settings.getDatabase()));
 		parameters.add(new BasicNameValuePair("QUERY", fasta));
 
+		String entryQuery = createEntrezQuery(settings);
+		if(!entryQuery.isBlank()) {
+			parameters.add(new BasicNameValuePair("ENTREZ_QUERY", entryQuery));
+		}
+
 		return parameters;
 	}
+
+	public static String createEntrezQuery(WebIdentifierSettings settings) {
+
+		if(!settings.isOnlyTypeMaterial() && !settings.isExcludeModels() && !settings.isExcludeUncultured()) {
+			return "";
+		}
+
+		String positive = settings.isOnlyTypeMaterial() ? "sequence_from_type[filter]" : "all [filter]";
+
+		List<String> negative = new ArrayList<>();
+		if(settings.isExcludeModels()) {
+			negative.add("XM_000001:XM_9999999[pacc]");
+			negative.add("XM_000000001:XM_999999999[pacc]");
+			negative.add("XR_000000001:XR_999999999[pacc]");
+		}
+		if(settings.isExcludeUncultured()) {
+			negative.add("(environmental samples[organism] OR metagenomes[orgn] OR txid32644[orgn])");
+			negative.add("env [DIV]");
+		}
+
+		StringBuilder builder = new StringBuilder(positive);
+		if(!negative.isEmpty()) {
+			builder.append(" NOT(").append(String.join(" OR ", negative)).append(')');
+		}
+		return builder.toString();
 	}
 
 	private static String getProgram(WebIdentifierSettings settings) {
