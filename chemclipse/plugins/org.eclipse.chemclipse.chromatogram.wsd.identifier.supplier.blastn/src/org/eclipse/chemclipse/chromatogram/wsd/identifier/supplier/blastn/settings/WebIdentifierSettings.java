@@ -31,9 +31,9 @@ public class WebIdentifierSettings extends AbstractIdentifierSettingsWSD impleme
 	@JsonPropertyDescription("Select the web server to query against.")
 	private String endpoint = "https://blast.ncbi.nlm.nih.gov/blast/Blast.cgi";
 
-	@JsonProperty(value = "Database", defaultValue = "nt")
+	@JsonProperty(value = "Database", defaultValue = "core_nt")
 	@JsonPropertyDescription(value = "Select the database to search.")
-	private String database = "nt";
+	private String database = "core_nt";
 
 	@JsonProperty(value = "Task", defaultValue = "megablast")
 	private Task task = Task.MEGABLAST;
