@@ -74,12 +74,12 @@ public class ReportWriter {
 		monitor.beginTask("Render Chromatogram", size);
 		for(int i = 1; i < size; i += chunkSize) {
 			ITotalScanSignals scans = totalScanSignalExtractor.getTotalScanSignals(i, Math.min(size, i + chunkSize), false);
-			PageUtil pageUtil = new PageUtil(document, new PageSettings(PDRectangle.A4, PageBase.TOP_LEFT, PAGE_UNIT, LANDSCAPE));
-			printPageHeader(chromatogram, pageUtil);
-			ValueScaling valueScaling = new ValueScaling(chromatogram, pageUtil.getPage(), scans);
-			drawChromatogram(pageUtil, chromatogram, scans, valueScaling, monitor);
-			drawPeaks(chromatogram, valueScaling, pageUtil);
-			pageUtil.close();
+			try (PageUtil pageUtil = new PageUtil(document, new PageSettings(PDRectangle.A4, PageBase.TOP_LEFT, PAGE_UNIT, LANDSCAPE))) {
+				printPageHeader(chromatogram, pageUtil);
+				ValueScaling valueScaling = new ValueScaling(chromatogram, pageUtil.getPage(), scans);
+				drawChromatogram(pageUtil, chromatogram, scans, valueScaling, monitor);
+				drawPeaks(chromatogram, valueScaling, pageUtil);
+			}
 		}
 		document.save(file);
 	}

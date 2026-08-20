@@ -13,6 +13,7 @@
 package org.eclipse.chemclipse.pdfbox.extensions.core;
 
 import java.awt.Color;
+import java.io.Closeable;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -41,7 +42,7 @@ import org.eclipse.chemclipse.pdfbox.extensions.settings.ReferenceX;
 import org.eclipse.chemclipse.pdfbox.extensions.settings.ReferenceY;
 import org.eclipse.chemclipse.pdfbox.extensions.settings.TextOption;
 
-public class PageUtil {
+public class PageUtil implements Closeable {
 
 	/*
 	 * All public method values (x,y) are handled in the given unit
@@ -80,12 +81,6 @@ public class PageUtil {
 		}
 	}
 
-	@Override
-	protected void finalize() throws Throwable {
-
-		close();
-	}
-
 	public PDDocument getDocument() {
 
 		return document;
@@ -97,10 +92,11 @@ public class PageUtil {
 	}
 
 	/**
-	 * Call close when page creation is finished.
-	 * 
+	 * Call close when page creation is finished. Prefer a try-with-resources statement.
+	 *
 	 * @throws IOException
 	 */
+	@Override
 	public void close() throws IOException {
 
 		if(contentStream != null) {
