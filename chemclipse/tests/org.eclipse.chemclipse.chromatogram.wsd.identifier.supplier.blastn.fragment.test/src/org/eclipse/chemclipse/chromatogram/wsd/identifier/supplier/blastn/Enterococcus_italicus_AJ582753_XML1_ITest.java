@@ -37,14 +37,14 @@ import org.xml.sax.SAXException;
 import jakarta.xml.bind.JAXBException;
 
 @TestInstance(Lifecycle.PER_CLASS)
-public class Enterococcus_italicus_AJ582753_ITest {
+public class Enterococcus_italicus_AJ582753_XML1_ITest {
 
 	private BlastOutput blastOutput;
 
 	@BeforeAll
 	public void setUp() throws SAXException, IOException, JAXBException, ParserConfigurationException {
 
-		File importFile = new File("testData/Enterococcus_italicus_AJ582753.xml");
+		File importFile = new File("testData/Enterococcus_italicus_AJ582753v1.xml");
 		InputSource inputSource = new InputSource(new FileInputStream(importFile));
 		blastOutput = XmlReaderVersion1.getBlastOutput(inputSource);
 	}
@@ -86,7 +86,7 @@ public class Enterococcus_italicus_AJ582753_ITest {
 
 		Hits hits = blastOutput.getIterations().getIteration().getFirst().getHits();
 
-		Hit firstHit = hits.getHit().get(0);
+		Hit firstHit = hits.getHit().getFirst();
 		assertEquals("NR_104571", firstHit.getAccession());
 		assertEquals("Enterococcus italicus DSM 15952 strain TP1.5 16S ribosomal RNA, partial sequence", firstHit.getDef());
 		assertEquals("gi|558508648|ref|NR_104571.1|", firstHit.getId());
