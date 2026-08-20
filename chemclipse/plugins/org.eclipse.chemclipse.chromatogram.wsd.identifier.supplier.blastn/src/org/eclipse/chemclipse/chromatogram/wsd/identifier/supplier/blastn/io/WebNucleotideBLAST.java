@@ -113,7 +113,8 @@ public class WebNucleotideBLAST extends AbstractNucleotideBLAST {
 		List<NameValuePair> parameters = new ArrayList<>();
 
 		parameters.add(new BasicNameValuePair("CMD", "Put"));
-		parameters.add(new BasicNameValuePair("PROGRAM", getProgram(settings)));
+		parameters.add(new BasicNameValuePair("PROGRAM", "blastn"));
+		parameters.add(new BasicNameValuePair("BLAST_PROGRAMS", getProgram(settings)));
 		parameters.add(new BasicNameValuePair("DATABASE", settings.getDatabase()));
 		parameters.add(new BasicNameValuePair("QUERY", fasta));
 
@@ -123,10 +124,19 @@ public class WebNucleotideBLAST extends AbstractNucleotideBLAST {
 
 	private static String getProgram(WebIdentifierSettings settings) {
 
-		if(settings.getTask() == Task.MEGABLAST) {
-			return "blastn&MEGABLAST=on";
+		switch(settings.getTask()) {
+			case Task.BLASTN: {
+				return "blastn";
+			}
+			case Task.MEGABLAST: {
+				return "megaBlast";
+			}
+			case Task.DC_MEGABLAST: {
+				return "discoMegablast";
+			}
+			default:
+				return "blastn";
 		}
-		return settings.getTask().value();
 	}
 
 	private static String regexExtract(String input, String patternStr, int flags) {
