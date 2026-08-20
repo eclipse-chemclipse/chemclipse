@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Christoph Läubrich - initial API and implementation
  * Philip Wenig - refactoring backgroun mode
@@ -37,8 +37,8 @@ public class TaskTileContainer {
 
 	public static final Color DEFAULT_COLOR_TITLE = Colors.WHITE;
 	public static final Color DEFAULT_COLOR_DESCRIPTION = Colors.WHITE;
-	public static final Color DEFAULT_COLOR_INACTIVE = Colors.getColor(139, 23, 23);
-	public static final Color DEFAULT_COLOR_ACTIVE = Colors.getColor(114, 20, 22);
+	public static final Color DEFAULT_COLOR_INACTIVE = new Color(139, 23, 23);
+	public static final Color DEFAULT_COLOR_ACTIVE = new Color(114, 20, 22);
 
 	private final List<TaskTile> taskTiles = new ArrayList<>();
 	private final Composite container;
