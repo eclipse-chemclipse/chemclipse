@@ -47,6 +47,7 @@ public class TimeRangeMarker extends AbstractBaseChartPaintListener {
 
 		super(baseChart);
 		transform.rotate(-90);
+		baseChart.addDisposeListener(_ -> transform.dispose());
 	}
 
 	public Set<TimeRange> getTimeRanges() {
@@ -92,12 +93,6 @@ public class TimeRangeMarker extends AbstractBaseChartPaintListener {
 
 			gc.setAlpha(255);
 		}
-	}
-
-	@Override
-	protected void finalize() throws Throwable {
-
-		transform.dispose();
 	}
 
 	private void plotMarker(GC gc, TimeRange timeRange) {
