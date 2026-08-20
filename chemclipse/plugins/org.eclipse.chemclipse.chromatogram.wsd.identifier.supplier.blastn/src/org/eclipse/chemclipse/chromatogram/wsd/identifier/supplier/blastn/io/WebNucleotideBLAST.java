@@ -146,7 +146,7 @@ public class WebNucleotideBLAST extends AbstractNucleotideBLAST {
 	private static String retrieveXML(CloseableHttpClient client, String rid, WebIdentifierSettings settings) throws IOException, InterruptedException {
 
 		while(true) {
-			Thread.sleep(5000);
+			Thread.sleep(10000);
 			String pollResponse = "";
 			BasicHttpClientResponseHandler handler = new BasicHttpClientResponseHandler();
 			String pollRequest = settings.getEndpoint() + "?CMD=Get&FORMAT_OBJECT=SearchInfo&RID=" + rid;
