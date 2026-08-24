@@ -26,6 +26,7 @@ public enum DataType implements ILabel {
 	MSD("Mass Selective Data (MSD)"), //
 	CSD("Current Selective Cata (CSD)"), //
 	WSD("Wavelength Selective Data (WSD)"), //
+	DSD("DNA Sequencing Data (DSD)"), //
 	VSD("Vibrational Spectroscopy Data (VSD)"), //
 	FSD("Fluorescence Spectroscopy Data (FSD)"), //
 	SCAN_VSD("Vibrational Spectroscopy Scan (FT-IR, Raman)"), //
@@ -85,6 +86,7 @@ public enum DataType implements ILabel {
 			case MSD:
 				return DataCategory.MSD;
 			case WSD:
+			case DSD: // A sequencing trace is a wavelength chromatogram.
 				return DataCategory.WSD;
 			case CSD:
 				return DataCategory.CSD;

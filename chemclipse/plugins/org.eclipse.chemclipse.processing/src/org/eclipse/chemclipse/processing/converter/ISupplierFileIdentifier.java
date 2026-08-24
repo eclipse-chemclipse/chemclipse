@@ -21,6 +21,7 @@ public interface ISupplierFileIdentifier extends SupplierContext {
 	String TYPE_MSD = "MSD";
 	String TYPE_CSD = "CSD";
 	String TYPE_WSD = "WSD";
+	String TYPE_DSD = "DSD"; // DNA Sequencing
 	String TYPE_TSD = "TSD";
 	String TYPE_VSD = "VSD";
 	String TYPE_FSD = "FSD";

@@ -209,6 +209,14 @@
          version="0.0.0"/>
 
    <plugin
+         id="org.eclipse.chemclipse.dsd.model"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.chemclipse.dsd.converter"
+         version="0.0.0"/>
+
+   <plugin
          id="org.eclipse.chemclipse.chromatogram.peak.detector"
          version="0.0.0"/>
 

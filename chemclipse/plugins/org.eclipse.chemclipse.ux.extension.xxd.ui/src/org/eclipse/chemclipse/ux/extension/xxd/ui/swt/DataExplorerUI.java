@@ -95,6 +95,12 @@ public class DataExplorerUI extends MultiDataExplorerTreeUI {
 			editorSupportList.add(new SupplierEditorSupport(DataType.WSD, () -> context));
 		}
 		/*
+		 * DSD
+		 */
+		if(preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_DATA_DSD)) {
+			editorSupportList.add(new SupplierEditorSupport(DataType.DSD, () -> context));
+		}
+		/*
 		 * VSD
 		 */
 		if(preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_DATA_VSD)) {

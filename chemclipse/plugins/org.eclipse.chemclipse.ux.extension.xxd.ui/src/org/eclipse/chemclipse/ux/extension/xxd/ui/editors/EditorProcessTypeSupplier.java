@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
+import org.eclipse.chemclipse.dsd.model.core.IChromatogramDSD;
 import org.eclipse.chemclipse.fsd.model.core.IChromatogramFSD;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
@@ -77,6 +78,8 @@ public class EditorProcessTypeSupplier implements IProcessTypeSupplier {
 					IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 					if(chromatogram instanceof IChromatogramMSD) {
 						new SupplierEditorSupport(DataType.MSD, () -> eclipseContext).openEditor(chromatogram);
+					} else if(chromatogram instanceof IChromatogramDSD) { // order is important
+						new SupplierEditorSupport(DataType.DSD, () -> eclipseContext).openEditor(chromatogram);
 					} else if(chromatogram instanceof IChromatogramWSD) {
 						new SupplierEditorSupport(DataType.WSD, () -> eclipseContext).openEditor(chromatogram);
 					} else if(chromatogram instanceof IChromatogramCSD) {

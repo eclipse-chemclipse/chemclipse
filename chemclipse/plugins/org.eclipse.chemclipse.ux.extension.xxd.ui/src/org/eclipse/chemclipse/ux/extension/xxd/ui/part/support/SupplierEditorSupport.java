@@ -24,6 +24,7 @@ import org.eclipse.chemclipse.converter.methods.MethodConverter;
 import org.eclipse.chemclipse.converter.quantitation.QuantDBConverter;
 import org.eclipse.chemclipse.converter.sequence.SequenceConverter;
 import org.eclipse.chemclipse.csd.converter.chromatogram.ChromatogramConverterCSD;
+import org.eclipse.chemclipse.dsd.converter.chromatogram.ChromatogramConverterDSD;
 import org.eclipse.chemclipse.fsd.converter.chromatogram.ChromatogramConverterFSD;
 import org.eclipse.chemclipse.fsd.converter.core.ScanConverterFSD;
 import org.eclipse.chemclipse.model.core.IMeasurement;
@@ -47,6 +48,7 @@ import org.eclipse.chemclipse.ux.extension.ui.provider.AbstractSupplierFileEdito
 import org.eclipse.chemclipse.ux.extension.ui.provider.ISupplierEditorSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.editors.AbstractChromatogramEditor;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.editors.ChromatogramEditorCSD;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.editors.ChromatogramEditorDSD;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.editors.ChromatogramEditorFSD;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.editors.ChromatogramEditorMSD;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.editors.ChromatogramEditorVSD;
@@ -105,6 +107,9 @@ public class SupplierEditorSupport extends AbstractSupplierFileEditorSupport imp
 				break;
 			case WSD:
 				supplier = ChromatogramConverterWSD.getInstance().getChromatogramConverterSupport().getSupplier();
+				break;
+			case DSD:
+				supplier = ChromatogramConverterDSD.getInstance().getChromatogramConverterSupport().getSupplier();
 				break;
 			case VSD:
 				supplier = ChromatogramConverterVSD.getInstance().getChromatogramConverterSupport().getSupplier();
@@ -281,6 +286,15 @@ public class SupplierEditorSupport extends AbstractSupplierFileEditorSupport imp
 				tooltip = AbstractChromatogramEditor.TOOLTIP;
 				topicUpdateRawfile = IChemClipseEvents.TOPIC_CHROMATOGRAM_WSD_UPDATE_RAWFILE;
 				topicUpdateOverview = IChemClipseEvents.TOPIC_CHROMATOGRAM_WSD_UPDATE_OVERVIEW;
+				break;
+			case DSD:
+				type = TYPE_DSD;
+				elementId = ChromatogramEditorDSD.ID;
+				contributionURI = ChromatogramEditorDSD.CONTRIBUTION_URI;
+				iconURI = ChromatogramEditorDSD.ICON_URI;
+				tooltip = AbstractChromatogramEditor.TOOLTIP;
+				topicUpdateRawfile = IChemClipseEvents.TOPIC_CHROMATOGRAM_DSD_UPDATE_RAWFILE;
+				topicUpdateOverview = IChemClipseEvents.TOPIC_CHROMATOGRAM_DSD_UPDATE_OVERVIEW;
 				break;
 			case VSD:
 				type = TYPE_VSD;
