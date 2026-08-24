@@ -91,6 +91,7 @@ import org.eclipse.chemclipse.swt.ui.marker.TargetMarker;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.swt.ui.preferences.PreferencePageSystem;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
+import org.eclipse.chemclipse.swt.ui.support.IColorScheme;
 import org.eclipse.chemclipse.ux.extension.ui.editors.ProcessorSupplierMenuEntry;
 import org.eclipse.chemclipse.ux.extension.ui.methods.MethodCancelException;
 import org.eclipse.chemclipse.ux.extension.ui.methods.MethodParameters;
@@ -136,6 +137,7 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.support.DisplayType;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.NoiseFactorSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ChromatogramChartSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ChromatogramDataSupport;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.Derivative;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.PeakChartSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ScanChartSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ChromatogramBaselinesUI;
@@ -895,12 +897,36 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 
 	private void addChromatogramData(List<ILineSeriesData> lineSeriesDataList) {
 
-		Color color = Colors.getColor(preferenceStore.getString(PreferenceSupplier.P_COLOR_CHROMATOGRAM));
 		boolean enableChromatogramArea = preferenceStore.getBoolean(PreferenceSupplier.P_ENABLE_CHROMATOGRAM_AREA);
 
-		ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(chromatogramSelection, SERIES_ID_CHROMATOGRAM, displayType, color, false);
-		lineSeriesData.getSettings().setEnableArea(enableChromatogramArea);
-		lineSeriesDataList.add(lineSeriesData);
+		if(chromatogramSelection.getChromatogram() instanceof IChromatogramDSD chromatogramDSD) {
+			addSequencingData(lineSeriesDataList, chromatogramDSD, enableChromatogramArea);
+		} else {
+			Color color = Colors.getColor(preferenceStore.getString(PreferenceSupplier.P_COLOR_CHROMATOGRAM));
+			ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(chromatogramSelection, SERIES_ID_CHROMATOGRAM, displayType, color, false);
+			lineSeriesData.getSettings().setEnableArea(enableChromatogramArea);
+			lineSeriesDataList.add(lineSeriesData);
+		}
+	}
+
+	/**
+	 * A sequencing trace is shown as its four dye traces instead of a summed signal.
+	 * Multiple wavelengths stacked. Otherwise the bases can't be told apart.
+	 */
+	private void addSequencingData(List<ILineSeriesData> lineSeriesDataList, IChromatogramDSD chromatogramDSD, boolean enableChromatogramArea) {
+
+		IColorScheme colorScheme = Colors.getColorScheme(Colors.COLOR_SCHEME_SEQUENCING);
+		for(Float wavelength : chromatogramDSD.getWavelengths()) {
+			IMarkedTraces<ITrace> markedTraces = new MarkedTraces(MarkedTraceModus.INCLUDE);
+			markedTraces.add(new TraceRasteredWSD(wavelength));
+			Nucleobase nucleobase = chromatogramDSD.getWavelengthMapping().get(wavelength);
+			String seriesId = SERIES_ID_CHROMATOGRAM + " " + nucleobase.letter();
+			ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(chromatogramSelection, seriesId, DisplayType.XWC, Derivative.NONE, colorScheme.getColor(), markedTraces, false);
+			lineSeriesData.getSettings().setEnableArea(enableChromatogramArea);
+			lineSeriesData.getSettings().setDescription(String.valueOf(nucleobase.label()));
+			lineSeriesDataList.add(lineSeriesData);
+			colorScheme.incrementColor();
+		}
 	}
 
 	private void addPeakData(List<ILineSeriesData> lineSeriesDataList, ITargetDisplaySettings settings) {

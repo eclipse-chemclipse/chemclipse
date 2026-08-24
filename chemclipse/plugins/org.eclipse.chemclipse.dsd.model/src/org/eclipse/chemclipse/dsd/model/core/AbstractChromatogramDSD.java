@@ -19,4 +19,13 @@ import org.eclipse.chemclipse.wsd.model.core.AbstractChromatogramWSD;
 
 public abstract class AbstractChromatogramDSD extends AbstractChromatogramWSD implements IChromatogramDSD {
 
+	private static final long serialVersionUID = 121187623672499533L;
+
+	private Map<Float, Nucleobase> nucleobasePerWavelength = new HashMap<>();
+
+	@Override
+	public Map<Float, Nucleobase> getWavelengthMapping() {
+
+		return nucleobasePerWavelength;
+	}
 }

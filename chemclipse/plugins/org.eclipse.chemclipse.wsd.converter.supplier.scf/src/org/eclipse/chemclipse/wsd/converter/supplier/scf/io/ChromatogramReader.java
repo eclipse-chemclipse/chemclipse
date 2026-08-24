@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024, 2025 Lablicate GmbH.
+ * Copyright (c) 2024, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -25,9 +25,10 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.eclipse.chemclipse.converter.exceptions.FileIsNotReadableException;
 import org.eclipse.chemclipse.converter.io.support.DataArrayReader;
 import org.eclipse.chemclipse.converter.io.support.IDataArrayReader;
+import org.eclipse.chemclipse.dsd.converter.io.AbstractChromatogramDSDReader;
+import org.eclipse.chemclipse.dsd.model.core.IChromatogramDSD;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
-import org.eclipse.chemclipse.wsd.converter.io.AbstractChromatogramWSDReader;
 import org.eclipse.chemclipse.wsd.converter.supplier.scf.internal.support.HeaderArrayReader;
 import org.eclipse.chemclipse.wsd.converter.supplier.scf.internal.support.IHeaderArrayReader;
 import org.eclipse.chemclipse.wsd.converter.supplier.scf.internal.support.ISamplePointsByteArrayReader;
@@ -40,9 +41,8 @@ import org.eclipse.chemclipse.wsd.converter.supplier.scf.model.IVendorChromatogr
 import org.eclipse.chemclipse.wsd.converter.supplier.scf.model.IVendorScan;
 import org.eclipse.chemclipse.wsd.converter.supplier.scf.model.VendorChromatogram;
 import org.eclipse.chemclipse.wsd.converter.supplier.scf.model.VendorScan;
-import org.eclipse.chemclipse.wsd.converter.supplier.scf.model.VendorScanSignalDAD;
+import org.eclipse.chemclipse.wsd.converter.supplier.scf.model.VendorScanSignalWSD;
 import org.eclipse.chemclipse.wsd.converter.supplier.scf.model.Version;
-import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /*
@@ -51,7 +51,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * DNA Sequence, 3(2), 107–110.
  * https://doi.org/10.3109/10425179209034003
  */
-public class ChromatogramReader extends AbstractChromatogramWSDReader {
+public class ChromatogramReader extends AbstractChromatogramDSDReader {
 
 	private static final Logger logger = Logger.getLogger(ChromatogramReader.class);
 
@@ -66,7 +66,7 @@ public class ChromatogramReader extends AbstractChromatogramWSDReader {
 	private int sizePrivate;
 
 	@Override
-	public IChromatogramWSD read(File file, IProgressMonitor monitor) throws IOException {
+	public IChromatogramDSD read(File file, IProgressMonitor monitor) throws IOException {
 
 		return readChromatogram(file);
 	}
@@ -77,7 +77,7 @@ public class ChromatogramReader extends AbstractChromatogramWSDReader {
 		return readChromatogram(file);
 	}
 
-	private IChromatogramWSD readChromatogram(File file) throws IOException {
+	private IChromatogramDSD readChromatogram(File file) throws IOException {
 
 		IVendorChromatogram chromatogram = new VendorChromatogram();
 		chromatogram.setConverterId("SCF"); // to be exportable
@@ -139,25 +139,35 @@ public class ChromatogramReader extends AbstractChromatogramWSDReader {
 			ISamplePointsShortArrayReader samplesShortArrayReader = new SamplePointsShortArrayReader(file);
 			samplesShortArrayReader.resetPosition();
 			samplesShortArrayReader.seek(offsetSamples);
+			short[] adenine = accumulate(samplesShortArrayReader.readAdenine(numberSamples));
+			short[] cytosine = accumulate(samplesShortArrayReader.readCytosine(numberSamples));
+			short[] guanine = accumulate(samplesShortArrayReader.readGuanine(numberSamples));
+			short[] thymine = accumulate(samplesShortArrayReader.readThymine(numberSamples));
 
-			addShortSignals(samplesShortArrayReader.readAdenine(numberSamples), chromatogram);
-			chromatogram.setDataName("Adenine");
+			for(int i = 0; i < numberSamples; i++) {
+				IVendorScan scan = new VendorScan();
+				addSignal(scan, 1, adenine[i]);
+				addSignal(scan, 2, cytosine[i]);
+				addSignal(scan, 3, guanine[i]);
+				addSignal(scan, 4, thymine[i]);
+				chromatogram.addScan(scan);
+			}
 
-			IVendorChromatogram referencedChromatogram1 = new VendorChromatogram();
-			addShortSignals(samplesShortArrayReader.readCytosine(numberSamples), referencedChromatogram1);
-			referencedChromatogram1.setDataName("Cytosine");
-			chromatogram.addReferencedChromatogram(referencedChromatogram1);
+			chromatogram.getWavelengthMapping().put(1f, Nucleobase.ADENINE);
+			chromatogram.getWavelengthMapping().put(2f, Nucleobase.CYTOSINE);
+			chromatogram.getWavelengthMapping().put(3f, Nucleobase.GUANINE);
+			chromatogram.getWavelengthMapping().put(4f, Nucleobase.THYMINE);
 
-			IVendorChromatogram referencedChromatogram2 = new VendorChromatogram();
-			addShortSignals(samplesShortArrayReader.readGuanine(numberSamples), referencedChromatogram2);
-			referencedChromatogram2.setDataName("Guanine");
-			chromatogram.addReferencedChromatogram(referencedChromatogram2);
-
-			IVendorChromatogram referencedChromatogram3 = new VendorChromatogram();
-			addShortSignals(samplesShortArrayReader.readThymine(numberSamples), referencedChromatogram3);
-			referencedChromatogram3.setDataName("Thymine");
-			chromatogram.addReferencedChromatogram(referencedChromatogram3);
+			chromatogram.recalculateRetentionTimes();
 		}
+	}
+
+	private void addSignal(IVendorScan scan, float wavelength, short value) {
+
+		VendorScanSignalWSD scanSignal = new VendorScanSignalWSD();
+		scanSignal.setWavelength(wavelength);
+		scanSignal.setAbsorbance(value);
+		scan.addScanSignal(scanSignal);
 	}
 
 	private void readSequenceInformation(File file, IVendorChromatogram chromatogram) throws IOException {
@@ -224,10 +234,13 @@ public class ChromatogramReader extends AbstractChromatogramWSDReader {
 		return null;
 	}
 
-	private void addShortSignals(short[] samples, IVendorChromatogram chromatogram) {
+	/**
+	 * Version 3 stores the sample points as second order differences, so the values have to be
+	 * accumulated twice to get the trace back.
+	 */
+	private short[] accumulate(short[] samples) {
 
 		short sample = 0;
-		sample = 0;
 		for(int i = 0; i < numberSamples; i++) {
 			samples[i] = (short)(samples[i] + sample);
 			sample = samples[i];
@@ -237,13 +250,6 @@ public class ChromatogramReader extends AbstractChromatogramWSDReader {
 			samples[i] = (short)(samples[i] + sample);
 			sample = samples[i];
 		}
-		for(short base : samples) {
-			VendorScanSignalDAD scanSignal = new VendorScanSignalDAD();
-			scanSignal.setAbsorbance(base);
-			IVendorScan scan = new VendorScan();
-			scan.addScanSignal(scanSignal);
-			chromatogram.addScan(scan);
-		}
-		chromatogram.recalculateRetentionTimes();
+		return samples;
 	}
 }
