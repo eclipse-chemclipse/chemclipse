@@ -27,8 +27,15 @@ import org.eclipse.chemclipse.converter.io.support.DataArrayReader;
 import org.eclipse.chemclipse.converter.io.support.IDataArrayReader;
 import org.eclipse.chemclipse.dsd.converter.io.AbstractChromatogramDSDReader;
 import org.eclipse.chemclipse.dsd.model.core.IChromatogramDSD;
+import org.eclipse.chemclipse.dsd.model.core.Nucleobase;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
+import org.eclipse.chemclipse.model.identifier.ComparisonResult;
+import org.eclipse.chemclipse.model.identifier.IComparisonResult;
+import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
+import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
+import org.eclipse.chemclipse.model.identifier.LibraryInformation;
+import org.eclipse.chemclipse.model.implementation.IdentificationTarget;
 import org.eclipse.chemclipse.wsd.converter.supplier.scf.internal.support.HeaderArrayReader;
 import org.eclipse.chemclipse.wsd.converter.supplier.scf.internal.support.IHeaderArrayReader;
 import org.eclipse.chemclipse.wsd.converter.supplier.scf.internal.support.ISamplePointsByteArrayReader;
@@ -39,10 +46,12 @@ import org.eclipse.chemclipse.wsd.converter.supplier.scf.internal.support.Sample
 import org.eclipse.chemclipse.wsd.converter.supplier.scf.internal.support.SequenceInformationArrayReader;
 import org.eclipse.chemclipse.wsd.converter.supplier.scf.model.IVendorChromatogram;
 import org.eclipse.chemclipse.wsd.converter.supplier.scf.model.IVendorScan;
+import org.eclipse.chemclipse.wsd.converter.supplier.scf.model.Probability;
 import org.eclipse.chemclipse.wsd.converter.supplier.scf.model.VendorChromatogram;
 import org.eclipse.chemclipse.wsd.converter.supplier.scf.model.VendorScan;
 import org.eclipse.chemclipse.wsd.converter.supplier.scf.model.VendorScanSignalWSD;
 import org.eclipse.chemclipse.wsd.converter.supplier.scf.model.Version;
+import org.eclipse.chemclipse.wsd.model.core.IScanWSD;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /*
@@ -175,10 +184,34 @@ public class ChromatogramReader extends AbstractChromatogramDSDReader {
 		ISequenceInformationArrayReader sequenceInformationArrayReader = new SequenceInformationArrayReader(file);
 		sequenceInformationArrayReader.resetPosition();
 		sequenceInformationArrayReader.seek(offsetBases);
-		sequenceInformationArrayReader.readPeakIndices(numberBases);
-		sequenceInformationArrayReader.readProbabilities(numberBases);
-		chromatogram.setMiscInfo(new String(sequenceInformationArrayReader.readBaseCalls(numberBases)));
+		int[] peakIndices = sequenceInformationArrayReader.readPeakIndices(numberBases);
+		Probability probabilities = sequenceInformationArrayReader.readProbabilities(numberBases);
+		char[] baseCalls = sequenceInformationArrayReader.readBaseCalls(numberBases);
 		sequenceInformationArrayReader.readSpares(numberBases);
+
+		StringBuilder nucleotideSequence = new StringBuilder();
+
+		for(int i = 0; i < numberBases; i++) {
+			char letter = baseCalls[i];
+			nucleotideSequence.append(letter);
+
+			int scanNumber = peakIndices[i] + 1;
+			IScanWSD scan = chromatogram.getScan(scanNumber);
+
+			ILibraryInformation libraryInformation = new LibraryInformation();
+			libraryInformation.setName(String.valueOf(letter));
+
+			IComparisonResult comparisonResult = new ComparisonResult( // TODO not the right field
+					probabilities.getAdenine()[i], probabilities.getCytosine()[i], //
+					probabilities.getGuanine()[i], probabilities.getThymine()[i]);
+
+			IIdentificationTarget identificationTarget = new IdentificationTarget(libraryInformation, comparisonResult);
+			identificationTarget.setIdentifier(String.valueOf(letter));
+			scan.getTargets().add(identificationTarget); // TODO add to scan signal rather than total signal
+
+		}
+
+		chromatogram.setMiscInfo(nucleotideSequence.toString()); // TODO
 	}
 
 	private void readComments(File file, IVendorChromatogram chromatogram) throws IOException {

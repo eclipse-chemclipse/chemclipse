@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.time.ZoneId;
 
 import org.eclipse.chemclipse.dsd.converter.chromatogram.ChromatogramConverterDSD;
+import org.eclipse.chemclipse.dsd.model.core.IChromatogramDSD;
+import org.eclipse.chemclipse.model.core.IScan;
+import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.wsd.converter.supplier.scf.SCF;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -57,5 +60,13 @@ public class ABCZ_F_ITest {
 				"TATCGCTACGCGGATTGTTGAACTTGACCGCGGCATTCTACGTTCCTATCCCGGCTCGTTCTCTAAATACAGTGAGAAAAAAGCGCAAGAGTTGGCAGTCAAAAC" + //
 				"C-G-AACAAA----------------------------------------------" + //
 				"T----------------------------------------------------------------------------T", chromatogram.getMiscInfo());
+	}
+
+	@Test
+	public void testTarget() {
+
+		IScan firstScan = chromatogram.getScan(148);
+		IIdentificationTarget identificationTarget = firstScan.getTargets().iterator().next();
+		assertEquals("A", identificationTarget.getLibraryInformation().getName());
 	}
 }

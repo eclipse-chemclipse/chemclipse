@@ -35,6 +35,8 @@ import org.eclipse.chemclipse.converter.methods.MetaProcessorProcessSupplier;
 import org.eclipse.chemclipse.converter.methods.UserMethodProcessSupplier;
 import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
 import org.eclipse.chemclipse.csd.model.core.selection.IChromatogramSelectionCSD;
+import org.eclipse.chemclipse.dsd.model.core.IChromatogramDSD;
+import org.eclipse.chemclipse.dsd.model.core.Nucleobase;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.columns.IRetentionIndexEntry;
 import org.eclipse.chemclipse.model.columns.ISeparationColumn;
@@ -886,13 +888,14 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 
 		addChromatogramData(lineSeriesDataList);
 		addPeakData(lineSeriesDataList, targetDisplaySettings);
-		addIdentifiedScansData(lineSeriesDataList, targetDisplaySettings);
 		addSelectedPeakData(lineSeriesDataList, targetDisplaySettings);
 		addSelectedScanData(lineSeriesDataList);
 		addSelectedIdentifiedScanData(lineSeriesDataList);
 		addBaselineData(lineSeriesDataList);
 
 		addLineSeriesData(lineSeriesDataList);
+
+		addIdentifiedScansData(lineSeriesDataList, targetDisplaySettings);
 	}
 
 	private void addChromatogramData(List<ILineSeriesData> lineSeriesDataList) {
@@ -1068,6 +1071,14 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 				targetReferenceSettings.setBaseChart(baseChart);
 				targetReferenceSettings.setLabel(LABEL_SCAN_TARGETS);
 				targetReferenceSettings.setDescription("Identified Scans");
+				if(baseChart.getSeriesIds().contains(SERIES_ID_CHROMATOGRAM)) {
+					targetReferenceSettings.setReferenceSeriesId(SERIES_ID_CHROMATOGRAM);
+				} else {
+					Optional<String> chromatogramSeriesId = baseChart.getSeriesIds().stream().filter(s -> s.startsWith(SERIES_ID_CHROMATOGRAM)).findFirst();
+					if(chromatogramSeriesId.isPresent()) {
+						targetReferenceSettings.setReferenceSeriesId(chromatogramSeriesId.get());
+					}
+				}
 				TargetReferenceLabelMarker scanLabelMarker = new TargetReferenceLabelMarker(targetReferenceSettings);
 				plotArea.addCustomPaintListener(scanLabelMarker);
 				scanLabelMarkerMap.put(seriesId, scanLabelMarker);
