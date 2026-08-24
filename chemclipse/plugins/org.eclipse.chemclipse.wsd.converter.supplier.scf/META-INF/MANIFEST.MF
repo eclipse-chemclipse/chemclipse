@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Automatic-Module-Name: net.openchrom.wsd.converter.supplier.abif
+Automatic-Module-Name: org.eclipse.chemclipse.wsd.converter.supplier.scf
 Bundle-ManifestVersion: 2
 Bundle-Name: SCF Converter
 Bundle-SymbolicName: org.eclipse.chemclipse.wsd.converter.supplier.scf;singleton:=true
