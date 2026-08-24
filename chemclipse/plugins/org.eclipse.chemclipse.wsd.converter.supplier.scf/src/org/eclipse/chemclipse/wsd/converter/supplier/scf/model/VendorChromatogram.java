@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024, 2025 Lablicate GmbH.
+ * Copyright (c) 2024, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -12,9 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.wsd.converter.supplier.scf.model;
 
-import org.eclipse.chemclipse.wsd.model.core.AbstractChromatogramWSD;
+import org.eclipse.chemclipse.dsd.model.core.AbstractChromatogramDSD;
 
-public class VendorChromatogram extends AbstractChromatogramWSD implements IVendorChromatogram {
+public class VendorChromatogram extends AbstractChromatogramDSD implements IVendorChromatogram {
 
 	private static final long serialVersionUID = 2457872678347226000L;
 

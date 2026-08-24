@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024, 2025 Lablicate GmbH.
+ * Copyright (c) 2024, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -14,7 +14,7 @@ package org.eclipse.chemclipse.wsd.converter.supplier.scf.model;
 
 import org.eclipse.chemclipse.wsd.model.core.AbstractScanSignalWSD;
 
-public class VendorScanSignalDAD extends AbstractScanSignalWSD implements IVendorScanSignalDAD {
+public class VendorScanSignalWSD extends AbstractScanSignalWSD implements IVendorScanSignalWSD {
 
 	private static final long serialVersionUID = -2457872678347226000L;
 }
