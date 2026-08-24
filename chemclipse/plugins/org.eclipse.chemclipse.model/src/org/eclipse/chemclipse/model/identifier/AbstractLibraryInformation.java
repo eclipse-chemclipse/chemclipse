@@ -345,6 +345,7 @@ public abstract class AbstractLibraryInformation implements ILibraryInformation 
 		return hit;
 	}
 
+	@Override
 	public void setHit(String hit) {
 
 		this.hit = hit;

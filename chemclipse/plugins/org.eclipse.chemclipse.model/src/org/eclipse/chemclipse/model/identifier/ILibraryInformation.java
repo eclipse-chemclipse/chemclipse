@@ -177,6 +177,8 @@ public interface ILibraryInformation extends IClassifier, Serializable {
 
 	String getHit();
 
+	void setHit(String hit);
+
 	int getRetentionTime();
 
 	void setRetentionTime(int retentionTime);
