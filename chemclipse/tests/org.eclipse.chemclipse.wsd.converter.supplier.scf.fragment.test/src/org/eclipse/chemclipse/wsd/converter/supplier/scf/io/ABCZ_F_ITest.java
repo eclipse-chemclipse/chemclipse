@@ -16,15 +16,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.File;
-import java.io.IOException;
 import java.time.ZoneId;
 
-import org.eclipse.chemclipse.dsd.converter.chromatogram.ChromatogramConverterDSD;
 import org.eclipse.chemclipse.dsd.model.core.IChromatogramDSD;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
-import org.eclipse.chemclipse.wsd.converter.supplier.scf.SCF;
+import org.eclipse.chemclipse.wsd.converter.supplier.scf.core.ChromatogramImportConverter;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -37,10 +35,11 @@ public class ABCZ_F_ITest {
 	private IChromatogramDSD chromatogram;
 
 	@BeforeAll
-	public void setUp() throws IOException {
+	public void setUp() {
 
-		File fileImport = new File(SCF.TESTFILE_IMPORT_ABCZ_F);
-		IProcessingInfo<IChromatogramDSD> processingInfo = ChromatogramConverterDSD.getInstance().convert(fileImport, SCF.EXTENSION_POINT_ID, new NullProgressMonitor());
+		File fileImport = new File("testdata/abcZ_F.scf");
+		ChromatogramImportConverter chromatogramImportConverter = new ChromatogramImportConverter();
+		IProcessingInfo<IChromatogramDSD> processingInfo = chromatogramImportConverter.convert(fileImport, new NullProgressMonitor());
 		chromatogram = processingInfo.getProcessingResult();
 	}
 
