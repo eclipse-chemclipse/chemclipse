@@ -59,7 +59,7 @@ public class ABCZ_F_ITest {
 				"GACCAACCATTTGGATATTGACGCGATTATCTGGTTGGAAAACCTGCTCAAGGCGTTTGAAGGCAGCTTGGTCGTGATTACCCACGACCGCCGTTTTTTGGATAA" + //
 				"TATCGCTACGCGGATTGTTGAACTTGACCGCGGCATTCTACGTTCCTATCCCGGCTCGTTCTCTAAATACAGTGAGAAAAAAGCGCAAGAGTTGGCAGTCAAAAC" + //
 				"C-G-AACAAA----------------------------------------------" + //
-				"T----------------------------------------------------------------------------T", chromatogram.getMiscInfo());
+				"T----------------------------------------------------------------------------T", chromatogram.getNucleotideSequence());
 	}
 
 	@Test

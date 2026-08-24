@@ -22,6 +22,13 @@ import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 public interface IChromatogramDSD extends IChromatogramWSD {
 
 	/**
+	 * The nucleotide sequence read from a sequencing trace.
+	 */
+	String getNucleotideSequence();
+
+	void setNucleotideSequence(String sequence);
+
+	/**
 	 * Maps nucleotide base to wavelength.
 	 */
 	Map<Float, Nucleobase> getWavelengthMapping();

@@ -20,6 +20,7 @@ import org.eclipse.chemclipse.chromatogram.wsd.identifier.chromatogram.IChromato
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.io.LocalNucleotideBLAST;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.settings.LocalIdentifierSettings;
+import org.eclipse.chemclipse.dsd.model.core.IChromatogramDSD;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.identifier.IChromatogramIdentificationResult;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
@@ -42,7 +43,7 @@ public class ChromatogramIdentifierLocal extends AbstractChromatogramIdentifier 
 					return processingInfo;
 				}
 				try {
-					int identifications = LocalNucleotideBLAST.run(chromatogramSelection.getChromatogram(), settings, monitor);
+					int identifications = LocalNucleotideBLAST.run((IChromatogramDSD)chromatogramSelection.getChromatogram(), settings, monitor);
 					processingInfo.addInfoMessage(DESCRIPTION, identifications + " targets were identified.");
 				} catch(IOException e) {
 					processingInfo.addErrorMessage(DESCRIPTION, e.getMessage());

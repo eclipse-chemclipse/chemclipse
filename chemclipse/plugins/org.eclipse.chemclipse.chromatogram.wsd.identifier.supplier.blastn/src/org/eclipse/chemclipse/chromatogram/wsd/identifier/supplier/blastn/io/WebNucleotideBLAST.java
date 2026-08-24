@@ -33,8 +33,8 @@ import org.apache.hc.core5.http.message.BasicNameValuePair;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.BlastOutput2;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.settings.Task;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.settings.WebIdentifierSettings;
+import org.eclipse.chemclipse.dsd.model.core.IChromatogramDSD;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.core.runtime.IProduct;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Version;
@@ -47,7 +47,7 @@ public class WebNucleotideBLAST extends AbstractNucleotideBLAST {
 
 	private static final Logger logger = Logger.getLogger(WebNucleotideBLAST.class);
 
-	public static int run(IChromatogramWSD chromatogram, WebIdentifierSettings settings) throws IOException, InterruptedException {
+	public static int run(IChromatogramDSD chromatogram, WebIdentifierSettings settings) throws IOException, InterruptedException {
 
 		List<NameValuePair> parameters = buildPostData(settings, getFASTA(chromatogram));
 		try (CloseableHttpClient client = HttpClients.createDefault()) {
@@ -177,10 +177,10 @@ public class WebNucleotideBLAST extends AbstractNucleotideBLAST {
 		return null;
 	}
 
-	private static String getFASTA(IChromatogramWSD chromatogram) {
+	private static String getFASTA(IChromatogramDSD chromatogram) {
 
 		StringBuilder stringBuilder = new StringBuilder("> " + chromatogram.getSampleName() + "\n");
-		stringBuilder.append(chromatogram.getMiscInfo());
+		stringBuilder.append(chromatogram.getNucleotideSequence());
 		return stringBuilder.toString();
 	}
 
