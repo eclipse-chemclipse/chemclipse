@@ -211,7 +211,7 @@ public class ChromatogramReader extends AbstractChromatogramDSDReader {
 
 		}
 
-		chromatogram.setMiscInfo(nucleotideSequence.toString()); // TODO
+		chromatogram.setNucleotideSequence(nucleotideSequence.toString());
 	}
 
 	private void readComments(File file, IVendorChromatogram chromatogram) throws IOException {

@@ -18,6 +18,7 @@ import org.eclipse.chemclipse.chromatogram.wsd.identifier.chromatogram.AbstractC
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.chromatogram.IChromatogramIdentifierSettings;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.io.WebNucleotideBLAST;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.settings.WebIdentifierSettings;
+import org.eclipse.chemclipse.dsd.model.core.IChromatogramDSD;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.identifier.IChromatogramIdentificationResult;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
@@ -36,7 +37,7 @@ public class ChromatogramIdentifierWeb extends AbstractChromatogramIdentifier {
 		if(!processingInfo.hasErrorMessages()) {
 			if(chromatogramIdentifierSettings instanceof WebIdentifierSettings settings) {
 				try {
-					int identifications = WebNucleotideBLAST.run(chromatogramSelection.getChromatogram(), settings);
+					int identifications = WebNucleotideBLAST.run((IChromatogramDSD)chromatogramSelection.getChromatogram(), settings);
 					processingInfo.addInfoMessage(DESCRIPTION, identifications + " targets were identified.");
 				} catch(IOException e) {
 					processingInfo.addErrorMessage(DESCRIPTION, e.getMessage());

@@ -26,8 +26,8 @@ import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.io.Bla
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.BlastOutput2;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.settings.LocalIdentifierSettings;
+import org.eclipse.chemclipse.dsd.model.core.IChromatogramDSD;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -38,7 +38,7 @@ public class LocalNucleotideBLAST extends AbstractNucleotideBLAST {
 
 	private static final Logger logger = Logger.getLogger(LocalNucleotideBLAST.class);
 
-	public static int run(IChromatogramWSD chromatogram, LocalIdentifierSettings settings, IProgressMonitor monitor) throws IOException, InterruptedException {
+	public static int run(IChromatogramDSD chromatogram, LocalIdentifierSettings settings, IProgressMonitor monitor) throws IOException, InterruptedException {
 
 		File fasta = File.createTempFile(chromatogram.getSampleName() + "_", ".fsa");
 		writeFASTA(chromatogram, fasta);
@@ -47,7 +47,7 @@ public class LocalNucleotideBLAST extends AbstractNucleotideBLAST {
 		return numberOfHits;
 	}
 
-	private static int runBLAST(IChromatogramWSD chromatogram, File fasta, File xml, LocalIdentifierSettings settings, IProgressMonitor monitor) throws IOException, InterruptedException {
+	private static int runBLAST(IChromatogramDSD chromatogram, File fasta, File xml, LocalIdentifierSettings settings, IProgressMonitor monitor) throws IOException, InterruptedException {
 
 		int numberOfHits = 0;
 		BlastDatabaseInfo databaseInfo = readDatabaseInfo(settings);
@@ -113,11 +113,11 @@ public class LocalNucleotideBLAST extends AbstractNucleotideBLAST {
 		return processBuilder;
 	}
 
-	private static void writeFASTA(IChromatogramWSD chromatogram, File fasta) throws FileNotFoundException {
+	private static void writeFASTA(IChromatogramDSD chromatogram, File fasta) throws FileNotFoundException {
 
 		try (PrintWriter printWriter = new PrintWriter(fasta)) {
 			printWriter.println("> " + chromatogram.getSampleName());
-			printWriter.println(chromatogram.getMiscInfo());
+			printWriter.println(chromatogram.getNucleotideSequence());
 			printWriter.flush();
 		}
 	}

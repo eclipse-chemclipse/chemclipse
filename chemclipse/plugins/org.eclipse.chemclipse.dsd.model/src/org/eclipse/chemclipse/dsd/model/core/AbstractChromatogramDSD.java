@@ -21,7 +21,20 @@ public abstract class AbstractChromatogramDSD extends AbstractChromatogramWSD im
 
 	private static final long serialVersionUID = 121187623672499533L;
 
+	private String nucleotideSequence = "";
 	private Map<Float, Nucleobase> nucleobasePerWavelength = new HashMap<>();
+
+	@Override
+	public String getNucleotideSequence() {
+
+		return nucleotideSequence;
+	}
+
+	@Override
+	public void setNucleotideSequence(String nucleotideSequence) {
+
+		this.nucleotideSequence = nucleotideSequence;
+	}
 
 	@Override
 	public Map<Float, Nucleobase> getWavelengthMapping() {
