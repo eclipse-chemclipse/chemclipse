@@ -21,4 +21,8 @@ import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
  */
 public interface IChromatogramDSD extends IChromatogramWSD {
 
+	/**
+	 * Maps nucleotide base to wavelength.
+	 */
+	Map<Float, Nucleobase> getWavelengthMapping();
 }

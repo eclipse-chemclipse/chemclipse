@@ -174,6 +174,16 @@ public class Colors {
 			new Color(170, 0, 212) //
 	);
 	/*
+	 * DNA Sequencing
+	 */
+	public static final String COLOR_SCHEME_SEQUENCING = "Sequencing";
+	private static final List<Color> colorsSequencing = List.of( //
+			new Color(0, 175, 0), // Adenine
+			new Color(0, 0, 255), // Cytosine
+			new Color(0, 0, 0), // Guanine
+			new Color(255, 0, 0) // Thymine
+	);
+	/*
 	 *
 	 */
 	public static final String COLOR_SCHEME_UNLIMITED = "Unlimited";
@@ -186,7 +196,7 @@ public class Colors {
 
 	public static String[][] getAvailableColorSchemes() {
 
-		String[][] elements = new String[8][2];
+		String[][] elements = new String[9][2];
 
 		elements[0][0] = COLOR_SCHEME_RED;
 		elements[0][1] = COLOR_SCHEME_RED;
@@ -209,8 +219,11 @@ public class Colors {
 		elements[6][0] = COLOR_SCHEME_GRAYSCALE;
 		elements[6][1] = COLOR_SCHEME_GRAYSCALE;
 
-		elements[7][0] = COLOR_SCHEME_UNLIMITED;
-		elements[7][1] = COLOR_SCHEME_UNLIMITED;
+		elements[7][0] = COLOR_SCHEME_SEQUENCING;
+		elements[7][1] = COLOR_SCHEME_SEQUENCING;
+
+		elements[8][0] = COLOR_SCHEME_UNLIMITED;
+		elements[8][1] = COLOR_SCHEME_UNLIMITED;
 
 		return elements;
 	}
@@ -240,6 +253,9 @@ public class Colors {
 				break;
 			case COLOR_SCHEME_ANALYSIS:
 				colorScheme = new ColorScheme(colorsGradientAnalysis);
+				break;
+			case COLOR_SCHEME_SEQUENCING:
+				colorScheme = new ColorScheme(colorsSequencing);
 				break;
 			case COLOR_SCHEME_NOISE:
 				colorScheme = new ColorScheme(colorsGradientNoise);
