@@ -21,6 +21,8 @@ import java.util.List;
 
 import org.eclipse.chemclipse.csd.converter.chromatogram.ChromatogramConverterCSD;
 import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
+import org.eclipse.chemclipse.dsd.converter.chromatogram.ChromatogramConverterDSD;
+import org.eclipse.chemclipse.dsd.model.core.IChromatogramDSD;
 import org.eclipse.chemclipse.csd.model.core.selection.ChromatogramSelectionCSD;
 import org.eclipse.chemclipse.fsd.converter.chromatogram.ChromatogramConverterFSD;
 import org.eclipse.chemclipse.fsd.model.core.IChromatogramFSD;
@@ -129,6 +131,17 @@ public class ChromatogramImportRunnable implements IRunnableWithProgress {
 						ProcessingInfoPartSupport.getInstance().update(processingInfoWSD);
 						IChromatogramWSD chromatogramWSD = processingInfoWSD.getProcessingResult();
 						chromatogramSelections.add(new ChromatogramSelectionWSD(chromatogramWSD, fireUpdate));
+						break;
+					case DSD:
+						IProcessingInfo<IChromatogramDSD> processingInfoDSD;
+						if(supplierId != null) {
+							processingInfoDSD = ChromatogramConverterDSD.getInstance().convert(file, supplierId, monitor);
+						} else {
+							processingInfoDSD = ChromatogramConverterDSD.getInstance().convert(file, monitor);
+						}
+						ProcessingInfoPartSupport.getInstance().update(processingInfoDSD);
+						IChromatogramDSD chromatogramDSD = processingInfoDSD.getProcessingResult();
+						chromatogramSelections.add(new ChromatogramSelectionWSD(chromatogramDSD, fireUpdate));
 						break;
 					case VSD:
 						IProcessingInfo<IChromatogramVSD> processingInfoVSD;

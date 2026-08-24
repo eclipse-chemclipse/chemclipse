@@ -19,6 +19,7 @@ import org.eclipse.chemclipse.converter.methods.MethodConverter;
 import org.eclipse.chemclipse.converter.quantitation.QuantDBConverter;
 import org.eclipse.chemclipse.converter.sequence.SequenceConverter;
 import org.eclipse.chemclipse.csd.converter.chromatogram.ChromatogramConverterCSD;
+import org.eclipse.chemclipse.dsd.converter.chromatogram.ChromatogramConverterDSD;
 import org.eclipse.chemclipse.fsd.converter.chromatogram.ChromatogramConverterFSD;
 import org.eclipse.chemclipse.model.types.DataType;
 import org.eclipse.chemclipse.msd.converter.chromatogram.ChromatogramConverterMSD;
@@ -47,6 +48,7 @@ public class SupplierFileIdentifier extends AbstractSupplierFileIdentifier {
 			case MSD_NOMINAL, MSD_TANDEM, MSD_HIGHRES, MSD -> ChromatogramConverterMSD.getInstance().getChromatogramConverterSupport().getSupplier();
 			case CSD -> ChromatogramConverterCSD.getInstance().getChromatogramConverterSupport().getSupplier();
 			case WSD -> ChromatogramConverterWSD.getInstance().getChromatogramConverterSupport().getSupplier();
+			case DSD -> ChromatogramConverterDSD.getInstance().getChromatogramConverterSupport().getSupplier();
 			case VSD -> ChromatogramConverterVSD.getInstance().getChromatogramConverterSupport().getSupplier();
 			case FSD -> ChromatogramConverterFSD.getInstance().getChromatogramConverterSupport().getSupplier();
 			case SCAN_VSD -> ScanConverterVSD.getScanConverterSupport().getSupplier();
@@ -68,6 +70,7 @@ public class SupplierFileIdentifier extends AbstractSupplierFileIdentifier {
 			case CSD -> TYPE_CSD;
 			case FSD -> TYPE_FSD;
 			case WSD -> TYPE_WSD;
+			case DSD -> TYPE_DSD;
 			case SCAN_WSD -> TYPE_SCAN_WSD;
 			case VSD -> TYPE_VSD;
 			case SCAN_VSD -> TYPE_SCAN_VSD;

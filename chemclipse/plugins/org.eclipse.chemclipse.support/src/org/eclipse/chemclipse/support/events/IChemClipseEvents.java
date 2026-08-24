@@ -23,6 +23,7 @@ public interface IChemClipseEvents {
 	String TOPIC_CHROMATOGRAM_MSD_UPDATE_RAWFILE = "chromatogram/msd/update/rawfile";
 	String TOPIC_CHROMATOGRAM_CSD_UPDATE_RAWFILE = "chromatogram/csd/update/rawfile";
 	String TOPIC_CHROMATOGRAM_WSD_UPDATE_RAWFILE = "chromatogram/wsd/update/rawfile";
+	String TOPIC_CHROMATOGRAM_DSD_UPDATE_RAWFILE = "chromatogram/dsd/update/rawfile";
 	String TOPIC_CHROMATOGRAM_VSD_UPDATE_RAWFILE = "chromatogram/vsd/update/rawfile";
 	String TOPIC_CHROMATOGRAM_TSD_UPDATE_RAWFILE = "chromatogram/tsd/update/rawfile";
 	String TOPIC_CHROMATOGRAM_FSD_UPDATE_RAWFILE = "chromatogram/fsd/update/rawfile";
@@ -40,6 +41,7 @@ public interface IChemClipseEvents {
 	String TOPIC_CHROMATOGRAM_MSD_UPDATE_OVERVIEW = "chromatogram/msd/update/overview";
 	String TOPIC_CHROMATOGRAM_CSD_UPDATE_OVERVIEW = "chromatogram/csd/update/overview";
 	String TOPIC_CHROMATOGRAM_WSD_UPDATE_OVERVIEW = "chromatogram/wsd/update/overview";
+	String TOPIC_CHROMATOGRAM_DSD_UPDATE_OVERVIEW = "chromatogram/dsd/update/overview";
 	String TOPIC_CHROMATOGRAM_VSD_UPDATE_OVERVIEW = "chromatogram/isd/update/overview";
 	String TOPIC_CHROMATOGRAM_TSD_UPDATE_OVERVIEW = "chromatogram/tsd/update/overview";
 	String TOPIC_CHROMATOGRAM_FSD_UPDATE_OVERVIEW = "chromatogram/fsd/update/overview";
@@ -127,6 +129,7 @@ public interface IChemClipseEvents {
 	String TOPIC_EDITOR_NMR_CLOSE = "editor/nmr/close";
 	String TOPIC_EDITOR_VSD_CLOSE = "editor/vsd/close";
 	String TOPIC_EDITOR_WSD_CLOSE = "editor/wsd/close";
+	String TOPIC_EDITOR_DSD_CLOSE = "editor/dsd/close";
 	String TOPIC_EDITOR_FSD_CLOSE = "editor/fsd/close";
 	String TOPIC_EDITOR_PCA_CLOSE = "editor/pca/close";
 

@@ -749,6 +749,8 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final boolean DEF_SHOW_DATA_CSD = true;
 	public static final String P_SHOW_DATA_WSD = "showDataWSD";
 	public static final boolean DEF_SHOW_DATA_WSD = true;
+	public static final String P_SHOW_DATA_DSD = "showDataDSD";
+	public static final boolean DEF_SHOW_DATA_DSD = true;
 	public static final String P_SHOW_DATA_VSD = "showDataVSD";
 	public static final boolean DEF_SHOW_DATA_VSD = true;
 	public static final String P_SHOW_DATA_TSD = "showDataTSD";
@@ -857,6 +859,8 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final String DEF_FILTER_PATH_CHROMATOGRAM_CSD = "";
 	public static final String P_FILTER_PATH_CHROMATOGRAM_WSD = "filterPathChromatogramWSD";
 	public static final String DEF_FILTER_PATH_CHROMATOGRAM_WSD = "";
+	public static final String P_FILTER_PATH_CHROMATOGRAM_DSD = "filterPathChromatogramDSD";
+	public static final String DEF_FILTER_PATH_CHROMATOGRAM_DSD = "";
 	public static final String P_FILTER_PATH_CHROMATOGRAM_FSD = "filterPathChromatogramFSD";
 	public static final String DEF_FILTER_PATH_CHROMATOGRAM_FSD = "";
 	public static final String P_FILTER_PATH_RETENTION_INDICES = "filterPathRetentionIndices";
@@ -1094,6 +1098,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		putDefault(P_SHOW_DATA_MSD, DEF_SHOW_DATA_MSD);
 		putDefault(P_SHOW_DATA_CSD, DEF_SHOW_DATA_CSD);
 		putDefault(P_SHOW_DATA_WSD, DEF_SHOW_DATA_WSD);
+		putDefault(P_SHOW_DATA_DSD, DEF_SHOW_DATA_DSD);
 		putDefault(P_SHOW_DATA_VSD, DEF_SHOW_DATA_VSD);
 		putDefault(P_SHOW_DATA_TSD, DEF_SHOW_DATA_TSD);
 		putDefault(P_SHOW_DATA_FSD, DEF_SHOW_DATA_FSD);
@@ -1152,6 +1157,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		putDefault(P_FILTER_PATH_CHROMATOGRAM_MSD, DEF_FILTER_PATH_CHROMATOGRAM_MSD);
 		putDefault(P_FILTER_PATH_CHROMATOGRAM_CSD, DEF_FILTER_PATH_CHROMATOGRAM_CSD);
 		putDefault(P_FILTER_PATH_CHROMATOGRAM_WSD, DEF_FILTER_PATH_CHROMATOGRAM_WSD);
+		putDefault(P_FILTER_PATH_CHROMATOGRAM_DSD, DEF_FILTER_PATH_CHROMATOGRAM_DSD);
 		putDefault(P_FILTER_PATH_RETENTION_INDICES, DEF_FILTER_PATH_RETENTION_INDICES);
 
 		putDefault(P_LIST_PATH_IMPORT, DEF_LIST_PATH_IMPORT);

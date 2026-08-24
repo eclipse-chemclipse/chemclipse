@@ -19,6 +19,8 @@ import java.util.List;
 
 import org.eclipse.chemclipse.csd.converter.chromatogram.ChromatogramConverterCSD;
 import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
+import org.eclipse.chemclipse.dsd.converter.chromatogram.ChromatogramConverterDSD;
+import org.eclipse.chemclipse.dsd.model.core.IChromatogramDSD;
 import org.eclipse.chemclipse.csd.model.core.selection.ChromatogramSelectionCSD;
 import org.eclipse.chemclipse.fsd.converter.chromatogram.ChromatogramConverterFSD;
 import org.eclipse.chemclipse.fsd.model.core.IChromatogramFSD;
@@ -82,6 +84,11 @@ public class ChromatogramTypeSupport {
 					IChromatogramWSD chromatogramWSD = processingInfoWSD.getProcessingResult();
 					chromatogramSelection = new ChromatogramSelectionWSD(chromatogramWSD, fireUpdate);
 					break;
+				case DSD:
+					IProcessingInfo<IChromatogramDSD> processingInfoDSD = ChromatogramConverterDSD.getInstance().convert(file, monitor);
+					IChromatogramDSD chromatogramDSD = processingInfoDSD.getProcessingResult();
+					chromatogramSelection = new ChromatogramSelectionWSD(chromatogramDSD, fireUpdate);
+					break;
 				case FSD:
 					IProcessingInfo<IChromatogramFSD> processingInfoFSD = ChromatogramConverterFSD.getInstance().convert(file, monitor);
 					IChromatogramFSD chromatogramFSD = processingInfoFSD.getProcessingResult();
@@ -129,6 +136,7 @@ public class ChromatogramTypeSupport {
 			case ISupplierFileIdentifier.TYPE_MSD -> DataType.MSD;
 			case ISupplierFileIdentifier.TYPE_CSD -> DataType.CSD;
 			case ISupplierFileIdentifier.TYPE_WSD -> DataType.WSD;
+			case ISupplierFileIdentifier.TYPE_DSD -> DataType.DSD;
 			case ISupplierFileIdentifier.TYPE_VSD -> DataType.VSD;
 			case ISupplierFileIdentifier.TYPE_FSD -> DataType.FSD;
 			default -> null;
