@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023, 2025 Lablicate GmbH.
+ * Copyright (c) 2023, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -46,6 +46,12 @@ public final class ComparisonResultFinal extends ComparisonResult {
 
 	@Override
 	public void addPenalty(float penalty) {
+
+		// No action
+	}
+
+	@Override
+	public void setMetric(String metricId, double value) {
 
 		// No action
 	}

@@ -1,14 +1,15 @@
 /*******************************************************************************
- * Copyright (c) 2023, 2025 Lablicate GmbH.
+ * Copyright (c) 2023, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
+ * Matthias Mailänder - rate by score instead of by status
  *******************************************************************************/
 package org.eclipse.chemclipse.model.identifier;
 
@@ -16,10 +17,6 @@ public abstract class AbstractComparisonRatingSupplier implements IRatingSupplie
 
 	private static final long serialVersionUID = -4927422343294543420L;
 
-	private static final float RATING_VERY_GOOD = 90.0f;
-	private static final float RATING_GOOD = 80.0f;
-	private static final float RATING_AVERAGE = 70.0f;
-	private static final float RATING_BAD = 60.0f;
 	/*
 	 * By default, the no match result is set.
 	 * The comparison result can be updated via the method.
@@ -27,24 +24,9 @@ public abstract class AbstractComparisonRatingSupplier implements IRatingSupplie
 	private IComparisonResult comparisonResult = ComparisonResult.COMPARISON_RESULT_NO_MATCH;
 
 	@Override
-	public RatingStatus getStatus() {
+	public String getAdvise() {
 
-		float rating = getScore();
-		RatingStatus ratingScheme;
-
-		if(rating >= RATING_VERY_GOOD) {
-			ratingScheme = RatingStatus.VERY_GOOD;
-		} else if(rating >= RATING_GOOD) {
-			ratingScheme = RatingStatus.GOOD;
-		} else if(rating >= RATING_AVERAGE) {
-			ratingScheme = RatingStatus.AVERAGE;
-		} else if(rating >= RATING_BAD) {
-			ratingScheme = RatingStatus.BAD;
-		} else {
-			ratingScheme = RatingStatus.VERY_BAD;
-		}
-
-		return ratingScheme;
+		return "";
 	}
 
 	@Override

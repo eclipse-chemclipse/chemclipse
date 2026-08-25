@@ -62,7 +62,10 @@ public class FileIdentifier {
 
 	public static final String IDENTIFIER = "File Identifier";
 
-	private static final Comparator<IComparisonResult> RESULT_COMPARATOR = Collections.reverseOrder(IComparisonResult.MATCH_FACTOR_COMPARATOR);
+	// TODO: Use {@link #SCORE_COMPARATOR} instead
+	static Comparator<IComparisonResult> MATCH_FACTOR_COMPARATOR = (o1, o2) -> Float.compare(o1.getMatchFactor(), o2.getMatchFactor());
+
+	private static final Comparator<IComparisonResult> RESULT_COMPARATOR = Collections.reverseOrder(MATCH_FACTOR_COMPARATOR);
 	private static final TargetBuilderMSD TARGETBUILDER = new TargetBuilderMSD();
 
 	private final DatabasesCache databasesCache = new DatabasesCache(PreferenceSupplier.getMassSpectraFiles());

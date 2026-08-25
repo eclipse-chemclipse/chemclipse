@@ -1,65 +1,135 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2025 Lablicate GmbH.
+ * Copyright (c) 2010, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Alexander Kerner - implementation
  * Christoph Läubrich - getPenalty and Matchfactors should be accessed by getters and not direct field access
+ * Matthias Mailänder - store the values as metrics of an identification algorithm
  *******************************************************************************/
 package org.eclipse.chemclipse.model.identifier;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.OptionalDouble;
+
 public abstract class AbstractComparisonResult implements IComparisonResult {
 
-	private static final long serialVersionUID = 1295884624032029498L;
+	/**
+	 * Renew the UUID on change.
+	 */
+	private static final long serialVersionUID = 7748523860423928004L;
 
+	private final String algorithmId;
+	private final Map<String, Double> metrics = new LinkedHashMap<>();
 	private boolean isMatch = false;
-	private float matchFactor = 0.0f;
-	private float matchFactorDirect = 0.0f;
-	private float reverseMatchFactor = 0.0f;
-	private float reverseMatchFactorDirect = 0.0f;
-	private float probability = 0.0f;
-	private float inLibFactor = 0.0f;
 	private float penalty = 0.0f;
 	/*
-	 * It's not planned to allow setting a specific
-	 * rating due to the reason, that the values of
-	 * the target/comparison result are saved e.g.
-	 * in the Open Chromatography Binary (*.ocb), but
-	 * the rating supplier with its algorithm is not.
-	 * Hence, when loading a file again, the default
-	 * rating supplier calculates the score and might
-	 * lead to an inconsistent status.
+	 * The rating supplier is resolved from the algorithm id and is therefore
+	 * not part of the serialized state. Only the algorithm id is stored, so
+	 * that a result which is loaded again is rated by the algorithm that has
+	 * created it and not by the default rating supplier.
 	 */
-	private IRatingSupplier ratingSupplier = new RatingSupplier(this);
+	private transient IRatingSupplier ratingSupplier = null;
 
-	public AbstractComparisonResult(float matchFactor) {
+	/**
+	 * Creates a result of the given identification algorithm without any
+	 * metric. The algorithm sets its metrics via
+	 * {@link #setMetric(String, double)}.
+	 *
+	 * @param algorithmId
+	 */
+	protected AbstractComparisonResult(String algorithmId) {
+
+		this.algorithmId = (algorithmId != null && !algorithmId.isEmpty()) ? algorithmId : ComparisonMetrics.ALGORITHM_CLASSIC;
+	}
+
+	protected AbstractComparisonResult(float matchFactor) {
 
 		this(matchFactor, matchFactor, matchFactor, matchFactor);
 	}
 
-	public AbstractComparisonResult(float matchFactor, float reverseMatchFactor, float matchFactorDirect, float reverseMatchFactorDirect) {
+	protected AbstractComparisonResult(float matchFactor, float reverseMatchFactor, float matchFactorDirect, float reverseMatchFactorDirect) {
 
 		this(matchFactor, reverseMatchFactor, matchFactorDirect, reverseMatchFactorDirect, MAX_ALLOWED_PROBABILITY);
 	}
 
-	public AbstractComparisonResult(float matchFactor, float reverseMatchFactor, float matchFactorDirect, float reverseMatchFactorDirect, float probability) {
+	protected AbstractComparisonResult(float matchFactor, float reverseMatchFactor, float matchFactorDirect, float reverseMatchFactorDirect, float probability) {
 
-		this.matchFactor = matchFactor;
-		this.reverseMatchFactor = reverseMatchFactor;
-		this.matchFactorDirect = matchFactorDirect;
-		this.reverseMatchFactorDirect = reverseMatchFactorDirect;
+		this(ComparisonMetrics.ALGORITHM_CLASSIC);
+		putMetric(ComparisonMetrics.MATCH_FACTOR, matchFactor);
+		putMetric(ComparisonMetrics.REVERSE_MATCH_FACTOR, reverseMatchFactor);
+		putMetric(ComparisonMetrics.MATCH_FACTOR_DIRECT, matchFactorDirect);
+		putMetric(ComparisonMetrics.REVERSE_MATCH_FACTOR_DIRECT, reverseMatchFactorDirect);
 		setProbability(probability);
+		putMetric(ComparisonMetrics.IN_LIB_FACTOR, 0.0d);
 	}
 
-	public AbstractComparisonResult(IComparisonResult comparisonResult) {
+	protected AbstractComparisonResult(IComparisonResult comparisonResult) {
 
-		this(comparisonResult.getMatchFactor(), comparisonResult.getReverseMatchFactor(), comparisonResult.getMatchFactorDirect(), comparisonResult.getReverseMatchFactorDirect());
+		this(comparisonResult.getAlgorithmId());
+		metrics.putAll(comparisonResult.getMetricValues());
+		this.penalty = comparisonResult.getPenalty();
+	}
+
+	@Override
+	public String getAlgorithmId() {
+
+		return algorithmId;
+	}
+
+	@Override
+	public List<IComparisonMetric> getMetrics() {
+
+		List<IComparisonMetric> comparisonMetrics = new ArrayList<>();
+		for(String metricId : metrics.keySet()) {
+			comparisonMetrics.add(ComparisonMetricRegistry.getMetric(algorithmId, metricId));
+		}
+
+		return Collections.unmodifiableList(comparisonMetrics);
+	}
+
+	@Override
+	public Map<String, Double> getMetricValues() {
+
+		return Collections.unmodifiableMap(metrics);
+	}
+
+	@Override
+	public OptionalDouble getMetric(String metricId) {
+
+		OptionalDouble value = getMetricNotAdjusted(metricId);
+		if(value.isEmpty()) {
+			return value;
+		}
+
+		if(ComparisonMetricRegistry.getMetric(algorithmId, metricId).isPenaltyApplicable()) {
+			return OptionalDouble.of(Math.max(0.0d, value.getAsDouble() - getPenalty()));
+		}
+
+		return value;
+	}
+
+	@Override
+	public OptionalDouble getMetricNotAdjusted(String metricId) {
+
+		Double value = metrics.get(metricId);
+		return value != null ? OptionalDouble.of(value.doubleValue()) : OptionalDouble.empty();
+	}
+
+	@Override
+	public void setMetric(String metricId, double value) {
+
+		putMetric(metricId, value);
 	}
 
 	@Override
@@ -125,13 +195,13 @@ public abstract class AbstractComparisonResult implements IComparisonResult {
 	@Override
 	public float getMatchFactorNotAdjusted() {
 
-		return matchFactor;
+		return getMetricValue(ComparisonMetrics.MATCH_FACTOR);
 	}
 
 	@Override
 	public float getMatchFactorDirectNotAdjusted() {
 
-		return matchFactorDirect;
+		return getMetricValue(ComparisonMetrics.MATCH_FACTOR_DIRECT);
 	}
 
 	@Override
@@ -149,35 +219,40 @@ public abstract class AbstractComparisonResult implements IComparisonResult {
 	@Override
 	public float getReverseMatchFactorNotAdjusted() {
 
-		return reverseMatchFactor;
+		return getMetricValue(ComparisonMetrics.REVERSE_MATCH_FACTOR);
 	}
 
 	@Override
 	public float getReverseMatchFactorDirectNotAdjusted() {
 
-		return reverseMatchFactorDirect;
+		return getMetricValue(ComparisonMetrics.REVERSE_MATCH_FACTOR_DIRECT);
 	}
 
 	@Override
 	public float getProbability() {
 
-		return probability;
+		return getMetricValue(ComparisonMetrics.PROBABILITY);
 	}
 
 	@Override
 	public float getInLibFactor() {
 
-		return inLibFactor;
+		return getMetricValue(ComparisonMetrics.IN_LIB_FACTOR);
 	}
 
 	@Override
 	public void setInLibFactor(float inLibFactor) {
 
-		this.inLibFactor = inLibFactor;
+		setMetric(ComparisonMetrics.IN_LIB_FACTOR, inLibFactor);
 	}
 
 	@Override
 	public IRatingSupplier getRatingSupplier() {
+
+		if(ratingSupplier == null) {
+			ratingSupplier = ComparisonMetricRegistry.createRatingSupplier(algorithmId);
+			ratingSupplier.updateComparisonResult(this);
+		}
 
 		return ratingSupplier;
 	}
@@ -197,46 +272,49 @@ public abstract class AbstractComparisonResult implements IComparisonResult {
 
 		int result = Boolean.compare(this.isMatch(), comparisonResult.isMatch());
 		if(result == 0) {
-			result = Float.compare(this.getMatchFactor(), comparisonResult.getMatchFactor());
+			result = Float.compare(IComparisonResult.getScore(this), IComparisonResult.getScore(comparisonResult));
 		}
-		if(result == 0) {
-			result = Float.compare(this.getReverseMatchFactor(), comparisonResult.getReverseMatchFactor());
-		}
-		if(result == 0) {
-			result = Float.compare(this.getMatchFactorDirect(), comparisonResult.getMatchFactorDirect());
-		}
-		if(result == 0) {
-			result = Float.compare(this.getReverseMatchFactorDirect(), comparisonResult.getReverseMatchFactorDirect());
-		}
+
 		return result;
 	}
 
 	protected void setMatchFactor(float matchFactor) {
 
-		this.matchFactor = matchFactor;
+		putMetric(ComparisonMetrics.MATCH_FACTOR, matchFactor);
 	}
 
 	protected void setMatchFactorDirect(float matchFactorDirect) {
 
-		this.matchFactorDirect = matchFactorDirect;
+		putMetric(ComparisonMetrics.MATCH_FACTOR_DIRECT, matchFactorDirect);
 	}
 
 	protected void setReverseMatchFactor(float reverseMatchFactor) {
 
-		this.reverseMatchFactor = reverseMatchFactor;
+		putMetric(ComparisonMetrics.REVERSE_MATCH_FACTOR, reverseMatchFactor);
 	}
 
 	protected void setReverseMatchFactorDirect(float reverseMatchFactorDirect) {
 
-		this.reverseMatchFactorDirect = reverseMatchFactorDirect;
+		putMetric(ComparisonMetrics.REVERSE_MATCH_FACTOR_DIRECT, reverseMatchFactorDirect);
+	}
+
+	private float getMetricValue(String metricId) {
+
+		Double value = metrics.get(metricId);
+		return value != null ? value.floatValue() : 0.0f;
+	}
+
+	private void putMetric(String metricId, double value) {
+
+		metrics.put(metricId, Double.valueOf(value));
 	}
 
 	private void setProbability(float probability) {
 
 		if(probability >= MIN_ALLOWED_PROBABILITY && probability <= MAX_ALLOWED_PROBABILITY) {
-			this.probability = probability;
+			putMetric(ComparisonMetrics.PROBABILITY, probability);
 		} else {
-			this.probability = 0.0f;
+			putMetric(ComparisonMetrics.PROBABILITY, 0.0d);
 		}
 	}
 }

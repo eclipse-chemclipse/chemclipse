@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2025 Lablicate GmbH.
+ * Copyright (c) 2012, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -18,10 +18,10 @@ import java.text.DecimalFormat;
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
-import org.eclipse.chemclipse.model.identifier.IRatingSupplier;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
+import org.eclipse.chemclipse.rcp.ui.icons.core.RatingImageSupport;
 import org.eclipse.chemclipse.support.ui.provider.AbstractChemClipseLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
@@ -105,30 +105,7 @@ public class TargetsLabelProvider extends AbstractChemClipseLabelProvider {
 			 */
 			if(element instanceof IIdentificationTarget identificationTarget) {
 				IComparisonResult comparisonResult = identificationTarget.getComparisonResult();
-				IRatingSupplier ratingSupplier = comparisonResult.getRatingSupplier();
-
-				String fileName;
-				switch(ratingSupplier.getStatus()) {
-					case VERY_GOOD:
-						fileName = IApplicationImage.IMAGE_RATING_VERY_GOOD;
-						break;
-					case GOOD:
-						fileName = IApplicationImage.IMAGE_RATING_GOOD;
-						break;
-					case AVERAGE:
-						fileName = IApplicationImage.IMAGE_RATING_AVERAGE;
-						break;
-					case BAD:
-						fileName = IApplicationImage.IMAGE_RATING_BAD;
-						break;
-					case VERY_BAD:
-						fileName = IApplicationImage.IMAGE_RATING_VERY_BAD;
-						break;
-					default:
-						fileName = "";
-						break;
-				}
-
+				String fileName = RatingImageSupport.getImageName(comparisonResult.getRatingSupplier().getScore());
 				if(!fileName.isEmpty()) {
 					return ApplicationImageFactory.getInstance().getImage(fileName, IApplicationImageProvider.SIZE_16x16);
 				}
