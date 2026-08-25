@@ -21,4 +21,54 @@
             identifierSettings="org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.settings.WebIdentifierSettings">
       </ChromatogramIdentificationSupplier>
    </extension>
+   <extension
+         point="org.eclipse.chemclipse.model.comparisonMetrics">
+      <Algorithm
+            id="blastn"
+            label="Nucleotide BLAST"
+            ratingSupplier="org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.BlastRatingSupplierFactory">
+         <Metric
+               id="blast.identity"
+               label="Identity [%]"
+               description="Percentage of identical bases within the aligned region."
+               format="0.0"
+               order="descending">
+         </Metric>
+         <Metric
+               id="blast.coverage"
+               label="Query Coverage [%]"
+               description="How much of the query sequence is covered by alignment segments."
+               format="0.0"
+               order="descending">
+         </Metric>
+         <Metric
+               id="blast.evalue"
+               label="E-Value"
+               description="Number of alignments of this quality expected by chance. The lower the better."
+               format="0.###E0"
+               order="ascending">
+         </Metric>
+         <Metric
+               id="blast.bitScore"
+               label="Bit Score"
+               description="Normalized alignment score, independent of the size of the database."
+               format="0.0"
+               order="descending">
+         </Metric>
+         <Metric
+               id="blast.score"
+               label="Score"
+               description="Raw alignment score."
+               format="0.0"
+               order="descending">
+         </Metric>
+         <Metric
+               id="blast.gaps"
+               label="Gaps"
+               description="Number of gaps within the aligned region. The lower the better."
+               format="0"
+               order="ascending">
+         </Metric>
+      </Algorithm>
+   </extension>
 </plugin>
