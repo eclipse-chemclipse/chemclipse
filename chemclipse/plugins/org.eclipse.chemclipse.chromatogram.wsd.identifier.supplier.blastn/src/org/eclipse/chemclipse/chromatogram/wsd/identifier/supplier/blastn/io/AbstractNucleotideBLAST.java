@@ -12,11 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.io;
 
+import java.math.BigInteger;
+
+import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.BlastMetrics;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.BlastOutput2;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.Hit;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.HitDescr;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.Hsp;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.Report;
+import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.Search;
 import org.eclipse.chemclipse.model.identifier.ComparisonResult;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.identifier.LibraryInformation;
@@ -32,7 +36,8 @@ public abstract class AbstractNucleotideBLAST {
 		}
 
 		Report report = blastOutput.getReport().getReport();
-		for(Hit hit : report.getResults().getResults().getSearch().getSearch().getHits().getHit()) {
+		Search search = report.getResults().getResults().getSearch().getSearch();
+		for(Hit hit : search.getHits().getHit()) {
 			ILibraryInformation libraryInformation = new LibraryInformation();
 			HitDescr description = hit.getDescription().getHitDescr().getFirst();
 			libraryInformation.setName(description.getTitle());
@@ -41,11 +46,61 @@ public abstract class AbstractNucleotideBLAST {
 			libraryInformation.setReferenceIdentifier(description.getId());
 			libraryInformation.setTaxonomyIdentifierNCBI(description.getTaxid().intValue());
 			for(Hsp hsp : hit.getHsps().getHsp()) {
-				ComparisonResult comparisionResult = new ComparisonResult((float)hsp.getBitScore(), (float)hsp.getScore(), (float)hsp.getEvalue(), hsp.getIdentity().floatValue()); // TODO: wrong model
-				IdentificationTarget identificationTarget = new IdentificationTarget(libraryInformation, comparisionResult);
+				IdentificationTarget identificationTarget = new IdentificationTarget(libraryInformation, createComparisonResult(hsp, search));
 				identificationTarget.setIdentifier(report.getVersion());
 				chromatogram.getTargets().add(identificationTarget);
 			}
 		}
+	}
+
+	private static ComparisonResult createComparisonResult(Hsp hsp, Search search) {
+
+		ComparisonResult comparisonResult = new ComparisonResult(BlastMetrics.ALGORITHM_BLASTN);
+		comparisonResult.setMetric(BlastMetrics.IDENTITY, getPercentIdentity(hsp));
+		comparisonResult.setMetric(BlastMetrics.COVERAGE, getQueryCoverage(hsp, search));
+		comparisonResult.setMetric(BlastMetrics.EVALUE, hsp.getEvalue());
+		comparisonResult.setMetric(BlastMetrics.BIT_SCORE, hsp.getBitScore());
+		comparisonResult.setMetric(BlastMetrics.SCORE, hsp.getScore());
+		if(hsp.getGaps() != null) {
+			comparisonResult.setMetric(BlastMetrics.GAPS, hsp.getGaps().doubleValue());
+		}
+
+		return comparisonResult;
+	}
+
+	/**
+	 * How many aligned positions are identical?
+	 */
+	private static double getPercentIdentity(Hsp hsp) {
+
+		BigInteger identity = hsp.getIdentity();
+		BigInteger alignLength = hsp.getAlignLen();
+		if(identity == null || alignLength == null || alignLength.signum() <= 0) {
+			return 0.0d;
+		}
+
+		return 100.0d * identity.doubleValue() / alignLength.doubleValue();
+	}
+
+	/**
+	 * Percentage of the query sequence that is included
+	 * in the alignment to the subject sequence
+	 */
+	private static double getQueryCoverage(Hsp hsp, Search search) {
+
+		if(hsp == null || search.getQueryLen() == null || search.getQueryLen().intValue() <= 0) {
+			return 0.0d;
+		}
+
+		BigInteger queryFrom = hsp.getQueryFrom();
+		BigInteger queryTo = hsp.getQueryTo();
+
+		if(queryFrom == null || queryTo == null) {
+			return 0.0d;
+		}
+
+		int covered = Math.abs(queryTo.intValue() - queryFrom.intValue()) + 1;
+
+		return 100.0d * covered / search.getQueryLen().intValue();
 	}
 }
