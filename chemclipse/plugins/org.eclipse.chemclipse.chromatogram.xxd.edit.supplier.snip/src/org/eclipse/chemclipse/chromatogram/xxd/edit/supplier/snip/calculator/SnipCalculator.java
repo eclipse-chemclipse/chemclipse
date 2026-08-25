@@ -16,19 +16,19 @@ package org.eclipse.chemclipse.chromatogram.xxd.edit.supplier.snip.calculator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 
+/**
+ * SNIP: Statistics-sensitive Non-linear Iterative Peak-clipping
+ * 
+ * as described in
+ * 
+ * C.G. Ryan, E. Clayton, W.L. Griffin, S.H. Sie, D.R. Cousens
+ * SNIP, a statistics-sensitive background treatment for the quantitative analysis of PIXE spectra in geoscience applications
+ * http://dx.doi.org/10.1016/0168-583X(88)90063-8
+ */
 public class SnipCalculator {
 
 	/**
 	 * Calculates the intensity values.
-	 * C.G. Ryan, E. Clayton, W.L. Griffin, S.H. Sie, D.R. Cousens
-	 * SNIP, a statistics-sensitive background treatment for the quantitative analysis of PIXE spectra in geoscience applications
-	 * http://dx.doi.org/10.1016/0168-583X(88)90063-8
-	 * 
-	 * SNIP: Statistics-sensitive Non-linear Iterative Peak-clipping
-	 * 
-	 * @param intensityValues
-	 * @param iterations
-	 * @return float[]
 	 */
 	public static float[] calculateBaselineIntensityValues(float[] intensityValues, int iterations) {
 
@@ -52,9 +52,6 @@ public class SnipCalculator {
 
 	/**
 	 * Calculates the intensity values.
-	 * C.G. Ryan, E. Clayton, W.L. Griffin, S.H. Sie, D.R. Cousens
-	 * SNIP, a statistics-sensitive background treatment for the quantitative analysis of PIXE spectra in geoscience applications
-	 * http://dx.doi.org/10.1016/0168-583X(88)90063-8
 	 * 
 	 * @param intensityValues
 	 *            the intensity values to perform the baseline operation to
