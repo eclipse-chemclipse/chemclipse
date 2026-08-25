@@ -1,0 +1,29 @@
+
+
+
+
+
+TY  - JOUR
+T1  - Morphology-Based Automated Baseline Removal for Raman Spectra of Artistic Pigments
+AU  - Perez-Pueyo, Rosanna
+AU  - Soneira, Maria Jose
+AU  - Ruiz-Moreno, Sergio
+Y1  - 2010/06/01
+PY  - 2010
+DA  - 2010/06/01
+N1  - doi: 10.1366/000370210791414281
+DO  - 10.1366/000370210791414281
+T2  - Applied Spectroscopy
+JF  - Applied Spectroscopy
+JO  - Appl Spectrosc
+SP  - 595
+EP  - 600
+VL  - 64
+IS  - 6
+PB  - SAGE Publications Ltd STM
+N2  - The interpretation of a Raman spectrum is based on the identification of its characteristic molecular bands. However, the assignment of the vibrational modes is often compromised by the presence in the spectrum of an intense fluorescence background that covers the measured spectra. Several techniques have been employed to minimize the presence of this fluorescence in order to resolve and analyze Raman spectra. In this paper a new automated method for fluorescence subtraction is described, based on morphology operations. This method is compared with the most commonly used polynomial fitting methods. Results indicate that the proposed automated method is efficient in fluorescence subtraction and retains the line shapes and positions of the Raman bands in the spectra.
+SN  - 0003-7028
+M3  - doi: 10.1366/000370210791414281
+UR  - https://doi.org/10.1366/000370210791414281
+Y2  - 2026/08/25
+ER  - 
