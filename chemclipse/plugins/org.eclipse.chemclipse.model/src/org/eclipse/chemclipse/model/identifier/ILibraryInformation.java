@@ -14,12 +14,11 @@
 package org.eclipse.chemclipse.model.identifier;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.chemclipse.model.core.IClassifier;
 
-public interface ILibraryInformation extends IClassifier, Serializable {
+public interface ILibraryInformation extends IClassifier, Serializable, ILibraryInformationChemical, ILibraryInformationFlavor, ILibraryInformationChromatography {
 
 	/**
 	 * Returns the name of the library mass spectrum.
@@ -41,89 +40,6 @@ public interface ILibraryInformation extends IClassifier, Serializable {
 	 * The set must be not null.
 	 */
 	void setSynonyms(Set<String> synonyms);
-
-	/**
-	 * Returns CAS number of the library mass spectrum.
-	 */
-	String getCasNumber();
-
-	/**
-	 * Sets the CAS number of the library mass spectrum.
-	 */
-	void setCasNumber(String casNumber);
-
-	/**
-	 * Add an additional CAS numbers.
-	 */
-	void addCasNumber(String casNumber);
-
-	void deleteCasNumber(String casNumber);
-
-	/**
-	 * Returns an unmodifiable list of the CAS numbers.
-	 */
-	List<String> getCasNumbers();
-
-	/**
-	 * Clear CAS numbers.
-	 */
-	void clearCasNumbers();
-
-	/**
-	 * Returns the formula of the library mass spectrum.
-	 */
-	String getFormula();
-
-	/**
-	 * Sets the formula of the library mass spectrum.
-	 */
-	void setFormula(String formula);
-
-	/**
-	 * Returns the SMILES of the library mass spectrum.
-	 */
-	String getSmiles();
-
-	/**
-	 * Sets the SMILES of the library mass spectrum.
-	 */
-	void setSmiles(String smiles);
-
-	/**
-	 * Returns the InChI of the library mass spectrum.
-	 */
-	String getInChI();
-
-	/**
-	 * Sets the InChI of the library mass spectrum.
-	 */
-	void setInChI(String inChI);
-
-	String getInChIKey();
-
-	void setInChIKey(String inChIKey);
-
-	/**
-	 * Returns the mol weight of the library mass spectrum.
-	 */
-	double getMolWeight();
-
-	/**
-	 * Sets the mol weight of the library mass spectrum.
-	 */
-	void setMolWeight(double molWeight);
-
-	/**
-	 * Returns the exact mass of the library mass spectrum.
-	 * 
-	 * @return String
-	 */
-	double getExactMass();
-
-	/**
-	 * Sets the exact mass of the library mass spectrum.
-	 */
-	void setExactMass(double exactMass);
 
 	/**
 	 * Returns comments of the library mass spectrum.
@@ -178,42 +94,4 @@ public interface ILibraryInformation extends IClassifier, Serializable {
 	String getHit();
 
 	void setHit(String hit);
-
-	int getRetentionTime();
-
-	void setRetentionTime(int retentionTime);
-
-	float getRetentionIndex();
-
-	void setRetentionIndex(float retentionIndex);
-
-	/**
-	 * Returns an unmodifiable list of the available column
-	 * index markers in the correct sort order.
-	 */
-	List<IColumnIndexMarker> getColumnIndexMarkers();
-
-	void add(IColumnIndexMarker columnIndexMarker);
-
-	void delete(IColumnIndexMarker columnIndexMarker);
-
-	void clearFlavorMarker();
-
-	/**
-	 * Returns an unmodifiable list of the available
-	 * flavor markers.
-	 */
-	List<IFlavorMarker> getFlavorMarkers();
-
-	void add(IFlavorMarker flavorMarker);
-
-	void delete(IFlavorMarker flavorMarker);
-
-	String getMoleculeStructure();
-
-	void setMoleculeStructure(String moleculeStructure);
-
-	String getCompoundClass();
-
-	void setCompoundClass(String compoundClass);
 }
