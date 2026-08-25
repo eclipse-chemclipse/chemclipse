@@ -320,4 +320,8 @@
          id="org.eclipse.chemclipse.msd.peakpicker.localmax.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.chemclipse.xxd.edit.supplier.tophat.feature"
+         version="0.0.0"/>
+
 </feature>
