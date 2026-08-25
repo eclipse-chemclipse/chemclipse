@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.chemclipse.chromatogram.xxd.identifier.targetIdentifier">
+      <TargetIdentificationSupplier
+            description="Links to the corresponding NCBI Tax ID."
+            id="org.eclipse.chemclipse.xxd.identifier.supplier.ncbi.taxonomy.identifier"
+            identifierName="NCBI Taxonomy"
+            targetURL="org.eclipse.chemclipse.xxd.identifier.supplier.ncbi.identifier.TaxonomyBrowserExternalTargetIdentifier">
+      </TargetIdentificationSupplier>
+      <TargetIdentificationSupplier
+            description="Links to the corresponding GenBank ID."
+            id="org.eclipse.chemclipse.xxd.identifier.supplier.ncbi.genbank.identifier"
+            identifierName="NCBI GenBank"
+            targetURL="org.eclipse.chemclipse.xxd.identifier.supplier.ncbi.identifier.GenBankExternalTargetIdentifier">
+      </TargetIdentificationSupplier>
+   </extension>
+</plugin>
