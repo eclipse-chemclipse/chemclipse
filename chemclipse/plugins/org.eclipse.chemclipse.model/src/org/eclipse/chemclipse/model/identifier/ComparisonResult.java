@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2025 Lablicate GmbH.
+ * Copyright (c) 2010, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -18,6 +18,16 @@ public class ComparisonResult extends AbstractComparisonResult {
 
 	public static final IComparisonResult COMPARISON_RESULT_NO_MATCH = new ComparisonResultFinal(FACTOR_NO_MATCH, false);
 	public static final IComparisonResult COMPARISON_RESULT_BEST_MATCH = new ComparisonResultFinal(FACTOR_BEST_MATCH, true);
+
+	/**
+	 * Creates a result of the given identification algorithm without any
+	 * metric, e.g. for an algorithm that does not report match factors. The
+	 * values are added via {@link #setMetric(String, double)}.
+	 */
+	public ComparisonResult(String algorithmId) {
+
+		super(algorithmId);
+	}
 
 	public ComparisonResult(float matchFactor) {
 
@@ -49,6 +59,6 @@ public class ComparisonResult extends AbstractComparisonResult {
 	@Override
 	public String toString() {
 
-		return "ComparisonResult [getPenalty()=" + getPenalty() + ", isMatch()=" + isMatch() + ", getMatchFactor()=" + getMatchFactor() + ", getMatchFactorDirect()=" + getMatchFactorDirect() + ", getReverseMatchFactor()=" + getReverseMatchFactor() + ", getReverseMatchFactorDirect()=" + getReverseMatchFactorDirect() + ", getProbability()=" + getProbability() + "]";
+		return "ComparisonResult [getAlgorithmId()=" + getAlgorithmId() + ", getPenalty()=" + getPenalty() + ", isMatch()=" + isMatch() + ", getMetricValues()=" + getMetricValues() + "]";
 	}
 }

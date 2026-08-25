@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023, 2025 Lablicate GmbH.
+ * Copyright (c) 2023, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -23,6 +23,10 @@ public class RatingSupplier extends AbstractComparisonRatingSupplier {
 	private static final float MAX_LIMIT_MATCH_FACTOR = 80.0f;
 	private static final float MIN_LIMIT_REVERSE_MATCH_FACTOR = 20.0f;
 	private static final float MAX_LIMIT_REVERSE_MATCH_FACTOR = 80.0f;
+
+	public RatingSupplier() {
+
+	}
 
 	public RatingSupplier(IComparisonResult comparisonResult) {
 
