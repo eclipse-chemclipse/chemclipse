@@ -17,12 +17,12 @@ import java.util.List;
 public interface ILibraryInformationChemical {
 
 	/**
-	 * Returns CAS number of the library mass spectrum.
+	 * Returns CAS number of the library compound.
 	 */
 	String getCasNumber();
 
 	/**
-	 * Sets the CAS number of the library mass spectrum.
+	 * Sets the CAS number of the library compound.
 	 */
 	void setCasNumber(String casNumber);
 
@@ -44,32 +44,32 @@ public interface ILibraryInformationChemical {
 	void clearCasNumbers();
 
 	/**
-	 * Returns the formula of the library mass spectrum.
+	 * Returns the formula of the library compound.
 	 */
 	String getFormula();
 
 	/**
-	 * Sets the formula of the library mass spectrum.
+	 * Sets the formula of the library compound.
 	 */
 	void setFormula(String formula);
 
 	/**
-	 * Returns the SMILES of the library mass spectrum.
+	 * Returns the SMILES of the library compound.
 	 */
 	String getSmiles();
 
 	/**
-	 * Sets the SMILES of the library mass spectrum.
+	 * Sets the SMILES of the library compound.
 	 */
 	void setSmiles(String smiles);
 
 	/**
-	 * Returns the InChI of the library mass spectrum.
+	 * Returns the InChI of the library compound.
 	 */
 	String getInChI();
 
 	/**
-	 * Sets the InChI of the library mass spectrum.
+	 * Sets the InChI of the library compound.
 	 */
 	void setInChI(String inChI);
 
@@ -78,24 +78,24 @@ public interface ILibraryInformationChemical {
 	void setInChIKey(String inChIKey);
 
 	/**
-	 * Returns the mol weight of the library mass spectrum.
+	 * Returns the mol weight of the library compound.
 	 */
 	double getMolWeight();
 
 	/**
-	 * Sets the molecular weight of the library mass spectrum.
+	 * Sets the molecular weight of the library compound.
 	 */
 	void setMolWeight(double molWeight);
 
 	/**
-	 * Returns the exact mass of the library mass spectrum.
+	 * Returns the exact mass of the library compound.
 	 * 
 	 * @return String
 	 */
 	double getExactMass();
 
 	/**
-	 * Sets the exact mass of the library mass spectrum.
+	 * Sets the exact mass of the library compound.
 	 */
 	void setExactMass(double exactMass);
 
