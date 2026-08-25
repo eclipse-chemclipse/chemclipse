@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.chemclipse.xxd.identifier.supplier.ncbi.feature"
+      label="NCBI Feature"
+      version="0.9.0.qualifier"
+      provider-name="ChemClipse"
+      plugin="org.eclipse.chemclipse.feature.branding"
+      license-feature="org.eclipse.license"
+      license-feature-version="2.0.2.qualifier">
+
+   <description url="https://www.chemclipse.net">
+      Queries NCBI for taxonomic information.
+   </description>
+
+   <copyright url="http://www.chemclipse.net">
+      Copyright (c) 2026 Lablicate GmbH
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.eclipse.chemclipse.xxd.identifier.supplier.ncbi"
+         version="0.0.0"/>
+
+</feature>
