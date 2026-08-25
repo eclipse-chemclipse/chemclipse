@@ -9,12 +9,17 @@
  * 
  * Contributors:
  * Philip Wenig - initial API and implementation
+ * Matthias Mailänder - display the metrics of the identification algorithm
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.OptionalDouble;
 
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
+import org.eclipse.chemclipse.model.identifier.IComparisonMetric;
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
@@ -61,74 +66,18 @@ public class TargetsLabelProvider extends AbstractChemClipseLabelProvider {
 	public static final String NCBI_TAXONOMY = "NCBI Taxonomy ID";
 	public static final String GENBANK_ACCESSION = "GenBank Accession";
 
-	public static final int INDEX_RATING = 1;
-	public static final int INDEX_NAME = 2;
-	public static final int INDEX_RETENTION_TIME = 23;
-	public static final int INDEX_RETENTION_INDEX = 24;
-
 	private static final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 
-	public static final String[] TITLES = { //
-			VERIFIED, //
-			RATING, //
-			NAME, //
-			CAS, //
-			MATCH_FACTOR, //
-			REVERSE_MATCH_FACTOR, //
-			MATCH_FACTOR_DIRECT, //
-			REVERSE_MATCH_FACTOR_DIRECT, //
-			PROBABILITY, //
-			FORMULA, //
-			SMILES, //
-			INCHI, //
-			INCHI_KEY, //
-			MOL_WEIGHT, //
-			EXACT_MASS, //
-			ADVICE, //
-			IDENTIFIER, //
-			MISCELLANEOUS, //
-			COMMENTS, //
-			DATABASE, //
-			DATABASE_INDEX, //
-			CONTRIBUTOR, //
-			REFERENCE_ID, //
-			RETENTION_TIME, //
-			RETENTION_INDEX, //
-			INLIB_FACTOR, //
-			NCBI_TAXONOMY, //
-			GENBANK_ACCESSION //
-	};
+	public static final String[] TITLES = TargetsColumns.create(null).getTitles();
+	public static final int[] BOUNDS = TargetsColumns.create(null).getBounds();
 
-	public static final int[] BOUNDS = { //
-			30, //
-			30, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100 //
-	};
+	private TargetsColumns targetsColumns = TargetsColumns.create(null);
+	private final Map<String, DecimalFormat> metricFormats = new HashMap<>();
+
+	public void setColumns(TargetsColumns targetsColumns) {
+
+		this.targetsColumns = targetsColumns;
+	}
 
 	public static String getRetentionTimeText(ILibraryInformation libraryInformation, Integer retentionTime) {
 
@@ -180,30 +129,31 @@ public class TargetsLabelProvider extends AbstractChemClipseLabelProvider {
 	@Override
 	public Image getColumnImage(Object element, int columnIndex) {
 
-		if(columnIndex == 0) {
-			/*
-			 * CheckBox
-			 */
-			if(element instanceof IIdentificationTarget identificationTarget) {
-				if(identificationTarget.isVerified()) {
-					return ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SELECTED, IApplicationImageProvider.SIZE_16x16);
-				} else {
-					return ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DESELECTED, IApplicationImageProvider.SIZE_16x16);
-				}
+		if(element instanceof IIdentificationTarget identificationTarget) {
+			TargetColumn column = targetsColumns.getColumn(columnIndex);
+			if(column == null) {
+				return null;
 			}
-		} else if(columnIndex == INDEX_RATING) {
-			/*
-			 * Rating
-			 */
-			if(element instanceof IIdentificationTarget identificationTarget) {
-				return IdentificationTargetSupport.getRatingSymbol(identificationTarget);
+
+			switch(column) {
+				case VERIFIED:
+					/*
+					 * CheckBox
+					 */
+					if(identificationTarget.isVerified()) {
+						return ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SELECTED, IApplicationImageProvider.SIZE_16x16);
+					} else {
+						return ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DESELECTED, IApplicationImageProvider.SIZE_16x16);
+					}
+				case RATING:
+					return IdentificationTargetSupport.getRatingSymbol(identificationTarget);
+				case NAME:
+					return getImage(element);
+				default:
+					return null;
 			}
-		} else if(columnIndex == INDEX_NAME) {
-			/*
-			 * Entry
-			 */
-			return getImage(element);
 		}
+
 		return null;
 	}
 
@@ -217,65 +167,60 @@ public class TargetsLabelProvider extends AbstractChemClipseLabelProvider {
 			ILibraryInformation libraryInformation = identificationTarget.getLibraryInformation();
 			IComparisonResult comparisonResult = identificationTarget.getComparisonResult();
 
-			switch(columnIndex) {
-				case 0:
+			IComparisonMetric metric = targetsColumns.getMetric(columnIndex);
+			if(metric != null) {
+				return getMetricText(comparisonResult, metric);
+			}
+
+			TargetColumn column = targetsColumns.getColumn(columnIndex);
+			if(column == null) {
+				return "n.v.";
+			}
+
+			switch(column) {
+				case VERIFIED:
 					text = "";
 					break;
-				case 1: // Rating
+				case RATING:
 					text = "";
 					break;
-				case 2: // Name
+				case NAME:
 					text = libraryInformation.getName();
 					break;
-				case 3: // CAS
+				case CAS:
 					text = libraryInformation.getCasNumber();
 					break;
-				case 4: // MQ
-					text = decimalFormat.format(comparisonResult.getMatchFactor());
-					break;
-				case 5: // RMQ
-					text = decimalFormat.format(comparisonResult.getReverseMatchFactor());
-					break;
-				case 6: // MQD
-					text = decimalFormat.format(comparisonResult.getMatchFactorDirect());
-					break;
-				case 7: // RMQD
-					text = decimalFormat.format(comparisonResult.getReverseMatchFactorDirect());
-					break;
-				case 8: // Probability
-					text = decimalFormat.format(comparisonResult.getProbability());
-					break;
-				case 9: // Formula
+				case FORMULA:
 					text = libraryInformation.getFormula();
 					break;
-				case 10: // SMILES
+				case SMILES:
 					text = libraryInformation.getSmiles();
 					break;
-				case 11: // InChI
+				case INCHI:
 					text = libraryInformation.getInChI();
 					break;
-				case 12: // InChI Key
+				case INCHI_KEY:
 					text = libraryInformation.getInChIKey();
 					break;
-				case 13: // Mol Weight
+				case MOL_WEIGHT:
 					text = decimalFormat.format(libraryInformation.getMolWeight());
 					break;
-				case 14: // Exact Mass
+				case EXACT_MASS:
 					text = decimalFormat.format(libraryInformation.getExactMass());
 					break;
-				case 15: // Advise
+				case ADVICE:
 					text = comparisonResult.getRatingSupplier().getAdvise();
 					break;
-				case 16: // Identifier
+				case IDENTIFIER:
 					text = identificationTarget.getIdentifier();
 					break;
-				case 17: // Miscellaneous
+				case MISCELLANEOUS:
 					text = libraryInformation.getMiscellaneous();
 					break;
-				case 18: // Comments
+				case COMMENTS:
 					text = libraryInformation.getComments();
 					break;
-				case 19:
+				case DATABASE:
 					/*
 					 * UUID or resolved name.
 					 */
@@ -285,28 +230,25 @@ public class TargetsLabelProvider extends AbstractChemClipseLabelProvider {
 						text = libraryInformation.getDatabase();
 					}
 					break;
-				case 20:
+				case DATABASE_INDEX:
 					text = Integer.toString(libraryInformation.getDatabaseIndex());
 					break;
-				case 21:
+				case CONTRIBUTOR:
 					text = libraryInformation.getContributor();
 					break;
-				case 22:
+				case REFERENCE_ID:
 					text = libraryInformation.getReferenceIdentifier();
 					break;
-				case 23:
+				case RETENTION_TIME:
 					text = getRetentionTimeText(libraryInformation, null);
 					break;
-				case 24:
+				case RETENTION_INDEX:
 					text = getRetentionIndexText(libraryInformation, null);
 					break;
-				case 25:
-					text = decimalFormat.format(comparisonResult.getInLibFactor());
-					break;
-				case 26:
+				case NCBI_TAXONOMY:
 					text = Integer.toString(libraryInformation.getTaxonomyIdentifierNCBI());
 					break;
-				case 27:
+				case GENBANK_ACCESSION:
 					text = libraryInformation.getGenBankAccesion();
 					break;
 				default:
@@ -314,6 +256,17 @@ public class TargetsLabelProvider extends AbstractChemClipseLabelProvider {
 			}
 		}
 		return text;
+	}
+
+	private String getMetricText(IComparisonResult comparisonResult, IComparisonMetric metric) {
+
+		OptionalDouble value = comparisonResult.getMetric(metric.getId());
+		if(value.isEmpty()) {
+			return "";
+		}
+
+		DecimalFormat decimalFormat = metricFormats.computeIfAbsent(metric.getFormat(), ValueFormat::getDecimalFormatEnglish);
+		return decimalFormat.format(value.getAsDouble());
 	}
 
 	@Override
