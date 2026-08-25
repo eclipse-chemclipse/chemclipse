@@ -10,9 +10,11 @@
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - make more generic useable
+ * Matthias Mailänder - display the metrics of the identification algorithm
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
@@ -24,6 +26,7 @@ import org.eclipse.chemclipse.support.updates.IUpdateListener;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
 import org.eclipse.chemclipse.ux.extension.ui.provider.TargetListFilter;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.TargetsColumns;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.TargetsComparator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.TargetsEditingSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.TargetsLabelProvider;
@@ -52,11 +55,16 @@ public class TargetsListUI extends ExtendedTableViewer {
 	private Integer retentionTime = null;
 	private Float retentionIndex = null;
 
+	private TargetsColumns targetsColumns = null;
+	private boolean dynamicColumns = false;
+	private boolean editingSupport = false;
+
 	private IUpdateListener updateListener;
 
 	public TargetsListUI(Composite parent, int style) {
 
 		this(parent, TITLES, style);
+		dynamicColumns = true;
 	}
 
 	public void setComparator(boolean active) {
@@ -87,12 +95,42 @@ public class TargetsListUI extends ExtendedTableViewer {
 		super(parent, style | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
 
 		createColumns(alternativeTitles, BOUNDS);
-		setLabelProvider(labelProvider);
+		setLabelProvider(labelProvider); // order is important
 		setContentProvider(new ListContentProvider());
 		setComparator(false);
 		setFilters(targetListFilter);
 		setCellColorProvider();
 		createDragAndDropProvider();
+	}
+
+	@Override
+	protected void inputChanged(Object input, Object oldInput) {
+
+		updateColumns(input);
+		super.inputChanged(input, oldInput);
+	}
+
+	private void updateColumns(Object input) {
+
+		if(!dynamicColumns) {
+			return;
+		}
+
+		TargetsColumns columns = TargetsColumns.create(input instanceof Collection<?> collection ? collection : null);
+		if(columns.matches(targetsColumns)) {
+			return;
+		}
+
+		targetsColumns = columns;
+		labelProvider.setColumns(columns);
+		targetsComparator.setColumns(columns);
+		createColumns(columns.getTitles(), columns.getBounds());
+
+		setLabelProvider(labelProvider);
+		setCellColorProvider();
+		if(editingSupport) {
+			setEditingSupport();
+		}
 	}
 
 	public void setSearchText(String searchText, boolean caseSensitive) {
@@ -130,6 +168,7 @@ public class TargetsListUI extends ExtendedTableViewer {
 
 	public void setEditingSupport() {
 
+		editingSupport = true;
 		List<TableViewerColumn> tableViewerColumns = getTableViewerColumns();
 		for(int i = 0; i < tableViewerColumns.size(); i++) {
 			TableViewerColumn tableViewerColumn = tableViewerColumns.get(i);
@@ -166,8 +205,7 @@ public class TargetsListUI extends ExtendedTableViewer {
 
 	private void setColorProviderRetentionTime() {
 
-		List<TableViewerColumn> tableViewerColumns = getTableViewerColumns();
-		TableViewerColumn tableViewerColumn = tableViewerColumns.get(TargetsLabelProvider.INDEX_RETENTION_TIME);
+		TableViewerColumn tableViewerColumn = getTableViewerColumn(TargetsLabelProvider.RETENTION_TIME);
 		if(tableViewerColumn != null) {
 			tableViewerColumn.setLabelProvider(new StyledCellLabelProvider() {
 
@@ -221,8 +259,7 @@ public class TargetsListUI extends ExtendedTableViewer {
 
 	private void setColorProviderRetentionIndex() {
 
-		List<TableViewerColumn> tableViewerColumns = getTableViewerColumns();
-		TableViewerColumn tableViewerColumn = tableViewerColumns.get(TargetsLabelProvider.INDEX_RETENTION_INDEX);
+		TableViewerColumn tableViewerColumn = getTableViewerColumn(TargetsLabelProvider.RETENTION_INDEX);
 		if(tableViewerColumn != null) {
 			tableViewerColumn.setLabelProvider(new StyledCellLabelProvider() {
 
