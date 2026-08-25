@@ -52,6 +52,8 @@ public abstract class AbstractLibraryInformation implements ILibraryInformation 
 	private final Set<IFlavorMarker> flavorMarkers = new HashSet<>();
 	private String moleculeStructure = "";
 	private String compoundClass = "";
+	private int taxID = 0;
+	private String genBankAccession = "";
 	/*
 	 * Default Column Position Marker
 	 */
@@ -475,6 +477,30 @@ public abstract class AbstractLibraryInformation implements ILibraryInformation 
 	public void setCompoundClass(String compoundClass) {
 
 		this.compoundClass = compoundClass;
+	}
+
+	@Override
+	public int getTaxonomyIdentifierNCBI() {
+
+		return taxID;
+	}
+
+	@Override
+	public void setTaxonomyIdentifierNCBI(int taxID) {
+
+		this.taxID = taxID;
+	}
+
+	@Override
+	public String getGenBankAccesion() {
+
+		return genBankAccession;
+	}
+
+	@Override
+	public void setGenBankAccesion(String genBankAccession) {
+
+		this.genBankAccession = genBankAccession;
 	}
 
 	private boolean isDefaultColumnIndexMarker(IColumnIndexMarker columnIndexMarker) {

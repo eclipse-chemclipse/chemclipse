@@ -37,9 +37,9 @@ public abstract class AbstractNucleotideBLAST {
 			HitDescr description = hit.getDescription().getHitDescr().getFirst();
 			libraryInformation.setName(description.getTitle());
 			libraryInformation.setDatabase(report.getSearchTarget().getTarget().getDb());
-			libraryInformation.setMiscellaneous(description.getAccession());
+			libraryInformation.setGenBankAccesion(description.getAccession());
 			libraryInformation.setReferenceIdentifier(description.getId());
-			libraryInformation.setDatabaseIndex(description.getTaxid().intValue());
+			libraryInformation.setTaxonomyIdentifierNCBI(description.getTaxid().intValue());
 			for(Hsp hsp : hit.getHsps().getHsp()) {
 				ComparisonResult comparisionResult = new ComparisonResult((float)hsp.getBitScore(), (float)hsp.getScore(), (float)hsp.getEvalue(), hsp.getIdentity().floatValue()); // TODO: wrong model
 				IdentificationTarget identificationTarget = new IdentificationTarget(libraryInformation, comparisionResult);

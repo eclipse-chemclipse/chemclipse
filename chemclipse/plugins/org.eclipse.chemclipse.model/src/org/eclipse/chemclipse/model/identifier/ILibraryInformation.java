@@ -18,7 +18,7 @@ import java.util.Set;
 
 import org.eclipse.chemclipse.model.core.IClassifier;
 
-public interface ILibraryInformation extends IClassifier, Serializable, ILibraryInformationChemical, ILibraryInformationFlavor, ILibraryInformationChromatography {
+public interface ILibraryInformation extends IClassifier, Serializable, ILibraryInformationBiological, ILibraryInformationChemical, ILibraryInformationFlavor, ILibraryInformationChromatography {
 
 	/**
 	 * Returns the name of the library mass spectrum.
