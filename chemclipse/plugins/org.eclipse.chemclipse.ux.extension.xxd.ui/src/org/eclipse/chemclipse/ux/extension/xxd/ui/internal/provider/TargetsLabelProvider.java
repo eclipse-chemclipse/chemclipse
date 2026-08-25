@@ -58,6 +58,8 @@ public class TargetsLabelProvider extends AbstractChemClipseLabelProvider {
 	public static final String RETENTION_INDEX = ExtensionMessages.retentionIndex;
 	public static final String REFERENCE_ID = ExtensionMessages.referenceID;
 	public static final String INLIB_FACTOR = ExtensionMessages.inLibFactor;
+	public static final String NCBI_TAXONOMY = "NCBI Taxonomy ID";
+	public static final String GENBANK_ACCESSION = "GenBank Accession";
 
 	public static final int INDEX_RATING = 1;
 	public static final int INDEX_NAME = 2;
@@ -92,12 +94,16 @@ public class TargetsLabelProvider extends AbstractChemClipseLabelProvider {
 			REFERENCE_ID, //
 			RETENTION_TIME, //
 			RETENTION_INDEX, //
-			INLIB_FACTOR //
+			INLIB_FACTOR, //
+			NCBI_TAXONOMY, //
+			GENBANK_ACCESSION //
 	};
 
 	public static final int[] BOUNDS = { //
 			30, //
 			30, //
+			100, //
+			100, //
 			100, //
 			100, //
 			100, //
@@ -296,6 +302,12 @@ public class TargetsLabelProvider extends AbstractChemClipseLabelProvider {
 					break;
 				case 25:
 					text = decimalFormat.format(comparisonResult.getInLibFactor());
+					break;
+				case 26:
+					text = Integer.toString(libraryInformation.getTaxonomyIdentifierNCBI());
+					break;
+				case 27:
+					text = libraryInformation.getGenBankAccesion();
 					break;
 				default:
 					text = "n.v.";
