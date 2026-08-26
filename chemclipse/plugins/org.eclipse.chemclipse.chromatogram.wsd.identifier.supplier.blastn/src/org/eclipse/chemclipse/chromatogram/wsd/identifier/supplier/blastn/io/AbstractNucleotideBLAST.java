@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.io;
 
+import java.io.File;
 import java.math.BigInteger;
 
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.BlastMetrics;
@@ -41,7 +42,13 @@ public abstract class AbstractNucleotideBLAST {
 			ILibraryInformation libraryInformation = new LibraryInformation();
 			HitDescr description = hit.getDescription().getHitDescr().getFirst();
 			libraryInformation.setName(description.getTitle());
-			libraryInformation.setDatabase(report.getSearchTarget().getTarget().getDb());
+			String db = report.getSearchTarget().getTarget().getDb();
+			File dbPath = new File(db);
+			if(dbPath.getParentFile().exists()) {
+				libraryInformation.setDatabase(dbPath.getName());
+			} else {
+				libraryInformation.setDatabase(db); // web
+			}
 			libraryInformation.setGenBankAccesion(description.getAccession());
 			libraryInformation.setReferenceIdentifier(description.getId());
 			libraryInformation.setTaxonomyIdentifierNCBI(description.getTaxid().intValue());
