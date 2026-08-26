@@ -19,6 +19,7 @@ import org.eclipse.chemclipse.chromatogram.wsd.identifier.chromatogram.IChromato
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.settings.AbstractIdentifierSettingsWSD;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.support.literature.LiteratureReference;
+import org.eclipse.chemclipse.support.settings.ComboSettingsProperty;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
@@ -27,9 +28,10 @@ public class LocalIdentifierSettings extends AbstractIdentifierSettingsWSD imple
 
 	private static final Logger logger = Logger.getLogger(LocalIdentifierSettings.class);
 
-	@JsonProperty(value = "Database", defaultValue = "16S_ribosomal_RNA")
+	@JsonProperty(value = "Database")
 	@JsonPropertyDescription(value = "Select the database to query against.")
-	private String database = "16S_ribosomal_RNA";
+	@ComboSettingsProperty(LocalDatabaseComboSupplier.class)
+	private String database = "";
 
 	@JsonProperty(value = "Task", defaultValue = "megablast")
 	private Task task = Task.MEGABLAST;
