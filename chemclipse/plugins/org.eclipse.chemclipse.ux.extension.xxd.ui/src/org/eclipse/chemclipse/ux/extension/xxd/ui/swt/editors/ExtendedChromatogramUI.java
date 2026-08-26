@@ -92,6 +92,7 @@ import org.eclipse.chemclipse.swt.ui.marker.RetentionIndexMarker;
 import org.eclipse.chemclipse.swt.ui.marker.TargetMarker;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.swt.ui.preferences.PreferencePageSystem;
+import org.eclipse.chemclipse.swt.ui.support.ColorScheme;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
 import org.eclipse.chemclipse.swt.ui.support.IColorScheme;
 import org.eclipse.chemclipse.ux.extension.ui.editors.ProcessorSupplierMenuEntry;
@@ -918,8 +919,9 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 	 */
 	private void addSequencingData(List<ILineSeriesData> lineSeriesDataList, IChromatogramDSD chromatogramDSD, boolean enableChromatogramArea) {
 
-		IColorScheme colorScheme = Colors.getColorScheme(Colors.COLOR_SCHEME_SEQUENCING);
-		for(Float wavelength : chromatogramDSD.getWavelengths()) {
+		IColorScheme colorScheme = generateColorScheme(chromatogramDSD);
+
+		for(Float wavelength : chromatogramDSD.getWavelengthMapping().keySet()) {
 			IMarkedTraces<ITrace> markedTraces = new MarkedTraces(MarkedTraceModus.INCLUDE);
 			markedTraces.add(new TraceRasteredWSD(wavelength));
 			Nucleobase nucleobase = chromatogramDSD.getWavelengthMapping().get(wavelength);
@@ -930,6 +932,26 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 			lineSeriesDataList.add(lineSeriesData);
 			colorScheme.incrementColor();
 		}
+	}
+
+	private IColorScheme generateColorScheme(IChromatogramDSD chromatogramDSD) {
+
+		List<Color> colorsNucleobases = new ArrayList<>();
+		for(Nucleobase nucleobase : chromatogramDSD.getWavelengthMapping().values()) {
+			if(nucleobase == Nucleobase.ADENINE) {
+				colorsNucleobases.add(new Color(0, 175, 0));
+			}
+			if(nucleobase == Nucleobase.CYTOSINE) {
+				colorsNucleobases.add(new Color(0, 0, 255));
+			}
+			if(nucleobase == Nucleobase.GUANINE) {
+				colorsNucleobases.add(new Color(0, 0, 0));
+			}
+			if(nucleobase == Nucleobase.THYMINE) {
+				colorsNucleobases.add(new Color(255, 0, 0));
+			}
+		}
+		return new ColorScheme(colorsNucleobases);
 	}
 
 	private void addPeakData(List<ILineSeriesData> lineSeriesDataList, ITargetDisplaySettings settings) {
