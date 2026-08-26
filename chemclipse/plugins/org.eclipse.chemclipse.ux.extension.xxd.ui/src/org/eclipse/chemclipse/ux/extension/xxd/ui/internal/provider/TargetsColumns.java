@@ -20,7 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.chemclipse.model.identifier.ComparisonMetrics;
+import org.eclipse.chemclipse.model.identifier.ComparisonMetricsClassic;
 import org.eclipse.chemclipse.model.identifier.IComparisonMetric;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 
@@ -147,7 +147,7 @@ public class TargetsColumns {
 		}
 
 		if(collected.isEmpty()) {
-			return ComparisonMetrics.getMetrics();
+			return ComparisonMetricsClassic.getMetrics();
 		}
 
 		return new ArrayList<>(collected.values());
@@ -169,12 +169,12 @@ public class TargetsColumns {
 	private static Map<String, String> createClassicLabels() {
 
 		Map<String, String> labels = new HashMap<>();
-		labels.put(ComparisonMetrics.MATCH_FACTOR, TargetsLabelProvider.MATCH_FACTOR);
-		labels.put(ComparisonMetrics.REVERSE_MATCH_FACTOR, TargetsLabelProvider.REVERSE_MATCH_FACTOR);
-		labels.put(ComparisonMetrics.MATCH_FACTOR_DIRECT, TargetsLabelProvider.MATCH_FACTOR_DIRECT);
-		labels.put(ComparisonMetrics.REVERSE_MATCH_FACTOR_DIRECT, TargetsLabelProvider.REVERSE_MATCH_FACTOR_DIRECT);
-		labels.put(ComparisonMetrics.PROBABILITY, TargetsLabelProvider.PROBABILITY);
-		labels.put(ComparisonMetrics.IN_LIB_FACTOR, TargetsLabelProvider.INLIB_FACTOR);
+		labels.put(ComparisonMetricsClassic.MATCH_FACTOR, TargetsLabelProvider.MATCH_FACTOR);
+		labels.put(ComparisonMetricsClassic.REVERSE_MATCH_FACTOR, TargetsLabelProvider.REVERSE_MATCH_FACTOR);
+		labels.put(ComparisonMetricsClassic.MATCH_FACTOR_DIRECT, TargetsLabelProvider.MATCH_FACTOR_DIRECT);
+		labels.put(ComparisonMetricsClassic.REVERSE_MATCH_FACTOR_DIRECT, TargetsLabelProvider.REVERSE_MATCH_FACTOR_DIRECT);
+		labels.put(ComparisonMetricsClassic.PROBABILITY, TargetsLabelProvider.PROBABILITY);
+		labels.put(ComparisonMetricsClassic.IN_LIB_FACTOR, TargetsLabelProvider.INLIB_FACTOR);
 
 		return labels;
 	}

@@ -50,7 +50,7 @@ public abstract class AbstractComparisonResult implements IComparisonResult {
 	 */
 	protected AbstractComparisonResult(String algorithmId) {
 
-		this.algorithmId = (algorithmId != null && !algorithmId.isEmpty()) ? algorithmId : ComparisonMetrics.ALGORITHM_CLASSIC;
+		this.algorithmId = (algorithmId != null && !algorithmId.isEmpty()) ? algorithmId : ComparisonMetricsClassic.ALGORITHM_CLASSIC;
 	}
 
 	protected AbstractComparisonResult(float matchFactor) {
@@ -65,13 +65,13 @@ public abstract class AbstractComparisonResult implements IComparisonResult {
 
 	protected AbstractComparisonResult(float matchFactor, float reverseMatchFactor, float matchFactorDirect, float reverseMatchFactorDirect, float probability) {
 
-		this(ComparisonMetrics.ALGORITHM_CLASSIC);
-		putMetric(ComparisonMetrics.MATCH_FACTOR, matchFactor);
-		putMetric(ComparisonMetrics.REVERSE_MATCH_FACTOR, reverseMatchFactor);
-		putMetric(ComparisonMetrics.MATCH_FACTOR_DIRECT, matchFactorDirect);
-		putMetric(ComparisonMetrics.REVERSE_MATCH_FACTOR_DIRECT, reverseMatchFactorDirect);
+		this(ComparisonMetricsClassic.ALGORITHM_CLASSIC);
+		putMetric(ComparisonMetricsClassic.MATCH_FACTOR, matchFactor);
+		putMetric(ComparisonMetricsClassic.REVERSE_MATCH_FACTOR, reverseMatchFactor);
+		putMetric(ComparisonMetricsClassic.MATCH_FACTOR_DIRECT, matchFactorDirect);
+		putMetric(ComparisonMetricsClassic.REVERSE_MATCH_FACTOR_DIRECT, reverseMatchFactorDirect);
 		setProbability(probability);
-		putMetric(ComparisonMetrics.IN_LIB_FACTOR, 0.0d);
+		putMetric(ComparisonMetricsClassic.IN_LIB_FACTOR, 0.0d);
 	}
 
 	protected AbstractComparisonResult(IComparisonResult comparisonResult) {
@@ -195,13 +195,13 @@ public abstract class AbstractComparisonResult implements IComparisonResult {
 	@Override
 	public float getMatchFactorNotAdjusted() {
 
-		return getMetricValue(ComparisonMetrics.MATCH_FACTOR);
+		return getMetricValue(ComparisonMetricsClassic.MATCH_FACTOR);
 	}
 
 	@Override
 	public float getMatchFactorDirectNotAdjusted() {
 
-		return getMetricValue(ComparisonMetrics.MATCH_FACTOR_DIRECT);
+		return getMetricValue(ComparisonMetricsClassic.MATCH_FACTOR_DIRECT);
 	}
 
 	@Override
@@ -219,31 +219,31 @@ public abstract class AbstractComparisonResult implements IComparisonResult {
 	@Override
 	public float getReverseMatchFactorNotAdjusted() {
 
-		return getMetricValue(ComparisonMetrics.REVERSE_MATCH_FACTOR);
+		return getMetricValue(ComparisonMetricsClassic.REVERSE_MATCH_FACTOR);
 	}
 
 	@Override
 	public float getReverseMatchFactorDirectNotAdjusted() {
 
-		return getMetricValue(ComparisonMetrics.REVERSE_MATCH_FACTOR_DIRECT);
+		return getMetricValue(ComparisonMetricsClassic.REVERSE_MATCH_FACTOR_DIRECT);
 	}
 
 	@Override
 	public float getProbability() {
 
-		return getMetricValue(ComparisonMetrics.PROBABILITY);
+		return getMetricValue(ComparisonMetricsClassic.PROBABILITY);
 	}
 
 	@Override
 	public float getInLibFactor() {
 
-		return getMetricValue(ComparisonMetrics.IN_LIB_FACTOR);
+		return getMetricValue(ComparisonMetricsClassic.IN_LIB_FACTOR);
 	}
 
 	@Override
 	public void setInLibFactor(float inLibFactor) {
 
-		setMetric(ComparisonMetrics.IN_LIB_FACTOR, inLibFactor);
+		setMetric(ComparisonMetricsClassic.IN_LIB_FACTOR, inLibFactor);
 	}
 
 	@Override
@@ -280,22 +280,22 @@ public abstract class AbstractComparisonResult implements IComparisonResult {
 
 	protected void setMatchFactor(float matchFactor) {
 
-		putMetric(ComparisonMetrics.MATCH_FACTOR, matchFactor);
+		putMetric(ComparisonMetricsClassic.MATCH_FACTOR, matchFactor);
 	}
 
 	protected void setMatchFactorDirect(float matchFactorDirect) {
 
-		putMetric(ComparisonMetrics.MATCH_FACTOR_DIRECT, matchFactorDirect);
+		putMetric(ComparisonMetricsClassic.MATCH_FACTOR_DIRECT, matchFactorDirect);
 	}
 
 	protected void setReverseMatchFactor(float reverseMatchFactor) {
 
-		putMetric(ComparisonMetrics.REVERSE_MATCH_FACTOR, reverseMatchFactor);
+		putMetric(ComparisonMetricsClassic.REVERSE_MATCH_FACTOR, reverseMatchFactor);
 	}
 
 	protected void setReverseMatchFactorDirect(float reverseMatchFactorDirect) {
 
-		putMetric(ComparisonMetrics.REVERSE_MATCH_FACTOR_DIRECT, reverseMatchFactorDirect);
+		putMetric(ComparisonMetricsClassic.REVERSE_MATCH_FACTOR_DIRECT, reverseMatchFactorDirect);
 	}
 
 	private float getMetricValue(String metricId) {
@@ -312,9 +312,9 @@ public abstract class AbstractComparisonResult implements IComparisonResult {
 	private void setProbability(float probability) {
 
 		if(probability >= MIN_ALLOWED_PROBABILITY && probability <= MAX_ALLOWED_PROBABILITY) {
-			putMetric(ComparisonMetrics.PROBABILITY, probability);
+			putMetric(ComparisonMetricsClassic.PROBABILITY, probability);
 		} else {
-			putMetric(ComparisonMetrics.PROBABILITY, 0.0d);
+			putMetric(ComparisonMetricsClassic.PROBABILITY, 0.0d);
 		}
 	}
 }
