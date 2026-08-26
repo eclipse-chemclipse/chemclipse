@@ -43,6 +43,8 @@ public class TargetsLabelProvider extends AbstractChemClipseLabelProvider {
 	public static final String COMMENTS = "Comments";
 	public static final String CONTRIBUTOR = "Contributor";
 	public static final String REFERENCE_ID = "Reference ID";
+	public static final String NCBI_TAXONOMY = "NCBI Taxonomy ID";
+	public static final String GENBANK_ACCESSION = "GenBank Accession";
 
 	public static final int INDEX_RATING = 1;
 	public static final int INDEX_NAME = 2;
@@ -64,12 +66,16 @@ public class TargetsLabelProvider extends AbstractChemClipseLabelProvider {
 			DATABASE_INDEX, //
 			CONTRIBUTOR, //
 			REFERENCE_ID, //
+			NCBI_TAXONOMY, //
+			GENBANK_ACCESSION, //
 	};
 
 	public static final int[] BOUNDS = { //
 			30, //
 			30, //
 			200, //
+			100, //
+			100, //
 			100, //
 			100, //
 			100, //
@@ -177,6 +183,12 @@ public class TargetsLabelProvider extends AbstractChemClipseLabelProvider {
 					break;
 				case 15:
 					text = libraryInformation.getReferenceIdentifier();
+					break;
+				case 16:
+					text = String.valueOf(libraryInformation.getTaxonomyIdentifierNCBI());
+					break;
+				case 17:
+					text = libraryInformation.getGenBankAccesion();
 					break;
 				default:
 					text = "n.v.";
