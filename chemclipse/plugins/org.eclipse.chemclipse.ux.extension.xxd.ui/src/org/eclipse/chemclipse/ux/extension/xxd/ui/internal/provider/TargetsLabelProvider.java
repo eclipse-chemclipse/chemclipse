@@ -14,9 +14,12 @@
 package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider;
 
 import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.OptionalDouble;
+import java.util.stream.Stream;
 
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.identifier.IComparisonMetric;
@@ -68,10 +71,13 @@ public class TargetsLabelProvider extends AbstractChemClipseLabelProvider {
 
 	private static final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 
-	public static final String[] TITLES = TargetsColumns.create(null).getTitles();
-	public static final int[] BOUNDS = TargetsColumns.create(null).getBounds();
+	private static final Stream<TargetColumn[]> TARGET_COLUMNS = Stream.of(TargetsColumns.CHEMICAL_IDENTIFIERS, TargetsColumns.CHROMATOGRAPHY_RELATED, TargetsColumns.BIOLOGICAL_IDENTIFIERS);
+	public static final Collection<TargetColumn> TRAILING_COLUMNS = TARGET_COLUMNS.flatMap(Arrays::stream).toList();
 
-	private TargetsColumns targetsColumns = TargetsColumns.create(null);
+	public static final String[] TITLES = TargetsColumns.create(null, TRAILING_COLUMNS).getTitles();
+	public static final int[] BOUNDS = TargetsColumns.create(null, TRAILING_COLUMNS).getBounds();
+
+	private TargetsColumns targetsColumns = TargetsColumns.create(null, TRAILING_COLUMNS);
 	private final Map<String, DecimalFormat> metricFormats = new HashMap<>();
 
 	public void setColumns(TargetsColumns targetsColumns) {

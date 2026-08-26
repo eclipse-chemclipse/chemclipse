@@ -24,7 +24,7 @@ import org.eclipse.jface.viewers.Viewer;
 
 public class TargetsComparator extends AbstractRecordTableComparator {
 
-	private TargetsColumns targetsColumns = TargetsColumns.create(null);
+	private TargetsColumns targetsColumns = TargetsColumns.create(null, TargetsLabelProvider.TRAILING_COLUMNS);
 
 	public void setColumns(TargetsColumns targetsColumns) {
 

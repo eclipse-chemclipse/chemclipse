@@ -116,7 +116,8 @@ public class TargetsListUI extends ExtendedTableViewer {
 			return;
 		}
 
-		TargetsColumns columns = TargetsColumns.create(input instanceof Collection<?> collection ? collection : null);
+		Collection<?> leadingColums = input instanceof Collection<?> collection ? collection : null;
+		TargetsColumns columns = TargetsColumns.create(leadingColums, TargetsLabelProvider.TRAILING_COLUMNS);
 		if(columns.matches(targetsColumns)) {
 			return;
 		}

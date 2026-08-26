@@ -32,16 +32,21 @@ public class TargetsColumns {
 			TargetColumn.VERIFIED, //
 			TargetColumn.RATING, //
 			TargetColumn.NAME, //
-			TargetColumn.CAS //
+
 	};
 
-	private static final TargetColumn[] COLUMNS_TRAILING = { //
+	public static final TargetColumn[] CHEMICAL_IDENTIFIERS = { //
+			TargetColumn.CAS, //
 			TargetColumn.FORMULA, //
 			TargetColumn.SMILES, //
 			TargetColumn.INCHI, //
 			TargetColumn.INCHI_KEY, //
 			TargetColumn.MOL_WEIGHT, //
 			TargetColumn.EXACT_MASS, //
+	};
+
+	private static final TargetColumn[] DATABASE_RELATED = { //
+
 			TargetColumn.ADVICE, //
 			TargetColumn.IDENTIFIER, //
 			TargetColumn.MISCELLANEOUS, //
@@ -50,8 +55,15 @@ public class TargetsColumns {
 			TargetColumn.DATABASE_INDEX, //
 			TargetColumn.CONTRIBUTOR, //
 			TargetColumn.REFERENCE_ID, //
+
+	};
+
+	public static final TargetColumn[] CHROMATOGRAPHY_RELATED = { //
 			TargetColumn.RETENTION_TIME, //
 			TargetColumn.RETENTION_INDEX, //
+	};
+
+	public static final TargetColumn[] BIOLOGICAL_IDENTIFIERS = { //
 			TargetColumn.NCBI_TAXONOMY, //
 			TargetColumn.GENBANK_ACCESSION //
 	};
@@ -63,12 +75,12 @@ public class TargetsColumns {
 	private final List<TargetColumn> columns = new ArrayList<>();
 	private final List<IComparisonMetric> metrics = new ArrayList<>();
 
-	public static TargetsColumns create(Collection<?> targets) {
+	public static TargetsColumns create(Collection<?> targets, Collection<TargetColumn> columnsTrailing) {
 
-		return new TargetsColumns(collectMetrics(targets));
+		return new TargetsColumns(collectMetrics(targets), columnsTrailing);
 	}
 
-	private TargetsColumns(List<IComparisonMetric> comparisonMetrics) {
+	private TargetsColumns(List<IComparisonMetric> comparisonMetrics, Collection<TargetColumn> identifiers) {
 
 		List<String> columnTitles = new ArrayList<>();
 		List<Integer> columnBounds = new ArrayList<>();
@@ -81,7 +93,11 @@ public class TargetsColumns {
 			add(null, metric, getTitle(metric, columnTitles), WIDTH_METRIC, columnTitles, columnBounds);
 		}
 
-		for(TargetColumn column : COLUMNS_TRAILING) {
+		for(TargetColumn column : DATABASE_RELATED) {
+			add(column, null, column.getTitle(), column.getWidth(), columnTitles, columnBounds);
+		}
+
+		for(TargetColumn column : identifiers) {
 			add(column, null, column.getTitle(), column.getWidth(), columnTitles, columnBounds);
 		}
 
