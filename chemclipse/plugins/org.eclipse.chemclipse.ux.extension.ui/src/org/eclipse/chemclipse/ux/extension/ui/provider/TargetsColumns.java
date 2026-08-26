@@ -10,7 +10,7 @@
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
-package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider;
+package org.eclipse.chemclipse.ux.extension.ui.provider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -185,12 +185,12 @@ public class TargetsColumns {
 	private static Map<String, String> createClassicLabels() {
 
 		Map<String, String> labels = new HashMap<>();
-		labels.put(ComparisonMetricsClassic.MATCH_FACTOR, TargetsLabelProvider.MATCH_FACTOR);
-		labels.put(ComparisonMetricsClassic.REVERSE_MATCH_FACTOR, TargetsLabelProvider.REVERSE_MATCH_FACTOR);
-		labels.put(ComparisonMetricsClassic.MATCH_FACTOR_DIRECT, TargetsLabelProvider.MATCH_FACTOR_DIRECT);
-		labels.put(ComparisonMetricsClassic.REVERSE_MATCH_FACTOR_DIRECT, TargetsLabelProvider.REVERSE_MATCH_FACTOR_DIRECT);
-		labels.put(ComparisonMetricsClassic.PROBABILITY, TargetsLabelProvider.PROBABILITY);
-		labels.put(ComparisonMetricsClassic.IN_LIB_FACTOR, TargetsLabelProvider.INLIB_FACTOR);
+		labels.put(ComparisonMetricsClassic.MATCH_FACTOR, "Match Factor");
+		labels.put(ComparisonMetricsClassic.REVERSE_MATCH_FACTOR, "Reverse Match Factor");
+		labels.put(ComparisonMetricsClassic.MATCH_FACTOR_DIRECT, "Match Factor Direct");
+		labels.put(ComparisonMetricsClassic.REVERSE_MATCH_FACTOR_DIRECT, "Reverse Match Factor Direct");
+		labels.put(ComparisonMetricsClassic.PROBABILITY, "Probability");
+		labels.put(ComparisonMetricsClassic.IN_LIB_FACTOR, "InLib Factor");
 
 		return labels;
 	}

@@ -20,6 +20,8 @@ import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.support.ui.swt.AbstractRecordTableComparator;
+import org.eclipse.chemclipse.ux.extension.ui.provider.TargetColumn;
+import org.eclipse.chemclipse.ux.extension.ui.provider.TargetsColumns;
 import org.eclipse.jface.viewers.Viewer;
 
 public class TargetsComparator extends AbstractRecordTableComparator {
