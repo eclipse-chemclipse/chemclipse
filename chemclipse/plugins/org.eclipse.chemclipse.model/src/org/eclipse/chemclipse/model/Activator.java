@@ -123,14 +123,20 @@ public class Activator implements BundleActivator {
 
 	public List<IDatabaseResolverService> getDatabaseResolverServices() {
 
-		List<IDatabaseResolverService> services = new ArrayList<>();
-		for(Object object : databaseResolverServiceTracker.getServices()) {
+		List<IDatabaseResolverService> resolverServices = new ArrayList<>();
+
+		Object[] services = databaseResolverServiceTracker.getServices();
+		if(services == null) {
+			return resolverServices;
+		}
+
+		for(Object object : services) {
 			if(object instanceof IDatabaseResolverService service) {
-				services.add(service);
+				resolverServices.add(service);
 			}
 		}
 
-		return services;
+		return resolverServices;
 	}
 
 	private void startServices(BundleContext context) {
