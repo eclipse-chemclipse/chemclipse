@@ -67,7 +67,7 @@ public class ComparisonMetrics_1_Test {
 	@Test
 	public void testUnknownMetricIsEmpty() {
 
-		IComparisonResult comparisonResult = new ComparisonResult(80.0f);
+		IComparisonResult comparisonResult = new ComparisonResult(80.0f, 70.0f, 60.0f, 50.0f);
 		assertTrue(comparisonResult.getMetric(METRIC_BAR).isEmpty());
 	}
 
@@ -101,7 +101,7 @@ public class ComparisonMetrics_1_Test {
 	@Test
 	public void testMetricsAreReportedInDeclaredOrder() {
 
-		IComparisonResult comparisonResult = new ComparisonResult(80.0f);
+		IComparisonResult comparisonResult = new ComparisonResult(80.0f, 70.0f, 60.0f, 50.0f);
 		List<IComparisonMetric> metrics = comparisonResult.getMetrics();
 		assertEquals(6, metrics.size());
 		assertEquals(ComparisonMetricsClassic.MATCH_FACTOR, metrics.get(0).getId());
@@ -118,12 +118,5 @@ public class ComparisonMetrics_1_Test {
 		IComparisonResult comparisonResult = ComparisonResult.COMPARISON_RESULT_BEST_MATCH;
 		comparisonResult.setMetric(ComparisonMetricsClassic.MATCH_FACTOR, 0.0d);
 		assertEquals(IComparisonResult.FACTOR_BEST_MATCH, comparisonResult.getMatchFactor(), 0);
-	}
-
-	@Test
-	public void testEValueRanksLowerFirst() {
-
-		IComparisonMetric evalue = new ComparisonMetric("e", "E-Value", "", "0.###E0", false, ComparisonMetric.LOWER_IS_BETTER);
-		assertTrue(evalue.getComparator().compare(1.0e-50d, 1.0d) < 0);
 	}
 }

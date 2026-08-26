@@ -55,7 +55,8 @@ public abstract class AbstractComparisonResult implements IComparisonResult {
 
 	protected AbstractComparisonResult(float matchFactor) {
 
-		this(matchFactor, matchFactor, matchFactor, matchFactor);
+		this(ComparisonMetricsSimple.ALGORITHM_SIMPLE);
+		putMetric(ComparisonMetricsClassic.MATCH_FACTOR, matchFactor);
 	}
 
 	protected AbstractComparisonResult(float matchFactor, float reverseMatchFactor, float matchFactorDirect, float reverseMatchFactorDirect) {
