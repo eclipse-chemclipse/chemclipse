@@ -14,6 +14,7 @@ package org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.io;
 
 import java.io.File;
 import java.math.BigInteger;
+import java.util.regex.Pattern;
 
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.BlastMetrics;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.BlastOutput2;
@@ -30,6 +31,8 @@ import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 
 public abstract class AbstractNucleotideBLAST {
 
+	private static final Pattern ENDS_WITH_DOT_NUMBER = Pattern.compile("\\.\\d+$");
+
 	public static void transferTargets(IChromatogramWSD chromatogram, BlastOutput2 blastOutput) {
 
 		if(blastOutput == null) {
@@ -45,7 +48,7 @@ public abstract class AbstractNucleotideBLAST {
 			String db = report.getSearchTarget().getTarget().getDb();
 			File dbPath = new File(db);
 			if(dbPath.getParentFile().exists()) {
-				libraryInformation.setDatabase(dbPath.getName());
+				libraryInformation.setDatabase(stripDotNumberSuffix(dbPath.getName()));
 			} else {
 				libraryInformation.setDatabase(db); // web
 			}
@@ -109,5 +112,14 @@ public abstract class AbstractNucleotideBLAST {
 		int covered = Math.abs(queryTo.intValue() - queryFrom.intValue()) + 1;
 
 		return 100.0d * covered / search.getQueryLen().intValue();
+	}
+
+	// treat multi-volume databases as one
+	private static String stripDotNumberSuffix(String value) {
+
+		if(ENDS_WITH_DOT_NUMBER.matcher(value).find()) {
+			return ENDS_WITH_DOT_NUMBER.matcher(value).replaceFirst("");
+		}
+		return value;
 	}
 }
