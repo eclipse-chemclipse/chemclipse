@@ -82,6 +82,6 @@ public class UnknownTargetBuilder {
 			matchQuality = MAX_FACTOR;
 		}
 
-		return new ComparisonResult(matchQuality, 0.0f, 0.0f, 0.0f);
+		return new ComparisonResult(matchQuality);
 	}
 }
