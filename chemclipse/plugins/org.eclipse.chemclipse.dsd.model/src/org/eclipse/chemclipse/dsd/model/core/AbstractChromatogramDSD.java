@@ -12,7 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.dsd.model.core;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.eclipse.chemclipse.wsd.model.core.AbstractChromatogramWSD;
@@ -22,7 +22,7 @@ public abstract class AbstractChromatogramDSD extends AbstractChromatogramWSD im
 	private static final long serialVersionUID = 121187623672499533L;
 
 	private String nucleotideSequence = "";
-	private Map<Float, Nucleobase> nucleobasePerWavelength = new HashMap<>();
+	private Map<Float, Nucleobase> nucleobasePerWavelength = new LinkedHashMap<>();
 
 	@Override
 	public String getNucleotideSequence() {
