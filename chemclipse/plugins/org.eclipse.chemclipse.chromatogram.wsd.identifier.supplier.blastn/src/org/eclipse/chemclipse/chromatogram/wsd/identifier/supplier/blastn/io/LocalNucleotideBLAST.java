@@ -42,12 +42,12 @@ public class LocalNucleotideBLAST extends AbstractNucleotideBLAST {
 
 		File fasta = File.createTempFile(chromatogram.getSampleName() + "_", ".fsa");
 		writeFASTA(chromatogram, fasta);
-		File xml = File.createTempFile(chromatogram.getSampleName() + "_", ".xml");
-		int numberOfHits = runBLAST(chromatogram, fasta, xml, settings, monitor);
+
+		int numberOfHits = runBLAST(chromatogram, fasta, settings, monitor);
 		return numberOfHits;
 	}
 
-	private static int runBLAST(IChromatogramDSD chromatogram, File fasta, File xml, LocalIdentifierSettings settings, IProgressMonitor monitor) throws IOException, InterruptedException {
+	private static int runBLAST(IChromatogramDSD chromatogram, File fasta, LocalIdentifierSettings settings, IProgressMonitor monitor) throws IOException, InterruptedException {
 
 		int numberOfHits = 0;
 		BlastDatabaseInfo databaseInfo = readDatabaseInfo(settings);
@@ -59,12 +59,31 @@ public class LocalNucleotideBLAST extends AbstractNucleotideBLAST {
 			if(monitor.isCanceled()) {
 				return numberOfHits;
 			}
-			ProcessBuilder processBuilder = buildProcessBLAST(volume, databaseInfo.totalBases(), settings, fasta, xml);
-			Process process = processBuilder.start();
+			ProcessBuilder processBuilderBLAST;
+			File xml = null;
+			File asn = null;
+			if(databaseInfo.volumes().size() == 1) {
+				xml = File.createTempFile(chromatogram.getSampleName() + "_", ".xml");
+				processBuilderBLAST = buildProcessBLAST(volume, 16, databaseInfo.totalBases(), settings, fasta, xml);
+			} else {
+				asn = File.createTempFile(chromatogram.getSampleName() + "_", ".asn");
+				processBuilderBLAST = buildProcessBLAST(volume, 11, databaseInfo.totalBases(), settings, fasta, asn);
+			}
+			Process process = processBuilderBLAST.start();
 			process.getErrorStream().transferTo(loggerErrorStream());
 			int exitCode = process.waitFor();
 			if(exitCode == 0) {
 				try {
+					if(databaseInfo.volumes().size() > 1) {
+						xml = File.createTempFile(chromatogram.getSampleName() + "_", ".xml");
+						ProcessBuilder processBuilderFormatter = buildProcessFormatterBLAST(asn, 16, settings, xml);
+						Process processFormatter = processBuilderFormatter.start();
+						processFormatter.getErrorStream().transferTo(loggerErrorStream());
+						exitCode = processFormatter.waitFor();
+						if(exitCode != 0) {
+							throw new IOException("blast_formatter exited with errors.");
+						}
+					}
 					InputSource inputSource = new InputSource(new FileInputStream(xml));
 					BlastOutput2 blastOutput = XmlReaderVersion2.getBlastOutput(inputSource);
 					transferTargets(chromatogram, blastOutput);
@@ -122,7 +141,7 @@ public class LocalNucleotideBLAST extends AbstractNucleotideBLAST {
 		}
 	}
 
-	private static ProcessBuilder buildProcessBLAST(String volume, long totalBases, LocalIdentifierSettings settings, File fasta, File xml) {
+	private static ProcessBuilder buildProcessBLAST(String volume, int outputFormat, long totalBases, LocalIdentifierSettings settings, File fasta, File resultFile) {
 
 		String pathPrefix = "";
 		if(!PreferenceSupplier.getExecutableFolder().isEmpty() && new File(PreferenceSupplier.getExecutableFolder()).exists()) {
@@ -144,10 +163,34 @@ public class LocalNucleotideBLAST extends AbstractNucleotideBLAST {
 		processBuilder.command().add(String.valueOf(totalBases));
 
 		processBuilder.command().add("-outfmt");
-		processBuilder.command().add("16");
+		processBuilder.command().add(String.valueOf(outputFormat));
 
 		processBuilder.command().add("-out");
-		processBuilder.command().add(xml.getAbsolutePath());
+		processBuilder.command().add(resultFile.getAbsolutePath());
+
+		return processBuilder;
+	}
+
+	private static ProcessBuilder buildProcessFormatterBLAST(File asn, int outputFormat, LocalIdentifierSettings settings, File outFile) {
+
+		String pathPrefix = "";
+		if(!PreferenceSupplier.getExecutableFolder().isEmpty() && new File(PreferenceSupplier.getExecutableFolder()).exists()) {
+			pathPrefix = PreferenceSupplier.getExecutableFolder() + File.separator;
+		}
+		ProcessBuilder processBuilder = new ProcessBuilder(pathPrefix + "blast_formatter");
+		processBuilder.environment().put("BLASTDB", PreferenceSupplier.getDatabaseFolder());
+
+		processBuilder.command().add("-archive");
+		processBuilder.command().add(asn.getAbsolutePath());
+
+		processBuilder.command().add("-outfmt");
+		processBuilder.command().add(String.valueOf(outputFormat));
+
+		processBuilder.command().add("-max_target_seqs");
+		processBuilder.command().add(String.valueOf(500));
+
+		processBuilder.command().add("-out");
+		processBuilder.command().add(outFile.getAbsolutePath());
 
 		return processBuilder;
 	}
