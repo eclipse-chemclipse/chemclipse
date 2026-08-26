@@ -14,15 +14,25 @@
 package org.eclipse.chemclipse.ux.extension.msd.ui.internal.provider;
 
 import java.text.DecimalFormat;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.OptionalDouble;
+import java.util.stream.Stream;
 
+import org.eclipse.chemclipse.model.identifier.IComparisonMetric;
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
+import org.eclipse.chemclipse.model.support.DatabaseResolver;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
-import org.eclipse.chemclipse.rcp.ui.icons.core.RatingImageSupport;
+import org.eclipse.chemclipse.support.text.ValueFormat;
 import org.eclipse.chemclipse.support.ui.provider.AbstractChemClipseLabelProvider;
+import org.eclipse.chemclipse.ux.extension.ui.provider.IdentificationTargetSupport;
+import org.eclipse.chemclipse.ux.extension.ui.provider.TargetColumn;
+import org.eclipse.chemclipse.ux.extension.ui.provider.TargetsColumns;
 import org.eclipse.swt.graphics.Image;
 
 public class TargetsLabelProvider extends AbstractChemClipseLabelProvider {
@@ -46,148 +56,107 @@ public class TargetsLabelProvider extends AbstractChemClipseLabelProvider {
 	public static final String NCBI_TAXONOMY = "NCBI Taxonomy ID";
 	public static final String GENBANK_ACCESSION = "GenBank Accession";
 
-	public static final int INDEX_RATING = 1;
-	public static final int INDEX_NAME = 2;
+	private static final Stream<TargetColumn> TARGET_COLUMNS = Stream.of(TargetsColumns.BIOLOGICAL_IDENTIFIERS);
+	public static final Collection<TargetColumn> TRAILING_COLUMNS = TARGET_COLUMNS.toList();
 
-	public static final String[] TITLES = { //
-			VERIFIED, //
-			RATING, //
-			NAME, //
-			MATCH_FACTOR, //
-			REVERSE_MATCH_FACTOR, //
-			MATCH_FACTOR_DIRECT, //
-			REVERSE_MATCH_FACTOR_DIRECT, //
-			PROBABILITY, //
-			ADVICE, //
-			IDENTIFIER, //
-			MISCELLANEOUS, //
-			COMMENTS, //
-			DATABASE, //
-			DATABASE_INDEX, //
-			CONTRIBUTOR, //
-			REFERENCE_ID, //
-			NCBI_TAXONOMY, //
-			GENBANK_ACCESSION, //
-	};
+	public static final String[] TITLES = TargetsColumns.create(null, TRAILING_COLUMNS).getTitles();
+	public static final int[] BOUNDS = TargetsColumns.create(null, TRAILING_COLUMNS).getBounds();
 
-	public static final int[] BOUNDS = { //
-			30, //
-			30, //
-			200, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-			100, //
-	};
+	private TargetsColumns targetsColumns = TargetsColumns.create(null, TRAILING_COLUMNS);
+	private final Map<String, DecimalFormat> metricFormats = new HashMap<>();
+
+	public void setColumns(TargetsColumns targetsColumns) {
+
+		this.targetsColumns = targetsColumns;
+	}
 
 	@Override
 	public Image getColumnImage(Object element, int columnIndex) {
 
-		if(columnIndex == 0) {
-			/*
-			 * CheckBox
-			 */
-			if(element instanceof IIdentificationTarget identificationTarget) {
-				if(identificationTarget.isVerified()) {
-					return ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SELECTED, IApplicationImageProvider.SIZE_16x16);
-				} else {
-					return ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DESELECTED, IApplicationImageProvider.SIZE_16x16);
-				}
+		if(element instanceof IIdentificationTarget identificationTarget) {
+			TargetColumn column = targetsColumns.getColumn(columnIndex);
+			if(column == null) {
+				return null;
 			}
-		} else if(columnIndex == INDEX_RATING) {
-			/*
-			 * Rating
-			 */
-			if(element instanceof IIdentificationTarget identificationTarget) {
-				IComparisonResult comparisonResult = identificationTarget.getComparisonResult();
-				String fileName = RatingImageSupport.getImageName(comparisonResult.getRatingSupplier().getScore());
-				if(!fileName.isEmpty()) {
-					return ApplicationImageFactory.getInstance().getImage(fileName, IApplicationImageProvider.SIZE_16x16);
-				}
+
+			switch(column) {
+				case VERIFIED:
+					/*
+					 * CheckBox
+					 */
+					if(identificationTarget.isVerified()) {
+						return ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SELECTED, IApplicationImageProvider.SIZE_16x16);
+					} else {
+						return ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DESELECTED, IApplicationImageProvider.SIZE_16x16);
+					}
+				case RATING:
+					return IdentificationTargetSupport.getRatingSymbol(identificationTarget);
+				case NAME:
+					return getImage(element);
+				default:
+					return null;
 			}
-		} else if(columnIndex == INDEX_NAME) {
-			/*
-			 * Entry
-			 */
-			return getImage(element);
 		}
+
 		return null;
 	}
 
 	@Override
 	public String getColumnText(Object element, int columnIndex) {
 
-		DecimalFormat decimalFormat = getDecimalFormat();
-
 		String text = "";
 		if(element instanceof IIdentificationTarget identificationTarget) {
 			ILibraryInformation libraryInformation = identificationTarget.getLibraryInformation();
 			IComparisonResult comparisonResult = identificationTarget.getComparisonResult();
 
-			switch(columnIndex) {
-				case 0: // Verified
+			IComparisonMetric metric = targetsColumns.getMetric(columnIndex);
+			if(metric != null) {
+				return getMetricText(comparisonResult, metric);
+			}
+
+			TargetColumn column = targetsColumns.getColumn(columnIndex);
+			if(column == null) {
+				return "n.v.";
+			}
+
+			switch(column) {
+				case VERIFIED:
 					text = "";
 					break;
-				case 1: // Rating
+				case RATING:
 					text = "";
 					break;
-				case 2: // Name
+				case NAME:
 					text = libraryInformation.getName();
 					break;
-				case 3: // MQ
-					text = decimalFormat.format(comparisonResult.getMatchFactor());
-					break;
-				case 4: // RMQ
-					text = decimalFormat.format(comparisonResult.getReverseMatchFactor());
-					break;
-				case 5: // MQD
-					text = decimalFormat.format(comparisonResult.getMatchFactorDirect());
-					break;
-				case 6: // RMQD
-					text = decimalFormat.format(comparisonResult.getReverseMatchFactorDirect());
-					break;
-				case 7: // RMQD
-					text = decimalFormat.format(comparisonResult.getProbability());
-					break;
-				case 8: // Advise
+				case ADVICE:
 					text = comparisonResult.getRatingSupplier().getAdvise();
 					break;
-				case 9: // Identifier
+				case IDENTIFIER:
 					text = identificationTarget.getIdentifier();
 					break;
-				case 10: // Miscellaneous
+				case MISCELLANEOUS:
 					text = libraryInformation.getMiscellaneous();
 					break;
-				case 11: // Comments
+				case COMMENTS:
 					text = libraryInformation.getComments();
 					break;
-				case 12:
-					text = libraryInformation.getDatabase();
+				case DATABASE:
+					text = DatabaseResolver.getDatabaseName(libraryInformation.getDatabase());
 					break;
-				case 13:
+				case DATABASE_INDEX:
 					text = Integer.toString(libraryInformation.getDatabaseIndex());
 					break;
-				case 14:
+				case CONTRIBUTOR:
 					text = libraryInformation.getContributor();
 					break;
-				case 15:
+				case REFERENCE_ID:
 					text = libraryInformation.getReferenceIdentifier();
 					break;
-				case 16:
-					text = String.valueOf(libraryInformation.getTaxonomyIdentifierNCBI());
+				case NCBI_TAXONOMY:
+					text = Integer.toString(libraryInformation.getTaxonomyIdentifierNCBI());
 					break;
-				case 17:
+				case GENBANK_ACCESSION:
 					text = libraryInformation.getGenBankAccesion();
 					break;
 				default:
@@ -195,6 +164,17 @@ public class TargetsLabelProvider extends AbstractChemClipseLabelProvider {
 			}
 		}
 		return text;
+	}
+
+	private String getMetricText(IComparisonResult comparisonResult, IComparisonMetric metric) {
+
+		OptionalDouble value = comparisonResult.getMetric(metric.getId());
+		if(value.isEmpty()) {
+			return "";
+		}
+
+		DecimalFormat decimalFormat = metricFormats.computeIfAbsent(metric.getFormat(), ValueFormat::getDecimalFormatEnglish);
+		return decimalFormat.format(value.getAsDouble());
 	}
 
 	@Override

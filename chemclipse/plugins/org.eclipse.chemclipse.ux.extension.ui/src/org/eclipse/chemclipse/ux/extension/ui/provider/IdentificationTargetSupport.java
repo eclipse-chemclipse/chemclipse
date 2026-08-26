@@ -11,7 +11,7 @@
  * Philip Wenig - initial API and implementation
  * Matthias Mailänder - select the rating symbol by score
  *******************************************************************************/
-package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider;
+package org.eclipse.chemclipse.ux.extension.ui.provider;
 
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;

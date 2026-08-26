@@ -13,13 +13,25 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.msd.ui.internal.provider;
 
+import java.util.OptionalDouble;
+
+import org.eclipse.chemclipse.model.identifier.IComparisonMetric;
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.support.ui.swt.AbstractRecordTableComparator;
+import org.eclipse.chemclipse.ux.extension.ui.provider.TargetColumn;
+import org.eclipse.chemclipse.ux.extension.ui.provider.TargetsColumns;
 import org.eclipse.jface.viewers.Viewer;
 
 public class TargetsComparator extends AbstractRecordTableComparator {
+
+	private TargetsColumns targetsColumns = TargetsColumns.create(null, TargetsLabelProvider.TRAILING_COLUMNS);
+
+	public void setColumns(TargetsColumns targetsColumns) {
+
+		this.targetsColumns = targetsColumns;
+	}
 
 	@Override
 	public int compare(Viewer viewer, Object e1, Object e2) {
@@ -31,68 +43,66 @@ public class TargetsComparator extends AbstractRecordTableComparator {
 			IComparisonResult comparisonResult1 = entry1.getComparisonResult();
 			ILibraryInformation libraryInformation2 = entry2.getLibraryInformation();
 			IComparisonResult comparisonResult2 = entry2.getComparisonResult();
+			int columnIndex = getPropertyIndex();
 
-			switch(getPropertyIndex()) {
-				case 0: // Verified
-					sortOrder = Boolean.compare(entry2.isVerified(), entry1.isVerified());
-					if(sortOrder == 0) {
-						sortOrder = getAdditionalSortOrder(comparisonResult1, comparisonResult2);
-					}
-					break;
-				case 1: // Rating
-					sortOrder = Float.compare(comparisonResult2.getRatingSupplier().getScore(), comparisonResult1.getRatingSupplier().getScore());
-					if(sortOrder == 0) {
-						sortOrder = getAdditionalSortOrder(comparisonResult1, comparisonResult2);
-					}
-					break;
-				case 2: // Name
-					sortOrder = libraryInformation2.getName().compareTo(libraryInformation1.getName());
-					break;
-				case 3: // Match Factor
-					sortOrder = Float.compare(comparisonResult2.getMatchFactor(), comparisonResult1.getMatchFactor());
-					break;
-				case 4: // Reverse Match Factor
-					sortOrder = Float.compare(comparisonResult2.getReverseMatchFactor(), comparisonResult1.getReverseMatchFactor());
-					break;
-				case 5: // Match Factor Direct
-					sortOrder = Float.compare(comparisonResult2.getMatchFactorDirect(), comparisonResult1.getMatchFactorDirect());
-					break;
-				case 6: // Reverse Match Factor Direct
-					sortOrder = Float.compare(comparisonResult2.getReverseMatchFactorDirect(), comparisonResult1.getReverseMatchFactorDirect());
-					break;
-				case 7: // Probability
-					sortOrder = Float.compare(comparisonResult2.getProbability(), comparisonResult1.getProbability());
-					break;
-				case 8: // Advise
-					String advise2 = comparisonResult2.getRatingSupplier().getAdvise();
-					String advise1 = comparisonResult1.getRatingSupplier().getAdvise();
-					if(advise2 != null && advise1 != null) {
-						sortOrder = advise2.compareTo(advise1);
-					}
-					break;
-				case 9: // Identifier
-					sortOrder = entry2.getIdentifier().compareTo(entry1.getIdentifier());
-					break;
-				case 10: // Miscellaneous
-					sortOrder = libraryInformation2.getMiscellaneous().compareTo(libraryInformation1.getMiscellaneous());
-					break;
-				case 11: // Comments
-					sortOrder = libraryInformation2.getComments().compareTo(libraryInformation1.getComments());
-					break;
-				case 12: // DB
-					sortOrder = libraryInformation2.getDatabase().compareTo(libraryInformation1.getDatabase());
-					break;
-				case 13: // DB Index
-					sortOrder = Integer.compare(libraryInformation2.getDatabaseIndex(), libraryInformation1.getDatabaseIndex());
-					break;
-				case 14: // Contributor
-					sortOrder = libraryInformation2.getContributor().compareTo(libraryInformation1.getContributor());
-					break;
-				case 15: // Reference Identifier
-					sortOrder = libraryInformation2.getReferenceIdentifier().compareTo(libraryInformation1.getReferenceIdentifier());
-					break;
-				default:
-					sortOrder = 0;
+			IComparisonMetric metric = targetsColumns.getMetric(columnIndex);
+			TargetColumn column = targetsColumns.getColumn(columnIndex);
+			if(metric != null) {
+				sortOrder = compareMetric(metric, comparisonResult1, comparisonResult2);
+			} else if(column != null) {
+				switch(column) {
+					case VERIFIED:
+						sortOrder = Boolean.compare(entry2.isVerified(), entry1.isVerified());
+						if(sortOrder == 0) {
+							sortOrder = getAdditionalSortOrder(comparisonResult1, comparisonResult2);
+						}
+						break;
+					case RATING:
+						sortOrder = Float.compare(IComparisonResult.getScore(comparisonResult2), IComparisonResult.getScore(comparisonResult1));
+						if(sortOrder == 0) {
+							sortOrder = getAdditionalSortOrder(comparisonResult1, comparisonResult2);
+						}
+						break;
+					case NAME:
+						sortOrder = libraryInformation2.getName().compareTo(libraryInformation1.getName());
+						break;
+					case ADVICE:
+						String advise2 = comparisonResult2.getRatingSupplier().getAdvise();
+						String advise1 = comparisonResult1.getRatingSupplier().getAdvise();
+						if(advise2 != null && advise1 != null) {
+							sortOrder = advise2.compareTo(advise1);
+						}
+						break;
+					case IDENTIFIER:
+						sortOrder = entry2.getIdentifier().compareTo(entry1.getIdentifier());
+						break;
+					case MISCELLANEOUS:
+						sortOrder = libraryInformation2.getMiscellaneous().compareTo(libraryInformation1.getMiscellaneous());
+						break;
+					case COMMENTS:
+						sortOrder = libraryInformation2.getComments().compareTo(libraryInformation1.getComments());
+						break;
+					case DATABASE:
+						sortOrder = libraryInformation2.getDatabase().compareTo(libraryInformation1.getDatabase());
+						break;
+					case DATABASE_INDEX:
+						sortOrder = Integer.compare(libraryInformation2.getDatabaseIndex(), libraryInformation1.getDatabaseIndex());
+						break;
+					case CONTRIBUTOR:
+						sortOrder = libraryInformation2.getContributor().compareTo(libraryInformation1.getContributor());
+						break;
+					case REFERENCE_ID:
+						sortOrder = libraryInformation2.getReferenceIdentifier().compareTo(libraryInformation1.getReferenceIdentifier());
+						break;
+					case NCBI_TAXONOMY:
+						sortOrder = Integer.compare(libraryInformation2.getTaxonomyIdentifierNCBI(), libraryInformation1.getTaxonomyIdentifierNCBI());
+						break;
+					case GENBANK_ACCESSION:
+						sortOrder = libraryInformation2.getGenBankAccesion().compareTo(libraryInformation1.getGenBankAccesion());
+						break;
+					default:
+						sortOrder = 0;
+				}
 			}
 		}
 		if(getDirection() == ASCENDING) {
@@ -101,43 +111,29 @@ public class TargetsComparator extends AbstractRecordTableComparator {
 		return sortOrder;
 	}
 
-	/**
-	 * Calculates the additional sort order by MF, RMF, MFD, RMFD and Probability
-	 *
-	 * @param comparisonResult1
-	 * @param comparisonResult2
-	 * @return int
-	 */
 	private int getAdditionalSortOrder(IComparisonResult comparisonResult1, IComparisonResult comparisonResult2) {
 
-		/*
-		 * Match Factor
-		 */
-		int sortOrder = Float.compare(comparisonResult2.getMatchFactor(), comparisonResult1.getMatchFactor());
-		if(sortOrder == 0) {
-			/*
-			 * Reverse Match Factor
-			 */
-			sortOrder = Float.compare(comparisonResult2.getReverseMatchFactor(), comparisonResult1.getReverseMatchFactor());
-			if(sortOrder == 0) {
-				/*
-				 * Match Factor Direct
-				 */
-				sortOrder = Float.compare(comparisonResult2.getMatchFactorDirect(), comparisonResult1.getMatchFactorDirect());
-				if(sortOrder == 0) {
-					/*
-					 * Reverse Match Factor
-					 */
-					sortOrder = Float.compare(comparisonResult2.getReverseMatchFactorDirect(), comparisonResult1.getReverseMatchFactorDirect());
-					if(sortOrder == 0) {
-						/*
-						 * Probability
-						 */
-						sortOrder = Float.compare(comparisonResult2.getProbability(), comparisonResult1.getProbability());
-					}
-				}
+		for(IComparisonMetric metric : comparisonResult1.getMetrics()) {
+			int sortOrder = compareMetric(metric, comparisonResult1, comparisonResult2);
+			if(sortOrder != 0) {
+				return sortOrder;
 			}
 		}
-		return sortOrder;
+
+		return 0;
+	}
+
+	private static int compareMetric(IComparisonMetric metric, IComparisonResult comparisonResult1, IComparisonResult comparisonResult2) {
+
+		OptionalDouble value1 = comparisonResult1.getMetric(metric.getId());
+		OptionalDouble value2 = comparisonResult2.getMetric(metric.getId());
+
+		if(value1.isEmpty()) {
+			return value2.isEmpty() ? 0 : 1;
+		} else if(value2.isEmpty()) {
+			return -1;
+		}
+
+		return metric.getComparator().compare(value1.getAsDouble(), value2.getAsDouble());
 	}
 }

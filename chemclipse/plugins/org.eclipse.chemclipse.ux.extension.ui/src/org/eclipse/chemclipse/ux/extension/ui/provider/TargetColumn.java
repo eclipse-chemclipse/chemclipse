@@ -10,9 +10,7 @@
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
-package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider;
-
-import org.eclipse.chemclipse.ux.extension.xxd.ui.l10n.ExtensionMessages;
+package org.eclipse.chemclipse.ux.extension.ui.provider;
 
 public enum TargetColumn {
 
@@ -42,26 +40,26 @@ public enum TargetColumn {
 	public String getTitle() {
 
 		return switch(this) {
-			case VERIFIED -> ExtensionMessages.verified;
-			case RATING -> ExtensionMessages.rating;
-			case NAME -> ExtensionMessages.name;
+			case VERIFIED -> "Verified";
+			case RATING -> "Rating";
+			case NAME -> "Name";
 			case CAS -> "CAS";
-			case FORMULA -> ExtensionMessages.formula;
+			case FORMULA -> "Formula";
 			case SMILES -> "SMILES";
 			case INCHI -> "InChI";
 			case INCHI_KEY -> "InChI Key";
-			case MOL_WEIGHT -> ExtensionMessages.molWeight;
-			case EXACT_MASS -> ExtensionMessages.excactMass;
-			case ADVICE -> ExtensionMessages.advice;
-			case IDENTIFIER -> ExtensionMessages.identifier;
-			case MISCELLANEOUS -> ExtensionMessages.miscellaneous;
-			case COMMENTS -> ExtensionMessages.comments;
-			case DATABASE -> ExtensionMessages.database;
-			case DATABASE_INDEX -> ExtensionMessages.databaseIndex;
-			case CONTRIBUTOR -> ExtensionMessages.contributor;
-			case REFERENCE_ID -> ExtensionMessages.referenceID;
-			case RETENTION_TIME -> ExtensionMessages.retentionTime;
-			case RETENTION_INDEX -> ExtensionMessages.retentionIndex;
+			case MOL_WEIGHT -> "Mol Weight";
+			case EXACT_MASS -> "Exact Mass";
+			case ADVICE -> "Advice";
+			case IDENTIFIER -> "Identifier";
+			case MISCELLANEOUS -> "Miscellaneous";
+			case COMMENTS -> "Comments";
+			case DATABASE -> "Database";
+			case DATABASE_INDEX -> "Database Index";
+			case CONTRIBUTOR -> "Contributor";
+			case REFERENCE_ID -> "Reference ID";
+			case RETENTION_TIME -> "Retention Time";
+			case RETENTION_INDEX -> "Retention Index";
 			case NCBI_TAXONOMY -> "NCBI Taxonomy ID";
 			case GENBANK_ACCESSION -> "GenBank Accession";
 		};

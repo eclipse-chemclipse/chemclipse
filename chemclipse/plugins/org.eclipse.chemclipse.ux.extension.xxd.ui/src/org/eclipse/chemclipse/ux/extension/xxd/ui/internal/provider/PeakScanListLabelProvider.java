@@ -34,6 +34,7 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.support.text.ValueFormat;
 import org.eclipse.chemclipse.support.ui.provider.AbstractChemClipseLabelProvider;
+import org.eclipse.chemclipse.ux.extension.ui.provider.IdentificationTargetSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.l10n.ExtensionMessages;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramPeakWSD;
 import org.eclipse.swt.graphics.Color;
