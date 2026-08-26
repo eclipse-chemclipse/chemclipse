@@ -17,11 +17,9 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * The metrics of the classical spectral match, shared by the NIST search, the
- * file based identifier and the distance, entropy and alfassi comparators.
  * They are the default metric set of an {@link IComparisonResult}.
  */
-public class ComparisonMetrics {
+public class ComparisonMetricsClassic {
 
 	/**
 	 * Algorithm id of the classical spectral match.
@@ -37,7 +35,7 @@ public class ComparisonMetrics {
 
 	private static final List<IComparisonMetric> METRICS = createMetrics();
 
-	private ComparisonMetrics() {
+	private ComparisonMetricsClassic() {
 
 	}
 

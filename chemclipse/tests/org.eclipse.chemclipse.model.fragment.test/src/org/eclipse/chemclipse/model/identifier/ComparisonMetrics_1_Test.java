@@ -29,17 +29,17 @@ public class ComparisonMetrics_1_Test {
 	public void testDefaultAlgorithm() {
 
 		IComparisonResult comparisonResult = new ComparisonResult(80.0f, 70.0f, 60.0f, 50.0f);
-		assertEquals(ComparisonMetrics.ALGORITHM_CLASSIC, comparisonResult.getAlgorithmId());
+		assertEquals(ComparisonMetricsClassic.ALGORITHM_CLASSIC, comparisonResult.getAlgorithmId());
 	}
 
 	@Test
 	public void testLegacyGettersReadTheMetrics() {
 
 		IComparisonResult comparisonResult = new ComparisonResult(80.0f, 70.0f, 60.0f, 50.0f);
-		assertEquals(80.0d, comparisonResult.getMetricNotAdjusted(ComparisonMetrics.MATCH_FACTOR).getAsDouble(), 0);
-		assertEquals(70.0d, comparisonResult.getMetricNotAdjusted(ComparisonMetrics.REVERSE_MATCH_FACTOR).getAsDouble(), 0);
-		assertEquals(60.0d, comparisonResult.getMetricNotAdjusted(ComparisonMetrics.MATCH_FACTOR_DIRECT).getAsDouble(), 0);
-		assertEquals(50.0d, comparisonResult.getMetricNotAdjusted(ComparisonMetrics.REVERSE_MATCH_FACTOR_DIRECT).getAsDouble(), 0);
+		assertEquals(80.0d, comparisonResult.getMetricNotAdjusted(ComparisonMetricsClassic.MATCH_FACTOR).getAsDouble(), 0);
+		assertEquals(70.0d, comparisonResult.getMetricNotAdjusted(ComparisonMetricsClassic.REVERSE_MATCH_FACTOR).getAsDouble(), 0);
+		assertEquals(60.0d, comparisonResult.getMetricNotAdjusted(ComparisonMetricsClassic.MATCH_FACTOR_DIRECT).getAsDouble(), 0);
+		assertEquals(50.0d, comparisonResult.getMetricNotAdjusted(ComparisonMetricsClassic.REVERSE_MATCH_FACTOR_DIRECT).getAsDouble(), 0);
 	}
 
 	@Test
@@ -48,7 +48,7 @@ public class ComparisonMetrics_1_Test {
 		IComparisonResult comparisonResult = new ComparisonResult(80.0f);
 		comparisonResult.setInLibFactor(3.0f);
 		assertEquals(3.0f, comparisonResult.getInLibFactor(), 0);
-		assertEquals(3.0d, comparisonResult.getMetricNotAdjusted(ComparisonMetrics.IN_LIB_FACTOR).getAsDouble(), 0);
+		assertEquals(3.0d, comparisonResult.getMetricNotAdjusted(ComparisonMetricsClassic.IN_LIB_FACTOR).getAsDouble(), 0);
 	}
 
 	@Test
@@ -59,9 +59,9 @@ public class ComparisonMetrics_1_Test {
 		/*
 		 * The match factor declares the penalty as applicable, the probability does not.
 		 */
-		assertEquals(70.0d, comparisonResult.getMetric(ComparisonMetrics.MATCH_FACTOR).getAsDouble(), 0);
-		assertEquals(80.0d, comparisonResult.getMetricNotAdjusted(ComparisonMetrics.MATCH_FACTOR).getAsDouble(), 0);
-		assertEquals(90.0d, comparisonResult.getMetric(ComparisonMetrics.PROBABILITY).getAsDouble(), 0);
+		assertEquals(70.0d, comparisonResult.getMetric(ComparisonMetricsClassic.MATCH_FACTOR).getAsDouble(), 0);
+		assertEquals(80.0d, comparisonResult.getMetricNotAdjusted(ComparisonMetricsClassic.MATCH_FACTOR).getAsDouble(), 0);
+		assertEquals(90.0d, comparisonResult.getMetric(ComparisonMetricsClassic.PROBABILITY).getAsDouble(), 0);
 	}
 
 	@Test
@@ -104,19 +104,19 @@ public class ComparisonMetrics_1_Test {
 		IComparisonResult comparisonResult = new ComparisonResult(80.0f);
 		List<IComparisonMetric> metrics = comparisonResult.getMetrics();
 		assertEquals(6, metrics.size());
-		assertEquals(ComparisonMetrics.MATCH_FACTOR, metrics.get(0).getId());
-		assertEquals(ComparisonMetrics.REVERSE_MATCH_FACTOR, metrics.get(1).getId());
-		assertEquals(ComparisonMetrics.MATCH_FACTOR_DIRECT, metrics.get(2).getId());
-		assertEquals(ComparisonMetrics.REVERSE_MATCH_FACTOR_DIRECT, metrics.get(3).getId());
-		assertEquals(ComparisonMetrics.PROBABILITY, metrics.get(4).getId());
-		assertEquals(ComparisonMetrics.IN_LIB_FACTOR, metrics.get(5).getId());
+		assertEquals(ComparisonMetricsClassic.MATCH_FACTOR, metrics.get(0).getId());
+		assertEquals(ComparisonMetricsClassic.REVERSE_MATCH_FACTOR, metrics.get(1).getId());
+		assertEquals(ComparisonMetricsClassic.MATCH_FACTOR_DIRECT, metrics.get(2).getId());
+		assertEquals(ComparisonMetricsClassic.REVERSE_MATCH_FACTOR_DIRECT, metrics.get(3).getId());
+		assertEquals(ComparisonMetricsClassic.PROBABILITY, metrics.get(4).getId());
+		assertEquals(ComparisonMetricsClassic.IN_LIB_FACTOR, metrics.get(5).getId());
 	}
 
 	@Test
 	public void testTheFinalResultRejectsMetrics() {
 
 		IComparisonResult comparisonResult = ComparisonResult.COMPARISON_RESULT_BEST_MATCH;
-		comparisonResult.setMetric(ComparisonMetrics.MATCH_FACTOR, 0.0d);
+		comparisonResult.setMetric(ComparisonMetricsClassic.MATCH_FACTOR, 0.0d);
 		assertEquals(IComparisonResult.FACTOR_BEST_MATCH, comparisonResult.getMatchFactor(), 0);
 	}
 

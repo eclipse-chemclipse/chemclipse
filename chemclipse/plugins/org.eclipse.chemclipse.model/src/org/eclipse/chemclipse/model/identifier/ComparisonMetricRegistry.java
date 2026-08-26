@@ -29,7 +29,7 @@ import org.eclipse.core.runtime.Platform;
  * Resolves the metrics and the rating supplier of an identification algorithm.
  *
  * The metrics of the classical spectral match are always available, see
- * {@link ComparisonMetrics}. Further algorithms contribute their metrics via
+ * {@link ComparisonMetricsClassic}. Further algorithms contribute their metrics via
  * the extension point "org.eclipse.chemclipse.model.comparisonMetrics".
  */
 public class ComparisonMetricRegistry {
@@ -128,10 +128,10 @@ public class ComparisonMetricRegistry {
 			 * where no extension registry is running.
 			 */
 			Algorithm classic = new Algorithm();
-			for(IComparisonMetric metric : ComparisonMetrics.getMetrics()) {
+			for(IComparisonMetric metric : ComparisonMetricsClassic.getMetrics()) {
 				classic.metrics.put(metric.getId(), metric);
 			}
-			algorithms.put(ComparisonMetrics.ALGORITHM_CLASSIC, classic);
+			algorithms.put(ComparisonMetricsClassic.ALGORITHM_CLASSIC, classic);
 			readExtensions();
 		}
 
