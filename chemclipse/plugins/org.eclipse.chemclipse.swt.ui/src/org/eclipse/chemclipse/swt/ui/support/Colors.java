@@ -186,7 +186,7 @@ public class Colors {
 
 	public static String[][] getAvailableColorSchemes() {
 
-		String[][] elements = new String[9][2];
+		String[][] elements = new String[8][2];
 
 		elements[0][0] = COLOR_SCHEME_RED;
 		elements[0][1] = COLOR_SCHEME_RED;
