@@ -41,5 +41,4 @@ public class DynamicHandler extends AbstractHandler {
 
 		return cachedEntry.isEnabled(scrollableChart);
 	}
-
 }

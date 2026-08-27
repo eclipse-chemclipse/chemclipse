@@ -24,6 +24,7 @@ import java.util.Locale;
 import java.util.function.Consumer;
 
 import org.eclipse.chemclipse.logging.core.Logger;
+import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.supplier.IScanProcessSupplier;
 import org.eclipse.chemclipse.msd.converter.massspectrum.MassSpectrumConverter;
 import org.eclipse.chemclipse.msd.converter.massspectrum.MassSpectrumConverterSupport;
@@ -45,6 +46,7 @@ import org.eclipse.chemclipse.processing.supplier.ProcessExecutionContext;
 import org.eclipse.chemclipse.processing.system.ProcessSettingsSupport;
 import org.eclipse.chemclipse.processing.ui.support.ProcessingInfoPartSupport;
 import org.eclipse.chemclipse.support.formats.MagnitudeScaledDecimalFormat;
+import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.ux.extension.msd.ui.handlers.DynamicHandler;
 import org.eclipse.chemclipse.ux.extension.msd.ui.internal.provider.UpdateMenuEntry;
 import org.eclipse.chemclipse.ux.extension.ui.editors.ProcessorSupplierMenuEntry;
@@ -287,11 +289,13 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 			processMassSpectrum(monitor -> executeMethod(massSpectrum, scanMSD -> {
 
 				DefaultProcessingResult<Object> processingInfo = new DefaultProcessingResult<>();
-				AbstractProcessSupplier.applyProcessor(settings, IScanProcessSupplier.createConsumer(scanMSD), new ProcessExecutionContext(monitor, processingInfo, processSupplierContext));
+				ProcessExecutionContext processExecutionContext = new ProcessExecutionContext(monitor, processingInfo, processSupplierContext);
+				IScan result = AbstractProcessSupplier.applyProcessor(settings, IScanProcessSupplier.createConsumer(scanMSD), processExecutionContext);
 				updateResult(processingInfo);
 				if(scanMSD instanceof IStandaloneMassSpectrum standaloneMassSpectrum) {
 					AuditTrailSupport.updateAuditTrail(standaloneMassSpectrum, processingInfo, processSupplier);
 				}
+				UpdateNotifierUI.update(getDisplay(), result);
 			}), shell);
 		} catch(IOException e) {
 			DefaultProcessingResult<Object> processingInfo = new DefaultProcessingResult<>();
