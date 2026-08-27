@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2025 Lablicate GmbH.
+ * Copyright (c) 2021, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -15,7 +15,7 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.operations;
 import java.util.List;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IPeak;
+import org.eclipse.chemclipse.model.core.IChromatogramPeak;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
@@ -32,9 +32,9 @@ public class DeletePeaksOperation extends AbstractOperation {
 
 	private IChromatogramSelection chromatogramSelection;
 	private Display display;
-	private List<IPeak> peaksToDelete;
+	private List<IChromatogramPeak> peaksToDelete;
 
-	public DeletePeaksOperation(Display display, IChromatogramSelection chromatogramSelection, List<IPeak> peaksToDelete) {
+	public DeletePeaksOperation(Display display, IChromatogramSelection chromatogramSelection, List<IChromatogramPeak> peaksToDelete) {
 
 		super(ExtensionMessages.deletePeaks);
 		this.display = display;
@@ -93,7 +93,7 @@ public class DeletePeaksOperation extends AbstractOperation {
 	public IStatus undo(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
 
 		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
-		chromatogram.getPeaks().removeAll(peaksToDelete);
+		chromatogram.getPeaks().addAll(peaksToDelete);
 		chromatogram.setDirty(true);
 		update(ExtensionMessages.peaksUndeleted);
 		return Status.OK_STATUS;

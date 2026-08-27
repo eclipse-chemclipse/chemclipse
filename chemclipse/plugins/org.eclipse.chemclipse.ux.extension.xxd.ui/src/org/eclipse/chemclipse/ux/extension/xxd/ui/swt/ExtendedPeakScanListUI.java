@@ -25,6 +25,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IChromatogram;
+import org.eclipse.chemclipse.model.core.IChromatogramPeak;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IPeakModel;
 import org.eclipse.chemclipse.model.core.IScan;
@@ -516,13 +517,13 @@ public class ExtendedPeakScanListUI extends Composite implements IExtendedPartUI
 			 */
 			Iterator<?> iterator = tableViewer.get().getStructuredSelection().iterator();
 			List<IScan> scanTargetsToClear = new ArrayList<>();
-			List<IPeak> peaksToDelete = new ArrayList<>();
+			List<IChromatogramPeak> peaksToDelete = new ArrayList<>();
 			/*
 			 * Collect
 			 */
 			while(iterator.hasNext()) {
 				Object object = iterator.next();
-				if(object instanceof IPeak peak) {
+				if(object instanceof IChromatogramPeak peak) {
 					peaksToDelete.add(peak);
 				} else if(object instanceof IScan scan) {
 					scanTargetsToClear.add(scan);
