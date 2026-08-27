@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.chemclipse.chromatogram.msd.filter.massSpectrumFilterSupplier">
+      <MassSpectrumFilterSupplier
+            config="org.eclipse.chemclipse.xxd.edit.supplier.convexhull.settings.MassSpectrumFilterSettings"
+            description="This is a Lower Convex Hull Mass Spectrum optimization filter."
+            filter="org.eclipse.chemclipse.xxd.edit.supplier.convexhull.core.MassSpectrumFilter"
+            filterName="Lower Convex Hull"
+            id="org.eclipse.chemclipse.msd.filter.supplier.convexhull.massspectrum">
+      </MassSpectrumFilterSupplier>
+   </extension>
+</plugin>

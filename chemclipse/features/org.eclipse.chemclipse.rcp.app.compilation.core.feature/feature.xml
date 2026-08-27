@@ -328,4 +328,8 @@
          id="org.eclipse.chemclipse.xxd.identifier.supplier.ncbi.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.chemclipse.xxd.edit.supplier.convexhull.feature"
+         version="0.0.0"/>
+
 </feature>
