@@ -225,7 +225,7 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 			return false;
 		}
 
-		if(supplier.getCategory() != ICategories.MASS_SPECTRUM_FILTER) {
+		if(!supplier.getCategory().equals(ICategories.MASS_SPECTRUM_FILTER)) {
 			return false;
 		}
 
