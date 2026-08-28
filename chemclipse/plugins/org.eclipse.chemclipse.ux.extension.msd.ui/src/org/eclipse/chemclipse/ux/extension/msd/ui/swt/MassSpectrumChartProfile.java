@@ -35,7 +35,6 @@ import org.eclipse.chemclipse.msd.converter.massspectrum.MassSpectrumConverterSu
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
-import org.eclipse.chemclipse.msd.swt.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
 import org.eclipse.chemclipse.processing.core.DefaultProcessingResult;
 import org.eclipse.chemclipse.processing.core.ICategories;
@@ -81,7 +80,6 @@ import org.eclipse.swtchart.extensions.core.ISeriesData;
 import org.eclipse.swtchart.extensions.core.RangeRestriction;
 import org.eclipse.swtchart.extensions.core.ScrollableChart;
 import org.eclipse.swtchart.extensions.core.SeriesData;
-import org.eclipse.swtchart.extensions.linecharts.ICompressionSupport;
 import org.eclipse.swtchart.extensions.linecharts.ILineSeriesData;
 import org.eclipse.swtchart.extensions.linecharts.ILineSeriesSettings;
 import org.eclipse.swtchart.extensions.linecharts.LineChart;
@@ -146,51 +144,11 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 				lineSeriesDataList.add(noiseLineSeriesData);
 				createAnnotations(standaloneMassSpectrum);
 			}
-			int compression = getCompressionLength(PreferenceSupplier.getProfileMassSpectrumChartCompression());
-			addSeriesData(lineSeriesDataList, compression);
+			addSeriesData(lineSeriesDataList);
 			updateAxis();
 			updateMenu();
 			UpdateNotifier.update(massSpectrum);
 		}
-	}
-
-	public int getCompressionLength(String compressionType) {
-
-		int numberIons = massSpectrum.getNumberOfIons();
-		int compressionToLength = 0;
-		switch(compressionType) {
-			case ICompressionSupport.COMPRESSION_AUTO:
-				if(numberIons >= 100000) {
-					compressionToLength = ICompressionSupport.EXTREME_COMPRESSION;
-				} else if(numberIons >= 10000) {
-					compressionToLength = ICompressionSupport.HIGH_COMPRESSION;
-				} else if(numberIons >= 5000) {
-					compressionToLength = ICompressionSupport.MEDIUM_COMPRESSION;
-				} else {
-					compressionToLength = ICompressionSupport.LOW_COMPRESSION;
-				}
-				break;
-			case ICompressionSupport.COMPRESSION_NONE:
-				compressionToLength = ICompressionSupport.NO_COMPRESSION;
-				break;
-			case ICompressionSupport.COMPRESSION_LOW:
-				compressionToLength = ICompressionSupport.LOW_COMPRESSION;
-				break;
-			case ICompressionSupport.COMPRESSION_MEDIUM:
-				compressionToLength = ICompressionSupport.MEDIUM_COMPRESSION;
-				break;
-			case ICompressionSupport.COMPRESSION_HIGH:
-				compressionToLength = ICompressionSupport.HIGH_COMPRESSION;
-				break;
-			case ICompressionSupport.COMPRESSION_EXTREME:
-				compressionToLength = ICompressionSupport.EXTREME_COMPRESSION;
-				break;
-			default:
-				compressionToLength = ICompressionSupport.MEDIUM_COMPRESSION;
-				break;
-		}
-
-		return compressionToLength;
 	}
 
 	private void updateAxis() {
@@ -267,7 +225,7 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 			return false;
 		}
 
-		if(supplier.getCategory() != ICategories.MASS_SPECTRUM_FILTER) {
+		if(!supplier.getCategory().equals(ICategories.MASS_SPECTRUM_FILTER)) {
 			return false;
 		}
 
