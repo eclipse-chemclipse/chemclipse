@@ -25,6 +25,9 @@ public class LocalDatabaseComboSupplier implements ComboSupplier<String> {
 	@Override
 	public Collection<String> items() {
 
+		if(PreferenceSupplier.getDatabaseFolder().isEmpty()) {
+			return null;
+		}
 		File databaseFolder = new File(PreferenceSupplier.getDatabaseFolder());
 		if(!databaseFolder.exists()) {
 			return null;
