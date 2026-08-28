@@ -136,7 +136,13 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 			List<ILineSeriesData> lineSeriesDataList = new ArrayList<>();
 			ISeriesData seriesData = getMassSpectrum(massSpectrum);
 			ILineSeriesData lineSeriesData = new LineSeriesData(seriesData);
+
+			ILineSeriesSettings settings = lineSeriesData.getSettings();
+			settings.setEnableArea(false);
+			settings.setAreaStrict(false);
+
 			lineSeriesDataList.add(lineSeriesData);
+
 			if(massSpectrum instanceof IStandaloneMassSpectrum standaloneMassSpectrum) {
 				LineSeriesData peakLineSeriesData = getPeaks(standaloneMassSpectrum);
 				lineSeriesDataList.add(peakLineSeriesData);
@@ -144,6 +150,7 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 				lineSeriesDataList.add(noiseLineSeriesData);
 				createAnnotations(standaloneMassSpectrum);
 			}
+
 			addSeriesData(lineSeriesDataList);
 			updateAxis();
 			updateMenu();
