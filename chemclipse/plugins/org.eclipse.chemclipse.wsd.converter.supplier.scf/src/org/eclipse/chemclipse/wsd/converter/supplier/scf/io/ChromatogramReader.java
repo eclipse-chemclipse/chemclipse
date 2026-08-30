@@ -208,7 +208,6 @@ public class ChromatogramReader extends AbstractChromatogramDSDReader {
 			IIdentificationTarget identificationTarget = new IdentificationTarget(libraryInformation, comparisonResult);
 			identificationTarget.setIdentifier(String.valueOf(letter));
 			scan.getTargets().add(identificationTarget); // TODO add to scan signal rather than total signal
-
 		}
 
 		chromatogram.setNucleotideSequence(nucleotideSequence.toString());

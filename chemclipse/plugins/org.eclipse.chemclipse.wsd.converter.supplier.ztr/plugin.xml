@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.chemclipse.dsd.converter.chromatogramSupplier">
+      <ChromatogramSupplier
+            description="Reads Zipped Trace files."
+            fileExtension=".ztr"
+            filterName="Zipped Trace (*.ztr)"
+            id="org.eclipse.chemclipse.wsd.converter.supplier.ztr"
+            importConverter="org.eclipse.chemclipse.wsd.converter.supplier.ztr.core.ChromatogramImportConverter"
+            importMagicNumberMatcher="org.eclipse.chemclipse.wsd.converter.supplier.ztr.core.MagicNumberMatcher"
+            isExportable="false"
+            isImportable="true">
+      </ChromatogramSupplier>
+   </extension>
+</plugin>

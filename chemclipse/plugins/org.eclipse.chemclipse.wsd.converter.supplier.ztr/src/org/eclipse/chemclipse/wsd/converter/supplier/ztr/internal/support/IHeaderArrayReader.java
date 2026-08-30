@@ -1,0 +1,23 @@
+/*******************************************************************************
+ * Copyright (c) 2026 Lablicate GmbH.
+ *
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ * 
+ * Contributors:
+ * Matthias Mailänder - initial API and implementation
+ *******************************************************************************/
+package org.eclipse.chemclipse.wsd.converter.supplier.ztr.internal.support;
+
+import org.eclipse.chemclipse.converter.io.support.IArrayReader;
+import org.eclipse.chemclipse.wsd.converter.supplier.ztr.internal.model.Version;
+
+public interface IHeaderArrayReader extends IArrayReader {
+
+	String readMagicNumber();
+
+	Version readVersion();
+}
