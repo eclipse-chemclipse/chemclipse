@@ -163,7 +163,7 @@ public class ChromatogramReader extends AbstractChromatogramDSDReader {
 			ILibraryInformation libraryInformation = new LibraryInformation();
 			libraryInformation.setName(String.valueOf(Nucleobase.of(letter).letter()));
 
-			IComparisonResult comparisonResult = new ComparisonResult(0); // TODO
+			IComparisonResult comparisonResult = new ComparisonResult(100); // TODO
 			IIdentificationTarget identificationTarget = new IdentificationTarget(libraryInformation, comparisonResult);
 			identificationTarget.setIdentifier("Base Caller");
 			scan.getTargets().add(identificationTarget); // TODO add to scan signal rather than total signal
