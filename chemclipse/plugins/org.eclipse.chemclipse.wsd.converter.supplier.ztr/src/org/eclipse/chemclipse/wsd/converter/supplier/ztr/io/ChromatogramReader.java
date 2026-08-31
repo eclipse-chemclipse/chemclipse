@@ -102,6 +102,7 @@ public class ChromatogramReader extends AbstractChromatogramDSDReader {
 		chunkArrayReader.skipBytes(10); // header
 
 		IBasePositionArrayReader basePositionArrayReader = null;
+		char[] nucleotides = new char[0];
 
 		while(chunkArrayReader.getPosition() < chunkArrayReader.getLength()) {
 			Chunk chunk = new Chunk(chunkArrayReader);
@@ -117,7 +118,7 @@ public class ChromatogramReader extends AbstractChromatogramDSDReader {
 				}
 				case "BASE": {
 					String baseCalls = new String(chunk.getData(), StandardCharsets.US_ASCII);
-					chromatogram.setNucleotideSequence(baseCalls);
+					nucleotides = baseCalls.toCharArray();
 					break;
 				}
 				case "BPOS": {
@@ -154,7 +155,7 @@ public class ChromatogramReader extends AbstractChromatogramDSDReader {
 			return;
 		}
 
-		for(char letter : chromatogram.getNucleotideSequence().toCharArray()) {
+		for(char letter : nucleotides) {
 
 			int scanNumber = basePositionArrayReader.readBasePosition() + 1;
 			IScanWSD scan = chromatogram.getScan(scanNumber);
