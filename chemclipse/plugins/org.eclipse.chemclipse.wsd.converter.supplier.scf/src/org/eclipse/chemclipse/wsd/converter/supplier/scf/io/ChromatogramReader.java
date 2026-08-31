@@ -30,6 +30,7 @@ import org.eclipse.chemclipse.dsd.model.core.IChromatogramDSD;
 import org.eclipse.chemclipse.dsd.model.core.Nucleobase;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
+import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.identifier.ComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
@@ -198,17 +199,28 @@ public class ChromatogramReader extends AbstractChromatogramDSDReader {
 			int scanNumber = peakIndices[i] + 1;
 			IScanWSD scan = chromatogram.getScan(scanNumber);
 
-			ILibraryInformation libraryInformation = new LibraryInformation();
-			libraryInformation.setName(String.valueOf(Nucleobase.of(letter).letter()));
+			addIdentificationTarget(scan, Nucleobase.ADENINE, probabilities.getAdenine()[i]);
+			addIdentificationTarget(scan, Nucleobase.CYTOSINE, probabilities.getCytosine()[i]);
+			addIdentificationTarget(scan, Nucleobase.GUANINE, probabilities.getGuanine()[i]);
+			addIdentificationTarget(scan, Nucleobase.THYMINE, probabilities.getThymine()[i]);
 
-			IComparisonResult comparisonResult = new ComparisonResult( // TODO not the right field
-					probabilities.getAdenine()[i], probabilities.getCytosine()[i], //
-					probabilities.getGuanine()[i], probabilities.getThymine()[i]);
-
-			IIdentificationTarget identificationTarget = new IdentificationTarget(libraryInformation, comparisonResult);
-			identificationTarget.setIdentifier("Base Caller");
-			scan.getTargets().add(identificationTarget); // TODO add to scan signal rather than total signal
+			if(scan.getTargets().isEmpty()) {
+				addIdentificationTarget(scan, Nucleobase.of(letter), (byte)100);
+			}
 		}
+	}
+
+	private void addIdentificationTarget(IScan scan, Nucleobase nucleobase, byte probability) {
+
+		if(probability == 0) {
+			return;
+		}
+		ILibraryInformation libraryInformation = new LibraryInformation();
+		libraryInformation.setName(String.valueOf(nucleobase.letter()));
+		IComparisonResult comparisonResult = new ComparisonResult(probability);
+		IIdentificationTarget identificationTarget = new IdentificationTarget(libraryInformation, comparisonResult);
+		identificationTarget.setIdentifier("Base Caller");
+		scan.getTargets().add(identificationTarget); // TODO add to scan signal rather than total signal
 	}
 
 	private void readComments(File file, IVendorChromatogram chromatogram) throws IOException {
