@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Composite;
 public class MassSpectrumPeakListUI extends ExtendedTableViewer {
 
 	private String[] titles = {"m/z", "abundance", "s/n"};
-	private int[] bounds = {160, 200, 10};
+	private int[] bounds = {150, 100, 10};
 
 	public MassSpectrumPeakListUI(Composite parent) {
 
