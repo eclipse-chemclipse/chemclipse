@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -10,13 +10,14 @@
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
-package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.xpass.operations;
+package org.eclipse.chemclipse.msd.model.operations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.chemclipse.model.core.IMassSpectrumPeak;
-import org.eclipse.chemclipse.model.notifier.UpdateNotifier;
 import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
+import org.eclipse.chemclipse.msd.model.notifier.MassSpectrumUpdateNotifier;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.AbstractOperation;
 import org.eclipse.core.runtime.IAdaptable;
@@ -33,7 +34,7 @@ public class DeleteMassSpectrumPeaksOperation extends AbstractOperation {
 
 		super("Delete Peaks");
 		this.massSpectrum = massSpectrum;
-		this.peaksToDelete = peaksToDelete;
+		this.peaksToDelete = new ArrayList<>(peaksToDelete);
 	}
 
 	@Override
@@ -71,7 +72,7 @@ public class DeleteMassSpectrumPeaksOperation extends AbstractOperation {
 	private void updateMassSpectrum() {
 
 		massSpectrum.setDirty(true);
-		UpdateNotifier.update(massSpectrum);
+		MassSpectrumUpdateNotifier.update(massSpectrum);
 	}
 
 	@Override

@@ -59,6 +59,7 @@ public interface IChemClipseEvents {
 	String TOPIC_PEAK_XXD_UPDATE_SELECTION = "peak/xxd/update/selection";
 	String TOPIC_SCAN_VSD_UPDATE_SELECTION = "scan/vsd/update/selection";
 	String TOPIC_SCAN_NMR_UPDATE_SELECTION = "scan/nmr/update/selection";
+
 	String TOPIC_MASS_SPECTRUM_UPDATE_SELECTION = "spectrum/ms/update/selection";
 
 	String TOPIC_LITERATURE_UPDATE = "literature/update";

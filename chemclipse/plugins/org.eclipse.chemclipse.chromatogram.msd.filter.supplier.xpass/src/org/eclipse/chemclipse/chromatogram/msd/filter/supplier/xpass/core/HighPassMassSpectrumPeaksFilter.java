@@ -21,13 +21,13 @@ import org.eclipse.chemclipse.chromatogram.msd.filter.core.massspectrum.Abstract
 import org.eclipse.chemclipse.chromatogram.msd.filter.result.IMassSpectrumFilterResult;
 import org.eclipse.chemclipse.chromatogram.msd.filter.result.MassSpectrumFilterResult;
 import org.eclipse.chemclipse.chromatogram.msd.filter.settings.IMassSpectrumFilterSettings;
-import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.xpass.operations.DeleteMassSpectrumPeaksOperation;
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.xpass.settings.HighPassMassSpectrumPeaksFilterSettings;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IMassSpectrumPeak;
-import org.eclipse.chemclipse.model.notifier.UpdateNotifier;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
+import org.eclipse.chemclipse.msd.model.notifier.MassSpectrumUpdateNotifier;
+import org.eclipse.chemclipse.msd.model.operations.DeleteMassSpectrumPeaksOperation;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.MessageType;
 import org.eclipse.chemclipse.processing.core.ProcessingMessage;
@@ -58,7 +58,7 @@ public class HighPassMassSpectrumPeaksFilter extends AbstractMassSpectrumFilter 
 					processingInfo.addMessage(new ProcessingMessage(MessageType.INFO, DESCRIPTION, "The mass spectrum has filtered successfully."));
 					IMassSpectrumFilterResult massSpectrumFilterResult = new MassSpectrumFilterResult(ResultStatus.OK, "The mass spectrum has filtered successfully.");
 					processingInfo.setProcessingResult(massSpectrumFilterResult);
-					UpdateNotifier.update(standaloneMassSpectrum);
+					MassSpectrumUpdateNotifier.update(standaloneMassSpectrum);
 				}
 			}
 		} else {

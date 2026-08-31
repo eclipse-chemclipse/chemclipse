@@ -4,6 +4,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Model Plug-in
 Bundle-SymbolicName: org.eclipse.chemclipse.msd.model
 Bundle-Version: 0.9.0.qualifier
+Bundle-Activator: org.eclipse.chemclipse.msd.model.Activator
 Bundle-Vendor: ChemClipse
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.chemclipse.numeric;bundle-version="0.8.0",
@@ -24,7 +25,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.apache.poi.ooxml;bundle-version="5.5.1",
  org.apache.poi.ooxml.schemas;bundle-version="5.5.1",
  org.apache.commons.commons-compress;bundle-version="1.28.0",
- org.apache.xmlbeans;bundle-version="5.3.0"
+ org.apache.xmlbeans;bundle-version="5.3.0",
+ org.eclipse.core.commands;bundle-version="3.12.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-25
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.chemclipse.msd.model.core,
@@ -36,6 +38,7 @@ Export-Package: org.eclipse.chemclipse.msd.model.core,
  org.eclipse.chemclipse.msd.model.matrix,
  org.eclipse.chemclipse.msd.model.noise,
  org.eclipse.chemclipse.msd.model.notifier,
+ org.eclipse.chemclipse.msd.model.operations,
  org.eclipse.chemclipse.msd.model.preferences,
  org.eclipse.chemclipse.msd.model.serializer,
  org.eclipse.chemclipse.msd.model.service,

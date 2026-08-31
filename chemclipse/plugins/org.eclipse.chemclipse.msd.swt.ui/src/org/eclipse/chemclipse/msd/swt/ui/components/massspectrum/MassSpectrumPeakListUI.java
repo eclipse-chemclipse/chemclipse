@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2025 Lablicate GmbH.
+ * Copyright (c) 2015, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -42,14 +42,13 @@ public class MassSpectrumPeakListUI extends ExtendedTableViewer {
 
 		if(regularMassSpectrum != null) {
 			setContentProviders();
-			if(regularMassSpectrum instanceof IStandaloneMassSpectrum standaloneMassSpectrum && !standaloneMassSpectrum.getPeaks().isEmpty()) {
+			if(regularMassSpectrum instanceof IStandaloneMassSpectrum standaloneMassSpectrum) {
 				super.setInput(standaloneMassSpectrum.getPeaks());
 				setItemCount(standaloneMassSpectrum.getPeaks().size());
 			} else if(regularMassSpectrum.getMassSpectrumType() == MassSpectrumType.CENTROID) {
 				super.setInput(regularMassSpectrum.getIons());
 				setItemCount(regularMassSpectrum.getIons().size());
 			}
-
 		} else {
 			super.setInput(null);
 		}

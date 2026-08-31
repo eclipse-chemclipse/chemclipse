@@ -27,7 +27,6 @@ import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IMassSpectrumPeak;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
-import org.eclipse.chemclipse.model.notifier.UpdateNotifier;
 import org.eclipse.chemclipse.model.supplier.IScanProcessSupplier;
 import org.eclipse.chemclipse.model.supplier.ScanProcessSupplier;
 import org.eclipse.chemclipse.msd.converter.massspectrum.MassSpectrumConverter;
@@ -35,6 +34,7 @@ import org.eclipse.chemclipse.msd.converter.massspectrum.MassSpectrumConverterSu
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
+import org.eclipse.chemclipse.msd.swt.ui.support.MassSpectrumUpdateNotifierUI;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
 import org.eclipse.chemclipse.processing.core.DefaultProcessingResult;
 import org.eclipse.chemclipse.processing.core.ICategories;
@@ -154,7 +154,6 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 			addSeriesData(lineSeriesDataList);
 			updateAxis();
 			updateMenu();
-			UpdateNotifier.update(massSpectrum);
 		}
 	}
 
@@ -283,6 +282,9 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 			monitor.run(true, true, runnable);
 			massSpectrum.setDirty(true);
 			update();
+			if(!isDisposed()) {
+				MassSpectrumUpdateNotifierUI.update(getDisplay(), massSpectrum);
+			}
 		} catch(InterruptedException e) {
 			logger.error(e);
 			Thread.currentThread().interrupt();

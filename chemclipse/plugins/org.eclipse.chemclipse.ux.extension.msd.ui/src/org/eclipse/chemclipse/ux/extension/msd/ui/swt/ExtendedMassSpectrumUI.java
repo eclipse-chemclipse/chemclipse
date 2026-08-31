@@ -26,6 +26,7 @@ import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.msd.swt.ui.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.msd.swt.ui.support.MassSpectrumUpdateNotifierUI;
 import org.eclipse.chemclipse.processing.core.IMessageProvider;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
@@ -37,7 +38,6 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
-import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.ux.extension.msd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.ui.methods.MethodSupportUI;
 import org.eclipse.chemclipse.ux.extension.ui.support.AuditTrailSupport;
@@ -107,6 +107,18 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 
 		this.massSpectrum = massSpectrum;
 		massSpectrumChart.update(massSpectrum);
+	}
+
+	public IScanMSD getMassSpectrum() {
+
+		return massSpectrum;
+	}
+
+	public void refresh() {
+
+		if(massSpectrumChart != null) {
+			massSpectrumChart.update();
+		}
 	}
 
 	private void createControl() {
@@ -214,7 +226,6 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 			IProcessingInfo<?> processingInfo = new ProcessingInfo<>();
 			AbstractProcessEntryContainer.applyProcessEntries(processMethod, new ProcessExecutionContext(monitor, processingInfo, processTypeSupport), IScanProcessSupplier.createConsumer(scanMSD));
 			scanMSD.setDirty(true);
-			UpdateNotifier.update(scanMSD);
 			if(scanMSD instanceof IStandaloneMassSpectrum standaloneMassSpectrum) {
 				AuditTrailSupport.updateAuditTrail(standaloneMassSpectrum, processingInfo, processMethod, processTypeSupport);
 			}
@@ -222,7 +233,7 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 			DisplayUtils.getDisplay().syncExec(() -> {
 				update(scanMSD);
 				massSpectrumChart.update();
-				UpdateNotifierUI.update(getDisplay(), scanMSD);
+				MassSpectrumUpdateNotifierUI.update(getDisplay(), scanMSD);
 				updateResult(processingInfo);
 			});
 		}));

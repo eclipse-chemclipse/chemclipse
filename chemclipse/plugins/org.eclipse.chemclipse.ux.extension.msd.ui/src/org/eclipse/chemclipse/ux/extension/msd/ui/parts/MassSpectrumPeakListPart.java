@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2025 Lablicate GmbH.
+ * Copyright (c) 2014, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -28,6 +28,7 @@ import jakarta.inject.Inject;
 public class MassSpectrumPeakListPart extends AbstractPart<ExtendedMassSpectrumPeakListUI> {
 
 	private static final String TOPIC = IChemClipseEvents.TOPIC_SCAN_XXD_UPDATE_SELECTION;
+	private static final String TOPIC_MASS_SPECTRUM = IChemClipseEvents.TOPIC_MASS_SPECTRUM_UPDATE_SELECTION;
 
 	@Inject
 	public MassSpectrumPeakListPart(Composite parent) {
@@ -55,8 +56,14 @@ public class MassSpectrumPeakListPart extends AbstractPart<ExtendedMassSpectrumP
 	}
 
 	@Override
+	protected void subscribeAdditionalTopics() {
+
+		subscribeAdditionalTopic(TOPIC_MASS_SPECTRUM, IChemClipseEvents.EVENT_BROKER_DATA);
+	}
+
+	@Override
 	protected boolean isUpdateTopic(String topic) {
 
-		return TOPIC.equals(topic);
+		return TOPIC.equals(topic) || TOPIC_MASS_SPECTRUM.equals(topic);
 	}
 }
