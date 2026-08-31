@@ -19,6 +19,7 @@ import org.eclipse.chemclipse.chromatogram.msd.filter.result.IMassSpectrumFilter
 import org.eclipse.chemclipse.chromatogram.msd.filter.settings.IMassSpectrumFilterSettings;
 import org.eclipse.chemclipse.model.core.IMassSpectrumPeak;
 import org.eclipse.chemclipse.model.core.MassSpectrumPeak;
+import org.eclipse.chemclipse.model.notifier.UpdateNotifier;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
@@ -52,6 +53,7 @@ public class LocalMaximaPeakPickerFilter extends AbstractMassSpectrumFilter {
 					int pickedPeaks = pickPeaks(standaloneMassSpectrum, localMaximaSettings, monitor);
 					String message = "The local maxima peak picker has detected " + pickedPeaks + " peaks.";
 					processingInfo.addMessage(new ProcessingMessage(MessageType.INFO, DESCRIPTION, message));
+					UpdateNotifier.update(standaloneMassSpectrum);
 				}
 			}
 		}
