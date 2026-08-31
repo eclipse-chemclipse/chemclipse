@@ -104,6 +104,7 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 		createPages(parent);
 		registeredEventHandler = new ArrayList<>();
 		registerEvents();
+		announceSelection();
 	}
 
 	private void createPages(Composite parent) {
@@ -115,11 +116,16 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 	@Focus
 	public void setFocus() {
 
-		/*
-		 * Fire an update if a loaded mass spectrum has been selected.
-		 */
-		if(massSpectrum != null) {
-			UpdateNotifier.update(massSpectrum);
+		extendedMassSpectrumUI.setFocus();
+		announceSelection();
+	}
+
+	private void announceSelection() {
+
+		IScanMSD displayedMassSpectrum = extendedMassSpectrumUI.getMassSpectrum();
+		if(displayedMassSpectrum != null && displayedMassSpectrum != massSpectrum) {
+			massSpectrum = displayedMassSpectrum;
+			UpdateNotifier.update(displayedMassSpectrum);
 		}
 	}
 
@@ -197,6 +203,9 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 				 * false.
 				 */
 				processingInfo.getProcessingResult();
+				if(massSpectrum != null) {
+					massSpectrum.setDirty(false);
+				}
 				dirtyable.setDirty(false);
 			} else {
 				throw new NoMassSpectrumConverterAvailableException();
@@ -330,7 +339,7 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 
 	private void update(String topic) {
 
-		if(extendedMassSpectrumUI.isVisible()) {
+		if(extendedMassSpectrumUI.isVisible() || IChemClipseEvents.TOPIC_MASS_SPECTRUM_UPDATE_SELECTION.equals(topic)) {
 			updateObjects(objects, topic);
 		}
 	}
@@ -348,10 +357,9 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 				if(objects.size() == 1) {
 					Object object = objects.get(0);
 					if(object instanceof IScanMSD scanMSD) {
-						if(object != massSpectrum) {
+						massSpectrum = scanMSD;
+						if(scanMSD != extendedMassSpectrumUI.getMassSpectrum()) {
 							extendedMassSpectrumUI.update(scanMSD);
-						} else {
-							dirtyable.setDirty(massSpectrum.isDirty());
 						}
 					}
 				}
@@ -360,7 +368,12 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 			case IChemClipseEvents.TOPIC_MASS_SPECTRUM_UPDATE_SELECTION: {
 				if(objects.size() == 1) {
 					Object object = objects.get(0);
-					if(object instanceof IMassSpectra updatedMassSpectra) {
+					if(object instanceof IScanMSD scanMSD) {
+						if(scanMSD == extendedMassSpectrumUI.getMassSpectrum()) {
+							extendedMassSpectrumUI.refresh();
+							dirtyable.setDirty(scanMSD.isDirty());
+						}
+					} else if(object instanceof IMassSpectra updatedMassSpectra) {
 						if(object != massSpectra) {
 							extendedMassSpectrumUI.update(updatedMassSpectra);
 						} else {

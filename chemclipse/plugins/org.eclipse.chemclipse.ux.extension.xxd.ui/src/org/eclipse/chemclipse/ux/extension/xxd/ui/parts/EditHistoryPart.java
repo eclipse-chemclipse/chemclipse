@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2025 Lablicate GmbH.
+ * Copyright (c) 2014, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -87,6 +87,7 @@ public class EditHistoryPart extends AbstractPart<ExtendedEditHistoryUI> {
 
 	private boolean isMassSpectrumTopic(String topic) {
 
-		return IChemClipseEvents.TOPIC_SCAN_XXD_UPDATE_SELECTION.equals(topic);
+		return IChemClipseEvents.TOPIC_SCAN_XXD_UPDATE_SELECTION.equals(topic) //
+				|| IChemClipseEvents.TOPIC_MASS_SPECTRUM_UPDATE_SELECTION.equals(topic);
 	}
 }
