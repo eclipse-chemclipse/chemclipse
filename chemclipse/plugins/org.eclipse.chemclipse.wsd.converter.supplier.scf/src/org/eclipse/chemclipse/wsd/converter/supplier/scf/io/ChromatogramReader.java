@@ -199,14 +199,14 @@ public class ChromatogramReader extends AbstractChromatogramDSDReader {
 			IScanWSD scan = chromatogram.getScan(scanNumber);
 
 			ILibraryInformation libraryInformation = new LibraryInformation();
-			libraryInformation.setName(String.valueOf(letter));
+			libraryInformation.setName(String.valueOf(Nucleobase.of(letter).letter()));
 
 			IComparisonResult comparisonResult = new ComparisonResult( // TODO not the right field
 					probabilities.getAdenine()[i], probabilities.getCytosine()[i], //
 					probabilities.getGuanine()[i], probabilities.getThymine()[i]);
 
 			IIdentificationTarget identificationTarget = new IdentificationTarget(libraryInformation, comparisonResult);
-			identificationTarget.setIdentifier(String.valueOf(letter));
+			identificationTarget.setIdentifier("Base Caller");
 			scan.getTargets().add(identificationTarget); // TODO add to scan signal rather than total signal
 		}
 	}
