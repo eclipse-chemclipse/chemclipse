@@ -32,6 +32,12 @@ public abstract class AbstractChromatogramDSD extends AbstractChromatogramWSD im
 	}
 
 	@Override
+	public String getMiscInfo() {
+
+		return nucleotideSequence.toString();
+	}
+
+	@Override
 	public Map<Float, Nucleobase> getWavelengthMapping() {
 
 		return nucleobasePerWavelength;
