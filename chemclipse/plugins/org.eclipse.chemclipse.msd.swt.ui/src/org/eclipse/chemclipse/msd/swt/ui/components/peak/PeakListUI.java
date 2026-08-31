@@ -12,24 +12,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.swt.ui.components.peak;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException;
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.core.IChromatogramOverview;
-import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
-import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
-import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
-import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
-import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
-import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
-import org.eclipse.chemclipse.msd.model.core.selection.ChromatogramSelectionMSD;
-import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 import org.eclipse.chemclipse.msd.swt.ui.internal.provider.PeakCheckBoxEditingSupport;
 import org.eclipse.chemclipse.msd.swt.ui.internal.provider.PeakListContentProvider;
 import org.eclipse.chemclipse.msd.swt.ui.internal.provider.PeakListLabelProvider;
@@ -38,7 +27,6 @@ import org.eclipse.chemclipse.msd.swt.ui.support.DatabaseFileSupport;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
-import org.eclipse.chemclipse.support.text.ValueFormat;
 import org.eclipse.chemclipse.support.ui.swt.ExtendedTableViewer;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -60,8 +48,6 @@ public class PeakListUI {
 
 	private IChromatogramSelection chromatogramSelection;
 
-	private final DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish();
-
 	private ExtendedTableViewer tableViewer;
 	private Label labelSelectedPeak;
 	private Label labelPeaks;
@@ -75,119 +61,9 @@ public class PeakListUI {
 		initialize(parent);
 	}
 
-	public void setChromatogramSelection(IChromatogramSelection chromatogramSelection) {
-
-		this.chromatogramSelection = chromatogramSelection;
-	}
-
-	public void setFocus() {
-
-		tableViewer.getControl().setFocus();
-	}
-
-	public void update(IPeaksMSD peaks) {
-
-		if(peaks != null) {
-			if(chromatogramSelection != null && chromatogramSelection.getChromatogram() != null) {
-				labelPeaks.setText(chromatogramSelection.getChromatogram().getPeaks().size() + " chromatogram peaks - " + peaks.getPeaks().size() + " displayed peaks");
-			} else {
-				labelPeaks.setText(peaks.getPeaks().size() + " displayed peaks");
-			}
-
-			tableViewer.setInput(peaks);
-		} else {
-			clear();
-		}
-	}
-
-	public void setLabelSelectedPeak(IChromatogramPeakMSD selectedPeakMSD) {
-
-		if(selectedPeakMSD != null && selectedPeakMSD.getPeakModel() != null) {
-			IPeakModelMSD peakModel = selectedPeakMSD.getPeakModel();
-			String name = getName(selectedPeakMSD.getTargets(), peakModel.getPeakMaximum().getRetentionIndex());
-			labelSelectedPeak.setText("Selected Peak: " + decimalFormat.format(peakModel.getRetentionTimeAtPeakMaximum() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR) + " min - Name: " + name);
-		} else {
-			labelSelectedPeak.setText("Selected Peak: none selected yet");
-		}
-	}
-
-	public void clear() {
-
-		labelSelectedPeak.setText("");
-		labelPeaks.setText("");
-		tableViewer.setInput(null);
-	}
-
 	public ExtendedTableViewer getTableViewer() {
 
 		return tableViewer;
-	}
-
-	public String[] getTitles() {
-
-		return titles;
-	}
-
-	public void deleteSelectedPeaks(IChromatogramSelectionMSD chromatogramSelection) {
-
-		if(chromatogramSelection != null) {
-			/*
-			 * Delete the selected items.
-			 */
-			Table table = tableViewer.getTable();
-			int[] indices = table.getSelectionIndices();
-			List<IPeakMSD> peaksToDelete = getPeakList(table, indices);
-			List<IChromatogramPeakMSD> chromatogramPeaksToDelete = new ArrayList<>();
-			for(IPeakMSD peakMSD : peaksToDelete) {
-				if(peakMSD instanceof IChromatogramPeakMSD chromatogramPeakMSD) {
-					chromatogramPeaksToDelete.add(chromatogramPeakMSD);
-				}
-			}
-			/*
-			 * Delete peaks in table.
-			 */
-			table.remove(indices);
-			/*
-			 * Delete peak in chromatogram.
-			 */
-			IChromatogramMSD chromatogram = chromatogramSelection.getChromatogram();
-			chromatogram.getPeaks().removeAll(chromatogramPeaksToDelete);
-			/*
-			 * Is the chromatogram updatable? IChromatogramSelection
-			 * at itself isn't.
-			 */
-			if(chromatogramSelection instanceof ChromatogramSelectionMSD chromatogramSelectionMSD) {
-				List<IChromatogramPeakMSD> peaks = chromatogram.getPeaks();
-				if(!peaks.isEmpty()) {
-					chromatogramSelectionMSD.setSelectedPeak(peaks.get(0));
-				}
-				chromatogramSelectionMSD.update(true); // true: forces the editor to update
-			}
-		}
-	}
-
-	public void setActiveStatusSelectedPeaks(IChromatogramSelectionMSD chromatogramSelection, boolean activeForAnalysis) {
-
-		Table table = tableViewer.getTable();
-		int[] indices = table.getSelectionIndices();
-		List<IPeakMSD> peaks = getPeakList(table, indices);
-		for(IPeakMSD peak : peaks) {
-			peak.setActiveForAnalysis(activeForAnalysis);
-		}
-		tableViewer.refresh();
-		chromatogramSelection.update(true);
-	}
-
-	public void exportSelectedPeaks() {
-
-		try {
-			Table table = tableViewer.getTable();
-			int[] indices = table.getSelectionIndices();
-			List<IPeakMSD> peaks = getPeakList(table, indices);
-			DatabaseFileSupport.saveMassSpectra(peaks);
-		} catch(NoConverterAvailableException e1) {
-			logger.warn(e1);
-		}
 	}
 
 	private void initialize(Composite parent) {
@@ -316,22 +192,6 @@ public class PeakListUI {
 		return peakList;
 	}
 
-	private List<IPeakMSD> getPeakList(Table table, int[] indices) {
-
-		List<IPeakMSD> peakList = new ArrayList<>();
-		for(int index : indices) {
-			/*
-			 * Get the selected item.
-			 */
-			TableItem tableItem = table.getItem(index);
-			Object object = tableItem.getData();
-			if(object instanceof IPeakMSD peak) {
-				peakList.add(peak);
-			}
-		}
-		return peakList;
-	}
-
 	private void setEditingSupport() {
 
 		TableViewer tableViewer = getTableViewer();
@@ -342,16 +202,6 @@ public class PeakListUI {
 			if(label.equals(PEAK_IS_ACTIVE_FOR_ANALYSIS)) {
 				tableViewerColumn.setEditingSupport(new PeakCheckBoxEditingSupport(tableViewer));
 			}
-		}
-	}
-
-	private String getName(Set<IIdentificationTarget> targets, float retentionIndex) {
-
-		ILibraryInformation libraryInformation = IIdentificationTarget.getLibraryInformation(targets, retentionIndex);
-		if(libraryInformation != null) {
-			return libraryInformation.getName();
-		} else {
-			return "Peak is not identified yet.";
 		}
 	}
 }
