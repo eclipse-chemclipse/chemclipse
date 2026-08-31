@@ -44,6 +44,7 @@ Export-Package: org.eclipse.chemclipse.support.ui.activator,
  org.eclipse.chemclipse.support.ui.swt.columns,
  org.eclipse.chemclipse.support.ui.swt.dialogs,
  org.eclipse.chemclipse.support.ui.swt.edit,
+ org.eclipse.chemclipse.support.ui.swt.impl,
  org.eclipse.chemclipse.support.ui.updates,
  org.eclipse.chemclipse.support.ui.wizards,
  org.eclipse.chemclipse.support.ui.workbench
