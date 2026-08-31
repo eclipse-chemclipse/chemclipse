@@ -209,8 +209,6 @@ public class ChromatogramReader extends AbstractChromatogramDSDReader {
 			identificationTarget.setIdentifier(String.valueOf(letter));
 			scan.getTargets().add(identificationTarget); // TODO add to scan signal rather than total signal
 		}
-
-		chromatogram.setNucleotideSequence(nucleotideSequence.toString());
 	}
 
 	private void readComments(File file, IVendorChromatogram chromatogram) throws IOException {

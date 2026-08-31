@@ -24,9 +24,7 @@ public interface IChromatogramDSD extends IChromatogramWSD {
 	/**
 	 * The nucleotide sequence read from a sequencing trace.
 	 */
-	String getNucleotideSequence();
-
-	void setNucleotideSequence(String sequence);
+	NucleotideSequence getNucleotideSequence();
 
 	/**
 	 * Maps nucleotide base to wavelength.
