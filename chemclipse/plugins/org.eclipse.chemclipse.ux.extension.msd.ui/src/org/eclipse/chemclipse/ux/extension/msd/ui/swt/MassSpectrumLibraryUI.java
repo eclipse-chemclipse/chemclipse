@@ -48,6 +48,7 @@ import org.eclipse.chemclipse.support.ui.provider.AbstractLabelProvider;
 import org.eclipse.chemclipse.swt.ui.components.InformationUI;
 import org.eclipse.chemclipse.swt.ui.components.SearchSupportUI;
 import org.eclipse.chemclipse.swt.ui.preferences.PreferencePageSystem;
+import org.eclipse.chemclipse.ux.extension.msd.ui.dialogs.ExtractTransferDialog;
 import org.eclipse.chemclipse.ux.extension.msd.ui.dialogs.LibraryEntryEditDialog;
 import org.eclipse.chemclipse.ux.extension.msd.ui.dialogs.MassSpectrumMergeDialog;
 import org.eclipse.chemclipse.ux.extension.msd.ui.help.HelpContext;
@@ -86,6 +87,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 	private AtomicReference<Button> buttonToolbarSearch = new AtomicReference<>();
 	private AtomicReference<SearchSupportUI> toolbarSearch = new AtomicReference<>();
 	private AtomicReference<Button> buttonAddEntry = new AtomicReference<>();
+	private AtomicReference<Button> buttonExtractTransfer = new AtomicReference<>();
 	private AtomicReference<Button> buttonImportExcel = new AtomicReference<>();
 	private AtomicReference<Button> buttonCleanUp = new AtomicReference<>();
 	private AtomicReference<Button> buttonDeleteEntries = new AtomicReference<>();
@@ -155,12 +157,13 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 		GridData gridDataStatus = new GridData(GridData.FILL_HORIZONTAL);
 		gridDataStatus.horizontalAlignment = SWT.END;
 		composite.setLayoutData(gridDataStatus);
-		composite.setLayout(new GridLayout(13, false));
+		composite.setLayout(new GridLayout(14, false));
 
 		createButtonToggleToolbarInfo(composite);
 		createButtonToggleToolbarSearch(composite);
 		createButtonLibraryImport(composite);
 		createButtonAddEntry(composite);
+		createButtonExtractTransfer(composite);
 		createButtonImportExcel(composite);
 		createComboDuplicateDetection(composite);
 		createButtonShowDuplicatesOnly(composite);
@@ -291,6 +294,28 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 			}
 		});
 		buttonAddEntry.set(button);
+	}
+
+	private void createButtonExtractTransfer(Composite parent) {
+
+		Button button = new Button(parent, SWT.PUSH);
+		button.setToolTipText("Transfer data from one header field to another.");
+		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_TRANSFER, IApplicationImageProvider.SIZE_16x16));
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				if(massSpectra != null) {
+					ExtractTransferDialog dialog = new ExtractTransferDialog(getShell(), massSpectra);
+					if(dialog.open() == Window.OK) {
+						setMassSpectraDirty();
+						setInput();
+					}
+				}
+			}
+		});
+		buttonExtractTransfer.set(button);
 	}
 
 	private void createButtonImportExcel(Composite parent) {
@@ -715,6 +740,7 @@ public class MassSpectrumLibraryUI extends Composite implements IExtendedPartUI 
 							if(massSpectra != null) {
 								setMassSpectraDirty();
 								updateDuplicates();
+								massSpectrumListControl.get().refresh();
 							}
 						}
 					}
