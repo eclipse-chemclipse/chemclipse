@@ -56,7 +56,7 @@ public class TargetsListUI extends ExtendedTableViewer {
 	private Integer retentionTime = null;
 	private Float retentionIndex = null;
 
-	private TargetsColumns targetsColumns = TargetsColumns.create(null, TargetsLabelProvider.TRAILING_COLUMNS);
+	private TargetsColumns targetsColumns = null;
 	private boolean dynamicColumns = false;
 	private boolean editingSupport = false;
 
@@ -96,6 +96,7 @@ public class TargetsListUI extends ExtendedTableViewer {
 		super(parent, style | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
 
 		createColumns(alternativeTitles, BOUNDS);
+		targetsColumns = TargetsColumns.create(null, TargetsLabelProvider.TRAILING_COLUMNS);
 		setLabelProvider(labelProvider); // order is important
 		setContentProvider(new ListContentProvider());
 		setComparator(false);
