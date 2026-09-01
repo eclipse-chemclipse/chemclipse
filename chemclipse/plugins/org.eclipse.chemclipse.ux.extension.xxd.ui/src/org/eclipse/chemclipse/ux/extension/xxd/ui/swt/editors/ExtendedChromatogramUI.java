@@ -1093,13 +1093,9 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 					targetReferenceSettings.setBaseChart(baseChart);
 					targetReferenceSettings.setLabel(LABEL_SCAN_TARGETS);
 					targetReferenceSettings.setDescription("Identified Scans");
-					if(baseChart.getSeriesIds().contains(SERIES_ID_CHROMATOGRAM)) {
-						targetReferenceSettings.setReferenceSeriesId(SERIES_ID_CHROMATOGRAM);
-					} else {
-						Optional<String> chromatogramSeriesId = baseChart.getSeriesIds().stream().filter(s -> s.startsWith(SERIES_ID_CHROMATOGRAM)).findFirst();
-						if(chromatogramSeriesId.isPresent()) {
-							targetReferenceSettings.setReferenceSeriesId(chromatogramSeriesId.get());
-						}
+					Optional<String> chromatogramSeriesId = lineSeriesDataList.stream().map(l -> l.getSeriesData().getId()).filter(s -> s.startsWith(SERIES_ID_CHROMATOGRAM)).findFirst();
+					if(chromatogramSeriesId.isPresent()) {
+						targetReferenceSettings.setReferenceSeriesId(chromatogramSeriesId.get());
 					}
 					TargetReferenceLabelMarker scanLabelMarker = new TargetReferenceLabelMarker(targetReferenceSettings);
 					plotArea.addCustomPaintListener(scanLabelMarker);
