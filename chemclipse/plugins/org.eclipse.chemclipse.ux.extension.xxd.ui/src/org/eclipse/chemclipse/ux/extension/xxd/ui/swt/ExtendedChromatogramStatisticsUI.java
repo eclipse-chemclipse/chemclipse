@@ -14,7 +14,6 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -42,7 +41,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swtchart.extensions.preferences.PreferencePage;
 
 public class ExtendedChromatogramStatisticsUI extends Composite implements IExtendedPartUI {
 
@@ -88,10 +86,9 @@ public class ExtendedChromatogramStatisticsUI extends Composite implements IExte
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.horizontalAlignment = SWT.END;
 		composite.setLayoutData(gridData);
-		composite.setLayout(new GridLayout(2, false));
+		composite.setLayout(new GridLayout(1, false));
 
 		buttonToolbarInfo = createButtonToggleToolbar(composite, toolbarInfo, IMAGE_INFO, TOOLTIP_INFO);
-		createSettingsButton(composite);
 
 		return composite;
 	}
@@ -111,18 +108,6 @@ public class ExtendedChromatogramStatisticsUI extends Composite implements IExte
 		table.setLayoutData(new GridData(GridData.FILL_BOTH));
 
 		tableControl.set(keyValueListUI);
-	}
-
-	private void createSettingsButton(Composite parent) {
-
-		createSettingsButton(parent, Arrays.asList(PreferencePage.class), _ -> {
-			applySettings();
-		});
-	}
-
-	private void applySettings() {
-
-		updateInput();
 	}
 
 	private void updateInput() {
