@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - helper for DPI aware font creation
@@ -17,7 +17,6 @@ import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.Point;
 
 public class Fonts {
 
@@ -27,35 +26,26 @@ public class Fonts {
 	 * Returns a cached font from the font registry.
 	 * In case of an error, the system font is returned.
 	 * Fonts are disposed when the display is disposed.
-	 * 
-	 * @param display
-	 * @param name
-	 * @param height
-	 * @param style
-	 * @return
+	 * @deprecated
 	 */
+	@Deprecated(forRemoval=true)
 	public static Font getCachedFont(Device display, String name, int height, int style) {
+
+		return getCachedFont(name, height, style);
+	}
+
+	/**
+	 * Returns a cached font from the font registry.
+	 * In case of an error, the system font is returned.
+	 * Fonts are disposed when the display is disposed.
+	 */
+	public static Font getCachedFont(String name, int height, int style) {
 
 		String fontId = name + "-" + height + "-" + style;
 		if(!fontRegistry.hasValueFor(fontId)) {
 			fontRegistry.put(fontId, new FontData[]{new FontData(name, height, style)});
 		}
-		Font font = fontRegistry.get(fontId);
-		return font != null ? font : display.getSystemFont();
+		return fontRegistry.get(fontId);
 	}
 
-	/**
-	 * Creates a font so it looks the same size on different DPIs for the given device.
-	 * Please note that the caller is responsible for disposing the font.
-	 * 
-	 * @param device
-	 * @param fontData
-	 * @return
-	 */
-	public static Font createDPIAwareFont(Device device, FontData fontData) {
-
-		Point dpi = device.getDPI();
-		int pointHeight = fontData.getHeight() * 72 / dpi.y;
-		return new Font(device, fontData.getName(), pointHeight, fontData.getStyle());
-	}
 }

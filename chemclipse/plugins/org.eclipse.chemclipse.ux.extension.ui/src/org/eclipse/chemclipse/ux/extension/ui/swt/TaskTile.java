@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - refactor to use a TileDefinition as model
@@ -254,7 +254,7 @@ public class TaskTile extends Composite {
 		if((style & LARGE_TITLE) != 0) {
 			fontSize = 40;
 		}
-		textSection.setFont(Fonts.getCachedFont(getDisplay(), label.getFont().getFontData()[0].getName(), fontSize, SWT.BOLD));
+		textSection.setFont(Fonts.getCachedFont(label.getFont().getFontData()[0].getName(), fontSize, SWT.BOLD));
 	}
 
 	public void updateFromDefinition() {
