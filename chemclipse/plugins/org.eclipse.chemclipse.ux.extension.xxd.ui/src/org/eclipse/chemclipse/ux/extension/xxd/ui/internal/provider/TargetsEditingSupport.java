@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2025 Lablicate GmbH.
+ * Copyright (c) 2016, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -15,6 +15,7 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
+import org.eclipse.chemclipse.ux.extension.ui.provider.TargetColumn;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.TargetsListUI;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckboxCellEditor;
@@ -25,13 +26,13 @@ public class TargetsEditingSupport extends EditingSupport {
 
 	private CellEditor cellEditor;
 	private TargetsListUI tableViewer;
-	private String column;
+	private TargetColumn column;
 
-	public TargetsEditingSupport(TargetsListUI tableViewer, String column) {
+	public TargetsEditingSupport(TargetsListUI tableViewer, TargetColumn column) {
 
 		super(tableViewer);
 		this.column = column;
-		if(column.equals(TargetsLabelProvider.VERIFIED)) {
+		if(column == TargetColumn.VERIFIED) {
 			this.cellEditor = new CheckboxCellEditor(tableViewer.getTable());
 		} else {
 			this.cellEditor = new TextCellEditor(tableViewer.getTable());
@@ -48,7 +49,7 @@ public class TargetsEditingSupport extends EditingSupport {
 	@Override
 	protected boolean canEdit(Object element) {
 
-		if(column == TargetsLabelProvider.VERIFIED) {
+		if(column == TargetColumn.VERIFIED) {
 			return true;
 		} else {
 			return tableViewer.isEditEnabled();
@@ -59,36 +60,19 @@ public class TargetsEditingSupport extends EditingSupport {
 	protected Object getValue(Object element) {
 
 		if(element instanceof IIdentificationTarget identificationTarget) {
-			if(column.equals(TargetsLabelProvider.VERIFIED)) {
-				return identificationTarget.isVerified();
-			}
-			if(column.equals(TargetsLabelProvider.NAME)) {
-				return identificationTarget.getLibraryInformation().getName();
-			}
-			if(column.equals(TargetsLabelProvider.CAS)) {
-				return identificationTarget.getLibraryInformation().getCasNumber();
-			}
-			if(column.equals(TargetsLabelProvider.COMMENTS)) {
-				return identificationTarget.getLibraryInformation().getComments();
-			}
-			if(column.equals(TargetsLabelProvider.FORMULA)) {
-				return identificationTarget.getLibraryInformation().getFormula();
-			}
-			if(column.equals(TargetsLabelProvider.SMILES)) {
-				return identificationTarget.getLibraryInformation().getSmiles();
-			}
-			if(column.equals(TargetsLabelProvider.INCHI)) {
-				return identificationTarget.getLibraryInformation().getInChI();
-			}
-			if(column.equals(TargetsLabelProvider.INCHI_KEY)) {
-				return identificationTarget.getLibraryInformation().getInChIKey();
-			}
-			if(column.equals(TargetsLabelProvider.CONTRIBUTOR)) {
-				return identificationTarget.getLibraryInformation().getContributor();
-			}
-			if(column.equals(TargetsLabelProvider.REFERENCE_ID)) {
-				return identificationTarget.getLibraryInformation().getReferenceIdentifier();
-			}
+			return switch(column) {
+				case VERIFIED -> identificationTarget.isVerified();
+				case NAME -> identificationTarget.getLibraryInformation().getName();
+				case CAS -> identificationTarget.getLibraryInformation().getCasNumber();
+				case COMMENTS -> identificationTarget.getLibraryInformation().getComments();
+				case FORMULA -> identificationTarget.getLibraryInformation().getFormula();
+				case SMILES -> identificationTarget.getLibraryInformation().getSmiles();
+				case INCHI -> identificationTarget.getLibraryInformation().getInChI();
+				case INCHI_KEY -> identificationTarget.getLibraryInformation().getInChIKey();
+				case CONTRIBUTOR -> identificationTarget.getLibraryInformation().getContributor();
+				case REFERENCE_ID -> identificationTarget.getLibraryInformation().getReferenceIdentifier();
+				default -> false;
+			};
 		}
 
 		return false;
@@ -98,35 +82,20 @@ public class TargetsEditingSupport extends EditingSupport {
 	protected void setValue(Object element, Object value) {
 
 		if(element instanceof IIdentificationTarget identificationTarget) {
-			if(column.equals(TargetsLabelProvider.VERIFIED)) {
-				identificationTarget.setVerified((boolean)value);
-			}
-			if(column.equals(TargetsLabelProvider.NAME)) {
-				identificationTarget.getLibraryInformation().setName((String)value);
-			}
-			if(column.equals(TargetsLabelProvider.CAS)) {
-				identificationTarget.getLibraryInformation().setCasNumber((String)value);
-			}
-			if(column.equals(TargetsLabelProvider.COMMENTS)) {
-				identificationTarget.getLibraryInformation().setComments((String)value);
-			}
-			if(column.equals(TargetsLabelProvider.FORMULA)) {
-				identificationTarget.getLibraryInformation().setFormula((String)value);
-			}
-			if(column.equals(TargetsLabelProvider.SMILES)) {
-				identificationTarget.getLibraryInformation().setSmiles((String)value);
-			}
-			if(column.equals(TargetsLabelProvider.INCHI)) {
-				identificationTarget.getLibraryInformation().setInChI((String)value);
-			}
-			if(column.equals(TargetsLabelProvider.INCHI_KEY)) {
-				identificationTarget.getLibraryInformation().setInChIKey((String)value);
-			}
-			if(column.equals(TargetsLabelProvider.CONTRIBUTOR)) {
-				identificationTarget.getLibraryInformation().setContributor((String)value);
-			}
-			if(column.equals(TargetsLabelProvider.REFERENCE_ID)) {
-				identificationTarget.getLibraryInformation().setReferenceIdentifier((String)value);
+			switch(column) {
+				case VERIFIED -> identificationTarget.setVerified((boolean)value);
+				case NAME -> identificationTarget.getLibraryInformation().setName((String)value);
+				case CAS -> identificationTarget.getLibraryInformation().setCasNumber((String)value);
+				case COMMENTS -> identificationTarget.getLibraryInformation().setComments((String)value);
+				case FORMULA -> identificationTarget.getLibraryInformation().setFormula((String)value);
+				case SMILES -> identificationTarget.getLibraryInformation().setSmiles((String)value);
+				case INCHI -> identificationTarget.getLibraryInformation().setInChI((String)value);
+				case INCHI_KEY -> identificationTarget.getLibraryInformation().setInChIKey((String)value);
+				case CONTRIBUTOR -> identificationTarget.getLibraryInformation().setContributor((String)value);
+				case REFERENCE_ID -> identificationTarget.getLibraryInformation().setReferenceIdentifier((String)value);
+				default -> {
+					// The column is not editable.
+				}
 			}
 		}
 

@@ -36,41 +36,11 @@ import org.eclipse.chemclipse.ux.extension.ui.provider.IdentificationTargetSuppo
 import org.eclipse.chemclipse.ux.extension.ui.provider.TargetColumn;
 import org.eclipse.chemclipse.ux.extension.ui.provider.TargetsColumns;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.l10n.ExtensionMessages;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.graphics.Image;
 
 public class TargetsLabelProvider extends AbstractChemClipseLabelProvider {
-
-	public static final String VERIFIED = ExtensionMessages.verified;
-	public static final String NAME = ExtensionMessages.name;
-	public static final String MATCH_FACTOR = ExtensionMessages.matchFactor;
-	public static final String REVERSE_MATCH_FACTOR = ExtensionMessages.reverseMatchFactor;
-	public static final String MATCH_FACTOR_DIRECT = ExtensionMessages.matchFactorDirect;
-	public static final String REVERSE_MATCH_FACTOR_DIRECT = ExtensionMessages.reverseMatchFactorDirect;
-	public static final String PROBABILITY = ExtensionMessages.probability;
-	public static final String MOL_WEIGHT = ExtensionMessages.molWeight;
-	public static final String EXACT_MASS = ExtensionMessages.excactMass;
-	public static final String ADVICE = ExtensionMessages.advice;
-	public static final String IDENTIFIER = ExtensionMessages.identifier;
-	public static final String MISCELLANEOUS = ExtensionMessages.miscellaneous;
-	public static final String DATABASE = ExtensionMessages.database;
-	public static final String DATABASE_INDEX = ExtensionMessages.databaseIndex;
-	public static final String RATING = ExtensionMessages.rating;
-	public static final String CAS = "CAS";
-	public static final String COMMENTS = ExtensionMessages.comments;
-	public static final String FORMULA = ExtensionMessages.formula;
-	public static final String SMILES = "SMILES";
-	public static final String INCHI = "InChI";
-	public static final String INCHI_KEY = "InChI Key";
-	public static final String CONTRIBUTOR = ExtensionMessages.contributor;
-	public static final String RETENTION_TIME = ExtensionMessages.retentionTime;
-	public static final String RETENTION_INDEX = ExtensionMessages.retentionIndex;
-	public static final String REFERENCE_ID = ExtensionMessages.referenceID;
-	public static final String INLIB_FACTOR = ExtensionMessages.inLibFactor;
-	public static final String NCBI_TAXONOMY = "NCBI Taxonomy ID";
-	public static final String GENBANK_ACCESSION = "GenBank Accession";
 
 	private static final IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
 
