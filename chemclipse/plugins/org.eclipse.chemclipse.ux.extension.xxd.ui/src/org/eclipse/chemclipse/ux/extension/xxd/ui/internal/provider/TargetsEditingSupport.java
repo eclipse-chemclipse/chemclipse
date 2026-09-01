@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider;
 
+import java.util.EnumSet;
+import java.util.Set;
+
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
@@ -23,6 +26,19 @@ import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.TextCellEditor;
 
 public class TargetsEditingSupport extends EditingSupport {
+
+	public static final Set<TargetColumn> EDITABLE_COLUMNS = EnumSet.of( //
+			TargetColumn.VERIFIED, //
+			TargetColumn.NAME, //
+			TargetColumn.CAS, //
+			TargetColumn.COMMENTS, //
+			TargetColumn.FORMULA, //
+			TargetColumn.SMILES, //
+			TargetColumn.INCHI, //
+			TargetColumn.INCHI_KEY, //
+			TargetColumn.CONTRIBUTOR, //
+			TargetColumn.REFERENCE_ID //
+	);
 
 	private CellEditor cellEditor;
 	private TargetsListUI tableViewer;

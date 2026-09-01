@@ -15,9 +15,7 @@
 package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
 
 import java.util.Collection;
-import java.util.EnumSet;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
@@ -50,18 +48,6 @@ public class TargetsListUI extends ExtendedTableViewer {
 
 	private static final String[] TITLES = TargetsLabelProvider.TITLES;
 	private static final int[] BOUNDS = TargetsLabelProvider.BOUNDS;
-	private static final Set<TargetColumn> EDITABLE_COLUMNS = EnumSet.of( //
-			TargetColumn.VERIFIED, //
-			TargetColumn.NAME, //
-			TargetColumn.CAS, //
-			TargetColumn.COMMENTS, //
-			TargetColumn.FORMULA, //
-			TargetColumn.SMILES, //
-			TargetColumn.INCHI, //
-			TargetColumn.INCHI_KEY, //
-			TargetColumn.CONTRIBUTOR, //
-			TargetColumn.REFERENCE_ID //
-	);
 
 	private final TargetsLabelProvider labelProvider = new TargetsLabelProvider();
 	private final TargetsComparator targetsComparator = new TargetsComparator();
@@ -188,7 +174,7 @@ public class TargetsListUI extends ExtendedTableViewer {
 		List<TableViewerColumn> tableViewerColumns = getTableViewerColumns();
 		for(int i = 0; i < tableViewerColumns.size(); i++) {
 			TargetColumn targetColumn = targetsColumns.getColumn(i);
-			if(targetColumn != null && EDITABLE_COLUMNS.contains(targetColumn)) {
+			if(targetColumn != null && TargetsEditingSupport.EDITABLE_COLUMNS.contains(targetColumn)) {
 				tableViewerColumns.get(i).setEditingSupport(new TargetsEditingSupport(this, targetColumn));
 			}
 		}
