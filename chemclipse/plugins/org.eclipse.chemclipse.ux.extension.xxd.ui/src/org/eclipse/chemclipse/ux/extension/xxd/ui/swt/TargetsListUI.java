@@ -15,7 +15,9 @@
 package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
 
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
@@ -24,6 +26,7 @@ import org.eclipse.chemclipse.support.ui.swt.ExtendedTableViewer;
 import org.eclipse.chemclipse.support.ui.swt.IRecordTableComparator;
 import org.eclipse.chemclipse.support.updates.IUpdateListener;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
+import org.eclipse.chemclipse.ux.extension.ui.provider.TargetColumn;
 import org.eclipse.chemclipse.ux.extension.ui.provider.TargetListFilter;
 import org.eclipse.chemclipse.ux.extension.ui.provider.TargetsColumns;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
@@ -47,6 +50,18 @@ public class TargetsListUI extends ExtendedTableViewer {
 
 	private static final String[] TITLES = TargetsLabelProvider.TITLES;
 	private static final int[] BOUNDS = TargetsLabelProvider.BOUNDS;
+	private static final Set<TargetColumn> EDITABLE_COLUMNS = EnumSet.of( //
+			TargetColumn.VERIFIED, //
+			TargetColumn.NAME, //
+			TargetColumn.CAS, //
+			TargetColumn.COMMENTS, //
+			TargetColumn.FORMULA, //
+			TargetColumn.SMILES, //
+			TargetColumn.INCHI, //
+			TargetColumn.INCHI_KEY, //
+			TargetColumn.CONTRIBUTOR, //
+			TargetColumn.REFERENCE_ID //
+	);
 
 	private final TargetsLabelProvider labelProvider = new TargetsLabelProvider();
 	private final TargetsComparator targetsComparator = new TargetsComparator();
@@ -55,7 +70,7 @@ public class TargetsListUI extends ExtendedTableViewer {
 	private Integer retentionTime = null;
 	private Float retentionIndex = null;
 
-	private TargetsColumns targetsColumns = null;
+	private TargetsColumns targetsColumns = TargetsColumns.create(null, TargetsLabelProvider.TRAILING_COLUMNS);
 	private boolean dynamicColumns = false;
 	private boolean editingSupport = false;
 
@@ -172,30 +187,23 @@ public class TargetsListUI extends ExtendedTableViewer {
 		editingSupport = true;
 		List<TableViewerColumn> tableViewerColumns = getTableViewerColumns();
 		for(int i = 0; i < tableViewerColumns.size(); i++) {
-			TableViewerColumn tableViewerColumn = tableViewerColumns.get(i);
-			String label = tableViewerColumn.getColumn().getText();
-			if(label.equals(TargetsLabelProvider.VERIFIED)) {
-				tableViewerColumn.setEditingSupport(new TargetsEditingSupport(this, label));
-			} else if(label.equals(TargetsLabelProvider.NAME)) {
-				tableViewerColumn.setEditingSupport(new TargetsEditingSupport(this, label));
-			} else if(label.equals(TargetsLabelProvider.CAS)) {
-				tableViewerColumn.setEditingSupport(new TargetsEditingSupport(this, label));
-			} else if(label.equals(TargetsLabelProvider.COMMENTS)) {
-				tableViewerColumn.setEditingSupport(new TargetsEditingSupport(this, label));
-			} else if(label.equals(TargetsLabelProvider.FORMULA)) {
-				tableViewerColumn.setEditingSupport(new TargetsEditingSupport(this, label));
-			} else if(label.equals(TargetsLabelProvider.SMILES)) {
-				tableViewerColumn.setEditingSupport(new TargetsEditingSupport(this, label));
-			} else if(label.equals(TargetsLabelProvider.INCHI)) {
-				tableViewerColumn.setEditingSupport(new TargetsEditingSupport(this, label));
-			} else if(label.equals(TargetsLabelProvider.INCHI_KEY)) {
-				tableViewerColumn.setEditingSupport(new TargetsEditingSupport(this, label));
-			} else if(label.equals(TargetsLabelProvider.CONTRIBUTOR)) {
-				tableViewerColumn.setEditingSupport(new TargetsEditingSupport(this, label));
-			} else if(label.equals(TargetsLabelProvider.REFERENCE_ID)) {
-				tableViewerColumn.setEditingSupport(new TargetsEditingSupport(this, label));
+			TargetColumn targetColumn = targetsColumns.getColumn(i);
+			if(targetColumn != null && EDITABLE_COLUMNS.contains(targetColumn)) {
+				tableViewerColumns.get(i).setEditingSupport(new TargetsEditingSupport(this, targetColumn));
 			}
 		}
+	}
+
+	private TableViewerColumn getTableViewerColumn(TargetColumn targetColumn) {
+
+		List<TableViewerColumn> tableViewerColumns = getTableViewerColumns();
+		for(int i = 0; i < tableViewerColumns.size(); i++) {
+			if(targetsColumns.getColumn(i) == targetColumn) {
+				return tableViewerColumns.get(i);
+			}
+		}
+
+		return null;
 	}
 
 	private void setCellColorProvider() {
@@ -206,7 +214,7 @@ public class TargetsListUI extends ExtendedTableViewer {
 
 	private void setColorProviderRetentionTime() {
 
-		TableViewerColumn tableViewerColumn = getTableViewerColumn(TargetsLabelProvider.RETENTION_TIME);
+		TableViewerColumn tableViewerColumn = getTableViewerColumn(TargetColumn.RETENTION_TIME);
 		if(tableViewerColumn != null) {
 			tableViewerColumn.setLabelProvider(new StyledCellLabelProvider() {
 
@@ -260,7 +268,7 @@ public class TargetsListUI extends ExtendedTableViewer {
 
 	private void setColorProviderRetentionIndex() {
 
-		TableViewerColumn tableViewerColumn = getTableViewerColumn(TargetsLabelProvider.RETENTION_INDEX);
+		TableViewerColumn tableViewerColumn = getTableViewerColumn(TargetColumn.RETENTION_INDEX);
 		if(tableViewerColumn != null) {
 			tableViewerColumn.setLabelProvider(new StyledCellLabelProvider() {
 

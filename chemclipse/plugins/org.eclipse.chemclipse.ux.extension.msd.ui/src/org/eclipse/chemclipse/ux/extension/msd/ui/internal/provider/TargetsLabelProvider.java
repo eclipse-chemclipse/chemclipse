@@ -37,25 +37,6 @@ import org.eclipse.swt.graphics.Image;
 
 public class TargetsLabelProvider extends AbstractChemClipseLabelProvider {
 
-	public static final String VERIFIED = "Verified";
-	public static final String NAME = "Name";
-	public static final String MATCH_FACTOR = "Match Factor";
-	public static final String REVERSE_MATCH_FACTOR = "Reverse Match Factor";
-	public static final String MATCH_FACTOR_DIRECT = "Match Factor Direct";
-	public static final String REVERSE_MATCH_FACTOR_DIRECT = "Reverse Match Factor Direct";
-	public static final String PROBABILITY = "Probability";
-	public static final String ADVICE = "Advice";
-	public static final String IDENTIFIER = "Identifier";
-	public static final String MISCELLANEOUS = "Miscellaneous";
-	public static final String DATABASE = "Database";
-	public static final String DATABASE_INDEX = "Database Index";
-	public static final String RATING = "Rating";
-	public static final String COMMENTS = "Comments";
-	public static final String CONTRIBUTOR = "Contributor";
-	public static final String REFERENCE_ID = "Reference ID";
-	public static final String NCBI_TAXONOMY = "NCBI Taxonomy ID";
-	public static final String GENBANK_ACCESSION = "GenBank Accession";
-
 	private static final Stream<TargetColumn> TARGET_COLUMNS = Stream.of(TargetsColumns.BIOLOGICAL_IDENTIFIERS);
 	public static final Collection<TargetColumn> TRAILING_COLUMNS = TARGET_COLUMNS.toList();
 
