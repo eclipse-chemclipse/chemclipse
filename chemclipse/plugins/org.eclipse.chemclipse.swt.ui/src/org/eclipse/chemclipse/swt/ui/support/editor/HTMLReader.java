@@ -22,14 +22,10 @@ import java.util.regex.Pattern;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Listener;
 
 public class HTMLReader {
     private final String html;
-    private final Display display;
 
     private StringBuilder text = new StringBuilder();
     private List<StyleRange> styles = new ArrayList<>();
@@ -38,13 +34,11 @@ public class HTMLReader {
     private static class CurrentStyle {
         int fontStyle = SWT.NONE;
         boolean underline = false;
-        FontData fontData = null;
     }
     private Deque<CurrentStyle> stack = new ArrayDeque<>();
 
     public HTMLReader(String html) {
         this.html = html;
-        this.display = Display.getCurrent();
     }
 
     public void applyTo(StyledText st) {
@@ -108,9 +102,6 @@ public class HTMLReader {
         sr.length = len;
         sr.fontStyle = cs.fontStyle;
         sr.underline = cs.underline;
-        if (cs.fontData != null) {
-			sr.font = new Font(display, cs.fontData);
-		}
         styles.add(sr);
     }
 
@@ -131,7 +122,6 @@ public class HTMLReader {
         CurrentStyle c = new CurrentStyle();
         c.fontStyle = s.fontStyle;
         c.underline = s.underline;
-        c.fontData = s.fontData;
         return c;
     }
 
