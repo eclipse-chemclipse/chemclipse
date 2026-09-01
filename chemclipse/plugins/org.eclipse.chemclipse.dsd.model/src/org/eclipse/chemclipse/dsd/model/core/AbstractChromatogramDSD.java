@@ -34,6 +34,7 @@ public abstract class AbstractChromatogramDSD extends AbstractChromatogramWSD im
 	@Override
 	public String getMiscInfo() {
 
+		nucleotideSequence.fromScans(getScans());
 		return nucleotideSequence.toString();
 	}
 
