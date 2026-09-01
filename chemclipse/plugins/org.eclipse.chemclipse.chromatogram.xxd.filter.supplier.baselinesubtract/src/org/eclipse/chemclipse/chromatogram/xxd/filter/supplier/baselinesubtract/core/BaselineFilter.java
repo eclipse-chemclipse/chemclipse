@@ -20,7 +20,6 @@ import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
-import org.eclipse.chemclipse.processing.core.ProcessingInfo;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public class BaselineFilter extends AbstractChromatogramFilter {
@@ -28,6 +27,13 @@ public class BaselineFilter extends AbstractChromatogramFilter {
 	@Override
 	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelection chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
 
+		IProcessingInfo<IChromatogramFilterResult> processingInfo = validate(chromatogramSelection, chromatogramFilterSettings);
+		if(!processingInfo.hasErrorMessages()) {
+			if(!chromatogramSelection.getChromatogram().getBaselineModel().isBaselineSet()) {
+				processingInfo.addErrorMessage("Baseline Extractor", "No baseline to extract.", "Use baseline detector first.");
+				return processingInfo;
+			}
+		}
 		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		int startScan = chromatogram.getScanNumber(chromatogramSelection.getStartRetentionTime());
 		int stopScan = chromatogram.getScanNumber(chromatogramSelection.getStopRetentionTime());
@@ -45,6 +51,6 @@ public class BaselineFilter extends AbstractChromatogramFilter {
 		chromatogram.getPeaks().clear();
 		baselineModel.removeBaseline();
 		chromatogramSelection.getChromatogram().setDirty(true);
-		return new ProcessingInfo<>();
+		return processingInfo;
 	}
 }
