@@ -11,4 +11,14 @@
             id="org.eclipse.chemclipse.msd.filter.supplier.tophat.massspectrum">
       </MassSpectrumFilterSupplier>
    </extension>
+   <extension
+         point="org.eclipse.chemclipse.chromatogram.xxd.baseline.detector.baselineDetectorSupplier">
+      <BaselineDetectorSupplier
+            baselineDetector="org.eclipse.chemclipse.xxd.edit.supplier.tophat.core.BaselineDetector"
+            description="This baseline detector uses a TopHat algorithm."
+            detectorName="TopHat"
+            detectorSettings="org.eclipse.chemclipse.xxd.edit.supplier.tophat.settings.BaselineDetectorSettings"
+            id="org.eclipse.chemclipse.chromatogram.xxd.baseline.detector.supplier.tophat">
+      </BaselineDetectorSupplier>
+   </extension>
 </plugin>
