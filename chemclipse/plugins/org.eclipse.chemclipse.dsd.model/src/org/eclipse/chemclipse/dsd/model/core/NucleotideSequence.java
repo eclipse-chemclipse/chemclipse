@@ -23,7 +23,12 @@ import org.eclipse.chemclipse.support.comparator.SortOrder;
 
 public class NucleotideSequence {
 
-	private List<Nucleobase> nucleotideSequence = new ArrayList<>();
+	private List<Nucleobase> nucleobases = new ArrayList<>();
+
+	public List<Nucleobase> getNucleobases() {
+
+		return nucleobases;
+	}
 
 	public void fromScans(List<IScan> scans) {
 
@@ -34,7 +39,7 @@ public class NucleotideSequence {
 			}
 			Nucleobase nucleobase = getNucleobase(bestTarget);
 			if(nucleobase != null) {
-				nucleotideSequence.add(nucleobase);
+				nucleobases.add(nucleobase);
 			}
 		}
 	}
@@ -42,9 +47,9 @@ public class NucleotideSequence {
 	@Override
 	public String toString() {
 
-		StringBuilder result = new StringBuilder(nucleotideSequence.size());
+		StringBuilder result = new StringBuilder(nucleobases.size());
 
-		for(Nucleobase nucleotide : nucleotideSequence) {
+		for(Nucleobase nucleotide : nucleobases) {
 			result.append(nucleotide.letter());
 		}
 
