@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.eclipse.chemclipse.dsd.model.core.IChromatogramDSD;
+import org.eclipse.chemclipse.dsd.model.core.Nucleobase;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.core.IPeak;
@@ -118,18 +120,29 @@ public class ExtendedChromatogramStatisticsUI extends Composite implements IExte
 			/*
 			 * Map
 			 */
-			addTimeData(chromatogramSelection, dataMap);
-			addSignalData(chromatogramSelection, dataMap);
-			addScanData(chromatogramSelection, dataMap);
-			addPeakData(chromatogramSelection, dataMap);
-			addIonTransitionData(chromatogramSelection, dataMap);
-
 			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
+			if(chromatogram instanceof IChromatogramDSD chromatogramDSD) {
+				addNucleobaseStats(chromatogramDSD, dataMap);
+			} else {
+				addTimeData(chromatogramSelection, dataMap);
+				addSignalData(chromatogramSelection, dataMap);
+				addScanData(chromatogramSelection, dataMap);
+				addPeakData(chromatogramSelection, dataMap);
+				addIonTransitionData(chromatogramSelection, dataMap);
+			}
+
 			info = ChromatogramDataSupport.getChromatogramLabel(chromatogram);
 		}
 
 		toolbarInfo.get().setText(info);
 		tableControl.get().setInput(dataMap);
+	}
+
+	private void addNucleobaseStats(IChromatogramDSD chromatogramDSD, Map<String, String> dataMap) {
+
+		List<Nucleobase> nucleobases = chromatogramDSD.getNucleotideSequence().getNucleobases();
+		long numberUnknowns = nucleobases.stream().filter(n -> n == Nucleobase.UNKNOWN).count();
+		dataMap.put("Unknown Bases [%]", decimalFormat.format(numberUnknowns / (double)nucleobases.size() * 100));
 	}
 
 	private void addTimeData(IChromatogramSelection chromatogramSelection, Map<String, String> dataMap) {
