@@ -98,6 +98,8 @@ public class SWTEditor extends Composite {
 
 		HTMLReader parser = new HTMLReader(text);
 		parser.applyTo(styledText);
+		// applyTo() suppressed the modify event, so drop the unconsumed insertion.
+		clearPendingInsert();
 		updateToolBar();
 	}
 
@@ -212,8 +214,8 @@ public class SWTEditor extends Composite {
 
 		int charCount = newCharCount;
 		int charStart = start;
-		newCharCount = 0;
-		start = -1;
+		StyleRange[] rangesToDispose = selectedRanges;
+		clearPendingInsert();
 		if(charCount > 0 && charStart >= 0) {
 			StyleRange style = new StyleRange();
 			style.fontStyle = SWT.NONE;
@@ -235,7 +237,9 @@ public class SWTEditor extends Composite {
 			StyleRange[] styles = {style};
 			styledText.setStyleRanges(charStart, charCount, ranges, styles);
 		}
-		disposeRanges(selectedRanges);
+		if(rangesToDispose != null) {
+			disposeRanges(rangesToDispose);
+		}
 	}
 
 	void handleVerifyText(VerifyEvent event) {
@@ -246,6 +250,14 @@ public class SWTEditor extends Composite {
 
 		// mark styles to be disposed
 		selectedRanges = styledText.getStyleRanges(start, replaceCharCount, false);
+	}
+
+	/** Forgets the insertion recorded by handleVerifyText(), so it is styled at most once. */
+	private void clearPendingInsert() {
+
+		newCharCount = 0;
+		start = -1;
+		selectedRanges = null;
 	}
 
 	void initResources() {
