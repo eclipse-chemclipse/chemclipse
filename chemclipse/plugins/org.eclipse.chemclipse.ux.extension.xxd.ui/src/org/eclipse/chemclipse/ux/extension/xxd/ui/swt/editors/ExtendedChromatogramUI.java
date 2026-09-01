@@ -483,7 +483,7 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 			List<ILineSeriesData> lineSeriesDataList = new ArrayList<>();
 			addSelectedScanData(lineSeriesDataList);
 			addSelectedIdentifiedScanData(lineSeriesDataList);
-			addLineSeriesData(lineSeriesDataList);
+			applyLineSeriesData(lineSeriesDataList);
 			adjustChromatogramSelectionRange();
 		}
 	}
@@ -503,7 +503,7 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 			List<ILineSeriesData> lineSeriesDataList = new ArrayList<>();
 			ITargetDisplaySettings targetDisplaySettings = chromatogramSelection.getChromatogram();
 			addSelectedPeakData(lineSeriesDataList, targetDisplaySettings);
-			addLineSeriesData(lineSeriesDataList);
+			applyLineSeriesData(lineSeriesDataList);
 			adjustChromatogramSelectionRange();
 		}
 	}
@@ -891,12 +891,11 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 		addPeakData(lineSeriesDataList, targetDisplaySettings);
 		addSelectedPeakData(lineSeriesDataList, targetDisplaySettings);
 		addSelectedScanData(lineSeriesDataList);
+		addIdentifiedScansData(lineSeriesDataList, targetDisplaySettings);
 		addSelectedIdentifiedScanData(lineSeriesDataList);
 		addBaselineData(lineSeriesDataList);
 
-		addLineSeriesData(lineSeriesDataList);
-
-		addIdentifiedScansData(lineSeriesDataList, targetDisplaySettings);
+		applyLineSeriesData(lineSeriesDataList);
 	}
 
 	private void addChromatogramData(List<ILineSeriesData> lineSeriesDataList) {
@@ -1077,33 +1076,35 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 		if(chromatogramSelection != null) {
 			String seriesId = SERIES_ID_IDENTIFIED_SCANS;
 			List<IScan> scans = ChromatogramDataSupport.getIdentifiedScans(chromatogramSelection.getChromatogram());
-			int symbolSize = preferenceStore.getInt(PreferenceSupplier.P_CHROMATOGRAM_SCAN_LABEL_SYMBOL_SIZE);
-			PlotSymbolType symbolType = PlotSymbolType.valueOf(preferenceStore.getString(PreferenceSupplier.P_CHROMATOGRAM_SCAN_MARKER_TYPE));
-			addIdentifiedScansData(lineSeriesDataList, scans, symbolType, symbolSize, Colors.DARK_GRAY, seriesId);
-			/*
-			 * Add the labels.
-			 */
-			removeIdentificationLabelMarker(scanLabelMarkerMap, seriesId);
-			if(displaySettings.isShowScanLabels()) {
-				ITargetDisplaySettings targetDisplaySettings = chromatogramSelection.getChromatogram();
-				BaseChart baseChart = chromatogramChartControl.get().getBaseChart();
-				IPlotArea plotArea = baseChart.getPlotArea();
-				Collection<? extends TargetReference> scanReferences = TargetReference.getScanReferences(scans, targetDisplaySettings);
-				TargetReferenceSettings targetReferenceSettings = new TargetReferenceSettings(scanReferences, targetDisplaySettings, symbolSize * 2);
-				targetReferenceSettings.setBaseChart(baseChart);
-				targetReferenceSettings.setLabel(LABEL_SCAN_TARGETS);
-				targetReferenceSettings.setDescription("Identified Scans");
-				if(baseChart.getSeriesIds().contains(SERIES_ID_CHROMATOGRAM)) {
-					targetReferenceSettings.setReferenceSeriesId(SERIES_ID_CHROMATOGRAM);
-				} else {
-					Optional<String> chromatogramSeriesId = baseChart.getSeriesIds().stream().filter(s -> s.startsWith(SERIES_ID_CHROMATOGRAM)).findFirst();
-					if(chromatogramSeriesId.isPresent()) {
-						targetReferenceSettings.setReferenceSeriesId(chromatogramSeriesId.get());
+			if(!scans.isEmpty()) {
+				int symbolSize = preferenceStore.getInt(PreferenceSupplier.P_CHROMATOGRAM_SCAN_LABEL_SYMBOL_SIZE);
+				PlotSymbolType symbolType = PlotSymbolType.valueOf(preferenceStore.getString(PreferenceSupplier.P_CHROMATOGRAM_SCAN_MARKER_TYPE));
+				addIdentifiedScansData(lineSeriesDataList, scans, symbolType, symbolSize, Colors.DARK_GRAY, seriesId);
+				/*
+				 * Add the labels.
+				 */
+				removeIdentificationLabelMarker(scanLabelMarkerMap, seriesId);
+				if(displaySettings.isShowScanLabels()) {
+					ITargetDisplaySettings targetDisplaySettings = chromatogramSelection.getChromatogram();
+					BaseChart baseChart = chromatogramChartControl.get().getBaseChart();
+					IPlotArea plotArea = baseChart.getPlotArea();
+					Collection<? extends TargetReference> scanReferences = TargetReference.getScanReferences(scans, targetDisplaySettings);
+					TargetReferenceSettings targetReferenceSettings = new TargetReferenceSettings(scanReferences, targetDisplaySettings, symbolSize * 2);
+					targetReferenceSettings.setBaseChart(baseChart);
+					targetReferenceSettings.setLabel(LABEL_SCAN_TARGETS);
+					targetReferenceSettings.setDescription("Identified Scans");
+					if(baseChart.getSeriesIds().contains(SERIES_ID_CHROMATOGRAM)) {
+						targetReferenceSettings.setReferenceSeriesId(SERIES_ID_CHROMATOGRAM);
+					} else {
+						Optional<String> chromatogramSeriesId = baseChart.getSeriesIds().stream().filter(s -> s.startsWith(SERIES_ID_CHROMATOGRAM)).findFirst();
+						if(chromatogramSeriesId.isPresent()) {
+							targetReferenceSettings.setReferenceSeriesId(chromatogramSeriesId.get());
+						}
 					}
+					TargetReferenceLabelMarker scanLabelMarker = new TargetReferenceLabelMarker(targetReferenceSettings);
+					plotArea.addCustomPaintListener(scanLabelMarker);
+					scanLabelMarkerMap.put(seriesId, scanLabelMarker);
 				}
-				TargetReferenceLabelMarker scanLabelMarker = new TargetReferenceLabelMarker(targetReferenceSettings);
-				plotArea.addCustomPaintListener(scanLabelMarker);
-				scanLabelMarkerMap.put(seriesId, scanLabelMarker);
 			}
 		}
 	}
@@ -1202,7 +1203,7 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 		}
 	}
 
-	private void addLineSeriesData(List<ILineSeriesData> lineSeriesDataList) {
+	private void applyLineSeriesData(List<ILineSeriesData> lineSeriesDataList) {
 
 		/*
 		 * Define the compression level.
