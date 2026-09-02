@@ -25,6 +25,7 @@
 -XX:+UseG1GC
 -XX:+UseStringDeduplication
 --add-modules=ALL-SYSTEM
+--enable-native-access=ALL-UNNAMED
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread
       </vmArgsMac>
@@ -70,10 +71,10 @@ Contributors:
    </features>
 
    <configurations>
-      <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
-      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
       <plugin id="org.apache.felix.scr" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
       <property name="sun.awt.xembedserver" value="true" />
       <property name="org.eclipse.update.reconcile" value="false" />
       <property name="osgi.requiredJavaVersion" value="25" />
