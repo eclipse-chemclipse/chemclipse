@@ -46,7 +46,7 @@ public class ChromatogramFileContentMatcher extends AbstractFileContentMatcher {
 					if("mzData".equals(localName)) {
 						hasRootElement = true;
 					} else if("cvParam".equals(localName) && //
-							xmlStreamReader.getAttributeValue(null, "name").startsWith("time")) {
+							xmlStreamReader.getAttributeValue(null, "name").toLowerCase().startsWith("time")) {
 						hasRetentionTime = true;
 					}
 				}
