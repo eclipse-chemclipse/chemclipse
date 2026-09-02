@@ -55,6 +55,8 @@ public class MaceReader extends AbstractMassSpectraReader {
 	private static final Pattern exactMassPattern = Pattern.compile("(ExactMass:)(.*)", Pattern.CASE_INSENSITIVE);
 	private static final Pattern synonymPattern = Pattern.compile("(Synon:)(.*)", Pattern.CASE_INSENSITIVE);
 	private static final Pattern commentsPattern = Pattern.compile("(COMMENTS?:)(.*)", Pattern.CASE_INSENSITIVE);
+	private static final Pattern smilesInCommentsPattern = Pattern.compile("\\bSmiles=(\\S+)");
+	private static final Pattern contributorInCommentsPattern = Pattern.compile("\\bContributor=(\\S+)");
 	private static final Pattern casNumberPattern = Pattern.compile("(CAS(NO|#)?:[ ]+)([0-9-]*)", Pattern.CASE_INSENSITIVE);
 	private static final Pattern databaseNamePattern = Pattern.compile("(DB(NO|#)?:)(.*)", Pattern.CASE_INSENSITIVE);
 	private static final Pattern inchiKeyPattern = Pattern.compile("(InChIKey:)(.*)", Pattern.CASE_INSENSITIVE);
@@ -155,7 +157,10 @@ public class MaceReader extends AbstractMassSpectraReader {
 		libraryInformation.setMolWeight(extractDouble(massSpectrumData, molweightPattern));
 		libraryInformation.setExactMass(extractDouble(massSpectrumData, exactMassPattern));
 		libraryInformation.setSynonyms(extractSynonyms(massSpectrumData));
-		libraryInformation.setComments(extractString(massSpectrumData, commentsPattern, 2));
+		String rawComments = extractString(massSpectrumData, commentsPattern, 2);
+		libraryInformation.setSmiles(extractCommentField(rawComments, smilesInCommentsPattern));
+		libraryInformation.setContributor(extractCommentField(rawComments, contributorInCommentsPattern));
+		libraryInformation.setComments(rawComments);
 		libraryInformation.setCasNumber(extractString(massSpectrumData, casNumberPattern, 3));
 		libraryInformation.setDatabaseIndex(extractInteger(massSpectrumData, databaseNamePattern, 3, -1));
 		libraryInformation.setInChIKey(extractString(massSpectrumData, inchiKeyPattern, 2));
@@ -198,6 +203,12 @@ public class MaceReader extends AbstractMassSpectraReader {
 			case "User" -> SeparationColumnType.DEFAULT;
 			default -> null;
 		};
+	}
+
+	private String extractCommentField(String comments, Pattern pattern) {
+
+		Matcher matcher = pattern.matcher(comments);
+		return matcher.find() ? matcher.group(1) : "";
 	}
 
 	private void extractIons(IRegularLibraryMassSpectrum massSpectrum, String massSpectrumData) {
