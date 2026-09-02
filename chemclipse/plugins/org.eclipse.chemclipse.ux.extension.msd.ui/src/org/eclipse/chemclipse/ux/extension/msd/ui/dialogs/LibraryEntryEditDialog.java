@@ -60,6 +60,12 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 	private AtomicReference<Text> textInChI = new AtomicReference<>();
 	private AtomicReference<Text> textReferenceIdentifier = new AtomicReference<>();
 	private AtomicReference<Text> textComments = new AtomicReference<>();
+	private AtomicReference<Text> textDatabase = new AtomicReference<>();
+	private AtomicReference<Text> textDatabaseIndex = new AtomicReference<>();
+	private AtomicReference<Text> textContributor = new AtomicReference<>();
+	private AtomicReference<Text> textInChIKey = new AtomicReference<>();
+	private AtomicReference<Text> textMiscellaneous = new AtomicReference<>();
+	private AtomicReference<Text> textMoleculeStructure = new AtomicReference<>();
 
 	private IRegularLibraryMassSpectrum massSpectrum;
 
@@ -88,10 +94,13 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 		tabFolder.setLayoutData(new GridData(GridData.FILL_BOTH));
 
 		createTabGeneral(tabFolder);
+		createTabComments(tabFolder);
+		createTabMiscellaneous(tabFolder);
 		createTabIons(tabFolder);
 		createTabSynonyms(tabFolder);
 		createTabCasNumbers(tabFolder);
 		createTabColumnIndices(tabFolder);
+		createTabMolecularStructure(tabFolder);
 		createTabFlavorMarkers(tabFolder);
 
 		return container;
@@ -107,8 +116,20 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 			libraryInformation.setSmiles(textSmiles.get().getText().trim());
 			libraryInformation.setFormula(textFormula.get().getText().trim());
 			libraryInformation.setInChI(textInChI.get().getText().trim());
+			libraryInformation.setInChIKey(textInChIKey.get().getText().trim());
 			libraryInformation.setReferenceIdentifier(textReferenceIdentifier.get().getText().trim());
 			libraryInformation.setComments(textComments.get().getText().trim());
+			libraryInformation.setDatabase(textDatabase.get().getText().trim());
+			libraryInformation.setContributor(textContributor.get().getText().trim());
+			libraryInformation.setMiscellaneous(textMiscellaneous.get().getText().trim());
+			libraryInformation.setMoleculeStructure(textMoleculeStructure.get().getText());
+			/*
+			 * Database Index
+			 */
+			try {
+				libraryInformation.setDatabaseIndex(Integer.parseInt(textDatabaseIndex.get().getText().trim()));
+			} catch(NumberFormatException e) {
+			}
 			/*
 			 * Retention Time
 			 */
@@ -150,7 +171,7 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 	@Override
 	protected Point getInitialSize() {
 
-		return new Point(700, 800);
+		return new Point(800, 800);
 	}
 
 	private void createTabGeneral(TabFolder tabFolder) {
@@ -190,13 +211,44 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 		createLabel(composite, "InChI:");
 		textInChI.set(createText(composite, libraryInformation != null ? libraryInformation.getInChI() : ""));
 
+		createLabel(composite, "InChIKey:");
+		textInChIKey.set(createText(composite, libraryInformation != null ? libraryInformation.getInChIKey() : ""));
+
 		createLabel(composite, "Reference Identifier:");
 		textReferenceIdentifier.set(createText(composite, libraryInformation != null ? libraryInformation.getReferenceIdentifier() : ""));
 
-		createLabel(composite, "Comments:");
-		textComments.set(createTextMultiLine(composite, libraryInformation != null ? libraryInformation.getComments() : ""));
+		createLabel(composite, "Database:");
+		textDatabase.set(createText(composite, libraryInformation != null ? libraryInformation.getDatabase() : ""));
+
+		createLabel(composite, "Database Index:");
+		textDatabaseIndex.set(createText(composite, libraryInformation != null ? Integer.toString(libraryInformation.getDatabaseIndex()) : "0"));
+
+		createLabel(composite, "Contributor:");
+		textContributor.set(createText(composite, libraryInformation != null ? libraryInformation.getContributor() : ""));
 
 		tabItem.setControl(composite);
+	}
+
+	private void createTabComments(TabFolder tabFolder) {
+
+		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
+		tabItem.setText("Comments");
+
+		ILibraryInformation libraryInformation = massSpectrum.getLibraryInformation();
+		textComments.set(createTextMultiLine(tabFolder, libraryInformation != null ? libraryInformation.getComments() : ""));
+
+		tabItem.setControl(textComments.get());
+	}
+
+	private void createTabMiscellaneous(TabFolder tabFolder) {
+
+		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
+		tabItem.setText("Miscellaneous");
+
+		ILibraryInformation libraryInformation = massSpectrum.getLibraryInformation();
+		textMiscellaneous.set(createTextMultiLine(tabFolder, libraryInformation != null ? libraryInformation.getMiscellaneous() : ""));
+
+		tabItem.setControl(textMiscellaneous.get());
 	}
 
 	private void createTabIons(TabFolder tabFolder) {
@@ -265,6 +317,23 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 
 		ColumnIndicesEditUI columnIndicesEditUI = new ColumnIndicesEditUI(composite, SWT.NONE);
 		columnIndicesEditUI.update(massSpectrum.getLibraryInformation());
+
+		tabItem.setControl(composite);
+	}
+
+	private void createTabMolecularStructure(TabFolder tabFolder) {
+
+		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
+		tabItem.setText("Molecular Structure");
+
+		ILibraryInformation libraryInformation = massSpectrum.getLibraryInformation();
+
+		Composite composite = new Composite(tabFolder, SWT.NONE);
+		composite.setLayout(new FillLayout());
+
+		Text text = new Text(composite, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
+		text.setText(libraryInformation != null ? libraryInformation.getMoleculeStructure() : "");
+		textMoleculeStructure.set(text);
 
 		tabItem.setControl(composite);
 	}
