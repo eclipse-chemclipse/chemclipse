@@ -32,6 +32,7 @@ public class NucleotideSequence {
 
 	public void fromScans(List<IScan> scans) {
 
+		nucleobases.clear();
 		for(IScan scan : scans) {
 			IIdentificationTarget bestTarget = getIdentificationTarget(scan);
 			if(bestTarget == null) {
