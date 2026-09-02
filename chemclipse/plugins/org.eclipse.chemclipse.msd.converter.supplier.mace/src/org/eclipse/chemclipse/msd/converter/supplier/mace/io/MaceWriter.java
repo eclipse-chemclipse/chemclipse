@@ -96,7 +96,7 @@ public class MaceWriter extends AbstractMassSpectraWriter {
 				fileWriter.write("CAS#: " + casNumber + CRLF);
 			}
 			fileWriter.write("DB#: " + Integer.toString(libraryInformation.getDatabaseIndex()) + CRLF);
-			String comments = libraryInformation.getComments();
+			String comments = buildComments(libraryInformation);
 			if(!comments.isEmpty()) {
 				fileWriter.write("Comments: " + comments + CRLF);
 			}
@@ -111,6 +111,38 @@ public class MaceWriter extends AbstractMassSpectraWriter {
 		fileWriter.write(getIonsMspec(massSpectrum));
 		fileWriter.write(CRLF);
 		fileWriter.flush();
+	}
+
+	private String buildComments(ILibraryInformation libraryInformation) {
+
+		/*
+		 * SMILES
+		 */
+		StringBuilder builder = new StringBuilder();
+		String smiles = libraryInformation.getSmiles();
+		if(!smiles.isEmpty()) {
+			builder.append("Smiles=").append(smiles);
+		}
+		/*
+		 * Contributor
+		 */
+		String contributor = libraryInformation.getContributor();
+		if(!contributor.isEmpty()) {
+			if(!builder.isEmpty()) {
+				builder.append(" ");
+			}
+			builder.append("Contributor=").append(contributor);
+		}
+
+		String comments = libraryInformation.getComments();
+		if(!comments.isEmpty()) {
+			if(!builder.isEmpty()) {
+				builder.append(" ");
+			}
+			builder.append(comments);
+		}
+
+		return builder.toString();
 	}
 
 	private String buildRetentionIndexLine(ILibraryInformation libraryInformation) {
