@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
 import org.eclipse.chemclipse.model.comparator.PeakRetentionTimeComparator;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
@@ -43,16 +42,14 @@ import org.eclipse.chemclipse.model.quantitation.IQuantitationEntry;
 import org.eclipse.chemclipse.model.support.PeakQuantitation;
 import org.eclipse.chemclipse.model.support.PeakQuantitations;
 import org.eclipse.chemclipse.model.support.PeakQuantitationsExtractor;
-import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
 import org.eclipse.chemclipse.msd.model.core.comparator.IonAbundanceComparator;
 import org.eclipse.chemclipse.support.comparator.SortOrder;
 import org.eclipse.chemclipse.support.text.ValueFormat;
-import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 
-public class ReportWriter1 {
+public class ReportWriter1 extends AbstractReportWriter {
 
 	private static final int NUMBER_OF_IONS_TO_PRINT = 5;
 	private static final String DELIMITER = "\t";
@@ -194,19 +191,6 @@ public class ReportWriter1 {
 		reportPeakListQuantitationSummary(printWriter, peakQuantitationsExtractor.extract(peaks), "The peak quantitation summary is not available.");
 		printWriter.println("");
 		printWriter.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-	}
-
-	private String getChromatogramType(IChromatogram chromatogram) {
-
-		if(chromatogram instanceof IChromatogramCSD) {
-			return "CSD";
-		} else if(chromatogram instanceof IChromatogramMSD) {
-			return "MSD";
-		} else if(chromatogram instanceof IChromatogramWSD) {
-			return "WSD";
-		} else {
-			return "???";
-		}
 	}
 
 	private void reportPeaksOverview(PrintWriter printWriter, List<IPeak> peaks, String messageNoResults) {

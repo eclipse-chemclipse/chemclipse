@@ -33,7 +33,7 @@ import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.quantitation.IQuantitationEntry;
 import org.eclipse.chemclipse.support.text.ValueFormat;
 
-public class ReportWriter3 {
+public class ReportWriter3 extends AbstractReportWriter {
 
 	private static final String DELIMITER = "\t";
 
@@ -62,6 +62,7 @@ public class ReportWriter3 {
 
 		printWriter.println("Filename: " + chromatogram.getName());
 		printWriter.println("Sample Name: " + chromatogram.getSampleName());
+		printWriter.println("Detector: " + getChromatogramType(chromatogram));
 		printWriter.println("Additional Info: " + chromatogram.getDetailedInfo());
 		printWriter.println("Acquisition Date: " + dateFormat.format(chromatogram.getDate()));
 		printWriter.println("Operator: " + chromatogram.getOperator());
