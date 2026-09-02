@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.chemclipse.msd.converter.databaseSupplier">
+      <DatabaseSupplier
+            description="Reads and writes MACE mass spectra."
+            fileExtension=".mspec"
+            filterName="MACE (*.mspec)"
+            id="org.eclipse.chemclipse.msd.converter.supplier.mace"
+            importConverter="org.eclipse.chemclipse.msd.converter.supplier.mace.core.DatabaseImportConverter"
+            exportConverter="org.eclipse.chemclipse.msd.converter.supplier.mace.core.DatabaseExportConverter"
+            importMagicNumberMatcher="org.eclipse.chemclipse.msd.converter.supplier.mace.core.MagicNumberMatcher"
+            isExportable="true"
+            isImportable="true">
+      </DatabaseSupplier>     
+   </extension>
+</plugin>
