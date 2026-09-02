@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2025 Lablicate GmbH.
+ * Copyright (c) 2016, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -21,7 +21,6 @@ import org.eclipse.chemclipse.csd.model.core.IChromatogramPeakCSD;
 import org.eclipse.chemclipse.csd.model.core.selection.IChromatogramSelectionCSD;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IPeak;
-import org.eclipse.chemclipse.model.core.ISignal;
 import org.eclipse.chemclipse.model.implementation.QuantitationEntry;
 import org.eclipse.chemclipse.model.quantitation.CalibrationMethod;
 import org.eclipse.chemclipse.model.quantitation.IInternalStandard;
@@ -32,6 +31,7 @@ import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public class PeakQuantitationCalculatorISTD extends AbstractPeakQuantitationCalculator {
 
@@ -102,7 +102,7 @@ public class PeakQuantitationCalculatorISTD extends AbstractPeakQuantitationCalc
 						double concentrationCalculated = ((concentration / peakAreaISTD) * integratedArea) * compensationFactor;
 
 						IQuantitationEntry quantitationEntryMSD = new QuantitationEntry(nameOfStandard, concentrationCalculated, concentrationUnit, integratedArea);
-						quantitationEntryMSD.setSignal(ISignal.TOTAL_INTENSITY);
+						quantitationEntryMSD.setSignal(ITrace.TOTAL_INTENSITY);
 						quantitationEntryMSD.setCalibrationMethod(CalibrationMethod.ISTD.toString());
 						quantitationEntryMSD.setUsedCrossZero(false);
 						quantitationEntryMSD.setChemicalClass(chemicalClass);

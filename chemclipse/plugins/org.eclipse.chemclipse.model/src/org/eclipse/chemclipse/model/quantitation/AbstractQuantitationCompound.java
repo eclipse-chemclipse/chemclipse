@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2025 Lablicate GmbH.
+ * Copyright (c) 2013, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -15,7 +15,7 @@ package org.eclipse.chemclipse.model.quantitation;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.chemclipse.model.core.ISignal;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public abstract class AbstractQuantitationCompound implements IQuantitationCompound {
 
@@ -168,7 +168,7 @@ public abstract class AbstractQuantitationCompound implements IQuantitationCompo
 	public void setQuantitationSignalTIC() {
 
 		quantitationSignals.clear();
-		quantitationSignals.add(new QuantitationSignal(ISignal.TOTAL_INTENSITY, IQuantitationSignal.ABSOLUTE_RELATIVE_RESPONSE, 0.0, true));
+		quantitationSignals.add(new QuantitationSignal(ITrace.TOTAL_INTENSITY, IQuantitationSignal.ABSOLUTE_RELATIVE_RESPONSE, 0.0, true));
 	}
 
 	@Override

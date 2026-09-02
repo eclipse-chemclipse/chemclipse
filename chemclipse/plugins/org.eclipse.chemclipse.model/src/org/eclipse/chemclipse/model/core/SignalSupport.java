@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2025 Lablicate GmbH.
+ * Copyright (c) 2022, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -16,12 +16,14 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.eclipse.chemclipse.support.traces.ITrace;
+
 public class SignalSupport {
 
 	public static String asText(double signal, DecimalFormat decimalFormat) {
 
-		if(signal == ISignal.TOTAL_INTENSITY) {
-			return ISignal.TOTAL_INTENSITY_DESCRIPTION;
+		if(signal == ITrace.TOTAL_INTENSITY) {
+			return ITrace.TOTAL_INTENSITY_DESCRIPTION;
 		} else {
 			return decimalFormat.format(signal);
 		}
@@ -30,9 +32,9 @@ public class SignalSupport {
 	public static String asText(List<Double> signals, DecimalFormat decimalFormat) {
 
 		if(signals.isEmpty()) {
-			return ISignal.TOTAL_INTENSITY_DESCRIPTION;
-		} else if(signals.size() == 1 && signals.get(0) == ISignal.TOTAL_INTENSITY) {
-			return ISignal.TOTAL_INTENSITY_DESCRIPTION;
+			return ITrace.TOTAL_INTENSITY_DESCRIPTION;
+		} else if(signals.size() == 1 && signals.get(0) == ITrace.TOTAL_INTENSITY) {
+			return ITrace.TOTAL_INTENSITY_DESCRIPTION;
 		} else {
 			return signals.stream().sorted().map(value -> decimalFormat.format(value)).collect(Collectors.joining(", "));
 		}

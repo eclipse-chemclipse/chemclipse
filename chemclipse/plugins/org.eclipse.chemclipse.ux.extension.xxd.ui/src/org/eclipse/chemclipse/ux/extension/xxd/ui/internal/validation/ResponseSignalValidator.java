@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -12,9 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.validation;
 
-import org.eclipse.chemclipse.model.core.ISignal;
 import org.eclipse.chemclipse.model.quantitation.IResponseSignal;
 import org.eclipse.chemclipse.model.quantitation.ResponseSignal;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.support.util.ValueParserSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.l10n.ExtensionMessages;
 import org.eclipse.core.databinding.validation.IValidator;
@@ -48,7 +48,7 @@ public class ResponseSignalValidator extends ValueParserSupport implements IVali
 
 					String signalValue = parseString(values, 0);
 					if("TIC".equals(signalValue)) {
-						signal = ISignal.TOTAL_INTENSITY;
+						signal = ITrace.TOTAL_INTENSITY;
 					} else {
 						signal = parseDouble(values, 0);
 					}

@@ -37,10 +37,10 @@ import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IPeakModel;
 import org.eclipse.chemclipse.model.core.IScan;
-import org.eclipse.chemclipse.model.core.ISignal;
 import org.eclipse.chemclipse.model.implementation.IntegrationEntry;
 import org.eclipse.chemclipse.model.support.IntegrationConstraint;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramPeakMSD;
+import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
@@ -243,7 +243,7 @@ public class PeakIntegrator extends AbstractIntegrator {
 			double integratedAreaTIC = calculateTICPeakArea(peak, baselineSupport, includeBackground, useAreaConstraint);
 			IIntegrationEntry integrationEntry;
 			Set<Integer> ions = MarkedTracesSupportMSD.getTracesAsInteger(markedTraces);
-			if(!ions.isEmpty() && !ions.contains(IMarkedTraces.TOTAL_SIGNAL_AS_INT)) {
+			if(!ions.isEmpty() && !ions.contains((int)IIon.TIC_ION)) {
 				IIonPercentages ionPercentages = new IonPercentages(massSpectrum);
 				/*
 				 * Calculate the percentage integrated area for each selected ion.
@@ -255,7 +255,7 @@ public class PeakIntegrator extends AbstractIntegrator {
 					integrationEntries.add(integrationEntry);
 				}
 			} else {
-				integrationEntry = new IntegrationEntry(ISignal.TOTAL_INTENSITY, integratedAreaTIC * scaleFactor);
+				integrationEntry = new IntegrationEntry(ITrace.TOTAL_INTENSITY, integratedAreaTIC * scaleFactor);
 				integrationEntries.add(integrationEntry);
 			}
 		} else if(peak instanceof IPeakCSD) {
@@ -275,7 +275,7 @@ public class PeakIntegrator extends AbstractIntegrator {
 			IIntegrationEntry integrationEntry;
 			if(scan instanceof IScanWSD scanWSD) {
 				Set<Integer> wavelengths = getTracesAsInteger(markedTraces);
-				if(!wavelengths.isEmpty() && !wavelengths.contains(IMarkedTraces.TOTAL_SIGNAL_AS_INT)) {
+				if(!wavelengths.isEmpty() && !wavelengths.contains((int)ITrace.TOTAL_INTENSITY)) {
 					WavelengthPercentages wavelengthPercentages = new WavelengthPercentages(scanWSD);
 					/*
 					 * Calculate the percentage integrated area for each selected ion.
@@ -287,7 +287,7 @@ public class PeakIntegrator extends AbstractIntegrator {
 						integrationEntries.add(integrationEntry);
 					}
 				} else {
-					integrationEntry = new IntegrationEntry(ISignal.TOTAL_INTENSITY, integratedAreaTIC * scaleFactor);
+					integrationEntry = new IntegrationEntry(ITrace.TOTAL_INTENSITY, integratedAreaTIC * scaleFactor);
 					integrationEntries.add(integrationEntry);
 				}
 			}

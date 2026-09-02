@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -12,13 +12,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.quantitation;
 
-import org.eclipse.chemclipse.model.core.ISignal;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public class ResponseSignal implements IResponseSignal {
 
 	private static final long serialVersionUID = -4768367983343261439L;
 
-	private double signal = ISignal.TOTAL_INTENSITY;
+	private double signal = ITrace.TOTAL_INTENSITY;
 	private double concentration = 0.0d;
 	private double response = 0.0d;
 

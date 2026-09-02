@@ -36,7 +36,7 @@ public interface IPeakIntegrationSettings extends IIntegrationSettings {
 
 	/**
 	 * Selected traces. It could be either m/z or wavelengths.
-	 * If the traces are null, empty or ISignal.TOTAL_INTENSITY is stored,
+	 * If the traces are null, empty or ITrace.TOTAL_INTENSITY is stored,
 	 * then use all available signals.
 	 * 
 	 * @return {@link IMarkedTraces}

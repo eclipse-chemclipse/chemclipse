@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2025 Lablicate GmbH.
+ * Copyright (c) 2013, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -19,7 +19,6 @@ import java.util.Set;
 
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IPeak;
-import org.eclipse.chemclipse.model.core.ISignal;
 import org.eclipse.chemclipse.model.implementation.QuantitationEntry;
 import org.eclipse.chemclipse.model.quantitation.CalibrationMethod;
 import org.eclipse.chemclipse.model.quantitation.IQuantitationCompound;
@@ -37,6 +36,7 @@ import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.MessageType;
 import org.eclipse.chemclipse.processing.core.ProcessingMessage;
 import org.eclipse.chemclipse.support.text.ValueFormat;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public class QuantitationCalculatorMSD implements IQuantitationCalculatorMSD {
 
@@ -115,7 +115,7 @@ public class QuantitationCalculatorMSD implements IQuantitationCalculatorMSD {
 
 		List<IQuantitationEntry> quantitationEntries = new ArrayList<>();
 		double integratedArea = peak.getIntegratedArea();
-		double signal = ISignal.TOTAL_INTENSITY;
+		double signal = ITrace.TOTAL_INTENSITY;
 		IQuantitationEntry quantitationEntry = getQuantitationEntry(signal, quantitationCompound, integratedArea);
 		quantitationEntries.add(quantitationEntry);
 

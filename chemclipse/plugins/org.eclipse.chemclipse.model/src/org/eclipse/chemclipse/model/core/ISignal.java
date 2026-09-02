@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -16,9 +16,6 @@ package org.eclipse.chemclipse.model.core;
  * An arbitrary signal, that can be displayed in a X/Y plot.
  */
 public interface ISignal {
-
-	double TOTAL_INTENSITY = 0.0d;
-	String TOTAL_INTENSITY_DESCRIPTION = "TIC";
 
 	public double getX();
 

@@ -19,8 +19,5 @@ import org.eclipse.chemclipse.support.traces.ITrace;
 
 public interface IMarkedTraces<S extends ITrace> extends Set<S> {
 
-	double TOTAL_SIGNAL = ISignal.TOTAL_INTENSITY;
-	int TOTAL_SIGNAL_AS_INT = (int)Math.round(TOTAL_SIGNAL);
-
 	MarkedTraceModus getMarkedTraceModus();
 }

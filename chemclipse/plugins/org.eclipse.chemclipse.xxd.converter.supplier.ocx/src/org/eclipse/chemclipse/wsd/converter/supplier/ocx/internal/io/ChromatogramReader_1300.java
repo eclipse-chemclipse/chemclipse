@@ -38,7 +38,6 @@ import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.core.IIntegrationEntry;
 import org.eclipse.chemclipse.model.core.IMethod;
 import org.eclipse.chemclipse.model.core.IPeakIntensityValues;
-import org.eclipse.chemclipse.model.core.ISignal;
 import org.eclipse.chemclipse.model.core.PeakType;
 import org.eclipse.chemclipse.model.exceptions.PeakException;
 import org.eclipse.chemclipse.model.exceptions.ReferenceMustNotBeNullException;
@@ -67,6 +66,7 @@ import org.eclipse.chemclipse.support.history.EditInformation;
 import org.eclipse.chemclipse.support.history.IEditHistory;
 import org.eclipse.chemclipse.support.history.IEditInformation;
 import org.eclipse.chemclipse.support.model.SeparationColumnType;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.wsd.converter.supplier.ocx.io.ChromatogramReaderWSD;
 import org.eclipse.chemclipse.wsd.converter.supplier.ocx.io.IChromatogramWSDZipReader;
 import org.eclipse.chemclipse.wsd.converter.supplier.ocx.model.chromatogram.IVendorChromatogram;
@@ -223,7 +223,7 @@ public class ChromatogramReader_1300 extends AbstractChromatogramReader implemen
 			scanObject.setRetentionTime(retentionTime);
 
 			IScanSignalWSD scanSignalObject = new VendorScanSignal();
-			scanSignalObject.setWavelength(IScanSignalWSD.TOTAL_INTENSITY);
+			scanSignalObject.setWavelength(ITrace.TOTAL_INTENSITY);
 			scanSignalObject.setAbsorbance(totalSignal);
 			scanObject.addScanSignal(scanSignalObject);
 			chromatogram.addScan(scanObject);
@@ -549,7 +549,7 @@ public class ChromatogramReader_1300 extends AbstractChromatogramReader implemen
 			/*
 			 * Legacy support
 			 */
-			double signal = ISignal.TOTAL_INTENSITY;
+			double signal = ITrace.TOTAL_INTENSITY;
 			boolean isSignal = dataInputStream.readBoolean();
 			if(isSignal) {
 				signal = dataInputStream.readDouble();

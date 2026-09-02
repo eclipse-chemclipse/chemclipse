@@ -18,7 +18,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.eclipse.chemclipse.logging.core.Logger;
-import org.eclipse.chemclipse.model.core.ISignal;
 import org.eclipse.chemclipse.model.exceptions.ChromatogramIsNullException;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignal;
 import org.eclipse.chemclipse.model.signals.ITotalScanSignals;
@@ -26,6 +25,7 @@ import org.eclipse.chemclipse.model.signals.TotalScanSignal;
 import org.eclipse.chemclipse.model.signals.TotalScanSignals;
 import org.eclipse.chemclipse.model.support.IScanRange;
 import org.eclipse.chemclipse.model.support.ScanRange;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.wsd.model.core.IScanSignalWSD;
 import org.eclipse.chemclipse.wsd.model.core.IScanWSD;
@@ -219,13 +219,13 @@ public class ExtractedWavelengthSignals implements IExtractedWavelengthSignals {
 	public ITotalScanSignals getTotalWavelengthSignals() {
 
 		IScanRange scanRange = new ScanRange(getStartScan(), getStopScan());
-		return getTotalWavelengthSignals((int)ISignal.TOTAL_INTENSITY, scanRange);
+		return getTotalWavelengthSignals((int)ITrace.TOTAL_INTENSITY, scanRange);
 	}
 
 	@Override
 	public ITotalScanSignals getTotalWavelengthSignals(IScanRange scanRange) {
 
-		return getTotalWavelengthSignals((int)ISignal.TOTAL_INTENSITY, scanRange);
+		return getTotalWavelengthSignals((int)ITrace.TOTAL_INTENSITY, scanRange);
 	}
 
 	@Override
@@ -252,7 +252,7 @@ public class ExtractedWavelengthSignals implements IExtractedWavelengthSignals {
 				retentionTime = extractedWavelengthSignal.getRetentionTime();
 				retentionIndex = extractedWavelengthSignal.getRetentionIndex();
 				// TIC
-				if(wavelength == (int)ISignal.TOTAL_INTENSITY) {
+				if(wavelength == (int)ITrace.TOTAL_INTENSITY) {
 					signal = extractedWavelengthSignal.getTotalSignal();
 				} else { // XIC
 					signal = extractedWavelengthSignal.getAbundance(wavelength);

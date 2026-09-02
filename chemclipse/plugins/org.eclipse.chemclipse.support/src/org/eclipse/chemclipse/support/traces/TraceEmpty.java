@@ -18,24 +18,27 @@ public class TraceEmpty extends AbstractTrace {
 
 	public int getTrace() {
 
-		return TRACE_TIC;
+		return (int)TOTAL_INTENSITY;
 	}
 
 	@Override
 	public int hashCode() {
 
-		return Objects.hash(TRACE_TIC);
+		return Objects.hash((int)TOTAL_INTENSITY);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 
-		if(this == obj)
+		if(this == obj) {
 			return true;
-		if(obj == null)
+		}
+		if(obj == null) {
 			return false;
-		if(getClass() != obj.getClass())
+		}
+		if(getClass() != obj.getClass()) {
 			return false;
+		}
 		return true;
 	}
 
@@ -43,7 +46,7 @@ public class TraceEmpty extends AbstractTrace {
 	public String toString() {
 
 		StringBuilder builder = new StringBuilder();
-		builder.append("TIC");
+		builder.append(TOTAL_INTENSITY_DESCRIPTION);
 		builder.append(getScaleFactorAsString());
 
 		return builder.toString();

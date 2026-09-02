@@ -26,11 +26,11 @@ import org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.set
 import org.eclipse.chemclipse.csd.model.core.selection.IChromatogramSelectionCSD;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IIntegrationEntry;
-import org.eclipse.chemclipse.model.core.ISignal;
 import org.eclipse.chemclipse.model.implementation.IntegrationEntry;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 import org.eclipse.chemclipse.support.l10n.TranslationSupport;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.e4.core.services.translation.TranslationService;
 
 public class ChromatogramIntegratorSupport {
@@ -77,7 +77,7 @@ public class ChromatogramIntegratorSupport {
 		 */
 		IIntegrationEntry chromatogramIntegrationEntry = null;
 		if(chromatogramSelection instanceof IChromatogramSelectionMSD) {
-			chromatogramIntegrationEntry = new IntegrationEntry(ISignal.TOTAL_INTENSITY, chromatogramArea * scaleFactor);
+			chromatogramIntegrationEntry = new IntegrationEntry(ITrace.TOTAL_INTENSITY, chromatogramArea * scaleFactor);
 		} else if(chromatogramSelection instanceof IChromatogramSelectionCSD) {
 			chromatogramIntegrationEntry = new IntegrationEntry(chromatogramArea * scaleFactor);
 		}
@@ -99,7 +99,7 @@ public class ChromatogramIntegratorSupport {
 		 */
 		IIntegrationEntry backgroundIntegrationEntry = null;
 		if(chromatogramSelection instanceof IChromatogramSelectionMSD) {
-			backgroundIntegrationEntry = new IntegrationEntry(ISignal.TOTAL_INTENSITY, backgroundArea * scaleFactor);
+			backgroundIntegrationEntry = new IntegrationEntry(ITrace.TOTAL_INTENSITY, backgroundArea * scaleFactor);
 		} else if(chromatogramSelection instanceof IChromatogramSelectionCSD) {
 			backgroundIntegrationEntry = new IntegrationEntry(backgroundArea * scaleFactor);
 		}
