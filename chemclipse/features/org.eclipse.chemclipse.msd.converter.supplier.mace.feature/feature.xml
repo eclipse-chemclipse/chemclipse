@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.chemclipse.msd.converter.supplier.mace.feature"
+      label="MACE"
+      version="0.9.0.qualifier"
+      provider-name="ChemClipse" plugin="org.eclipse.chemclipse.feature.branding"
+      license-feature="org.eclipse.license"
+      license-feature-version="2.0.2.qualifier">
+
+   <description url="http://www.chemclipse.net/">
+      MACE mass spectral library converter.
+   </description>
+
+   <copyright url="http://www.chemclipse.net/">
+      Copyright (c) 2026 Lablicate GmbH.
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+   
+   <url>
+      <discovery label="MACE" url="http://www.oc.tu-bs.de/schulz/html/MACE.html"/>
+   </url>
+
+   <plugin
+         id="org.eclipse.chemclipse.msd.converter.supplier.mace"
+         version="0.0.0"/>
+
+</feature>
