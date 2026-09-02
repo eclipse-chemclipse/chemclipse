@@ -23,18 +23,19 @@ public abstract class AbstractChromatogramDSD extends AbstractChromatogramWSD im
 
 	private Map<Float, Nucleobase> nucleobasePerWavelength = new LinkedHashMap<>();
 	private NucleotideSequence nucleotideSequence = new NucleotideSequence();
+	private int nucleotideSequenceModCount = -1;
 
 	@Override
 	public NucleotideSequence getNucleotideSequence() {
 
-		nucleotideSequence.fromScans(getScans());
+		cacheNucleotideSequence();
 		return nucleotideSequence;
 	}
 
 	@Override
 	public String getMiscInfo() {
 
-		nucleotideSequence.fromScans(getScans());
+		cacheNucleotideSequence();
 		return nucleotideSequence.toString();
 	}
 
@@ -42,5 +43,14 @@ public abstract class AbstractChromatogramDSD extends AbstractChromatogramWSD im
 	public Map<Float, Nucleobase> getWavelengthMapping() {
 
 		return nucleobasePerWavelength;
+	}
+
+	private void cacheNucleotideSequence() {
+
+		int modCount = getModCount();
+		if(nucleotideSequenceModCount != modCount) {
+			nucleotideSequence.fromScans(getScans());
+			nucleotideSequenceModCount = modCount;
+		}
 	}
 }
