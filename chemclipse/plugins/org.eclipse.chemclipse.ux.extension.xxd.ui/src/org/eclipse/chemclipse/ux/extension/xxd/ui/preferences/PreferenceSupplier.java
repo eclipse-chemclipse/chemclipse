@@ -714,6 +714,8 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final boolean DEF_CHROMATOGRAM_MARK_ANALYSIS_SEGMENTS = false;
 	public static final String P_SHOW_RETENTION_INDEX_MARKER = "showRetentionIndexMarker";
 	public static final boolean DEF_SHOW_RETENTION_INDEX_MARKER = true;
+	public static final String P_SHOW_TARGET_MARKER = "showTargetMarker";
+	public static final boolean DEF_SHOW_TARGET_MARKER = true;
 	/*
 	 * Calibration Chart
 	 */
@@ -1275,6 +1277,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		putDefault(P_DELTA_MILLISECONDS_PEAK_SELECTION, DEF_DELTA_MILLISECONDS_PEAK_SELECTION);
 		putDefault(P_CHROMATOGRAM_MARK_ANALYSIS_SEGMENTS, DEF_CHROMATOGRAM_MARK_ANALYSIS_SEGMENTS);
 		putDefault(P_SHOW_RETENTION_INDEX_MARKER, DEF_SHOW_RETENTION_INDEX_MARKER);
+		putDefault(P_SHOW_TARGET_MARKER, DEF_SHOW_TARGET_MARKER);
 		/*
 		 * Time Ranges
 		 */

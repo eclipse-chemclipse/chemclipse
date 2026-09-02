@@ -87,6 +87,7 @@ public class PreferencePageChromatogram extends FieldEditorPreferencePage implem
 		addIntegerField(PreferenceSupplier.P_DELTA_MILLISECONDS_PEAK_SELECTION, "Delta Peak Selection [ms]", PreferenceSupplier.MIN_DELTA_MILLISECONDS_PEAK_SELECTION, PreferenceSupplier.MAX_DELTA_MILLISECONDS_PEAK_SELECTION);
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_MARK_ANALYSIS_SEGMENTS, "Mark Analysis Segments", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_SHOW_RETENTION_INDEX_MARKER, "Show Retention Index Marker", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(PreferenceSupplier.P_SHOW_TARGET_MARKER, "Show Target Marker", getFieldEditorParent()));
 
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
 		addIntegerField(PreferenceSupplier.P_LIMIT_SIM_TRACES, "If the scan contains less than ... it's SIM.", PreferenceSupplier.MIN_SIM_IONS, PreferenceSupplier.MAX_SIM_IONS);

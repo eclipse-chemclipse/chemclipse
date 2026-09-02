@@ -1841,23 +1841,23 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 
 	private void updateTargetMarker() {
 
-		if(chromatogramSelection != null) {
-			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
-			targetMarker.clear();
-			for(IPeak peak : ChromatogramDataSupport.getPeaks(chromatogram)) {
-				int retentionTime = peak.getPeakModel().getRetentionTimeAtPeakMaximum();
-				float peakMaximum = peak.getPeakModel().getPeakMaximum().getTotalSignal();
-				boolean identified = !peak.getTargets().isEmpty();
-				targetMarker.addPeak(retentionTime, peakMaximum, identified);
-			}
-			for(IScan scan : ChromatogramDataSupport.getIdentifiedScans(chromatogram)) {
-				if(!scan.getTargets().isEmpty()) {
-					targetMarker.addScan(scan.getRetentionTime(), scan.getTotalSignal());
+		targetMarker.clear();
+		if(preferenceStore.getBoolean(PreferenceSupplier.P_SHOW_TARGET_MARKER)) {
+			if(chromatogramSelection != null) {
+				IChromatogram chromatogram = chromatogramSelection.getChromatogram();
+				for(IPeak peak : ChromatogramDataSupport.getPeaks(chromatogram)) {
+					int retentionTime = peak.getPeakModel().getRetentionTimeAtPeakMaximum();
+					float peakMaximum = peak.getPeakModel().getPeakMaximum().getTotalSignal();
+					boolean identified = !peak.getTargets().isEmpty();
+					targetMarker.addPeak(retentionTime, peakMaximum, identified);
 				}
+				for(IScan scan : ChromatogramDataSupport.getIdentifiedScans(chromatogram)) {
+					if(!scan.getTargets().isEmpty()) {
+						targetMarker.addScan(scan.getRetentionTime(), scan.getTotalSignal());
+					}
+				}
+				targetMarker.setDraw(true);
 			}
-			targetMarker.setDraw(true);
-		} else {
-			targetMarker.clear();
 		}
 	}
 
