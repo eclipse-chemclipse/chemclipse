@@ -40,6 +40,7 @@ public abstract class AbstractStandaloneMassSpectrum extends AbstractRegularMass
 
 	private List<IMassSpectrumPeak> peaks = new ArrayList<>();
 	private List<Double> noise = new ArrayList<>();
+	private List<Double> baseline = new ArrayList<>();
 
 	private final IEditHistory editHistory = new EditHistory();
 
@@ -165,5 +166,17 @@ public abstract class AbstractStandaloneMassSpectrum extends AbstractRegularMass
 	public List<Double> getNoise() {
 
 		return noise;
+	}
+
+	@Override
+	public List<Double> getBaseline() {
+
+		return baseline;
+	}
+
+	@Override
+	public void setBaseline(List<Double> baseline) {
+
+		this.baseline = baseline;
 	}
 }

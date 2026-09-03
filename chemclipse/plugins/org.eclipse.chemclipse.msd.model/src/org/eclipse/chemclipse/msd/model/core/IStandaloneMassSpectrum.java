@@ -86,4 +86,8 @@ public interface IStandaloneMassSpectrum extends IRegularMassSpectrum, ISupplier
 	List<IMassSpectrumPeak> getPeaks();
 
 	List<Double> getNoise();
+
+	List<Double> getBaseline();
+
+	void setBaseline(List<Double> baseline);
 }

@@ -20,7 +20,6 @@ import org.eclipse.chemclipse.chromatogram.msd.filter.settings.AbstractMassSpect
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.support.literature.LiteratureReference;
-import org.eclipse.chemclipse.support.settings.DoubleSettingsProperty;
 import org.eclipse.chemclipse.support.settings.IntSettingsProperty;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -35,16 +34,6 @@ public class MassSpectrumFilterSettings extends AbstractMassSpectrumFilterSettin
 	@IntSettingsProperty(minValue = 5, maxValue = 2000)
 	private int iterations = 100;
 
-	@JsonProperty(value = "Magnification Factor", defaultValue = "1.0")
-	@JsonPropertyDescription(value = "The magnification factor run the filter.")
-	@DoubleSettingsProperty(minValue = 0.01d, maxValue = 5.0d)
-	private double magnificationFactor = 1.0d;
-
-	@JsonProperty(value = "Transitions", defaultValue = "1")
-	@JsonPropertyDescription(value = "The number of transitions run the filter.")
-	@IntSettingsProperty(minValue = 1, maxValue = 100)
-	private int transitions = 1;
-
 	public int getIterations() {
 
 		return iterations;
@@ -53,26 +42,6 @@ public class MassSpectrumFilterSettings extends AbstractMassSpectrumFilterSettin
 	public void setIterations(int iterations) {
 
 		this.iterations = iterations;
-	}
-
-	public double getMagnificationFactor() {
-
-		return magnificationFactor;
-	}
-
-	public void setMagnificationFactor(double magnificationFactor) {
-
-		this.magnificationFactor = magnificationFactor;
-	}
-
-	public int getTransitions() {
-
-		return transitions;
-	}
-
-	public void setTransitions(int transitions) {
-
-		this.transitions = transitions;
 	}
 
 	@Override

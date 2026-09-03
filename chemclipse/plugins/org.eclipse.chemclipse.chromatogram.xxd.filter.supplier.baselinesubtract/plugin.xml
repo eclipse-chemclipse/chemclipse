@@ -18,4 +18,14 @@
             id="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.baselineextract">
       </ChromatogramFilterSupplier>
    </extension>
+   <extension
+         point="org.eclipse.chemclipse.chromatogram.msd.filter.massSpectrumFilterSupplier">
+      <MassSpectrumFilterSupplier
+            config="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.baselinesubtract.settings.MassSpectrumFilterSettings"
+            description="This is a baseline subtraction filter."
+            filter="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.baselinesubtract.core.MassSpectrumFilter"
+            filterName="Baseline Subtract"
+            id="org.eclipse.chemclipse.msd.filter.supplier.baseline.subtract">
+      </MassSpectrumFilterSupplier>
+   </extension>
 </plugin>

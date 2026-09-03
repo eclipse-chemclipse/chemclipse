@@ -10,10 +10,8 @@
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
-package org.eclipse.chemclipse.xxd.edit.supplier.convexhull.core;
+package org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.baselinesubtract.core;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.filter.result.ResultStatus;
@@ -27,36 +25,37 @@ import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.MessageType;
 import org.eclipse.chemclipse.processing.core.ProcessingMessage;
-import org.eclipse.chemclipse.xxd.edit.supplier.convexhull.settings.MassSpectrumFilterSettings;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public class MassSpectrumFilter extends AbstractMassSpectrumFilter {
 
-	private static final String DESCRIPTION = "Lower Convex Hull Filter Mass Spectra";
+	private static final String DESCRIPTION = "Baseline Subtract";
 
 	@Override
 	public IProcessingInfo<IMassSpectrumFilterResult> applyFilter(List<IScanMSD> massSpectra, IMassSpectrumFilterSettings filterSettings, IProgressMonitor monitor) {
 
-		MassSpectrumFilterSettings massSpectrumFilterSettings;
-		if(filterSettings instanceof MassSpectrumFilterSettings settings) {
-			massSpectrumFilterSettings = settings;
-		} else {
-			massSpectrumFilterSettings = new MassSpectrumFilterSettings();
-		}
 		IProcessingInfo<IMassSpectrumFilterResult> processingInfo = validate(massSpectra, filterSettings);
 		if(!processingInfo.hasErrorMessages()) {
 			for(IScanMSD scanMSD : massSpectra) {
-				double[] ions = scanMSD.getIons().stream().mapToDouble(IIon::getIon).toArray();
-				double[] abundances = scanMSD.getIons().stream().mapToDouble(IIon::getAbundance).toArray();
-				double[] baseline = LowerConvexHull.baseline(ions, abundances, massSpectrumFilterSettings.getTolerance());
-
 				if(scanMSD instanceof IStandaloneMassSpectrum standaloneMassSpectrum) {
-					standaloneMassSpectrum.setBaseline(new ArrayList<>(Arrays.stream(baseline).boxed().toList()));
-				}
 
-				processingInfo.addMessage(new ProcessingMessage(MessageType.INFO, DESCRIPTION, "The mass spectrum has been optimized successfully."));
-				IMassSpectrumFilterResult massSpectrumFilterResult = new MassSpectrumFilterResult(ResultStatus.OK, "The Lower Convex Hull filter has been applied successfully.");
-				processingInfo.setProcessingResult(massSpectrumFilterResult);
+					if(standaloneMassSpectrum.getBaseline().isEmpty()) {
+						processingInfo.addMessage(new ProcessingMessage(MessageType.ERROR, DESCRIPTION, "No baseline to subtract.", "Estimate baseline first."));
+						return processingInfo;
+					}
+
+					int i = 0;
+					for(IIon ion : scanMSD.getIons()) {
+						ion.setAbundance(ion.getAbundance() - standaloneMassSpectrum.getBaseline().get(i).floatValue());
+						i++;
+					}
+
+					standaloneMassSpectrum.getBaseline().clear();
+
+					processingInfo.addMessage(new ProcessingMessage(MessageType.INFO, DESCRIPTION, "Baseline subtracted."));
+					IMassSpectrumFilterResult massSpectrumFilterResult = new MassSpectrumFilterResult(ResultStatus.OK, "Baseline subtracted.");
+					processingInfo.setProcessingResult(massSpectrumFilterResult);
+				}
 			}
 		}
 
