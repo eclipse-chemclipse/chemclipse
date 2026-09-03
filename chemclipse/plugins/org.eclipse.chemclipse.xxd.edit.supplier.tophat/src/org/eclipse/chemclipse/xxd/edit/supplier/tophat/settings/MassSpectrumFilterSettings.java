@@ -19,6 +19,7 @@ import java.util.List;
 import org.eclipse.chemclipse.chromatogram.msd.filter.settings.AbstractMassSpectrumFilterSettings;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
+import org.eclipse.chemclipse.processing.core.ICategories;
 import org.eclipse.chemclipse.support.literature.LiteratureReference;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -46,6 +47,12 @@ public class MassSpectrumFilterSettings extends AbstractMassSpectrumFilterSettin
 	public List<MassSpectrumType> appliesToMassSpectrumTypes() {
 
 		return Arrays.asList(MassSpectrumType.PROFILE);
+	}
+
+	@Override
+	public String getCategory() {
+
+		return ICategories.BASELINE_DETECTOR;
 	}
 
 	@Override
