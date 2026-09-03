@@ -11,9 +11,5 @@
             class="org.eclipse.chemclipse.chromatogram.xxd.edit.supplier.snip.ui.icon.SnipPeakMenuIcon"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.snip.peak">
       </icon>
-      <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.edit.supplier.snip.ui.icon.SnipScanMenuIcon"
-            id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.snip.massspectrum">
-      </icon>
    </extension>
 </plugin>
