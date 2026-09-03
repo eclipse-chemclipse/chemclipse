@@ -24,8 +24,8 @@
 -Dosgi.user.area=@user.home/.chemclipse/0.8.x
 -XX:+UseG1GC
 -XX:+UseStringDeduplication
---add-modules=ALL-SYSTEM
 --enable-native-access=ALL-UNNAMED
+--add-modules=ALL-SYSTEM
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread
       </vmArgsMac>
