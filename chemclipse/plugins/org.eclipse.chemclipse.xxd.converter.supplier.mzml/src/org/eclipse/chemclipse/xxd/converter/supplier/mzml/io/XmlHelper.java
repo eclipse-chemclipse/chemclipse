@@ -27,12 +27,13 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.XMLConstants;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.util.StreamReaderDelegate;
+
+import org.eclipse.chemclipse.support.xml.XmlParserFactory;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
@@ -134,12 +135,8 @@ public class XmlHelper {
 
 	private static XMLInputFactory createInputFactory() {
 
-		XMLInputFactory xmlInputFactory = XMLInputFactory.newFactory();
-		xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-		xmlInputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+		XMLInputFactory xmlInputFactory = XmlParserFactory.createInputFactory();
 		xmlInputFactory.setProperty(XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES, false);
-		xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-		xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
 		return xmlInputFactory;
 	}
 

@@ -31,6 +31,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
 import org.eclipse.chemclipse.converter.core.AbstractFileContentMatcher;
+import org.eclipse.chemclipse.support.xml.XmlParserFactory;
 
 public class ChromatogramFileContentMatcherIndexed extends AbstractFileContentMatcher {
 
@@ -73,9 +74,7 @@ public class ChromatogramFileContentMatcherIndexed extends AbstractFileContentMa
 
 	private static boolean scanForChromatogramOffset(InputStream input) throws XMLStreamException {
 
-		XMLInputFactory factory = XMLInputFactory.newInstance();
-		factory.setProperty(XMLInputFactory.SUPPORT_DTD, Boolean.FALSE);
-		factory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, Boolean.FALSE);
+		XMLInputFactory factory = XmlParserFactory.createInputFactory();
 		factory.setProperty(XMLInputFactory.IS_COALESCING, Boolean.TRUE);
 		XMLStreamReader reader = factory.createXMLStreamReader(input, StandardCharsets.UTF_8.name());
 		try {

@@ -26,7 +26,8 @@ Export-Package: org.eclipse.chemclipse.support.comparator,
  org.eclipse.chemclipse.support.traces,
  org.eclipse.chemclipse.support.updates,
  org.eclipse.chemclipse.support.util,
- org.eclipse.chemclipse.support.validators
+ org.eclipse.chemclipse.support.validators,
+ org.eclipse.chemclipse.support.xml
 Require-Bundle: org.eclipse.osgi;bundle-version="3.13.0",
  org.eclipse.e4.core.services;bundle-version="2.3.400",
  org.eclipse.e4.core.contexts;bundle-version="1.11.0",
