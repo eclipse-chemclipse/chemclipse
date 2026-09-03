@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -67,6 +67,10 @@ public class MassSpectrumFilterProcessSupplier implements IProcessTypeSupplier {
 
 			super(supplier.getId(), supplier.getFilterName(), supplier.getDescription(), (Class<IMassSpectrumFilterSettings>)supplier.getSettingsClass(), parent, DataType.MSD);
 			getLiteratureReferences().addAll(supplier.getLiteratureReferences());
+			IMassSpectrumFilterSettings massSpectrumFilterSettings = createSettings();
+			if(massSpectrumFilterSettings != null) {
+				setCategory(massSpectrumFilterSettings.getCategory());
+			}
 		}
 
 		@Override
@@ -85,18 +89,27 @@ public class MassSpectrumFilterProcessSupplier implements IProcessTypeSupplier {
 				return false;
 			}
 			if(scan instanceof IRegularMassSpectrum regularMassSpectrum) {
+				IMassSpectrumFilterSettings massSpectrumFilterSettings = createSettings();
+				if(massSpectrumFilterSettings != null) {
+					return massSpectrumFilterSettings.appliesToMassSpectrumTypes().contains(regularMassSpectrum.getMassSpectrumType());
+				}
+			}
+			return true;
+		}
+
+		private IMassSpectrumFilterSettings createSettings() {
+
+			Class<IMassSpectrumFilterSettings> settingsClass = getSettingsClass();
+			if(settingsClass != null) {
 				try {
-					IMassSpectrumFilterSettings instance = getSettingsClass().getDeclaredConstructor().newInstance();
-					return instance.appliesToMassSpectrumTypes().contains(regularMassSpectrum.getMassSpectrumType());
+					return settingsClass.getDeclaredConstructor().newInstance();
 				} catch(InstantiationException | IllegalAccessException
 						| IllegalArgumentException | InvocationTargetException
 						| NoSuchMethodException | SecurityException e) {
 					logger.error(e);
 				}
-				return true;
-			} else {
-				return true;
 			}
+			return null;
 		}
 	}
 }

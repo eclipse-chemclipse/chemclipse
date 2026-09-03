@@ -233,7 +233,8 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 			return false;
 		}
 
-		if(!supplier.getCategory().equals(ICategories.MASS_SPECTRUM_FILTER)) {
+		String category = supplier.getCategory();
+		if(!category.equals(ICategories.MASS_SPECTRUM_FILTER) && !category.equals(ICategories.BASELINE_DETECTOR)) {
 			return false;
 		}
 
@@ -248,6 +249,9 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 
 		Command command = commandService.getCommand(supplier.getId());
 		Category category = commandService.getCategory(supplier.getCategory());
+		if(!category.isDefined()) {
+			category.define(supplier.getCategory(), "");
+		}
 		command.define(supplier.getName(), supplier.getDescription(), category);
 		command.setHandler(new DynamicHandler(cachedEntry, this));
 	}
