@@ -40,7 +40,7 @@ public class MassSpectrumFilter extends AbstractMassSpectrumFilter {
 				if(scanMSD instanceof IStandaloneMassSpectrum standaloneMassSpectrum) {
 
 					if(standaloneMassSpectrum.getBaseline().isEmpty()) {
-						processingInfo.addMessage(new ProcessingMessage(MessageType.ERROR, DESCRIPTION, "No baseline to subtract.", "Estimate baseline first."));
+						processingInfo.addMessage(new ProcessingMessage(MessageType.ERROR, DESCRIPTION, "No baseline to subtract.", "Detect baseline first."));
 						return processingInfo;
 					}
 
