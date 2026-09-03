@@ -148,6 +148,8 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 				lineSeriesDataList.add(peakLineSeriesData);
 				LineSeriesData noiseLineSeriesData = getNoise(standaloneMassSpectrum);
 				lineSeriesDataList.add(noiseLineSeriesData);
+				LineSeriesData baselineLineSeriesData = getBaseline(standaloneMassSpectrum);
+				lineSeriesDataList.add(baselineLineSeriesData);
 				createAnnotations(standaloneMassSpectrum);
 			}
 
@@ -377,7 +379,7 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 		return noiseSeries;
 	}
 
-	public static ISeriesData createNoiseSeries(String id, IStandaloneMassSpectrum massSpectrum) {
+	private static ISeriesData createNoiseSeries(String id, IStandaloneMassSpectrum massSpectrum) {
 
 		List<Double> noiseList = massSpectrum.getNoise();
 		int size = Math.min(noiseList.size(), massSpectrum.getNumberOfIons());
@@ -387,6 +389,35 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 		for(int i = 0; i < size; i++) {
 			xSeries[index] = massSpectrum.getIons().get(index).getIon();
 			ySeries[index] = noiseList.get(index);
+			index++;
+		}
+		return new SeriesData(xSeries, ySeries, id);
+	}
+
+	private LineSeriesData getBaseline(IStandaloneMassSpectrum massSpectrum) {
+
+		ISeriesData noiseSeriesData = createBaselineSeries("Baseline", massSpectrum);
+		LineSeriesData noiseSeries = new LineSeriesData(noiseSeriesData);
+		ILineSeriesSettings lineSeriesSettings = noiseSeries.getLineSeriesSettings();
+		lineSeriesSettings.setEnableArea(false);
+		lineSeriesSettings.setLineWidth(2);
+		lineSeriesSettings.setLineStyle(LineStyle.SOLID);
+		lineSeriesSettings.setSymbolType(PlotSymbolType.NONE);
+		lineSeriesSettings.setLineColor(getDisplay().getSystemColor(SWT.COLOR_BLACK));
+		lineSeriesSettings.setSymbolColor(getDisplay().getSystemColor(SWT.COLOR_BLACK));
+		return noiseSeries;
+	}
+
+	private static ISeriesData createBaselineSeries(String id, IStandaloneMassSpectrum massSpectrum) {
+
+		List<Double> baselineList = massSpectrum.getBaseline();
+		int size = Math.min(baselineList.size(), massSpectrum.getNumberOfIons());
+		double[] xSeries = new double[size];
+		double[] ySeries = new double[size];
+		int index = 0;
+		for(int i = 0; i < size; i++) {
+			xSeries[index] = massSpectrum.getIons().get(index).getIon();
+			ySeries[index] = baselineList.get(index);
 			index++;
 		}
 		return new SeriesData(xSeries, ySeries, id);

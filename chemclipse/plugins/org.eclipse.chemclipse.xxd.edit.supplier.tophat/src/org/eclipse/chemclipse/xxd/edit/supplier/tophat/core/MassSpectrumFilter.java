@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.edit.supplier.tophat.core;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.filter.result.ResultStatus;
@@ -22,6 +24,7 @@ import org.eclipse.chemclipse.chromatogram.msd.filter.settings.IMassSpectrumFilt
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
+import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.MessageType;
 import org.eclipse.chemclipse.processing.core.ProcessingMessage;
@@ -44,8 +47,8 @@ public class MassSpectrumFilter extends AbstractMassSpectrumFilter {
 		}
 		IProcessingInfo<IMassSpectrumFilterResult> processingInfo = validate(massSpectra, filterSettings);
 		if(!processingInfo.hasErrorMessages()) {
-			for(IScanMSD massSpectrum : massSpectra) {
-				double[] abundances = massSpectrum.getIons().stream().mapToDouble(IIon::getAbundance).toArray();
+			for(IScanMSD scanMSD : massSpectra) {
+				double[] abundances = scanMSD.getIons().stream().mapToDouble(IIon::getAbundance).toArray();
 
 				int halfWindowSize = massSpectrumFilterSettings.getHalfWindowSize();
 				if(halfWindowSize < 1) {
@@ -55,11 +58,8 @@ public class MassSpectrumFilter extends AbstractMassSpectrumFilter {
 
 				double[] baseline = TopHat.baseline(abundances, halfWindowSize);
 
-				// subtract
-				int i = 0;
-				for(IIon ion : massSpectrum.getIons()) {
-					ion.setAbundance(ion.getAbundance() - (float)baseline[i]);
-					i++;
+				if(scanMSD instanceof IStandaloneMassSpectrum standaloneMassSpectrum) {
+					standaloneMassSpectrum.setBaseline(new ArrayList<>(Arrays.stream(baseline).boxed().toList()));
 				}
 			}
 
