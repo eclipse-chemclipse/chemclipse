@@ -15,11 +15,11 @@ package org.eclipse.chemclipse.xxd.converter.supplier.mzml.io;
 import java.io.File;
 import java.io.IOException;
 
-import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.eclipse.chemclipse.support.xml.XmlParserFactory;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v10.CVParamType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v10.MzMLType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v10.ObjectFactory;
@@ -41,11 +41,7 @@ public class XmlReader10 {
 
 	public static MzMLType getMzML(File file) throws SAXException, IOException, JAXBException, ParserConfigurationException {
 
-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-		documentBuilderFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-		documentBuilderFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-		documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-		documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+		DocumentBuilderFactory documentBuilderFactory = XmlParserFactory.createDocumentBuilderFactory();
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 		Document document = documentBuilder.parse(file);

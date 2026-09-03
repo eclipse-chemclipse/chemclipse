@@ -16,12 +16,12 @@ package org.eclipse.chemclipse.msd.converter.supplier.mzml.converter;
 import java.io.File;
 import java.io.FileInputStream;
 
-import javax.xml.XMLConstants;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamReader;
 
 import org.eclipse.chemclipse.converter.core.AbstractFileContentMatcher;
+import org.eclipse.chemclipse.support.xml.XmlParserFactory;
 
 public class ChromatogramFileContentMatcher extends AbstractFileContentMatcher {
 
@@ -32,10 +32,7 @@ public class ChromatogramFileContentMatcher extends AbstractFileContentMatcher {
 
 		boolean isValidFormat = false;
 		try {
-			XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
-			xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-			xmlInputFactory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
-			xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+			XMLInputFactory xmlInputFactory = XmlParserFactory.createInputFactory();
 			XMLStreamReader xmlStreamReader = xmlInputFactory.createXMLStreamReader(new FileInputStream(file));
 
 			boolean hasChromatogramList = false;
