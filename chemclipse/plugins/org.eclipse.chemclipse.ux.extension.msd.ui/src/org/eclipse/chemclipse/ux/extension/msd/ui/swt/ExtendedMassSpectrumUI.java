@@ -195,8 +195,9 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.horizontalAlignment = GridData.END;
 		composite.setLayoutData(gridData);
-		composite.setLayout(new GridLayout(5, false));
+		composite.setLayout(new GridLayout(6, false));
 
+		createButtonDeleteBaseline(composite);
 		buttonToolbarSelection.set(createButtonToggleSelection(composite));
 		buttonToolbarMethod.set(createButtonToggleMethod(composite));
 		createButtonToggleChartGrid(composite);
@@ -259,6 +260,27 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 		composite.setLayout(new FillLayout());
 		Label label = new Label(composite, SWT.NONE);
 		label.setText("The mass spectrum couldn't be loaded.");
+	}
+
+	private void createButtonDeleteBaseline(Composite composite) {
+
+		Button button = new Button(composite, SWT.PUSH);
+		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_BASELINE_DELETE, IApplicationImageProvider.SIZE_16x16));
+		button.setToolTipText("Delete baseline");
+		button.setEnabled(getMassSpectrumType() == MassSpectrumType.PROFILE);
+		button.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				if(massSpectrum instanceof IStandaloneMassSpectrum standaloneMassSpectrum) {
+					standaloneMassSpectrum.getBaseline().clear();
+					update(standaloneMassSpectrum);
+					massSpectrumChart.update();
+					MassSpectrumUpdateNotifierUI.update(getDisplay(), standaloneMassSpectrum);
+				}
+			}
+		});
 	}
 
 	private Button createButtonToggleSelection(Composite parent) {
