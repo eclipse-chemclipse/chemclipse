@@ -18,7 +18,6 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.XMLConstants;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -47,6 +46,7 @@ import org.eclipse.chemclipse.pcr.model.core.IPlate;
 import org.eclipse.chemclipse.pcr.model.core.IWell;
 import org.eclipse.chemclipse.pcr.model.core.Position;
 import org.eclipse.chemclipse.pcr.model.core.Well;
+import org.eclipse.chemclipse.support.xml.XmlParserFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -71,11 +71,7 @@ public class PCRReaderVersion13 implements IPCRReader {
 
 	private static Rdml getRDML(InputStream inputStream) throws SAXException, IOException, JAXBException, ParserConfigurationException {
 
-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-		documentBuilderFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-		documentBuilderFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-		documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-		documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+		DocumentBuilderFactory documentBuilderFactory = XmlParserFactory.createDocumentBuilderFactory();
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 		Document document = documentBuilder.parse(inputStream);

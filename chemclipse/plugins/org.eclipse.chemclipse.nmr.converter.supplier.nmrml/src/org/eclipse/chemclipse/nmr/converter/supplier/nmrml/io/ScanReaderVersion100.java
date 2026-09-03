@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
-import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -47,6 +46,7 @@ import org.eclipse.chemclipse.nmr.converter.supplier.nmrml.model.VendorFIDMeasur
 import org.eclipse.chemclipse.nmr.converter.supplier.nmrml.model.VendorFIDSignal;
 import org.eclipse.chemclipse.nmr.processing.supplier.base.settings.ExponentialApodizationSettings;
 import org.eclipse.chemclipse.nmr.processing.supplier.base.settings.PhaseCorrectionSettings;
+import org.eclipse.chemclipse.support.xml.XmlParserFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -63,11 +63,7 @@ public class ScanReaderVersion100 {
 
 		List<IComplexSignalMeasurement<?>> measurements = new ArrayList<>();
 		try {
-			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-			documentBuilderFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-			documentBuilderFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-			documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-			documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+			DocumentBuilderFactory documentBuilderFactory = XmlParserFactory.createDocumentBuilderFactory();
 
 			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 			Document document = documentBuilder.parse(file);

@@ -22,13 +22,13 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.chemclipse.logging.core.Logger;
+import org.eclipse.chemclipse.support.xml.XmlParserFactory;
 import org.eclipse.chemclipse.wsd.converter.supplier.spectroml.model.IVendorSpectrumWSD;
 import org.eclipse.chemclipse.wsd.converter.supplier.spectroml.model.VendorSpectrumWSD;
 import org.eclipse.chemclipse.wsd.converter.supplier.spectroml.model.v1.DataCore;
@@ -116,11 +116,7 @@ public class ScanReader {
 
 	private static SpectroML getSpectroML(File file) throws SAXException, IOException, JAXBException, ParserConfigurationException {
 
-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-		documentBuilderFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-		documentBuilderFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-		documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-		documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+		DocumentBuilderFactory documentBuilderFactory = XmlParserFactory.createDocumentBuilderFactory();
 		documentBuilderFactory.setNamespaceAware(true);
 
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
