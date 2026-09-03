@@ -25,7 +25,6 @@ import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.columns.SeparationColumnFactory;
 import org.eclipse.chemclipse.model.core.IIntegrationEntry;
 import org.eclipse.chemclipse.model.core.IPeakIntensityValues;
-import org.eclipse.chemclipse.model.core.ISignal;
 import org.eclipse.chemclipse.model.core.PeakType;
 import org.eclipse.chemclipse.model.exceptions.PeakException;
 import org.eclipse.chemclipse.model.exceptions.ReferenceMustNotBeNullException;
@@ -64,6 +63,7 @@ import org.eclipse.chemclipse.msd.model.implementation.ScanMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
 import org.eclipse.chemclipse.support.model.SeparationColumnType;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -403,7 +403,7 @@ public class PeakReader_1007 extends AbstractZipReader implements IPeakReader {
 			/*
 			 * Legacy support
 			 */
-			double signal = ISignal.TOTAL_INTENSITY;
+			double signal = ITrace.TOTAL_INTENSITY;
 			boolean isSignal = dataInputStream.readBoolean();
 			if(isSignal) {
 				signal = dataInputStream.readDouble();

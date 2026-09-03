@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -14,7 +14,7 @@ package org.eclipse.chemclipse.model.quantitation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.eclipse.chemclipse.model.core.ISignal;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -28,12 +28,12 @@ public class ResponseSignals_2_Test {
 	@BeforeAll
 	public void setUp() {
 
-		responseSignals.add(new ResponseSignal(ISignal.TOTAL_INTENSITY, 0.5d, 500));
-		responseSignals.add(new ResponseSignal(ISignal.TOTAL_INTENSITY, 1.0d, 1000));
-		responseSignals.add(new ResponseSignal(ISignal.TOTAL_INTENSITY, 2.5d, 2500));
-		responseSignals.add(new ResponseSignal(ISignal.TOTAL_INTENSITY, 5.0d, 5000));
-		responseSignals.add(new ResponseSignal(ISignal.TOTAL_INTENSITY, 7.5d, 7500));
-		responseSignals.add(new ResponseSignal(ISignal.TOTAL_INTENSITY, 10.0d, 10000));
+		responseSignals.add(new ResponseSignal(ITrace.TOTAL_INTENSITY, 0.5d, 500));
+		responseSignals.add(new ResponseSignal(ITrace.TOTAL_INTENSITY, 1.0d, 1000));
+		responseSignals.add(new ResponseSignal(ITrace.TOTAL_INTENSITY, 2.5d, 2500));
+		responseSignals.add(new ResponseSignal(ITrace.TOTAL_INTENSITY, 5.0d, 5000));
+		responseSignals.add(new ResponseSignal(ITrace.TOTAL_INTENSITY, 7.5d, 7500));
+		responseSignals.add(new ResponseSignal(ITrace.TOTAL_INTENSITY, 10.0d, 10000));
 	}
 
 	@Test

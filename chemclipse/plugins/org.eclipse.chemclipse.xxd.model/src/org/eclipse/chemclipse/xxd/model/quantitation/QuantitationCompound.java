@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.chemclipse.model.core.IPeak;
-import org.eclipse.chemclipse.model.core.ISignal;
 import org.eclipse.chemclipse.model.quantitation.AbstractQuantitationCompound;
 import org.eclipse.chemclipse.model.quantitation.IQuantitationPeak;
 import org.eclipse.chemclipse.model.quantitation.IQuantitationSignal;
@@ -27,6 +26,7 @@ import org.eclipse.chemclipse.model.quantitation.ResponseSignal;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public class QuantitationCompound extends AbstractQuantitationCompound {
 
@@ -72,7 +72,7 @@ public class QuantitationCompound extends AbstractQuantitationCompound {
 			QuantitationSupport integrationQuantitationSupport = new QuantitationSupport(peak);
 			if(integrationQuantitationSupport.validateTIC()) {
 
-				double ion = ISignal.TOTAL_INTENSITY;
+				double ion = ITrace.TOTAL_INTENSITY;
 				double response = integrationQuantitationSupport.getIntegrationArea(ion);
 
 				if(firstPeak) {

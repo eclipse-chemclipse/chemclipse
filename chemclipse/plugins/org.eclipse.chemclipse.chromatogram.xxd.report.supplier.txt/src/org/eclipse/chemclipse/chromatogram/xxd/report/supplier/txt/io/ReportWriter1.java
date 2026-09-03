@@ -34,7 +34,6 @@ import org.eclipse.chemclipse.model.core.IIntegrationEntry;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IPeakModel;
 import org.eclipse.chemclipse.model.core.IScan;
-import org.eclipse.chemclipse.model.core.ISignal;
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
@@ -48,6 +47,7 @@ import org.eclipse.chemclipse.msd.model.core.IPeakModelMSD;
 import org.eclipse.chemclipse.msd.model.core.comparator.IonAbundanceComparator;
 import org.eclipse.chemclipse.support.comparator.SortOrder;
 import org.eclipse.chemclipse.support.text.ValueFormat;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public class ReportWriter1 extends AbstractReportWriter {
 
@@ -368,8 +368,8 @@ public class ReportWriter1 extends AbstractReportWriter {
 			 * TIC or XIC/XWC
 			 */
 			double signal = integrationEntry.getSignal();
-			if(signal == ISignal.TOTAL_INTENSITY) {
-				printWriter.print(ISignal.TOTAL_INTENSITY_DESCRIPTION);
+			if(signal == ITrace.TOTAL_INTENSITY) {
+				printWriter.print(ITrace.TOTAL_INTENSITY_DESCRIPTION);
 			} else {
 				printWriter.print(decimalFormat.format(signal));
 			}
@@ -572,8 +572,8 @@ public class ReportWriter1 extends AbstractReportWriter {
 			 * TIC or XIC
 			 */
 			double signal = integrationEntry.getSignal();
-			if(signal == ISignal.TOTAL_INTENSITY) {
-				printWriter.print(ISignal.TOTAL_INTENSITY_DESCRIPTION);
+			if(signal == ITrace.TOTAL_INTENSITY) {
+				printWriter.print(ITrace.TOTAL_INTENSITY_DESCRIPTION);
 			} else {
 				printWriter.print(decimalFormat.format(signal));
 			}
@@ -651,8 +651,8 @@ public class ReportWriter1 extends AbstractReportWriter {
 			 */
 			double signal = quantitationEntry.getSignal();
 			printWriter.print(DELIMITER);
-			if(signal == ISignal.TOTAL_INTENSITY) {
-				printWriter.print(ISignal.TOTAL_INTENSITY_DESCRIPTION);
+			if(signal == ITrace.TOTAL_INTENSITY) {
+				printWriter.print(ITrace.TOTAL_INTENSITY_DESCRIPTION);
 			} else {
 				printWriter.print(decimalFormat.format(signal));
 			}

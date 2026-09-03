@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -13,8 +13,8 @@
 package org.eclipse.chemclipse.model.implementation;
 
 import org.eclipse.chemclipse.model.core.IIntegrationEntry;
-import org.eclipse.chemclipse.model.core.ISignal;
 import org.eclipse.chemclipse.model.core.IntegrationType;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public class IntegrationEntry implements IIntegrationEntry {
 
@@ -26,7 +26,7 @@ public class IntegrationEntry implements IIntegrationEntry {
 
 	public IntegrationEntry(double integratedArea) {
 
-		this(ISignal.TOTAL_INTENSITY, integratedArea);
+		this(ITrace.TOTAL_INTENSITY, integratedArea);
 	}
 
 	public IntegrationEntry(double signal, double integratedArea) {

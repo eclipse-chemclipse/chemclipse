@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2025 Lablicate GmbH.
+ * Copyright (c) 2013, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -15,8 +15,6 @@ package org.eclipse.chemclipse.wsd.model.core;
 import java.io.Serializable;
 
 public interface IScanSignalWSD extends Serializable {
-
-	float TOTAL_INTENSITY = 0.0f;
 
 	/**
 	 * Returns the wavelength in nanometer (nm) scale.

@@ -72,6 +72,7 @@ import org.eclipse.chemclipse.support.history.EditInformation;
 import org.eclipse.chemclipse.support.history.IEditHistory;
 import org.eclipse.chemclipse.support.history.IEditInformation;
 import org.eclipse.chemclipse.support.model.SeparationColumnType;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.wsd.converter.supplier.ocx.io.ChromatogramReaderWSD;
 import org.eclipse.chemclipse.wsd.converter.supplier.ocx.io.IChromatogramWSDZipReader;
 import org.eclipse.chemclipse.wsd.converter.supplier.ocx.model.chromatogram.IVendorChromatogram;
@@ -228,7 +229,7 @@ public class ChromatogramReader_1500 extends AbstractChromatogramReader implemen
 			scanObject.setRetentionTime(retentionTime);
 
 			IScanSignalWSD scanSignalObject = new VendorScanSignal();
-			scanSignalObject.setWavelength(IScanSignalWSD.TOTAL_INTENSITY);
+			scanSignalObject.setWavelength(ITrace.TOTAL_INTENSITY);
 			scanSignalObject.setAbsorbance(totalSignal);
 			scanObject.addScanSignal(scanSignalObject);
 			chromatogram.addScan(scanObject);

@@ -19,7 +19,7 @@ import java.util.Map;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IIntegrationEntry;
 import org.eclipse.chemclipse.model.core.IPeak;
-import org.eclipse.chemclipse.model.core.ISignal;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public class QuantitationSupport {
 
@@ -80,7 +80,7 @@ public class QuantitationSupport {
 	 */
 	public boolean isTotalSignalIntegrated() {
 
-		if(integratedSignals.size() == 1 && integratedSignals.containsKey(ISignal.TOTAL_INTENSITY)) {
+		if(integratedSignals.size() == 1 && integratedSignals.containsKey((double)ITrace.TOTAL_INTENSITY)) {
 			return true;
 		}
 		return false;
@@ -97,7 +97,7 @@ public class QuantitationSupport {
 
 		Double value;
 		if(isTotalSignalIntegrated()) {
-			value = integratedSignals.get(ISignal.TOTAL_INTENSITY);
+			value = integratedSignals.get((double)ITrace.TOTAL_INTENSITY);
 		} else {
 			value = integratedSignals.get(signal);
 		}

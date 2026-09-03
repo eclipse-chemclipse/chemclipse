@@ -29,7 +29,6 @@ import org.eclipse.chemclipse.converter.io.AbstractChromatogramWriter;
 import org.eclipse.chemclipse.model.baseline.IBaselineModel;
 import org.eclipse.chemclipse.model.core.IIntegrationEntry;
 import org.eclipse.chemclipse.model.core.IMethod;
-import org.eclipse.chemclipse.model.core.ISignal;
 import org.eclipse.chemclipse.model.identifier.IComparisonResult;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
@@ -49,6 +48,7 @@ import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.support.history.IEditHistory;
 import org.eclipse.chemclipse.support.history.IEditInformation;
+import org.eclipse.chemclipse.support.traces.ITrace;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.IScanProxy;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.ProcessSupplierSupport;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.ScanProxy;
@@ -526,7 +526,7 @@ public class ChromatogramWriter_1005 extends AbstractChromatogramWriter implemen
 			/*
 			 * Legacy support
 			 */
-			if(quantitationEntry.getSignal() != ISignal.TOTAL_INTENSITY) {
+			if(quantitationEntry.getSignal() != ITrace.TOTAL_INTENSITY) {
 				dataOutputStream.writeBoolean(true);
 				dataOutputStream.writeDouble(quantitationEntry.getSignal());
 			} else {

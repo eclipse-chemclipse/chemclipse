@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024, 2025 Lablicate GmbH.
+ * Copyright (c) 2024, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -16,6 +16,9 @@ import org.eclipse.chemclipse.support.text.ValueFormat;
 
 public interface ITrace {
 
+	float TOTAL_INTENSITY = 0;
+	String TOTAL_INTENSITY_DESCRIPTION = "TIC";
+
 	String PREFIX_SCALE_FACTOR = "(x";
 	String POSTFIX_SCALE_FACTOR = ")";
 	String INFIX_RANGE_STANDARD = "±";
@@ -27,7 +30,6 @@ public interface ITrace {
 	String SEPARATOR_TRACE_ITEM = ",";
 	String SEPARATOR_TRACE_RANGE = "-";
 
-	int TRACE_TIC = 0;
 	int MILLION = 1000000;
 
 	double getValue();

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import org.eclipse.chemclipse.model.core.ISignal;
+import org.eclipse.chemclipse.support.traces.ITrace;
 
 public abstract class AbstractQuantitationEntry implements IQuantitationEntry {
 
@@ -50,7 +50,7 @@ public abstract class AbstractQuantitationEntry implements IQuantitationEntry {
 		/*
 		 * This method has been added for backward compatibility reasons.
 		 */
-		return signals.isEmpty() ? ISignal.TOTAL_INTENSITY : signals.get(0);
+		return signals.isEmpty() ? ITrace.TOTAL_INTENSITY : signals.get(0);
 	}
 
 	@Override
