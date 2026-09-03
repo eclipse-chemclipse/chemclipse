@@ -715,7 +715,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final String P_SHOW_RETENTION_INDEX_MARKER = "showRetentionIndexMarker";
 	public static final boolean DEF_SHOW_RETENTION_INDEX_MARKER = true;
 	public static final String P_SHOW_TARGET_MARKER = "showTargetMarker";
-	public static final boolean DEF_SHOW_TARGET_MARKER = true;
+	public static final boolean DEF_SHOW_TARGET_MARKER = false;
 	/*
 	 * Calibration Chart
 	 */
