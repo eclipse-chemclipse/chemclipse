@@ -28,9 +28,11 @@ public class MassSpectrumFilterSettings extends AbstractMassSpectrumFilterSettin
 	@JsonProperty(value = "Subtract Mass Spectrum", defaultValue = "")
 	@JsonPropertyDescription(value = "This is the mass spectrum used for subtraction.")
 	private IScanMSD subtractMassSpectrum = new ScanMSD();
+
 	@JsonProperty(value = "Use Nominal Mass", defaultValue = "true")
 	@JsonPropertyDescription(value = "Use the nominal mass schema.")
 	private boolean useNominalMasses = true;
+
 	@JsonProperty(value = "Normalize Data", defaultValue = "true")
 	@JsonPropertyDescription(value = "Normalize the intensities.")
 	private boolean useNormalize = true;
