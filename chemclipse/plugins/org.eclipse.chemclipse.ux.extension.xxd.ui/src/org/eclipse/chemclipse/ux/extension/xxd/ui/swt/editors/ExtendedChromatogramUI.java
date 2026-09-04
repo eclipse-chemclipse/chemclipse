@@ -53,6 +53,7 @@ import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.model.core.MarkedTraces;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.model.supplier.IChromatogramSelectionProcessSupplier;
+import org.eclipse.chemclipse.model.supplier.IScanProcessSupplier;
 import org.eclipse.chemclipse.model.support.IAnalysisSegment;
 import org.eclipse.chemclipse.model.support.RetentionIndexMath;
 import org.eclipse.chemclipse.model.targets.ITargetDisplaySettings;
@@ -788,6 +789,11 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 		}
 
 		if(supplier.getTypeSupplier() instanceof EditorProcessTypeSupplier) {
+			return false;
+		}
+
+		// MALDI
+		if(supplier instanceof IScanProcessSupplier) {
 			return false;
 		}
 
