@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
-import org.eclipse.chemclipse.model.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.model.ui.internal.provider.LibraryInformationComparator;
 import org.eclipse.chemclipse.model.ui.internal.provider.LibraryInformationContentProvider;
 import org.eclipse.chemclipse.model.ui.internal.provider.LibraryInformationFilter;
@@ -115,7 +114,7 @@ public class LibraryInformationListUI extends ExtendedTableViewer {
 		 * Normal or Virtual
 		 */
 		int size = libraryInformationsUse.size();
-		if(virtualFlagIsSet && (size > PreferenceSupplier.getLibraryInformationListLimitVirtual())) {
+		if(virtualFlagIsSet && (size > 1000)) {
 			setUseHashlookup(true);
 			setContentProvider(contentProviderVirtual);
 		} else {
