@@ -70,7 +70,6 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.operations.DeleteTargetsOperat
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageLists;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageMergePeaks;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageScans;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageTargets;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageUnknownTarget;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.IdentificationTargetSupport;
