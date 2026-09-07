@@ -62,6 +62,7 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.charts.ChromatogramRulerChart;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.help.HelpContext;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.support.OverlayChartSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogram;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogramChart;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageNamedTraces;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageOverlay;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
@@ -473,6 +474,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 				PreferencePageOverlay.class, //
 				PreferencePageNamedTraces.class, //
 				PreferencePageChromatogram.class, //
+				PreferencePageChromatogramChart.class, //
 				PreferencePage.class //
 		), _ -> {
 			applySettings();
