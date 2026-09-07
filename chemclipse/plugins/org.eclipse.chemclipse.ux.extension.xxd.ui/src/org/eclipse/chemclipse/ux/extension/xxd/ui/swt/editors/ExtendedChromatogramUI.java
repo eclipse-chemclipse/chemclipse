@@ -127,6 +127,7 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ChromatogramAxisSc
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ChromatogramAxisSeconds;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePage;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogram;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogramChart;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogramPeaks;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogramScans;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageProcessorToolbarCSD;
@@ -1523,6 +1524,7 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 			 */
 			preferencePages.add(PreferencePageProcessors.class);
 			preferencePages.add(PreferencePageChromatogram.class);
+			preferencePages.add(PreferencePageChromatogramChart.class);
 			preferencePages.add(ChromatogramAxisMilliseconds.class);
 			preferencePages.add(ChromatogramAxisRetentionIndex.class);
 			preferencePages.add(ChromatogramAxisIntensity.class);

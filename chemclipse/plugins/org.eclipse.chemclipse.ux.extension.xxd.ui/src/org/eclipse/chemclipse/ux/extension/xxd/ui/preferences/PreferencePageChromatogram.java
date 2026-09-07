@@ -15,19 +15,16 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.preferences;
 import org.eclipse.chemclipse.model.core.support.HeaderField;
 import org.eclipse.chemclipse.support.text.ILabel;
 import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.DoubleFieldEditor;
-import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.LabelFieldEditor;
 import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.SpacerFieldEditor;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.l10n.ExtensionMessages;
 import org.eclipse.jface.preference.BooleanFieldEditor;
-import org.eclipse.jface.preference.ColorFieldEditor;
 import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
-import org.eclipse.swtchart.extensions.charts.ChartOptions;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
@@ -44,16 +41,6 @@ public class PreferencePageChromatogram extends FieldEditorPreferencePage implem
 	@Override
 	public void createFieldEditors() {
 
-		addField(new ComboFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_CHART_COMPRESSION_TYPE, ExtensionMessages.compressionType + ":", ChartOptions.COMPRESSION_TYPES, getFieldEditorParent()));
-		addField(new ColorFieldEditor(PreferenceSupplier.P_COLOR_CHROMATOGRAM, "Color Chromatogram:", getFieldEditorParent()));
-		addField(new ColorFieldEditor(PreferenceSupplier.P_COLOR_CHROMATOGRAM_INACTIVE, "Color Chromatogram (Inactive):", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_ENABLE_CHROMATOGRAM_AREA, "Enable Chromatogram Area", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_SHOW_CHROMATOGRAM_BASELINE, "Show Chromatogram Baseline", getFieldEditorParent()));
-		addField(new ColorFieldEditor(PreferenceSupplier.P_COLOR_CHROMATOGRAM_BASELINE, "Color Chromatogram Baseline:", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_ENABLE_BASELINE_AREA, "Enable Baseline Area", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_ALTERNATE_WINDOW_MOVE_DIRECTION, "Use alternate window move direction", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_CONDENSE_CYCLE_NUMBER_SCANS, "Condense cycle number scans", getFieldEditorParent()));
-
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
 		addField(new ComboFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_EDITOR_LABEL, "Editor Label (Name in Part):", HeaderField.getOptions(), getFieldEditorParent()));
 		addField(new ComboFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_REFERENCE_LABEL, "Reference Label (Name in Legend):", HeaderField.getOptions(), getFieldEditorParent()));
@@ -65,26 +52,12 @@ public class PreferencePageChromatogram extends FieldEditorPreferencePage implem
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
 		addField(new DoubleFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_TRANSFER_DELTA_RETENTION_TIME, "Transfer delta retention time [min]", PreferenceSupplier.MIN_CHROMATOGRAM_TRANSFER_DELTA_RETENTION_TIME, PreferenceSupplier.MAX_CHROMATOGRAM_TRANSFER_DELTA_RETENTION_TIME, getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_TRANSFER_BEST_TARGET_ONLY, "Transfer best target only", getFieldEditorParent()));
-		addField(new DoubleFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_EXTEND_Y, "Extend Y (1.0 = 100%)", PreferenceSupplier.MIN_CHROMATOGRAM_EXTEND_Y, PreferenceSupplier.MAX_CHROMATOGRAM_EXTEND_Y, getFieldEditorParent()));
-
-		addField(new SpacerFieldEditor(getFieldEditorParent()));
-		addField(new LabelFieldEditor("The following settings define how the chart reacts on a user selection and zoom events.", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_RESTRICT_SELECT_X, "Restrict Select X", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_RESTRICT_SELECT_Y, "Restrict Select Y", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_FORCE_ZERO_MIN_Y_MSD, "Force Zero Min Y (MSD)", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_REFERENCE_ZOOM_ZERO_X, "Reference Zoom Zero X", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_REFERENCE_ZOOM_ZERO_Y, "Reference Zoom Zero Y", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_RESTRICT_ZOOM_X, "Restrict Zoom X", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_RESTRICT_ZOOM_Y, "Restrict Zoom Y", getFieldEditorParent()));
 
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
 		addField(new StringFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_SELECTED_ACTION_ID, "Chromatogram Selected Action Id:", getFieldEditorParent()));
 		addField(new DirectoryFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_SAVE_AS_FOLDER, "Save As... Folder", getFieldEditorParent()));
 		addField(new FileFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_LOAD_PROCESS_METHOD, "Load Process Method (*.ocm)", getFieldEditorParent()));
 		addIntegerField(PreferenceSupplier.P_DELTA_MILLISECONDS_PEAK_SELECTION, "Delta Peak Selection [ms]", PreferenceSupplier.MIN_DELTA_MILLISECONDS_PEAK_SELECTION, PreferenceSupplier.MAX_DELTA_MILLISECONDS_PEAK_SELECTION);
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_MARK_ANALYSIS_SEGMENTS, "Mark Analysis Segments", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_SHOW_RETENTION_INDEX_MARKER, "Show Retention Index Marker", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_SHOW_TARGET_MARKER, "Show Target Marker", getFieldEditorParent()));
 	}
 
 	private void addIntegerField(String name, String labelText, int min, int max) {
