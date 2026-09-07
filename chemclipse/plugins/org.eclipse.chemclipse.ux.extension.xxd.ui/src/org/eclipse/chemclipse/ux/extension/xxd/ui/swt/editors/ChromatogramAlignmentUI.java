@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -14,6 +14,7 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.chemclipse.logging.core.Logger;
@@ -23,9 +24,11 @@ import org.eclipse.chemclipse.model.updates.IChromatogramSelectionUpdateListener
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
+import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.runnables.ChromatogramLengthModifier;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.EditorUpdateSupport;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogramAlignment;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.ChromatogramSourceCombo;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -45,7 +48,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
-public class ChromatogramAlignmentUI extends Composite implements IChromatogramSelectionUpdateListener {
+public class ChromatogramAlignmentUI extends Composite implements IChromatogramSelectionUpdateListener, IExtendedPartUI {
 
 	private static final Logger logger = Logger.getLogger(ChromatogramAlignmentUI.class);
 
@@ -90,7 +93,7 @@ public class ChromatogramAlignmentUI extends Composite implements IChromatogramS
 		setLayout(new FillLayout());
 
 		Composite composite = new Composite(this, SWT.NONE);
-		GridLayout gridLayout = new GridLayout(8, false);
+		GridLayout gridLayout = new GridLayout(9, false);
 		gridLayout.marginLeft = 0;
 		gridLayout.marginRight = 0;
 		composite.setLayout(gridLayout);
@@ -103,6 +106,18 @@ public class ChromatogramAlignmentUI extends Composite implements IChromatogramS
 		buttons.add(createButtonAdjustChromatograms(composite));
 		createVerticalSeparator(composite);
 		buttons.add(createButtonSetRanges(composite));
+		buttons.add(createButtonSettings(composite));
+	}
+
+	private Button createButtonSettings(Composite parent) {
+
+		return createSettingsButton(parent, Arrays.asList( //
+				PreferencePageChromatogramAlignment.class //
+		), _ -> applySettings());
+	}
+
+	private void applySettings() {
+
 	}
 
 	private ChromatogramSourceCombo createChromatogramSourceCombo(Composite parent) {
