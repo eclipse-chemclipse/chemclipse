@@ -18,9 +18,9 @@ import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
-public class PreferencePageLists extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+public class PreferencePeakScanPageList extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
-	public PreferencePageLists() {
+	public PreferencePeakScanPageList() {
 
 		super(GRID);
 		setPreferenceStore(Activator.getDefault().getPreferenceStore());
