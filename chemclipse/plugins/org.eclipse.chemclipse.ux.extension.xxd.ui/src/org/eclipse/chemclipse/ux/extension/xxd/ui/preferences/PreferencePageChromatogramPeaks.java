@@ -17,7 +17,6 @@ import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.LabelFieldEdit
 import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.SpacerFieldEditor;
 import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.SpinnerFieldEditor;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
-import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.ColorFieldEditor;
 import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
@@ -27,7 +26,6 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 public class PreferencePageChromatogramPeaks extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
-	private static final String FIELD_MISCELLANEOUS = "Miscellaneous";
 	private static final String FIELD_PEAKS = "Peaks";
 	private static final String FIELD_PEAK_LABELS = "Peak Labels";
 	private static final String FIELD_SELECTED_PEAK_SCAN_MARKER = "Selected Peak (Scan Marker)";
@@ -66,10 +64,6 @@ public class PreferencePageChromatogramPeaks extends FieldEditorPreferencePage i
 		addField(new ColorFieldEditor(PreferenceSupplier.P_COLOR_CHROMATOGRAM_PEAKS_ACTIVE_ISTD, "Color (Active ISTD):", getFieldEditorParent()));
 		addField(new ColorFieldEditor(PreferenceSupplier.P_COLOR_CHROMATOGRAM_PEAKS_ACTIVE_ISTD_TARGETS_HIDDEN, "Color (Active ISTD - Targets Hidden):", getFieldEditorParent()));
 		addField(new ColorFieldEditor(PreferenceSupplier.P_COLOR_CHROMATOGRAM_PEAKS_INACTIVE_ISTD, "Color (Inactive ISTD):", getFieldEditorParent()));
-
-		addField(new SpacerFieldEditor(getFieldEditorParent()));
-		addField(new LabelFieldEditor(FIELD_MISCELLANEOUS, getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_MOVE_RETENTION_TIME_ON_PEAK_SELECTION, "Move retention time on peak selection", getFieldEditorParent()));
 	}
 
 	@Override
