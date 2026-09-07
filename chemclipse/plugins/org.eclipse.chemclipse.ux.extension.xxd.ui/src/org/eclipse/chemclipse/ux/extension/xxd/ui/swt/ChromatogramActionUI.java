@@ -15,6 +15,7 @@
 package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,8 +30,10 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.support.ui.provider.AbstractLabelProvider;
 import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
+import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.support.ChromatogramEditorActionExtension;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogramAction;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.IChromatogramEditorAction;
 import org.eclipse.chemclipse.wsd.model.core.selection.IChromatogramSelectionWSD;
@@ -51,7 +54,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 
-public class ChromatogramActionUI extends Composite {
+public class ChromatogramActionUI extends Composite implements IExtendedPartUI
+
+{
 
 	private static final Logger logger = Logger.getLogger(ChromatogramActionUI.class);
 
@@ -96,13 +101,25 @@ public class ChromatogramActionUI extends Composite {
 		setLayout(new FillLayout());
 
 		Composite composite = new Composite(this, SWT.NONE);
-		GridLayout gridLayout = new GridLayout(2, false);
+		GridLayout gridLayout = new GridLayout(3, false);
 		gridLayout.horizontalSpacing = 0;
 		gridLayout.marginWidth = 0;
 		composite.setLayout(gridLayout);
 
 		comboChromatogramAction = createChromatogramActionCombo(composite);
 		buttonChromatogramAction = createChromatogramActionButton(composite);
+		createButtonSettings(composite);
+	}
+
+	private Button createButtonSettings(Composite parent) {
+
+		return createSettingsButton(parent, Arrays.asList( //
+				PreferencePageChromatogramAction.class //
+		), _ -> applySettings());
+	}
+
+	private void applySettings() {
+
 	}
 
 	private ComboViewer createChromatogramActionCombo(Composite parent) {
