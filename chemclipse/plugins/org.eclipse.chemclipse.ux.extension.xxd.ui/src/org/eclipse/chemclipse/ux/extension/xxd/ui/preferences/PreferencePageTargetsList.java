@@ -25,7 +25,7 @@ public class PreferencePageTargetsList extends FieldEditorPreferencePage impleme
 		super(GRID);
 		setPreferenceStore(Activator.getDefault().getPreferenceStore());
 		setTitle("Targets List");
-		setDescription("");
+		setDescription("Enter predefined entries for manually adding targets.");
 	}
 
 	@Override
