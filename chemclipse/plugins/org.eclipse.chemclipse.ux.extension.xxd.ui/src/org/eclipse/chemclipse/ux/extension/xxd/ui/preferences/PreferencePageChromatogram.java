@@ -53,7 +53,6 @@ public class PreferencePageChromatogram extends FieldEditorPreferencePage implem
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_ENABLE_BASELINE_AREA, "Enable Baseline Area", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_ALTERNATE_WINDOW_MOVE_DIRECTION, "Use alternate window move direction", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_CONDENSE_CYCLE_NUMBER_SCANS, "Condense cycle number scans", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_SET_CHROMATOGRAM_INTENSITY_RANGE, "Set chromatogram intensity range", getFieldEditorParent()));
 
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
 		addField(new ComboFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_EDITOR_LABEL, "Editor Label (Name in Part):", HeaderField.getOptions(), getFieldEditorParent()));
@@ -66,8 +65,6 @@ public class PreferencePageChromatogram extends FieldEditorPreferencePage implem
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
 		addField(new DoubleFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_TRANSFER_DELTA_RETENTION_TIME, "Transfer delta retention time [min]", PreferenceSupplier.MIN_CHROMATOGRAM_TRANSFER_DELTA_RETENTION_TIME, PreferenceSupplier.MAX_CHROMATOGRAM_TRANSFER_DELTA_RETENTION_TIME, getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_TRANSFER_BEST_TARGET_ONLY, "Transfer best target only", getFieldEditorParent()));
-		addIntegerField(PreferenceSupplier.P_STRETCH_CHROMATOGRAM_MILLISECONDS_SCAN_DELAY, "Stretch Chromatogram Scan Delay [ms]:", PreferenceSupplier.MIN_STRETCH_CHROMATOGRAM_MILLISECONDS_SCAN_DELAY, PreferenceSupplier.MAX_STRETCH_CHROMATOGRAM_MILLISECONDS_SCAN_DELAY);
-		addIntegerField(PreferenceSupplier.P_STRETCH_CHROMATOGRAM_MILLISECONDS_LENGTH, "Stretch Chromatogram Length [ms]:", PreferenceSupplier.MIN_STRETCH_CHROMATOGRAM_MILLISECONDS_LENGTH, PreferenceSupplier.MAX_STRETCH_CHROMATOGRAM_MILLISECONDS_LENGTH);
 		addField(new DoubleFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_EXTEND_Y, "Extend Y (1.0 = 100%)", PreferenceSupplier.MIN_CHROMATOGRAM_EXTEND_Y, PreferenceSupplier.MAX_CHROMATOGRAM_EXTEND_Y, getFieldEditorParent()));
 
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
