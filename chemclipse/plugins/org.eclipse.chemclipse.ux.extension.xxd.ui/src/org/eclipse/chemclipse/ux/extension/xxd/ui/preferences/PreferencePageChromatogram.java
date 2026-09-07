@@ -88,9 +88,6 @@ public class PreferencePageChromatogram extends FieldEditorPreferencePage implem
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_MARK_ANALYSIS_SEGMENTS, "Mark Analysis Segments", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_SHOW_RETENTION_INDEX_MARKER, "Show Retention Index Marker", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_SHOW_TARGET_MARKER, "Show Target Marker", getFieldEditorParent()));
-
-		addField(new SpacerFieldEditor(getFieldEditorParent()));
-		addIntegerField(PreferenceSupplier.P_LIMIT_SIM_TRACES, "If the scan contains less than ... it's SIM.", PreferenceSupplier.MIN_SIM_IONS, PreferenceSupplier.MAX_SIM_IONS);
 	}
 
 	private void addIntegerField(String name, String labelText, int min, int max) {
