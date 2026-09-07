@@ -44,8 +44,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final String DEF_BEST_TARGET_LIBRARY_FIELD = LibraryField.NAME.name();
 	public static final String P_ION_ROUND_METHOD = "ionRoundMethod"; // When changing this value, call clearCacheActiveIonRoundMethod.
 	public static final String DEF_ION_ROUND_METHOD = IonRoundMethod.DEFAULT.name();
-	public static final String P_LIBRARY_INFORMATION_LIST_LIMIT_VIRTUAL = "libraryInformationListLimitVirtual";
-	public static final int DEF_LIBRARY_INFORMATION_LIST_LIMIT_VIRTUAL = 1000;
 	/*
 	 * Separation Columns
 	 */
@@ -95,7 +93,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		putDefault(P_USE_RETENTION_INDEX_QC, Boolean.toString(DEF_USE_RETENTION_INDEX_QC));
 		putDefault(P_BEST_TARGET_LIBRARY_FIELD, DEF_BEST_TARGET_LIBRARY_FIELD);
 		putDefault(P_ION_ROUND_METHOD, DEF_ION_ROUND_METHOD);
-		putDefault(P_LIBRARY_INFORMATION_LIST_LIMIT_VIRTUAL, DEF_LIBRARY_INFORMATION_LIST_LIMIT_VIRTUAL);
 		putDefault(P_PARSE_SEPARATION_COLUMN_FROM_HEADER, DEF_PARSE_SEPARATION_COLUMN_FROM_HEADER);
 		putDefault(P_SEPARATION_COLUMN_HEADER_FIELD, DEF_SEPARATION_COLUMN_HEADER_FIELD);
 		putDefault(P_PARSE_SEPARATION_COLUMN_REFERENCED_CHROMATOGRAMS, DEF_PARSE_SEPARATION_COLUMN_REFERENCED_CHROMATOGRAMS);
@@ -212,11 +209,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		ionRoundMethod = (ionRoundMethod == null) ? IonRoundMethod.DEFAULT : ionRoundMethod;
 		INSTANCE().put(P_ION_ROUND_METHOD, ionRoundMethod.name());
 		activeIonRoundMethod = ionRoundMethod;
-	}
-
-	public static int getLibraryInformationListLimitVirtual() {
-
-		return INSTANCE().getInteger(P_LIBRARY_INFORMATION_LIST_LIMIT_VIRTUAL, DEF_LIBRARY_INFORMATION_LIST_LIMIT_VIRTUAL);
 	}
 
 	public static String getListPathImport() {
