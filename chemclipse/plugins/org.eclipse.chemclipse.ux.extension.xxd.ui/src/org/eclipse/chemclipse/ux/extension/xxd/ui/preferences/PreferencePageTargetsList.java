@@ -31,7 +31,7 @@ public class PreferencePageTargetsList extends FieldEditorPreferencePage impleme
 	@Override
 	public void createFieldEditors() {
 
-		addField(new TargetFieldEditor(PreferenceSupplier.P_TARGET_LIST, "Targets", getFieldEditorParent()));
+		addField(new TargetFieldEditor(PreferenceSupplier.P_TARGET_LIST, "", getFieldEditorParent()));
 	}
 
 	@Override
