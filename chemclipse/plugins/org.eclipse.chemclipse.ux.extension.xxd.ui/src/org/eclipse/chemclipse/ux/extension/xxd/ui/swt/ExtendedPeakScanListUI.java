@@ -71,6 +71,7 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageList
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageMergePeaks;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageScans;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageTargets;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageUnknownTarget;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.IdentificationTargetSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ChromatogramDataSupport;
@@ -1008,7 +1009,8 @@ public class ExtendedPeakScanListUI extends Composite implements IExtendedPartUI
 				PreferencePageMergePeaks.class, //
 				PreferencePageScans.class, //
 				PreferencePageTargets.class, //
-				PreferencePageLists.class //
+				PreferencePageLists.class, //
+				PreferencePageUnknownTarget.class //
 		), _ -> applySettings());
 	}
 
