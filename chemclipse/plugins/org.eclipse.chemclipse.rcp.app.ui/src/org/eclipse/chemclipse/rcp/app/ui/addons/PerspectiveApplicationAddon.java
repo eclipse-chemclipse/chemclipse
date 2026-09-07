@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.rcp.app.ui.addons;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
@@ -22,6 +24,8 @@ import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
+import org.eclipse.ui.IWorkbenchPreferenceConstants;
+import org.eclipse.ui.PlatformUI;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -29,37 +33,49 @@ import jakarta.annotation.PostConstruct;
 
 public class PerspectiveApplicationAddon {
 
+	private static final String PROPERTY_PERSPECTIVE = "application.perspective";
+
 	@PostConstruct
 	public void postConstruct(MApplication application, EModelService modelService, IEventBroker eventBroker) {
 
-		/*
-		 * The default perspective can be defined in the product definition, e.g.:
-		 * -Dapplication.perspective=org.eclipse.chemclipse.chromatogram.xxd.integrator.ui.perspective.main
-		 * If no value has been set, the default perspective will.
-		 */
-		String perspectiveId;
-		Properties properties = System.getProperties();
-		Object value = properties.get("application.perspective");
-		if(value != null && value instanceof String text) {
-			perspectiveId = text;
-		} else {
-			perspectiveId = IPerspectiveAndViewIds.PERSPECTIVE_WELCOME;
+		MPerspective perspective = findPerspective(application, modelService);
+		if(perspective == null) {
+			return;
 		}
 		/*
 		 * The Bug #408678 has been fixed since Eclipse 4.3.2
 		 */
-		MPerspective perspective = (MPerspective)modelService.find(perspectiveId, application);
-		if(perspective == null) {
-			perspectiveId = IPerspectiveAndViewIds.PERSPECTIVE_WELCOME;
-			perspective = (MPerspective)modelService.find(perspectiveId, application);
-		}
-
 		MPerspectiveStack perspectiveStack = (MPerspectiveStack)modelService.find(IPerspectiveAndViewIds.STACK_PERSPECTIVES, application);
 		perspectiveStack.setSelectedElement(perspective);
 		if(eventBroker != null) {
 			eventBroker.send(IChemClipseEvents.TOPIC_APPLICATION_SELECT_PERSPECTIVE, perspective.getElementId());
 			scheduleSnapshot(application, modelService, perspectiveStack, eventBroker);
 		}
+	}
+
+	/*
+	 * The perspective to be shown on startup is determined in the following order:
+	 * 1. The perspective the user has marked as default in "General > Perspectives".
+	 * 2. The perspective defined in the product definition, e.g.: -Dapplication.perspective=
+	 * 3. The welcome perspective.
+	 */
+	private MPerspective findPerspective(MApplication application, EModelService modelService) {
+
+		List<String> perspectiveIds = new ArrayList<>();
+		perspectiveIds.add(PlatformUI.getPreferenceStore().getString(IWorkbenchPreferenceConstants.DEFAULT_PERSPECTIVE_ID));
+		Properties properties = System.getProperties();
+		if(properties.get(PROPERTY_PERSPECTIVE) instanceof String text) {
+			perspectiveIds.add(text);
+		}
+		perspectiveIds.add(IPerspectiveAndViewIds.PERSPECTIVE_WELCOME);
+
+		for(String perspectiveId : perspectiveIds) {
+			if(perspectiveId != null && !perspectiveId.isEmpty() && modelService.find(perspectiveId, application) instanceof MPerspective perspective) {
+				return perspective;
+			}
+		}
+
+		return null;
 	}
 
 	/*
