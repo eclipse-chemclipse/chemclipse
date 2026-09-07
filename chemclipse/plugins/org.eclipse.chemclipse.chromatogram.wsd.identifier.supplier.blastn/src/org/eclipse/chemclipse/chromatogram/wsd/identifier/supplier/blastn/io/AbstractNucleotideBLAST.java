@@ -66,11 +66,11 @@ public abstract class AbstractNucleotideBLAST {
 	private static ComparisonResult createComparisonResult(Hsp hsp, Search search) {
 
 		ComparisonResult comparisonResult = new ComparisonResult(BlastMetrics.ALGORITHM_BLASTN);
-		comparisonResult.setMetric(BlastMetrics.IDENTITY, getPercentIdentity(hsp));
-		comparisonResult.setMetric(BlastMetrics.COVERAGE, getQueryCoverage(hsp, search));
-		comparisonResult.setMetric(BlastMetrics.EVALUE, hsp.getEvalue());
 		comparisonResult.setMetric(BlastMetrics.BIT_SCORE, hsp.getBitScore());
 		comparisonResult.setMetric(BlastMetrics.SCORE, hsp.getScore());
+		comparisonResult.setMetric(BlastMetrics.EVALUE, hsp.getEvalue());
+		comparisonResult.setMetric(BlastMetrics.IDENTITY, getPercentIdentity(hsp));
+		comparisonResult.setMetric(BlastMetrics.COVERAGE, getQueryCoverage(hsp, search));
 		if(hsp.getGaps() != null) {
 			comparisonResult.setMetric(BlastMetrics.GAPS, hsp.getGaps().doubleValue());
 		}
