@@ -46,8 +46,6 @@ public class PreferencePageChromatogram extends FieldEditorPreferencePage implem
 		addField(new ComboFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_REFERENCE_LABEL, "Reference Label (Name in Legend):", HeaderField.getOptions(), getFieldEditorParent()));
 		addField(new ComboFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_TRANSFER_NAME_TO_REFERENCES_HEADER_FIELD, "Transfer Name to References Header Field:", ILabel.getOptions(new HeaderField[]{HeaderField.DATA_NAME, HeaderField.SAMPLE_NAME, HeaderField.SAMPLE_GROUP, HeaderField.SHORT_INFO}), getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_TRANSFER_COLUMN_TYPE_TO_REFERENCES, "Transfer Column Type to References", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_SHOW_METHODS_TOOLBAR, "Show Methods Toolbar", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_SHOW_REFERENCES_COMBO, "Show References Combo", getFieldEditorParent()));
 
 		addField(new SpacerFieldEditor(getFieldEditorParent()));
 		addField(new DoubleFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_TRANSFER_DELTA_RETENTION_TIME, "Transfer delta retention time [min]", PreferenceSupplier.MIN_CHROMATOGRAM_TRANSFER_DELTA_RETENTION_TIME, PreferenceSupplier.MAX_CHROMATOGRAM_TRANSFER_DELTA_RETENTION_TIME, getFieldEditorParent()));
