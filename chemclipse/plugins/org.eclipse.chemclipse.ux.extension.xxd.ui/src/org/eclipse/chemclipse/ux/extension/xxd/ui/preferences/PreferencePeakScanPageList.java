@@ -12,8 +12,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.preferences;
 
+import org.eclipse.chemclipse.model.targets.LibraryField;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.jface.preference.BooleanFieldEditor;
+import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
@@ -36,6 +38,7 @@ public class PreferencePeakScanPageList extends FieldEditorPreferencePage implem
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_SHOW_SCANS_IN_LIST, "Show scans in list", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_SHOW_SCANS_IN_SELECTED_RANGE, "Show scans in selected range", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_SHOW_PEAK_PROFILES_SELECTION_ALL, "Show peak profiles (CTRL + A)", getFieldEditorParent()));
+		addField(new ComboFieldEditor(org.eclipse.chemclipse.model.preferences.PreferenceSupplier.P_BEST_TARGET_LIBRARY_FIELD, "Best Target", LibraryField.getOptions(), getFieldEditorParent()));
 	}
 
 	@Override
