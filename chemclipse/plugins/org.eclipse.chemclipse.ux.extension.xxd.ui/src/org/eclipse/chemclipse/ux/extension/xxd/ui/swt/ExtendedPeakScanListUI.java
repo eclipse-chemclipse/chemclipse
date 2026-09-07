@@ -1008,7 +1008,6 @@ public class ExtendedPeakScanListUI extends Composite implements IExtendedPartUI
 				PreferencePageSystem.class, //
 				PreferencePageMergePeaks.class, //
 				PreferencePageScans.class, //
-				PreferencePageTargets.class, //
 				PreferencePageLists.class, //
 				PreferencePageUnknownTarget.class //
 		), _ -> applySettings());
