@@ -1,0 +1,57 @@
+/*******************************************************************************
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
+ *
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ * 
+ * Contributors:
+ * Philip Wenig - initial API and implementation
+ *******************************************************************************/
+package org.eclipse.chemclipse.ux.extension.xxd.ui.preferences;
+
+import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.ExtendedIntegerFieldEditor;
+import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.FloatFieldEditor;
+import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.SpacerFieldEditor;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
+import org.eclipse.jface.preference.BooleanFieldEditor;
+import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPreferencePage;
+
+public class PreferencePageTargetsChromatography extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+
+	public PreferencePageTargetsChromatography() {
+
+		super(GRID);
+		setPreferenceStore(Activator.getDefault().getPreferenceStore());
+		setTitle("Chromatography");
+		setDescription("");
+	}
+
+	@Override
+	public void createFieldEditors() {
+
+		addField(new BooleanFieldEditor(PreferenceSupplier.P_TARGETS_TABLE_SHOW_DEVIATION_RT, "Show Deviation Retention Time", getFieldEditorParent()));
+		addField(new FloatFieldEditor(PreferenceSupplier.P_RETENTION_TIME_DEVIATION_REL_OK, "Allowed Deviation [%]", PreferenceSupplier.MIN_DEVIATION_RELATIVE, PreferenceSupplier.MAX_DEVIATION_RELATIVE, getFieldEditorParent()));
+		addField(new FloatFieldEditor(PreferenceSupplier.P_RETENTION_TIME_DEVIATION_REL_WARN, "Warn Deviation [%]", PreferenceSupplier.MIN_DEVIATION_RELATIVE, PreferenceSupplier.MAX_DEVIATION_RELATIVE, getFieldEditorParent()));
+		addField(new BooleanFieldEditor(PreferenceSupplier.P_USE_ABSOLUTE_DEVIATION_RETENTION_TIME, "Retention Time: Use absolute deviation", getFieldEditorParent()));
+		addField(new ExtendedIntegerFieldEditor(PreferenceSupplier.P_RETENTION_TIME_DEVIATION_ABS_OK, "Allowed Deviation [ms]", PreferenceSupplier.MIN_DEVIATION_RETENTION_TIME, PreferenceSupplier.MAX_DEVIATION_RETENTION_TIME, getFieldEditorParent()));
+		addField(new ExtendedIntegerFieldEditor(PreferenceSupplier.P_RETENTION_TIME_DEVIATION_ABS_WARN, "Warn Deviation [ms]", PreferenceSupplier.MIN_DEVIATION_RETENTION_TIME, PreferenceSupplier.MAX_DEVIATION_RETENTION_TIME, getFieldEditorParent()));
+
+		addField(new SpacerFieldEditor(getFieldEditorParent()));
+		addField(new BooleanFieldEditor(PreferenceSupplier.P_TARGETS_TABLE_SHOW_DEVIATION_RI, "Show Deviation Retention Index", getFieldEditorParent()));
+		addField(new FloatFieldEditor(PreferenceSupplier.P_RETENTION_INDEX_DEVIATION_REL_OK, "Allowed Deviation [%]", PreferenceSupplier.MIN_DEVIATION_RELATIVE, PreferenceSupplier.MAX_DEVIATION_RELATIVE, getFieldEditorParent()));
+		addField(new FloatFieldEditor(PreferenceSupplier.P_RETENTION_INDEX_DEVIATION_REL_WARN, "Warn Deviation [%]", PreferenceSupplier.MIN_DEVIATION_RELATIVE, PreferenceSupplier.MAX_DEVIATION_RELATIVE, getFieldEditorParent()));
+		addField(new BooleanFieldEditor(PreferenceSupplier.P_USE_ABSOLUTE_DEVIATION_RETENTION_INDEX, "Retention Index: Use absolute deviation", getFieldEditorParent()));
+		addField(new FloatFieldEditor(PreferenceSupplier.P_RETENTION_INDEX_DEVIATION_ABS_OK, "Allowed Deviation [abs]", PreferenceSupplier.MIN_DEVIATION_RETENTION_INDEX, PreferenceSupplier.MAX_DEVIATION_RETENTION_INDEX, getFieldEditorParent()));
+		addField(new FloatFieldEditor(PreferenceSupplier.P_RETENTION_INDEX_DEVIATION_ABS_WARN, "Warn Deviation [abs]", PreferenceSupplier.MIN_DEVIATION_RETENTION_INDEX, PreferenceSupplier.MAX_DEVIATION_RETENTION_INDEX, getFieldEditorParent()));
+	}
+
+	@Override
+	public void init(IWorkbench workbench) {
+
+	}
+}

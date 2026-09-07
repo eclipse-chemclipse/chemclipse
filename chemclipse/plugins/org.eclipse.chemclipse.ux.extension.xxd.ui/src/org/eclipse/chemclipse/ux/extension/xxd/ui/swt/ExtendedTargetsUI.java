@@ -50,6 +50,7 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.l10n.ExtensionMessages;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.operations.DeleteTargetsOperation;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageLists;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageTargets;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageTargetsChromatography;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageTargetsList;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageUnknownTarget;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
@@ -308,6 +309,7 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 		createSettingsButton(parent, Arrays.asList( //
 				PreferencePageTargets.class, //
 				PreferencePageTargetsList.class, //
+				PreferencePageTargetsChromatography.class, //
 				PreferencePageSystem.class, //
 				PreferencePageLists.class, //
 				PreferencePageUnknownTarget.class //
