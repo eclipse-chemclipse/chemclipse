@@ -76,7 +76,7 @@ public class LocalNucleotideBLAST extends AbstractNucleotideBLAST {
 				try {
 					if(databaseInfo.volumes().size() > 1) {
 						xml = File.createTempFile(chromatogram.getSampleName() + "_", ".xml");
-						ProcessBuilder processBuilderFormatter = buildProcessFormatterBLAST(asn, 16, settings, xml);
+						ProcessBuilder processBuilderFormatter = buildProcessFormatterBLAST(asn, 16, xml);
 						Process processFormatter = processBuilderFormatter.start();
 						processFormatter.getErrorStream().transferTo(loggerErrorStream());
 						exitCode = processFormatter.waitFor();
@@ -171,7 +171,7 @@ public class LocalNucleotideBLAST extends AbstractNucleotideBLAST {
 		return processBuilder;
 	}
 
-	private static ProcessBuilder buildProcessFormatterBLAST(File asn, int outputFormat, LocalIdentifierSettings settings, File outFile) {
+	private static ProcessBuilder buildProcessFormatterBLAST(File asn, int outputFormat, File outFile) {
 
 		String pathPrefix = "";
 		if(!PreferenceSupplier.getExecutableFolder().isEmpty() && new File(PreferenceSupplier.getExecutableFolder()).exists()) {
