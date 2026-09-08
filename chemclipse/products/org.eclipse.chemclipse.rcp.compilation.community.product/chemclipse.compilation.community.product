@@ -25,7 +25,6 @@
 -XX:+UseG1GC
 -XX:+UseStringDeduplication
 --enable-native-access=ALL-UNNAMED
---add-modules=ALL-SYSTEM
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread
       </vmArgsMac>
