@@ -932,7 +932,7 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 			markedTraces.add(new TraceRasteredWSD(wavelength));
 			Nucleobase nucleobase = chromatogramDSD.getWavelengthMapping().get(wavelength);
 			String seriesId = SERIES_ID_CHROMATOGRAM + " " + nucleobase.letter();
-			ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(chromatogramSelection, seriesId, DisplayType.XWC, Derivative.NONE, colorScheme.getColor(), markedTraces, false);
+			ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(chromatogramDSD, seriesId, DisplayType.XWC, Derivative.NONE, colorScheme.getColor(), markedTraces);
 			lineSeriesData.getSettings().setEnableArea(enableChromatogramArea);
 			lineSeriesData.getSettings().setDescription(String.valueOf(nucleobase.label()));
 			lineSeriesDataList.add(lineSeriesData);
