@@ -1103,4 +1103,120 @@
 	            sequence="M1+Q">
 	      </key>
 	</extension>
+	<extension
+		point="org.eclipse.ui.contexts">
+		<context
+			name="Chromatogram Editor"
+			description="Graphical representation of the chromatogram"
+			id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+			parentId="org.eclipse.ui.contexts.window">
+		</context>
+	</extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="Chromatogram Editor"
+            description="Charting"
+            id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI">
+      </category>
+      <command
+            name="Next Scan"
+            description="Select the next scan."
+            categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+            id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.ScanSelectionNext">
+      </command>
+      <command
+            name="Previous Scan"
+            description="Select the previous scan."
+            categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+            id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.ScanSelectionPrevious">
+      </command>
+      <command
+            name="Next Peak"
+            description="Select the next peak"
+            categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+            id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.PeakSelectionNext">
+      </command>
+      <command
+            name="Previous Peak"
+            description="Select the previous peak."
+            categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+            id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.PeakSelectionPrevious">
+      </command>
+      <command
+            name="Abundance Up"
+            description="Scroll abundance upwards"
+            categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+            id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.AbundanceUp">
+      </command>
+      <command
+            name="Abundance Down"
+            description="Scroll abundance downwards"
+            categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+            id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.AbundanceDown">
+      </command>
+      <command
+            name="Retention Time Left"
+            description="Scroll retention time towards start"
+            categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+            id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.RetentionTimeLeft">
+      </command>
+      <command
+            name="Retention Time Right"
+            description="Scroll retention time towards end"
+            categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+            id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.RetentionTimeRight">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.ScanSelectionPrevious"
+            contextId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+ARROW_LEFT">
+      </key>
+      <key
+            commandId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.ScanSelectionNext"
+            contextId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+ARROW_RIGHT">
+      </key>
+      <key
+            commandId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.PeakSelectionPrevious"
+            contextId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+ARROW_UP">
+      </key>
+      <key
+            commandId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.PeakSelectionNext"
+            contextId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+ARROW_DOWN">
+      </key>
+      <key
+            commandId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.AbundanceUp"
+            contextId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="ARROW_UP">
+      </key>
+      <key
+            commandId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.AbundanceDown"
+            contextId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="ARROW_DOWN">
+      </key>
+      <key
+            commandId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.RetentionTimeLeft"
+            contextId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="ARROW_LEFT">
+      </key>
+      <key
+            commandId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.RetentionTimeRight"
+            contextId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="ARROW_RIGHT">
+      </key>
+   </extension>
 </plugin>

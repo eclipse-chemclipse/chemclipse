@@ -204,6 +204,7 @@ import org.eclipse.swtchart.extensions.menu.ResetChartHandler;
 import org.eclipse.swtchart.extensions.model.ICustomSeries;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.internal.keys.model.KeyController;
 import org.eclipse.ui.keys.IBindingService;
 
@@ -244,7 +245,11 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 	private static final String MAIN_MENU_SCAN = "org.eclipse.chemclipse.ux.extension.ui.menu.scan";
 	private static final String MENU_CONTRIBUTOR_URI = "org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI";
 
+	private static final String KEY_CLASS_PREFIX = "org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI";
+
 	private ICommandService commandService = PlatformUI.getWorkbench().getService(ICommandService.class);
+	private IContextService contextService = (IContextService)PlatformUI.getWorkbench().getService(IContextService.class);
+	private IBindingService bindingService = PlatformUI.getWorkbench().getService(IBindingService.class);
 
 	private AtomicReference<ProcessorToolbarUI> processorToolbarControl = new AtomicReference<>();
 	private AtomicReference<Composite> toolbarMainControl = new AtomicReference<>();
@@ -297,6 +302,7 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 
 		super(parent, style);
 		this.processTypeSupport = processTypeSupport != null ? processTypeSupport : new ProcessTypeSupport();
+		contextService.activateContext(KEY_CLASS_PREFIX);
 		createControl();
 	}
 
@@ -618,7 +624,6 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 	@SuppressWarnings("restriction")
 	private void restoreKeyBindingsFromSettings() {
 
-		IBindingService bindingService = PlatformUI.getWorkbench().getService(IBindingService.class);
 		KeyController keyController = new KeyController();
 		keyController.init(PlatformUI.getWorkbench());
 		keyController.saveBindings(bindingService);
@@ -1566,7 +1571,7 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 		plotArea.addCustomPaintListener(targetMarker);
 		/*
 		 * Some converter have an option to set analysis segments while parsing the chromatogram data.
-		 * Via the preferences it's defined, whether these segements shall be displayed be default.
+		 * Via the preferences it's defined, whether these segments shall be displayed be default.
 		 */
 		boolean markAnalysisSegments = preferenceStore.getBoolean(PreferenceSupplier.P_CHROMATOGRAM_MARK_ANALYSIS_SEGMENTS);
 		if(markAnalysisSegments) {
@@ -1600,14 +1605,16 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 
 		chartSettings.addHandledEventProcessor(new ScanSelectionHandler(this));
 		chartSettings.addHandledEventProcessor(new PeakSelectionHandler(this));
-		chartSettings.addHandledEventProcessor(new ScanSelectionArrowKeyHandler(this, SWT.ARROW_LEFT));
-		chartSettings.addHandledEventProcessor(new ScanSelectionArrowKeyHandler(this, SWT.ARROW_RIGHT));
-		chartSettings.addHandledEventProcessor(new PeakSelectionArrowKeyHandler(this, SWT.ARROW_DOWN));
-		chartSettings.addHandledEventProcessor(new PeakSelectionArrowKeyHandler(this, SWT.ARROW_UP));
-		chartSettings.addHandledEventProcessor(new ChromatogramMoveArrowKeyHandler(this, SWT.ARROW_LEFT));
-		chartSettings.addHandledEventProcessor(new ChromatogramMoveArrowKeyHandler(this, SWT.ARROW_RIGHT));
-		chartSettings.addHandledEventProcessor(new ChromatogramMoveArrowKeyHandler(this, SWT.ARROW_UP));
-		chartSettings.addHandledEventProcessor(new ChromatogramMoveArrowKeyHandler(this, SWT.ARROW_DOWN));
+
+		chartSettings.addHandledEventProcessor(new ScanSelectionArrowKeyHandler(this, bindingService, KEY_CLASS_PREFIX + ".ScanSelectionNext", true));
+		chartSettings.addHandledEventProcessor(new ScanSelectionArrowKeyHandler(this, bindingService, KEY_CLASS_PREFIX + ".ScanSelectionPrevious", false));
+		chartSettings.addHandledEventProcessor(new PeakSelectionArrowKeyHandler(this, bindingService, KEY_CLASS_PREFIX + ".PeakSelectionNext", true));
+		chartSettings.addHandledEventProcessor(new PeakSelectionArrowKeyHandler(this, bindingService, KEY_CLASS_PREFIX + ".PeakSelectionPrevious", false));
+
+		chartSettings.addHandledEventProcessor(new ChromatogramMoveAbundanceKeyHandler(this, bindingService, KEY_CLASS_PREFIX + ".AbundanceUp", true));
+		chartSettings.addHandledEventProcessor(new ChromatogramMoveAbundanceKeyHandler(this, bindingService, KEY_CLASS_PREFIX + ".AbundanceDown", false));
+		chartSettings.addHandledEventProcessor(new ChromatogramMoveRetentionTimeKeyHandler(this, bindingService, KEY_CLASS_PREFIX + ".RetentionTimeRight", true));
+		chartSettings.addHandledEventProcessor(new ChromatogramMoveRetentionTimeKeyHandler(this, bindingService, KEY_CLASS_PREFIX + ".RetentionTimeLeft", false));
 
 		chromatogramChart.applySettings(chartSettings);
 		/*

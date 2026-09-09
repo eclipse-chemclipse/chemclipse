@@ -17,49 +17,30 @@ import org.eclipse.chemclipse.model.selection.ChromatogramSelectionSupport;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.model.selection.MoveDirection;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swtchart.extensions.core.BaseChart;
-import org.eclipse.swtchart.extensions.core.IKeyboardSupport;
-import org.eclipse.swtchart.extensions.events.AbstractHandledEventProcessor;
+import org.eclipse.ui.keys.IBindingService;
 
-public class ScanSelectionArrowKeyHandler extends AbstractHandledEventProcessor {
+public class ScanSelectionArrowKeyHandler extends AbstractTriggerSequenceHandler {
 
 	private ExtendedChromatogramUI extendedChromatogramUI;
-	private int keyCode;
+	private boolean next;
 
-	public ScanSelectionArrowKeyHandler(ExtendedChromatogramUI extendedChromatogramUI, int keyCode) {
+	public ScanSelectionArrowKeyHandler(ExtendedChromatogramUI extendedChromatogramUI, IBindingService bindingService, String command, boolean next) {
 
+		super(bindingService, command);
 		this.extendedChromatogramUI = extendedChromatogramUI;
-		this.keyCode = keyCode;
-	}
-
-	@Override
-	public int getEvent() {
-
-		return IKeyboardSupport.EVENT_KEY_UP;
-	}
-
-	@Override
-	public int getButton() {
-
-		return keyCode;
-	}
-
-	@Override
-	public int getStateMask() {
-
-		return SWT.MOD1;
+		this.next = next;
 	}
 
 	@Override
 	public void handleEvent(BaseChart baseChart, Event event) {
 
-		handleControlScanSelection(event.display, keyCode);
+		handleControlScanSelection(event.display);
 	}
 
-	protected void handleControlScanSelection(Display display, int keyCode) {
+	protected void handleControlScanSelection(Display display) {
 
 		IChromatogramSelection chromatogramSelection = extendedChromatogramUI.getChromatogramSelection();
 		if(chromatogramSelection != null) {
@@ -67,7 +48,7 @@ public class ScanSelectionArrowKeyHandler extends AbstractHandledEventProcessor 
 			 * Select the next or previous scan.
 			 */
 			int scanNumber = chromatogramSelection.getSelectedScan().getScanNumber();
-			if(keyCode == SWT.ARROW_RIGHT) {
+			if(next) {
 				scanNumber++;
 			} else {
 				scanNumber--;

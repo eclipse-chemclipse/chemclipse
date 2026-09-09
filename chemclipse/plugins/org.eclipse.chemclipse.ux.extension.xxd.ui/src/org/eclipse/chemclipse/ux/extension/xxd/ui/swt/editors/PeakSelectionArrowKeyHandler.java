@@ -25,40 +25,21 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ChromatogramDataSupport;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swtchart.extensions.core.BaseChart;
-import org.eclipse.swtchart.extensions.core.IKeyboardSupport;
-import org.eclipse.swtchart.extensions.events.AbstractHandledEventProcessor;
+import org.eclipse.ui.keys.IBindingService;
 
-public class PeakSelectionArrowKeyHandler extends AbstractHandledEventProcessor {
+public class PeakSelectionArrowKeyHandler extends AbstractTriggerSequenceHandler {
 
 	private ExtendedChromatogramUI extendedChromatogramUI;
 	private IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-	private int keyCode;
+	private boolean next;
 
-	public PeakSelectionArrowKeyHandler(ExtendedChromatogramUI extendedChromatogramUI, int keyCode) {
+	public PeakSelectionArrowKeyHandler(ExtendedChromatogramUI extendedChromatogramUI, IBindingService bindingService, String command, boolean next) {
 
+		super(bindingService, command);
 		this.extendedChromatogramUI = extendedChromatogramUI;
-		this.keyCode = keyCode;
-	}
-
-	@Override
-	public int getEvent() {
-
-		return IKeyboardSupport.EVENT_KEY_UP;
-	}
-
-	@Override
-	public int getButton() {
-
-		return keyCode;
-	}
-
-	@Override
-	public int getStateMask() {
-
-		return SWT.MOD1;
+		this.next = next;
 	}
 
 	@Override
@@ -79,7 +60,7 @@ public class PeakSelectionArrowKeyHandler extends AbstractHandledEventProcessor 
 			return;
 		}
 		int nextIndex;
-		if(keyCode == SWT.ARROW_DOWN) {
+		if(next) {
 			nextIndex = (index < peaks.size() - 1) ? index + 1 : 0;
 		} else {
 			nextIndex = (index > 0) ? index - 1 : peaks.size() - 1;
