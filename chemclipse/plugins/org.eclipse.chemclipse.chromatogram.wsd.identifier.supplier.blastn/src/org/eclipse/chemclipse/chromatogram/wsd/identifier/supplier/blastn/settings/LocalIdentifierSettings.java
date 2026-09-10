@@ -36,6 +36,10 @@ public class LocalIdentifierSettings extends AbstractIdentifierSettingsWSD imple
 	@JsonProperty(value = "Task", defaultValue = "MEGABLAST")
 	private Task task = Task.MEGABLAST;
 
+	@JsonProperty(value = "Exclude uncultured / environmental", defaultValue = "true")
+	@JsonPropertyDescription(value = "Uncultured bacteria and environmental samples")
+	private boolean excludeUncultured = true;
+
 	public String getDatabase() {
 
 		return database;
@@ -54,6 +58,16 @@ public class LocalIdentifierSettings extends AbstractIdentifierSettingsWSD imple
 	public void setTask(Task task) {
 
 		this.task = task;
+	}
+
+	public boolean isExcludeUncultured() {
+
+		return excludeUncultured;
+	}
+
+	public void setExcludeUncultured(boolean excludeUncultured) {
+
+		this.excludeUncultured = excludeUncultured;
 	}
 
 	@Override
