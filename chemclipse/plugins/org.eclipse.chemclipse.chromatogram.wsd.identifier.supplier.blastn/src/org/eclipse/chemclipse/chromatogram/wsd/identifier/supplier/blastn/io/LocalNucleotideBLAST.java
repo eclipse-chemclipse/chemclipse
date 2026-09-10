@@ -87,6 +87,10 @@ public class LocalNucleotideBLAST extends AbstractNucleotideBLAST {
 					InputSource inputSource = new InputSource(new FileInputStream(xml));
 					BlastOutput2 blastOutput = XmlReaderVersion2.getBlastOutput(inputSource);
 					transferTargets(chromatogram, blastOutput);
+					if(settings.isExcludeUncultured()) {
+						chromatogram.getTargets().removeIf(t -> t.getLibraryInformation().getTaxonomyIdentifierNCBI() == 48479); // environmental
+						chromatogram.getTargets().removeIf(t -> t.getLibraryInformation().getTaxonomyIdentifierNCBI() == 77133); // uncultured
+					}
 					if(chromatogram.getTargets().stream().noneMatch(t -> !t.getLibraryInformation().getSynonyms().isEmpty())) {
 						logger.warn("Taxonomy database is not installed.");
 					}
