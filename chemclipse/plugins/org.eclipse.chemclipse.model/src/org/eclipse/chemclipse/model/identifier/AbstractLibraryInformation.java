@@ -45,7 +45,6 @@ public abstract class AbstractLibraryInformation implements ILibraryInformation 
 	private String database = "";
 	private int databaseIndex = -1;
 	private String contributor = "";
-	private String hit;
 	private final Set<String> classification = new LinkedHashSet<>();
 	private int retentionTime = 0;
 	private final Set<IColumnIndexMarker> columnIndexMarkers = new LinkedHashSet<>();
@@ -90,7 +89,6 @@ public abstract class AbstractLibraryInformation implements ILibraryInformation 
 			database = libraryInformation.getDatabase();
 			databaseIndex = libraryInformation.getDatabaseIndex();
 			contributor = libraryInformation.getContributor();
-			hit = libraryInformation.getHit();
 			classification.addAll(libraryInformation.getClassifiers());
 			retentionTime = libraryInformation.getRetentionTime();
 			columnIndexMarkers.addAll(libraryInformation.getColumnIndexMarkers());
@@ -339,18 +337,6 @@ public abstract class AbstractLibraryInformation implements ILibraryInformation 
 		if(contributor != null) {
 			this.contributor = contributor;
 		}
-	}
-
-	@Override
-	public String getHit() {
-
-		return hit;
-	}
-
-	@Override
-	public void setHit(String hit) {
-
-		this.hit = hit;
 	}
 
 	@Override
