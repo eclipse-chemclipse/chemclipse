@@ -33,7 +33,7 @@ public class LocalIdentifierSettings extends AbstractIdentifierSettingsWSD imple
 	@ComboSettingsProperty(LocalDatabaseComboSupplier.class)
 	private String database = "";
 
-	@JsonProperty(value = "Task", defaultValue = "megablast")
+	@JsonProperty(value = "Task", defaultValue = "MEGABLAST")
 	private Task task = Task.MEGABLAST;
 
 	public String getDatabase() {

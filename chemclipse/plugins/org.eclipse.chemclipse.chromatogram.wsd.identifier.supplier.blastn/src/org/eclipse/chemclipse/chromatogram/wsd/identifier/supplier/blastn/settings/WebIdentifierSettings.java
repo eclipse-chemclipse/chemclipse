@@ -35,7 +35,7 @@ public class WebIdentifierSettings extends AbstractIdentifierSettingsWSD impleme
 	@JsonPropertyDescription(value = "Select the database to search.")
 	private String database = "core_nt";
 
-	@JsonProperty(value = "Task", defaultValue = "megablast")
+	@JsonProperty(value = "Task", defaultValue = "MEGABLAST")
 	private Task task = Task.MEGABLAST;
 
 	@JsonProperty(value = "Exclude models (XM/XR)", defaultValue = "true")
