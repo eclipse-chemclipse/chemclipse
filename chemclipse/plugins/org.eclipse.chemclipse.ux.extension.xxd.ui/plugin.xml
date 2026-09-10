@@ -99,8 +99,20 @@
             category="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageTargets"
             class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageTargetsList"
             id="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageTargetsList"
-            name="Targets List">
-      </page>      
+            name="List">
+      </page>
+      <page
+            category="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageTargets"
+            class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageTargetsChromatography"
+            id="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageTargetsChromatography"
+            name="Chromatography">
+      </page>
+      <page
+            category="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageTargets"
+            class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageUnknownTarget"
+            id="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageTargetsUnknownTarget"
+            name="Unknown Target">
+      </page>
       <page
             category="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePage"
             class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageSubtract"
@@ -178,6 +190,24 @@
             class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogramScans"
             id="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageChromatogramScans"
             name="Scans">
+      </page>
+      <page
+            category="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageChromatogram"
+            class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogramAction"
+            id="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageChromatogramAction"
+            name="Action">
+      </page>
+      <page
+            category="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageChromatogram"
+            class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogramAlignment"
+            id="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageChromatogramAlignment"
+            name="Alignment">
+      </page>
+      <page
+            category="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageChromatogram"
+            class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogramChart"
+            id="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageChromatogramChart"
+            name="Chart">
       </page>
       <page
             category="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePage"
