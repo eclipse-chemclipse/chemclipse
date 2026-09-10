@@ -54,7 +54,9 @@ public abstract class AbstractNucleotideBLAST {
 			}
 			libraryInformation.setGenBankAccesion(description.getAccession());
 			libraryInformation.setReferenceIdentifier(description.getId());
-			libraryInformation.setTaxonomyIdentifierNCBI(description.getTaxid().intValue());
+			if(description.getTaxid() != null) {
+				libraryInformation.setTaxonomyIdentifierNCBI(description.getTaxid().intValue());
+			}
 			libraryInformation.getSynonyms().add(description.getSciname());
 			for(Hsp hsp : hit.getHsps().getHsp()) {
 				IdentificationTarget identificationTarget = new IdentificationTarget(libraryInformation, createComparisonResult(hsp, search));
