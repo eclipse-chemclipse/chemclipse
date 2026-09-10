@@ -90,8 +90,4 @@ public interface ILibraryInformation extends IClassifier, Serializable, ILibrary
 	 * Sets the contributor information.
 	 */
 	void setContributor(String contributor);
-
-	String getHit();
-
-	void setHit(String hit);
 }
