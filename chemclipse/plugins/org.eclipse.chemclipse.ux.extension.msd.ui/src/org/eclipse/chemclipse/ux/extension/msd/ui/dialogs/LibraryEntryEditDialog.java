@@ -141,7 +141,7 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 			 * Retention Index
 			 */
 			try {
-				libraryInformation.setRetentionIndex((float)Double.parseDouble(textRetentionIndex.get().getText().trim()));
+				massSpectrum.setRetentionIndex((float)Double.parseDouble(textRetentionIndex.get().getText().trim()));
 			} catch(NumberFormatException e) {
 			}
 			/*
@@ -197,7 +197,7 @@ public class LibraryEntryEditDialog extends TitleAreaDialog {
 		textRetentionTime.set(createText(composite, libraryInformation != null ? decimalFormat.format(massSpectrum.getRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR) : ""));
 
 		createLabel(composite, "Retention Index:");
-		textRetentionIndex.set(createText(composite, libraryInformation != null ? decimalFormat.format(libraryInformation.getRetentionIndex()) : ""));
+		textRetentionIndex.set(createText(composite, libraryInformation != null ? decimalFormat.format(massSpectrum.getRetentionIndex()) : ""));
 
 		createLabel(composite, "Mol Weight (MW):");
 		textMolWeight.set(createText(composite, libraryInformation != null ? decimalFormat.format(libraryInformation.getMolWeight()) : ""));
