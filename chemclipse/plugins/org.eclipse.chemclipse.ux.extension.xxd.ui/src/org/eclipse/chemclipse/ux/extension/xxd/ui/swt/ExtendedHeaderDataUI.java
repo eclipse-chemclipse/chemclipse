@@ -363,11 +363,15 @@ public class ExtendedHeaderDataUI extends Composite implements IExtendedPartUI {
 			/*
 			 * Tabs
 			 */
-			miscellaneousControl.get().setText(measurementInfo.getMiscInfo());
+			if(miscellaneousControl.get() != null) {
+				miscellaneousControl.get().setText(measurementInfo.getMiscInfo());
+			}
 			updateFindings(measurementInfo.getFindings());
 		} else {
 			tableViewer.get().setInput(null);
-			miscellaneousControl.get().setText("");
+			if(miscellaneousControl.get() != null) {
+				miscellaneousControl.get().setText("");
+			}
 			updateFindings("");
 		}
 	}
