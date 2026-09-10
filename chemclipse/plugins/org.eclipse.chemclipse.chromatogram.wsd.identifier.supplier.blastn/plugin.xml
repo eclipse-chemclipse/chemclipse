@@ -71,4 +71,16 @@
          </Metric>
       </Algorithm>
    </extension>
+   <extension
+         point="org.eclipse.chemclipse.chromatogram.xxd.report.chromatogramReportSupplier">
+      <ChromatogramReportSupplier
+            description="Reports taxonomy results as text."
+            fileExtension=".txt"
+            fileName="TaxonomyReport"
+            id="org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.report.taxonomy"
+            reportGenerator="org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.report.TaxonomyReportGenerator"
+            reportName="Taxonomy Report (*.txt)"
+            reportSettings="org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.settings.TaxonomyReportSettings">
+      </ChromatogramReportSupplier>
+   </extension>
 </plugin>
