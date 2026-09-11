@@ -292,6 +292,7 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 	private List<ISeparationColumn> separationColumns = SeparationColumnFactory.getSeparationColumns();
 	private RetentionIndexMarker retentionIndexMarker;
 	private TargetMarker targetMarker;
+	private AnalysisSegmentPaintListener<IAnalysisSegment> analysisSegmentPaintListener;
 
 	private MApplication application = Activator.getDefault().getApplication();
 	private IEventBroker eventBroker = Activator.getDefault().getEventBroker();
@@ -1572,21 +1573,20 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 		/*
 		 * Some converter have an option to set analysis segments while parsing the chromatogram data.
 		 * Via the preferences it's defined, whether these segments shall be displayed be default.
+		 * Additionally, allow to show them if segments are set via a classifier.
 		 */
-		boolean markAnalysisSegments = preferenceStore.getBoolean(PreferenceSupplier.P_CHROMATOGRAM_MARK_ANALYSIS_SEGMENTS);
-		if(markAnalysisSegments) {
-			AnalysisSegmentPaintListener<IAnalysisSegment> listener = new AnalysisSegmentPaintListener<>(AnalysisSegmentColorScheme.CHROMATOGRAM, () -> {
+		analysisSegmentPaintListener = new AnalysisSegmentPaintListener<>(AnalysisSegmentColorScheme.ANALYSIS, () -> {
 
-				if(chromatogramSelection != null) {
-					return chromatogramSelection.getChromatogram().getAnalysisSegments();
-				}
-				return Collections.emptyList();
-			}, _ -> false);
-			listener.setPaintArea(true);
-			listener.setPaintLines(true);
-			listener.setAlpha(50);
-			baseChart.getPlotArea().addCustomPaintListener(listener);
-		}
+			if(chromatogramSelection != null) {
+				return chromatogramSelection.getChromatogram().getAnalysisSegments();
+			}
+			return Collections.emptyList();
+		}, _ -> false);
+		analysisSegmentPaintListener.setPaintArea(true);
+		analysisSegmentPaintListener.setPaintLines(true);
+		analysisSegmentPaintListener.setAlpha(50);
+		analysisSegmentPaintListener.setDraw(preferenceStore.getBoolean(PreferenceSupplier.P_CHROMATOGRAM_MARK_ANALYSIS_SEGMENTS));
+		baseChart.getPlotArea().addCustomPaintListener(analysisSegmentPaintListener);
 		/*
 		 * Chart Settings
 		 */
@@ -1712,6 +1712,7 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 
 	private void applySettings(Display display) {
 
+		analysisSegmentPaintListener.setDraw(preferenceStore.getBoolean(PreferenceSupplier.P_CHROMATOGRAM_MARK_ANALYSIS_SEGMENTS));
 		adjustAxisSettings();
 		updateChromatogram();
 		toolbarReferencesControl.get().update();

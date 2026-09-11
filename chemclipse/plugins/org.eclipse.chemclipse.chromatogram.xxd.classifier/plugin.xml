@@ -6,11 +6,11 @@
    <extension
          point="org.eclipse.chemclipse.chromatogram.msd.classifier.chromatogramClassifierSupplier">
       <ChromatogramClassifierSupplier
-            classifier="org.eclipse.chemclipse.chromatogram.xxd.classifier.impl.AnalysisSegmentBlockClassifier"
-            classifierName="Analysis Segment (Block)"
-            classifierSettings="org.eclipse.chemclipse.chromatogram.xxd.classifier.impl.AnalysisSegmentBlockClassifierSettings"
-            description="Sets analysis segments with a fixed width."
-            id="org.eclipse.chemclipse.chromatogram.xxd.classifier.impl.analysisSegmentBlockClassifier">
+            classifier="org.eclipse.chemclipse.chromatogram.xxd.classifier.impl.AnalysisSegmentClassifier"
+            classifierName="Analysis Segment (Fixed Width)"
+            classifierSettings="org.eclipse.chemclipse.chromatogram.xxd.classifier.impl.AnalysisSegmentSettings"
+            description="Sets analysis segments with a given fixed width."
+            id="org.eclipse.chemclipse.chromatogram.xxd.classifier.impl.analysisSegmentClassifierFixedWidth">
       </ChromatogramClassifierSupplier>            
    </extension>
 </plugin>
