@@ -1476,4 +1476,9 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 
 		return INSTANCE().getBoolean(P_RESOLVE_DATABASE_UUID, DEF_RESOLVE_DATABASE_UUID);
 	}
+
+	public static boolean useAlternateWindowMoveDirection() {
+
+		return INSTANCE().getBoolean(P_ALTERNATE_WINDOW_MOVE_DIRECTION, DEF_ALTERNATE_WINDOW_MOVE_DIRECTION);
+	}
 }
