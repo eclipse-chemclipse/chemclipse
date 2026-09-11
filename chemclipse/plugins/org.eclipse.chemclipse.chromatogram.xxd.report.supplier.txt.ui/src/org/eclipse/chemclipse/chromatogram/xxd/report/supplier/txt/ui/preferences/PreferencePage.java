@@ -48,7 +48,6 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 		addField(new LabelFieldEditor("Area% Report", getFieldEditorParent()));
 		addField(new IntegerFieldEditor(PreferenceSupplier.P_DELTA_RETENTION_TIME_LEFT, "Delta Retention Time Left [ms]", getFieldEditorParent()));
 		addField(new IntegerFieldEditor(PreferenceSupplier.P_DELTA_RETENTION_TIME_LEFT, "Delta Retention Time Right [ms]", getFieldEditorParent()));
-		addField(new BooleanFieldEditor(PreferenceSupplier.P_USE_RETENTION_INDEX_QC, "Use Retention Index QC", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_ADD_PEAK_AREA, "Add Peak Area", getFieldEditorParent()));
 	}
 
