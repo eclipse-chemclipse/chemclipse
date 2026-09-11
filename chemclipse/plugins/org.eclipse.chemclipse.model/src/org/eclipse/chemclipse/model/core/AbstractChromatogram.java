@@ -911,13 +911,24 @@ public abstract class AbstractChromatogram extends AbstractMeasurementTarget imp
 	}
 
 	@Override
+	public void clearAnalysisSegments() {
+
+		analysisSegments.clear();
+	}
+
+	@Override
 	public void removeAnalysisSegment(IAnalysisSegment segment) {
 
+		analysisSegments.remove(segment);
 	}
 
 	@Override
 	public void updateAnalysisSegment(IAnalysisSegment segment, IScanRange range) {
 
+		int index = analysisSegments.indexOf(segment);
+		if(index >= 0) {
+			analysisSegments.set(index, new ChromatogramAnalysisSegment(range, this, segment.getChildSegments()));
+		}
 	}
 
 	@Override
