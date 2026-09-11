@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2025 Lablicate GmbH.
+ * Copyright (c) 2021, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -19,8 +19,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SettingsRetentionIndexQC implements ISystemProcessSettings {
 
-	@JsonProperty(value = "QC: Use Retention Index", defaultValue = "false")
-	@LabelProperty(value = "%UseRetentionIndex", tooltip = "%UseRetentionIndexDescription")
+	@JsonProperty(value = "Sort targets by RI delta", defaultValue = "false")
+	@LabelProperty(value = "%UseRetentionIndex")
 	private boolean useRetentionIndexQC = false;
 
 	public boolean isUseRetentionIndexQC() {
