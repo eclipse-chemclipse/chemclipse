@@ -28,8 +28,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final String DEF_MISC_SEPARATED_DELIMITER = " ";
 	public static final String P_USE_RETENTION_INDEX_QC = "useRetentionIndexQC";
 	public static final boolean DEF_USE_RETENTION_INDEX_QC = false; // Must be activated manually.
-	public static final String P_ALTERNATE_WINDOW_MOVE_DIRECTION = "useAlternateWindowMoveDirection";
-	public static final boolean DEF_ALTERNATE_WINDOW_MOVE_DIRECTION = false;
 	public static final String P_CONDENSE_CYCLE_NUMBER_SCANS = "condenseCycleNumberScans";
 	public static final boolean DEF_CONDENSE_CYCLE_NUMBER_SCANS = true;
 	public static final String P_SHOW_RETENTION_INDEX_WITHOUT_DECIMALS = "showRetentionIndexWithoutDecimals";
@@ -84,7 +82,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 
 		putDefault(P_MISC_SEPARATOR, DEF_MISC_SEPARATOR);
 		putDefault(P_MISC_SEPARATED_DELIMITER, DEF_MISC_SEPARATED_DELIMITER);
-		putDefault(P_ALTERNATE_WINDOW_MOVE_DIRECTION, Boolean.toString(DEF_ALTERNATE_WINDOW_MOVE_DIRECTION));
 		putDefault(P_CONDENSE_CYCLE_NUMBER_SCANS, Boolean.toString(DEF_CONDENSE_CYCLE_NUMBER_SCANS));
 		putDefault(P_SHOW_RETENTION_INDEX_WITHOUT_DECIMALS, Boolean.toString(DEF_SHOW_RETENTION_INDEX_WITHOUT_DECIMALS));
 		putDefault(P_SHOW_AREA_WITHOUT_DECIMALS, Boolean.toString(DEF_SHOW_AREA_WITHOUT_DECIMALS));
@@ -129,11 +126,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static boolean isSortCaseSensitive() {
 
 		return INSTANCE().getBoolean(P_SORT_CASE_SENSITIVE, DEF_SORT_CASE_SENSITIVE);
-	}
-
-	public static boolean useAlternateWindowMoveDirection() {
-
-		return INSTANCE().getBoolean(P_ALTERNATE_WINDOW_MOVE_DIRECTION, DEF_ALTERNATE_WINDOW_MOVE_DIRECTION);
 	}
 
 	public static boolean isSearchCaseSensitive() {
