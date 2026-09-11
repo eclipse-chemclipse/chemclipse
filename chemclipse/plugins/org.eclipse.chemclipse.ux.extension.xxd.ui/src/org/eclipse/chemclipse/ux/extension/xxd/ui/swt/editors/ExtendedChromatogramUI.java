@@ -1244,7 +1244,7 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 
 	private void initialize() {
 
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(this, HelpContext.CHROMATOGRAM_EDITOR);
+		setHelp(this, HelpContext.CHROMATOGRAM_EDITOR);
 
 		enableToolbar(toolbarInfoControl, buttonToolbarInfo.get(), IMAGE_INFO, TOOLTIP_INFO, false);
 		enableToolbar(toolbarReferencesControl, buttonToolbarReferences.get(), IMAGE_REFERENCES, TOOLTIP_REFERENCES, preferenceStore.getBoolean(PreferenceSupplier.P_CHROMATOGRAM_SHOW_REFERENCES_COMBO));

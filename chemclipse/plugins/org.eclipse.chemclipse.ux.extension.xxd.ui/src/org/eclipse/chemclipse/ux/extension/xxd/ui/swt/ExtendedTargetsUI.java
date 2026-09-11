@@ -223,7 +223,7 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 		enableToolbar(toolbarSearch, buttonToolbarSearch.get(), IMAGE_SEARCH, TOOLTIP_SEARCH, false);
 		enableToolbar(toolbarEdit, buttonToolbarEdit.get(), IMAGE_EDIT, TOOLTIP_EDIT, false);
 
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(this, HelpContext.TARGETS);
+		setHelp(this, HelpContext.TARGETS);
 		enableEdit(Arrays.asList(targetListOther, targetListChromatogram), buttonTableEditControl.get(), IMAGE_EDIT_ENTRY, false);
 		applySettings();
 	}

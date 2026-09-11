@@ -112,7 +112,6 @@ import org.eclipse.swtchart.extensions.linecharts.ILineSeriesData;
 import org.eclipse.swtchart.extensions.linecharts.ILineSeriesSettings;
 import org.eclipse.swtchart.extensions.linecharts.LineSeriesData;
 import org.eclipse.swtchart.extensions.preferences.PreferencePage;
-import org.eclipse.ui.PlatformUI;
 
 public class ExtendedChromatogramOverlayUI extends Composite implements IExtendedPartUI {
 
@@ -212,7 +211,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		 * This is needed to layout both combo boxes accordingly.
 		 */
 		this.layout(true);
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(this, HelpContext.CHROMATOGRAM_OVERLAY);
+		setHelp(this, HelpContext.CHROMATOGRAM_OVERLAY);
 	}
 
 	private Composite createToolbarMain(Composite parent) {

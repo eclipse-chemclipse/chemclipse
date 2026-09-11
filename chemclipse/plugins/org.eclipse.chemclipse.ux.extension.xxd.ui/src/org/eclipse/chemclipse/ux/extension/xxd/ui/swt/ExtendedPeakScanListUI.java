@@ -253,7 +253,7 @@ public class ExtendedPeakScanListUI extends Composite implements IExtendedPartUI
 		buttonMerge.get().setEnabled(false);
 		buttonDelete.get().setEnabled(false);
 		scanIdentifierControl.get().setEnabled(false);
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(this, HelpContext.PEAK_SCAN_LIST);
+		setHelp(this, HelpContext.PEAK_SCAN_LIST);
 	}
 
 	private void createToolbarMain(Composite parent) {

@@ -51,7 +51,6 @@ import org.eclipse.swtchart.extensions.core.IChartSettings;
 import org.eclipse.swtchart.extensions.core.IMouseSupport;
 import org.eclipse.swtchart.extensions.core.UserSelection;
 import org.eclipse.swtchart.extensions.events.IHandledEventProcessor;
-import org.eclipse.ui.PlatformUI;
 
 public class ExtendedSPlot extends Composite implements IExtendedPartUI {
 
@@ -126,7 +125,7 @@ public class ExtendedSPlot extends Composite implements IExtendedPartUI {
 
 		createToolbarMain(this);
 		createPlot(this);
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(this, HelpContext.S_PLOT);
+		setHelp(this, HelpContext.S_PLOT);
 		control = this;
 	}
 
