@@ -32,8 +32,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final int DEF_DELTA_RETENTION_TIME_RIGHT = 0;
 	public static final String P_USE_BEST_MATCH = "useBestMatch";
 	public static final boolean DEF_USE_BEST_MATCH = true;
-	public static final String P_USE_RETENTION_INDEX_QC = "useRetentionIndexQC";
-	public static final boolean DEF_USE_RETENTION_INDEX_QC = false;
 	public static final String P_ADD_PEAK_AREA = "addPeakArea";
 	public static final boolean DEF_ADD_PEAK_AREA = false;
 
@@ -55,7 +53,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		putDefault(P_DELTA_RETENTION_TIME_LEFT, Integer.toString(DEF_DELTA_RETENTION_TIME_LEFT));
 		putDefault(P_DELTA_RETENTION_TIME_RIGHT, Integer.toString(DEF_DELTA_RETENTION_TIME_RIGHT));
 		putDefault(P_USE_BEST_MATCH, Boolean.toString(DEF_USE_BEST_MATCH));
-		putDefault(P_USE_RETENTION_INDEX_QC, Boolean.toString(DEF_USE_RETENTION_INDEX_QC));
 		putDefault(P_ADD_PEAK_AREA, Boolean.toString(DEF_ADD_PEAK_AREA));
 	}
 
@@ -70,7 +67,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		settings.setDeltaRetentionTimeLeft(getDeltaRetentionTimeLeft());
 		settings.setDeltaRetentionTimeRight(getDeltaRetentionTimeRight());
 		settings.setUseBestMatch(isUseBestMatch());
-		settings.setUseRetentionIndexQC(isUseRetentionIndexQC());
 		settings.setAddPeakArea(isAddPeakArea());
 		return settings;
 	}
@@ -103,11 +99,6 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static boolean isUseBestMatch() {
 
 		return INSTANCE().getBoolean(P_USE_BEST_MATCH, DEF_USE_BEST_MATCH);
-	}
-
-	public static boolean isUseRetentionIndexQC() {
-
-		return INSTANCE().getBoolean(P_USE_RETENTION_INDEX_QC, DEF_USE_RETENTION_INDEX_QC);
 	}
 
 	public static boolean isAddPeakArea() {
