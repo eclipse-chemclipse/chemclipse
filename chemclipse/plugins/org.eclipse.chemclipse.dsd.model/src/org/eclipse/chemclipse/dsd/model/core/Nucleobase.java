@@ -23,6 +23,17 @@ public enum Nucleobase implements ILabel {
 	CYTOSINE('C', "Cytosine"), //
 	GUANINE('G', "Guanine"), //
 	THYMINE('T', "Thymine"), //
+	URACIL('U', "Uracil"), //
+	PURINES('R', "purines"), //
+	PYRIMIDINES('Y', "pyrimidines"), //
+	KETONES('K', "ketones"), //
+	AMINO('M', "with amino group"), //
+	STRONG('S', "strong interaction"), //
+	WEAK('W', "weak interaction"), //
+	NOT_A('B', "not A"), //
+	NOT_C('D', "not C"), //
+	NOT_G('H', "not G"), //
+	NOT_T_U('V', "neither T nor U"), //
 	UNKNOWN('N', "Unknown"); //
 
 	private final char letter;
@@ -57,6 +68,17 @@ public enum Nucleobase implements ILabel {
 			case 'C' -> CYTOSINE;
 			case 'G' -> GUANINE;
 			case 'T' -> THYMINE;
+			case 'U' -> URACIL;
+			case 'R' -> PURINES;
+			case 'Y' -> PYRIMIDINES;
+			case 'K' -> KETONES;
+			case 'M' -> AMINO;
+			case 'S' -> STRONG;
+			case 'W' -> WEAK;
+			case 'B' -> NOT_A;
+			case 'D' -> NOT_C;
+			case 'H' -> NOT_G;
+			case 'V' -> NOT_T_U;
 			default -> UNKNOWN;
 		};
 	}

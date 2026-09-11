@@ -143,6 +143,15 @@ public class ExtendedChromatogramStatisticsUI extends Composite implements IExte
 		List<Nucleobase> nucleobases = chromatogramDSD.getNucleotideSequence().getNucleobases();
 		long numberUnknowns = nucleobases.stream().filter(n -> n == Nucleobase.UNKNOWN).count();
 		dataMap.put("Unknown Bases [%]", decimalFormat.format(numberUnknowns / (double)nucleobases.size() * 100));
+
+		long numberUnclear = nucleobases.stream() //
+										.filter(n -> n != Nucleobase.GUANINE //
+												&& n != Nucleobase.ADENINE //
+												&& n != Nucleobase.THYMINE //
+												&& n != Nucleobase.CYTOSINE //
+												&& n != Nucleobase.URACIL) //
+										.count();
+		dataMap.put("Ambiguous Bases [%]", decimalFormat.format(numberUnclear / (double)nucleobases.size() * 100));
 	}
 
 	private void addTimeData(IChromatogramSelection chromatogramSelection, Map<String, String> dataMap) {
