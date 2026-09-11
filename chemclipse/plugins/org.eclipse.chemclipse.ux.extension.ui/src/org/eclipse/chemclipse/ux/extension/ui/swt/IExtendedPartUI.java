@@ -26,7 +26,10 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.support.ui.swt.ExtendedTableViewer;
+import org.eclipse.chemclipse.ux.extension.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.ui.support.PartSupport;
+import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.services.help.EHelpService;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferencePage;
 import org.eclipse.jface.preference.PreferenceDialog;
@@ -40,7 +43,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swtchart.extensions.core.IChartSettings;
 import org.eclipse.swtchart.extensions.core.ScrollableChart;
-import org.eclipse.ui.PlatformUI;
 
 public interface IExtendedPartUI {
 
@@ -140,15 +142,28 @@ public interface IExtendedPartUI {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
-				if(context != null && !context.isBlank()) {
-					PlatformUI.getWorkbench().getHelpSystem().displayHelp(context);
-				} else {
-					PlatformUI.getWorkbench().getHelpSystem().displayHelp();
+				EHelpService helpService = getHelpService();
+				if(helpService != null && context != null && !context.isBlank()) {
+					helpService.displayHelp(context);
 				}
 			}
 		});
 
 		return button;
+	}
+
+	default EHelpService getHelpService() {
+
+		MApplication application = Activator.getDefault().getApplication();
+		return application != null ? application.getContext().get(EHelpService.class) : null;
+	}
+
+	default void setHelp(Object element, String context) {
+
+		EHelpService helpService = getHelpService();
+		if(helpService != null && context != null && !context.isBlank()) {
+			helpService.setHelp(element, context);
+		}
 	}
 
 	default Button createButtonToggleEditTable(Composite parent, AtomicReference<? extends ExtendedTableViewer> viewer, String image) {

@@ -57,7 +57,6 @@ import org.eclipse.swtchart.extensions.core.IChartSettings;
 import org.eclipse.swtchart.extensions.core.IMouseSupport;
 import org.eclipse.swtchart.extensions.core.UserSelection;
 import org.eclipse.swtchart.extensions.events.IHandledEventProcessor;
-import org.eclipse.ui.PlatformUI;
 
 public class ExtendedScorePlot2D extends Composite implements IExtendedPartUI {
 
@@ -132,7 +131,7 @@ public class ExtendedScorePlot2D extends Composite implements IExtendedPartUI {
 
 		createToolbarMain(this);
 		createScorePlot(this);
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(this, HelpContext.SCORE_PLOT);
+		setHelp(this, HelpContext.SCORE_PLOT);
 		control = this;
 	}
 

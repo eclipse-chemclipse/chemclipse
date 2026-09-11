@@ -86,7 +86,6 @@ import org.eclipse.swtchart.extensions.events.AbstractHandledEventProcessor;
 import org.eclipse.swtchart.extensions.linecharts.ICompressionSupport;
 import org.eclipse.swtchart.extensions.linecharts.ILineSeriesData;
 import org.eclipse.swtchart.extensions.linecharts.ILineSeriesSettings;
-import org.eclipse.ui.PlatformUI;
 
 import jakarta.inject.Inject;
 
@@ -390,7 +389,7 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 	private void initialize() {
 
 		enableToolbar(toolbarInfo, buttonToolbarInfo, IMAGE_INFO, TOOLTIP_INFO, true);
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(this, HelpContext.PEAK_DETECTOR);
+		setHelp(this, HelpContext.PEAK_DETECTOR);
 	}
 
 	private void createToolbarMain(Composite parent) {

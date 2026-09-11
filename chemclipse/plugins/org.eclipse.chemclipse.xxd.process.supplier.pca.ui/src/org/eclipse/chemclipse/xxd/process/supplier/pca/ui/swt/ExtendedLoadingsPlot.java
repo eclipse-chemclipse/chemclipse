@@ -51,7 +51,6 @@ import org.eclipse.swtchart.extensions.core.IChartSettings;
 import org.eclipse.swtchart.extensions.core.IMouseSupport;
 import org.eclipse.swtchart.extensions.core.UserSelection;
 import org.eclipse.swtchart.extensions.events.IHandledEventProcessor;
-import org.eclipse.ui.PlatformUI;
 
 public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 
@@ -130,7 +129,7 @@ public class ExtendedLoadingsPlot extends Composite implements IExtendedPartUI {
 
 		createToolbarMain(this);
 		createPlot(this);
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(this, HelpContext.LOADINGS_PLOT);
+		setHelp(this, HelpContext.LOADINGS_PLOT);
 		control = this;
 	}
 
