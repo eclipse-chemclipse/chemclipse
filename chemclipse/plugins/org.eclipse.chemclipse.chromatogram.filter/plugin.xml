@@ -40,6 +40,13 @@
             id="org.eclipse.chemclipse.chromatogram.filter.chromatogramReshape">
       </ChromatogramFilterSupplier>
       <ChromatogramFilterSupplier
+            description="Cuts a chromatogram at peak positions into multiple referenced chromatograms."
+            filter="org.eclipse.chemclipse.chromatogram.filter.impl.ChromatogramFilterSegmentSlicer"
+            filterName="Segment Slicer"
+            filterSettings="org.eclipse.chemclipse.chromatogram.filter.impl.settings.FilterSettingsSegmentSlicer"
+            id="org.eclipse.chemclipse.chromatogram.filter.chromatogramSegmentSlicer">
+      </ChromatogramFilterSupplier>
+      <ChromatogramFilterSupplier
             description="This filter transfers header data to the chromatogram references."
             filter="org.eclipse.chemclipse.chromatogram.filter.impl.ChromatogramFilterHeaderTransfer"
             filterName="Header Transfer"
