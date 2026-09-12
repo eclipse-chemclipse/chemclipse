@@ -59,6 +59,13 @@
             filterName="Header Input"
             filterSettings="org.eclipse.chemclipse.chromatogram.filter.impl.settings.FilterSettingsHeaderInput"
             id="org.eclipse.chemclipse.chromatogram.filter.chromatogramHeaderInput">
-      </ChromatogramFilterSupplier>                                
+      </ChromatogramFilterSupplier>
+      <ChromatogramFilterSupplier
+            description="Clears the chromatogram analysis segments."
+            filter="org.eclipse.chemclipse.chromatogram.filter.impl.ChromatogramFilterAnalysisSegmentsClear"
+            filterName="Analysis Segments (Clear)"
+            filterSettings="org.eclipse.chemclipse.chromatogram.filter.impl.settings.FilterSettingsAnalysisSegmentsClear"
+            id="org.eclipse.chemclipse.chromatogram.filter.chromatogramAnalysisSegmentsClear">
+      </ChromatogramFilterSupplier>                                     
    </extension>
 </plugin>
