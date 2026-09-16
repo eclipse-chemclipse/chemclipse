@@ -948,7 +948,7 @@ public class ExtendedComparisonScanUI extends Composite implements IExtendedPart
 		spinner.setMaximum(50);
 		spinner.setPageIncrement(1);
 		spinner.setSelection(shiftMass);
-		spinner.setToolTipText("Determine the shitf mass.");
+		spinner.setToolTipText("Determine the shift mass.");
 		GridData gridData = new GridData();
 		gridData.widthHint = 80;
 		spinner.setLayoutData(gridData);
