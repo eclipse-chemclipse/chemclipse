@@ -46,6 +46,7 @@ import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.core.IPeakModel;
 import org.eclipse.chemclipse.model.core.IScan;
+import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.model.supplier.IChromatogramSelectionProcessSupplier;
 import org.eclipse.chemclipse.model.supplier.IScanProcessSupplier;
@@ -1553,6 +1554,10 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 		chartSettings.addHandledEventProcessor(new ScanSelectionArrowKeyHandler(this, bindingService, KEY_CLASS_PREFIX + ".ScanSelectionPrevious", false));
 		chartSettings.addHandledEventProcessor(new PeakSelectionArrowKeyHandler(this, bindingService, KEY_CLASS_PREFIX + ".PeakSelectionNext", true));
 		chartSettings.addHandledEventProcessor(new PeakSelectionArrowKeyHandler(this, bindingService, KEY_CLASS_PREFIX + ".PeakSelectionPrevious", false));
+
+		AtomicReference<IIdentificationTarget> selectedTarget = new AtomicReference<>();
+		chartSettings.addHandledEventProcessor(new TargetSelectionKeyHandler(this, selectedTarget, bindingService, KEY_CLASS_PREFIX + ".TargetSelectionNext", true));
+		chartSettings.addHandledEventProcessor(new TargetSelectionKeyHandler(this, selectedTarget, bindingService, KEY_CLASS_PREFIX + ".TargetSelectionPrevious", false));
 
 		chartSettings.addHandledEventProcessor(new ChromatogramMoveAbundanceKeyHandler(this, bindingService, KEY_CLASS_PREFIX + ".AbundanceUp", true));
 		chartSettings.addHandledEventProcessor(new ChromatogramMoveAbundanceKeyHandler(this, bindingService, KEY_CLASS_PREFIX + ".AbundanceDown", false));
