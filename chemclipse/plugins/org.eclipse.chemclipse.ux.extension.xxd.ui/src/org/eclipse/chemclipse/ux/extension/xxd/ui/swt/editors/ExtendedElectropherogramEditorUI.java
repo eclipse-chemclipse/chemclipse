@@ -1144,6 +1144,8 @@ public class ExtendedElectropherogramEditorUI extends Composite implements ITool
 	private void adjustAxisSettingsX(IChartSettings chartSettings) {
 
 		IPrimaryAxisSettings primaryAxisSettingsX = chartSettings.getPrimaryAxisSettingsX();
+		primaryAxisSettingsX.setVisible(false);
+		primaryAxisSettingsX.setTicksVisible(false);
 		primaryAxisSettingsX.setDecimalFormat(new DecimalFormat("0", ENGLISH_SYMBOLS));
 	}
 
