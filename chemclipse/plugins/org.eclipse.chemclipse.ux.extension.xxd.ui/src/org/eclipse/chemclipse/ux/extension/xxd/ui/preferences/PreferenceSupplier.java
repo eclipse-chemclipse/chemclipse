@@ -877,6 +877,11 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	 */
 	public static final String P_ZOOMED_IN_BASES = "startZoomedNucleoBasesX";
 	public static final int DEF_ZOOMED_IN_BASES = 120;
+	/*
+	 * Scan Browse
+	 */
+	public static final String P_SCAN_BROWSE_LIBRARY_FILE = "scanBrowseLibraryFile";
+	public static final String DEF_SCAN_BROWSE_LIBRARY_FILE = "";
 
 	public static IPreferenceSupplier INSTANCE() {
 
@@ -1312,6 +1317,10 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		for(DataCategory dataCategory : DataCategory.values()) {
 			putDefault(P_QUICK_ACCESS_PROCESSORS + dataCategory.name(), DEF_QUICK_ACCESS_PROCESSORS);
 		}
+		/*
+		 * Scan Browse
+		 */
+		putDefault(P_SCAN_BROWSE_LIBRARY_FILE, DEF_SCAN_BROWSE_LIBRARY_FILE);
 	}
 
 	private void initializeOverlayDefaults() {
@@ -1492,5 +1501,10 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static int getZoomedInNucleobasesStart() {
 
 		return INSTANCE().getInteger(P_ZOOMED_IN_BASES, DEF_ZOOMED_IN_BASES);
+	}
+
+	public static String getScanBrowseLibraryFile() {
+
+		return INSTANCE().get(P_SCAN_BROWSE_LIBRARY_FILE, DEF_SCAN_BROWSE_LIBRARY_FILE);
 	}
 }

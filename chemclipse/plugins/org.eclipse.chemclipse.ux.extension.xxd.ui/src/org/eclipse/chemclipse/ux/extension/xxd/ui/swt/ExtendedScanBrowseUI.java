@@ -12,23 +12,32 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.swt;
 
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IScan;
+import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.selection.ChromatogramSelection;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
+import org.eclipse.chemclipse.msd.model.core.ILibraryMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
+import org.eclipse.chemclipse.support.util.FileListUtil;
+import org.eclipse.chemclipse.ux.extension.msd.ui.support.DatabaseImportRunnable;
 import org.eclipse.chemclipse.ux.extension.ui.support.PartSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.charts.ChartSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.l10n.ExtensionMessages;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.part.support.EditorUpdateSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogram;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageScanBrowse;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageScans;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ScanChartAxisIntensity;
@@ -36,9 +45,9 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ScanChartAxisIon;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.ScanChartAxisRelativeIntensity;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ChromatogramDataSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ScanDataSupport;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -58,16 +67,19 @@ import org.eclipse.swtchart.extensions.core.SecondaryAxisSettings;
 
 public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 
+	private static final Logger logger = Logger.getLogger(ExtendedScanBrowseUI.class);
+
 	private Label labelInfo;
 
 	private Button buttonPreviousScan;
 	private ComboViewer comboViewerType;
-	private ComboViewer comboViewerSource;
+	private ComboScanSource comboScanSource;
 	private Button buttonNextScan;
 	private ScanChartUI scanChartUI;
 
 	private IChromatogramSelection chromatogramSelection;
 	private int masterRetentionTime;
+	private List<IScan> libraryScans = null;
 
 	private final ScanDataSupport scanDataSupport = new ScanDataSupport();
 
@@ -75,7 +87,8 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 
 		EXTERNAL("Editors"), //
 		INTERNAL("References"), //
-		BOTH("Both"); //
+		BOTH("Both"), //
+		LIBRARY("Library"); //
 
 		private String label = "";
 
@@ -90,9 +103,9 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 		}
 	}
 
-	public ExtendedScanBrowseUI(Composite parent, int type) {
+	public ExtendedScanBrowseUI(Composite parent, int style) {
 
-		super(parent, type);
+		super(parent, style);
 		createControl();
 		adjustAxisSettings();
 	}
@@ -135,7 +148,7 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 
 		comboViewerType = createComboViewerType(composite);
 		buttonPreviousScan = createPreviousReferenceScanButton(composite);
-		comboViewerSource = createComboViewerSource(composite);
+		comboScanSource = createComboScanSource(composite);
 		buttonNextScan = createNextReferenceScanButton(composite);
 		createSettingsButton(composite);
 
@@ -195,36 +208,24 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 		return button;
 	}
 
-	private ComboViewer createComboViewerSource(Composite parent) {
+	private ComboScanSource createComboScanSource(Composite parent) {
 
-		ComboViewer comboViewer = new ComboViewer(parent, SWT.READ_ONLY);
-		comboViewer.setContentProvider(new ArrayContentProvider());
-		comboViewer.setLabelProvider(new LabelProvider() {
-
-			@Override
-			public String getText(Object element) {
-
-				String label = "";
-				if(element instanceof IChromatogramSelection chromatogramSelection) {
-					IChromatogram chromatogram = chromatogramSelection.getChromatogram();
-					label = ChromatogramDataSupport.getReferenceLabel(chromatogram, -1, false);
-				}
-				return label;
+		ComboScanSource comboSource = new ComboScanSource(parent, SWT.NONE);
+		comboSource.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		comboSource.setLabelFunction(element -> {
+			String label = "";
+			if(element instanceof IChromatogramSelection chromatogramSelectionSource) {
+				IChromatogram chromatogram = chromatogramSelectionSource.getChromatogram();
+				label = ChromatogramDataSupport.getReferenceLabel(chromatogram, -1, false);
+			} else if(element instanceof ILibraryMassSpectrum libraryMassSpectrum) {
+				ILibraryInformation libraryInformation = libraryMassSpectrum.getLibraryInformation();
+				label = (libraryInformation != null) ? libraryInformation.getReferenceIdentifier() : "";
 			}
+			return label;
 		});
+		comboSource.setSelectionListener(_ -> updateSource());
 
-		Combo combo = comboViewer.getCombo();
-		combo.setToolTipText("Editor References Scan");
-		combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		combo.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-
-				selectScan(0);
-			}
-		});
-		return comboViewer;
+		return comboSource;
 	}
 
 	private Button createNextReferenceScanButton(Composite parent) {
@@ -246,6 +247,7 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 	private void createSettingsButton(Composite parent) {
 
 		createSettingsButton(parent, Arrays.asList( //
+				PreferencePageScanBrowse.class, //
 				PreferencePageScans.class, //
 				ScanChartAxisIon.class, //
 				ScanChartAxisIntensity.class, //
@@ -287,28 +289,26 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 
 	private void selectScan(int moveIndex) {
 
-		Combo combo = comboViewerSource.getCombo();
-		int index = combo.getSelectionIndex() + moveIndex;
+		comboScanSource.moveSelection(moveIndex);
+		updateSource();
+	}
 
-		if(moveIndex < 0) {
-			index = (index < 0) ? 0 : index;
-			combo.select(index);
-		} else if(moveIndex > 0) {
-			index = (index > combo.getItemCount()) ? combo.getItemCount() : index;
-			combo.select(index);
-		}
+	private void updateSource() {
+
 		/*
 		 * Update the chart and label
 		 */
 		IScan referenceScan = null;
-		IStructuredSelection structuredSelection = comboViewerSource.getStructuredSelection();
-		Object object = structuredSelection.getFirstElement();
-		if(object instanceof IChromatogramSelection chromatogramSelection) {
-			IChromatogram chromatogram = chromatogramSelection.getChromatogram();
+		Object object = comboScanSource.getSelection();
+		if(object instanceof IChromatogramSelection chromatogramSelectionSource) {
+			IChromatogram chromatogram = chromatogramSelectionSource.getChromatogram();
 			int scanNumber = chromatogram.getScanNumber(masterRetentionTime);
 			referenceScan = chromatogram.getScan(scanNumber);
+		} else if(object instanceof IScan scan) {
+			referenceScan = scan;
 		}
 
+		updateLabel(referenceScan);
 		updateChart(referenceScan);
 		updatePreviousAndNextButton();
 	}
@@ -324,7 +324,12 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 
 	private void updateLabel(IScan scan) {
 
-		labelInfo.setText(scanDataSupport.getScanLabel(scan));
+		if(scan instanceof ILibraryMassSpectrum libraryMassSpectrum) {
+			ILibraryInformation libraryInformation = libraryMassSpectrum.getLibraryInformation();
+			labelInfo.setText((libraryInformation != null) ? libraryInformation.getName() : "");
+		} else {
+			labelInfo.setText(scanDataSupport.getScanLabel(scan));
+		}
 	}
 
 	private void updateChart(IScan scan) {
@@ -336,43 +341,49 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 	private void updateComboViewer() {
 
 		Type type = getSelectedType();
-		List<IChromatogramSelection> chromatogramSelections = new ArrayList<>();
-		/*
-		 * Add this selection as the first entry.
-		 */
-		if(chromatogramSelection != null) {
-			chromatogramSelections.add(chromatogramSelection);
+		List<Object> sources = new ArrayList<>();
+		if(Type.LIBRARY.equals(type)) {
+			sources.addAll(extractLibrary());
+		} else {
+			/*
+			 * Add this selection as the first entry.
+			 */
+			if(chromatogramSelection != null) {
+				sources.add(chromatogramSelection);
+			}
+			/*
+			 * Add the references
+			 */
+			switch(type) {
+				case INTERNAL:
+					sources.addAll(extractInternal());
+					break;
+				case EXTERNAL:
+					sources.addAll(extractExternal());
+					break;
+				default:
+					sources.addAll(extractInternal());
+					sources.addAll(extractExternal());
+					break;
+			}
 		}
 		/*
-		 * Add the references
+		 * Set and select the references. Type to search for libraries.
 		 */
-		switch(type) {
-			case INTERNAL:
-				chromatogramSelections.addAll(extractInternal());
-				break;
-			case EXTERNAL:
-				chromatogramSelections.addAll(extractExternal());
-				break;
-			default:
-				chromatogramSelections.addAll(extractInternal());
-				chromatogramSelections.addAll(extractExternal());
-				break;
-		}
-		/*
-		 * Set and select the references
-		 */
-		Combo combo = comboViewerSource.getCombo();
-		comboViewerSource.setInput(chromatogramSelections);
-		if(!chromatogramSelections.isEmpty()) {
-			combo.select(0);
+		comboScanSource.setEditable(Type.LIBRARY.equals(type));
+		comboScanSource.setInput(sources);
+		if(!sources.isEmpty()) {
+			comboScanSource.selectFirst();
+			if(Type.LIBRARY.equals(type)) {
+				updateSource();
+			}
 		}
 	}
 
 	private void updatePreviousAndNextButton() {
 
-		Combo combo = comboViewerSource.getCombo();
-		buttonPreviousScan.setEnabled(combo.getSelectionIndex() > 0);
-		buttonNextScan.setEnabled(combo.getSelectionIndex() < combo.getItemCount() - 1);
+		buttonPreviousScan.setEnabled(comboScanSource.hasPrevious());
+		buttonNextScan.setEnabled(comboScanSource.hasNext());
 	}
 
 	private Type getSelectedType() {
@@ -415,6 +426,49 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 		}
 
 		return chromatogramSelections;
+	}
+
+	private List<IScan> extractLibrary() {
+
+		if(libraryScans != null) {
+			return null;
+		}
+		libraryScans = new ArrayList<>();
+		String path = PreferenceSupplier.getScanBrowseLibraryFile();
+		if(path == null || path.isEmpty()) {
+			return null;
+		}
+		File libraryFile = new File(path);
+		if(libraryFile.isDirectory()) {
+			FileListUtil fileListUtil = new FileListUtil();
+			List<String> files = fileListUtil.getFiles(FileListUtil.getAllContainingFilesAbsolutePath(libraryFile));
+			for(String file : files) {
+				importDatabase(new File(file));
+			}
+		} else if(libraryFile.exists()) {
+			importDatabase(libraryFile);
+			logger.warn("The library is not available: " + libraryFile.getAbsolutePath());
+		}
+		return libraryScans;
+	}
+
+	private void importDatabase(File file) {
+
+		DatabaseImportRunnable runnable = new DatabaseImportRunnable(file);
+		try {
+			ProgressMonitorDialog dialog = new ProgressMonitorDialog(getShell());
+			dialog.run(true, true, runnable);
+			IMassSpectra massSpectra = runnable.getMassSpectra();
+			if(massSpectra != null) {
+				libraryScans.addAll(massSpectra.getList());
+			}
+			dialog.close();
+		} catch(InvocationTargetException e) {
+			logger.warn(e);
+		} catch(InterruptedException e) {
+			logger.warn(e);
+			Thread.currentThread().interrupt();
+		}
 	}
 
 	private void adjustAxisSettings() {
