@@ -200,6 +200,31 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 		}
 	}
 
+	public void updateTarget(IIdentificationTarget identificationTarget) {
+
+		if(identificationTarget == null) {
+			return;
+		}
+
+		// Sort again as targets verification was updated.
+		TargetsListUI targetListUI = getActiveTargetList().get();
+		updateInput(getRetentionIndex());
+		targetListUI.sortTable();
+
+		Table table = targetListUI.getTable();
+		for(int index = 0; index < table.getItemCount(); index++) {
+			if(table.getItem(index).getData() == identificationTarget) {
+				table.setSelection(index);
+				table.showSelection();
+				targetWebIdentifierControl.get().setInput(identificationTarget.getLibraryInformation());
+				break;
+			}
+		}
+
+		updateWidgets();
+		// The target is not propagated again to avoid an update loop.
+	}
+
 	private void createControl() {
 
 		GridLayout gridLayout = new GridLayout(1, true);

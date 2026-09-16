@@ -1183,6 +1183,18 @@
             id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.PeakSelectionPrevious">
       </command>
       <command
+            name="Next Target"
+            description="Select the next target of the selected peak or scan."
+            categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+            id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.TargetSelectionNext">
+      </command>
+      <command
+            name="Previous Target"
+            description="Select the previous target of the selected peak or scan."
+            categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+            id="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.TargetSelectionPrevious">
+      </command>
+      <command
             name="Abundance Up"
             description="Scroll abundance upwards"
             categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
@@ -1232,6 +1244,18 @@
             contextId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+ARROW_DOWN">
+      </key>
+      <key
+            commandId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.TargetSelectionPrevious"
+            contextId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M2+ARROW_UP">
+      </key>
+      <key
+            commandId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.TargetSelectionNext"
+            contextId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M2+ARROW_DOWN">
       </key>
       <key
             commandId="org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.AbundanceUp"

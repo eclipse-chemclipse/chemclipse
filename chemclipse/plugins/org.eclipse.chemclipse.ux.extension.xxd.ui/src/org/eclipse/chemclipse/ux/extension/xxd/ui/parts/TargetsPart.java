@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -14,6 +14,7 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.parts;
 
 import java.util.List;
 
+import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.ux.extension.ui.parts.AbstractPart;
@@ -67,6 +68,11 @@ public class TargetsPart extends AbstractPart<ExtendedTargetsUI> {
 					}
 				} else if(isPartUpdateEvent(topic)) {
 					getControl().updatePart();
+				} else if(isTargetTopic(topic)) {
+					if(object instanceof IIdentificationTarget identificationTarget) {
+						getControl().updateTarget(identificationTarget);
+						return true;
+					}
 				} else if(isScanTopic(topic) || isPeakTopic(topic) || isIdentificationTopic(topic)) {
 					getControl().updateOther(object);
 					return true;
@@ -84,6 +90,7 @@ public class TargetsPart extends AbstractPart<ExtendedTargetsUI> {
 				isScanTopic(topic) || //
 				isPeakTopic(topic) || //
 				isIdentificationTopic(topic) || //
+				isTargetTopic(topic) || //
 				isPartUpdateEvent(topic) || //
 				isCloseEvent(topic); //
 	}
@@ -106,6 +113,11 @@ public class TargetsPart extends AbstractPart<ExtendedTargetsUI> {
 	private boolean isIdentificationTopic(String topic) {
 
 		return IChemClipseEvents.TOPIC_IDENTIFICATION_TARGETS_UPDATE_SELECTION.equals(topic);
+	}
+
+	private boolean isTargetTopic(String topic) {
+
+		return IChemClipseEvents.TOPIC_IDENTIFICATION_TARGET_UPDATE.equals(topic);
 	}
 
 	private boolean isPartUpdateEvent(String topic) {
