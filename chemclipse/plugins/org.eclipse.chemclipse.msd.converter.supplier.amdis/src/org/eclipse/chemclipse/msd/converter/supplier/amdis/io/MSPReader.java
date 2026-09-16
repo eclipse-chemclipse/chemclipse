@@ -314,7 +314,7 @@ public class MSPReader extends AbstractMassSpectraReader {
 		String precursorType = extractContentAsString(massSpectrumData, precursorTypePattern, 2);
 		massSpectrum.putProperty(IRegularLibraryMassSpectrum.PROPERTY_PRECURSOR_TYPE, precursorType);
 
-		double precursorMZ = extractContentAsDouble(massSpectrumData, precursorMassPattern);
+		double precursorMZ = extractPrecursorAsDouble(massSpectrumData, precursorMassPattern);
 		massSpectrum.setPrecursorIon(precursorMZ);
 
 		double exactMass = extractContentAsDouble(massSpectrumData, exactMassPattern);
@@ -434,6 +434,25 @@ public class MSPReader extends AbstractMassSpectraReader {
 			Matcher matcher = pattern.matcher(massSpectrumData);
 			if(matcher.find() && matcher.groupCount() > 1 && !matcher.group(2).isBlank()) {
 				content = Double.parseDouble(matcher.group(2));
+			}
+		} catch(NumberFormatException e) {
+			logger.warn(e);
+		}
+		return content;
+	}
+
+	private double extractPrecursorAsDouble(String massSpectrumData, Pattern pattern) {
+
+		double content = 0.0f;
+		try {
+			Matcher matcher = pattern.matcher(massSpectrumData);
+			if(matcher.find() && matcher.groupCount() > 1 && !matcher.group(2).isBlank()) {
+				String[] precursors = matcher.group(2).split("/");
+				if(precursors.length > 0) {
+					content = Double.parseDouble(precursors[0]); // TODO: MS3, MS4
+				} else {
+					Double.parseDouble(matcher.group(2));
+				}
 			}
 		} catch(NumberFormatException e) {
 			logger.warn(e);
