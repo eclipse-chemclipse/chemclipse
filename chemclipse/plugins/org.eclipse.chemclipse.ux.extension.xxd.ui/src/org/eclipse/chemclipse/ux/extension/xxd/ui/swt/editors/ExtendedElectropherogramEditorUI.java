@@ -1035,7 +1035,7 @@ public class ExtendedElectropherogramEditorUI extends Composite implements ITool
 
 		LineChart chart = new LineChart(parent, SWT.BORDER);
 		chart.setLayoutData(new GridData(GridData.FILL_BOTH));
-		chart.setFileName("Chromatogram");
+		chart.setFileName(ExtensionMessages.chromatogram);
 		BaseChart baseChart = chart.getBaseChart();
 		IPlotArea plotArea = baseChart.getPlotArea();
 		/*
