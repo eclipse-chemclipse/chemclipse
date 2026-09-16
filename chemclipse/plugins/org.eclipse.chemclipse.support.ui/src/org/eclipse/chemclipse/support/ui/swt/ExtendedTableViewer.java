@@ -78,6 +78,8 @@ public class ExtendedTableViewer extends TableViewer implements IExtendedTableVi
 	private final List<IColumnMoveListener> columnMoveListeners = new ArrayList<>();
 	private boolean editEnabled = true;
 	private int[] defaultColumnWidths = new int[0];
+	private boolean rebuildingColumns = false;
+	private boolean columnSetReplaced = false;
 
 	private boolean copyHeaderToClipboard = PreferenceSupplier.DEF_CLIPBOARD_COPY_HEADER;
 	private ValueDelimiter copyValueDelimiterClipboard = ValueDelimiter.TAB;
@@ -104,6 +106,7 @@ public class ExtendedTableViewer extends TableViewer implements IExtendedTableVi
 	@Override
 	public void resetColumnOrder() {
 
+		PreferenceSupplier.setColumnOrder(getColumnPreferenceName(PreferenceSupplier.P_COLUMN_ORDER), PreferenceSupplier.DEF_COLUMN_ORDER);
 		PreferenceSupplier.setColumnOrder(getPreferenceName(PreferenceSupplier.P_COLUMN_ORDER), PreferenceSupplier.DEF_COLUMN_ORDER);
 		Table table = getTable();
 		int columnCount = table.getColumnCount();
@@ -119,6 +122,7 @@ public class ExtendedTableViewer extends TableViewer implements IExtendedTableVi
 	@Override
 	public void resetColumnWidth() {
 
+		PreferenceSupplier.setColumnWidth(getColumnPreferenceName(PreferenceSupplier.P_COLUMN_WIDTH), PreferenceSupplier.DEF_COLUMN_WIDTH);
 		PreferenceSupplier.setColumnWidth(getPreferenceName(PreferenceSupplier.P_COLUMN_WIDTH), PreferenceSupplier.DEF_COLUMN_WIDTH);
 		Table table = getTable();
 		TableColumn[] columns = table.getColumns();
@@ -168,12 +172,34 @@ public class ExtendedTableViewer extends TableViewer implements IExtendedTableVi
 	@Override
 	public void createColumns(String[] titles, int[] bounds) {
 
+		/*
+		 * Disposing and creating the columns moves and resizes them, which would
+		 * otherwise persist the layout of a table that is only half built.
+		 */
+		rebuildingColumns = true;
+		try {
+			buildColumns(titles, bounds);
+		} finally {
+			rebuildingColumns = false;
+		}
+	}
+
+	private void buildColumns(String[] titles, int[] bounds) {
+
 		defaultColumnWidths = Arrays.copyOf(bounds, bounds.length);
 		/*
 		 * Clear the table and all existing columns.
 		 */
 		Table table = getTable();
 		table.setRedraw(false);
+
+		if(table.getColumnCount() > 0) {
+			/*
+			 * The columns are exchanged, hence a layout stored without the column set
+			 * in the key can't be told apart from the one of another column set.
+			 */
+			columnSetReplaced = true;
+		}
 
 		tableViewerColumns.clear();
 		table.clearAll();
@@ -385,13 +411,18 @@ public class ExtendedTableViewer extends TableViewer implements IExtendedTableVi
 	@Override
 	public void clearColumns() {
 
-		tableViewerColumns.clear();
-		Table table = getTable();
-		for(TableColumn column : table.getColumns()) {
-			column.dispose();
+		rebuildingColumns = true;
+		try {
+			tableViewerColumns.clear();
+			Table table = getTable();
+			for(TableColumn column : table.getColumns()) {
+				column.dispose();
+			}
+			table.setHeaderVisible(false);
+			table.setLinesVisible(false);
+		} finally {
+			rebuildingColumns = false;
 		}
-		table.setHeaderVisible(false);
-		table.setLinesVisible(false);
 	}
 
 	@Override
@@ -684,24 +715,67 @@ public class ExtendedTableViewer extends TableViewer implements IExtendedTableVi
 			@Override
 			public void controlMoved(ControlEvent e) {
 
+				if(rebuildingColumns) {
+					return;
+				}
 				String columnOrder = TableSupport.getColumnOrder(table);
-				PreferenceSupplier.setColumnOrder(getPreferenceName(PreferenceSupplier.P_COLUMN_ORDER), columnOrder);
+				PreferenceSupplier.setColumnOrder(getColumnPreferenceName(PreferenceSupplier.P_COLUMN_ORDER), columnOrder);
 			}
 
 			@Override
 			public void controlResized(ControlEvent e) {
 
+				if(rebuildingColumns) {
+					return;
+				}
 				String columnWidth = TableSupport.getColumnWidth(table);
-				PreferenceSupplier.setColumnWidth(getPreferenceName(PreferenceSupplier.P_COLUMN_WIDTH), columnWidth);
+				PreferenceSupplier.setColumnWidth(getColumnPreferenceName(PreferenceSupplier.P_COLUMN_WIDTH), columnWidth);
 			}
 		});
 	}
 
 	private void updateColumnOrderAndWith() {
 
-		Table table = getTable();
-		TableSupport.setColumnOrder(table, PreferenceSupplier.getColumnOrder(getPreferenceName(PreferenceSupplier.P_COLUMN_ORDER)));
-		TableSupport.setColumnWidth(table, PreferenceSupplier.getColumnWidth(getPreferenceName(PreferenceSupplier.P_COLUMN_WIDTH)));
+		/*
+		 * Restoring must not be persisted again, otherwise the stored layout of the
+		 * previous column set is overwritten while it is being replaced.
+		 */
+		boolean rebuilding = rebuildingColumns;
+		rebuildingColumns = true;
+		try {
+			migrateColumnLayout();
+			Table table = getTable();
+			TableSupport.setColumnOrder(table, PreferenceSupplier.getColumnOrder(getColumnPreferenceName(PreferenceSupplier.P_COLUMN_ORDER)));
+			TableSupport.setColumnWidth(table, PreferenceSupplier.getColumnWidth(getColumnPreferenceName(PreferenceSupplier.P_COLUMN_WIDTH)));
+		} finally {
+			rebuildingColumns = rebuilding;
+		}
+	}
+
+	/**
+	 * Takes over a layout that was stored before the column set was part of the key.
+	 * Only the set a table starts with can be the one that layout was stored for, as
+	 * a table that has exchanged its columns can't tell whose layout it is.
+	 */
+	private void migrateColumnLayout() {
+
+		if(columnSetReplaced) {
+			return;
+		}
+
+		if(PreferenceSupplier.getColumnOrder(getColumnPreferenceName(PreferenceSupplier.P_COLUMN_ORDER)).isEmpty()) {
+			String columnOrder = PreferenceSupplier.getColumnOrder(getPreferenceName(PreferenceSupplier.P_COLUMN_ORDER));
+			if(!columnOrder.isEmpty()) {
+				PreferenceSupplier.setColumnOrder(getColumnPreferenceName(PreferenceSupplier.P_COLUMN_ORDER), columnOrder);
+			}
+		}
+
+		if(PreferenceSupplier.getColumnWidth(getColumnPreferenceName(PreferenceSupplier.P_COLUMN_WIDTH)).isEmpty()) {
+			String columnWidth = PreferenceSupplier.getColumnWidth(getPreferenceName(PreferenceSupplier.P_COLUMN_WIDTH));
+			if(!columnWidth.isEmpty()) {
+				PreferenceSupplier.setColumnWidth(getColumnPreferenceName(PreferenceSupplier.P_COLUMN_WIDTH), columnWidth);
+			}
+		}
 	}
 
 	private TableViewerColumn createTableColumn(String title, int width) {
@@ -721,6 +795,36 @@ public class ExtendedTableViewer extends TableViewer implements IExtendedTableVi
 
 		String postfix = getClass().getName();
 		return prefix + postfix;
+	}
+
+	/**
+	 * The order and the width refer to a specific set of columns. Tables that create
+	 * their columns dynamically, e.g. one column per comparison metric, would store
+	 * the layout of all their variants under the same key and hence lose it on each
+	 * switch. Therefore, the columns currently shown are part of the key.
+	 */
+	private String getColumnPreferenceName(String prefix) {
+
+		return getPreferenceName(prefix) + getColumnSetQualifier();
+	}
+
+	private String getColumnSetQualifier() {
+
+		Table table = getTable();
+		if(table.isDisposed()) {
+			return ""; //$NON-NLS-1$
+		}
+		/*
+		 * The titles identify the column set. Dynamic columns make them unique, e.g.
+		 * by adding the metric id to an otherwise ambiguous label.
+		 */
+		StringBuilder builder = new StringBuilder();
+		for(TableColumn tableColumn : table.getColumns()) {
+			builder.append(tableColumn.getText());
+			builder.append('\n');
+		}
+
+		return "_" + Integer.toHexString(builder.toString().hashCode()); //$NON-NLS-1$
 	}
 
 	private ValueDelimiter getValueDelimiter() {
