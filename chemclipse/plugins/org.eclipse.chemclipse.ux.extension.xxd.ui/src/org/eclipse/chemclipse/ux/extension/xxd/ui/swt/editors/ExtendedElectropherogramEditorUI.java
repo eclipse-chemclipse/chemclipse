@@ -85,7 +85,6 @@ import org.eclipse.chemclipse.ux.extension.ui.methods.ResumeMethodSupport;
 import org.eclipse.chemclipse.ux.extension.ui.methods.SettingsWizard;
 import org.eclipse.chemclipse.ux.extension.ui.support.AuditTrailSupport;
 import org.eclipse.chemclipse.ux.extension.ui.support.PartSupport;
-import org.eclipse.chemclipse.ux.extension.ui.swt.ChartGridSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.editors.EditorProcessTypeSupplier;
@@ -211,7 +210,6 @@ public class ExtendedElectropherogramEditorUI extends Composite implements ITool
 	private AtomicReference<Composite> toolbarMainControl = new AtomicReference<>();
 	private AtomicReference<Button> buttonToolbarMethod = new AtomicReference<>();
 	private AtomicReference<MethodSupportUI> toolbarMethodControl = new AtomicReference<>();
-	private AtomicReference<Button> buttonChartGridControl = new AtomicReference<>();
 	private AtomicReference<LineChart> chartControl = new AtomicReference<>();
 
 	private IChromatogramSelection chromatogramSelection = null;
@@ -233,7 +231,6 @@ public class ExtendedElectropherogramEditorUI extends Composite implements ITool
 	private MApplication application = Activator.getDefault().getApplication();
 	private IEventBroker eventBroker = Activator.getDefault().getEventBroker();
 	private IPreferenceStore preferenceStore = Activator.getDefault().getPreferenceStore();
-	private ChartGridSupport chartGridSupport = new ChartGridSupport();
 
 	public ExtendedElectropherogramEditorUI(Composite parent, int style, IProcessSupplierContext processTypeSupport) {
 
@@ -933,7 +930,6 @@ public class ExtendedElectropherogramEditorUI extends Composite implements ITool
 		setHelp(this, HelpContext.CHROMATOGRAM_EDITOR);
 
 		enableToolbar(toolbarMethodControl, buttonToolbarMethod.get(), IMAGE_METHOD, TOOLTIP_METHOD, preferenceStore.getBoolean(PreferenceSupplier.P_CHROMATOGRAM_SHOW_METHODS_TOOLBAR));
-		enableChartGrid(chartControl, buttonChartGridControl.get(), IMAGE_CHART_GRID, chartGridSupport);
 	}
 
 	private void createToolbarMethod(Composite parent) {
@@ -958,23 +954,16 @@ public class ExtendedElectropherogramEditorUI extends Composite implements ITool
 
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		composite.setLayout(new GridLayout(7, false));
+		composite.setLayout(new GridLayout(6, false));
 
 		createProcessorToolbarUI(composite);
 		createButtonToggleMethod(composite);
-		createButtonToggleChartGrid(composite);
 		createToggleChartSeriesLegendButton(composite);
 		createButtonReset(composite);
 		createButtonHelp(composite, HelpContext.CHROMATOGRAM_EDITOR);
 		createButtonSettings(composite);
 
 		toolbarMainControl.set(composite);
-	}
-
-	private void createButtonToggleChartGrid(Composite parent) {
-
-		Button button = createButtonToggleChartGrid(parent, chartControl, IMAGE_CHART_GRID, chartGridSupport);
-		buttonChartGridControl.set(button);
 	}
 
 	private void createProcessorToolbarUI(Composite parent) {
@@ -1049,9 +1038,7 @@ public class ExtendedElectropherogramEditorUI extends Composite implements ITool
 		IChartSettings chartSettings = chart.getChartSettings();
 		chartSettings.setCreateMenu(true);
 		chartSettings.setRangeSelectorDefaultAxisX(0);
-		chartSettings.getPrimaryAxisSettingsX().setTitleVisible(false);
 		chartSettings.setRangeSelectorDefaultAxisY(0);
-		chartSettings.getPrimaryAxisSettingsY().setTitleVisible(false);
 
 		chart.applySettings(chartSettings);
 		/*
@@ -1146,6 +1133,8 @@ public class ExtendedElectropherogramEditorUI extends Composite implements ITool
 		IPrimaryAxisSettings primaryAxisSettingsX = chartSettings.getPrimaryAxisSettingsX();
 		primaryAxisSettingsX.setVisible(false);
 		primaryAxisSettingsX.setTicksVisible(false);
+		primaryAxisSettingsX.setGridLineStyle(LineStyle.NONE);
+		primaryAxisSettingsX.setTitleVisible(false);
 		primaryAxisSettingsX.setDecimalFormat(new DecimalFormat("0", ENGLISH_SYMBOLS));
 	}
 
@@ -1156,6 +1145,7 @@ public class ExtendedElectropherogramEditorUI extends Composite implements ITool
 		primaryAxisSettingsY.setDecimalFormat(new MagnitudeScaledDecimalFormat("0.#", ENGLISH_SYMBOLS, exponent));
 		primaryAxisSettingsY.setTitleVisible(true);
 		primaryAxisSettingsY.setTitle(ExtensionMessages.intensity);
+		primaryAxisSettingsY.setGridLineStyle(LineStyle.NONE);
 		primaryAxisSettingsY.setHorizontalLabel("×10" + MagnitudeScaledDecimalFormat.toSuperscript(String.valueOf(exponent)));
 	}
 
