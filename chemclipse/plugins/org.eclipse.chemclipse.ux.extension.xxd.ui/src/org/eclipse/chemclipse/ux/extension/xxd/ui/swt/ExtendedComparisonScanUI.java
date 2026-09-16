@@ -263,10 +263,7 @@ public class ExtendedComparisonScanUI extends Composite implements IExtendedPart
 
 			scanReference = copyScan(referenceMassSpectrum);
 			updateMolecularIon(identificationTarget, scanReference);
-			Display.getDefault().asyncExec(() -> {
-
-				updateChart();
-			});
+			Display.getDefault().asyncExec(this::updateChart);
 		});
 		/*
 		 * Create a runnable to update the reference.

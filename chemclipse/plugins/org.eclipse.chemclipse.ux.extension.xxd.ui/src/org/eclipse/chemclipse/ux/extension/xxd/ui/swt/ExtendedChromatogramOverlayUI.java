@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.chemclipse.csd.model.core.selection.IChromatogramSelectionCSD;
@@ -34,6 +35,7 @@ import org.eclipse.chemclipse.model.core.IMarkedTraces;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
 import org.eclipse.chemclipse.model.core.MarkedTraces;
+import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.model.traces.NamedTrace;
 import org.eclipse.chemclipse.model.traces.NamedTraces;
@@ -49,6 +51,7 @@ import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 import org.eclipse.chemclipse.support.traces.TraceRasteredWSD;
 import org.eclipse.chemclipse.support.traces.TraceType;
 import org.eclipse.chemclipse.support.ui.provider.AbstractLabelProvider;
+import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.chemclipse.support.validators.TraceValidator;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
 import org.eclipse.chemclipse.ux.extension.ui.support.PartSupport;
@@ -61,11 +64,13 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.charts.ChromatogramChart;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.charts.ChromatogramRulerChart;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.help.HelpContext;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.support.OverlayChartSupport;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.model.TracesSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogram;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogramChart;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageNamedTraces;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageOverlay;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.runnables.LibraryServiceRunnable;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.DisplayType;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ChromatogramChartSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ChromatogramDataSupport;
@@ -77,12 +82,15 @@ import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.wsd.model.core.IScanWSD;
 import org.eclipse.chemclipse.wsd.model.core.selection.IChromatogramSelectionWSD;
 import org.eclipse.chemclipse.wsd.model.xwc.IExtractedWavelengthSignal;
+import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -550,6 +558,48 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 	private void updateNamedTraces() {
 
 		toolbarNamedTraces.get().setInput(new NamedTraces(preferenceStore.getString(PreferenceSupplier.P_CHROMATOGRAM_OVERLAY_NAMED_TRACES)));
+	}
+
+	public void update(IIdentificationTarget identificationTarget) {
+
+		if(identificationTarget != null) {
+			updateIdentificationTarget(identificationTarget);
+		}
+	}
+
+	private void updateIdentificationTarget(IIdentificationTarget identificationTarget) {
+
+		LibraryServiceRunnable runnable = new LibraryServiceRunnable(identificationTarget, referenceMassSpectrum -> {
+			NamedTrace libraryTrace = new NamedTrace(identificationTarget.getLibraryInformation().getName(), TracesSupport.getTraces(referenceMassSpectrum, 5));
+			if(!libraryTrace.getTraces().isEmpty()) {
+				getDisplay().asyncExec(() -> {
+					if(!isDisposed()) {
+						NamedTraces namedTraces = toolbarNamedTraces.get().getNamedTraces() != null ? toolbarNamedTraces.get().getNamedTraces() : new NamedTraces();
+						namedTraces.add(libraryTrace);
+						toolbarNamedTraces.get().setInput(namedTraces, true);
+					}
+				});
+			}
+		});
+
+		try {
+			if(runnable.requireProgressMonitor()) {
+				DisplayUtils.executeInUserInterfaceThread(() -> {
+					ProgressMonitorDialog monitor = new ProgressMonitorDialog(chartControl.get().getShell());
+					monitor.run(true, true, runnable);
+					return null;
+				});
+			} else {
+				DisplayUtils.executeBusy(() -> {
+					runnable.run(new NullProgressMonitor());
+					return null;
+				});
+			}
+		} catch(InterruptedException e) {
+			Thread.currentThread().interrupt();
+		} catch(ExecutionException e) {
+			ILog.get().error("Updating the reference scan failed.", e);
+		}
 	}
 
 	private void createOverlayChart(Composite parent) {

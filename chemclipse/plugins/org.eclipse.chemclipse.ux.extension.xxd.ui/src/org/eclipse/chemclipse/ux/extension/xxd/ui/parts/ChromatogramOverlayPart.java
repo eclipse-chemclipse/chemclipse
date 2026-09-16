@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -15,7 +15,10 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.parts;
 
 import java.util.List;
 
+import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
+import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.chemclipse.ux.extension.ui.parts.AbstractPart;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
@@ -56,11 +59,20 @@ public class ChromatogramOverlayPart extends AbstractPart<ExtendedChromatogramOv
 
 		if(objects.size() == 1) {
 			Object object = objects.get(0);
-			if(isUpdateEvent(topic)) {
+			if(isChromatogramUpdateEvent(topic)) {
 				if(object instanceof IChromatogramSelection chromatogramSelection) {
 					getControl().update(chromatogramSelection);
 					return true;
 				}
+			} else if(isPeakUpdateEvent(topic) || isScanUpdateEvent(topic)) {
+				IIdentificationTarget identificationTarget = null;
+				if(object instanceof IScanMSD scanMSD) {
+					identificationTarget = IIdentificationTarget.getIdentificationTarget(scanMSD);
+				} else if(object instanceof IPeakMSD peakMSD) {
+					identificationTarget = IIdentificationTarget.getIdentificationTarget(peakMSD);
+				}
+				getControl().update(identificationTarget);
+				return true;
 			}
 		}
 
@@ -70,11 +82,21 @@ public class ChromatogramOverlayPart extends AbstractPart<ExtendedChromatogramOv
 	@Override
 	protected boolean isUpdateTopic(String topic) {
 
-		return isUpdateEvent(topic);
+		return isChromatogramUpdateEvent(topic) || isPeakUpdateEvent(topic) || isScanUpdateEvent(topic);
 	}
 
-	private boolean isUpdateEvent(String topic) {
+	private boolean isChromatogramUpdateEvent(String topic) {
 
 		return TOPIC.equals(topic);
+	}
+
+	private boolean isScanUpdateEvent(String topic) {
+
+		return IChemClipseEvents.TOPIC_SCAN_XXD_UPDATE_SELECTION.equals(topic);
+	}
+
+	private boolean isPeakUpdateEvent(String topic) {
+
+		return IChemClipseEvents.TOPIC_PEAK_XXD_UPDATE_SELECTION.equals(topic);
 	}
 }
