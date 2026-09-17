@@ -91,6 +91,29 @@
         </children>
       </children>
     </elements>
+    <elements xsi:type="advanced:Perspective" xmi:id="__2fg0LJ9EfGJg8J48iBmmg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.perspective.dsd" selectedElement="__2fg0bJ9EfGJg8J48iBmmg" label="Gene Analysis" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/chromatogram-dsd.gif">
+      <children xsi:type="basic:PartSashContainer" xmi:id="__2fg0bJ9EfGJg8J48iBmmg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.perspective.maldi.partsashcontainer.0" horizontal="true">
+        <children xsi:type="basic:PartSashContainer" xmi:id="__2fg0rJ9EfGJg8J48iBmmg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.perspective.maldi.partsashcontainer.1" containerData="1500" horizontal="true">
+          <children xsi:type="basic:PartStack" xmi:id="__2fg07J9EfGJg8J48iBmmg" elementId="net.openchrom.msd.identifier.supplier.opentyper.ui.partstack.0">
+            <children xsi:type="advanced:Placeholder" xmi:id="_GLsIULJ-EfGJg8J48iBmmg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.dataexplorer" ref="_qtur4Cf2EeafjOXnfHSw0Q"/>
+            <children xsi:type="advanced:Placeholder" xmi:id="_G4qjELJ-EfGJg8J48iBmmg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.peakScanListPartDescriptor" ref="_dXp1AC5uEeiL24_JU7_FGA"/>
+          </children>
+        </children>
+        <children xsi:type="basic:PartSashContainer" xmi:id="__2fg1rJ9EfGJg8J48iBmmg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.perspective.maldi.partsashcontainer.2" horizontal="true">
+          <children xsi:type="basic:PartSashContainer" xmi:id="__2fg17J9EfGJg8J48iBmmg" elementId="net.openchrom.msd.identifier.supplier.maldi.ui.partsashcontainer.3">
+            <children xsi:type="advanced:Placeholder" xmi:id="__2fg2LJ9EfGJg8J48iBmmg" elementId="org.eclipse.ui.editorss" ref="_qjvtkCskEeakPPc3RJFSAg"/>
+            <children xsi:type="basic:PartStack" xmi:id="__2fg2bJ9EfGJg8J48iBmmg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.partstack.5">
+              <children xsi:type="advanced:Placeholder" xmi:id="_TcsrYLJ-EfGJg8J48iBmmg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.targets" ref="_E8UhsDmqEei-wI9hy1kIxA"/>
+            </children>
+          </children>
+          <children xsi:type="basic:PartStack" xmi:id="__2fg37J9EfGJg8J48iBmmg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.perspective.maldi.partstack.1" containerData="1500">
+            <children xsi:type="advanced:Placeholder" xmi:id="__2fg3rJ9EfGJg8J48iBmmg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.processinginfo" ref="_aHkWoK2kEeuuJ_UXBFJQCQ"/>
+            <children xsi:type="basic:Part" xmi:id="_iJrdMLJ-EfGJg8J48iBmmg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.headerdata" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.xxd.ui/org.eclipse.chemclipse.ux.extension.xxd.ui.parts.HeaderDataPart" label="%HeaderData" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/header.gif" closeable="true"/>
+            <children xsi:type="basic:Part" xmi:id="_tX_vwLJ-EfGJg8J48iBmmg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.synonyms" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.xxd.ui/org.eclipse.chemclipse.ux.extension.xxd.ui.parts.SynonymsPart" label="%Synonyms" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/tag.gif"/>
+          </children>
+        </children>
+      </children>
+    </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_2yQBwJ0_Eee_5ZW_PnglkQ" featurename="descriptors" parentElementId="org.eclipse.chemclipse.rcp.ide.application">
     <elements xsi:type="basic_1:PartDescriptor" xmi:id="_ErRAAJ1AEee_5ZW_PnglkQ" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.chromatogramOverlayPartDescriptor" label="%ChromatogramOverlay" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/chromatogramOverlayDefault.gif" closeable="true" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.xxd.ui/org.eclipse.chemclipse.ux.extension.xxd.ui.parts.ChromatogramOverlayPart"/>
