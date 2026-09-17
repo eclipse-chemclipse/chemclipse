@@ -18,14 +18,15 @@ import org.eclipse.chemclipse.model.core.ITargetSupplier;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.targets.TargetSupport;
 import org.eclipse.chemclipse.support.ui.provider.AbstractChemClipseLabelProvider;
+import org.eclipse.chemclipse.ux.extension.dsd.ui.l10n.ExtensionMessages;
 import org.eclipse.chemclipse.ux.extension.ui.provider.IdentificationTargetSupport;
 import org.eclipse.swt.graphics.Image;
 
 public class BaseCallerListLabelProvider extends AbstractChemClipseLabelProvider {
 
-	public static final String BASE_NUMBER = "Number";
-	public static final String BEST_TARGET = "Nucleotide";
-	public static final String MATCH_QUALITY = "Rating";
+	public static final String BASE_NUMBER = ExtensionMessages.number;
+	public static final String BEST_TARGET = ExtensionMessages.nucleotide;
+	public static final String MATCH_QUALITY = ExtensionMessages.rating;
 
 	private static final String BLANK = "";
 
