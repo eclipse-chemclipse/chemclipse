@@ -206,12 +206,20 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 			return;
 		}
 
-		// Sort again as targets verification was updated.
 		TargetsListUI targetListUI = getActiveTargetList().get();
-		updateInput(getRetentionIndex());
-		targetListUI.sortTable();
-
 		Table table = targetListUI.getTable();
+		/*
+		 * Skip the echo of the own propagation, otherwise the refresh
+		 * would cancel a cell editor that has just been opened.
+		 */
+		int selectionIndex = table.getSelectionIndex();
+		if(selectionIndex >= 0 && table.getItem(selectionIndex).getData() == identificationTarget) {
+			return;
+		}
+
+		updateInput(getRetentionIndex());
+		targetListUI.sortTable(); // Sort again as targets verification was updated.
+
 		for(int index = 0; index < table.getItemCount(); index++) {
 			if(table.getItem(index).getData() == identificationTarget) {
 				table.setSelection(index);
