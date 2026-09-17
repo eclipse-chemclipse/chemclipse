@@ -103,7 +103,7 @@
           <children xsi:type="basic:PartSashContainer" xmi:id="__2fg17J9EfGJg8J48iBmmg" elementId="net.openchrom.msd.identifier.supplier.maldi.ui.partsashcontainer.3">
             <children xsi:type="advanced:Placeholder" xmi:id="__2fg2LJ9EfGJg8J48iBmmg" elementId="org.eclipse.ui.editorss" ref="_qjvtkCskEeakPPc3RJFSAg"/>
             <children xsi:type="basic:PartStack" xmi:id="__2fg2bJ9EfGJg8J48iBmmg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.partstack.5">
-              <children xsi:type="advanced:Placeholder" xmi:id="_TcsrYLJ-EfGJg8J48iBmmg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.targets" ref="_E8UhsDmqEei-wI9hy1kIxA"/>
+              <children xsi:type="basic:Part" xmi:id="_BEfjALKUEfGvvI7tTNrhJA" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.targets" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.dsd.ui/org.eclipse.chemclipse.ux.extension.dsd.ui.parts.ElectropherogramTargetsPart" label="%Targets" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/target.png"/>
             </children>
           </children>
           <children xsi:type="basic:PartStack" xmi:id="__2fg37J9EfGJg8J48iBmmg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.perspective.maldi.partstack.1" containerData="1500">

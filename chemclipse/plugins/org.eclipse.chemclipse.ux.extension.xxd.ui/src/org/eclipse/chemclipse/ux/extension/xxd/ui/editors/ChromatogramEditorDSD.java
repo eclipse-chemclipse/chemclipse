@@ -96,6 +96,7 @@ public class ChromatogramEditorDSD extends AbstractUpdater<ExtendedElectropherog
 	private static final String TOPIC_EDITOR_ADJUST = IChemClipseEvents.TOPIC_EDITOR_CHROMATOGRAM_ADJUST;
 	private static final String TOPIC_TOOLBAR_UPDATE = IChemClipseEvents.TOPIC_EDITOR_CHROMATOGRAM_TOOLBAR_UPDATE;
 
+	private final Composite parent;
 	private final DataType dataType;
 	private final MPart part;
 	private final MDirtyable dirtyable;
@@ -120,6 +121,7 @@ public class ChromatogramEditorDSD extends AbstractUpdater<ExtendedElectropherog
 
 		super(TOPIC_CHROMATOGRAM, Activator.getDefault().getDataUpdateSupport());
 
+		this.parent = parent;
 		this.dataType = DataType.DSD;
 		this.part = part;
 		this.dirtyable = dirtyable;
@@ -143,6 +145,8 @@ public class ChromatogramEditorDSD extends AbstractUpdater<ExtendedElectropherog
 				}
 			});
 		}
+
+		parent.setFocus();
 	}
 
 	@PostConstruct
