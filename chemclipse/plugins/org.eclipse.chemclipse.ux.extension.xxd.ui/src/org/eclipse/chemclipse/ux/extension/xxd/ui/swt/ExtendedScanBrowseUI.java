@@ -324,12 +324,7 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 
 	private void updateLabel(IScan scan) {
 
-		if(scan instanceof ILibraryMassSpectrum libraryMassSpectrum) {
-			ILibraryInformation libraryInformation = libraryMassSpectrum.getLibraryInformation();
-			labelInfo.setText((libraryInformation != null) ? libraryInformation.getName() : "");
-		} else {
-			labelInfo.setText(scanDataSupport.getScanLabel(scan));
-		}
+		labelInfo.setText(scanDataSupport.getScanLabel(scan));
 	}
 
 	private void updateChart(IScan scan) {

@@ -21,6 +21,7 @@ import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.types.DataType;
 import org.eclipse.chemclipse.model.types.SignalType;
+import org.eclipse.chemclipse.msd.model.core.ILibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IPeakMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
@@ -62,21 +63,24 @@ public class ScanDataSupport {
 		if(scan != null) {
 			if(scan instanceof IPeakMassSpectrum) {
 				builder.append("Peak Scan");
-				builder.append(" | ");
+			} else if(scan instanceof ILibraryMassSpectrum) {
+				builder.append("Library Spectrum");
 			} else {
 				builder.append("Scan: ");
 				builder.append(scan.getScanNumber());
-				builder.append(" | ");
 			}
 
-			builder.append("RT: ");
-			builder.append(decimalFormat.format(scan.getRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
-			builder.append(" | ");
-			builder.append("RI: ");
-			if(org.eclipse.chemclipse.model.preferences.PreferenceSupplier.showRetentionIndexWithoutDecimals()) {
-				builder.append(Integer.toString((int)scan.getRetentionIndex()));
-			} else {
-				builder.append(decimalFormat.format(scan.getRetentionIndex()));
+			if(!(scan instanceof ILibraryMassSpectrum)) {
+				builder.append(" | ");
+				builder.append("RT: ");
+				builder.append(decimalFormat.format(scan.getRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
+				builder.append(" | ");
+				builder.append("RI: ");
+				if(org.eclipse.chemclipse.model.preferences.PreferenceSupplier.showRetentionIndexWithoutDecimals()) {
+					builder.append(Integer.toString((int)scan.getRetentionIndex()));
+				} else {
+					builder.append(decimalFormat.format(scan.getRetentionIndex()));
+				}
 			}
 
 			if(scan instanceof IRegularMassSpectrum massSpectrum) {
@@ -93,9 +97,11 @@ public class ScanDataSupport {
 				}
 			}
 
-			builder.append(" | ");
-			builder.append("Signal: ");
-			builder.append(BigDecimal.valueOf(scan.getTotalSignal()).toBigInteger());
+			if(!(scan instanceof ILibraryMassSpectrum)) {
+				builder.append(" | ");
+				builder.append("Signal: ");
+				builder.append(BigDecimal.valueOf(scan.getTotalSignal()).toBigInteger());
+			}
 
 			if(scan instanceof IScanMSD scanMSD) {
 				IScanMSD optimizedMassSpectrum = scanMSD.getOptimizedMassSpectrum();
