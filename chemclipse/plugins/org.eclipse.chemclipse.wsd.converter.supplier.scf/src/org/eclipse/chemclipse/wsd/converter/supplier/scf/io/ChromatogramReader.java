@@ -207,6 +207,8 @@ public class ChromatogramReader extends AbstractChromatogramDSDReader {
 			if(scan.getTargets().isEmpty()) {
 				addIdentificationTarget(scan, Nucleobase.of(letter), (byte)100);
 			}
+
+			scan.setCycleNumber(i + 1); // TODO: move elsewhere
 		}
 	}
 

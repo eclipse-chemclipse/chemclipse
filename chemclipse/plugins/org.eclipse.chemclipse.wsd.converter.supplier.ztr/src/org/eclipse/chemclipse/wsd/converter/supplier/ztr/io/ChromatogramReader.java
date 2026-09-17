@@ -155,6 +155,7 @@ public class ChromatogramReader extends AbstractChromatogramDSDReader {
 			return;
 		}
 
+		int i = 0;
 		for(char letter : nucleotides) {
 
 			int scanNumber = basePositionArrayReader.readBasePosition() + 1;
@@ -167,6 +168,9 @@ public class ChromatogramReader extends AbstractChromatogramDSDReader {
 			IIdentificationTarget identificationTarget = new IdentificationTarget(libraryInformation, comparisonResult);
 			identificationTarget.setIdentifier("Base Caller");
 			scan.getTargets().add(identificationTarget); // TODO add to scan signal rather than total signal
+
+			scan.setCycleNumber(i + 1); // TODO: move elsewhere
+			i++;
 		}
 	}
 
