@@ -187,6 +187,7 @@ public class ExtendedElectropherogramEditorUI extends Composite implements ITool
 	private static final DecimalFormatSymbols ENGLISH_SYMBOLS = new DecimalFormatSymbols(Locale.ENGLISH);
 
 	private static final Set<String> DISABLED_CATEGORIES = Set.of( //
+			ICategories.BASELINE_DETECTOR, //
 			ICategories.CHROMATOGRAM_CALCULATOR, //
 			ICategories.CHROMATOGRAM_CLASSIFIER, //
 			ICategories.CHROMATOGRAM_FILTER, //
