@@ -158,6 +158,8 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 
 	private final Map<IChromatogramSelection, List<String>> chromatogramSelections = new LinkedHashMap<>();
 
+	private NamedTrace libraryTrace = null;
+
 	public ExtendedChromatogramOverlayUI(Composite parent, int style) {
 
 		super(parent, style);
@@ -285,7 +287,7 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 		namedTracesUI.setUpdateListener(() -> {
 			NamedTraces namedTraces = namedTracesUI.getNamedTraces();
 			if(namedTraces != null) {
-				preferenceStore.setValue(PreferenceSupplier.P_CHROMATOGRAM_OVERLAY_NAMED_TRACES, namedTraces.save());
+				saveNamedTraces(namedTraces);
 				refreshUpdateOverlayChart(true);
 			}
 		});
@@ -557,7 +559,30 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 
 	private void updateNamedTraces() {
 
-		toolbarNamedTraces.get().setInput(new NamedTraces(preferenceStore.getString(PreferenceSupplier.P_CHROMATOGRAM_OVERLAY_NAMED_TRACES)));
+		NamedTraces namedTraces = new NamedTraces(preferenceStore.getString(PreferenceSupplier.P_CHROMATOGRAM_OVERLAY_NAMED_TRACES));
+		/*
+		 * Don't replace a persisted named trace of the same identifier.
+		 */
+		boolean showLibraryTrace = libraryTrace != null && namedTraces.get(libraryTrace.getIdentifier()) == null;
+		if(showLibraryTrace) {
+			namedTraces.add(libraryTrace);
+		}
+		toolbarNamedTraces.get().setInput(namedTraces, showLibraryTrace);
+	}
+
+	private void saveNamedTraces(NamedTraces namedTraces) {
+
+		NamedTraces persistedTraces = new NamedTraces();
+		persistedTraces.addAll(namedTraces.values());
+
+		/*
+		 * Avoid too many collected entry so keep this as transient entry.
+		 */
+		if(libraryTrace != null && persistedTraces.get(libraryTrace.getIdentifier()) == libraryTrace) {
+			persistedTraces.remove(libraryTrace);
+		}
+
+		preferenceStore.setValue(PreferenceSupplier.P_CHROMATOGRAM_OVERLAY_NAMED_TRACES, persistedTraces.save());
 	}
 
 	public void update(IIdentificationTarget identificationTarget) {
@@ -570,13 +595,12 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 	private void updateIdentificationTarget(IIdentificationTarget identificationTarget) {
 
 		LibraryServiceRunnable runnable = new LibraryServiceRunnable(identificationTarget, referenceMassSpectrum -> {
-			NamedTrace libraryTrace = new NamedTrace(identificationTarget.getLibraryInformation().getName(), TracesSupport.getTraces(referenceMassSpectrum, 5));
-			if(!libraryTrace.getTraces().isEmpty()) {
+			NamedTrace namedTrace = new NamedTrace(identificationTarget.getLibraryInformation().getName(), TracesSupport.getTraces(referenceMassSpectrum, 5));
+			if(!namedTrace.getTraces().isEmpty()) {
 				getDisplay().asyncExec(() -> {
 					if(!isDisposed()) {
-						NamedTraces namedTraces = toolbarNamedTraces.get().getNamedTraces() != null ? toolbarNamedTraces.get().getNamedTraces() : new NamedTraces();
-						namedTraces.add(libraryTrace);
-						toolbarNamedTraces.get().setInput(namedTraces, true);
+						libraryTrace = namedTrace;
+						updateNamedTraces();
 					}
 				});
 			}
