@@ -96,7 +96,7 @@
         <children xsi:type="basic:PartSashContainer" xmi:id="__2fg0rJ9EfGJg8J48iBmmg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.perspective.dsd.partsashcontainer.1" containerData="1500" horizontal="true">
           <children xsi:type="basic:PartStack" xmi:id="__2fg07J9EfGJg8J48iBmmg" elementId="net.openchrom.msd.identifier.supplier.dsd.ui.partstack.0">
             <children xsi:type="advanced:Placeholder" xmi:id="_GLsIULJ-EfGJg8J48iBmmg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.dataexplorer" ref="_qtur4Cf2EeafjOXnfHSw0Q"/>
-            <children xsi:type="advanced:Placeholder" xmi:id="_G4qjELJ-EfGJg8J48iBmmg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.peakScanListPartDescriptor" ref="_dXp1AC5uEeiL24_JU7_FGA"/>
+            <children xsi:type="basic:Part" xmi:id="_4xt1sLKtEfGzwa42vmeL1w" elementId="org.eclipse.chemclipse.ux.extension.dsd.ui.part.nucleotideBaseCaller" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.dsd.ui/org.eclipse.chemclipse.ux.extension.dsd.ui.parts.BaseCallerListPart" label="Nucleobases" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/scanPeakListDefault.gif"/>
             <children xsi:type="basic:Part" xmi:id="_iJrdMLJ-EfGJg8J48iBmmg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.headerdata" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.xxd.ui/org.eclipse.chemclipse.ux.extension.xxd.ui.parts.HeaderDataPart" label="%HeaderData" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/header.gif" closeable="true"/>
           </children>
         </children>
