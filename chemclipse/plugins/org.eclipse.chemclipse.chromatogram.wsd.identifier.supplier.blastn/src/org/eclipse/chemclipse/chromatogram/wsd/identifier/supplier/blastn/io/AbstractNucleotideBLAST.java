@@ -14,6 +14,7 @@ package org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.io;
 
 import java.io.File;
 import java.math.BigInteger;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.BlastMetrics;
@@ -23,6 +24,7 @@ import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.Hsp;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.Report;
 import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.model.xml.v2.Search;
+import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.identifier.ComparisonResult;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.identifier.LibraryInformation;
@@ -31,7 +33,10 @@ import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 
 public abstract class AbstractNucleotideBLAST {
 
+	private static final Logger logger = Logger.getLogger(AbstractNucleotideBLAST.class);
+
 	private static final Pattern ENDS_WITH_DOT_NUMBER = Pattern.compile("\\.\\d+$");
+	private static final Pattern PATTERN_GEN_INFO = Pattern.compile("gi\\|(\\d+)\\|");
 
 	public static void transferTargets(IChromatogramWSD chromatogram, BlastOutput2 blastOutput) {
 
@@ -52,6 +57,7 @@ public abstract class AbstractNucleotideBLAST {
 			} else {
 				libraryInformation.setDatabase(db); // web
 			}
+			libraryInformation.setDatabaseIndex(parseGenInfo(description));
 			libraryInformation.setGenBankAccesion(description.getAccession());
 			libraryInformation.setReferenceIdentifier(description.getId());
 			if(description.getTaxid() != null) {
@@ -120,9 +126,28 @@ public abstract class AbstractNucleotideBLAST {
 	// treat multi-volume databases as one
 	private static String stripDotNumberSuffix(String value) {
 
-		if(ENDS_WITH_DOT_NUMBER.matcher(value).find()) {
-			return ENDS_WITH_DOT_NUMBER.matcher(value).replaceFirst("");
+		Matcher matcher = ENDS_WITH_DOT_NUMBER.matcher(value);
+		if(matcher.find()) {
+			return matcher.replaceFirst("");
 		}
 		return value;
+	}
+
+	// https://www.ncbi.nlm.nih.gov/genbank/sequenceids/
+	private static int parseGenInfo(HitDescr description) {
+
+		int gi = -1;
+
+		Matcher matcher = PATTERN_GEN_INFO.matcher(description.getId());
+		if(matcher.find()) {
+			try {
+				gi = Math.toIntExact(Long.parseLong(matcher.group(1)));
+			} catch(NumberFormatException e) {
+				logger.warn(e);
+			} catch(ArithmeticException _) {
+				// TODO: https://github.com/eclipse-chemclipse/chemclipse/issues/1570#issuecomment-5715203633
+			}
+		}
+		return gi;
 	}
 }
