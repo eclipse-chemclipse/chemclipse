@@ -15,7 +15,7 @@
 package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.charts;
 
 import org.eclipse.chemclipse.dsd.model.core.Nucleobase;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.support.NucleotideSupport;
+import org.eclipse.chemclipse.ux.extension.dsd.support.NucleotideSupport;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 

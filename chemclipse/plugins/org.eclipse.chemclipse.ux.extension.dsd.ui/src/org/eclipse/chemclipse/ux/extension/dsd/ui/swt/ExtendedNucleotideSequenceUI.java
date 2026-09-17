@@ -15,16 +15,20 @@ package org.eclipse.chemclipse.ux.extension.dsd.ui.swt;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.chemclipse.dsd.model.core.IChromatogramDSD;
+import org.eclipse.chemclipse.dsd.model.core.Nucleobase;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
+import org.eclipse.chemclipse.ux.extension.dsd.support.NucleotideSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyleRange;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Text;
 
 public class ExtendedNucleotideSequenceUI extends Composite implements IExtendedPartUI {
 
-	private AtomicReference<Text> textControl = new AtomicReference<>();
+	private AtomicReference<StyledText> textControl = new AtomicReference<>();
 
 	public ExtendedNucleotideSequenceUI(Composite parent, int style) {
 
@@ -35,20 +39,32 @@ public class ExtendedNucleotideSequenceUI extends Composite implements IExtended
 	private void createControl() {
 
 		setLayout(new FillLayout());
-		createText(this);
+		createNucleotideText(this);
 	}
 
-	private void createText(Composite parent) {
+	private void createNucleotideText(Composite parent) {
 
-		Text text = new Text(parent, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP | SWT.READ_ONLY);
+		StyledText text = new StyledText(parent, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL | SWT.WRAP | SWT.READ_ONLY);
 		textControl.set(text);
+	}
+
+	private void setText(String sequence) {
+
+		StyledText text = textControl.get();
+		text.setText(sequence);
+
+		for(int index = 0; index < sequence.length(); index++) {
+			Nucleobase nucleobase = Nucleobase.of(sequence.charAt(index));
+			Color color = nucleobase != null ? NucleotideSupport.getColor(nucleobase) : new Color(255, 0, 255);
+			text.setStyleRange(new StyleRange(index, 1, color, null));
+		}
 	}
 
 	public void updateInput(IChromatogramSelection chromatogramSelection) {
 
 		if(textControl.get() != null && chromatogramSelection != null) {
 			if(chromatogramSelection.getChromatogram() instanceof IChromatogramDSD chromatogram) {
-				textControl.get().setText(chromatogram.getNucleotideSequence().toString());
+				setText(chromatogram.getNucleotideSequence().toString());
 			}
 		}
 	}
