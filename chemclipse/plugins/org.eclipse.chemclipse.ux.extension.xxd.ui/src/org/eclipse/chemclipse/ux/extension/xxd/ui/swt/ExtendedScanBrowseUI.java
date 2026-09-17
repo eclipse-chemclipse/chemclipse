@@ -219,7 +219,9 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 				label = ChromatogramDataSupport.getReferenceLabel(chromatogram, -1, false);
 			} else if(element instanceof ILibraryMassSpectrum libraryMassSpectrum) {
 				ILibraryInformation libraryInformation = libraryMassSpectrum.getLibraryInformation();
-				label = (libraryInformation != null) ? libraryInformation.getReferenceIdentifier() : "";
+				if(libraryInformation != null) {
+					label = libraryInformation.getName() + " " + libraryInformation.getReferenceIdentifier();
+				}
 			}
 			return label;
 		});
