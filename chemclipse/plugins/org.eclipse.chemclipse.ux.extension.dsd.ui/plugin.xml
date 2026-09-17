@@ -8,4 +8,13 @@
             uri="fragment.e4xmi">
       </fragment>
    </extension>
+   <extension
+         point="org.eclipse.chemclipse.ux.extension.ui.welcometile">
+      <WelcomeTile
+            Description="Electropheroresis"
+            PerspectiveId="org.eclipse.chemclipse.ux.extension.xxd.ui.perspective.dsd"
+            Section="Gene Analysis"
+            defaultShow="false">
+      </WelcomeTile>
+   </extension>
 </plugin>
