@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.eclipse.chemclipse.dsd.model.core.IChromatogramDSD;
 import org.eclipse.chemclipse.dsd.model.core.Nucleobase;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
-import org.eclipse.chemclipse.ux.extension.dsd.support.NucleotideSupport;
+import org.eclipse.chemclipse.ux.extension.dsd.ui.support.NucleotideSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;

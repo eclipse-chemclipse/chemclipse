@@ -10,7 +10,7 @@
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
-package org.eclipse.chemclipse.ux.extension.dsd.support;
+package org.eclipse.chemclipse.ux.extension.dsd.ui.support;
 
 import org.eclipse.chemclipse.dsd.model.core.Nucleobase;
 import org.eclipse.swt.graphics.Color;
