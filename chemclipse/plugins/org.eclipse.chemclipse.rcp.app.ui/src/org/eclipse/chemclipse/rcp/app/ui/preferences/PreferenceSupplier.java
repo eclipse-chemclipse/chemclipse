@@ -12,6 +12,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.rcp.app.ui.preferences;
 
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import org.eclipse.chemclipse.support.preferences.AbstractPreferenceSupplier;
 import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
 
@@ -23,6 +27,11 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final boolean DEF_SHOW_PERSPECTIVE_DIALOG = true;
 	public static final String P_CHANGE_PERSPECTIVE_AUTOMATICALLY = "changePerspectiveAutomatically";
 	public static final boolean DEF_CHANGE_PERSPECTIVE_AUTOMATICALLY = true;
+	public static final String P_SHOW_PERSPECTIVE_SWITCHER = "showPerspectiveSwitcher";
+	public static final boolean DEF_SHOW_PERSPECTIVE_SWITCHER = true;
+	public static final String P_OPENED_PERSPECTIVES = "openedPerspectives";
+	public static final String DEF_OPENED_PERSPECTIVES = "";
+	private static final String SEPARATOR_TOKEN = ";";
 
 	public static IPreferenceSupplier INSTANCE() {
 
@@ -45,6 +54,8 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		putDefault(P_SELECTED_PROFILE, DEF_SELECTED_PROFILE);
 		putDefault(P_SHOW_PERSPECTIVE_DIALOG, DEF_SHOW_PERSPECTIVE_DIALOG);
 		putDefault(P_CHANGE_PERSPECTIVE_AUTOMATICALLY, DEF_CHANGE_PERSPECTIVE_AUTOMATICALLY);
+		putDefault(P_SHOW_PERSPECTIVE_SWITCHER, DEF_SHOW_PERSPECTIVE_SWITCHER);
+		putDefault(P_OPENED_PERSPECTIVES, DEF_OPENED_PERSPECTIVES);
 	}
 
 	public static void setChangePerspectivesAutomatically(boolean changeAutomatically) {
@@ -87,5 +98,43 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static void setChangePerspectiveAutomatically(boolean changePerspectiveAutomatically) {
 
 		INSTANCE().setBoolean(P_CHANGE_PERSPECTIVE_AUTOMATICALLY, changePerspectiveAutomatically);
+	}
+
+	/**
+	 * Returns whether the perspective switcher shall be shown in the top trim bar or not.
+	 */
+	public static boolean getShowPerspectiveSwitcher() {
+
+		return INSTANCE().getBoolean(P_SHOW_PERSPECTIVE_SWITCHER);
+	}
+
+	/**
+	 * Sets whether the perspective switcher shall be shown in the top trim bar or not.
+	 */
+	public static void setShowPerspectiveSwitcher(boolean showPerspectiveSwitcher) {
+
+		INSTANCE().setBoolean(P_SHOW_PERSPECTIVE_SWITCHER, showPerspectiveSwitcher);
+	}
+
+	/**
+	 * Returns the ids of the perspectives the user has opened.
+	 */
+	public static Set<String> getOpenedPerspectives() {
+
+		Set<String> perspectiveIds = new LinkedHashSet<>();
+		for(String perspectiveId : INSTANCE().get(P_OPENED_PERSPECTIVES).split(SEPARATOR_TOKEN)) {
+			if(!perspectiveId.isEmpty()) {
+				perspectiveIds.add(perspectiveId);
+			}
+		}
+		return perspectiveIds;
+	}
+
+	/**
+	 * Sets the ids of the perspectives the user has opened.
+	 */
+	public static void setOpenedPerspectives(Collection<String> perspectiveIds) {
+
+		INSTANCE().set(P_OPENED_PERSPECTIVES, String.join(SEPARATOR_TOKEN, perspectiveIds));
 	}
 }
