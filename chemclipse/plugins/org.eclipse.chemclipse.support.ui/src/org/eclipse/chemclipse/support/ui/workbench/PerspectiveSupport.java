@@ -21,7 +21,6 @@ import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
-import org.eclipse.e4.ui.workbench.modeling.EPartService;
 
 import jakarta.inject.Inject;
 
@@ -36,8 +35,6 @@ public class PerspectiveSupport {
 
 	@Inject
 	private EModelService eModelService;
-	@Inject
-	private EPartService ePartService;
 	@Inject
 	private MApplication mApplication;
 	@Inject
@@ -76,7 +73,14 @@ public class PerspectiveSupport {
 			if(perspectiveModel.equals(activePerspective)) {
 				return;
 			}
-			ePartService.switchPerspective(perspectiveModel);
+			/*
+			 * No widget is created for a perspective which is not marked as to be rendered.
+			 * Selecting it lets the renderer switch the perspective, which is not done via the
+			 * part service, because it fails on parts that are not rendered yet, see
+			 * PerspectiveStackRenderer#showTab and PartServiceImpl#switchPerspective.
+			 */
+			perspectiveModel.setToBeRendered(true);
+			perspectiveModel.getParent().setSelectedElement(perspectiveModel);
 			eventBroker.post(IChemClipseEvents.TOPIC_APPLICATION_SELECT_PERSPECTIVE, perspectiveModel.getElementId());
 		}
 	}
