@@ -77,7 +77,7 @@ import org.eclipse.chemclipse.swt.ui.preferences.PreferencePageSystem;
 import org.eclipse.chemclipse.swt.ui.support.ColorScheme;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
 import org.eclipse.chemclipse.swt.ui.support.IColorScheme;
-import org.eclipse.chemclipse.ux.extension.dsd.support.NucleotideSupport;
+import org.eclipse.chemclipse.ux.extension.dsd.ui.support.NucleotideSupport;
 import org.eclipse.chemclipse.ux.extension.ui.editors.ProcessorSupplierMenuEntry;
 import org.eclipse.chemclipse.ux.extension.ui.methods.MethodCancelException;
 import org.eclipse.chemclipse.ux.extension.ui.methods.MethodParameters;

@@ -24,4 +24,4 @@ Bundle-Localization: OSGI-INF/l10n/bundle
 Import-Package: jakarta.inject;version="2.0.0",
  org.eclipse.e4.core.di.annotations;version="1.6.0",
  org.eclipse.e4.ui.di
-Export-Package: org.eclipse.chemclipse.ux.extension.dsd.support
+Export-Package: org.eclipse.chemclipse.ux.extension.dsd.ui.support
