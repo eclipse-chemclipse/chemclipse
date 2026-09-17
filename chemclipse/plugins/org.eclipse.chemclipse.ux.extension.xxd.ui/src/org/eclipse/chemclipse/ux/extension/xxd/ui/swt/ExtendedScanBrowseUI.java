@@ -433,7 +433,7 @@ public class ExtendedScanBrowseUI extends Composite implements IExtendedPartUI {
 		libraryScans = new ArrayList<>();
 		String path = PreferenceSupplier.getScanBrowseLibraryFile();
 		if(path == null || path.isEmpty()) {
-			return null;
+			return new ArrayList<>();
 		}
 		File libraryFile = new File(path);
 		if(libraryFile.isDirectory()) {
