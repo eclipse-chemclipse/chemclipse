@@ -68,6 +68,11 @@ public class PerspectiveSwitcherAddon {
 	 * The least recently used perspective is listed first.
 	 */
 	private final Set<String> openedPerspectives = new LinkedHashSet<>();
+	/*
+	 * A perspective which is hidden is rendered again once it is opened, at a time it is not
+	 * selected yet. Its placeholders don't host the shared elements, e.g. the data explorer or
+	 * the editor area, hence the layout is reset when the perspective has been selected.
+	 */
 	private final Set<String> perspectivesToReset = new HashSet<>();
 	private MApplication application;
 	private EModelService modelService;
@@ -162,11 +167,6 @@ public class PerspectiveSwitcherAddon {
 		if(partService != null) {
 			partService.requestActivation();
 		}
-		/*
-		 * The placeholders of the hidden perspective keep referring to the shared elements, e.g.
-		 * the editor area, which are no longer rendered. The layout is restored once it is opened
-		 * again, just like a closed perspective in the Eclipse IDE offers the default layout.
-		 */
 		perspectivesToReset.add(perspective.getElementId());
 	}
 
@@ -239,6 +239,7 @@ public class PerspectiveSwitcherAddon {
 		for(MPerspective perspective : perspectiveStack.getChildren()) {
 			if(perspective != selectedPerspective && !openedPerspectives.contains(perspective.getElementId())) {
 				perspective.setToBeRendered(false);
+				perspectivesToReset.add(perspective.getElementId());
 			}
 		}
 		markAsRecentlyUsed(selectedPerspective.getElementId());
