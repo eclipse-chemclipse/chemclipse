@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.chemclipse.msd.converter.chromatogramSupplier">
+      <ChromatogramSupplier
+            description="Reads mzPeak Chromatograms"
+            exportConverter="org.eclipse.chemclipse.msd.converter.supplier.mzpeak.converter.ChromatogramExportConverter"
+            fileExtension=".mzpeak"
+            filterName="mzPeak Chromatogram (*.mzpeak)"
+            id="org.eclipse.chemclipse.msd.converter.supplier.mzpeak"
+            importConverter="org.eclipse.chemclipse.msd.converter.supplier.mzpeak.converter.ChromatogramImportConverter"
+            importMagicNumberMatcher="org.eclipse.chemclipse.msd.converter.supplier.mzpeak.converter.MagicNumberMatcher"
+            isExportable="false"
+            isImportable="true">
+      </ChromatogramSupplier>
+   </extension>
+</plugin>
