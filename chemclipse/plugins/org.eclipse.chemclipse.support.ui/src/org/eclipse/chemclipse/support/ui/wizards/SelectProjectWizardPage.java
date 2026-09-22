@@ -24,6 +24,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -340,8 +341,14 @@ public class SelectProjectWizardPage extends AbstractExtendedWizardPage {
 		String message = null;
 
 		String containerName = projectNameText.getText().trim();
+		IStatus nameStatus = ResourcesPlugin.getWorkspace().validateName(containerName, IResource.PROJECT);
 		if(containerName == null || containerName.equals("")) {
 			message = SupportMessages.processingTypeProjectName;
+		} else if(!nameStatus.isOK()) {
+			/*
+			 * An invalid name, e.g. one containing a separator, would be rejected by the workspace root.
+			 */
+			message = nameStatus.getMessage();
 		} else {
 			/*
 			 * Check that the new project doesn't exists.
