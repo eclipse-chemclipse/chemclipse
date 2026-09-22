@@ -87,11 +87,13 @@ public class ScanDataSupport {
 				builder.append(" | ");
 				builder.append("Detector: MS");
 				builder.append(massSpectrum.getMassSpectrometer());
-				builder.append(" | ");
-				builder.append("Type: ");
-				builder.append(massSpectrum.getMassSpectrumType().label());
-				builder.append(" | ");
+				if(massSpectrum.getMassSpectrumType() != null) {
+					builder.append(" | ");
+					builder.append("Type: ");
+					builder.append(massSpectrum.getMassSpectrumType().label());
+				}
 				if(massSpectrum.getPolarity() != Polarity.NONE) {
+					builder.append(" | ");
 					builder.append("Polarity: ");
 					builder.append(massSpectrum.getPolarity().label());
 				}
