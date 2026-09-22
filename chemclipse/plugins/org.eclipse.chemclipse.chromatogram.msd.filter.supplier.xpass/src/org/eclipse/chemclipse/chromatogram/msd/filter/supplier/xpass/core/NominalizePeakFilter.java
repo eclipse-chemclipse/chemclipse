@@ -48,11 +48,12 @@ public class NominalizePeakFilter extends AbstractPeakFilter<NominalizeFilterSet
 
 		Collection<IPeak> peaks = getReadOnlyPeaks(chromatogramSelection);
 
+		boolean preserveTandemMS = configuration.isPreserveTandemMS();
 		SubMonitor subMonitor = SubMonitor.convert(context.getProgressMonitor(), peaks.size());
 		for(IPeak peak : peaks) {
 			if(peak instanceof IPeakMSD peakMSD) {
 				IPeakModelMSD peakModelMSD = peakMSD.getPeakModel();
-				XPassFilter.nominalize(peakModelMSD.getPeakMassSpectrum());
+				XPassFilter.nominalize(peakModelMSD.getPeakMassSpectrum(), preserveTandemMS);
 				subMonitor.worked(1);
 			}
 		}
