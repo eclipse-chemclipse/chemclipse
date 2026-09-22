@@ -154,6 +154,12 @@ public abstract class AbstractIonTransition implements IIonTransition {
 	}
 
 	@Override
+	public void updateQ3Ion(double q3Ion) {
+
+		this.q3Ion = q3Ion;
+	}
+
+	@Override
 	public double getDeltaQ3Ion() {
 
 		return q3StopIon - q3StartIon;

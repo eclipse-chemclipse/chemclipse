@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2025 Lablicate GmbH.
+ * Copyright (c) 2013, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -33,6 +33,13 @@ public interface IIonTransition extends Serializable {
 	double getQ3StopIon();
 
 	double getQ3Ion(); // Q3 - precision 1
+
+	/*
+	 * Handle with care. Only update this
+	 * value if you are sure that this
+	 * action is performed intentionally.
+	 */
+	void updateQ3Ion(double q3Ion);
 
 	double getDeltaQ3Ion();
 

@@ -20,7 +20,6 @@ import org.eclipse.chemclipse.chromatogram.msd.filter.result.IMassSpectrumFilter
 import org.eclipse.chemclipse.chromatogram.msd.filter.result.MassSpectrumFilterResult;
 import org.eclipse.chemclipse.chromatogram.msd.filter.settings.IMassSpectrumFilterSettings;
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.xpass.filter.XPassFilter;
-import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.xpass.settings.LowPassFilterSettings;
 import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.xpass.settings.NominalizeFilterSettings;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
@@ -37,19 +36,16 @@ public class NominalizeScanFilter extends AbstractMassSpectrumFilter {
 
 		IProcessingInfo<IMassSpectrumFilterResult> processingInfo = validate(massSpectra, filterSettings);
 		if(!processingInfo.hasErrorMessages()) {
-			if(filterSettings instanceof NominalizeFilterSettings) {
-				/*
-				 * Filter
-				 */
+			if(filterSettings instanceof NominalizeFilterSettings settings) {
+				boolean preserveTandemMS = settings.isPreserveTandemMS();
 				for(IScanMSD massSpectrum : massSpectra) {
-					XPassFilter.nominalize(massSpectrum);
+					XPassFilter.nominalize(massSpectrum, preserveTandemMS);
 				}
-
 				processingInfo.addMessage(new ProcessingMessage(MessageType.INFO, DESCRIPTION, "The mass spectrum has been nominalized successfully."));
 				IMassSpectrumFilterResult massSpectrumFilterResult = new MassSpectrumFilterResult(ResultStatus.OK, "The Nominalize filter has been applied successfully.");
 				processingInfo.setProcessingResult(massSpectrumFilterResult);
 			} else {
-				processingInfo.addErrorMessage(DESCRIPTION, "The filter settings instance is not a type of: " + LowPassFilterSettings.class);
+				processingInfo.addErrorMessage(DESCRIPTION, "The filter settings instance is not a type of: " + NominalizeFilterSettings.class);
 			}
 		}
 
