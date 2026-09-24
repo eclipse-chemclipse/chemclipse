@@ -283,6 +283,7 @@ public class ExtendedSPlot extends Composite implements IExtendedPartUI {
 
 					userSelection.reset();
 					userSelection.setSingleClick(false);
+					baseChart.getPlotArea().redraw();
 				}
 			}
 		});

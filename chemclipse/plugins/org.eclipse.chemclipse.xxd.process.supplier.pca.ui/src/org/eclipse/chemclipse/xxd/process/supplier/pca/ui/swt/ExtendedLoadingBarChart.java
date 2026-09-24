@@ -325,6 +325,7 @@ public class ExtendedLoadingBarChart extends Composite implements IExtendedPartU
 
 					userSelection.reset();
 					userSelection.setSingleClick(false);
+					baseChart.getPlotArea().redraw();
 				}
 
 			}

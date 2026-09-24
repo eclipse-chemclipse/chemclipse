@@ -443,6 +443,7 @@ public class ExtendedVariableLinePlot extends Composite implements IExtendedPart
 					 */
 					userSelection.reset();
 					userSelection.setSingleClick(false);
+					baseChart.getPlotArea().redraw();
 				}
 
 			}
