@@ -212,7 +212,7 @@ public class ExtendedErrorResidueUI extends Composite implements IExtendedPartUI
 
 				if(userSelection.getStartX() > 0 && userSelection.getStartY() > 0) {
 					userSelection.setStopCoordinate(event.x, event.y);
-					baseChart.getPlotArea().getControl().redraw();
+					baseChart.getPlotArea().redraw();
 				}
 			}
 		});
