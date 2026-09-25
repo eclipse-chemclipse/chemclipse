@@ -1,18 +1,19 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2025 Lablicate GmbH.
+ * Copyright (c) 2020, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Lorenz Gerber - Opls Target Group
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.swt;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.chemclipse.model.statistics.ISample;
@@ -41,12 +42,13 @@ public class SamplesListUI extends ExtendedTableViewer {
 	private final SamplesListFilter listFilter = new SamplesListFilter();
 
 	private IUpdateListener updateListener;
-	private SamplesEditingSupport editingSupport;
+	private final List<SamplesEditingSupport> editingSupports = new ArrayList<>();
 
 	public SamplesListUI(Composite parent, int style) {
 
 		super(parent, style);
 		createColumns();
+		getTable().addDisposeListener(_ -> editingSupports.forEach(SamplesEditingSupport::dispose));
 	}
 
 	public void updateInput(List<ISample> sampleList) {
@@ -90,7 +92,8 @@ public class SamplesListUI extends ExtendedTableViewer {
 			TableViewerColumn tableViewerColumn = tableViewerColumns.get(i);
 			String label = tableViewerColumn.getColumn().getText();
 			if(isEditable(label)) {
-				editingSupport = new SamplesEditingSupport(this, label);
+				SamplesEditingSupport editingSupport = new SamplesEditingSupport(this, label);
+				editingSupports.add(editingSupport);
 				tableViewerColumn.setEditingSupport(editingSupport);
 			}
 		}
@@ -123,10 +126,5 @@ public class SamplesListUI extends ExtendedTableViewer {
 				}
 			});
 		}
-	}
-
-	public void dispose() {
-
-		editingSupport.dispose();
 	}
 }

@@ -895,10 +895,4 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 			UpdateNotifierUI.update(getDisplay(), IChemClipseEvents.TOPIC_PCA_UPDATE_HIGHLIGHT_SAMPLE, groups.toArray());
 		}
 	}
-
-	@Override
-	public void dispose() {
-
-		sampleListControl.get().dispose();
-	}
 }
