@@ -616,6 +616,8 @@ public class ExtendedPeakDetectorUI extends Composite implements IExtendedPartUI
 		xStop = 0;
 		yStop = 0;
 		xBoxMoveStart = 0;
+
+		redraw();
 	}
 
 	private void handleKeyPressedEvent(Event event) {
