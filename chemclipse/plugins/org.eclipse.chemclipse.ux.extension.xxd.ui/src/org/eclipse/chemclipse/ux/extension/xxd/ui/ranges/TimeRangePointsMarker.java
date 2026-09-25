@@ -42,6 +42,7 @@ public class TimeRangePointsMarker extends AbstractBaseChartPaintListener {
 	public void setPointSelection(List<Point> pointSelection) {
 
 		this.pointSelection = pointSelection;
+		redraw();
 	}
 
 	@Override

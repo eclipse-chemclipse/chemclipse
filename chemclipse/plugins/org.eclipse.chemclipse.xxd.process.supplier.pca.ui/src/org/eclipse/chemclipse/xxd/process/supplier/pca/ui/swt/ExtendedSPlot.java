@@ -203,7 +203,7 @@ public class ExtendedSPlot extends Composite implements IExtendedPartUI {
 
 				if(userSelection.getStartX() > 0 && userSelection.getStartY() > 0) {
 					userSelection.setStopCoordinate(event.x, event.y);
-					baseChart.getPlotArea().getControl().redraw();
+					baseChart.getPlotArea().redraw();
 				}
 			}
 		});
@@ -283,6 +283,7 @@ public class ExtendedSPlot extends Composite implements IExtendedPartUI {
 
 					userSelection.reset();
 					userSelection.setSingleClick(false);
+					baseChart.getPlotArea().redraw();
 				}
 			}
 		});

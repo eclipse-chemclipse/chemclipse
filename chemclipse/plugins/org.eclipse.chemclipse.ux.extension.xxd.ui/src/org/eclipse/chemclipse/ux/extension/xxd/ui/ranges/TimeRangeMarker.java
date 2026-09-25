@@ -74,11 +74,7 @@ public class TimeRangeMarker extends AbstractBaseChartPaintListener {
 
 		this.timeRangeHover = timeRange;
 		this.hoverPositionX = hoverPositionX;
-		/*
-		 * The chart is not repainted on each mouse move anymore, hence request
-		 * the repaint of the plot area the marker is drawn on.
-		 */
-		getBaseChart().getPlotArea().getControl().redraw();
+		redraw();
 	}
 
 	@Override

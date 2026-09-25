@@ -519,6 +519,7 @@ public class ExtendedPeakChartUI extends Composite implements IExtendedPartUI {
 				xStart = event.x;
 				splitSelectionPaintListener.setX1(event.x);
 				splitSelectionPaintListener.setY1(event.y);
+				getPlotArea().redraw();
 			} else {
 				if(event.x > xStart) {
 					xStop = event.x;
