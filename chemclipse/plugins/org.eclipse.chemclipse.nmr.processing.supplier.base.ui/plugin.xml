@@ -14,6 +14,7 @@
          id="org.eclipse.chemclipse.nmr.processing.supplier.base.ui.fragment"
          point="org.eclipse.e4.workbench.model">
       <fragment
+            apply="notexists"
             uri="fragment.e4xmi">
       </fragment>
    </extension>

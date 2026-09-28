@@ -13,6 +13,7 @@
          id="org.eclipse.chemclipse.ux.extension.xxd.ui.modelContribution"
          point="org.eclipse.e4.workbench.model">
       <fragment
+            apply="notexists"
             uri="fragment.e4xmi">
       </fragment>
    </extension>
