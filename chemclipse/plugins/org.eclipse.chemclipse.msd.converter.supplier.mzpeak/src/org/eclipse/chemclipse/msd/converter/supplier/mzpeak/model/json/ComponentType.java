@@ -50,7 +50,7 @@ public class ComponentType {
 	 */
 	@JsonProperty(value = "parameters", required = true)
 	@JsonPropertyDescription("Additional parameters describing this component, like the particular hardware type or components")
-	private List<Param> parameters = new ArrayList<Param>();
+	private List<Param> parameters = new ArrayList<>();
 
 	public ComponentTypeKind getComponentType() {
 
@@ -90,7 +90,7 @@ public class ComponentType {
 		IONSOURCE("ionsource"), ANALYZER("analyzer"), DETECTOR("detector");
 
 		private final String value;
-		private final static Map<String, ComponentTypeKind> CONSTANTS = new HashMap<String, ComponentTypeKind>();
+		private final static Map<String, ComponentTypeKind> CONSTANTS = new HashMap<>();
 
 		static {
 			for(ComponentTypeKind c : values()) {

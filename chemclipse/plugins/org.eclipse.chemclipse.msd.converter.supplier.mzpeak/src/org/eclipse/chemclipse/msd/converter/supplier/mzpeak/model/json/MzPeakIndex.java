@@ -34,7 +34,7 @@ public class MzPeakIndex {
 	 */
 	@JsonProperty(value = "files", required = true)
 	@JsonPropertyDescription("The files described in the index")
-	private List<File> files = new ArrayList<File>();
+	private List<File> files = new ArrayList<>();
 
 	@JsonProperty(value = "metadata", required = true)
 	private Metadata metadata;

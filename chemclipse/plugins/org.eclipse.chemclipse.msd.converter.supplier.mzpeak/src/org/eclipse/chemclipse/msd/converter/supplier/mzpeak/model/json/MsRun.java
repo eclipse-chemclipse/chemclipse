@@ -35,7 +35,7 @@ public class MsRun {
 	 */
 	@JsonProperty("parameters")
 	@JsonPropertyDescription("Parameters describing the run not otherwise covered by the attributes.")
-	private List<Param> parameters = new ArrayList<Param>();
+	private List<Param> parameters = new ArrayList<>();
 
 	/**
 	 * A unique identifier for the run

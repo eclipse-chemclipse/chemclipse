@@ -53,7 +53,7 @@ public class SourceFile {
 	 */
 	@JsonProperty(value = "parameters", required = true)
 	@JsonPropertyDescription("Additional parameters describing this source file, like checksums, nativeID format, or file format")
-	private List<Param> parameters = new ArrayList<Param>();
+	private List<Param> parameters = new ArrayList<>();
 
 	public String getId() {
 

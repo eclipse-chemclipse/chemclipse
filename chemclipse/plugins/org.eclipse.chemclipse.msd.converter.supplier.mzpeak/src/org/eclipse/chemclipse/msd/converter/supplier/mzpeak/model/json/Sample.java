@@ -46,7 +46,7 @@ public class Sample {
 	 */
 	@JsonProperty(value = "parameters", required = true)
 	@JsonPropertyDescription("Additional parameters describing this sample.")
-	private List<Param> parameters = new ArrayList<Param>();
+	private List<Param> parameters = new ArrayList<>();
 
 	/**
 	 * A unique identifier for this sample.

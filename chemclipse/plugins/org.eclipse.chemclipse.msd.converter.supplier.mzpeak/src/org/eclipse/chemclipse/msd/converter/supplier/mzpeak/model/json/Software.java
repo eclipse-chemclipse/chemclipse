@@ -46,7 +46,7 @@ public class Software {
 	 */
 	@JsonProperty("parameters")
 	@JsonPropertyDescription("Additional parameters describing this software, such as its controlled vocabulary identifier, or the term MS:1000799 for custom unreleased software to denote its name.")
-	private List<Param> parameters = new ArrayList<Param>();
+	private List<Param> parameters = new ArrayList<>();
 
 	public String getId() {
 
