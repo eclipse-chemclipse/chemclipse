@@ -19,15 +19,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.apache.parquet.column.page.PageReadStore;
+import org.apache.parquet.example.data.Group;
+import org.apache.parquet.hadoop.ParquetFileReader;
+import org.apache.parquet.io.RecordReader;
+import org.apache.parquet.schema.MessageType;
 import org.eclipse.chemclipse.converter.io.AbstractChromatogramReader;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
@@ -54,15 +54,9 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 
 	private static final Logger logger = Logger.getLogger(ChromatogramMSDReaderVersion09.class);
 
-	private static final String CHROMATOGRAM_DATA_QUERY = """
-			    SELECT
-			        struct_extract(point, 'chromatogram_index') AS chromatogram_index,
-			        struct_extract(point, 'time') AS time,
-			        struct_extract(point, 'intensity') AS intensity,
-			        struct_extract(point, 'ms_level') AS ms_level
-			    FROM read_parquet(?)
-			    ORDER BY chromatogram_index, time
-			""";
+	private static final String TIME = "time";
+	private static final String INTENSITY = "intensity";
+	private static final String MS_LEVEL = "ms_level";
 
 	private boolean isMultiStageMassSpectrum = false;
 
@@ -155,53 +149,47 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 
 	private static void readTIC(Path chromatogramDataParquet, IVendorChromatogram chromatogram) {
 
-		try {
-			Class.forName("org.duckdb.DuckDBDriver");
-		} catch(ClassNotFoundException e) {
-			logger.error(e);
-			return;
-		}
-
-		try (Connection connection = DriverManager.getConnection("jdbc:duckdb:");
-				PreparedStatement preparedStatement = connection.prepareStatement(CHROMATOGRAM_DATA_QUERY)) {
-
-			preparedStatement.setString(1, chromatogramDataParquet.toString());
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while(resultSet.next()) {
+		try (ParquetFileReader parquetFileReader = ParquetReaderSupport.open(chromatogramDataParquet)) {
+			MessageType schema = parquetFileReader.getFooter().getFileMetaData().getSchema();
+			PageReadStore pageReadStore;
+			while((pageReadStore = parquetFileReader.readNextRowGroup()) != null) {
+				RecordReader<Group> recordReader = ParquetReaderSupport.getRecordReader(schema, pageReadStore);
+				for(long row = 0, rows = pageReadStore.getRowCount(); row < rows; row++) {
+					Group point = ParquetReaderSupport.readPoint(recordReader);
+					if(point == null) {
+						continue;
+					}
 					IVendorScan scan = new VendorScan();
-					scan.setRetentionTime((int)Math.round(resultSet.getDouble("time") * IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
-					IIon tic = new Ion(IIon.TIC_ION, resultSet.getFloat("intensity"));
+					scan.setRetentionTime((int)Math.round(ParquetReaderSupport.getNumber(point, TIME, 0) * IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
+					IIon tic = new Ion(IIon.TIC_ION, (float)ParquetReaderSupport.getNumber(point, INTENSITY, 0));
 					scan.addIon(tic);
-					scan.setMassSpectrometer(resultSet.getShort("ms_level"));
+					scan.setMassSpectrometer((short)ParquetReaderSupport.getNumber(point, MS_LEVEL, 1));
 					chromatogram.addScan(scan);
 				}
 			}
-		} catch(SQLException e) {
+		} catch(IOException e) {
 			logger.error(e);
 		}
 	}
 
 	private void addScanProxies(Path chromatogramDataParquet, IVendorChromatogram chromatogram, IReaderProxy readerProxy, IProgressMonitor monitor) {
 
-		try {
-			Class.forName("org.duckdb.DuckDBDriver");
-		} catch(ClassNotFoundException e) {
-			logger.error(e);
-			return;
-		}
+		int cycleNumber = isMultiStageMassSpectrum ? 1 : 0;
 
-		try (Connection connection = DriverManager.getConnection("jdbc:duckdb:");
-				PreparedStatement preparedStatement = connection.prepareStatement(CHROMATOGRAM_DATA_QUERY)) {
-
-			int cycleNumber = isMultiStageMassSpectrum ? 1 : 0;
-
-			preparedStatement.setString(1, chromatogramDataParquet.toString());
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while(resultSet.next()) {
+		try (ParquetFileReader parquetFileReader = ParquetReaderSupport.open(chromatogramDataParquet)) {
+			MessageType schema = parquetFileReader.getFooter().getFileMetaData().getSchema();
+			PageReadStore pageReadStore;
+			while((pageReadStore = parquetFileReader.readNextRowGroup()) != null) {
+				RecordReader<Group> recordReader = ParquetReaderSupport.getRecordReader(schema, pageReadStore);
+				for(long row = 0, rows = pageReadStore.getRowCount(); row < rows; row++) {
+					Group point = ParquetReaderSupport.readPoint(recordReader);
+					if(point == null) {
+						continue;
+					}
 					IVendorScanProxy scanProxy = new VendorScanProxy(readerProxy, monitor);
-					scanProxy.setRetentionTime((int)Math.round(resultSet.getDouble("time") * IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
-					scanProxy.setTotalSignal(resultSet.getFloat("intensity"));
-					scanProxy.setMassSpectrometer(resultSet.getShort("ms_level"));
+					scanProxy.setRetentionTime((int)Math.round(ParquetReaderSupport.getNumber(point, TIME, 0) * IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
+					scanProxy.setTotalSignal((float)ParquetReaderSupport.getNumber(point, INTENSITY, 0));
+					scanProxy.setMassSpectrometer((short)ParquetReaderSupport.getNumber(point, MS_LEVEL, 1));
 					if(scanProxy.getMassSpectrometer() < 2) {
 						cycleNumber++;
 					}
@@ -211,7 +199,7 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 					chromatogram.addScan(scanProxy);
 				}
 			}
-		} catch(SQLException e) {
+		} catch(IOException e) {
 			logger.error(e);
 		}
 	}

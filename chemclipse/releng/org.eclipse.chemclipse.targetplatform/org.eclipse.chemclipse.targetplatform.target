@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
-<target name="Eclipse ChemClipse" sequenceNumber="528">
+<target name="Eclipse ChemClipse" sequenceNumber="532">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 	<unit id="org.eclipse.equinox.sdk.feature.group"/>
@@ -88,12 +88,30 @@
 			</dependency>
 		</dependencies>
 	</location>
-	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" label="org.duckdb" missingManifest="generate" type="Maven">
+	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" label="org.apache.parquet" missingManifest="generate" type="Maven">
 		<dependencies>
 			<dependency>
-				<groupId>org.duckdb</groupId>
-				<artifactId>duckdb_jdbc</artifactId>
-				<version>1.5.5.1</version>
+				<groupId>org.apache.parquet</groupId>
+				<artifactId>parquet-hadoop-bundle</artifactId>
+				<version>1.18.1</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.locationtech.jts</groupId>
+				<artifactId>jts-core</artifactId>
+				<version>1.20.0</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>blue.strategic.parquet</groupId>
+				<artifactId>parquet-floor</artifactId>
+				<version>2.3</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>io.airlift</groupId>
+				<artifactId>aircompressor</artifactId>
+				<version>2.0.3</version>
 				<type>jar</type>
 			</dependency>
 		</dependencies>
