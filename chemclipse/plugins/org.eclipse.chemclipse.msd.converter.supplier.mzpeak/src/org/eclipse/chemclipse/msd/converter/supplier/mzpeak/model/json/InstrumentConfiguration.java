@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class InstrumentConfiguration {
 
 	@JsonProperty(value = "components", required = true)
-	private List<ComponentType> components = new ArrayList<ComponentType>();
+	private List<ComponentType> components = new ArrayList<>();
 
 	/**
 	 * The identifier for a software that was associated with the data acquisition process.
@@ -49,7 +49,7 @@ public class InstrumentConfiguration {
 	 */
 	@JsonProperty(value = "parameters", required = true)
 	@JsonPropertyDescription("Additional parameters describing this configuration, like the instrument model and serial number")
-	private List<Param> parameters = new ArrayList<Param>();
+	private List<Param> parameters = new ArrayList<>();
 
 	public List<ComponentType> getComponents() {
 

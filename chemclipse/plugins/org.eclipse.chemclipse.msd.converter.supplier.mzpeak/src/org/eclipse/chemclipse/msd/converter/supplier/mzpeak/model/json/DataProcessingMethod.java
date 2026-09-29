@@ -35,7 +35,7 @@ public class DataProcessingMethod {
 	private String id;
 
 	@JsonProperty("methods")
-	private List<ProcessingMethod> methods = new ArrayList<ProcessingMethod>();
+	private List<ProcessingMethod> methods = new ArrayList<>();
 
 	public String getId() {
 

@@ -46,7 +46,7 @@ public class ProcessingMethod {
 	 */
 	@JsonProperty("parameters")
 	@JsonPropertyDescription("Additional parameters describing this data processing step denoting actions, parameters, and other descriptors.")
-	private List<Param> parameters = new ArrayList<Param>();
+	private List<Param> parameters = new ArrayList<>();
 
 	public Integer getOrder() {
 

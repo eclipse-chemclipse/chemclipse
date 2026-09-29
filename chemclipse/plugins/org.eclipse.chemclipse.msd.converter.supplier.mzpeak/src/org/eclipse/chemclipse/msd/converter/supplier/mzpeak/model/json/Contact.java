@@ -46,7 +46,7 @@ public class Contact {
 	 */
 	@JsonProperty(value = "parameters", required = true)
 	@JsonPropertyDescription("Parameters describing the contact, such as name, organization, email, website, or address.")
-	private List<Param> parameters = new ArrayList<Param>();
+	private List<Param> parameters = new ArrayList<>();
 
 	public String getContactName() {
 

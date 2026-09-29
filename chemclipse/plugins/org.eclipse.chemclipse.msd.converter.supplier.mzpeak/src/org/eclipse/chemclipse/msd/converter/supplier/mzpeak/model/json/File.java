@@ -53,14 +53,14 @@ public class File {
 	 */
 	@JsonProperty("column_mapping")
 	@JsonPropertyDescription("A list of Parquet column to controlled vocabulary term mappings")
-	private List<ColumnMapping> columnMapping = new ArrayList<ColumnMapping>();
+	private List<ColumnMapping> columnMapping = new ArrayList<>();
 
 	/**
 	 * A list of parameters describing the file stored in the mzPeak archive itself
 	 */
 	@JsonProperty("parameters")
 	@JsonPropertyDescription("A list of parameters describing the file stored in the mzPeak archive itself")
-	private List<Param> parameters = new ArrayList<Param>();
+	private List<Param> parameters = new ArrayList<>();
 
 	public String getName() {
 

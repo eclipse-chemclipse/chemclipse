@@ -61,7 +61,7 @@ public class Metadata {
 	 */
 	@JsonProperty("instrument_configuration_list")
 	@JsonPropertyDescription("Describe the JSON format of instrument configurations used to acquire a mass spectrometry experiment")
-	private List<InstrumentConfiguration> instrumentConfigurationList = new ArrayList<InstrumentConfiguration>();
+	private List<InstrumentConfiguration> instrumentConfigurationList = new ArrayList<>();
 
 	/**
 	 * mzPeak metadata data processing method list
@@ -70,7 +70,7 @@ public class Metadata {
 	 */
 	@JsonProperty("data_processing_method_list")
 	@JsonPropertyDescription("Describe the JSON format of data processing method list")
-	private List<DataProcessingMethod> dataProcessingMethodList = new ArrayList<DataProcessingMethod>();
+	private List<DataProcessingMethod> dataProcessingMethodList = new ArrayList<>();
 
 	/**
 	 * mzPeak metadata software list
@@ -79,7 +79,7 @@ public class Metadata {
 	 */
 	@JsonProperty("software_list")
 	@JsonPropertyDescription("Describe the JSON format of software list")
-	private List<Software> softwareList = new ArrayList<Software>();
+	private List<Software> softwareList = new ArrayList<>();
 
 	/**
 	 * mzPeak metadata sample list
@@ -88,7 +88,7 @@ public class Metadata {
 	 */
 	@JsonProperty("sample_list")
 	@JsonPropertyDescription("Describe the JSON format of the sample list. Multiple samples can be present in a single run in scenarios like multiplexing or pooling.")
-	private List<Sample> sampleList = new ArrayList<Sample>();
+	private List<Sample> sampleList = new ArrayList<>();
 
 	/**
 	 * mzPeak controlled vocabulary list
@@ -97,7 +97,7 @@ public class Metadata {
 	 */
 	@JsonProperty("cv_list")
 	@JsonPropertyDescription("Describe the JSON format of the controlled vocabulary list, analogous to https://peptideatlas.org/tmp/mzML1.1.0.html#cvList")
-	private List<Cv> cvList = new ArrayList<Cv>();
+	private List<Cv> cvList = new ArrayList<>();
 
 	/**
 	 * mzPeak metadata MS run

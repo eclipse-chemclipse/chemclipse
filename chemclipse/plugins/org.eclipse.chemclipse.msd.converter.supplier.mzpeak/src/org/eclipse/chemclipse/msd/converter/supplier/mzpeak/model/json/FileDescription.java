@@ -34,21 +34,21 @@ public class FileDescription {
 	 */
 	@JsonProperty(value = "contents", required = true)
 	@JsonPropertyDescription("Parameters describing the contents of the file, such as types of spectra. Analogous to https://peptideatlas.org/tmp/mzML1.1.0.html#fileContent")
-	private List<Param> contents = new ArrayList<Param>();
+	private List<Param> contents = new ArrayList<>();
 
 	/**
 	 * List of all files used as data sources for this mzPeak file. Analogous to https://peptideatlas.org/tmp/mzML1.1.0.html#sourceFileList
 	 */
 	@JsonProperty(value = "source_files", required = true)
 	@JsonPropertyDescription("List of all files used as data sources for this mzPeak file. Analogous to https://peptideatlas.org/tmp/mzML1.1.0.html#sourceFileList")
-	private List<SourceFile> sourceFiles = new ArrayList<SourceFile>();
+	private List<SourceFile> sourceFiles = new ArrayList<>();
 
 	/**
 	 * Persons or entities responsible for the data contained here.
 	 */
 	@JsonProperty("contacts")
 	@JsonPropertyDescription("Persons or entities responsible for the data contained here.")
-	private List<Contact> contacts = new ArrayList<Contact>();
+	private List<Contact> contacts = new ArrayList<>();
 
 	public List<Param> getContents() {
 
