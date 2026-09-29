@@ -57,6 +57,7 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.support.ChromatogramUpdateSupp
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.IdentificationTargetSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ChromatogramDataSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.PeakDataSupport;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.PeakSelectionSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts.ScanDataSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.targets.ComboTarget;
 import org.eclipse.core.commands.ExecutionException;
@@ -77,7 +78,9 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
@@ -94,6 +97,8 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 	private static final int INDEX_CHROMATOGRAM = 1;
 
 	private static final String KEY_CLASS_PREFIX = "org.eclipse.chemclipse.ux.extension.xxd.ui.TargetsList.";
+	private static final String COMMAND_PEAK_SELECTION_NEXT = "org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.PeakSelectionNext";
+	private static final String COMMAND_PEAK_SELECTION_PREVIOUS = "org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI.PeakSelectionPrevious";
 
 	private IContextService contextService = (IContextService)PlatformUI.getWorkbench().getService(IContextService.class);
 	private IBindingService bindingService = PlatformUI.getWorkbench().getService(IBindingService.class);
@@ -131,6 +136,41 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 		super(parent, style);
 		createControl();
 		contextService.activateContext("org.eclipse.chemclipse.ux.extension.xxd.ui.TargetsList");
+		contextService.activateContext("org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI"); // reuse the peak selection hotkeys
+		createPeakSelectionFilter();
+	}
+
+	// not attached to the table to account for unidentified peaks
+	private void createPeakSelectionFilter() {
+
+		Display display = getDisplay();
+		Listener listener = event -> {
+
+			if(event.widget instanceof Control control && isChildControl(control)) {
+				KeyEvent keyEvent = new KeyEvent(event);
+				if(matchesCommand(COMMAND_PEAK_SELECTION_NEXT, keyEvent)) {
+					PeakSelectionSupport.selectNeighborPeak(display, chromatogramSelection, true);
+				} else if(matchesCommand(COMMAND_PEAK_SELECTION_PREVIOUS, keyEvent)) {
+					PeakSelectionSupport.selectNeighborPeak(display, chromatogramSelection, false);
+				}
+			}
+		};
+
+		display.addFilter(SWT.KeyUp, listener);
+		addDisposeListener(_ -> display.removeFilter(SWT.KeyUp, listener));
+	}
+
+	private boolean isChildControl(Control control) {
+
+		Control parent = control;
+		while(parent != null) {
+			if(parent == this) {
+				return true;
+			}
+			parent = parent.getParent();
+		}
+
+		return false;
 	}
 
 	@Override
@@ -606,15 +646,25 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 				addTargetUnknown(e.display);
 			} else if(matchesKeyPress("Query", e)) {
 				scanIdentifierControl.get().runIdentification();
-			} else {
+			} else if(!matchesPeakSelection(e)) {
 				propagateTarget(display);
 			}
 		});
 	}
 
+	private boolean matchesPeakSelection(KeyEvent e) {
+
+		return matchesCommand(COMMAND_PEAK_SELECTION_NEXT, e) || matchesCommand(COMMAND_PEAK_SELECTION_PREVIOUS, e);
+	}
+
 	private boolean matchesKeyPress(String commandSuffix, KeyEvent e) {
 
-		TriggerSequence triggerSequence = bindingService.getBestActiveBindingFor(KEY_CLASS_PREFIX + commandSuffix);
+		return matchesCommand(KEY_CLASS_PREFIX + commandSuffix, e);
+	}
+
+	private boolean matchesCommand(String commandId, KeyEvent e) {
+
+		TriggerSequence triggerSequence = bindingService.getBestActiveBindingFor(commandId);
 		if(triggerSequence instanceof KeySequence keySequence) {
 			KeyStroke[] bindingStrokes = keySequence.getKeyStrokes();
 			int accelerator = SWTKeySupport.convertEventToUnmodifiedAccelerator(e);
