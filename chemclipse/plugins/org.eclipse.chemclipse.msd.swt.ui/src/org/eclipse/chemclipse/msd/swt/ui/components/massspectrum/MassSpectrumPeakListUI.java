@@ -42,12 +42,14 @@ public class MassSpectrumPeakListUI extends ExtendedTableViewer {
 
 		if(regularMassSpectrum != null) {
 			setContentProviders();
-			if(regularMassSpectrum instanceof IStandaloneMassSpectrum standaloneMassSpectrum) {
-				super.setInput(standaloneMassSpectrum.getPeaks());
-				setItemCount(standaloneMassSpectrum.getPeaks().size());
-			} else if(regularMassSpectrum.getMassSpectrumType() == MassSpectrumType.CENTROID) {
+			if(regularMassSpectrum.getMassSpectrumType() == MassSpectrumType.CENTROID) {
 				super.setInput(regularMassSpectrum.getIons());
 				setItemCount(regularMassSpectrum.getIons().size());
+			} else if(regularMassSpectrum instanceof IStandaloneMassSpectrum standaloneMassSpectrum) {
+				super.setInput(standaloneMassSpectrum.getPeaks());
+				setItemCount(standaloneMassSpectrum.getPeaks().size());
+			} else {
+				super.setInput(null);
 			}
 		} else {
 			super.setInput(null);
