@@ -123,7 +123,7 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 	private void announceSelection() {
 
 		IScanMSD displayedMassSpectrum = extendedMassSpectrumUI.getMassSpectrum();
-		if(displayedMassSpectrum != null && displayedMassSpectrum != massSpectrum) {
+		if(displayedMassSpectrum != null) {
 			massSpectrum = displayedMassSpectrum;
 			UpdateNotifier.update(displayedMassSpectrum);
 		}
