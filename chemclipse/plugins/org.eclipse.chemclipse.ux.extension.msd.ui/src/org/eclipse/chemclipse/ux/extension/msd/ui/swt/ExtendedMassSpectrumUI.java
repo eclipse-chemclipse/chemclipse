@@ -68,6 +68,8 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 	private AtomicReference<MassSpectraSelectionUI> toolbarSelectionControl = new AtomicReference<>();
 	private AtomicReference<Button> buttonToolbarMethod = new AtomicReference<>();
 	private AtomicReference<MethodSupportUI> toolbarMethodControl = new AtomicReference<>();
+	private AtomicReference<Button> buttonDeleteBaseline = new AtomicReference<>();
+	private AtomicReference<Composite> chartParentControl = new AtomicReference<>();
 
 	private IProcessSupplierContext processTypeSupport = new ProcessTypeSupport();
 
@@ -106,7 +108,9 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 	public void update(IScanMSD massSpectrum) {
 
 		this.massSpectrum = massSpectrum;
-		massSpectrumChart.update(massSpectrum);
+		if(!recreateChartOnTypeChange()) {
+			massSpectrumChart.update(massSpectrum);
+		}
 	}
 
 	public IScanMSD getMassSpectrum() {
@@ -116,9 +120,44 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 
 	public void refresh() {
 
-		if(massSpectrumChart != null) {
+		if(massSpectrumChart != null && !recreateChartOnTypeChange()) {
 			massSpectrumChart.update();
 		}
+	}
+
+	/*
+	 * A conversion from profile to centroid, needs a different chart.
+	 */
+	private boolean recreateChartOnTypeChange() {
+
+		if(massSpectrumChart == null || !isChartTypeOutdated()) {
+			return false;
+		}
+		Composite composite = chartParentControl.get();
+		if(composite == null || composite.isDisposed()) {
+			return false;
+		}
+		if(massSpectrumChart instanceof Control control) {
+			control.dispose();
+		}
+		createMassSpectrumChart(composite);
+		Button button = buttonDeleteBaseline.get();
+		if(button != null && !button.isDisposed()) {
+			button.setEnabled(getMassSpectrumType() == MassSpectrumType.PROFILE);
+		}
+		composite.layout(true, true);
+		return true;
+	}
+
+	private boolean isChartTypeOutdated() {
+
+		MassSpectrumType massSpectrumType = getMassSpectrumType();
+		if(massSpectrumType == MassSpectrumType.PROFILE) {
+			return !(massSpectrumChart instanceof MassSpectrumChartProfile);
+		} else if(massSpectrumType == MassSpectrumType.CENTROID) {
+			return !(massSpectrumChart instanceof MassSpectrumChartCentroid);
+		}
+		return false;
 	}
 
 	private void createControl() {
@@ -170,6 +209,7 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 
 	private void createMassSpectrumChart(Composite composite) {
 
+		chartParentControl.set(composite);
 		if(getMassSpectrumType() == MassSpectrumType.PROFILE) {
 			massSpectrumChart = new MassSpectrumChartProfile(composite, SWT.BORDER);
 		} else if(getMassSpectrumType() == MassSpectrumType.CENTROID) {
@@ -268,6 +308,7 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_BASELINE_DELETE, IApplicationImageProvider.SIZE_16x16));
 		button.setToolTipText("Delete baseline");
 		button.setEnabled(getMassSpectrumType() == MassSpectrumType.PROFILE);
+		buttonDeleteBaseline.set(button);
 		button.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -319,9 +360,8 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 
 			if(event.getSelection() instanceof IStructuredSelection selection) {
 				if(selection.getFirstElement() instanceof IScanMSD scanMSD) {
-					massSpectrum = scanMSD;
-					massSpectrumChart.update(massSpectrum);
-					UpdateNotifier.update(massSpectrum);
+					update(scanMSD);
+					UpdateNotifier.update(scanMSD);
 				}
 			}
 		};

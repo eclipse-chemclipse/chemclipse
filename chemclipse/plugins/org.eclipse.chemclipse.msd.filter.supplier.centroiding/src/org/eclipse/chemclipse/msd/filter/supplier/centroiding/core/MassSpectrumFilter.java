@@ -20,20 +20,15 @@ import org.eclipse.chemclipse.chromatogram.msd.filter.result.IMassSpectrumFilter
 import org.eclipse.chemclipse.chromatogram.msd.filter.result.MassSpectrumFilterResult;
 import org.eclipse.chemclipse.chromatogram.msd.filter.settings.IMassSpectrumFilterSettings;
 import org.eclipse.chemclipse.model.core.IMassSpectrumPeak;
-import org.eclipse.chemclipse.msd.filter.supplier.centroiding.Activator;
 import org.eclipse.chemclipse.msd.filter.supplier.centroiding.settings.MassSpectrumFilterSettings;
 import org.eclipse.chemclipse.msd.model.core.IIon;
-import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
-import org.eclipse.chemclipse.msd.model.implementation.MassSpectra;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
-import org.eclipse.chemclipse.support.events.IChemClipseEvents;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.e4.core.services.events.IEventBroker;
 
 public class MassSpectrumFilter extends AbstractMassSpectrumFilter {
 
@@ -51,7 +46,6 @@ public class MassSpectrumFilter extends AbstractMassSpectrumFilter {
 				processingInfo.addMessages(centroidisation(massSpectrum, massSpectrumFilterSettings));
 			}
 		}
-		update(massSpectra);
 		return processingInfo;
 	}
 
@@ -92,15 +86,5 @@ public class MassSpectrumFilter extends AbstractMassSpectrumFilter {
 			processingInfo.addErrorMessage(CENTROIDING, "There are no peaks stored.");
 		}
 		return processingInfo;
-	}
-
-	private void update(List<IScanMSD> scanMSDs) {
-
-		IMassSpectra massSpectra = new MassSpectra();
-		massSpectra.addMassSpectra(scanMSDs);
-		IEventBroker eventBroker = Activator.getDefault().getEventBroker();
-		if(eventBroker != null) {
-			eventBroker.send(IChemClipseEvents.TOPIC_MASS_SPECTRUM_UPDATE_SELECTION, massSpectra);
-		}
 	}
 }
