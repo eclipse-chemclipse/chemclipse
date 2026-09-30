@@ -66,6 +66,7 @@
           </children>
           <children xsi:type="basic:PartStack" xmi:id="_F-avMJRlEeW3h-K0O5zQFg" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.perspective.maldi.partstack.1" containerData="1500">
             <children xsi:type="basic:Part" xmi:id="_OTuAUOMCEeeFk6MNh27L1g" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.MassSpectrumScanList" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.msd.ui/org.eclipse.chemclipse.ux.extension.msd.ui.parts.MassSpectrumPeakListPart" label="Mass Spectrum Peak List" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/selectedScansDefault.gif"/>
+            <children xsi:type="basic:Part" xmi:id="_GgmB4LyxEfGOfvl1POr9pQ" elementId="org.eclipse.chemclipse.ux.extension.xxd.ui.part.Synonyms" contributionURI="bundleclass://org.eclipse.chemclipse.ux.extension.xxd.ui/org.eclipse.chemclipse.ux.extension.xxd.ui.parts.SynonymsPart" label="Synonyms" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/tag.gif" closeable="true"/>
           </children>
         </children>
       </children>
