@@ -12,11 +12,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.identifier;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.exceptions.NoIdentifierAvailableException;
 import org.eclipse.chemclipse.model.supplier.ScanProcessSupplier;
@@ -34,6 +36,8 @@ import org.osgi.service.component.annotations.Component;
 
 @Component(service = IProcessTypeSupplier.class)
 public class StandaloneMassSpectrumIdentifierProcessTypeSupplier implements IProcessTypeSupplier {
+
+	private static final Logger logger = Logger.getLogger(StandaloneMassSpectrumIdentifierProcessTypeSupplier.class);
 
 	@Override
 	public String getCategory() {
@@ -93,9 +97,29 @@ public class StandaloneMassSpectrumIdentifierProcessTypeSupplier implements IPro
 		public boolean isValidFor(IScan scan) {
 
 			if(scan instanceof IRegularMassSpectrum regularMassSpectrum) {
-				return regularMassSpectrum.getMassSpectrumType().equals(MassSpectrumType.CENTROID);
+				MassSpectrumType massSpectrumType = regularMassSpectrum.getMassSpectrumType();
+				IMassSpectrumIdentifierSettings massSpectrumIdentifierSettings = createSettings();
+				if(massSpectrumIdentifierSettings != null) {
+					return massSpectrumIdentifierSettings.appliesToMassSpectrumTypes().contains(massSpectrumType);
+				}
+				return MassSpectrumType.CENTROID.equals(massSpectrumType);
 			}
 			return false;
+		}
+
+		private IMassSpectrumIdentifierSettings createSettings() {
+
+			Class<IMassSpectrumIdentifierSettings> settingsClass = getSettingsClass();
+			if(settingsClass != null) {
+				try {
+					return settingsClass.getDeclaredConstructor().newInstance();
+				} catch(InstantiationException | IllegalAccessException
+						| IllegalArgumentException | InvocationTargetException
+						| NoSuchMethodException | SecurityException e) {
+					logger.error(e);
+				}
+			}
+			return null;
 		}
 	}
 
