@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.chemclipse.msd.report.massSpectraReportSupplier">
+      <MassSpectraReportSupplier
+            description="Reports standalone mass spectra as ASCII text."
+            fileExtension=".txt"
+            fileName="MassSpectraReport"
+            id="org.eclipse.chemclipse.msd.report.txt.maldi"
+            reportGenerator="org.eclipse.chemclipse.msd.report.txt.core.StandaloneMassSpectrumReport"
+            reportName="Text Report (*.txt)"
+            reportSettings="org.eclipse.chemclipse.msd.report.txt.settings.StandaloneMassSpectrumReportSettings">
+      </MassSpectraReportSupplier>
+   </extension>
+</plugin>
