@@ -356,7 +356,7 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 			case IChemClipseEvents.TOPIC_SCAN_XXD_UPDATE_SELECTION: {
 				if(objects.size() == 1) {
 					Object object = objects.get(0);
-					if(object instanceof IScanMSD scanMSD) {
+					if(object instanceof IScanMSD scanMSD && containsMassSpectrum(scanMSD)) {
 						massSpectrum = scanMSD;
 						if(scanMSD != extendedMassSpectrumUI.getMassSpectrum()) {
 							extendedMassSpectrumUI.update(scanMSD);
@@ -373,17 +373,26 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 							extendedMassSpectrumUI.refresh();
 							dirtyable.setDirty(scanMSD.isDirty());
 						}
-					} else if(object instanceof IMassSpectra updatedMassSpectra) {
-						if(object != massSpectra) {
-							extendedMassSpectrumUI.update(updatedMassSpectra);
-						} else {
-							dirtyable.setDirty(massSpectra.isDirty());
-						}
+					} else if(object == massSpectra) {
+						dirtyable.setDirty(massSpectra.isDirty());
 					}
 				}
 				break;
 			}
 		}
+	}
+
+	private boolean containsMassSpectrum(IScanMSD scanMSD) {
+
+		if(massSpectra == null) {
+			return false;
+		}
+		for(IScanMSD massSpectrumOfFile : massSpectra.getList()) {
+			if(massSpectrumOfFile == scanMSD) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
