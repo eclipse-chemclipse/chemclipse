@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -11,6 +11,8 @@
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.identifier.comparison;
+
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 
 public interface IMassSpectrumComparisonSupplier {
 
@@ -41,4 +43,16 @@ public interface IMassSpectrumComparisonSupplier {
 	boolean supportsTandemMS();
 
 	boolean supportsHighResolutionMS();
+
+	default boolean supports(IScanMSD massSpectrum) {
+
+		// we don't know yet
+		if(massSpectrum == null) {
+			return true;
+		}
+		if(massSpectrum.isTandemMS() && !supportsTandemMS()) {
+			return false;
+		}
+		return massSpectrum.isHighResolutionMS() ? supportsHighResolutionMS() : supportsNominalMS();
+	}
 }

@@ -31,6 +31,7 @@ import org.eclipse.chemclipse.model.supplier.IScanProcessSupplier;
 import org.eclipse.chemclipse.model.supplier.ScanProcessSupplier;
 import org.eclipse.chemclipse.msd.converter.massspectrum.MassSpectrumConverter;
 import org.eclipse.chemclipse.msd.converter.massspectrum.MassSpectrumConverterSupport;
+import org.eclipse.chemclipse.msd.identifier.comparison.MassSpectrumComparatorContext;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
@@ -260,7 +261,13 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 
 		try {
 			Shell shell = getShell();
-			IProcessorPreferences<C> settings = SettingsWizard.getSettings(shell, ProcessSettingsSupport.getWorkspacePreferences(processSupplier), true);
+			IProcessorPreferences<C> settings;
+			MassSpectrumComparatorContext.setMassSpectrum(massSpectrum);
+			try {
+				settings = SettingsWizard.getSettings(shell, ProcessSettingsSupport.getWorkspacePreferences(processSupplier), true);
+			} finally {
+				MassSpectrumComparatorContext.setMassSpectrum(null);
+			}
 			if(settings == null) {
 				return;
 			}

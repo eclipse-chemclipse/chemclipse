@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.chemclipse.msd.identifier.comparison.exceptions.NoMassSpectrumComparatorAvailableException;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 
 public interface IMassSpectrumComparatorSupport {
 
@@ -45,4 +46,11 @@ public interface IMassSpectrumComparatorSupport {
 	String[] getComparatorNames() throws NoMassSpectrumComparatorAvailableException;
 
 	Collection<IMassSpectrumComparisonSupplier> getSuppliers();
+
+	/**
+	 * Returns only those suppliers that are able to handle the given mass spectrum,
+	 * see {@link IMassSpectrumComparisonSupplier#supports(IScanMSD)}. A null mass
+	 * spectrum yields all suppliers.
+	 */
+	Collection<IMassSpectrumComparisonSupplier> getSuppliers(IScanMSD massSpectrum);
 }
