@@ -34,6 +34,7 @@ public class InputValue {
 	private final List<IValidator<Object>> validators = new ArrayList<>();
 	private ComboSupplier<?> comboSupplier;
 	private boolean comboEdit = false;
+	private boolean comboRequired = false;
 	private String label = "";
 	private String tooltip = "";
 	private String contributorURI = "";
@@ -135,6 +136,16 @@ public class InputValue {
 	public void setComboEdit(boolean comboEdit) {
 
 		this.comboEdit = comboEdit;
+	}
+
+	public boolean isComboRequired() {
+
+		return comboRequired;
+	}
+
+	public void setComboRequired(boolean comboRequired) {
+
+		this.comboRequired = comboRequired;
 	}
 
 	public String getContributorURI() {

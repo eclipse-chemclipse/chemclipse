@@ -10,6 +10,7 @@
  * Contributors:
  * Jan Holy - initial API and implementation
  * Philip Wenig - editable combo support
+ * Matthias Mailänder - required combo support
  *******************************************************************************/
 package org.eclipse.chemclipse.support.settings;
 
@@ -29,6 +30,11 @@ public @interface ComboSettingsProperty {
 	Class<? extends ComboSupplier<?>> value();
 
 	boolean edit() default false;
+
+	/**
+	 * If set, an empty selection is reported as an error, hence the dialog can't be finished.
+	 */
+	boolean required() default false;
 
 	public static interface ComboSupplier<T> {
 
