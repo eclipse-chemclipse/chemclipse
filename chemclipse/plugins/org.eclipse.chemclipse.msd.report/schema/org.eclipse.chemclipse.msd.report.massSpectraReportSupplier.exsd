@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="org.eclipse.chemclipse.msd.report" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appinfo>
+         <meta.schema plugin="org.eclipse.chemclipse.msd.report" id="org.eclipse.chemclipse.msd.report.massSpectraReportSupplier" name="Mass Spectra Report Supplier"/>
+      </appinfo>
+      <documentation>
+         This extension point enables other plugins to register report formats for standalone mass spectra. It depends on each supplier to export specific reports.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="1" maxOccurs="unbounded">
+            <element ref="MassSpectraReportSupplier" minOccurs="1" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="MassSpectraReportSupplier">
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Set a unique suppliers id, e.g. &quot;org.eclipse.chemclipse.msd.report.supplier.txt&quot;.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="description" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Describe in short words the intention of the supplier.
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="reportName" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The report name is used to show in the corresponding FileDialog. Give a short description of the report e.g. &quot;Mass Spectra Report (.txt)&quot;.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="fileExtension" type="string" use="required">
+            <annotation>
+               <documentation>
+                  For example &quot;.txt&quot;.
+
+The value must not contain unallowed file system characters like: \/:*?&quot;&lt;&gt;|
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="fileName" type="string" use="required">
+            <annotation>
+               <documentation>
+                  For example &quot;MassSpectraReport&quot;. Leave the field empty if the report has no default file name.
+
+The value must not contain unallowed file system characters like: \/:*?&quot;&lt;&gt;|
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="reportGenerator" type="string" use="required">
+            <annotation>
+               <documentation>
+
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.eclipse.chemclipse.msd.report.massspectra.AbstractMassSpectraReportGenerator:"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="reportSettings" type="string">
+            <annotation>
+               <documentation>
+
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.chemclipse.msd.report.settings.IMassSpectraReportSettings"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="since"/>
+      </appinfo>
+      <documentation>
+         0.9.0
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="examples"/>
+      </appinfo>
+      <documentation>
+         [Enter extension point usage example here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="apiinfo"/>
+      </appinfo>
+      <documentation>
+         [Enter API information here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="implementation"/>
+      </appinfo>
+      <documentation>
+         [Enter information about supplied implementation of this extension point.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="copyright"/>
+      </appinfo>
+      <documentation>
+         /*******************************************************************************
+ * Copyright (c) 2026 Lablicate GmbH.
+ *
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     Matthias Mailänder - initial API and implementation
+*******************************************************************************/
+      </documentation>
+   </annotation>
+
+</schema>

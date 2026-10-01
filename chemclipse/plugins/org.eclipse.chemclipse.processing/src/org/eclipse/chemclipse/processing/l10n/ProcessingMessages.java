@@ -41,6 +41,7 @@ public class ProcessingMessages extends NLS {
 	public static String scanMassSpectrumFilter;
 	public static String massSpectrumFilter;
 	public static String massSpectrumIdentifier;
+	public static String massSpectrumReports;
 	public static String system;
 	public static String userMethods;
 	public static String userInterface;

@@ -1,0 +1,31 @@
+/*******************************************************************************
+ * Copyright (c) 2026 Lablicate GmbH.
+ *
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ * Matthias Mailänder - initial API and implementation
+ *******************************************************************************/
+package org.eclipse.chemclipse.msd.report.settings;
+
+import java.io.File;
+
+import org.eclipse.chemclipse.model.settings.IProcessSettings;
+
+public interface IMassSpectraReportSettings extends IProcessSettings {
+
+	/*
+	 * File name placeholder
+	 */
+	String VARIABLE_MASSSPECTRUM_NAME = "{massspectrum_name}";
+
+	File getExportFolder();
+
+	boolean isAppend();
+
+	String getFileNamePattern();
+}
