@@ -20,6 +20,6 @@ public class Pareto050Comparator extends AbstractDistanceComparator {
 	@Override
 	DistanceMeasure getDistanceMeasure() {
 
-		return new ParetoDistance(0.75);
+		return new ParetoDistance(0.5);
 	}
 }
