@@ -32,10 +32,12 @@ public class AbstractIdentifierSettingsMSD extends AbstractIdentifierDeltaPenalt
 
 	@JsonProperty(value = "Mass Spectrum Comparator", defaultValue = DEFAULT_COMPARATOR_ID)
 	@JsonPropertyDescription(value = "Select the algorithm used for mass spectrum comparison calculation.")
-	@ComboSettingsProperty(MassSpectrumComparatorDynamicSettingProperty.class)
+	@ComboSettingsProperty(value = MassSpectrumComparatorDynamicSettingProperty.class, required = true)
 	private String massSpectrumComparatorId = DEFAULT_COMPARATOR_ID;
+
 	@JsonIgnore
 	private IMarkedTraces<ITrace> excludedIons = new MarkedTraces(MarkedTraceModus.INCLUDE);
+
 	@JsonIgnore
 	private IMassSpectrumComparator comparator = null; // The comparator will be created dynamically.
 

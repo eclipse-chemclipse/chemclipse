@@ -153,6 +153,7 @@ public class SettingsClassParser<SettingType> implements SettingsParser<SettingT
 								try {
 									inputValue.setComboSupplier(comboSettingsProperty.value().getDeclaredConstructor().newInstance());
 									inputValue.setComboEdit(comboSettingsProperty.edit());
+									inputValue.setComboRequired(comboSettingsProperty.required());
 								} catch(Exception e) {
 									throw new RuntimeException("The specified ComboSupplier can't be created.", e);
 								}

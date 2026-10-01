@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Christoph Läubrich - support File properties
+ * Matthias Mailänder - support required combo properties
  *******************************************************************************/
 package org.eclipse.chemclipse.support.settings.validation;
 
@@ -25,6 +26,7 @@ import org.eclipse.core.runtime.IStatus;
 public class InputValidator implements IValidator<Object> {
 
 	private static final String ERROR = "Please enter a value.";
+	private static final String ERROR_COMBO = "Please select an option from the combo box.";
 	private final InputValue inputValue;
 
 	public InputValidator(InputValue inputValue) {
@@ -36,7 +38,9 @@ public class InputValidator implements IValidator<Object> {
 	public IStatus validate(Object value) {
 
 		String message = null;
-		if(value == null) {
+		if(isRequiredComboEmpty(value)) {
+			message = ERROR_COMBO;
+		} else if(value == null) {
 			message = ERROR;
 		} else {
 			Class<?> rawType = inputValue.getRawType();
@@ -52,6 +56,14 @@ public class InputValidator implements IValidator<Object> {
 		}
 	}
 
+	private boolean isRequiredComboEmpty(Object value) {
+
+		if(inputValue.getComboSupplier() == null || !inputValue.isComboRequired()) {
+			return false;
+		}
+		return value == null || value.toString().isBlank();
+	}
+
 	private String parse(Class<?> rawType, String value) {
 
 		String message = null;
@@ -60,7 +72,7 @@ public class InputValidator implements IValidator<Object> {
 				Boolean.parseBoolean(value);
 			} else if(rawType.isEnum()) {
 				if("".equals(value)) {
-					message = "Please select and option from the combo box.";
+					message = ERROR_COMBO;
 				}
 			} else if(rawType == File.class) {
 				FileSettingProperty property = inputValue.getFileSettingProperty();
