@@ -62,7 +62,7 @@
       </ComparisonSupplier>
       <ComparisonSupplier
             comparatorName="Pareto (0.75)"
-            description="This comparator calculates the similarity between two mass spectra with the covariance-based distance."
+            description="This comparator calculates the similarity between two mass spectra with the Pareto scaled correlation, using the scaling exponent 0.75."
             id="org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.distance.pareto.0.75"
             massSpectrumComparator="org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.distance.comparator.Pareto075Comparator"
             nominalMS="true"
@@ -71,7 +71,7 @@
       </ComparisonSupplier>
       <ComparisonSupplier
             comparatorName="Pareto (0.50)"
-            description="This comparator calculates the similarity between two mass spectra with the covariance-based distance."
+            description="This comparator calculates the similarity between two mass spectra with the Pareto scaled correlation, using the scaling exponent 0.50."
             id="org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.distance.pareto.0.50"
             massSpectrumComparator="org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.distance.comparator.Pareto050Comparator"
             nominalMS="true"
@@ -80,7 +80,7 @@
       </ComparisonSupplier>
       <ComparisonSupplier
             comparatorName="Pareto (0.25)"
-            description="This comparator calculates the similarity between two mass spectra with the covariance-based distance."
+            description="This comparator calculates the similarity between two mass spectra with the Pareto scaled correlation, using the scaling exponent 0.25."
             id="org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.distance.pareto.0.25"
             massSpectrumComparator="org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.distance.comparator.Pareto025Comparator"
             nominalMS="true"
