@@ -26,6 +26,7 @@ import java.util.function.Consumer;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.supplier.IScanProcessSupplier;
+import org.eclipse.chemclipse.model.supplier.ScanProcessSupplier;
 import org.eclipse.chemclipse.msd.converter.massspectrum.MassSpectrumConverter;
 import org.eclipse.chemclipse.msd.converter.massspectrum.MassSpectrumConverterSupport;
 import org.eclipse.chemclipse.msd.model.core.IIon;
@@ -264,7 +265,16 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 			return false;
 		}
 
-		return supplier.getCategory().equals(ICategories.MASS_SPECTRUM_IDENTIFIER);
+		String category = supplier.getCategory();
+		if(!category.equals(ICategories.MASS_SPECTRUM_FILTER) && !category.equals(ICategories.MASS_SPECTRUM_IDENTIFIER)) {
+			return false;
+		}
+
+		if(supplier instanceof ScanProcessSupplier scanProcessSupplier) {
+			return scanProcessSupplier.isValidFor(massSpectrum);
+		}
+
+		return false;
 	}
 
 	private void addCommand(IProcessSupplier<?> supplier, IChartMenuEntry cachedEntry) {
