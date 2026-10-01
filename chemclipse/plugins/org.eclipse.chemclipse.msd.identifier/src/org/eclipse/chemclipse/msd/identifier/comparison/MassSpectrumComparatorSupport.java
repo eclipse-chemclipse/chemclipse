@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.chemclipse.msd.identifier.comparison.exceptions.NoMassSpectrumComparatorAvailableException;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 
 /**
  * This class gives you the information about the registered mass spectra
@@ -94,6 +95,18 @@ public class MassSpectrumComparatorSupport implements IMassSpectrumComparatorSup
 	public Collection<IMassSpectrumComparisonSupplier> getSuppliers() {
 
 		return Collections.unmodifiableCollection(suppliers);
+	}
+
+	@Override
+	public Collection<IMassSpectrumComparisonSupplier> getSuppliers(IScanMSD massSpectrum) {
+
+		List<IMassSpectrumComparisonSupplier> supportedSuppliers = new ArrayList<>();
+		for(IMassSpectrumComparisonSupplier supplier : suppliers) {
+			if(supplier.supports(massSpectrum)) {
+				supportedSuppliers.add(supplier);
+			}
+		}
+		return Collections.unmodifiableCollection(supportedSuppliers);
 	}
 
 	@Override
