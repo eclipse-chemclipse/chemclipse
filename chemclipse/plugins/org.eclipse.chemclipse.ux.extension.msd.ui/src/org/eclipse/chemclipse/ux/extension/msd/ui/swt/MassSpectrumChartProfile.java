@@ -234,7 +234,10 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 		}
 
 		String category = supplier.getCategory();
-		if(!category.equals(ICategories.MASS_SPECTRUM_FILTER) && !category.equals(ICategories.BASELINE_DETECTOR) && !category.equals(ICategories.MASS_SPECTRUM_IDENTIFIER)) {
+		if(!category.equals(ICategories.MASS_SPECTRUM_FILTER) //
+				&& !category.equals(ICategories.BASELINE_DETECTOR) //
+				&& !category.equals(ICategories.MASS_SPECTRUM_IDENTIFIER) //
+				&& !category.equals(ICategories.MASS_SPECTRUM_REPORTS)) {
 			return false;
 		}
 

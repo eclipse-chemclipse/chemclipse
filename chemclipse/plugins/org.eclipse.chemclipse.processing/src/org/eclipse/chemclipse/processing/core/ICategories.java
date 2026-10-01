@@ -43,6 +43,7 @@ public interface ICategories {
 	String MASS_SPECTRUM = ProcessingMessages.massSpectrum;
 	String MASS_SPECTRUM_FILTER = ProcessingMessages.massSpectrumFilter;
 	String MASS_SPECTRUM_IDENTIFIER = ProcessingMessages.massSpectrumIdentifier;
+	String MASS_SPECTRUM_REPORTS = ProcessingMessages.massSpectrumReports;
 	String PROCEDURES = ProcessingMessages.procedures;
 	String IDENTIFIER = ProcessingMessages.identifier;
 	String EXPORT = ProcessingMessages.export;
