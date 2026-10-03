@@ -471,7 +471,7 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_SORT_ALPHA_ASC = "alphab_sort_asc.svg";
 	String IMAGE_SORT_ALPHA_DESC = "alphab_sort_desc.svg";
 
-	String IMAGE_EXTERNAL_BROWSER = "external_browser.png";
+	String IMAGE_EXTERNAL_BROWSER = "external_browser.svg";
 
 	String IMAGE_UNZOOM = "unzoomChromatogram.gif";
 	String IMAGE_STACK = "stack.png";
