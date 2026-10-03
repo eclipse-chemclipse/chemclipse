@@ -32,7 +32,7 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	/*
 	 * Icons and Images
 	 */
-	String IMAGE_ADD = "add.gif";
+	String IMAGE_ADD = "add_att.svg";
 	String IMAGE_COPY = "copy_edit.svg";
 	String IMAGE_REFRESH = "refresh.svg";
 	String IMAGE_CANCEL = "cancel.svg";
