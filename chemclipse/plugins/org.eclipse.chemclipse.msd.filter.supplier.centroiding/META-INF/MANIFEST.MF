@@ -15,7 +15,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.chemclipse.logging;bundle-version="0.9.0",
  org.eclipse.e4.core.contexts;bundle-version="1.13.0"
 Bundle-ActivationPolicy: lazy
-Bundle-Activator: org.eclipse.chemclipse.msd.filter.supplier.centroiding.Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-25
 Bundle-Vendor: ChemClipse
 Export-Package: org.eclipse.chemclipse.msd.filter.supplier.centroiding.core,
