@@ -118,11 +118,8 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_PERSPECTIVES = "perspectives.gif";
 	String IMAGE_QUIT = "delete.svg";
 	String IMAGE_SAVE = "save.gif";
-	String IMAGE_SAVE_DISABLED = "save_disabled.gif";
 	String IMAGE_SAVE_AS = "saveas.gif";
-	String IMAGE_SAVE_AS_DISABLED = "saveas_disabled.gif";
 	String IMAGE_SAVEALL = "saveall.gif";
-	String IMAGE_SAVEALL_DISABLED = "saveall_disabled.gif";
 	String IMAGE_VIEW = "view.gif";
 	String IMAGE_UNKNOWN = "unknown.svg";
 	String IMAGE_LOG = "log.gif";
