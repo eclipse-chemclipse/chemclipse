@@ -344,4 +344,8 @@
          id="org.eclipse.chemclipse.msd.converter.supplier.mzpeak.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.chemclipse.msd.filter.supplier.trim.feature"
+         version="0.0.0"/>
+
 </feature>

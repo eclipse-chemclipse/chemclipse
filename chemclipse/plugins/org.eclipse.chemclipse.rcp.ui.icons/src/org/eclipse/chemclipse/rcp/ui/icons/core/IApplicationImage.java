@@ -246,6 +246,7 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_FILTER_NORMALIZER = "normalizer.gif";
 	String IMAGE_FILTER_SCANREMOVER = "scanremover.gif";
 	String IMAGE_FILTER_SCAN_DENSITY = "scanDensity.gif";
+	String IMAGE_FILTER_CUT = "cut_edit.svg";
 
 	String IMAGE_CHROMATOGRAM_OVERLAY_SUBTRACT = "chromatogramOverlaySubtract.gif";
 	String IMAGE_CHROMATOGRAM_OVERLAY_MIRRORED = "chromatogramOverlayMirrored.gif";
