@@ -176,10 +176,6 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_PREPROCESSING = "preprocessing.png";
 	String IMAGE_IMPORT_CHROMATOGRAM = "importChromatogram.png";
 	String IMAGE_EXPORT = "export.svg";
-	String IMAGE_GROOVY_EXECUTE = "groovy_execute.gif";
-	String IMAGE_GROOVY_CREATE = "groovy_create.gif";
-	String IMAGE_JYTHON_EXECUTE = "jython_execute.gif";
-	String IMAGE_JYTHON_CREATE = "jython_create.gif";
 	String IMAGE_BASELINE = "baseline.gif";
 	String IMAGE_BASELINE_SNIP = "baselineSnip.gif";
 	String IMAGE_BASELINE_DELETE = "baselineDelete.gif";
