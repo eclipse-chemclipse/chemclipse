@@ -97,7 +97,7 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_FOLDER_CLOSED = "folder_closed.gif";
 	String IMAGE_HEADER = "header.gif";
 	String IMAGE_FILE = "file.gif";
-	String IMAGE_FOLDER = "folder.png";
+	String IMAGE_FOLDER = "folder.svg";
 	String IMAGE_OPEN_FOLDER = "open-folder.png";
 	String IMAGE_PEAK = "peak.gif";
 	String IMAGE_PEAK_ADD = "peakAdd.gif";
