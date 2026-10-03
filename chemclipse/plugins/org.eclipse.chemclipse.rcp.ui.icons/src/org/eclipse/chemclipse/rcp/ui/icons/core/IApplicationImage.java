@@ -117,9 +117,9 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_CREATE_SNAPSHOT = "camera.png";
 	String IMAGE_PERSPECTIVES = "perspectives.gif";
 	String IMAGE_QUIT = "delete.svg";
-	String IMAGE_SAVE = "save.gif";
-	String IMAGE_SAVE_AS = "saveas.gif";
-	String IMAGE_SAVEALL = "saveall.gif";
+	String IMAGE_SAVE = "save_edit.svg";
+	String IMAGE_SAVE_AS = "saveas_edit.svg";
+	String IMAGE_SAVEALL = "saveall_edit.svg";
 	String IMAGE_VIEW = "view.gif";
 	String IMAGE_UNKNOWN = "unknown.svg";
 	String IMAGE_LOG = "log.gif";
