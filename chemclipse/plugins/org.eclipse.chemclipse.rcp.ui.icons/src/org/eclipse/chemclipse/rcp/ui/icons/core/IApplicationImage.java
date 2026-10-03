@@ -158,8 +158,8 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_FILTER_CODA = "coda.gif";
 	String IMAGE_FILTER_DENOISING = "denoising.gif";
 	String IMAGE_FILTER_IONREMOVER = "ionremover.gif";
-	String IMAGE_WORD_DOCUMENT = "word_document.gif";
-	String IMAGE_EXCEL_DOCUMENT = "excel_document.gif";
+	String IMAGE_WORD_DOCUMENT = "word.svg"; // TODO: deduplicate
+	String IMAGE_EXCEL_DOCUMENT = "excel.svg"; // TODO: deduplicate
 	String IMAGE_BITMAP_DOCUMENT = "bitmap_document.png";
 	String IMAGE_VECTOR_DOCUMENT = "vector_document.png";
 	String IMAGE_BACKWARD = "backward.gif";
@@ -298,7 +298,7 @@ public interface IApplicationImage extends IApplicationImageProvider {
 
 	String IMAGE_ARROW_FORWARD = "arrowForward.gif";
 	String IMAGE_ARROW_BACKWARD = "arrowBackward.gif";
-	String IMAGE_EXCEL = "excel.gif";
+	String IMAGE_EXCEL = "excel.svg";
 	String IMAGE_PDF = "pdf.gif";
 	String IMAGE_TXT = "txt.gif";
 	String IMAGE_CSV = "csv.gif";
@@ -426,7 +426,7 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_OFFSET_ACTIVE = "offsetActive.gif";
 
 	String IMAGE_MERGE = "merge.gif";
-	String IMAGE_LABELS = "labels.png";
+	String IMAGE_LABELS = "labels.svg";
 	String IMAGE_PEAK_TRACES = "peakTraces.gif";
 	String IMAGE_COPY_CLIPBOARD = "copy-clipboard.svg";
 	String IMAGE_ZOOM_LOCKED = "zoomLocked.png";
