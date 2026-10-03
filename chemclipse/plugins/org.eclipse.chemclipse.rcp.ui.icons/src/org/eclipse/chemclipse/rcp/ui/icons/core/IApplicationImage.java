@@ -410,10 +410,6 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_EXECUTE_EXTENSION = "execute-extension.png";
 	String IMAGE_POPUP_MENU = "popup-menu.png";
 
-	String IMAGE_AUTH = "auth.png";
-	String IMAGE_AUTH_LOCKED = "auth_locked.gif";
-	String IMAGE_AUTH_UNLOCKED = "auth_unlocked.gif";
-
 	String IMAGE_HEADER_DATA = "headerdata.gif";
 	String IMAGE_CHART_DATA_SHOW = "chartDataShow.png";
 	String IMAGE_CHART_DATA_HIDE = "chartDataHide.png";
