@@ -446,7 +446,7 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_CHROMATOGRAM_XIC_HIDE = "chromatogramXicHide.gif";
 	String IMAGE_REVIEW_DETAILS_SHOW = "reviewDetailsShow.gif";
 	String IMAGE_REVIEW_DETAILS_HIDE = "reviewDetailsHide.gif";
-	String IMAGE_PLUGINS = "plugins.png";
+	String IMAGE_PLUGINS = "plugin_obj.svg";
 	String IMAGE_XML_FILE = "xmldoc.gif";
 	String IMAGE_ZIP_FILE = "zip_file.png";
 	String IMAGE_TRANSFER = "transfer.png";
