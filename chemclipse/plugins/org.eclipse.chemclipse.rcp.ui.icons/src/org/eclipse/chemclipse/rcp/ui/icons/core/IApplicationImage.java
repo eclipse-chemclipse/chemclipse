@@ -484,7 +484,7 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_CHROM_2D_STACK_1D = "chrom2dstack1d.gif";
 	String IMAGE_COLUMN = "column.gif";
 	String IMAGE_BOOK = "book.png";
-	String IMAGE_BOOKMARK = "bookmark.png";
+	String IMAGE_BOOKMARK = "bookmarks_view.svg";
 	String IMAGE_INTENSITY_RANGE = "intensityRange.gif";
 	String IMAGE_OPTIMIZE_PATTERN = "optimizePattern.gif";
 	String IMAGE_BINARYDATA = "binarydata.png";
