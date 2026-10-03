@@ -216,7 +216,7 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_ION_TRANSITION = "ionTransition.gif";
 
 	String IMAGE_UPDATES = "updates.gif";
-	String IMAGE_MARKETPLACE = "marketplace.gif";
+	String IMAGE_MARKETPLACE = "ds_wizard_obj.svg";
 
 	String IMAGE_PCA = "pca.gif";
 
