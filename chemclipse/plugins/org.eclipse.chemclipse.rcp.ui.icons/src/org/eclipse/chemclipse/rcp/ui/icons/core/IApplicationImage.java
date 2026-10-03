@@ -34,7 +34,7 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	 */
 	String IMAGE_ADD = "add.gif";
 	String IMAGE_COPY = "copy_edit.svg";
-	String IMAGE_REFRESH = "refresh.png";
+	String IMAGE_REFRESH = "refresh.svg";
 	String IMAGE_CANCEL = "cancel.svg";
 	String IMAGE_DELETE = "delete.svg";
 	String IMAGE_DELETE_ALL = "delete_all.png";
