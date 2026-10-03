@@ -258,8 +258,8 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_OFFSET_UP = "offsetUp.gif";
 	String IMAGE_OFFSET_DOWN = "offsetDown.gif";
 
-	String IMAGE_NEXT = "next.gif";
-	String IMAGE_PREVIOUS = "previous.gif";
+	String IMAGE_NEXT = "yellow_arrow_right.svg";
+	String IMAGE_PREVIOUS = "yellow_arrow_left.svg";
 	String IMAGE_NEXT_YELLOW = "nextYellow.gif";
 	String IMAGE_PREVIOUS_YELLOW = "previousYellow.gif";
 
@@ -283,21 +283,21 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_PLUS = "plus.gif";
 	String IMAGE_MINUS = "minus.gif";
 
-	String IMAGE_ARROW_DOWN_2 = "arrow_down_2.gif";
-	String IMAGE_ARROW_UP_2 = "arrow_up_2.gif";
+	String IMAGE_ARROW_DOWN_2 = "yellow_arrow_down.svg";
+	String IMAGE_ARROW_UP_2 = "yellow_arrow_up.svg";
 
-	String IMAGE_ARROW_DOWN = "arrow_down.gif";
-	String IMAGE_ARROW_UP = "arrow_up.gif";
-	String IMAGE_ARROW_EQUAL = "arrow_equal.gif";
+	String IMAGE_ARROW_DOWN = "yellow_arrow_down.svg";
+	String IMAGE_ARROW_UP = "yellow_arrow_up.svg";
+	String IMAGE_ARROW_EQUAL = "yellow_arrow_right.svg";
 
 	String IMAGE_RATING_VERY_GOOD = "ratingVeryGood.gif";
 	String IMAGE_RATING_GOOD = "ratingGood.gif";
-	String IMAGE_RATING_AVERAGE = "ratingAverage.gif";
+	String IMAGE_RATING_AVERAGE = "yellow_arrow_right.svg";
 	String IMAGE_RATING_BAD = "ratingBad.gif";
 	String IMAGE_RATING_VERY_BAD = "ratingVeryBad.gif";
 
-	String IMAGE_ARROW_FORWARD = "arrowForward.gif";
-	String IMAGE_ARROW_BACKWARD = "arrowBackward.gif";
+	String IMAGE_ARROW_FORWARD = "yellow_arrow_right.svg";
+	String IMAGE_ARROW_BACKWARD = "yellow_arrow_left.svg";
 	String IMAGE_EXCEL = "excel.svg";
 	String IMAGE_PDF = "pdf.gif";
 	String IMAGE_TXT = "txt.gif";
