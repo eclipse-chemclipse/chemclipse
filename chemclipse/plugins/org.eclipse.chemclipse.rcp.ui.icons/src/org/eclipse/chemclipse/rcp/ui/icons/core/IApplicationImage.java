@@ -472,8 +472,8 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_GRID = "grid.png";
 	String IMAGE_FILTER = "filter.svg";
 	String IMAGE_LOCK_UPDATE = "lockUpdate.gif";
-	String IMAGE_SORT_ALPHA_ASC = "sort_alpha_asc.png";
-	String IMAGE_SORT_ALPHA_DESC = "sort_alpha_desc.png";
+	String IMAGE_SORT_ALPHA_ASC = "alphab_sort_asc.svg";
+	String IMAGE_SORT_ALPHA_DESC = "alphab_sort_desc.svg";
 
 	String IMAGE_EXTERNAL_BROWSER = "external_browser.png";
 
