@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.chemclipse.chromatogram.msd.filter.massSpectrumFilterSupplier">
+      <MassSpectrumFilterSupplier
+            config="org.eclipse.chemclipse.xxd.edit.supplier.alsl.settings.MassSpectrumFilterSettings"
+            description="This baseline detector uses a Asymmetric Least Squares (AsLS) Smoothing"
+            filter="org.eclipse.chemclipse.xxd.edit.supplier.asls.core.MassSpectrumFilter"
+            filterName="AsLS"
+            id="org.eclipse.chemclipse.msd.filter.supplier.alsl.massspectrum">
+      </MassSpectrumFilterSupplier>
+   </extension>
+   <extension
+         point="org.eclipse.chemclipse.chromatogram.xxd.baseline.detector.baselineDetectorSupplier">
+      <BaselineDetectorSupplier
+            baselineDetector="org.eclipse.chemclipse.xxd.edit.supplier.asls.core.BaselineDetector"
+            description="This baseline detector uses a Asymmetric Least Squares (AsLS) Smoothing"
+            detectorName="AsLS"
+            detectorSettings="org.eclipse.chemclipse.xxd.edit.supplier.alsl.settings.BaselineDetectorSettings"
+            id="org.eclipse.chemclipse.chromatogram.xxd.baseline.detector.supplier.alsl">
+      </BaselineDetectorSupplier>
+   </extension>
+</plugin>
