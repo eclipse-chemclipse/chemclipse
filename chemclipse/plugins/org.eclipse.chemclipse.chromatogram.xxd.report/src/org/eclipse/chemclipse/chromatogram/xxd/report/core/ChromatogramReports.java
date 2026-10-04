@@ -136,6 +136,7 @@ public class ChromatogramReports {
 				if(element.getAttribute(REPORT_SETTINGS) != null) {
 					try {
 						IChromatogramReportSettings instance = (IChromatogramReportSettings)element.createExecutableExtension(REPORT_SETTINGS);
+						supplier.getLiteratureReferences().addAll(instance.getLiteratureReferences());
 						supplier.setSettingsClass(instance.getClass());
 					} catch(CoreException e) {
 						logger.warn(e);

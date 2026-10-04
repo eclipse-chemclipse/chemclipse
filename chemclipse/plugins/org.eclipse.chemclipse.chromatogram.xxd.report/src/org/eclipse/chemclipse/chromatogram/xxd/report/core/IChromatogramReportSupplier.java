@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2025 Lablicate GmbH.
+ * Copyright (c) 2012, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -12,7 +12,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.report.core;
 
+import java.util.List;
+
 import org.eclipse.chemclipse.chromatogram.xxd.report.settings.IChromatogramReportSettings;
+import org.eclipse.chemclipse.support.literature.LiteratureReference;
 
 public interface IChromatogramReportSupplier {
 
@@ -30,6 +33,13 @@ public interface IChromatogramReportSupplier {
 	 * @return String
 	 */
 	String getDescription();
+
+	/**
+	 * Returns the list of literature references.
+	 *
+	 * @return {@link List}
+	 */
+	List<LiteratureReference> getLiteratureReferences();
 
 	/**
 	 * The report name that will be shown in the FileDialog.
