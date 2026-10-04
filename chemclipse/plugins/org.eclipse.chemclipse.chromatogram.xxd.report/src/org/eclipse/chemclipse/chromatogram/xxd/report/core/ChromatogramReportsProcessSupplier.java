@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -70,6 +70,7 @@ public class ChromatogramReportsProcessSupplier implements IProcessTypeSupplier 
 
 			super(supplier.getId(), supplier.getReportName(), supplier.getDescription(), (Class<IChromatogramReportSettings>)supplier.getSettingsClass(), parent, DataType.MSD, DataType.CSD, DataType.WSD, DataType.VSD);
 			this.supplier = supplier;
+			getLiteratureReferences().addAll(supplier.getLiteratureReferences());
 		}
 
 		@Override

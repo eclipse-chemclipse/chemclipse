@@ -12,12 +12,17 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.report.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.chemclipse.chromatogram.xxd.report.settings.IChromatogramReportSettings;
+import org.eclipse.chemclipse.support.literature.LiteratureReference;
 
 public class AbstractChromatogramReportSupplier implements IChromatogramReportSupplierSetter {
 
 	private String id = "";
 	private String description = "";
+	private final List<LiteratureReference> literatureReferences = new ArrayList<>();
 	private String filterName = "";
 	private String fileExtension = "";
 	private String fileName = "";
@@ -49,6 +54,12 @@ public class AbstractChromatogramReportSupplier implements IChromatogramReportSu
 		if(description != null) {
 			this.description = description;
 		}
+	}
+
+	@Override
+	public List<LiteratureReference> getLiteratureReferences() {
+
+		return literatureReferences;
 	}
 
 	@Override
