@@ -54,6 +54,7 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 
 	private static final Logger logger = Logger.getLogger(ChromatogramMSDReaderVersion09.class);
 
+	private static final String CHROMATOGRAM_INDEX = "chromatogram_index";
 	private static final String TIME = "time";
 	private static final String INTENSITY = "intensity";
 	private static final String MS_LEVEL = "ms_level";
@@ -66,8 +67,10 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 		IVendorChromatogram chromatogram = new VendorChromatogram();
 		readPackage(file, chromatogram);
 
+		Path chromatogramMetadataParquet = extract(file, "chromatograms_metadata.parquet");
+		int ticIndex = extractTicIndexFromMetadata(chromatogramMetadataParquet);
 		Path chromatogramDataParquet = extract(file, "chromatograms_data.parquet");
-		readTIC(chromatogramDataParquet, chromatogram);
+		readTIC(chromatogramDataParquet, ticIndex, chromatogram);
 
 		return chromatogram;
 	}
@@ -78,12 +81,13 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 		IVendorChromatogram chromatogram = new VendorChromatogram();
 		readPackage(file, chromatogram);
 
-		Path chromatogramDataParquet = extract(file, "chromatograms_data.parquet");
-
 		Path spectraPeaksParquet = extract(file, "spectra_peaks.parquet");
 		Path spectraDataParquet = extract(file, "spectra_data.parquet");
 		IReaderProxy readerProxy = new ReaderProxy(spectraPeaksParquet, spectraDataParquet);
-		addScanProxies(chromatogramDataParquet, chromatogram, readerProxy, monitor);
+		Path chromatogramMetadataParquet = extract(file, "chromatograms_metadata.parquet");
+		int ticIndex = extractTicIndexFromMetadata(chromatogramMetadataParquet);
+		Path chromatogramDataParquet = extract(file, "chromatograms_data.parquet");
+		addScanProxies(chromatogramDataParquet, ticIndex, chromatogram, readerProxy, monitor);
 		return chromatogram;
 	}
 
@@ -147,16 +151,41 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 		}
 	}
 
-	private static void readTIC(Path chromatogramDataParquet, IVendorChromatogram chromatogram) {
+	private int extractTicIndexFromMetadata(Path chromatogramMetadataParquet) {
+
+		try (ParquetFileReader parquetFileReader = ParquetReaderSupport.open(chromatogramMetadataParquet)) {
+			MessageType schema = parquetFileReader.getFooter().getFileMetaData().getSchema();
+			PageReadStore pageReadStore;
+			while((pageReadStore = parquetFileReader.readNextRowGroup()) != null) {
+				RecordReader<Group> recordReader = ParquetReaderSupport.getRecordReader(schema, pageReadStore);
+				long rows = pageReadStore.getRowCount();
+				for(long row = 0; row < rows; row++) {
+					Group point = ParquetReaderSupport.readPoint(recordReader);
+					if(point == null) {
+						continue;
+					}
+					if(point.getString("id", 0).equals("TIC") || point.getString("chromatogram_type", 0).equals("MS1000235")) {
+						return point.getInteger("index", 0);
+					}
+				}
+			}
+		} catch(IOException e) {
+			logger.error(e);
+		}
+		return 0;
+	}
+
+	private static void readTIC(Path chromatogramDataParquet, int ticIndex, IVendorChromatogram chromatogram) {
 
 		try (ParquetFileReader parquetFileReader = ParquetReaderSupport.open(chromatogramDataParquet)) {
 			MessageType schema = parquetFileReader.getFooter().getFileMetaData().getSchema();
 			PageReadStore pageReadStore;
 			while((pageReadStore = parquetFileReader.readNextRowGroup()) != null) {
 				RecordReader<Group> recordReader = ParquetReaderSupport.getRecordReader(schema, pageReadStore);
-				for(long row = 0, rows = pageReadStore.getRowCount(); row < rows; row++) {
+				long rows = pageReadStore.getRowCount();
+				for(long row = 0; row < rows; row++) {
 					Group point = ParquetReaderSupport.readPoint(recordReader);
-					if(point == null) {
+					if(point == null || ParquetReaderSupport.getNumber(point, CHROMATOGRAM_INDEX, 0) != ticIndex) {
 						continue;
 					}
 					IVendorScan scan = new VendorScan();
@@ -172,7 +201,7 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 		}
 	}
 
-	private void addScanProxies(Path chromatogramDataParquet, IVendorChromatogram chromatogram, IReaderProxy readerProxy, IProgressMonitor monitor) {
+	private void addScanProxies(Path chromatogramDataParquet, int ticIndex, IVendorChromatogram chromatogram, IReaderProxy readerProxy, IProgressMonitor monitor) {
 
 		int cycleNumber = isMultiStageMassSpectrum ? 1 : 0;
 
@@ -181,9 +210,10 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 			PageReadStore pageReadStore;
 			while((pageReadStore = parquetFileReader.readNextRowGroup()) != null) {
 				RecordReader<Group> recordReader = ParquetReaderSupport.getRecordReader(schema, pageReadStore);
-				for(long row = 0, rows = pageReadStore.getRowCount(); row < rows; row++) {
+				long rows = pageReadStore.getRowCount();
+				for(long row = 0; row < rows; row++) {
 					Group point = ParquetReaderSupport.readPoint(recordReader);
-					if(point == null) {
+					if(point == null || ParquetReaderSupport.getNumber(point, CHROMATOGRAM_INDEX, 0) != ticIndex) {
 						continue;
 					}
 					IVendorScanProxy scanProxy = new VendorScanProxy(readerProxy, monitor);
