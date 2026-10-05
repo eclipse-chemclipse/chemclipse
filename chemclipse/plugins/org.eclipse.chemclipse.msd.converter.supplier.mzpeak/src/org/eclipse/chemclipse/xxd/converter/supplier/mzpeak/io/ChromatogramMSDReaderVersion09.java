@@ -59,6 +59,12 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 	private static final String INTENSITY = "intensity";
 	private static final String MS_LEVEL = "ms_level";
 
+	@FunctionalInterface
+	private interface IScanBuilder {
+
+		void addScan(int retentionTime, float intensity, short msLevel);
+	}
+
 	private boolean isMultiStageMassSpectrum = false;
 
 	@Override
@@ -160,7 +166,7 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 				RecordReader<Group> recordReader = ParquetReaderSupport.getRecordReader(schema, pageReadStore);
 				long rows = pageReadStore.getRowCount();
 				for(long row = 0; row < rows; row++) {
-					Group point = ParquetReaderSupport.readPoint(recordReader);
+					Group point = ParquetReaderSupport.getGroup(recordReader.read(), ParquetReaderSupport.POINT);
 					if(point == null) {
 						continue;
 					}
@@ -177,6 +183,37 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 
 	private static void readTIC(Path chromatogramDataParquet, int ticIndex, IVendorChromatogram chromatogram) {
 
+		readChromatogram(chromatogramDataParquet, ticIndex, (retentionTime, intensity, msLevel) -> {
+			IVendorScan scan = new VendorScan();
+			scan.setRetentionTime(retentionTime);
+			IIon tic = new Ion(IIon.TIC_ION, intensity);
+			scan.addIon(tic);
+			scan.setMassSpectrometer(msLevel);
+			chromatogram.addScan(scan);
+		});
+	}
+
+	private void addScanProxies(Path chromatogramDataParquet, int ticIndex, IVendorChromatogram chromatogram, IReaderProxy readerProxy, IProgressMonitor monitor) {
+
+		int[] cycleNumber = new int[]{isMultiStageMassSpectrum ? 1 : 0};
+
+		readChromatogram(chromatogramDataParquet, ticIndex, (retentionTime, intensity, msLevel) -> {
+			IVendorScanProxy scanProxy = new VendorScanProxy(readerProxy, monitor);
+			scanProxy.setRetentionTime(retentionTime);
+			scanProxy.setTotalSignal(intensity);
+			scanProxy.setMassSpectrometer(msLevel);
+			if(msLevel < 2) {
+				cycleNumber[0]++;
+			}
+			if(cycleNumber[0] >= 1) {
+				scanProxy.setCycleNumber(cycleNumber[0]);
+			}
+			chromatogram.addScan(scanProxy);
+		});
+	}
+
+	private static void readChromatogram(Path chromatogramDataParquet, int ticIndex, IScanBuilder scanBuilder) {
+
 		try (ParquetFileReader parquetFileReader = ParquetReaderSupport.open(chromatogramDataParquet)) {
 			MessageType schema = parquetFileReader.getFooter().getFileMetaData().getSchema();
 			PageReadStore pageReadStore;
@@ -184,16 +221,18 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 				RecordReader<Group> recordReader = ParquetReaderSupport.getRecordReader(schema, pageReadStore);
 				long rows = pageReadStore.getRowCount();
 				for(long row = 0; row < rows; row++) {
-					Group point = ParquetReaderSupport.readPoint(recordReader);
-					if(point == null || ParquetReaderSupport.getNumber(point, CHROMATOGRAM_INDEX, 0) != ticIndex) {
+					Group group = recordReader.read();
+					Group point = ParquetReaderSupport.getGroup(group, ParquetReaderSupport.POINT);
+					if(point != null) {
+						if(ParquetReaderSupport.getNumber(point, CHROMATOGRAM_INDEX, 0) == ticIndex) {
+							readPoint(point, scanBuilder);
+						}
 						continue;
 					}
-					IVendorScan scan = new VendorScan();
-					scan.setRetentionTime((int)Math.round(ParquetReaderSupport.getNumber(point, TIME, 0) * IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
-					IIon tic = new Ion(IIon.TIC_ION, (float)ParquetReaderSupport.getNumber(point, INTENSITY, 0));
-					scan.addIon(tic);
-					scan.setMassSpectrometer((short)ParquetReaderSupport.getNumber(point, MS_LEVEL, 1));
-					chromatogram.addScan(scan);
+					Group chunk = ParquetReaderSupport.getGroup(group, ParquetReaderSupport.CHUNK);
+					if(chunk != null && ParquetReaderSupport.getNumber(chunk, CHROMATOGRAM_INDEX, 0) == ticIndex) {
+						readChunk(chunk, scanBuilder);
+					}
 				}
 			}
 		} catch(IOException e) {
@@ -201,36 +240,30 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 		}
 	}
 
-	private void addScanProxies(Path chromatogramDataParquet, int ticIndex, IVendorChromatogram chromatogram, IReaderProxy readerProxy, IProgressMonitor monitor) {
+	private static void readPoint(Group point, IScanBuilder scanBuilder) {
 
-		int cycleNumber = isMultiStageMassSpectrum ? 1 : 0;
+		int retentionTime = getRetentionTime(ParquetReaderSupport.getNumber(point, TIME, 0));
+		float intensity = (float)ParquetReaderSupport.getNumber(point, INTENSITY, 0);
+		short msLevel = (short)ParquetReaderSupport.getNumber(point, MS_LEVEL, 1);
+		scanBuilder.addScan(retentionTime, intensity, msLevel);
+	}
 
-		try (ParquetFileReader parquetFileReader = ParquetReaderSupport.open(chromatogramDataParquet)) {
-			MessageType schema = parquetFileReader.getFooter().getFileMetaData().getSchema();
-			PageReadStore pageReadStore;
-			while((pageReadStore = parquetFileReader.readNextRowGroup()) != null) {
-				RecordReader<Group> recordReader = ParquetReaderSupport.getRecordReader(schema, pageReadStore);
-				long rows = pageReadStore.getRowCount();
-				for(long row = 0; row < rows; row++) {
-					Group point = ParquetReaderSupport.readPoint(recordReader);
-					if(point == null || ParquetReaderSupport.getNumber(point, CHROMATOGRAM_INDEX, 0) != ticIndex) {
-						continue;
-					}
-					IVendorScanProxy scanProxy = new VendorScanProxy(readerProxy, monitor);
-					scanProxy.setRetentionTime((int)Math.round(ParquetReaderSupport.getNumber(point, TIME, 0) * IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
-					scanProxy.setTotalSignal((float)ParquetReaderSupport.getNumber(point, INTENSITY, 0));
-					scanProxy.setMassSpectrometer((short)ParquetReaderSupport.getNumber(point, MS_LEVEL, 1));
-					if(scanProxy.getMassSpectrometer() < 2) {
-						cycleNumber++;
-					}
-					if(cycleNumber >= 1) {
-						scanProxy.setCycleNumber(cycleNumber);
-					}
-					chromatogram.addScan(scanProxy);
-				}
+	private static void readChunk(Group chunk, IScanBuilder scanBuilder) {
+
+		double[] intensities = ParquetReaderSupport.getNumbers(chunk, INTENSITY);
+		double[] times = ChunkReaderSupport.readAxis(chunk, TIME, intensities.length);
+		double[] msLevels = ParquetReaderSupport.getNumbers(chunk, MS_LEVEL);
+		for(int i = 0; i < times.length; i++) {
+			if(Double.isNaN(times[i]) || Double.isNaN(intensities[i])) {
+				continue; // separates two runs of data points
 			}
-		} catch(IOException e) {
-			logger.error(e);
+			short msLevel = i < msLevels.length && !Double.isNaN(msLevels[i]) ? (short)msLevels[i] : 1;
+			scanBuilder.addScan(getRetentionTime(times[i]), (float)intensities[i], msLevel);
 		}
+	}
+
+	private static int getRetentionTime(double minutes) {
+
+		return (int)Math.round(minutes * IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
 	}
 }

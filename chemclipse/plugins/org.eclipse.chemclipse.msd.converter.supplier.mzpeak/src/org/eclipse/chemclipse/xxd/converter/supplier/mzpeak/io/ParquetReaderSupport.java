@@ -26,21 +26,19 @@ import org.apache.parquet.io.LocalInputFile;
 import org.apache.parquet.io.RecordReader;
 import org.apache.parquet.schema.GroupType;
 import org.apache.parquet.schema.MessageType;
+import org.apache.parquet.schema.Type;
 
-/**
- * Reads the data tables of an mzPeak package, which store their values in a nested "point" group.
- */
 public class ParquetReaderSupport {
 
 	public static final String POINT = "point";
+	public static final String CHUNK = "chunk";
+
+	private static final double[] NO_NUMBERS = new double[0];
 
 	private ParquetReaderSupport() {
 
 	}
 
-	/**
-	 * Opens the given Parquet file without touching Hadoop configuration or native codecs.
-	 */
 	public static ParquetFileReader open(Path path) throws IOException {
 
 		ParquetReadOptions readOptions = ParquetReadOptions.builder(new PlainParquetConfiguration()) //
@@ -54,41 +52,88 @@ public class ParquetReaderSupport {
 		return new ColumnIOFactory().getColumnIO(schema).getRecordReader(pageReadStore, new GroupRecordConverter(schema));
 	}
 
-	/**
-	 * Returns the "point" group of the next row, or null when the row carries none.
-	 */
-	public static Group readPoint(RecordReader<Group> recordReader) {
+	public static Group getGroup(Group row, String field) {
 
-		Group row = recordReader.read();
-		if(row == null || !row.getType().containsField(POINT)) {
+		if(row == null || !row.getType().containsField(field)) {
 			return null;
 		}
-		if(row.getFieldRepetitionCount(row.getType().getFieldIndex(POINT)) == 0) {
+		int index = row.getType().getFieldIndex(field);
+		if(row.getFieldRepetitionCount(index) == 0) {
 			return null;
 		}
-		return row.getGroup(POINT, 0);
+		return row.getGroup(index, 0);
 	}
 
-	/**
-	 * Reads a numeric field regardless of the primitive type the writer chose for it. Profile
-	 * spectra leave entries empty, hence the default value for absent and null fields.
-	 */
-	public static double getNumber(Group point, String field, double defaultValue) {
+	public static double getNumber(Group group, String field, double defaultValue) {
 
-		GroupType groupType = point.getType();
+		GroupType groupType = group.getType();
 		if(!groupType.containsField(field)) {
 			return defaultValue;
 		}
 		int index = groupType.getFieldIndex(field);
-		if(point.getFieldRepetitionCount(index) == 0) {
+		if(group.getFieldRepetitionCount(index) == 0) {
 			return defaultValue;
 		}
-		return switch(groupType.getType(index).asPrimitiveType().getPrimitiveTypeName()) {
-			case DOUBLE -> point.getDouble(index, 0);
-			case FLOAT -> point.getFloat(index, 0);
-			case INT64 -> point.getLong(index, 0);
-			case INT32 -> point.getInteger(index, 0);
-			default -> defaultValue;
+		double number = readNumber(group, index, 0);
+		return Double.isNaN(number) ? defaultValue : number;
+	}
+
+	public static String getString(Group group, String field, String defaultValue) {
+
+		GroupType groupType = group.getType();
+		if(!groupType.containsField(field)) {
+			return defaultValue;
+		}
+		int index = groupType.getFieldIndex(field);
+		if(group.getFieldRepetitionCount(index) == 0) {
+			return defaultValue;
+		}
+		return group.getString(index, 0);
+	}
+
+	public static double[] getNumbers(Group group, String field) {
+
+		GroupType groupType = group.getType();
+		if(!groupType.containsField(field)) {
+			return NO_NUMBERS;
+		}
+		int index = groupType.getFieldIndex(field);
+		if(group.getFieldRepetitionCount(index) == 0) {
+			return NO_NUMBERS;
+		}
+		Group list = group.getGroup(index, 0);
+		int size = list.getFieldRepetitionCount(0);
+		double[] numbers = new double[size];
+		for(int element = 0; element < size; element++) {
+			numbers[element] = readElement(list, element);
+		}
+		return numbers;
+	}
+
+	private static double readElement(Group list, int element) {
+
+		if(list.getType().getType(0).isPrimitive()) {
+			return readNumber(list, 0, element); // two level list
+		}
+		Group item = list.getGroup(0, element); // three level list
+		if(item.getFieldRepetitionCount(0) == 0) {
+			return Double.NaN;
+		}
+		return readNumber(item, 0, 0);
+	}
+
+	private static double readNumber(Group group, int index, int repetition) {
+
+		Type type = group.getType().getType(index);
+		if(!type.isPrimitive()) {
+			return Double.NaN;
+		}
+		return switch(type.asPrimitiveType().getPrimitiveTypeName()) {
+			case DOUBLE -> group.getDouble(index, repetition);
+			case FLOAT -> group.getFloat(index, repetition);
+			case INT64 -> group.getLong(index, repetition);
+			case INT32 -> group.getInteger(index, repetition);
+			default -> Double.NaN;
 		};
 	}
 }
