@@ -70,18 +70,17 @@ public class ReaderProxy implements IReaderProxy {
 			while((pageReadStore = parquetFileReader.readNextRowGroup()) != null) {
 				RecordReader<Group> recordReader = ParquetReaderSupport.getRecordReader(schema, pageReadStore);
 				for(long row = 0, rows = pageReadStore.getRowCount(); row < rows; row++) {
-					Group point = ParquetReaderSupport.readPoint(recordReader);
-					if(point == null) {
-						continue;
-					}
-					if((long)ParquetReaderSupport.getNumber(point, SPECTRUM_INDEX, -1) != spectrumIndex) {
-						continue;
-					}
-					double mz = ParquetReaderSupport.getNumber(point, MZ, 0);
-					float intensity = (float)ParquetReaderSupport.getNumber(point, INTENSITY, 0);
-					if(mz > 0) {
-						IVendorIon ion = new VendorIon(mz, intensity);
-						scanProxy.addIon(ion);
+					Group record = recordReader.read();
+					Group point = ParquetReaderSupport.getGroup(record, ParquetReaderSupport.POINT);
+					if(point != null) {
+						if((long)ParquetReaderSupport.getNumber(point, SPECTRUM_INDEX, -1) == spectrumIndex) {
+							addIon(scanProxy, ParquetReaderSupport.getNumber(point, MZ, 0), (float)ParquetReaderSupport.getNumber(point, INTENSITY, 0));
+						}
+					} else {
+						Group chunk = ParquetReaderSupport.getGroup(record, ParquetReaderSupport.CHUNK);
+						if(chunk != null && (long)ParquetReaderSupport.getNumber(chunk, SPECTRUM_INDEX, -1) == spectrumIndex) {
+							readChunk(scanProxy, chunk);
+						}
 					}
 					monitor.worked(1);
 				}
@@ -91,5 +90,22 @@ public class ReaderProxy implements IReaderProxy {
 		}
 
 		monitor.done();
+	}
+
+	private static void readChunk(IVendorScanProxy scanProxy, Group chunk) {
+
+		double[] intensities = ParquetReaderSupport.getNumbers(chunk, INTENSITY);
+		double[] masses = ChunkReaderSupport.readAxis(chunk, MZ, intensities.length);
+		for(int i = 0; i < masses.length; i++) {
+			addIon(scanProxy, masses[i], (float)intensities[i]);
+		}
+	}
+
+	private static void addIon(IVendorScanProxy scanProxy, double mz, float intensity) {
+
+		if(mz > 0 && !Float.isNaN(intensity)) {
+			IVendorIon ion = new VendorIon(mz, intensity);
+			scanProxy.addIon(ion);
+		}
 	}
 }
