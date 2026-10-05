@@ -61,25 +61,25 @@
 			<dependency>
 				<groupId>org.ejml</groupId>
 				<artifactId>ejml-core</artifactId>
-				<version>0.44.0</version>
+				<version>0.46.1</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.ejml</groupId>
 				<artifactId>ejml-ddense</artifactId>
-				<version>0.44.0</version>
+				<version>0.46.1</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.ejml</groupId>
 				<artifactId>ejml-dsparse</artifactId>
-				<version>0.44.0</version>
+				<version>0.46.1</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
 				<groupId>org.ejml</groupId>
 				<artifactId>ejml-simple</artifactId>
-				<version>0.44.0</version>
+				<version>0.46.1</version>
 				<type>jar</type>
 			</dependency>
 		</dependencies>
