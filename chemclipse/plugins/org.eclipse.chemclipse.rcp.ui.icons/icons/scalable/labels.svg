@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="31.678384"
-     inkscape:cx="9.2965601"
-     inkscape:cy="7.9865186"
+     inkscape:cx="9.3281273"
+     inkscape:cy="4.7982246"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -42,7 +42,8 @@
      fit-margin-bottom="0"
      inkscape:showpageshadow="2"
      inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1" />
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:antialias-rendering="false" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -59,46 +60,26 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-48.883455,-82.280757)">
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:5.43041px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.135761"
-       x="50.163361"
-       y="86.467949"
+    <path
+       style="font-size:5.50734px;line-height:1.25;font-family:'TeX Gyre Cursor';-inkscape-font-specification:'TeX Gyre Cursor';letter-spacing:0px;word-spacing:0px;stroke-width:0.137684"
+       d="M 53.047207,84.028784 V 83.400947 H 50.53586 v 0.627837 c 0,0.09913 0.03855,0.148698 0.110147,0.148698 0.0771,0 0.115654,-0.04957 0.115654,-0.148698 v -0.402036 h 0.919726 v 2.64903 h -0.578271 c -0.09913,0 -0.148698,0.03855 -0.148698,0.110147 0,0.0771 0.04957,0.115654 0.148698,0.115654 h 1.382343 c 0.09913,0 0.148698,-0.03855 0.148698,-0.115654 0,-0.0716 -0.04957,-0.110147 -0.148698,-0.110147 h -0.578271 v -2.64903 h 0.914218 v 0.402036 c 0,0.08812 0.04957,0.148698 0.115655,0.148698 0.0771,0 0.110146,-0.04406 0.110146,-0.148698 z"
        id="text4487"
-       inkscape:export-xdpi="50.144707"
-       inkscape:export-ydpi="50.144707"><tspan
-         sodipodi:role="line"
-         id="tspan4485"
-         x="50.163361"
-         y="86.467949"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Cursor';-inkscape-font-specification:'TeX Gyre Cursor';stroke-width:0.135761">T</tspan></text>
+       aria-label="T" />
     <g
        id="g4529"
-       transform="matrix(0.51311009,0,0,0.51311009,31.612679,52.961556)"
+       transform="matrix(0.52037929,0,0,0.52037929,31.325846,52.520504)"
        inkscape:export-xdpi="50.144707"
        inkscape:export-ydpi="50.144707">
-      <text
+      <path
+         style="font-weight:bold;font-size:10.5833px;line-height:1.25;font-family:'TeX Gyre Cursor';-inkscape-font-specification:'TeX Gyre Cursor Bold';letter-spacing:0px;word-spacing:0px;fill:#e3e2db;stroke-width:0.264583"
+         d="m 39.809919,59.911408 v -2.042577 h -5.460982 v 2.042577 c 0,0.539748 0.222249,0.698498 0.529165,0.698498 0.275165,0 0.529165,-0.127 0.529165,-0.698498 v -0.984247 h 1.132413 v 4.053404 h -0.687915 c -0.560915,0 -0.698498,0.232832 -0.698498,0.529165 0,0.275165 0.15875,0.529165 0.698498,0.529165 h 2.444742 c 0.539749,0 0.698498,-0.232833 0.698498,-0.529165 0,-0.275166 -0.137583,-0.529165 -0.698498,-0.529165 H 37.59801 v -4.053404 h 1.153579 v 0.984247 c 0,0.529165 0.22225,0.698498 0.529165,0.698498 0.275166,0 0.529165,-0.127 0.529165,-0.698498 z"
          id="text4487-8-6"
-         y="64.038895"
-         x="33.904438"
-         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#e3e2db;fill-opacity:1;stroke:none;stroke-width:0.264583"
-         xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'TeX Gyre Cursor';-inkscape-font-specification:'TeX Gyre Cursor Bold';fill:#e3e2db;stroke-width:0.264583"
-           y="64.038895"
-           x="33.904438"
-           id="tspan4485-9-0"
-           sodipodi:role="line">T</tspan></text>
-      <text
+         aria-label="T" />
+      <path
+         style="font-weight:bold;font-size:10.5833px;line-height:1.25;font-family:'TeX Gyre Cursor';-inkscape-font-specification:'TeX Gyre Cursor Bold';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+         d="M 39.205183,59.238629 V 57.196052 H 33.7442 v 2.042577 c 0,0.539748 0.22225,0.698497 0.529165,0.698497 0.275166,0 0.529165,-0.126999 0.529165,-0.698497 v -0.984247 h 1.132413 v 4.053404 h -0.687914 c -0.560915,0 -0.698498,0.232832 -0.698498,0.529165 0,0.275165 0.15875,0.529165 0.698498,0.529165 h 2.444742 c 0.539748,0 0.698498,-0.232833 0.698498,-0.529165 0,-0.275166 -0.137583,-0.529165 -0.698498,-0.529165 h -0.698498 v -4.053404 h 1.15358 v 0.984247 c 0,0.529165 0.222249,0.698497 0.529165,0.698497 0.275166,0 0.529165,-0.126999 0.529165,-0.698497 z"
          id="text4487-8"
-         y="63.366116"
-         x="33.299702"
-         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-         xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'TeX Gyre Cursor';-inkscape-font-specification:'TeX Gyre Cursor Bold';stroke-width:0.264583"
-           y="63.366116"
-           x="33.299702"
-           id="tspan4485-9"
-           sodipodi:role="line">T</tspan></text>
+         aria-label="T" />
     </g>
   </g>
 </svg>
