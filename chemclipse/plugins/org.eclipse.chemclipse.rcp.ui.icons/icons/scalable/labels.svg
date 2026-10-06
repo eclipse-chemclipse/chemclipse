@@ -2,12 +2,12 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="31.61134"
-   height="30.832586"
-   viewBox="0 0 8.3638335 8.1577886"
+   width="16"
+   height="16"
+   viewBox="0 0 4.2333333 4.2333334"
    version="1.1"
    id="svg8"
-   inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
    sodipodi:docname="labels.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6"
-     inkscape:cx="14.375"
-     inkscape:cy="32.142857"
+     inkscape:zoom="31.678384"
+     inkscape:cx="9.2965601"
+     inkscape:cy="7.9865186"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -61,20 +61,20 @@
      transform="translate(-48.883455,-82.280757)">
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.9239px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.273098"
-       x="51.413921"
-       y="90.438545"
+       style="font-style:normal;font-weight:normal;font-size:5.43041px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.135761"
+       x="50.163361"
+       y="86.467949"
        id="text4487"
        inkscape:export-xdpi="50.144707"
        inkscape:export-ydpi="50.144707"><tspan
          sodipodi:role="line"
          id="tspan4485"
-         x="51.413921"
-         y="90.438545"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Cursor';-inkscape-font-specification:'TeX Gyre Cursor';stroke-width:0.273098">T</tspan></text>
+         x="50.163361"
+         y="86.467949"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Cursor';-inkscape-font-specification:'TeX Gyre Cursor';stroke-width:0.135761">T</tspan></text>
     <g
        id="g4529"
-       transform="matrix(1.0321806,0,0,1.0321806,14.097061,23.036539)"
+       transform="matrix(0.51311009,0,0,0.51311009,31.612679,52.961556)"
        inkscape:export-xdpi="50.144707"
        inkscape:export-ydpi="50.144707">
       <text
