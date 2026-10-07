@@ -256,8 +256,8 @@ public interface IApplicationImage extends IApplicationImageProvider {
 
 	String IMAGE_NEXT = "yellow_arrow_right.svg";
 	String IMAGE_PREVIOUS = "yellow_arrow_left.svg";
-	String IMAGE_NEXT_YELLOW = "nextYellow.gif";
-	String IMAGE_PREVIOUS_YELLOW = "previousYellow.gif";
+	String IMAGE_NEXT_YELLOW = "yellow_arrow_right.svg"; // TODO: deduplicate
+	String IMAGE_PREVIOUS_YELLOW = "yellow_arrow_left.svg"; // TODO: deduplicate
 
 	String IMAGE_SCRIPT_SHELL = "script_shell.png";
 
