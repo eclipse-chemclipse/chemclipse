@@ -31,12 +31,12 @@ public class TotalScanSignal extends AbstractTotalScanSignal {
 
 	/**
 	 * Validates that retention time and retention index are positive.
-	 * If validatePositive is true, it will be checked that totalSignal is positive too.
 	 *
 	 * @param retentionTime
 	 * @param retentionIndex
 	 * @param totalSignal
 	 * @param validatePositive
+	 *            reject negative values
 	 */
 	public TotalScanSignal(int retentionTime, float retentionIndex, float totalSignal, boolean validatePositive) {
 
