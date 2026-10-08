@@ -25,7 +25,6 @@ import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.msd.converter.supplier.mzpeak.model.IVendorIon;
 import org.eclipse.chemclipse.msd.converter.supplier.mzpeak.model.IVendorScanProxy;
 import org.eclipse.chemclipse.msd.converter.supplier.mzpeak.model.VendorIon;
-import org.eclipse.chemclipse.xxd.converter.supplier.mzpeak.preferences.PreferenceSupplier;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public class ReaderProxy implements IReaderProxy {
@@ -36,31 +35,17 @@ public class ReaderProxy implements IReaderProxy {
 	private static final String MZ = "mz";
 	private static final String INTENSITY = "intensity";
 
-	private Path spectraPeaksParquet;
-	private Path spectraDataParquet;
+	private Path spectraParquet;
 
-	public ReaderProxy(Path spectraPeaksParquet, Path spectraDataParquet) {
+	public ReaderProxy(Path spectraParquet) {
 
-		this.spectraPeaksParquet = spectraPeaksParquet;
-		this.spectraDataParquet = spectraDataParquet;
+		this.spectraParquet = spectraParquet;
 	}
 
 	@Override
 	public void readMassSpectrum(IVendorScanProxy scanProxy, IProgressMonitor monitor) throws IOException {
 
 		monitor.beginTask(ConverterMessages.importScan, IProgressMonitor.UNKNOWN);
-
-		Path spectraParquet = null;
-		if(PreferenceSupplier.isImportCentroidedSpectra()) {
-			spectraParquet = spectraPeaksParquet;
-		} else if(PreferenceSupplier.isImportProfileSpectra()) {
-			spectraParquet = spectraDataParquet;
-		}
-
-		if(spectraParquet == null) {
-			monitor.done();
-			return;
-		}
 
 		int spectrumIndex = scanProxy.getScanNumber() - 1;
 
@@ -69,7 +54,8 @@ public class ReaderProxy implements IReaderProxy {
 			PageReadStore pageReadStore;
 			while((pageReadStore = parquetFileReader.readNextRowGroup()) != null) {
 				RecordReader<Group> recordReader = ParquetReaderSupport.getRecordReader(schema, pageReadStore);
-				for(long row = 0, rows = pageReadStore.getRowCount(); row < rows; row++) {
+				long rows = pageReadStore.getRowCount();
+				for(long row = 0; row < rows; row++) {
 					Group record = recordReader.read();
 					Group point = ParquetReaderSupport.getGroup(record, ParquetReaderSupport.POINT);
 					if(point != null) {

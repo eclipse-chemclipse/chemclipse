@@ -45,6 +45,7 @@ import org.eclipse.chemclipse.msd.converter.supplier.mzpeak.model.json.Param;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzpeak.preferences.PreferenceSupplier;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -53,6 +54,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader implements IChromatogramMSDReader {
 
 	private static final Logger logger = Logger.getLogger(ChromatogramMSDReaderVersion09.class);
+
+	private static final String CHROMATOGRAMS_METADATA = "chromatograms_metadata.parquet";
+	private static final String CHROMATOGRAMS_DATA = "chromatograms_data.parquet";
+	private static final String SPECTRA_PEAKS = "spectra_peaks.parquet";
+	private static final String SPECTRA_DATA = "spectra_data.parquet";
 
 	private static final String CHROMATOGRAM_INDEX = "chromatogram_index";
 	private static final String TIME = "time";
@@ -73,9 +79,9 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 		IVendorChromatogram chromatogram = new VendorChromatogram();
 		readPackage(file, chromatogram);
 
-		Path chromatogramMetadataParquet = extract(file, "chromatograms_metadata.parquet");
+		Path chromatogramMetadataParquet = extract(file, CHROMATOGRAMS_METADATA);
 		int ticIndex = extractTicIndexFromMetadata(chromatogramMetadataParquet);
-		Path chromatogramDataParquet = extract(file, "chromatograms_data.parquet");
+		Path chromatogramDataParquet = extract(file, CHROMATOGRAMS_DATA);
 		readTIC(chromatogramDataParquet, ticIndex, chromatogram);
 
 		return chromatogram;
@@ -84,16 +90,48 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 	@Override
 	public IChromatogramMSD read(File file, IProgressMonitor monitor) throws IOException {
 
+		Path chromatogramMetadataParquet = extract(file, CHROMATOGRAMS_METADATA);
+		int ticIndex = extractTicIndexFromMetadata(chromatogramMetadataParquet);
+		Path chromatogramDataParquet = extract(file, CHROMATOGRAMS_DATA);
+
+		IVendorChromatogram chromatogram = null;
+		if(PreferenceSupplier.isImportCentroidedSpectra()) {
+			chromatogram = readSpectra(file, SPECTRA_PEAKS, "Centroided", chromatogramDataParquet, ticIndex, monitor);
+		}
+		if(PreferenceSupplier.isImportProfileSpectra()) {
+			IVendorChromatogram profileChromatogram = readSpectra(file, SPECTRA_DATA, "Profile", chromatogramDataParquet, ticIndex, monitor);
+			if(chromatogram == null) {
+				chromatogram = profileChromatogram;
+			} else if(profileChromatogram != null) {
+				chromatogram.addReferencedChromatogram(profileChromatogram);
+			}
+		}
+
+		if(chromatogram == null) { // no mass spectra selected or none contained
+			chromatogram = new VendorChromatogram();
+			readPackage(file, chromatogram);
+			readTIC(chromatogramDataParquet, ticIndex, chromatogram);
+		}
+
+		return chromatogram;
+	}
+
+	private IVendorChromatogram readSpectra(File file, String entryName, String dataName, Path chromatogramDataParquet, int ticIndex, IProgressMonitor monitor) {
+
+		Path spectraParquet;
+		try {
+			spectraParquet = extract(file, entryName);
+		} catch(IOException e) {
+			logger.warn(e);
+			return null;
+		}
+
 		IVendorChromatogram chromatogram = new VendorChromatogram();
 		readPackage(file, chromatogram);
+		chromatogram.setFile(file);
+		chromatogram.setDataName(dataName);
+		addScanProxies(chromatogramDataParquet, ticIndex, chromatogram, new ReaderProxy(spectraParquet), monitor);
 
-		Path spectraPeaksParquet = extract(file, "spectra_peaks.parquet");
-		Path spectraDataParquet = extract(file, "spectra_data.parquet");
-		IReaderProxy readerProxy = new ReaderProxy(spectraPeaksParquet, spectraDataParquet);
-		Path chromatogramMetadataParquet = extract(file, "chromatograms_metadata.parquet");
-		int ticIndex = extractTicIndexFromMetadata(chromatogramMetadataParquet);
-		Path chromatogramDataParquet = extract(file, "chromatograms_data.parquet");
-		addScanProxies(chromatogramDataParquet, ticIndex, chromatogram, readerProxy, monitor);
 		return chromatogram;
 	}
 
