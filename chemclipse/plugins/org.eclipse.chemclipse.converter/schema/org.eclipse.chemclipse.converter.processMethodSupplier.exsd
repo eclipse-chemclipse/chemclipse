@@ -91,6 +91,15 @@ The value must not contain unallowed file system characters like: \/:*?&quot;&lt
                </documentation>
             </annotation>
          </attribute>
+         <attribute name="directoryExtension" type="string">
+            <annotation>
+               <documentation>
+                  Set this value if the method is stored in a directory instead of a single file, for example &quot;.MTD&quot;. Leave the field empty if the method is a file.
+
+The value must not contain unallowed file system characters like: \/:*?&quot;&lt;&gt;|
+               </documentation>
+            </annotation>
+         </attribute>
          <attribute name="importConverter" type="string" use="required">
             <annotation>
                <documentation>

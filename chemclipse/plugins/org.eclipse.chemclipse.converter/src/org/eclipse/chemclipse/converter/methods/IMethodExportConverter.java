@@ -26,6 +26,13 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 public interface IMethodExportConverter extends IExportConverter {
 
+	/**
+	 * Writes the given method to a single file. A converter that declares a directoryExtension
+	 * stores its method in a directory and has to override this method.
+	 *
+	 * @throws IOException
+	 *             in case of an IOError while writing streams
+	 */
 	default void convert(File file, IProcessMethod processMethod, IMessageConsumer messages, IProgressMonitor monitor) throws IOException {
 
 		try (FileOutputStream stream = new FileOutputStream(file)) {

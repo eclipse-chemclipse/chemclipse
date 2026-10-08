@@ -229,6 +229,19 @@ public class MethodConverter {
 	}
 
 	/**
+	 * Returns the directory extensions of all registered method converters. A converter
+	 * that stores its method in a single file contributes an empty string.
+	 */
+	public static String[] getDirectoryExtensions() {
+
+		List<String> directoryExtensions = new ArrayList<>();
+		for(IConfigurationElement element : getConfigurationElements()) {
+			directoryExtensions.add(getDirectoryExtension(element));
+		}
+		return directoryExtensions.toArray(new String[directoryExtensions.size()]);
+	}
+
+	/**
 	 * Returns the default file name of the default method converter
 	 * or an empty string if the converter defines no default file name.
 	 */
@@ -286,6 +299,15 @@ public class MethodConverter {
 		return "." + fileExtension;
 	}
 
+	private static String getDirectoryExtension(IConfigurationElement element) {
+
+		String directoryExtension = getAttribute(element, Converter.DIRECTORY_EXTENSION);
+		if(directoryExtension.isEmpty() || directoryExtension.startsWith(".")) {
+			return directoryExtension;
+		}
+		return "." + directoryExtension;
+	}
+
 	private static String getAttribute(IConfigurationElement element, String name) {
 
 		if(element != null) {
@@ -306,6 +328,7 @@ public class MethodConverter {
 			supplier = new MethodSupplier();
 			supplier.setFileExtension(element.getAttribute(Converter.FILE_EXTENSION));
 			supplier.setFileName(element.getAttribute(Converter.FILE_NAME));
+			supplier.setDirectoryExtension(element.getAttribute(Converter.DIRECTORY_EXTENSION));
 			supplier.setId(element.getAttribute(Converter.ID));
 			supplier.setDescription(element.getAttribute(Converter.DESCRIPTION));
 			supplier.setFilterName(element.getAttribute(Converter.FILTER_NAME));
@@ -396,7 +419,7 @@ public class MethodConverter {
 
 	public static void setUserMethodFile(File file) {
 
-		if(file != null && file.isFile()) {
+		if(file != null && file.exists()) {
 			IProcessingInfo<IProcessMethod> processingInfo = MethodConverter.convert(file, MethodConverter.DEFAULT_METHOD_CONVERTER_ID, new NullProgressMonitor());
 			IProcessMethod processMethod = processingInfo.getProcessingResult();
 			if(processMethod != null) {

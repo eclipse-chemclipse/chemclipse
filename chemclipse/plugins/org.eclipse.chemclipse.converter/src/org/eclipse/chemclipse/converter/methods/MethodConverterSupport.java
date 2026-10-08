@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -121,11 +121,20 @@ public class MethodConverterSupport implements IMethodConverterSupport {
 		List<String> availableConverters = new ArrayList<>();
 		String fileName = file.getName();
 		for(ISupplier supplier : suppliers) {
-			/*
-			 * Check if the file has an extension or
-			 * if the bare file name shall be used.
-			 */
-			if(FileUtil.fileHasExtension(file)) {
+			if(file.isDirectory()) {
+				/*
+				 * The method is stored in a directory. Enable to read directories
+				 * whether they end with lower or upper case letters.
+				 */
+				String directoryExtension = supplier.getDirectoryExtension();
+				if(directoryExtension == null || directoryExtension.equals("")) {
+					continue;
+				} else {
+					if(fileName.endsWith(directoryExtension) || fileName.endsWith(directoryExtension.toLowerCase()) || fileName.endsWith(directoryExtension.toUpperCase())) {
+						availableConverters.add(supplier.getId());
+					}
+				}
+			} else if(FileUtil.fileHasExtension(file)) {
 				/*
 				 * Enable to read files whether they end with lower or upper
 				 * case letters. Take care, files like *.cdf would cause no
