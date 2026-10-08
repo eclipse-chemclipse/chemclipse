@@ -18,23 +18,39 @@ import java.io.FilenameFilter;
 public class MethodFilenameFilter implements FilenameFilter {
 
 	private final String[] fileExtensions = MethodConverter.getFileExtensions();
+	private final String[] directoryExtensions = MethodConverter.getDirectoryExtensions();
 
 	@Override
 	public boolean accept(File dir, String name) {
 
-		return isMethodFile(name, fileExtensions);
+		return isMethod(new File(dir, name), fileExtensions, directoryExtensions);
 	}
 
-	public static boolean isMethodFile(String name) {
+	/**
+	 * Returns whether the given file is a method, either a method file or a method directory.
+	 */
+	public static boolean isMethod(File file) {
 
-		return isMethodFile(name, MethodConverter.getFileExtensions());
+		return isMethod(file, MethodConverter.getFileExtensions(), MethodConverter.getDirectoryExtensions());
 	}
 
-	private static boolean isMethodFile(String name, String[] fileExtensions) {
+	private static boolean isMethod(File file, String[] fileExtensions, String[] directoryExtensions) {
+
+		/*
+		 * A method is stored either as a single file or, if the converter declares a
+		 * directory extension, as a directory, e.g. Agilent style ".D" containers.
+		 */
+		if(file.isDirectory()) {
+			return matchesExtension(file.getName(), directoryExtensions);
+		}
+		return file.isFile() && matchesExtension(file.getName(), fileExtensions);
+	}
+
+	private static boolean matchesExtension(String name, String[] extensions) {
 
 		String fileName = name.toLowerCase();
-		for(String fileExtension : fileExtensions) {
-			if(!fileExtension.isEmpty() && fileName.endsWith(fileExtension.toLowerCase())) {
+		for(String extension : extensions) {
+			if(!extension.isEmpty() && fileName.endsWith(extension.toLowerCase())) {
 				return true;
 			}
 		}

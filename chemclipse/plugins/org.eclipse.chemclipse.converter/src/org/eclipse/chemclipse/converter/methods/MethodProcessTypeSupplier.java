@@ -227,7 +227,7 @@ public class MethodProcessTypeSupplier implements IProcessTypeSupplier, BundleTr
 			File[] listFiles = systemMethodFolder.listFiles();
 			if(listFiles != null) {
 				for(File file : listFiles) {
-					if(file.isFile() && MethodFilenameFilter.isMethodFile(file.getName())) {
+					if(MethodFilenameFilter.isMethod(file)) {
 						IProcessingInfo<IProcessMethod> load = MethodConverter.convert(file, new NullProgressMonitor());
 						IProcessMethod processMethod = load.getProcessingResult();
 						if(processMethod != null) {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -25,6 +25,7 @@ public class MethodSupplier implements IMethodSupplierSetter {
 	private String filterName = "";
 	private String fileExtension = "";
 	private String fileName = "";
+	private String directoryExtension = "";
 	private boolean exportable = false;
 	private boolean importable = false;
 	private IMagicNumberMatcher magicNumberMatcher = null;
@@ -142,7 +143,19 @@ public class MethodSupplier implements IMethodSupplierSetter {
 	@Override
 	public String getDirectoryExtension() {
 
-		return "";
+		return directoryExtension;
+	}
+
+	@Override
+	public void setDirectoryExtension(final String directoryExtension) {
+
+		String extension = directoryExtension;
+		if(directoryExtension != null) {
+			if(!"".equals(directoryExtension)) {
+				extension = directoryExtension.startsWith(".") ? directoryExtension : "." + directoryExtension;
+			}
+			this.directoryExtension = extension;
+		}
 	}
 
 	@Override
@@ -184,7 +197,8 @@ public class MethodSupplier implements IMethodSupplierSetter {
 				description.equals(other.getDescription()) && //
 				filterName.equals(other.getFilterName()) && //
 				fileExtension.equals(other.getFileExtension()) && //
-				fileName.equals(other.getFileName());
+				fileName.equals(other.getFileName()) && //
+				directoryExtension.equals(other.getDirectoryExtension());
 	}
 
 	@Override
@@ -194,7 +208,8 @@ public class MethodSupplier implements IMethodSupplierSetter {
 				description.hashCode() + //
 				filterName.hashCode() + //
 				fileExtension.hashCode() + //
-				fileName.hashCode();
+				fileName.hashCode() + //
+				directoryExtension.hashCode();
 	}
 
 	@Override
@@ -208,6 +223,7 @@ public class MethodSupplier implements IMethodSupplierSetter {
 		builder.append(",filterName=" + this.filterName);
 		builder.append(",fileExtension=" + this.fileExtension);
 		builder.append(",fileName=" + this.fileName);
+		builder.append(",directoryExtension=" + this.directoryExtension);
 		builder.append("]");
 		return builder.toString();
 	}
