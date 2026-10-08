@@ -110,6 +110,20 @@ public class ParquetReaderSupport {
 		return numbers;
 	}
 
+	/**
+	 * Returns a list of unsigned bytes, which Parquet stores as a list of 8 bit integers, as the
+	 * byte array a decoder of such a buffer expects. An absent or empty list gives an empty array.
+	 */
+	public static byte[] getBytes(Group group, String field) {
+
+		double[] numbers = getNumbers(group, field);
+		byte[] bytes = new byte[numbers.length];
+		for(int i = 0; i < numbers.length; i++) {
+			bytes[i] = (byte)numbers[i];
+		}
+		return bytes;
+	}
+
 	private static double readElement(Group list, int element) {
 
 		if(list.getType().getType(0).isPrimitive()) {
