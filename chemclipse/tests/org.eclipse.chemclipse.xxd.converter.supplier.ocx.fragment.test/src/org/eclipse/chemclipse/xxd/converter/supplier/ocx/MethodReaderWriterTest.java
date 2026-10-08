@@ -18,9 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
@@ -50,18 +48,18 @@ public class MethodReaderWriterTest {
 			if(FIRST_STREAM_SUPPORT_FORMAT.equals(filename)) {
 				stream = true;
 			}
-			IProcessMethod result1 = checkRead(file, false);
+			IProcessMethod result1 = checkRead(file);
 			if(stream) {
-				assertTrue(result1.contentEquals(checkRead(file, true), true), "result read from file differs from stream!");
+				assertTrue(result1.contentEquals(checkRead(file), true), "result read from file differs from stream!");
 			}
 		}
 	}
 
-	private IProcessMethod checkRead(File file, boolean withStream) {
+	private IProcessMethod checkRead(File file) {
 
-		try (BufferedInputStream stream = new BufferedInputStream(new FileInputStream(file))) {
-			IProcessingInfo<IProcessMethod> result = withStream ? converter.readFrom(stream, file.getName(), new NullProgressMonitor()) : converter.convert(file, new NullProgressMonitor());
-			checkResult(file.getAbsolutePath(), result, withStream ? "stream api" : "file api");
+		try {
+			IProcessingInfo<IProcessMethod> result = converter.convert(file, new NullProgressMonitor());
+			checkResult(file.getAbsolutePath(), result, "file api");
 			return result.getProcessingResult();
 		} catch(IOException e) {
 			throw new AssertionError(e);
@@ -89,8 +87,7 @@ public class MethodReaderWriterTest {
 		method.addProcessEntry(createEntryWithChilds(method, "main.withchilds"));
 		method.addProcessEntry(createEntry(method, "main1"));
 		exportConverter.convert(tempFile, method, messages, null);
-		ProcessMethod read = (ProcessMethod)checkRead(tempFile, false);
-		assertTrue(read.contentEquals(checkRead(tempFile, true), true), "result read from file differs from stream!");
+		ProcessMethod read = (ProcessMethod)checkRead(tempFile);
 		assertNotEquals(System.identityHashCode(method), System.identityHashCode(read), "not different objects!");
 		assertEquals(method.getUUID(), read.getUUID());
 		assertEquals(method.getName(), read.getSourceFile().getName());

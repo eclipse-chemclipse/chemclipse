@@ -9,14 +9,11 @@
  * 
  * Contributors:
  * Philip Wenig - initial API and implementation
- * Christoph Läubrich - Stream support
  *******************************************************************************/
 package org.eclipse.chemclipse.converter.methods;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +36,6 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.SubMonitor;
 
 public class MethodConverter {
 
@@ -47,11 +43,6 @@ public class MethodConverter {
 
 	private static final String NAME_IMPORT = "Method Import Converter";
 	private static final String NAME_EXPORT = "Method Export Converter";
-
-	/*
-	 * 5MB should be enough for all cases and don't hurt much...
-	 */
-	private static final int STREAM_BUFFER_SIZE = 1024 * 1024 * 5;
 
 	private static final Logger logger = Logger.getLogger(MethodConverter.class);
 	private static final String EXTENSION_POINT = "org.eclipse.chemclipse.converter.processMethodSupplier";
@@ -106,37 +97,6 @@ public class MethodConverter {
 			processingInfo = getNoImportConverterAvailableProcessingInfo(file);
 		}
 		return processingInfo;
-	}
-
-	public static IProcessingInfo<IProcessMethod> load(InputStream stream, String nameHint, IProgressMonitor monitor) throws IOException {
-
-		if(!stream.markSupported()) {
-			stream = new BufferedInputStream(stream, STREAM_BUFFER_SIZE);
-		}
-		MethodConverterSupport converterSupport = getMethodConverterSupport();
-		List<ISupplier> list = converterSupport.getSupplier();
-		SubMonitor subMonitor = SubMonitor.convert(monitor, list.size() * 100);
-		IProcessingInfo<IProcessMethod> errors = getNoImportConverterAvailableProcessingInfo(nameHint);
-		for(ISupplier supplier : list) {
-			if(!supplier.isImportable()) {
-				continue;
-			}
-			IMethodImportConverter converter = getMethodImportConverter(supplier.getId());
-			if(converter == null) {
-				continue;
-			}
-			IProcessingInfo<IProcessMethod> info = converter.readFrom(stream, nameHint, subMonitor.split(100));
-			if(info == null) {
-				continue;
-			}
-			if(info.hasErrorMessages() || info.getProcessingResult() == null) {
-				errors.addMessages(info);
-				continue;
-			}
-			return info;
-		}
-
-		return errors;
 	}
 
 	public static void store(OutputStream stream, String nameHint, IProcessMethod processMethod, IMessageConsumer consumer, IProgressMonitor monitor) throws IOException {
