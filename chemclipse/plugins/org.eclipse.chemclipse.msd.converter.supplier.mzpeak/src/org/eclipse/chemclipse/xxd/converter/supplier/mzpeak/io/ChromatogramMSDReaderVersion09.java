@@ -44,6 +44,7 @@ import org.eclipse.chemclipse.msd.converter.supplier.mzpeak.model.json.MzPeakInd
 import org.eclipse.chemclipse.msd.converter.supplier.mzpeak.model.json.Param;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
+import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzpeak.preferences.PreferenceSupplier;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -130,7 +131,7 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 		readPackage(file, chromatogram);
 		chromatogram.setFile(file);
 		chromatogram.setDataName(dataName);
-		addScanProxies(chromatogramDataParquet, ticIndex, chromatogram, new ReaderProxy(spectraParquet), monitor);
+		addScanProxies(chromatogramDataParquet, spectraParquet, ticIndex, chromatogram, new ReaderProxy(spectraParquet), monitor);
 
 		return chromatogram;
 	}
@@ -231,7 +232,7 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 		});
 	}
 
-	private void addScanProxies(Path chromatogramDataParquet, int ticIndex, IVendorChromatogram chromatogram, IReaderProxy readerProxy, IProgressMonitor monitor) {
+	private void addScanProxies(Path chromatogramDataParquet, Path spectraParquet, int ticIndex, IVendorChromatogram chromatogram, IReaderProxy readerProxy, IProgressMonitor monitor) {
 
 		int[] cycleNumber = new int[]{isMultiStageMassSpectrum ? 1 : 0};
 
@@ -240,6 +241,11 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 			scanProxy.setRetentionTime(retentionTime);
 			scanProxy.setTotalSignal(intensity);
 			scanProxy.setMassSpectrometer(msLevel);
+			if(spectraParquet.toFile().getName().endsWith(ChromatogramMSDReaderVersion09.SPECTRA_PEAKS)) {
+				scanProxy.setMassSpectrumType(MassSpectrumType.CENTROID);
+			} else if(spectraParquet.toFile().getName().endsWith(ChromatogramMSDReaderVersion09.SPECTRA_DATA)) {
+				scanProxy.setMassSpectrumType(MassSpectrumType.PROFILE);
+			}
 			if(msLevel < 2) {
 				cycleNumber[0]++;
 			}
