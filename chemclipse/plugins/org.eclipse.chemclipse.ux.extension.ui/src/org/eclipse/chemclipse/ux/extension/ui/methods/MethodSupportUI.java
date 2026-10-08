@@ -14,9 +14,6 @@
 package org.eclipse.chemclipse.ux.extension.ui.methods;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collections;
@@ -266,41 +263,33 @@ public class MethodSupportUI extends Composite implements IExtendedPartUI {
 							/*
 							 * Process Method (Source)
 							 */
-							try (InputStream inputStreamSource = new FileInputStream(fileSource)) {
-								IProcessingInfo<IProcessMethod> processingInfoSource = MethodConverter.load(inputStreamSource, fileSource.getAbsolutePath(), null);
-								IProcessMethod processMethodSource = processingInfoSource.getProcessingResult();
-								/*
-								 * Process Method (Sink)
-								 */
-								File fileSink = createNewMethod(false);
-								if(fileSink != null && fileSink.exists()) {
-									try (InputStream inputStreamSink = new FileInputStream(fileSink)) {
-										IProcessingInfo<IProcessMethod> processingInfoSink = MethodConverter.load(inputStreamSink, fileSource.getAbsolutePath(), null);
-										if(processingInfoSink.getProcessingResult() instanceof ProcessMethod processMethodSink) {
-											/*
-											 * Copy the entries.
-											 */
-											for(IProcessEntry processEntry : processMethodSource) {
-												processMethodSink.addProcessEntry(processEntry);
-											}
-											/*
-											 * Save the new method.
-											 */
-											IProcessingInfo<?> processingInfo = MethodConverter.convert(fileSink, processMethodSink, MethodConverter.DEFAULT_METHOD_CONVERTER_ID, new NullProgressMonitor());
-											if(!processingInfo.hasErrorMessages()) {
-												/*
-												 * Open the editor
-												 */
-												updateInput();
-												openProcessMethodEditor(fileSink);
-											}
-										}
-									} catch(IOException e1) {
-										logger.warn(e1);
+							IProcessingInfo<IProcessMethod> processingInfoSource = MethodConverter.convert(fileSource, fileSource.getAbsolutePath(), new NullProgressMonitor());
+							IProcessMethod processMethodSource = processingInfoSource.getProcessingResult();
+							/*
+							 * Process Method (Sink)
+							 */
+							File fileSink = createNewMethod(false);
+							if(fileSink != null && fileSink.exists()) {
+								IProcessingInfo<IProcessMethod> processingInfoSink = MethodConverter.convert(fileSink, fileSource.getAbsolutePath(), new NullProgressMonitor());
+								if(processingInfoSink.getProcessingResult() instanceof ProcessMethod processMethodSink) {
+									/*
+									 * Copy the entries.
+									 */
+									for(IProcessEntry processEntry : processMethodSource) {
+										processMethodSink.addProcessEntry(processEntry);
+									}
+									/*
+									 * Save the new method.
+									 */
+									IProcessingInfo<?> processingInfo = MethodConverter.convert(fileSink, processMethodSink, MethodConverter.DEFAULT_METHOD_CONVERTER_ID, new NullProgressMonitor());
+									if(!processingInfo.hasErrorMessages()) {
+										/*
+										 * Open the editor
+										 */
+										updateInput();
+										openProcessMethodEditor(fileSink);
 									}
 								}
-							} catch(IOException e1) {
-								logger.warn(e1);
 							}
 						}
 						return;

@@ -14,9 +14,7 @@
 package org.eclipse.chemclipse.converter.methods;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,6 +33,7 @@ import org.eclipse.chemclipse.processing.methods.ProcessMethod;
 import org.eclipse.chemclipse.processing.supplier.IProcessSupplier;
 import org.eclipse.chemclipse.processing.supplier.IProcessTypeSupplier;
 import org.eclipse.core.runtime.Adapters;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
@@ -189,28 +188,25 @@ public class MethodProcessTypeSupplier implements IProcessTypeSupplier, BundleTr
 			while(entries.hasMoreElements()) {
 				URL url = entries.nextElement();
 				try {
-					try (InputStream inputStream = url.openStream()) {
-						/*
-						 * Try to resolve the file.
-						 */
-						String urlPath = url.getPath();
-						File sourceFile = PathResolver.getFile(bundle, urlPath);
+					/*
+					 * Try to resolve the file.
+					 */
+					File sourceFile = PathResolver.getFile(bundle, url.getPath());
 
-						String path = url.getPath().replace(PROCESSORS_ENTRY_PATH, "").replace(fileExtension, "");
-						String externalForm = url.toExternalForm();
-						IProcessingInfo<IProcessMethod> processingInfo = MethodConverter.load(inputStream, externalForm, null);
-						IProcessMethod processMethod = processingInfo.getProcessingResult();
-						if(processMethod != null) {
-							/*
-							 * Set the File (if available) to allow editing the profiles.
-							 * The containing bundle should define in the MANIFEST.MF:
-							 * Eclipse-BundleShape: dir
-							 */
-							if(processMethod instanceof ProcessMethod method && sourceFile.exists()) {
-								method.setSourceFile(sourceFile);
-							}
-							processSupplierList.add(new MetaProcessorProcessSupplier(MethodProcessSupport.getID(processMethod, BUNDLE_PREFIX + bundle.getSymbolicName() + ":" + path), processMethod, this));
+					String path = url.getPath().replace(PROCESSORS_ENTRY_PATH, "").replace(fileExtension, "");
+					String externalForm = url.toExternalForm();
+					IProcessingInfo<IProcessMethod> processingInfo = MethodConverter.convert(sourceFile, externalForm, new NullProgressMonitor());
+					IProcessMethod processMethod = processingInfo.getProcessingResult();
+					if(processMethod != null) {
+						/*
+						 * Set the File (if available) to allow editing the profiles.
+						 * The containing bundle should define in the MANIFEST.MF:
+						 * Eclipse-BundleShape: dir
+						 */
+						if(processMethod instanceof ProcessMethod method && sourceFile.exists()) {
+							method.setSourceFile(sourceFile);
 						}
+						processSupplierList.add(new MetaProcessorProcessSupplier(MethodProcessSupport.getID(processMethod, BUNDLE_PREFIX + bundle.getSymbolicName() + ":" + path), processMethod, this));
 					}
 				} catch(IOException e) {
 					logger.error("Failed to load the method from URL: " + url, e);
@@ -219,6 +215,7 @@ public class MethodProcessTypeSupplier implements IProcessTypeSupplier, BundleTr
 		}
 
 		return processSupplierList;
+
 	}
 
 	private List<IProcessSupplier<?>> parseSystemMethods() {
@@ -231,22 +228,16 @@ public class MethodProcessTypeSupplier implements IProcessTypeSupplier, BundleTr
 			if(listFiles != null) {
 				for(File file : listFiles) {
 					if(file.isFile() && MethodFilenameFilter.isMethodFile(file.getName())) {
-						try {
-							try (InputStream inputStream = new FileInputStream(file)) {
-								IProcessingInfo<IProcessMethod> load = MethodConverter.load(inputStream, file.getAbsolutePath(), null);
-								IProcessMethod processMethod = load.getProcessingResult();
-								if(processMethod != null) {
-									/*
-									 * Set the File to allow editing the profiles.
-									 */
-									if(processMethod instanceof ProcessMethod method) {
-										method.setSourceFile(file);
-									}
-									processSupplierList.add(new MetaProcessorProcessSupplier(MethodProcessSupport.getID(processMethod, SYSTEM_PREFIX + file.getName()), processMethod, this));
-								}
+						IProcessingInfo<IProcessMethod> load = MethodConverter.convert(file, new NullProgressMonitor());
+						IProcessMethod processMethod = load.getProcessingResult();
+						if(processMethod != null) {
+							/*
+							 * Set the File to allow editing the profiles.
+							 */
+							if(processMethod instanceof ProcessMethod method) {
+								method.setSourceFile(file);
 							}
-						} catch(IOException e) {
-							logger.error("Failed to load the following method from the system path: " + file.getAbsolutePath(), e);
+							processSupplierList.add(new MetaProcessorProcessSupplier(MethodProcessSupport.getID(processMethod, SYSTEM_PREFIX + file.getName()), processMethod, this));
 						}
 					}
 				}

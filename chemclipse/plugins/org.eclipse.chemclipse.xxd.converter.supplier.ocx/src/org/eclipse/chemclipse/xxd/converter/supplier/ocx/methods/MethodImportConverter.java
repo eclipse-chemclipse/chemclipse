@@ -9,13 +9,11 @@
  * 
  * Contributors:
  * Philip Wenig - initial API and implementation
- * Christoph Läubrich - add stream support
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.converter.supplier.ocx.methods;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.eclipse.chemclipse.converter.core.AbstractImportConverter;
 import org.eclipse.chemclipse.converter.methods.IMethodImportConverter;
@@ -57,23 +55,6 @@ public class MethodImportConverter extends AbstractImportConverter implements IM
 		}
 		ProcessingInfo<IProcessMethod> info = new ProcessingInfo<>();
 		info.addErrorMessage("Method Converter (*.ocm)", "No available format could read: " + file);
-		return info;
-	}
-
-	@Override
-	public IProcessingInfo<IProcessMethod> readFrom(InputStream stream, String nameHint, IProgressMonitor monitor) throws IOException {
-
-		SubMonitor subMonitor = SubMonitor.convert(monitor, READER.length * 100);
-		for(IMethodReader reader : READER) {
-			ProcessingInfo<IProcessMethod> info = new ProcessingInfo<>();
-			IProcessMethod processMethod = reader.convert(stream, nameHint, info, subMonitor.split(100));
-			if(processMethod != null) {
-				info.setProcessingResult(processMethod);
-				return info;
-			}
-		}
-		ProcessingInfo<IProcessMethod> info = new ProcessingInfo<>();
-		info.addErrorMessage("Method Converter (*.ocm)", "No available format could read: " + nameHint);
 		return info;
 	}
 }
