@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2025 Lablicate GmbH.
+ * Copyright (c) 2012, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -90,8 +90,7 @@ public interface IChromatogramSelection extends IChromatogramUpdateListener, IRe
 	float getStartAbundance();
 
 	/**
-	 * Sets the start abundance.<br/>
-	 * The startAbundance must be >= 0.
+	 * Sets the start abundance.
 	 */
 	void setStartAbundance(float startAbundance);
 
