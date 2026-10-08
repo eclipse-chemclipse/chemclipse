@@ -250,7 +250,7 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 
 	private static void readChunk(Group chunk, IScanBuilder scanBuilder) {
 
-		double[] intensities = ParquetReaderSupport.getNumbers(chunk, INTENSITY);
+		double[] intensities = ChunkReaderSupport.readValues(chunk, INTENSITY);
 		double[] times = ChunkReaderSupport.readAxis(chunk, TIME, intensities.length);
 		double[] msLevels = ParquetReaderSupport.getNumbers(chunk, MS_LEVEL);
 		for(int i = 0; i < times.length; i++) {

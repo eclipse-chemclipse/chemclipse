@@ -13,9 +13,12 @@
 package org.eclipse.chemclipse.xxd.converter.supplier.mzpeak.io;
 
 import java.util.Arrays;
+import java.util.Map;
 
 import org.apache.parquet.example.data.Group;
 import org.eclipse.chemclipse.logging.core.Logger;
+
+import ms.numpress.MSNumpress;
 
 public class ChunkReaderSupport {
 
@@ -28,8 +31,31 @@ public class ChunkReaderSupport {
 	private static final String NO_COMPRESSION = "MS:1000576";
 	private static final String DELTA_PREDICTION = "MS:1003089";
 
+	private static final Map<String, String> NUMPRESS_SCHEMES = Map.of( //
+			MSNumpress.ACC_NUMPRESS_LINEAR, "linear", // linear prediction compression
+			MSNumpress.ACC_NUMPRESS_PIC, "pic", // positive integer compression
+			MSNumpress.ACC_NUMPRESS_SLOF, "slof"); // short logged float compression
+
 	private ChunkReaderSupport() {
 
+	}
+
+	/**
+	 * Returns the values an array of the chunk holds, decoded when MS Numpress was used to write
+	 * them, and an empty array when the chunk holds no such array.
+	 * 
+	 * @param array
+	 *            the name the array has in this table, e.g. "intensity"
+	 */
+	public static double[] readValues(Group chunk, String array) {
+
+		for(String accession : NUMPRESS_SCHEMES.keySet()) {
+			double[] values = readNumpress(chunk, array, accession);
+			if(values != null) {
+				return values;
+			}
+		}
+		return ParquetReaderSupport.getNumbers(chunk, array);
 	}
 
 	/**
@@ -46,6 +72,13 @@ public class ChunkReaderSupport {
 
 		double[] axisValues = new double[count];
 		String encoding = ParquetReaderSupport.getString(chunk, CHUNK_ENCODING, NO_COMPRESSION);
+		if(NUMPRESS_SCHEMES.containsKey(encoding)) {
+			/*
+			 * MS Numpress carries every value of the chunk, the one "<axis>_chunk_start" would hold
+			 * included, and restores absolute coordinates on its own.
+			 */
+			return fit(readNumpress(chunk, axis, encoding), count);
+		}
 		boolean isDeltaPredicted = DELTA_PREDICTION.equals(encoding);
 		if(!isDeltaPredicted && !NO_COMPRESSION.equals(encoding)) {
 			logger.warn("Unsupported chunk encoding: " + encoding);
@@ -74,6 +107,33 @@ public class ChunkReaderSupport {
 				}
 			}
 			axisValues[i] = previous;
+		}
+		return axisValues;
+	}
+
+	private static double[] readNumpress(Group chunk, String array, String accession) {
+
+		byte[] buffer = ParquetReaderSupport.getBytes(chunk, array + "_numpress_" + NUMPRESS_SCHEMES.get(accession) + "_bytes");
+		if(buffer.length == 0) {
+			return null;
+		}
+		try {
+			return MSNumpress.decode(accession, buffer, buffer.length);
+		} catch(IllegalArgumentException e) {
+			logger.warn(e);
+			return null;
+		}
+	}
+
+	private static double[] fit(double[] values, int count) {
+
+		if(values != null && values.length == count) {
+			return values;
+		}
+		double[] axisValues = new double[count];
+		Arrays.fill(axisValues, Double.NaN);
+		if(values != null) {
+			System.arraycopy(values, 0, axisValues, 0, Math.min(values.length, count));
 		}
 		return axisValues;
 	}

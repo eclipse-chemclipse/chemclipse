@@ -94,7 +94,7 @@ public class ReaderProxy implements IReaderProxy {
 
 	private static void readChunk(IVendorScanProxy scanProxy, Group chunk) {
 
-		double[] intensities = ParquetReaderSupport.getNumbers(chunk, INTENSITY);
+		double[] intensities = ChunkReaderSupport.readValues(chunk, INTENSITY);
 		double[] masses = ChunkReaderSupport.readAxis(chunk, MZ, intensities.length);
 		for(int i = 0; i < masses.length; i++) {
 			addIon(scanProxy, masses[i], (float)intensities[i]);
