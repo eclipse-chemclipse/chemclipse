@@ -27,7 +27,7 @@ import org.eclipse.chemclipse.numeric.core.Point;
 
 public abstract class AbstractChromatogramSelection implements IChromatogramSelection {
 
-	private static final Logger logger = Logger.getLogger(ChromatogramSelection.class);
+	private static final Logger logger = Logger.getLogger(AbstractChromatogramSelection.class);
 
 	private IChromatogram chromatogram;
 	private int startRetentionTime;
