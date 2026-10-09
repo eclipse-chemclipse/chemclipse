@@ -23,7 +23,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.chemclipse.converter.PathResolver;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.logging.support.Settings;
 import org.eclipse.chemclipse.processing.core.ICategories;
@@ -33,6 +32,7 @@ import org.eclipse.chemclipse.processing.methods.ProcessMethod;
 import org.eclipse.chemclipse.processing.supplier.IProcessSupplier;
 import org.eclipse.chemclipse.processing.supplier.IProcessTypeSupplier;
 import org.eclipse.core.runtime.Adapters;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -191,7 +191,7 @@ public class MethodProcessTypeSupplier implements IProcessTypeSupplier, BundleTr
 					/*
 					 * Try to resolve the file.
 					 */
-					File sourceFile = PathResolver.getFile(bundle, url.getPath());
+					File sourceFile = new File(FileLocator.resolve(url).getPath());
 					IProcessingInfo<IProcessMethod> processingInfo = MethodConverter.convert(sourceFile, new NullProgressMonitor());
 					IProcessMethod processMethod = processingInfo.getProcessingResult();
 					if(processMethod != null) {
