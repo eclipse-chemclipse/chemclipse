@@ -192,10 +192,7 @@ public class MethodProcessTypeSupplier implements IProcessTypeSupplier, BundleTr
 					 * Try to resolve the file.
 					 */
 					File sourceFile = PathResolver.getFile(bundle, url.getPath());
-
-					String path = url.getPath().replace(PROCESSORS_ENTRY_PATH, "").replace(fileExtension, "");
-					String externalForm = url.toExternalForm();
-					IProcessingInfo<IProcessMethod> processingInfo = MethodConverter.convert(sourceFile, externalForm, new NullProgressMonitor());
+					IProcessingInfo<IProcessMethod> processingInfo = MethodConverter.convert(sourceFile, new NullProgressMonitor());
 					IProcessMethod processMethod = processingInfo.getProcessingResult();
 					if(processMethod != null) {
 						/*
@@ -206,6 +203,7 @@ public class MethodProcessTypeSupplier implements IProcessTypeSupplier, BundleTr
 						if(processMethod instanceof ProcessMethod method && sourceFile.exists()) {
 							method.setSourceFile(sourceFile);
 						}
+						String path = url.getPath().replace(PROCESSORS_ENTRY_PATH, "").replace(fileExtension, "");
 						processSupplierList.add(new MetaProcessorProcessSupplier(MethodProcessSupport.getID(processMethod, BUNDLE_PREFIX + bundle.getSymbolicName() + ":" + path), processMethod, this));
 					}
 				} catch(IOException e) {
