@@ -13,9 +13,7 @@
 package org.eclipse.chemclipse.swt.ui.support;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.IntFunction;
 
 import org.eclipse.swt.SWT;
@@ -48,8 +46,6 @@ public class Colors {
 	/*
 	 * Map specific colors
 	 */
-	private static final Map<Integer, Map<RGB, Color>> COLOR_MAP_RGB = new HashMap<>(); // Alpha and Colors
-
 	public static final Color LIGHT_RED = new Color(249, 154, 152);
 	public static final Color LIGHT_GREEN = new Color(166, 255, 139);
 	public static final Color LIGHT_YELLOW = new Color(255, 254, 136);
@@ -257,24 +253,7 @@ public class Colors {
 
 	public static Color getColor(RGB rgb, int alpha) {
 
-		/*
-		 * Get the alpha color map.
-		 */
-		Map<RGB, Color> alphaColors = COLOR_MAP_RGB.get(alpha);
-		if(alphaColors == null) {
-			alphaColors = new HashMap<>();
-			COLOR_MAP_RGB.put(alpha, alphaColors);
-		}
-		/*
-		 * Get the color.
-		 */
-		Color color = alphaColors.get(rgb);
-		if(color == null) {
-			color = new Color(rgb, alpha);
-			alphaColors.put(rgb, color);
-		}
-
-		return color;
+		return new Color(rgb, alpha);
 	}
 
 	public static String getColor(Color color) {
