@@ -111,11 +111,24 @@ public class ChromatogramChartSupport {
 
 		Color color = usedColors.get(seriesId);
 		if(color == null) {
-			color = colorScheme.getColor();
-			colorScheme.incrementColor();
+			/*
+			 * Referenced chromatograms use a lighter shade of their master.
+			 */
+			Color masterColor = usedColors.get(seriesId.replaceFirst(REFERENCE_MARKER + "\\d+", ""));
+			if(seriesId.contains(REFERENCE_MARKER) && masterColor != null) {
+				color = getLighterColor(masterColor);
+			} else {
+				color = colorScheme.getColor();
+				colorScheme.incrementColor();
+			}
 			usedColors.put(seriesId, color);
 		}
 		return color;
+	}
+
+	private static Color getLighterColor(Color color) {
+
+		return new Color((color.getRed() + 255) / 2, (color.getGreen() + 255) / 2, (color.getBlue() + 255) / 2);
 	}
 
 	public ILineSeriesData getLineSeriesDataChromatogram(IChromatogramSelection chromatogramSelection, String seriesId, Color color) {
