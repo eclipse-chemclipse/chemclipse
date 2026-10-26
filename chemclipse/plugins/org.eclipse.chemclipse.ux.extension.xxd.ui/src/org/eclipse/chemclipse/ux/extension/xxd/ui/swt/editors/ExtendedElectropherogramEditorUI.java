@@ -97,6 +97,7 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.l10n.ExtensionMessages;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePage;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogram;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogramChart;
+import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogramDSD;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogramScans;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageProcessorToolbarWSD;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageProcessors;
@@ -1011,6 +1012,7 @@ public class ExtendedElectropherogramEditorUI extends Composite implements ITool
 			preferencePages.add(PreferencePageProcessors.class);
 			preferencePages.add(PreferencePageChromatogram.class);
 			preferencePages.add(PreferencePageChromatogramChart.class);
+			preferencePages.add(PreferencePageChromatogramDSD.class);
 			preferencePages.add(PreferencePageChromatogramScans.class);
 			preferencePages.add(PreferencePageSystem.class);
 			preferencePages.add(PreferencePage.class);
