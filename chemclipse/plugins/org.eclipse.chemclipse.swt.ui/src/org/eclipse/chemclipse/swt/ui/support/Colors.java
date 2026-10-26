@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.IntFunction;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -336,10 +337,23 @@ public class Colors {
 		 * In this case, we use system colors. We do not need to dispose them.
 		 * If you use own colors, dispose them, if not needed any more.
 		 */
-		colorsGradientRed = initialize(colorIdsGradientRed);
+		colorsGradientRed = initializeGradient(colorIdsGradientRed, red -> new Color(red, 0, 0));
 		colorsGradient = initialize(colorIdsGradient);
-		colorsGradientRedContrast = initialize(colorIdsGradientRedContrast);
+		colorsGradientRedContrast = initializeGradient(colorIdsGradientRedContrast, red -> new Color(red, 0, 0));
 		colorsGradientHighContrast = initialize(colorIdsGradientHighContrast);
+	}
+
+	/*
+	 * Creates a color for each channel value, e.g. blue -> new Color(0, 0, blue)
+	 */
+	private static List<Color> initializeGradient(int[] values, IntFunction<Color> colorFactory) {
+
+		List<Color> colors = new ArrayList<>();
+		for(int value : values) {
+			colors.add(colorFactory.apply(value));
+		}
+
+		return colors;
 	}
 
 	private static List<Color> initialize(int[] colorIds) {
