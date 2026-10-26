@@ -71,7 +71,7 @@ public class Colors {
 	 * 0, 0, 0
 	 */
 	public static final String COLOR_SCHEME_RED = "Red";
-	private static final int[] colorIdsGradientRed = new int[]{255, 0, 45, 85, 125, 165, 205};
+	private static final int[] colorIdsGradientRed = new int[]{255, 205, 165, 125, 85, 45, 0};
 	private static List<Color> colorsGradientRed;
 	/*
 	 * Normal gradient
@@ -84,7 +84,7 @@ public class Colors {
 	 * Red with higher contrast
 	 */
 	public static final String COLOR_SCHEME_RED_CONTRAST = "Red Contrast";
-	private static final int[] colorIdsGradientRedContrast = new int[]{255, 0, 85, 165};
+	private static final int[] colorIdsGradientRedContrast = new int[]{255, 165, 85, 0};
 	private static List<Color> colorsGradientRedContrast;
 	/*
 	 * High Contrast
