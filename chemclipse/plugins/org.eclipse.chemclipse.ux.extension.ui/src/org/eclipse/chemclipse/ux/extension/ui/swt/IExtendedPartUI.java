@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
@@ -32,15 +33,19 @@ import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.services.help.EHelpService;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferencePage;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jface.preference.PreferenceNode;
+import org.eclipse.jface.preference.PreferencePage;
+import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swtchart.extensions.core.IChartSettings;
 import org.eclipse.swtchart.extensions.core.ScrollableChart;
 
@@ -124,7 +129,7 @@ public interface IExtendedPartUI {
 	/**
 	 * The context is the id of your linked help via contexts.xml and controls.xml, e.g.:
 	 * org.eclipse.chemclipse.ux.extension.xxd.ui.chromatogram_editor
-	 * 
+	 *
 	 * @param parent
 	 * @param context
 	 * @return {@link Button}
@@ -381,7 +386,35 @@ public interface IExtendedPartUI {
 			PreferenceDialog preferenceDialog = new PreferenceDialog(event.display.getActiveShell(), preferenceManager);
 			preferenceDialog.create();
 			preferenceDialog.setMessage(TITLE_SETTINGS);
-			if(preferenceDialog.open() == Window.OK) {
+			/*
+			 * Apply the settings also when the Apply button is pressed.
+			 */
+			Set<IPreferenceStore> preferenceStores = new HashSet<>();
+			for(IPreferencePage preferencePage : pages) {
+				if(preferencePage instanceof PreferencePage page && page.getPreferenceStore() != null) {
+					preferenceStores.add(page.getPreferenceStore());
+				}
+			}
+			AtomicBoolean applyScheduled = new AtomicBoolean();
+			IPropertyChangeListener propertyChangeListener = _ -> {
+				if(settingsHandler != null && applyScheduled.compareAndSet(false, true)) {
+					event.display.asyncExec(() -> {
+						applyScheduled.set(false);
+						Shell shell = preferenceDialog.getShell();
+						if(shell != null && !shell.isDisposed()) {
+							settingsHandler.apply(event.display);
+						}
+					});
+				}
+			};
+			preferenceStores.forEach(preferenceStore -> preferenceStore.addPropertyChangeListener(propertyChangeListener));
+			int returnCode;
+			try {
+				returnCode = preferenceDialog.open();
+			} finally {
+				preferenceStores.forEach(preferenceStore -> preferenceStore.removePropertyChangeListener(propertyChangeListener));
+			}
+			if(returnCode == Window.OK) {
 				try {
 					if(settingsHandler != null) {
 						settingsHandler.apply(event.display);
