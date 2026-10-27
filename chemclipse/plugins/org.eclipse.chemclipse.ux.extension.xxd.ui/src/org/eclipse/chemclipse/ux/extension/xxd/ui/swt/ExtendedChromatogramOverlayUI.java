@@ -1379,15 +1379,15 @@ public class ExtendedChromatogramOverlayUI extends Composite implements IExtende
 					String referenceSeriesId = referenceChromatogramName + OverlayChartSupport.OVERLAY_START_MARKER + displayType + OverlayChartSupport.DELIMITER_SIGNAL_DERIVATIVE + derivative + OverlayChartSupport.OVERLAY_STOP_MARKER;
 					availableSeriesIds.add(referenceSeriesId);
 					selectionSeries.add(referenceSeriesId);
+					Color color = getColorTIC(chromatogramChartSupport.getSeriesColor(referenceChromatogramName));
 					if(!baseChart.isSeriesContained(referenceSeriesId)) {
-						Color color = chromatogramChartSupport.getSeriesColor(referenceChromatogramName);
 						ILineSeriesData lineSeriesData = chromatogramChartSupport.getLineSeriesData(referencedChromatogram, referenceSeriesId, displayType, derivative, color, null);
 						ILineSeriesSettings lineSeriesSettings = lineSeriesData.getSettings();
 						lineSeriesSettings.setDescription(description);
 						lineSeriesDataList.add(lineSeriesData);
 					} else {
 						if(baseChart.getSeriesSettings(referenceSeriesId) instanceof ILineSeriesSettings lineSeriesSettings) {
-							lineSeriesSettings.setLineColor(colorTIC);
+							lineSeriesSettings.setLineColor(color);
 						}
 					}
 				}
