@@ -32,7 +32,7 @@
         <children xsi:type="menu:MenuSeparator" xmi:id="_PpiZsGTlEe2pDehzkyrxqQ" elementId="org.eclipse.chemclipse.rcp.app.ui.menuseparator.3"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_0NmMgGTlEe2pDehzkyrxqQ" elementId="org.eclipse.chemclipse.rcp.app.ui.handledmenuitem.quickaccess" label="%QuickAccess" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/scalable/search.svg" mnemonics="" command="_VHTxUGTiEe2pDehzkyrxqQ"/>
         <children xsi:type="menu:MenuSeparator" xmi:id="_Li57gGTlEe2pDehzkyrxqQ" elementId="org.eclipse.chemclipse.rcp.app.ui.menuseparator.0"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_nz0_UDiVEeKDEdWQrkwLnQ" elementId="org.eclipse.chemclipse.rcp.app.ui.handledmenuitem.preferences" label="%Preferences" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/preferences.gif" command="_XevnQDiVEeKDEdWQrkwLnQ"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_nz0_UDiVEeKDEdWQrkwLnQ" elementId="org.eclipse.chemclipse.rcp.app.ui.handledmenuitem.preferences" label="%Preferences" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/scalable/preferences.svg" command="_XevnQDiVEeKDEdWQrkwLnQ"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_h0BcRjLzEeKMEOdllHiEaA" elementId="org.eclipse.chemclipse.rcp.app.ui.menu.help" label="%Help">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_-y9BQCaJEeOrR5M2kqmSOQ" elementId="org.eclipse.chemclipse.rcp.app.ui.menu.item.help.contents" label="%Contents" iconURI="platform:/plugin/org.eclipse.help.ui/icons/etool16/help.svg" tooltip="Show the table of contents" command="_zeEzsCaJEeOrR5M2kqmSOQ"/>
@@ -91,7 +91,7 @@
       <children xsi:type="menu:ToolBar" xmi:id="_2GIJsMDJEeOKxaD_PtepsA" elementId="org.eclipse.chemclipse.rcp.app.ui.toolbar.window">
         <children xsi:type="menu:ToolBarSeparator" xmi:id="_5R6wQMDJEeOKxaD_PtepsA" elementId="org.eclipse.chemclipse.rcp.app.ui.toolbarseparator.6"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_GPPw4GTiEe2pDehzkyrxqQ" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.quickaccess" label="Quick Access" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/scalable/search.svg" tooltip="Quick Access" command="_VHTxUGTiEe2pDehzkyrxqQ"/>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_4hjDQMDJEeOKxaD_PtepsA" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.preferences" label="Preferences" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/preferences.gif" tooltip="Preferences" command="_XevnQDiVEeKDEdWQrkwLnQ"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_4hjDQMDJEeOKxaD_PtepsA" elementId="org.eclipse.chemclipse.rcp.app.ui.handledtoolitem.preferences" label="Preferences" iconURI="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/scalable/preferences.svg" tooltip="Preferences" command="_XevnQDiVEeKDEdWQrkwLnQ"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_XqnQUF6nEe2sw_cXqaBWMw" elementId="org.eclipse.chemclipse.rcp.app.ui.toolbar.help">
         <children xsi:type="menu:ToolBarSeparator" xmi:id="_Y8yp4F6nEe2sw_cXqaBWMw" elementId="org.eclipse.chemclipse.rcp.app.ui.toolbarseparator.6"/>
