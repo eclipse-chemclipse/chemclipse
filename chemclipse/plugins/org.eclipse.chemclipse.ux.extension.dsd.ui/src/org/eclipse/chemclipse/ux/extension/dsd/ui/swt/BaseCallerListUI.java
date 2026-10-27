@@ -112,7 +112,7 @@ public class BaseCallerListUI extends ExtendedTableViewer {
 		for(int i = 0; i < tableViewerColumns.size(); i++) {
 			TableViewerColumn tableViewerColumn = tableViewerColumns.get(i);
 			String label = tableViewerColumn.getColumn().getText();
-			if(label.equals(BaseCallerListLabelProvider.BEST_TARGET)) {
+			if(label.equals(BaseCallerListLabelProvider.NUCLEOTIDE)) {
 				tableViewerColumn.setEditingSupport(new BaseCallerListEditingSupport(this, label));
 			}
 		}

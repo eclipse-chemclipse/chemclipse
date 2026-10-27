@@ -25,21 +25,24 @@ import org.eclipse.swt.graphics.Image;
 public class BaseCallerListLabelProvider extends AbstractChemClipseLabelProvider {
 
 	public static final String BASE_NUMBER = ExtensionMessages.number;
-	public static final String BEST_TARGET = ExtensionMessages.nucleotide;
+	public static final String NUCLEOTIDE = ExtensionMessages.nucleotide;
 	public static final String MATCH_QUALITY = ExtensionMessages.rating;
+	public static final String ORIGIN = ExtensionMessages.origin;
 
 	private static final String BLANK = "";
 
 	public static final String[] TITLES = { //
 			BASE_NUMBER, //
 			MATCH_QUALITY, //
-			BEST_TARGET, //
+			NUCLEOTIDE, //
+			ORIGIN, //
 	};
 
 	public static final int[] BOUNDS = { //
 			80, //
+			60, //
+			140, //
 			100, //
-			200, //
 	};
 
 	@Override
@@ -68,12 +71,12 @@ public class BaseCallerListLabelProvider extends AbstractChemClipseLabelProvider
 
 		String text = BLANK;
 
+		IIdentificationTarget identificationTarget = TargetSupport.getBestIdentificationTarget(scan);
 		switch(columnIndex) {
 			case 0:
 				text = String.valueOf(scan.getCycleNumber());
 				break;
 			case 1:
-				IIdentificationTarget identificationTarget = TargetSupport.getBestIdentificationTarget(scan);
 				if(!identificationTarget.getComparisonResult().getMetricValues().isEmpty()) {
 					text = String.valueOf(identificationTarget.getComparisonResult().getMetricValues().values().iterator().next().intValue());
 				}
@@ -82,6 +85,9 @@ public class BaseCallerListLabelProvider extends AbstractChemClipseLabelProvider
 				String targetLibraryField = TargetSupport.getBestTargetLibraryField(scan);
 				Nucleobase nucleobase = Nucleobase.of(targetLibraryField.charAt(0));
 				text = nucleobase.label();
+				break;
+			case 3:
+				text = identificationTarget.getIdentifier();
 				break;
 		}
 
