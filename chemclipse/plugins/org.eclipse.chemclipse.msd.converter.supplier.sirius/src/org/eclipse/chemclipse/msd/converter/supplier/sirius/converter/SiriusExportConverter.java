@@ -25,12 +25,12 @@ public class SiriusExportConverter extends AbstractDatabaseExportConverter {
 	@Override
 	public IProcessingInfo<File> convert(File file, IScanMSD massSpectrum, boolean append, IProgressMonitor monitor) {
 
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public IProcessingInfo<File> convert(File file, IMassSpectra massSpectra, boolean append, IProgressMonitor monitor) {
 
-		return null;
+		throw new UnsupportedOperationException();
 	}
 }
