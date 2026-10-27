@@ -17,7 +17,6 @@ import org.eclipse.osgi.util.NLS;
 
 public class ExtensionMessages extends NLS {
 
-	public static String dataExplorer;
 	public static String processingFailed;
 	public static String toggleChartGrid;
 	public static String cantProcessSettings;
