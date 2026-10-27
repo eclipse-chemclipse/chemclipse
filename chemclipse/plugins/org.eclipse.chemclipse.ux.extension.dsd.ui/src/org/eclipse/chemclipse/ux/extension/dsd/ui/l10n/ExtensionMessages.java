@@ -19,6 +19,7 @@ public class ExtensionMessages extends NLS {
 	public static String number;
 	public static String nucleotide;
 	public static String rating;
+	public static String origin;
 
 	static {
 		NLS.initializeMessages("org.eclipse.chemclipse.ux.extension.dsd.ui.l10n.messages", ExtensionMessages.class); //$NON-NLS-1$

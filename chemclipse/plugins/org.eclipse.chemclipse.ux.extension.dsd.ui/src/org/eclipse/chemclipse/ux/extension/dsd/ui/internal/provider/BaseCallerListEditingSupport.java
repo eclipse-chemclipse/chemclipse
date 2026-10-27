@@ -52,13 +52,13 @@ public class BaseCallerListEditingSupport extends EditingSupport {
 	@Override
 	protected boolean canEdit(Object element) {
 
-		return element instanceof IScan && column.equals(BaseCallerListLabelProvider.BEST_TARGET);
+		return element instanceof IScan && column.equals(BaseCallerListLabelProvider.NUCLEOTIDE);
 	}
 
 	@Override
 	protected Object getValue(Object element) {
 
-		if(element instanceof IScan scan && column.equals(BaseCallerListLabelProvider.BEST_TARGET)) {
+		if(element instanceof IScan scan && column.equals(BaseCallerListLabelProvider.NUCLEOTIDE)) {
 			char letter = TargetSupport.getBestTargetLibraryField(scan).charAt(0);
 			for(int i = 0; i < values.length; i++) {
 				if(values[i].equals(Nucleobase.of(letter))) {
@@ -73,7 +73,7 @@ public class BaseCallerListEditingSupport extends EditingSupport {
 	@Override
 	protected void setValue(Object element, Object value) {
 
-		if(element instanceof IScan scan && value instanceof Integer index && index >= 0 && index < values.length && column.equals(BaseCallerListLabelProvider.BEST_TARGET)) {
+		if(element instanceof IScan scan && value instanceof Integer index && index >= 0 && index < values.length && column.equals(BaseCallerListLabelProvider.NUCLEOTIDE)) {
 			Nucleobase selectedValue = values[index];
 			/*
 			 * Only the latest manual base call is verified, otherwise they compete for the best target.
@@ -89,6 +89,7 @@ public class BaseCallerListEditingSupport extends EditingSupport {
 			IIdentificationTarget identificationTarget = new IdentificationTarget(libraryInformation, comparisonResult);
 			identificationTarget.setIdentifier(TargetValidator.IDENTIFIER);
 			identificationTarget.setVerified(true); // rank above the base caller
+			identificationTarget.setIdentifier("Manual");
 
 			scan.getTargets().remove(identificationTarget); // an equal earlier call would block the add
 			scan.getTargets().add(identificationTarget);
