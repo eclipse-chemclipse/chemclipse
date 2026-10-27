@@ -190,7 +190,6 @@ public class ExtensionMessages extends NLS {
 	public static String maximumTimeMin;
 	public static String stopTimeMin;
 	public static String chromatogramLengthModified;
-	public static String scanIdentification;
 	public static String importProcessMethod;
 	public static String importQuantitationDatabase;
 	public static String importScan;
