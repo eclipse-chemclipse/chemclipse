@@ -33,10 +33,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.eclipse.chemclipse.chromatogram.alignment.model"
-         version="0.0.0"/>
-
-   <plugin
          id="org.eclipse.chemclipse.converter"
          version="0.0.0"/>
 
