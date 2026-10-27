@@ -101,10 +101,6 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 	private static final int LABEL_COUNT = 5;
 	private static final DecimalFormatSymbols ENGLISH_SYMBOLS = new DecimalFormatSymbols(Locale.ENGLISH);
 
-	public enum LabelOption {
-		NOMIMAL, EXACT, CUSTOM;
-	}
-
 	private final DecimalFormat decimalFormatMZ = new DecimalFormat("0", ENGLISH_SYMBOLS);
 	private final LabelPaintListener labelPaintListener = new LabelPaintListener();
 
