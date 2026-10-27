@@ -150,6 +150,7 @@ import org.eclipse.swtchart.IAxis;
 import org.eclipse.swtchart.ILineSeries.PlotSymbolType;
 import org.eclipse.swtchart.IPlotArea;
 import org.eclipse.swtchart.LineStyle;
+import org.eclipse.swtchart.Range;
 import org.eclipse.swtchart.extensions.core.BaseChart;
 import org.eclipse.swtchart.extensions.core.IChartSettings;
 import org.eclipse.swtchart.extensions.core.IPrimaryAxisSettings;
@@ -368,8 +369,7 @@ public class ExtendedElectropherogramEditorUI extends Composite implements ITool
 
 		if(!suspendUpdate) {
 			if(!menuActive) {
-				updateChromatogram();
-				adjustChromatogramSelectionRange();
+				keepRange(this::updateChromatogram);
 			}
 		}
 	}
@@ -377,14 +377,15 @@ public class ExtendedElectropherogramEditorUI extends Composite implements ITool
 	public void updateSelectedScan() {
 
 		if(!menuActive) {
-			chartControl.get().deleteSeries(SERIES_ID_SELECTED_SCAN);
-			chartControl.get().deleteSeries(SERIES_ID_IDENTIFIED_SCAN_SELECTED);
+			keepRange(() -> {
+				chartControl.get().deleteSeries(SERIES_ID_SELECTED_SCAN);
+				chartControl.get().deleteSeries(SERIES_ID_IDENTIFIED_SCAN_SELECTED);
 
-			List<ILineSeriesData> lineSeriesDataList = new ArrayList<>();
-			addSelectedScanData(lineSeriesDataList);
-			addSelectedIdentifiedScanData(lineSeriesDataList);
-			chartControl.get().addSeriesData(lineSeriesDataList);
-			adjustChromatogramSelectionRange();
+				List<ILineSeriesData> lineSeriesDataList = new ArrayList<>();
+				addSelectedScanData(lineSeriesDataList);
+				addSelectedIdentifiedScanData(lineSeriesDataList);
+				chartControl.get().addSeriesData(lineSeriesDataList);
+			});
 		}
 	}
 
@@ -1121,6 +1122,20 @@ public class ExtendedElectropherogramEditorUI extends Composite implements ITool
 			baseChart.setRange(x, chromatogramSelection.getStartScan(), PreferenceSupplier.getZoomedInNucleobasesStart(), false);
 			baseChart.setRange(y, chromatogramSelection.getStartAbundance(), chromatogramSelection.getStopAbundance(), false);
 		}
+	}
+
+	/*
+	 * Adding series data adjusts the chart to the full range.
+	 * Restore the zoom of the user afterwards instead of jumping back to the beginning.
+	 */
+	private void keepRange(Runnable runnable) {
+
+		BaseChart baseChart = chartControl.get().getBaseChart();
+		Range rangeX = baseChart.getAxisSet().getXAxes()[0].getRange();
+		Range rangeY = baseChart.getAxisSet().getYAxes()[0].getRange();
+		runnable.run();
+		baseChart.setRange(baseChart.getAxisSet().getXAxes()[0], rangeX.lower, rangeX.upper, false);
+		baseChart.setRange(baseChart.getAxisSet().getYAxes()[0], rangeY.lower, rangeY.upper, false);
 	}
 
 	private void adjustAxisSettings() {
