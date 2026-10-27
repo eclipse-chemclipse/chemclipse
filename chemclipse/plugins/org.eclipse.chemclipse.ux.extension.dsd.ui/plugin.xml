@@ -18,4 +18,16 @@
             defaultShow="false">
       </WelcomeTile>
    </extension>
+   <extension
+         point="org.eclipse.ui.themes">
+      <fontDefinition
+            categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.charts"
+            id="org.eclipse.chemclipse.ux.extension.dsd.ui.charts.NucleotideLabelMarker.Scan.Font"
+            label="Electropherogram Chart Nucleotide Label Font"
+            value="Verdana-regular-8">
+         <description>
+            The nucleotide label font.
+         </description>
+      </fontDefinition>
+   </extension>
 </plugin>

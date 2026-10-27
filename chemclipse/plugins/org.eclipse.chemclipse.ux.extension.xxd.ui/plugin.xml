@@ -705,16 +705,6 @@
         </description>
     </fontDefinition>
 
-    <fontDefinition
-        categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.charts"
-        id="org.eclipse.chemclipse.ux.extension.xxd.ui.internal.charts.LabelBounds.PeakLabelFont"
-        label="Chromatogram Chart Peak Label Font"
-        value="Verdana-regular-8">
-        <description>
-            The peak label font.
-        </description>
-    </fontDefinition>
-    
     <colorDefinition
         categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.charts"
         id="org.eclipse.chemclipse.ux.extension.xxd.ui.internal.charts.TargetReferenceLabelMarker.ActiveColor"
@@ -758,15 +748,6 @@
         value="Verdana-regular-8">
         <description>
             The target reference scan label font.
-        </description>
-    </fontDefinition>
-    <fontDefinition
-        categoryId="org.eclipse.chemclipse.ux.extension.xxd.ui.charts"
-        id="org.eclipse.chemclipse.ux.extension.xxd.ui.internal.charts.NucleotideLabelMarker.Scan.Font"
-        label="Electropherogram Chart Nucleotide Label Font"
-        value="Verdana-regular-8">
-        <description>
-            The nucleotide label font.
         </description>
     </fontDefinition>
     <colorDefinition

@@ -11,7 +11,7 @@
  * Christoph Läubrich - initial API and implementation
  * Matthias Mailänder - adapted for nucleotide display
  *******************************************************************************/
-package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.charts;
+package org.eclipse.chemclipse.ux.extension.dsd.ui.charts;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,6 +29,8 @@ import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.targets.ITargetDisplaySettings;
 import org.eclipse.chemclipse.model.targets.ITargetReference;
 import org.eclipse.chemclipse.model.targets.TargetReference;
+import org.eclipse.chemclipse.ux.extension.ui.charts.LabelBounds;
+import org.eclipse.chemclipse.ux.extension.ui.charts.TargetReferenceSettings;
 import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
