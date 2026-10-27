@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.model.CalibrationFileSupplier;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IMeasurement;
 import org.eclipse.chemclipse.model.core.IMeasurementInfo;

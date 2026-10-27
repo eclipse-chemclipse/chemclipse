@@ -12,9 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.ui.internal.provider;
 
+import org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.model.CalibrationFileSupplier;
 import org.eclipse.chemclipse.ux.extension.ui.editors.EditorDescriptor;
 import org.eclipse.chemclipse.ux.extension.ui.provider.ISupplierFileEditorSupport;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.editors.CalibrationFileSupplier;
 import org.eclipse.core.runtime.IAdapterFactory;
 
 public class CalibrationFileEditorAdapterFactory implements IAdapterFactory {
