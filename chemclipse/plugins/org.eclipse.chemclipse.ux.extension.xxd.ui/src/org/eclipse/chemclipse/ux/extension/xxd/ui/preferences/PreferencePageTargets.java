@@ -39,6 +39,7 @@ public class PreferencePageTargets extends FieldEditorPreferencePage implements 
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_USE_TARGET_LIST, "Use Target List", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_PROPAGATE_TARGET_ON_UPDATE, "Propagate Target on Update", getFieldEditorParent()));
 		addField(new BooleanFieldEditor(PreferenceSupplier.P_TARGETS_TABLE_SORTABLE, "Table Sortable", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(PreferenceSupplier.P_TARGETS_TABLE_VERIFIED_ON_TOP, "Verified Target Always on Top", getFieldEditorParent()));
 		addField(new DirectoryFieldEditor(PreferenceSupplier.P_TARGET_TEMPLATE_LIBRARY_IMPORT_FOLDER, "Library Path", getFieldEditorParent()));
 		addField(new ComboFieldEditor(PreferenceSupplier.P_TARGET_IDENTIFER, "Target Identifier:", TargetWebIdentifierUI.getTargetIdentifier(), getFieldEditorParent()));
 		addField(new ComboFieldEditor(PreferenceSupplier.P_SCAN_IDENTIFER, "Scan Identifier:", ScanWebIdentifierUI.getScanIdentifier(), getFieldEditorParent()));

@@ -443,6 +443,8 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final boolean DEF_PROPAGATE_TARGET_ON_UPDATE = false;
 	public static final String P_TARGETS_TABLE_SORTABLE = "targetsTableSortable";
 	public static final boolean DEF_TARGETS_TABLE_SORTABLE = false;
+	public static final String P_TARGETS_TABLE_VERIFIED_ON_TOP = "targetsTableVerifiedOnTop";
+	public static final boolean DEF_TARGETS_TABLE_VERIFIED_ON_TOP = false;
 	public static final String P_TARGETS_TABLE_SHOW_DEVIATION_RT = "targetsTableShowDeviationRetentionTime";
 	public static final boolean DEF_TARGETS_TABLE_SHOW_DEVIATION_RT = false;
 	public static final String P_TARGETS_TABLE_SHOW_DEVIATION_RI = "targetsTableShowDeviationRetentionIndex";
@@ -1068,6 +1070,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		putDefault(P_TARGET_LIST, DEF_TARGET_LIST);
 		putDefault(P_PROPAGATE_TARGET_ON_UPDATE, DEF_PROPAGATE_TARGET_ON_UPDATE);
 		putDefault(P_TARGETS_TABLE_SORTABLE, DEF_TARGETS_TABLE_SORTABLE);
+		putDefault(P_TARGETS_TABLE_VERIFIED_ON_TOP, DEF_TARGETS_TABLE_VERIFIED_ON_TOP);
 		putDefault(P_TARGETS_TABLE_SHOW_DEVIATION_RT, DEF_TARGETS_TABLE_SHOW_DEVIATION_RT);
 		putDefault(P_TARGETS_TABLE_SHOW_DEVIATION_RI, DEF_TARGETS_TABLE_SHOW_DEVIATION_RI);
 		putDefault(P_TARGET_TEMPLATE_LIBRARY_IMPORT_FOLDER, DEF_TARGET_TEMPLATE_LIBRARY_IMPORT_FOLDER);
