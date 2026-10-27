@@ -1113,15 +1113,60 @@ public class ExtendedElectropherogramEditorUI extends Composite implements ITool
 		}
 	}
 
+	/*
+	 * Zoom into the first nucleobases and fit the intensity to the traces shown there.
+	 */
 	private void adjustChromatogramSelectionRange() {
 
-		if(chromatogramSelection != null) {
+		if(chromatogramSelection != null && chromatogramSelection.getChromatogram() instanceof IChromatogramDSD chromatogramDSD) {
+			int startScan = Math.max(1, chromatogramSelection.getStartScan());
+			int stopScan = getInitialStopScan(chromatogramDSD, startScan);
+			double minIntensity = Double.MAX_VALUE;
+			double maxIntensity = -Double.MAX_VALUE;
+			for(int i = startScan; i <= stopScan; i++) {
+				if(chromatogramDSD.getScan(i) instanceof IScanWSD scanWSD) {
+					IExtractedWavelengthSignal extractedWavelengthSignal = scanWSD.getExtractedWavelengthSignal();
+					for(Float wavelength : chromatogramDSD.getWavelengthMapping().keySet()) {
+						double intensity = extractedWavelengthSignal.getAbundance(Math.round(wavelength));
+						minIntensity = Math.min(minIntensity, intensity);
+						maxIntensity = Math.max(maxIntensity, intensity);
+					}
+				}
+			}
+
 			BaseChart baseChart = chartControl.get().getBaseChart();
 			IAxis x = baseChart.getAxisSet().getXAxes()[0];
 			IAxis y = baseChart.getAxisSet().getYAxes()[0];
-			baseChart.setRange(x, chromatogramSelection.getStartScan(), PreferenceSupplier.getZoomedInNucleobasesStart(), false);
-			baseChart.setRange(y, chromatogramSelection.getStartAbundance(), chromatogramSelection.getStopAbundance(), false);
+			baseChart.setRange(x, (double)startScan, (double)stopScan, false);
+			if(maxIntensity > minIntensity) {
+				/*
+				 * Add space on top to show labels correctly.
+				 */
+				double extendY = preferenceStore.getDouble(PreferenceSupplier.P_CHROMATOGRAM_EXTEND_Y);
+				baseChart.setRange(y, minIntensity, maxIntensity + (maxIntensity - minIntensity) * extendY, false);
+			}
 		}
+	}
+
+	/**
+	 * Base calls are stored as identified scans.
+	 *
+	 * @return the scan of the last base call to show initially or the last scan if there are not enough
+	 */
+	private int getInitialStopScan(IChromatogramDSD chromatogramDSD, int startScan) {
+
+		int stopScan = chromatogramDSD.getNumberOfScans();
+		int nucleobases = PreferenceSupplier.getZoomedInNucleobasesStart();
+		if(nucleobases > 0) {
+			int count = 0;
+			for(IScan scan : ChromatogramDataSupport.getIdentifiedScans(chromatogramDSD)) {
+				if(scan.getScanNumber() >= startScan && ++count == nucleobases) {
+					return scan.getScanNumber();
+				}
+			}
+		}
+
+		return stopScan;
 	}
 
 	/*
