@@ -51,12 +51,12 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_LOGO = "logo.png";
 	String IMAGE_ABOUT = "about.png";
 
-	String IMAGE_DESELECTED = "deselected.gif";
+	String IMAGE_DESELECTED = "disabled_co.svg";
 	String IMAGE_DESELECTED_INACTIVE = "deselected_inactive.gif";
-	String IMAGE_SELECTED = "selected.gif";
+	String IMAGE_SELECTED = "task-complete.svg";
 	String IMAGE_SELECTED_INACTIVE = "selected_inactive.gif";
-	String IMAGE_CHECK_ALL = "checkAll.gif";
-	String IMAGE_UNCHECK_ALL = "uncheckAll.gif";
+	String IMAGE_CHECK_ALL = "check_all.svg";
+	String IMAGE_UNCHECK_ALL = "uncheck_all.svg";
 
 	String IMAGE_SHRINK_CHROMATOGRAMS = "shrinkChromatograms.gif";
 	String IMAGE_ALIGN_CHROMATOGRAMS = "alignChromatograms.gif";
@@ -87,23 +87,23 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_SAMPLE_QC_QUALIFIER = "sample-qc-qualifier.gif";
 	String IMAGE_SAMPLE_COLORIZE = "sample-colorize.gif";
 
-	String IMAGE_PREFERENCES = "preferences.gif";
+	String IMAGE_PREFERENCES = "preferences.svg";
 	String IMAGE_SETTINGS_PULL = "settings_pull.png";
 	String IMAGE_SETTINGS_PUSH = "settings_push.png";
 	String IMAGE_SETTINGS_SYNCHRONIZE = "settings_synchronize.png";
 	String IMAGE_DRIVE = "drive.gif";
 	String IMAGE_CHROMATOGRAM_ZERO_SET = "chromatogramZeroSet.gif";
-	String IMAGE_FOLDER_OPENED = "folder_opened.gif";
+	String IMAGE_FOLDER_OPENED = "prj_obj.svg";
 	String IMAGE_FOLDER_CLOSED = "folder_closed.gif";
 	String IMAGE_HEADER = "header.gif";
-	String IMAGE_FILE = "file.gif";
+	String IMAGE_FILE = "file_obj.svg";
 	String IMAGE_FOLDER = "folder.svg";
 	String IMAGE_OPEN_FOLDER = "open-folder.png";
 	String IMAGE_PEAK = "peak.gif";
 	String IMAGE_PEAK_ADD = "peakAdd.gif";
 	String IMAGE_PEAK_REPLACE = "peakReplace.gif";
 	String IMAGE_PEAKS = "peaks.gif";
-	String IMAGE_ERROR = "error.png";
+	String IMAGE_ERROR = "message_error.svg";
 	String IMAGE_WARN = "warn.svg";
 	String IMAGE_INFO = "info.svg";
 	String IMAGE_VALID = "valid.gif";
@@ -122,9 +122,9 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_SAVEALL = "saveall_edit.svg";
 	String IMAGE_VIEW = "view.gif";
 	String IMAGE_UNKNOWN = "unknown.svg";
-	String IMAGE_LOG = "log.gif";
+	String IMAGE_LOG = "file_obj.svg";
 	String IMAGE_ION = "ion.gif";
-	String IMAGE_REPORT = "report.gif";
+	String IMAGE_REPORT = "file_obj.svg";
 	String IMAGE_CHROMATOGRAM_REPORT = "chromatogramReport.gif";
 	String IMAGE_CHROMATOGRAM_REPORT_ADD = "chromatogramReportAdd.gif";
 	String IMAGE_CHROMATOGRAM_SELECTED = "chromatogramSelected.gif";
@@ -160,7 +160,7 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_FILTER_IONREMOVER = "ionremover.gif";
 	String IMAGE_WORD_DOCUMENT = "word.svg"; // TODO: deduplicate
 	String IMAGE_EXCEL_DOCUMENT = "excel.svg"; // TODO: deduplicate
-	String IMAGE_BITMAP_DOCUMENT = "bitmap_document.png";
+	String IMAGE_BITMAP_DOCUMENT = "hunk_obj.svg";
 	String IMAGE_VECTOR_DOCUMENT = "vector_document.png";
 	String IMAGE_BACKWARD = "backward.gif";
 	String IMAGE_FAST_BACKWARD = "fastbackward.gif";
@@ -277,7 +277,7 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_CHROMATOGRAM_DATABASE_ADD = "chromatogramDatabaseAdd.gif";
 	String IMAGE_SUBSTANCE_HIT_RESULT = "substanceHitResult.gif";
 	String IMAGE_PLUS = "plus.gif";
-	String IMAGE_MINUS = "minus.gif";
+	String IMAGE_MINUS = "remove_correction.svg";
 
 	String IMAGE_ARROW_DOWN_2 = "yellow_arrow_down.svg";
 	String IMAGE_ARROW_UP_2 = "yellow_arrow_up.svg";
@@ -296,16 +296,16 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_ARROW_BACKWARD = "yellow_arrow_left.svg";
 	String IMAGE_EXCEL = "excel.svg";
 	String IMAGE_PDF = "pdf.gif";
-	String IMAGE_TXT = "txt.gif";
+	String IMAGE_TXT = "file_obj.svg";
 	String IMAGE_CSV = "csv.gif";
 	String IMAGE_CALCULATE = "calculate.gif";
-	String IMAGE_CHECK = "check.gif";
-	String IMAGE_SELECT_ROWS = "select-rows.gif";
+	String IMAGE_CHECK = "preferences.svg";
+	String IMAGE_SELECT_ROWS = "flatLayout.svg";
 	String IMAGE_REMOVE = "delete.svg";
-	String IMAGE_STATUS_EMPTY = "status-empty.gif";
-	String IMAGE_STATUS_OK = "status-ok.gif";
+	String IMAGE_STATUS_EMPTY = "test.svg";
+	String IMAGE_STATUS_OK = "testok.svg";
 	String IMAGE_STATUS_WARN = "status-warn.gif";
-	String IMAGE_STATUS_ERROR = "status-error.gif";
+	String IMAGE_STATUS_ERROR = "testerr.svg";
 
 	String IMAGE_DETECTION_BOX_BOTH = "detectionBoxBoth.gif";
 	String IMAGE_DETECTION_BOX_LEFT = "detectionBoxLeft.gif";
@@ -324,8 +324,8 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_SEARCH = "search.svg";
 	String IMAGE_DATABASE_SEARCH = "databaseSearch.gif";
 	String IMAGE_CASE_SENSITIVE = "caseSensitive.gif";
-	String IMAGE_EVALUATE = "evaluate.gif";
-	String IMAGE_EVALUATED = "evaluated.gif";
+	String IMAGE_EVALUATE = "test.svg";
+	String IMAGE_EVALUATED = "testok.svg";
 	String IMAGE_VALIDATE = "validate.gif";
 	String IMAGE_SKIP = "skip.gif";
 	String IMAGE_SKIPPED = "skipped.gif";
@@ -341,8 +341,8 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_SHIFT_MIRROR = "shiftMirror.gif";
 	String IMAGE_SCAN_RETENTION_TIME = "scanRetentionTime.gif";
 	String IMAGE_CHART_LEGEND_MARKER = "chartLegendMarker.svg";
-	String IMAGE_CHART_RANGE_SELECTOR = "chartRangeSelector.gif";
-	String IMAGE_SEQUENCE_LIST = "sequenceListDefault.gif";
+	String IMAGE_CHART_RANGE_SELECTOR = "templates.svg";
+	String IMAGE_SEQUENCE_LIST = "icons-legend.svg";
 	String IMAGE_SEQUENCE_ADD = "sequenceAdd.gif";
 	/*
 	 * PICTOGRAM and Data Analysis Perspective
@@ -365,11 +365,11 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_COMPARISON_SCAN_ACTIVE = "comparisonScanActive.gif";
 	String IMAGE_QUANTITATION_DEFAULT = "quantitationDefault.gif";
 	String IMAGE_QUANTITATION_ACTIVE = "quantitationActive.gif";
-	String IMAGE_SCAN_PEAK_LIST_DEFAULT = "scanPeakListDefault.gif";
+	String IMAGE_SCAN_PEAK_LIST_DEFAULT = "icons-legend.svg";
 	String IMAGE_SCAN_PEAK_LIST_ACTIVE = "scanPeakListActive.gif";
 	String IMAGE_HEATMAP_ACTIVE = "heatmapActive.gif";
 	String IMAGE_HEATMAP_DEFAULT = "heatmapDefault.gif";
-	String IMAGE_SEQUENCE_LIST_DEFAULT = "sequenceListDefault.gif";
+	String IMAGE_SEQUENCE_LIST_DEFAULT = "icons-legend.svg";
 	String IMAGE_SEQUENCE_LIST_ACTIVE = "sequenceListActive.gif";
 	String IMAGE_PCR_ACTIVE = "pcrActive.gif";
 	String IMAGE_PCR_DEFAULT = "pcrDefault.gif";
@@ -384,8 +384,8 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_CHROMATOGRAM_DEFAULT = "chromatogramDefault.gif";
 	String IMAGE_CHROMATOGRAM_ACTIVE = "chromatogramActive.gif";
 
-	String IMAGE_PROCESS_CONTROL = "processControl.gif";
-	String IMAGE_START_PROCESSING = "startProcessing.gif";
+	String IMAGE_PROCESS_CONTROL = "workingSet.svg";
+	String IMAGE_START_PROCESSING = "task-new.svg";
 	String IMAGE_END_PROCESSING = "endProcessing.gif";
 
 	String IMAGE_RESULTS = "measurementResults.svg";
@@ -393,7 +393,7 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_MEASUREMENT_RESULTS_ACTIVE = "measurementResultsActive.gif";
 
 	String IMAGE_PLATE_PCR = "plate-pcr.png";
-	String IMAGE_METHOD = "method.gif";
+	String IMAGE_METHOD = "import_m2_project.svg";
 	String IMAGE_METHOD_ADD = "methodAdd.gif";
 	String IMAGE_METHOD_EDIT = "methodEdit.gif";
 	String IMAGE_METHOD_DELETE = "methodDelete.gif";
@@ -403,7 +403,7 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_EXECUTE_EXTENSION = "execute-extension.png";
 	String IMAGE_POPUP_MENU = "popup-menu.png";
 
-	String IMAGE_HEADER_DATA = "headerdata.gif";
+	String IMAGE_HEADER_DATA = "workingSet.svg";
 	String IMAGE_CHART_DATA_SHOW = "chartDataShow.png";
 	String IMAGE_CHART_DATA_HIDE = "chartDataHide.png";
 
@@ -415,7 +415,7 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_FOLDER_ADD = "folderAdd.gif";
 
 	String IMAGE_CHROMATOGRAM_BLANK = "chromatogramBlank.gif";
-	String IMAGE_INTERPOLATE = "interpolate.png";
+	String IMAGE_INTERPOLATE = "addtsk_tsk.svg";
 
 	String IMAGE_OFFSET = "offset.gif";
 	String IMAGE_OFFSET_DEFAULT = "offsetDefault.gif";
@@ -426,8 +426,8 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_PEAK_TRACES = "peakTraces.gif";
 	String IMAGE_COPY_CLIPBOARD = "copy-clipboard.svg";
 	String IMAGE_ZOOM_LOCKED = "zoomLocked.png";
-	String IMAGE_ZOOM_IN = "zoomIn.png";
-	String IMAGE_ZOOM_OUT = "zoomOut.png";
+	String IMAGE_ZOOM_IN = "zoomIn.svg";
+	String IMAGE_ZOOM_OUT = "zoomOut.svg";
 	String IMAGE_ZOOM_RESET = "zoomReset.png";
 	String IMAGE_TYPES = "types.png";
 	String IMAGE_VALUE_DECREASE = "valueDecrease.gif";
@@ -443,8 +443,8 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_REVIEW_DETAILS_SHOW = "reviewDetailsShow.gif";
 	String IMAGE_REVIEW_DETAILS_HIDE = "reviewDetailsHide.gif";
 	String IMAGE_PLUGINS = "plugin_obj.svg";
-	String IMAGE_XML_FILE = "xmldoc.gif";
-	String IMAGE_ZIP_FILE = "zip_file.png";
+	String IMAGE_XML_FILE = "generic_xml_obj.svg";
+	String IMAGE_ZIP_FILE = "importzip_wiz.svg";
 	String IMAGE_TRANSFER = "transfer.png";
 
 	String IMAGE_FOCUS_TOP = "focus_top.gif";
@@ -476,13 +476,13 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_UNZOOM = "unzoomChromatogram.gif";
 	String IMAGE_STACK = "stack.png";
 	String IMAGE_CRITERIUM = "generate_class.svg";
-	String IMAGE_PARAMETER = "parameter.png";
+	String IMAGE_PARAMETER = "attribute_obj.svg";
 	String IMAGE_CHROM_2D_STACK_1D = "chrom2dstack1d.gif";
 	String IMAGE_COLUMN = "column.gif";
 	String IMAGE_BOOK = "office-book.svg";
 	String IMAGE_BOOKMARK = "bookmarks_view.svg";
 	String IMAGE_INTENSITY_RANGE = "intensityRange.gif";
 	String IMAGE_OPTIMIZE_PATTERN = "optimizePattern.gif";
-	String IMAGE_BINARYDATA = "binarydata.png";
-	String IMAGE_TRICKS = "tricks.png";
+	String IMAGE_BINARYDATA = "build_exec.svg";
+	String IMAGE_TRICKS = "tricks.svg";
 }
