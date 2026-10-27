@@ -31,7 +31,7 @@ public class PreferencePageNamedTraces extends FieldEditorPreferencePage impleme
 	@Override
 	public void createFieldEditors() {
 
-		addField(new NamedTracesFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_OVERLAY_NAMED_TRACES, "Named Traces", getFieldEditorParent()));
+		addField(new NamedTracesFieldEditor(PreferenceSupplier.P_CHROMATOGRAM_OVERLAY_NAMED_TRACES, "", getFieldEditorParent()));
 	}
 
 	@Override
