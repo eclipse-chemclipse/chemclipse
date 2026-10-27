@@ -21,7 +21,8 @@ import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.identifier.LibraryInformation;
 import org.eclipse.chemclipse.model.implementation.IdentificationTarget;
 import org.eclipse.chemclipse.model.targets.TargetSupport;
-import org.eclipse.chemclipse.support.ui.swt.ExtendedTableViewer;
+import org.eclipse.chemclipse.model.targets.TargetValidator;
+import org.eclipse.chemclipse.ux.extension.dsd.ui.swt.BaseCallerListUI;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ComboBoxCellEditor;
 import org.eclipse.jface.viewers.EditingSupport;
@@ -31,10 +32,10 @@ public class BaseCallerListEditingSupport extends EditingSupport {
 
 	private final Nucleobase[] values = Nucleobase.values();
 	private final CellEditor cellEditor;
-	private final ExtendedTableViewer tableViewer;
+	private final BaseCallerListUI tableViewer;
 	private final String column;
 
-	public BaseCallerListEditingSupport(ExtendedTableViewer tableViewer, String column) {
+	public BaseCallerListEditingSupport(BaseCallerListUI tableViewer, String column) {
 
 		super(tableViewer);
 		this.column = column;
@@ -74,15 +75,24 @@ public class BaseCallerListEditingSupport extends EditingSupport {
 
 		if(element instanceof IScan scan && value instanceof Integer index && index >= 0 && index < values.length && column.equals(BaseCallerListLabelProvider.BEST_TARGET)) {
 			Nucleobase selectedValue = values[index];
+			/*
+			 * Only the latest manual base call is verified, otherwise they compete for the best target.
+			 */
+			for(IIdentificationTarget target : scan.getTargets()) {
+				target.setVerified(false);
+			}
 
 			ILibraryInformation libraryInformation = new LibraryInformation();
 			libraryInformation.setName(String.valueOf(selectedValue.letter()));
 
 			IComparisonResult comparisonResult = new ComparisonResult(100);
 			IIdentificationTarget identificationTarget = new IdentificationTarget(libraryInformation, comparisonResult);
+			identificationTarget.setIdentifier(TargetValidator.IDENTIFIER);
+			identificationTarget.setVerified(true); // rank above the base caller
 
+			scan.getTargets().remove(identificationTarget); // an equal earlier call would block the add
 			scan.getTargets().add(identificationTarget);
-			tableViewer.refresh(element);
+			tableViewer.fireEdited(scan);
 		}
 	}
 

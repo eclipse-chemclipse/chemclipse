@@ -177,6 +177,7 @@ public class ExtendedBaseCallerListUI extends Composite implements IExtendedPart
 		addDeleteMenuItem(tableSettings, "Delete Nucleobase");
 		addKeyEventProcessors(tableSettings);
 		baseCallerListUI.applySettings(tableSettings);
+		baseCallerListUI.setEditListener(_ -> fireNucleobaseChanged());
 
 		tableViewer.set(baseCallerListUI);
 	}
@@ -253,6 +254,18 @@ public class ExtendedBaseCallerListUI extends Composite implements IExtendedPart
 			chromatogramSelection.getChromatogram().setDirty(true);
 			UpdateNotifierUI.update(getDisplay(), chromatogramSelection);
 			UpdateNotifierUI.update(getDisplay(), IChemClipseEvents.TOPIC_IDENTIFICATION_TARGETS_UPDATE_SELECTION, "Nucleobase deleted.");
+		}
+	}
+
+	/*
+	 * The modified chromatogram updates the cached nucleotide sequence, the list and the electropherogram.
+	 */
+	private void fireNucleobaseChanged() {
+
+		if(chromatogramSelection != null) {
+			chromatogramSelection.getChromatogram().setDirty(true);
+			UpdateNotifierUI.update(getDisplay(), chromatogramSelection);
+			UpdateNotifierUI.update(getDisplay(), IChemClipseEvents.TOPIC_IDENTIFICATION_TARGETS_UPDATE_SELECTION, "Nucleobase changed.");
 		}
 	}
 

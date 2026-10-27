@@ -14,6 +14,7 @@ package org.eclipse.chemclipse.ux.extension.dsd.ui.swt;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IScan;
@@ -38,11 +39,25 @@ public class BaseCallerListUI extends ExtendedTableViewer {
 	private final BaseCallerListFilter listFilter = new BaseCallerListFilter();
 
 	private List<ITargetSupplier> targetSuppliers = new ArrayList<>();
+	private Consumer<IScan> editListener = null;
 
 	public BaseCallerListUI(Composite parent, int style) {
 
 		super(parent, style);
 		createColumns();
+	}
+
+	public void setEditListener(Consumer<IScan> editListener) {
+
+		this.editListener = editListener;
+	}
+
+	public void fireEdited(IScan scan) {
+
+		refresh(scan);
+		if(editListener != null) {
+			editListener.accept(scan);
+		}
 	}
 
 	public void setInput(IChromatogramSelection chromatogramSelection) {
