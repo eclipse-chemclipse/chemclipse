@@ -210,6 +210,8 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static final int DEF_PEAK_TRACES_OFFSET_RETENTION_TIME = DEF_OFFSET_RETENTION_TIME;
 	public static final String P_CHROMATOGRAM_OVERLAY_NAMED_TRACES = "chromatogramOverlayNamedTraces";
 	public static final String DEF_CHROMATOGRAM_OVERLAY_NAMED_TRACES = NamedTraceUtil.getDefaultTraces();
+	public static final String P_CHROMATOGRAM_OVERLAY_NAMED_WAVELENGTHS = "chromatogramOverlayNamedWavelengths";
+	public static final String DEF_CHROMATOGRAM_OVERLAY_NAMED_WAVELENGTHS = NamedTraceUtil.getDefaultWavelengths();
 
 	public static final String P_OVERLAY_SHIFT_X = "overlayShiftX";
 	public static final double DEF_OVERLAY_SHIFT_X = 0.0d;
@@ -1334,6 +1336,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 		putDefault(P_MODULO_AUTO_MIRROR_CHROMATOGRAMS, DEF_MODULO_AUTO_MIRROR_CHROMATOGRAMS);
 
 		putDefault(P_CHROMATOGRAM_OVERLAY_NAMED_TRACES, DEF_CHROMATOGRAM_OVERLAY_NAMED_TRACES);
+		putDefault(P_CHROMATOGRAM_OVERLAY_NAMED_WAVELENGTHS, DEF_CHROMATOGRAM_OVERLAY_NAMED_WAVELENGTHS);
 
 		putDefault(P_OVERLAY_SHIFT_X, DEF_OVERLAY_SHIFT_X);
 		putDefault(P_INDEX_SHIFT_X, DEF_INDEX_SHIFT_X);
