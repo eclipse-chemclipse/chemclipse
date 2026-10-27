@@ -22,6 +22,7 @@ import org.eclipse.chemclipse.model.identifier.LibraryInformation;
 import org.eclipse.chemclipse.model.implementation.IdentificationTarget;
 import org.eclipse.chemclipse.model.targets.TargetSupport;
 import org.eclipse.chemclipse.model.targets.TargetValidator;
+import org.eclipse.chemclipse.support.text.ILabel;
 import org.eclipse.chemclipse.ux.extension.dsd.ui.swt.BaseCallerListUI;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ComboBoxCellEditor;
@@ -39,7 +40,7 @@ public class BaseCallerListEditingSupport extends EditingSupport {
 
 		super(tableViewer);
 		this.column = column;
-		this.cellEditor = new ComboBoxCellEditor(tableViewer.getTable(), getLabels(), SWT.READ_ONLY);
+		this.cellEditor = new ComboBoxCellEditor(tableViewer.getTable(), ILabel.getLabels(values), SWT.READ_ONLY);
 		this.tableViewer = tableViewer;
 	}
 
@@ -95,14 +96,5 @@ public class BaseCallerListEditingSupport extends EditingSupport {
 			scan.getTargets().add(identificationTarget);
 			tableViewer.fireEdited(scan);
 		}
-	}
-
-	private String[] getLabels() {
-
-		String[] labels = new String[values.length];
-		for(int i = 0; i < values.length; i++) {
-			labels[i] = values[i].toString();
-		}
-		return labels;
 	}
 }
