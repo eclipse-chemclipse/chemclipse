@@ -35,7 +35,7 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.support.ui.updates.IUpdateListenerUI;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.runnables.MassSpectrumIdentifierRunnable;
+import org.eclipse.chemclipse.ux.extension.msd.ui.runnables.MassSpectrumIdentifierRunnable;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.runnables.WaveSpectrumIdentifierRunnable;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.ProcessorSettingsSupport;

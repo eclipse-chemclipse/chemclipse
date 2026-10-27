@@ -48,6 +48,7 @@ Bundle-Vendor: ChemClipse
 Export-Package: org.eclipse.chemclipse.ux.extension.msd.ui.editors,
  org.eclipse.chemclipse.ux.extension.msd.ui.parts,
  org.eclipse.chemclipse.ux.extension.msd.ui.provider,
+ org.eclipse.chemclipse.ux.extension.msd.ui.runnables,
  org.eclipse.chemclipse.ux.extension.msd.ui.services,
  org.eclipse.chemclipse.ux.extension.msd.ui.support,
  org.eclipse.chemclipse.ux.extension.msd.ui.swt,
