@@ -11,9 +11,8 @@
  * Christoph Läubrich - initial API and implementation
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
-package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.charts;
+package org.eclipse.chemclipse.ux.extension.ui.charts;
 
-import org.eclipse.chemclipse.ux.extension.ui.charts.LabelBounds;
 import org.eclipse.swt.graphics.Font;
 
 public class TargetLabel {

@@ -11,7 +11,7 @@
  * Christoph Läubrich - initial API and implementation
  * Philip Wenig - refactoring target label support
  *******************************************************************************/
-package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.charts;
+package org.eclipse.chemclipse.ux.extension.ui.charts;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -32,8 +32,6 @@ import org.eclipse.chemclipse.model.targets.LibraryField;
 import org.eclipse.chemclipse.model.targets.TargetReference;
 import org.eclipse.chemclipse.model.targets.TargetReferenceType;
 import org.eclipse.chemclipse.support.text.ValueFormat;
-import org.eclipse.chemclipse.ux.extension.ui.charts.LabelBounds;
-import org.eclipse.chemclipse.ux.extension.ui.charts.TargetReferenceSettings;
 import org.eclipse.jface.resource.ColorRegistry;
 import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.swt.SWT;
