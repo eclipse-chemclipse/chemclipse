@@ -15,6 +15,7 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.quantitation.CalibrationMethod;
 import org.eclipse.chemclipse.model.quantitation.IQuantitationCompound;
+import org.eclipse.chemclipse.support.text.ILabel;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.QuantCompoundListUI;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckboxCellEditor;
@@ -28,7 +29,7 @@ public class QuantCompoundEditingSupport extends EditingSupport {
 	private CellEditor cellEditor;
 	private QuantCompoundListUI tableViewer;
 	private String column;
-	private String[] calibrationMethods = CalibrationMethod.getExternalCalibrationOptionsArray();
+	private CalibrationMethod[] calibrationMethods = CalibrationMethod.getExternalCalibrationOptions();
 
 	public QuantCompoundEditingSupport(QuantCompoundListUI tableViewer, String column) {
 
@@ -64,9 +65,9 @@ public class QuantCompoundEditingSupport extends EditingSupport {
 				return compound.getConcentrationUnit();
 			}
 			if(column.equals(QuantCompoundLabelProvider.CALIBRATION_METHOD)) {
-				String item = compound.getCalibrationMethod().toString();
+				CalibrationMethod item = compound.getCalibrationMethod();
 				for(int i = 0; i < calibrationMethods.length; i++) {
-					if(calibrationMethods[i].equals(item)) {
+					if(calibrationMethods[i] == item) {
 						return i;
 					}
 				}
@@ -119,8 +120,7 @@ public class QuantCompoundEditingSupport extends EditingSupport {
 				compound.setConcentrationUnit((String)value);
 			}
 			if(column.equals(QuantCompoundLabelProvider.CALIBRATION_METHOD)) {
-				String calibrationMethod = calibrationMethods[(int)value];
-				compound.setCalibrationMethod(CalibrationMethod.valueOf(calibrationMethod));
+				compound.setCalibrationMethod(calibrationMethods[(int)value]);
 			}
 			if(column.equals(QuantCompoundLabelProvider.CROSS_ZERO)) {
 				compound.setUseCrossZero((boolean)value);
@@ -200,7 +200,7 @@ public class QuantCompoundEditingSupport extends EditingSupport {
 			this.cellEditor = new CheckboxCellEditor(tableViewer.getTable());
 		} else if(column.equals(QuantCompoundLabelProvider.CALIBRATION_METHOD)) {
 			this.cellEditor = new ComboBoxCellEditor(tableViewer.getTable(), //
-					CalibrationMethod.getExternalCalibrationOptionsArray(), //
+					ILabel.getLabels(calibrationMethods), //
 					SWT.READ_ONLY);
 		} else {
 			this.cellEditor = new TextCellEditor(tableViewer.getTable());

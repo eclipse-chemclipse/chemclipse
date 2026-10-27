@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2025 Lablicate GmbH.
+ * Copyright (c) 2022, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.classification.ui.provider;
 
+import org.eclipse.chemclipse.support.text.ILabel;
 import org.eclipse.chemclipse.xxd.classification.model.ClassificationRule;
 import org.eclipse.chemclipse.xxd.classification.model.Reference;
 import org.eclipse.chemclipse.xxd.classification.ui.swt.ClassificationDictionaryListUI;
@@ -27,14 +28,14 @@ public class ClassificationRuleEditingSupport extends EditingSupport {
 	private CellEditor cellEditor;
 	private ClassificationDictionaryListUI tableViewer;
 
-	private String[] references = Reference.getItems();
+	private Reference[] references = Reference.values();
 
 	public ClassificationRuleEditingSupport(ClassificationDictionaryListUI tableViewer, String column) {
 
 		super(tableViewer);
 		this.column = column;
 		if(ClassificationRuleLabelProvider.REFERENCE.equals(column)) {
-			this.cellEditor = new ComboBoxCellEditor(tableViewer.getTable(), references, SWT.READ_ONLY);
+			this.cellEditor = new ComboBoxCellEditor(tableViewer.getTable(), ILabel.getLabels(references), SWT.READ_ONLY);
 		} else {
 			this.cellEditor = new TextCellEditor(tableViewer.getTable());
 		}
@@ -63,7 +64,7 @@ public class ClassificationRuleEditingSupport extends EditingSupport {
 				case ClassificationRuleLabelProvider.CLASSIFICATION:
 					return classificationRule.getClassification();
 				case ClassificationRuleLabelProvider.REFERENCE:
-					return getComboIndex(classificationRule.getReference().name(), references);
+					return getComboIndex(classificationRule.getReference(), references);
 			}
 		}
 		return false;
@@ -90,7 +91,7 @@ public class ClassificationRuleEditingSupport extends EditingSupport {
 		}
 	}
 
-	private int getComboIndex(String item, String[] items) {
+	private int getComboIndex(Reference item, Reference[] items) {
 
 		int index = 0;
 		exitloop:
@@ -106,7 +107,7 @@ public class ClassificationRuleEditingSupport extends EditingSupport {
 	private Reference getReference(Object value) {
 
 		try {
-			return Reference.valueOf(references[(int)value]);
+			return references[(int)value];
 		} catch(Exception e) {
 			return Reference.NAME;
 		}

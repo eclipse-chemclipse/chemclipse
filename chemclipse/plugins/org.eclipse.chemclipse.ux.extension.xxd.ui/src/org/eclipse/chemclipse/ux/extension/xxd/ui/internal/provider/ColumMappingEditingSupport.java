@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -15,6 +15,7 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider;
 import java.util.Map;
 
 import org.eclipse.chemclipse.support.model.SeparationColumnType;
+import org.eclipse.chemclipse.support.text.ILabel;
 import org.eclipse.chemclipse.support.ui.swt.ExtendedTableViewer;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ComboBoxCellEditor;
@@ -27,14 +28,14 @@ public class ColumMappingEditingSupport extends EditingSupport {
 	private CellEditor cellEditor;
 	private ExtendedTableViewer tableViewer;
 	private String column;
-	private String[] columnTypes = SeparationColumnType.getItems();
+	private SeparationColumnType[] columnTypes = SeparationColumnType.values();
 
 	public ColumMappingEditingSupport(ExtendedTableViewer tableViewer, String column) {
 
 		super(tableViewer);
 		this.column = column;
 		if(column.equals(ColumMappingLabelProvider.SEPRATION_COLUMN)) {
-			this.cellEditor = new ComboBoxCellEditor(tableViewer.getTable(), columnTypes, SWT.READ_ONLY);
+			this.cellEditor = new ComboBoxCellEditor(tableViewer.getTable(), ILabel.getLabels(columnTypes), SWT.READ_ONLY);
 		} else {
 			this.cellEditor = new TextCellEditor(tableViewer.getTable());
 		}
@@ -74,7 +75,7 @@ public class ColumMappingEditingSupport extends EditingSupport {
 			switch(column) {
 				case ColumMappingLabelProvider.SEPRATION_COLUMN:
 					try {
-						setting.setValue(SeparationColumnType.valueOf(columnTypes[(int)value]));
+						setting.setValue(columnTypes[(int)value]);
 					} catch(Exception e) {
 						setting.setValue(SeparationColumnType.DEFAULT);
 					}
@@ -87,7 +88,7 @@ public class ColumMappingEditingSupport extends EditingSupport {
 	private int getIndexColumnType(String value) {
 
 		for(int i = 0; i < columnTypes.length; i++) {
-			if(columnTypes[i].equals(value)) {
+			if(columnTypes[i].name().equals(value)) {
 				return i;
 			}
 		}

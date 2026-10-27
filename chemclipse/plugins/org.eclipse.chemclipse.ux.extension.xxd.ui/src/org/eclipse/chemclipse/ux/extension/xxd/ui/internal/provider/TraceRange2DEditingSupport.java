@@ -12,8 +12,6 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider;
 
-import java.util.Arrays;
-
 import org.eclipse.chemclipse.support.text.ILabel;
 import org.eclipse.chemclipse.tsd.model.core.SecondDimensionHint;
 import org.eclipse.chemclipse.tsd.model.core.TraceRange2D;
@@ -36,7 +34,7 @@ public class TraceRange2DEditingSupport extends EditingSupport {
 		super(tableViewer);
 		this.column = column;
 		if(TraceRange2DLabelProvider.SECOND_DIMENSION_HINT.equals(column)) {
-			this.cellEditor = new ComboBoxCellEditor(tableViewer.getTable(), getEnumLabels(secondDimensionValues), SWT.READ_ONLY);
+			this.cellEditor = new ComboBoxCellEditor(tableViewer.getTable(), ILabel.getLabels(secondDimensionValues), SWT.READ_ONLY);
 		} else {
 			this.cellEditor = new TextCellEditor(tableViewer.getTable());
 		}
@@ -103,11 +101,6 @@ public class TraceRange2DEditingSupport extends EditingSupport {
 			tableViewer.refresh();
 			tableViewer.updateContent();
 		}
-	}
-
-	private static String[] getEnumLabels(ILabel[] collection) {
-
-		return Arrays.stream(collection).map(ILabel::label).toArray(String[]::new);
 	}
 
 	private int getComboIndexType(Enum<?> item, Enum<?>[] collection) {

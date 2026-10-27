@@ -111,7 +111,7 @@ public class QuantCompoundLabelProvider extends AbstractChemClipseLabelProvider 
 					text = compound.getConcentrationUnit();
 					break;
 				case 3:
-					text = compound.getCalibrationMethod().toString();
+					text = compound.getCalibrationMethod().label();
 					break;
 				case 4:
 					text = ""; // Icon
