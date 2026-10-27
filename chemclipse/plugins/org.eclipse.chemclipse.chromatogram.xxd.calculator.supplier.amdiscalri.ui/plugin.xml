@@ -12,7 +12,7 @@
    <extension
          point="org.eclipse.core.runtime.adapters">
       <factory
-            adaptableType="org.eclipse.chemclipse.ux.extension.xxd.ui.internal.editors.CalibrationFileSupplier"
+            adaptableType="org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.model.CalibrationFileSupplier"
             class="org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.ui.internal.provider.CalibrationFileEditorAdapterFactory">
          <adapter
                type="org.eclipse.chemclipse.ux.extension.ui.provider.ISupplierFileEditorSupport">
