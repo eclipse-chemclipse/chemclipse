@@ -12,10 +12,11 @@
  * Philip Wenig - initial API and implementation
  * Matthias Mailänder - adapted for nucleotide display
  *******************************************************************************/
-package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.charts;
+package org.eclipse.chemclipse.ux.extension.dsd.ui.charts;
 
 import org.eclipse.chemclipse.dsd.model.core.Nucleobase;
 import org.eclipse.chemclipse.ux.extension.dsd.ui.support.NucleotideSupport;
+import org.eclipse.chemclipse.ux.extension.ui.charts.LabelBounds;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 

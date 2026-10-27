@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024, 2025 Lablicate GmbH.
+ * Copyright (c) 2024, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -10,16 +10,17 @@
  * Contributors:
  * Philip Wenig - initial API and implementation
  *******************************************************************************/
-package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.charts;
+package org.eclipse.chemclipse.ux.extension.ui.charts;
 
 import java.util.Collection;
 
 import org.eclipse.chemclipse.model.targets.ITargetDisplaySettings;
 import org.eclipse.chemclipse.model.targets.TargetReference;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.swt.editors.ExtendedChromatogramUI;
 import org.eclipse.swtchart.extensions.core.BaseChart;
 
 public class TargetReferenceSettings {
+
+	private static final String SERIES_ID_CHROMATOGRAM = "Chromatogram";
 
 	private Collection<? extends TargetReference> targetReferences = null;
 	private ITargetDisplaySettings targetDisplaySettings = null;
@@ -29,7 +30,7 @@ public class TargetReferenceSettings {
 	private BaseChart baseChart = null; // Null is valid
 	private String label = "";
 	private String description = "";
-	private String referenceSeriesId = ExtendedChromatogramUI.SERIES_ID_CHROMATOGRAM;
+	private String referenceSeriesId = SERIES_ID_CHROMATOGRAM;
 
 	public TargetReferenceSettings(boolean showReferenceId, int offset) {
 
