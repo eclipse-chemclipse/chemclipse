@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2025 Lablicate GmbH.
+ * Copyright (c) 2021, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -9,6 +9,7 @@
  * 
  * Contributors:
  * Philip Wenig - initial API and implementation
+ * Matthias Mailänder - optionally ignore the manual verification
  *******************************************************************************/
 package org.eclipse.chemclipse.model.comparator;
 
@@ -24,6 +25,7 @@ public class IdentificationTargetComparator implements Comparator<IIdentificatio
 
 	private SortOrder sortOrder;
 	private float retentionIndexSource = 0.0f;
+	private boolean verifiedFirst = true;
 
 	public IdentificationTargetComparator() {
 
@@ -42,8 +44,14 @@ public class IdentificationTargetComparator implements Comparator<IIdentificatio
 
 	public IdentificationTargetComparator(SortOrder sortOrder, float retentionIndexSource) {
 
+		this(sortOrder, retentionIndexSource, true);
+	}
+
+	public IdentificationTargetComparator(SortOrder sortOrder, float retentionIndexSource, boolean verifiedFirst) {
+
 		this.sortOrder = sortOrder;
 		this.retentionIndexSource = retentionIndexSource;
+		this.verifiedFirst = verifiedFirst;
 	}
 
 	@Override
@@ -61,7 +69,9 @@ public class IdentificationTargetComparator implements Comparator<IIdentificatio
 			/*
 			 * Manually verified
 			 */
-			sortIndex = Boolean.compare(identificationTarget1.isVerified(), identificationTarget2.isVerified());
+			if(verifiedFirst) {
+				sortIndex = Boolean.compare(identificationTarget1.isVerified(), identificationTarget2.isVerified());
+			}
 			if(sortIndex == 0) {
 				/*
 				 * Delta Retention Index

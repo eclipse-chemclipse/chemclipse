@@ -543,6 +543,7 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 		/*
 		 * Sort the table
 		 */
+		targetListUI.setVerifiedOnTop(preferenceStore.getBoolean(PreferenceSupplier.P_TARGETS_TABLE_VERIFIED_ON_TOP));
 		targetListUI.setComparator(preferenceStore.getBoolean(PreferenceSupplier.P_TARGETS_TABLE_SORTABLE));
 		/*
 		 * Add the delete targets support.
@@ -692,6 +693,9 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 
 		comboTargetControl.get().updateContentProposals();
 
+		targetListOther.get().setVerifiedOnTop(preferenceStore.getBoolean(PreferenceSupplier.P_TARGETS_TABLE_VERIFIED_ON_TOP));
+		targetListChromatogram.get().setVerifiedOnTop(preferenceStore.getBoolean(PreferenceSupplier.P_TARGETS_TABLE_VERIFIED_ON_TOP));
+		updateInput(getRetentionIndex());
 		targetListOther.get().setComparator(preferenceStore.getBoolean(PreferenceSupplier.P_TARGETS_TABLE_SORTABLE));
 		targetListChromatogram.get().setComparator(preferenceStore.getBoolean(PreferenceSupplier.P_TARGETS_TABLE_SORTABLE));
 	}
@@ -705,7 +709,8 @@ public class ExtendedTargetsUI extends Composite implements IExtendedPartUI {
 
 		Object object = getObject();
 		if(object instanceof ITargetSupplier targetSupplier) {
-			List<IIdentificationTarget> identificationTargets = IIdentificationTarget.getTargetsSorted(targetSupplier.getTargets(), retentionIndex);
+			boolean verifiedOnTop = preferenceStore.getBoolean(PreferenceSupplier.P_TARGETS_TABLE_VERIFIED_ON_TOP);
+			List<IIdentificationTarget> identificationTargets = IIdentificationTarget.getTargetsSorted(targetSupplier.getTargets(), retentionIndex, verifiedOnTop);
 			targetList.get().setInput(identificationTargets);
 		} else {
 			targetList.get().setInput(null);

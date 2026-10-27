@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2025 Lablicate GmbH.
+ * Copyright (c) 2010, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -93,10 +93,24 @@ public interface IIdentificationTarget extends ITarget {
 	 */
 	static List<IIdentificationTarget> getTargetsSorted(Collection<IIdentificationTarget> targets, float retentionIndex) {
 
+		return getTargetsSorted(targets, retentionIndex, true);
+	}
+
+	/**
+	 * Returns a sorted list of the targets.
+	 * 
+	 * @param targets
+	 * @param retentionIndex
+	 * @param verifiedFirst
+	 *            put the manually verified targets on top
+	 * @return {@link List}
+	 */
+	static List<IIdentificationTarget> getTargetsSorted(Collection<IIdentificationTarget> targets, float retentionIndex, boolean verifiedFirst) {
+
 		List<IIdentificationTarget> identificationTargets = new ArrayList<>();
 		if(targets != null) {
 			identificationTargets.addAll(targets);
-			IdentificationTargetComparator identificationTargetComparator = new IdentificationTargetComparator(SortOrder.DESC, PreferenceSupplier.isUseRetentionIndexQC() ? retentionIndex : 0.0f);
+			IdentificationTargetComparator identificationTargetComparator = new IdentificationTargetComparator(SortOrder.DESC, PreferenceSupplier.isUseRetentionIndexQC() ? retentionIndex : 0.0f, verifiedFirst);
 			Collections.sort(identificationTargets, identificationTargetComparator);
 		}
 

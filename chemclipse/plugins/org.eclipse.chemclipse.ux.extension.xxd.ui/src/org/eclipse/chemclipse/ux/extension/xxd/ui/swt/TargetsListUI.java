@@ -59,6 +59,7 @@ public class TargetsListUI extends ExtendedTableViewer {
 	private TargetsColumns targetsColumns = null;
 	private boolean dynamicColumns = false;
 	private boolean editingSupport = false;
+	private boolean verifiedOnTop = true;
 
 	private IUpdateListener updateListener;
 
@@ -77,6 +78,11 @@ public class TargetsListUI extends ExtendedTableViewer {
 			setComparator(null);
 			refresh();
 		}
+	}
+
+	public void setVerifiedOnTop(boolean verifiedOnTop) {
+
+		this.verifiedOnTop = verifiedOnTop;
 	}
 
 	public void setUpdateListener(IUpdateListener updateListener) {
@@ -158,7 +164,7 @@ public class TargetsListUI extends ExtendedTableViewer {
 	public void sortTable() {
 
 		if(getComparator() != null) {
-			int column = 0;
+			int column = getColumnIndex(verifiedOnTop ? TargetColumn.VERIFIED : TargetColumn.RATING);
 			int sortOrder = IRecordTableComparator.DESCENDING;
 
 			targetsComparator.setColumn(column);
@@ -183,14 +189,20 @@ public class TargetsListUI extends ExtendedTableViewer {
 
 	private TableViewerColumn getTableViewerColumn(TargetColumn targetColumn) {
 
+		int index = getColumnIndex(targetColumn);
+		return index >= 0 ? getTableViewerColumns().get(index) : null;
+	}
+
+	private int getColumnIndex(TargetColumn targetColumn) {
+
 		List<TableViewerColumn> tableViewerColumns = getTableViewerColumns();
 		for(int i = 0; i < tableViewerColumns.size(); i++) {
 			if(targetsColumns.getColumn(i) == targetColumn) {
-				return tableViewerColumns.get(i);
+				return i;
 			}
 		}
 
-		return null;
+		return -1;
 	}
 
 	private void setCellColorProvider() {
