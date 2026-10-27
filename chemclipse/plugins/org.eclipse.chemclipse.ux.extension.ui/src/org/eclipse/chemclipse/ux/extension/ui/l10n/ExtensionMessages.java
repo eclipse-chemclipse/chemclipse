@@ -114,6 +114,7 @@ public class ExtensionMessages extends NLS {
 	public static String processMethod;
 	public static String process;
 	public static String selectProfile;
+	public static String importProcessMethod;
 
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, ExtensionMessages.class);
