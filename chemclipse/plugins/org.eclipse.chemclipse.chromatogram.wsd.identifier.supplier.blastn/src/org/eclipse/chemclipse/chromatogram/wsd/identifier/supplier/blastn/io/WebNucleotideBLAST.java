@@ -225,7 +225,7 @@ public class WebNucleotideBLAST extends AbstractNucleotideBLAST {
 		return client.execute(httpGet, handler);
 	}
 
-	private static String getUserAgent() {
+	public static String getUserAgent() {
 
 		IProduct product = Platform.getProduct();
 		Version version = product.getDefiningBundle().getVersion();
