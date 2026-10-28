@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.preferences;
 
+import org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.blastn.download.Mirror;
 import org.eclipse.chemclipse.support.preferences.AbstractPreferenceSupplier;
 import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
 import org.osgi.framework.FrameworkUtil;
@@ -23,6 +24,9 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 
 	public static final String P_BLAST_DATABASE_PATH = "blastDatabasePath";
 	public static final String DEF_BLAST_DATABASE_PATH = "";
+
+	public static final String P_BLAST_DATABASE_MIRROR = "blastDatabaseMirror";
+	public static final String DEF_BLAST_DATABASE_MIRROR = Mirror.NCBI.name();
 
 	public static IPreferenceSupplier INSTANCE() {
 
@@ -40,6 +44,7 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 
 		putDefault(P_BLAST_EXECUTABLE_PATH, DEF_BLAST_EXECUTABLE_PATH);
 		putDefault(P_BLAST_DATABASE_PATH, DEF_BLAST_DATABASE_PATH);
+		putDefault(P_BLAST_DATABASE_MIRROR, DEF_BLAST_DATABASE_MIRROR);
 	}
 
 	public static String getExecutableFolder() {
@@ -50,5 +55,14 @@ public class PreferenceSupplier extends AbstractPreferenceSupplier {
 	public static String getDatabaseFolder() {
 
 		return INSTANCE().get(P_BLAST_DATABASE_PATH, DEF_BLAST_DATABASE_PATH);
+	}
+
+	public static Mirror getDatabaseMirror() {
+
+		try {
+			return Mirror.valueOf(INSTANCE().get(P_BLAST_DATABASE_MIRROR, DEF_BLAST_DATABASE_MIRROR));
+		} catch(IllegalArgumentException e) {
+			return Mirror.NCBI;
+		}
 	}
 }
