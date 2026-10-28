@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
@@ -23,6 +23,7 @@ public class BasePositionArrayReader extends AbstractArrayReader implements IBas
 		super(data);
 	}
 
+	@Override
 	public int readBasePosition() {
 
 		return (int)read4BULongBE();
