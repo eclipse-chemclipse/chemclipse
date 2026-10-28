@@ -51,6 +51,7 @@ import org.eclipse.chemclipse.processing.supplier.ProcessExecutionContext;
 import org.eclipse.chemclipse.processing.system.ProcessSettingsSupport;
 import org.eclipse.chemclipse.processing.ui.support.ProcessingInfoPartSupport;
 import org.eclipse.chemclipse.support.formats.MagnitudeScaledDecimalFormat;
+import org.eclipse.chemclipse.support.ui.activator.ContextAddon;
 import org.eclipse.chemclipse.ux.extension.msd.ui.handlers.DynamicHandler;
 import org.eclipse.chemclipse.ux.extension.msd.ui.internal.provider.UpdateMenuEntry;
 import org.eclipse.chemclipse.ux.extension.ui.editors.ProcessorSupplierMenuEntry;
@@ -64,6 +65,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
@@ -87,8 +89,6 @@ import org.eclipse.swtchart.extensions.linecharts.LineChart;
 import org.eclipse.swtchart.extensions.linecharts.LineSeriesData;
 import org.eclipse.swtchart.extensions.marker.LabelMarker;
 import org.eclipse.swtchart.extensions.menu.IChartMenuEntry;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.commands.ICommandService;
 
 public class MassSpectrumChartProfile extends LineChart implements IMassSpectrumChart {
 
@@ -103,7 +103,7 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 
 	private IProcessSupplierContext processTypeSupport = new ProcessTypeSupport();
 
-	private ICommandService commandService = PlatformUI.getWorkbench().getService(ICommandService.class);
+	private ECommandService commandService = ContextAddon.getApplication().getContext().get(ECommandService.class);
 
 	public MassSpectrumChartProfile() {
 
