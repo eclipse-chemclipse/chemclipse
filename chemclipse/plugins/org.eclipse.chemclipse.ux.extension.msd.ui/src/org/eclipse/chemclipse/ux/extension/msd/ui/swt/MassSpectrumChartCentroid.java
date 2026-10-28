@@ -48,6 +48,7 @@ import org.eclipse.chemclipse.processing.supplier.ProcessExecutionContext;
 import org.eclipse.chemclipse.processing.system.ProcessSettingsSupport;
 import org.eclipse.chemclipse.processing.ui.support.ProcessingInfoPartSupport;
 import org.eclipse.chemclipse.support.formats.MagnitudeScaledDecimalFormat;
+import org.eclipse.chemclipse.support.ui.activator.ContextAddon;
 import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.ux.extension.msd.ui.handlers.DynamicHandler;
 import org.eclipse.chemclipse.ux.extension.msd.ui.internal.provider.UpdateMenuEntry;
@@ -58,6 +59,7 @@ import org.eclipse.chemclipse.xxd.process.comparators.CategoryNameComparator;
 import org.eclipse.chemclipse.xxd.process.support.ProcessTypeSupport;
 import org.eclipse.core.commands.Category;
 import org.eclipse.core.commands.Command;
+import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
@@ -83,8 +85,6 @@ import org.eclipse.swtchart.extensions.core.RangeRestriction;
 import org.eclipse.swtchart.extensions.core.ScrollableChart;
 import org.eclipse.swtchart.extensions.core.SeriesData;
 import org.eclipse.swtchart.extensions.menu.IChartMenuEntry;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.commands.ICommandService;
 
 public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrumChart {
 
@@ -95,7 +95,7 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 
 	private IProcessSupplierContext processTypeSupport = new ProcessTypeSupport();
 
-	private ICommandService commandService = PlatformUI.getWorkbench().getService(ICommandService.class);
+	private ECommandService commandService = ContextAddon.getApplication().getContext().get(ECommandService.class);
 
 	private static final int MAX_NUMBER_MZ = 50000;
 	private static final int LABEL_COUNT = 5;
