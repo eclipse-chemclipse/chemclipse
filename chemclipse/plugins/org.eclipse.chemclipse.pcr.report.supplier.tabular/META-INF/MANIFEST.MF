@@ -5,8 +5,7 @@ Bundle-Name: Tabular PCR report shareds modules
 Bundle-SymbolicName: org.eclipse.chemclipse.pcr.report.supplier.tabular;singleton:=true
 Bundle-Version: 0.9.0.qualifier
 Bundle-Vendor: ChemClipse
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.chemclipse.support,
+Require-Bundle: org.eclipse.chemclipse.support,
  org.eclipse.chemclipse.model,
  org.eclipse.chemclipse.logging,
  org.eclipse.chemclipse.pcr.model
