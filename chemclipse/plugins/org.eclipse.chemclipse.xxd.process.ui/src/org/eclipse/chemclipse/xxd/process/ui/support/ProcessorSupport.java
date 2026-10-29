@@ -18,6 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.eclipse.chemclipse.logging.core.Logger;
@@ -33,6 +34,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.resource.ImageRegistry;
+import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.resource.ResourceLocator;
 import org.eclipse.swt.graphics.Image;
 
 public class ProcessorSupport {
@@ -152,18 +156,46 @@ public class ProcessorSupport {
 	 */
 	public static Image getMenuIcon(IProcessSupplier<?> processSupplier) {
 
+		// some process type suppliers add hard-coded prefixes
+		return getMenuIcon(id -> processSupplier.getId().contains(id));
+	}
+
+	/**
+	 * Use the icon contributed for exactly this supplier id, e.g. of a converter.
+	 */
+	public static Image getMenuIcon(String supplierId) {
+
+		return getMenuIcon(supplierId::equals);
+	}
+
+	private static Image getMenuIcon(Predicate<String> matcher) {
+
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
-		IConfigurationElement[] config = registry.getConfigurationElementsFor(IMenuIcon.EXTENSION_POINT_ID);
+		for(IConfigurationElement element : registry.getConfigurationElementsFor(IMenuIcon.EXTENSION_POINT_ID)) {
+			String id = element.getAttribute("id");
+			if(id != null && matcher.test(id)) {
+				return createMenuIcon(element);
+			}
+		}
+		return null;
+	}
+
+	private static Image createMenuIcon(IConfigurationElement element) {
+
+		String icon = element.getAttribute("icon");
+		if(icon != null) {
+			String bundleName = element.getContributor().getName();
+			String key = bundleName + "/" + icon;
+			ImageRegistry imageRegistry = JFaceResources.getImageRegistry();
+			if(imageRegistry.getDescriptor(key) == null) {
+				ResourceLocator.imageDescriptorFromBundle(bundleName, icon).ifPresent(descriptor -> imageRegistry.put(key, descriptor));
+			}
+			return imageRegistry.get(key);
+		}
+
 		try {
-			for(IConfigurationElement element : config) {
-				final String id = element.getAttribute("id");
-				if(!processSupplier.getId().contains(id)) {
-					continue;
-				}
-				final Object object = element.createExecutableExtension("class");
-				if(object instanceof IMenuIcon menuIcon) {
-					return menuIcon.getImage();
-				}
+			if(element.createExecutableExtension("class") instanceof IMenuIcon menuIcon) {
+				return menuIcon.getImage();
 			}
 		} catch(CoreException e) {
 			logger.warn(e);

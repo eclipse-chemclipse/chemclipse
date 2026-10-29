@@ -58,13 +58,9 @@ import org.eclipse.chemclipse.ux.extension.ui.editors.ProcessorSupplierMenuEntry
 import org.eclipse.chemclipse.ux.extension.ui.methods.SettingsWizard;
 import org.eclipse.chemclipse.xxd.process.comparators.CategoryNameComparator;
 import org.eclipse.chemclipse.xxd.process.support.ProcessTypeSupport;
-import org.eclipse.chemclipse.xxd.process.ui.menu.IMenuIcon;
+import org.eclipse.chemclipse.xxd.process.ui.support.ProcessorSupport;
 import org.eclipse.core.commands.Category;
 import org.eclipse.core.commands.Command;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.e4.core.commands.ECommandService;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -488,23 +484,7 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 				@Override
 				public Image getIcon() {
 
-					IExtensionRegistry registry = Platform.getExtensionRegistry();
-					IConfigurationElement[] config = registry.getConfigurationElementsFor(IMenuIcon.EXTENSION_POINT_ID);
-					try {
-						for(IConfigurationElement element : config) {
-							final String id = element.getAttribute("id");
-							if(!supplier.getId().equals(id)) {
-								continue;
-							}
-							final Object object = element.createExecutableExtension("class");
-							if(object instanceof IMenuIcon menuIcon) {
-								return menuIcon.getImage();
-							}
-						}
-					} catch(CoreException e) {
-						logger.warn(e);
-					}
-					return null;
+					return ProcessorSupport.getMenuIcon(supplier.getId());
 				}
 
 				@Override
