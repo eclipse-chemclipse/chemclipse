@@ -137,14 +137,14 @@ ColorDefinition#org-eclipse-chemclipse-ux-extension-xxd-ui-charts-CalibrationCha
   color: #404040;
 }
 
-ColorDefinition#org-eclipse-chemclipse-ux-extension-xxd-ui-internal-charts-TargetReferenceLabelMarker-ActiveColor {
+ColorDefinition#org-eclipse-chemclipse-ux-extension-ui-charts-TargetReferenceLabelMarker-ActiveColor {
   color: #FFFFFF;
 }
 
-ColorDefinition#org-eclipse-chemclipse-ux-extension-xxd-ui-internal-charts-TargetReferenceLabelMarker-InactiveColor {
+ColorDefinition#org-eclipse-chemclipse-ux-extension-ui-charts-TargetReferenceLabelMarker-InactiveColor {
   color: #6d6d6d;
 }
 
-ColorDefinition#org-eclipse-chemclipse-ux-extension-xxd-ui-internal-charts-TargetReferenceLabelMarker-IdColor {
+ColorDefinition#org-eclipse-chemclipse-ux-extension-ui-charts-TargetReferenceLabelMarker-IdColor {
   color: #FFFFFF;
 }
