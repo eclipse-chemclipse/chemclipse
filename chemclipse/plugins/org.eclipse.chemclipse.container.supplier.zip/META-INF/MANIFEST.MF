@@ -7,11 +7,11 @@ Bundle-SymbolicName: org.eclipse.chemclipse.container.supplier.zip;singleton:=tr
 Bundle-Version: 0.9.0.qualifier
 Bundle-Activator: org.eclipse.chemclipse.container.supplier.zip.Activator
 Bundle-Vendor: Chemclipse
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.chemclipse.processing,
+Require-Bundle: org.eclipse.chemclipse.processing,
  org.eclipse.chemclipse.converter,
  org.eclipse.chemclipse.container;bundle-version="0.9.0",
  org.eclipse.chemclipse.logging,
  org.eclipse.chemclipse.support
+Import-Package: org.osgi.framework;version="1.3.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-25
 Bundle-ActivationPolicy: lazy
