@@ -7,7 +7,7 @@ Bundle-Vendor: ChemClipse
 Bundle-Localization: OSGI-INF/l10n/bundle
 Require-Bundle: org.eclipse.swt,
  org.eclipse.jface,
- org.eclipse.core.runtime,
+ org.eclipse.equinox.common,
  org.eclipse.chemclipse.logging;bundle-version="0.8.0",
  org.eclipse.chemclipse.processing;bundle-version="0.8.0",
  org.eclipse.chemclipse.support;bundle-version="0.8.0",
