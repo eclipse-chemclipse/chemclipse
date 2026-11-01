@@ -126,7 +126,7 @@ public class TimeRangesEditor extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 
 				if(timeRanges != null) {
-					FileDialog fileDialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.READ_ONLY);
+					FileDialog fileDialog = new FileDialog(getShell(), SWT.READ_ONLY);
 					fileDialog.setText(TimeRanges.DESCRIPTION);
 					fileDialog.setFilterExtensions(TimeRanges.FILTER_EXTENSION);
 					fileDialog.setFilterNames(TimeRanges.FILTER_NAME);
