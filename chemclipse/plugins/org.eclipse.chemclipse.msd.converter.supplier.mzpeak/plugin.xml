@@ -4,14 +4,14 @@
    <extension
          point="org.eclipse.chemclipse.msd.converter.chromatogramSupplier">
       <ChromatogramSupplier
-            description="Reads mzPeak Chromatograms"
+            description="Reads and writes mzPeak Chromatograms"
             exportConverter="org.eclipse.chemclipse.msd.converter.supplier.mzpeak.converter.ChromatogramExportConverter"
             fileExtension=".mzpeak"
             filterName="mzPeak Chromatogram (*.mzpeak)"
             id="org.eclipse.chemclipse.msd.converter.supplier.mzpeak"
             importConverter="org.eclipse.chemclipse.msd.converter.supplier.mzpeak.converter.ChromatogramImportConverter"
             importMagicNumberMatcher="org.eclipse.chemclipse.msd.converter.supplier.mzpeak.converter.MagicNumberMatcher"
-            isExportable="false"
+            isExportable="true"
             isImportable="true">
       </ChromatogramSupplier>
    </extension>

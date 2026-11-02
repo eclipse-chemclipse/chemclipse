@@ -22,21 +22,27 @@ import org.apache.parquet.compression.CompressionCodecFactory;
 import org.apache.parquet.hadoop.metadata.CompressionCodecName;
 
 import io.airlift.compress.snappy.SnappyDecompressor;
+import io.airlift.compress.zstd.ZstdCompressor;
 import io.airlift.compress.zstd.ZstdDecompressor;
 
 /**
- * Decompresses Parquet pages with pure Java codecs.
+ * Compresses and decompresses Parquet pages with pure Java codecs.
  * <p>
  * The factory parquet-java installs by default routes ZSTD through zstd-jni and SNAPPY through
- * snappy-java, which both ship platform specific native libraries. Reading mzPeak needs neither, so
- * aircompressor is used instead and the native libraries stay out of the dependency chain.
+ * snappy-java, which both ship platform specific native libraries. Reading and writing mzPeak needs
+ * neither, so aircompressor is used instead and the native libraries stay out of the dependency
+ * chain.
  */
 public class ParquetCodecFactory implements CompressionCodecFactory {
 
 	@Override
 	public BytesInputCompressor getCompressor(CompressionCodecName codecName) {
 
-		throw new UnsupportedOperationException("mzPeak is read only.");
+		return switch(codecName) {
+			case UNCOMPRESSED -> new UncompressedCompressor();
+			case ZSTD -> new ZstandardCompressor();
+			default -> throw new UnsupportedOperationException("Unsupported Parquet compression codec: " + codecName);
+		};
 	}
 
 	@Override
@@ -54,6 +60,51 @@ public class ParquetCodecFactory implements CompressionCodecFactory {
 	@Override
 	public void release() {
 
+	}
+
+	private static class UncompressedCompressor implements BytesInputCompressor {
+
+		@Override
+		public BytesInput compress(BytesInput bytes) throws IOException {
+
+			return bytes;
+		}
+
+		@Override
+		public CompressionCodecName getCodecName() {
+
+			return CompressionCodecName.UNCOMPRESSED;
+		}
+
+		@Override
+		public void release() {
+
+		}
+	}
+
+	private static class ZstandardCompressor implements BytesInputCompressor {
+
+		private final ZstdCompressor compressor = new ZstdCompressor();
+
+		@Override
+		public BytesInput compress(BytesInput bytes) throws IOException {
+
+			byte[] input = bytes.toInputStream().readAllBytes();
+			byte[] output = new byte[compressor.maxCompressedLength(input.length)];
+			int length = compressor.compress(input, 0, input.length, output, 0, output.length);
+			return BytesInput.from(output, 0, length);
+		}
+
+		@Override
+		public CompressionCodecName getCodecName() {
+
+			return CompressionCodecName.ZSTD;
+		}
+
+		@Override
+		public void release() {
+
+		}
 	}
 
 	private static class UncompressedDecompressor implements BytesInputDecompressor {
