@@ -152,6 +152,7 @@ public class TargetLabelEditAction {
 			baseChart.getPlotArea().removeCustomPaintListener(targetReferenceLabelMarker);
 			settingsWizardListener.setPreviewSettings(null);
 			if(settingsChanged) {
+				chromatogram.setDirty(true);
 				labelEditSettings.getChromatogramUI().update();
 				chromatogramChart.getBaseChart().redraw();
 				listeners.forEach(Runnable::run);
