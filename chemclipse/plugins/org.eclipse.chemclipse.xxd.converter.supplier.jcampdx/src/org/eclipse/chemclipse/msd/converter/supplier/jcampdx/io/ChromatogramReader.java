@@ -57,6 +57,18 @@ public class ChromatogramReader extends AbstractChromatogramMSDReader {
 	private static final String HEADER_MASSFINDER_3 = "##PROGRAM=MassFinder3";
 	private static final String HEADER_MASSFINDER_4 = "##PROGRAM=MassFinder4";
 	private static final String HEADER_MASSFINDER_5 = "##PROGRAM=MassFinder5";
+
+	/*
+	 * Bruker CompassXport - NTUPLES, one page per scan, the time is given in seconds
+	 * ##PAGE= T= 0.422000
+	 * ##NPOINTS= 168
+	 * ##DATA TABLE= (XY..XY), PEAKS
+	 * 61.703529,80.000000;78.961237,93.000000;95.082722,79.000000;
+	 */
+	private static final String PAGE_MARKER = "##PAGE=";
+	private static final String PAGE_TIME = "T=";
+	private static final String DATA_TABLE_MARKER = "##DATA TABLE= (XY..XY)";
+
 	/*
 	 * ##NAME=Toluol
 	 * ##TIC=11143
@@ -79,6 +91,7 @@ public class ChromatogramReader extends AbstractChromatogramMSDReader {
 	private static final String XYDATA_MARKER_SPACE = "##XYDATA= (XY..XY)";
 	private static final String XYDATA_MARKER_SHORT = "##XYDATA=(X,Y)";
 	private static final String ION_DELIMITER_COMMA = ",";
+	private static final String ION_DELIMITER_SEMICOLON = ";";
 	private static final String ION_DELIMITER_WHITESPACE = " ";
 
 	@Override
@@ -137,7 +150,7 @@ public class ChromatogramReader extends AbstractChromatogramMSDReader {
 				 * 28 1631
 				 * 29 3914
 				 */
-				if(line.startsWith(SCAN_NUMBER_MARKER) || line.startsWith(SCAN_MARKER) || (specialCaseTIC && line.startsWith(TIC_MARKER))) {
+				if(line.startsWith(SCAN_NUMBER_MARKER) || line.startsWith(SCAN_MARKER) || line.startsWith(PAGE_MARKER) || (specialCaseTIC && line.startsWith(TIC_MARKER))) {
 					/*
 					 * Store an existing scan.
 					 */
@@ -163,6 +176,13 @@ public class ChromatogramReader extends AbstractChromatogramMSDReader {
 					identificationTarget = null;
 					totalSignalFromFile = 0.0f;
 					readIons = false;
+					/*
+					 * The page itself carries the retention time.
+					 */
+					if(line.startsWith(PAGE_MARKER)) {
+						retentionTime = getRetentionTime(line);
+						massSpectrum.setRetentionTime(retentionTime);
+					}
 					/*
 					 * Read the next line.
 					 */
@@ -213,13 +233,13 @@ public class ChromatogramReader extends AbstractChromatogramMSDReader {
 							identificationTarget = createIdentificationTarget(RetentionIndexSupport.RETENTION_INDEX_MARKER);
 							retentionIndexSupport.extract(identificationTarget, line);
 						}
-					} else if(line.startsWith(XYDATA_MARKER_SPACE) || line.startsWith(XYDATA_MARKER_SHORT)) {
+					} else if(isDataMarker(line)) {
 						/*
 						 * Mark to read ions.
 						 */
 						readIons = true;
 						readIonsSpace = false;
-						if(line.startsWith(XYDATA_MARKER_SPACE)) {
+						if(line.startsWith(XYDATA_MARKER_SPACE) || line.startsWith(DATA_TABLE_MARKER)) {
 							readIonsSpace = true;
 						}
 					} else if(!line.startsWith(HEADER_MARKER) && readIons) {
@@ -229,12 +249,17 @@ public class ChromatogramReader extends AbstractChromatogramMSDReader {
 						try {
 							line = line.trim();
 							if(readIonsSpace) {
-								String[] values = line.split(ION_DELIMITER_COMMA);
-								if(values.length == 2) {
-									double mz = Double.parseDouble(values[0].trim());
-									float abundance = Float.parseFloat(values[1].trim());
-									IVendorIon ion = new VendorIon(mz, abundance);
-									massSpectrum.addIon(ion);
+								/*
+								 * One pair per line or several pairs per line separated by semicolons.
+								 */
+								for(String pair : line.split(ION_DELIMITER_SEMICOLON)) {
+									String[] values = pair.split(ION_DELIMITER_COMMA);
+									if(values.length == 2) {
+										double mz = Double.parseDouble(values[0].trim());
+										float abundance = Float.parseFloat(values[1].trim());
+										IVendorIon ion = new VendorIon(mz, abundance);
+										massSpectrum.addIon(ion);
+									}
 								}
 							} else {
 								String[] values = line.split(ION_DELIMITER_WHITESPACE);
@@ -288,6 +313,7 @@ public class ChromatogramReader extends AbstractChromatogramMSDReader {
 		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
 			String line;
 			boolean retentionTimeIsAvailable = false;
+			boolean readDataTable = false;
 			int retentionTime = 0;
 			/*
 			 * Parse each line
@@ -297,44 +323,67 @@ public class ChromatogramReader extends AbstractChromatogramMSDReader {
 				 * Extract the TIC values
 				 * ##RETENTION_TIME= 2.90
 				 * ##TIC= 3875
+				 * or sum up the data table of a page
+				 * ##PAGE= T= 0.422000
+				 * ##DATA TABLE= (XY..XY), PEAKS
+				 * 61.703529,80.000000;78.961237,93.000000;
 				 */
-				if(line.startsWith(RETENTION_TIME_MARKER) || line.startsWith(TIME_MARKER)) {
+				if(line.startsWith(RETENTION_TIME_MARKER) || line.startsWith(TIME_MARKER) || line.startsWith(PAGE_MARKER)) {
 					retentionTime = getRetentionTime(line);
 					retentionTimeIsAvailable = true;
+					readDataTable = false;
+				} else if(line.startsWith(DATA_TABLE_MARKER)) {
+					readDataTable = retentionTimeIsAvailable;
 				} else {
 					/*
 					 * Set a TIC value only if a retention time is available.
+					 * Set retentionTimeIsAvailable = false
+					 * to wait for the next retention
+					 * time event and to avoid setting
+					 * a wrong retention time for the
+					 * current scan.
 					 */
 					if(line.startsWith(TIC_MARKER) && retentionTimeIsAvailable) {
 						try {
 							String value = line.replace(TIC_MARKER, "").trim();
-							float abundance = Float.parseFloat(value);
-							IVendorIon ion = new VendorIon(IIon.TIC_ION);
-							ion.setAbundance(abundance);
-							IVendorScan massSpectrum = new VendorScan();
-							/*
-							 * Set retentionTimeIsAvailable = false
-							 * to wait for the next retention
-							 * time event and to avoid setting
-							 * a wrong retention time for the
-							 * current scan.
-							 */
-							massSpectrum.setRetentionTime(retentionTime);
-							retentionTimeIsAvailable = false;
-
-							if(retentionTime >= 0) {
-								massSpectrum.addIon(ion);
-								chromatogram.addScan(massSpectrum);
-							}
+							addTotalSignalScan(chromatogram, retentionTime, Float.parseFloat(value));
 						} catch(NumberFormatException e) {
 							logger.warn(e);
 						}
+						retentionTimeIsAvailable = false;
+					} else if(readDataTable && !line.startsWith(HEADER_MARKER)) {
+						try {
+							float abundance = 0.0f;
+							for(String pair : line.trim().split(ION_DELIMITER_SEMICOLON)) {
+								String[] values = pair.split(ION_DELIMITER_COMMA);
+								if(values.length == 2) {
+									abundance += Float.parseFloat(values[1].trim());
+								}
+							}
+							addTotalSignalScan(chromatogram, retentionTime, abundance);
+						} catch(NumberFormatException e) {
+							logger.warn(e);
+						}
+						retentionTimeIsAvailable = false;
+						readDataTable = false;
 					}
 				}
 			}
 		}
 
 		return chromatogram;
+	}
+
+	private void addTotalSignalScan(IVendorChromatogram chromatogram, int retentionTime, float abundance) {
+
+		if(retentionTime >= 0) {
+			IVendorIon ion = new VendorIon(IIon.TIC_ION);
+			ion.setAbundance(abundance);
+			IVendorScan massSpectrum = new VendorScan();
+			massSpectrum.setRetentionTime(retentionTime);
+			massSpectrum.addIon(ion);
+			chromatogram.addScan(massSpectrum);
+		}
 	}
 
 	private int getRetentionTime(String line) {
@@ -351,6 +400,12 @@ public class ChromatogramReader extends AbstractChromatogramMSDReader {
 			} else if(line.startsWith(TIME_MARKER)) {
 				String value = line.replace(TIME_MARKER, "").trim();
 				retentionTime = (int)(Double.parseDouble(value) * IChromatogramOverview.MINUTE_CORRELATION_FACTOR);
+			} else if(line.startsWith(PAGE_MARKER)) {
+				String value = line.replace(PAGE_MARKER, "").trim();
+				if(value.startsWith(PAGE_TIME)) {
+					value = value.substring(PAGE_TIME.length()).trim();
+					retentionTime = (int)(Double.parseDouble(value) * 1000.0d);
+				}
 			}
 		} catch(NumberFormatException e) {
 			logger.warn(e);
@@ -371,7 +426,7 @@ public class ChromatogramReader extends AbstractChromatogramMSDReader {
 				boolean readIons = false;
 				exitloop:
 				while((line = bufferedReader.readLine()) != null) {
-					if(line.startsWith(XYDATA_MARKER_SPACE) || line.startsWith(XYDATA_MARKER_SHORT)) {
+					if(isDataMarker(line)) {
 						readIons = true;
 					} else if(!line.startsWith(HEADER_MARKER) && readIons) {
 						isValidFormat = true;
@@ -382,5 +437,10 @@ public class ChromatogramReader extends AbstractChromatogramMSDReader {
 		}
 
 		return isValidFormat;
+	}
+
+	private boolean isDataMarker(String line) {
+
+		return line.startsWith(XYDATA_MARKER_SPACE) || line.startsWith(XYDATA_MARKER_SHORT) || line.startsWith(DATA_TABLE_MARKER);
 	}
 }
