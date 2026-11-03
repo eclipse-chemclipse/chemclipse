@@ -16,6 +16,20 @@
       </ChromatogramSupplier>
    </extension>
    <extension
+         point="org.eclipse.chemclipse.msd.converter.chromatogramSupplier">
+      <ChromatogramSupplier
+            description="Reads JCAMP-DX Chromatograms."
+            exportConverter="org.eclipse.chemclipse.msd.converter.supplier.jcampdx.converter.ChromatogramExportConverter"
+            fileExtension=".dx"
+            filterName="JCAMP-DX MSD Chromatogram (*.dx)"
+            id="org.eclipse.chemclipse.msd.converter.supplier.jcampdx.dx"
+            importConverter="org.eclipse.chemclipse.msd.converter.supplier.jcampdx.converter.ChromatogramImportConverter"
+            importMagicNumberMatcher="org.eclipse.chemclipse.msd.converter.supplier.jcampdx.io.MagicNumberMatcherChromatogram"
+            isExportable="false"
+            isImportable="true">
+      </ChromatogramSupplier>
+   </extension>
+   <extension
          point="org.eclipse.chemclipse.msd.converter.databaseSupplier">
       <DatabaseSupplier
             description="Reads and writes JCAMP-DX (JDX) library."
