@@ -24,7 +24,6 @@ import org.eclipse.chemclipse.csd.model.core.IChromatogramCSD;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
-import org.eclipse.chemclipse.xxd.converter.supplier.jcampdx.internal.converter.SpecificationValidator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.osgi.util.NLS;
 
@@ -38,7 +37,6 @@ public class ChromatogramImportConverter extends AbstractChromatogramImportConve
 
 		IProcessingInfo<IChromatogramCSD> processingInfo = super.validate(file);
 		if(!processingInfo.hasErrorMessages()) {
-			file = SpecificationValidator.validateSpecification(file, "JDX");
 			IChromatogramCSDReader reader = new ChromatogramReader();
 			try {
 				IChromatogramCSD chromatogram = reader.read(file, monitor);
@@ -56,7 +54,6 @@ public class ChromatogramImportConverter extends AbstractChromatogramImportConve
 
 		IProcessingInfo<IChromatogramOverview> processingInfo = super.validate(file);
 		if(!processingInfo.hasErrorMessages()) {
-			file = SpecificationValidator.validateSpecification(file, "JDX");
 			IChromatogramCSDReader reader = new ChromatogramReader();
 			try {
 				IChromatogramOverview chromatogramOverview = reader.readOverview(file, monitor);

@@ -26,7 +26,6 @@ import org.eclipse.chemclipse.msd.converter.supplier.jcampdx.io.MassSpectraReade
 import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
-import org.eclipse.chemclipse.xxd.converter.supplier.jcampdx.internal.converter.SpecificationValidator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.osgi.util.NLS;
 
@@ -47,7 +46,6 @@ public class DatabaseImportConverterJDL extends AbstractDatabaseImportConverter 
 			processingInfo.addMessages(processingInfoValidate);
 		} else {
 			try {
-				file = SpecificationValidator.validateSpecification(file, "JDL");
 				IMassSpectraReader massSpectraReader = new MassSpectraReader();
 				IMassSpectra massSpectra = massSpectraReader.read(file, monitor);
 				if(massSpectra != null && !massSpectra.isEmpty()) {
