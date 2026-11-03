@@ -119,6 +119,9 @@ public class ChromatogramImportConverter extends AbstractChromatogramImportConve
 		monitor.subTask(IMPORT_CHROMATOGRAM);
 		try {
 			IChromatogramWSD chromatogram = chromatogramReaderWSD.read(file, monitor);
+			if(chromatogram.getNumberOfScans() == 0) {
+				return;
+			}
 			if(processingInfo.getProcessingResult() == null) {
 				processingInfo.setProcessingResult(chromatogram);
 			} else {
