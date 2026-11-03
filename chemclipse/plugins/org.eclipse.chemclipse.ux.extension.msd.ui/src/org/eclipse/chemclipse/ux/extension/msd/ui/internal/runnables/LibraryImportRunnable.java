@@ -40,6 +40,7 @@ public class LibraryImportRunnable implements IRunnableWithProgress {
 	@Override
 	public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 
+		monitor.beginTask("Import Library", IProgressMonitor.UNKNOWN);
 		IProcessingInfo<IMassSpectra> processingInfo = DatabaseConverter.convert(file, monitor);
 		massSpectra = processingInfo.getProcessingResult();
 	}
