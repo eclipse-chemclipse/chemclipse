@@ -23,6 +23,7 @@ import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
 import org.eclipse.chemclipse.numeric.statistics.Calculations;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 public class MedianAbsoluteDeviationFilter extends AbstractMassSpectrumFilter {
 
@@ -36,9 +37,11 @@ public class MedianAbsoluteDeviationFilter extends AbstractMassSpectrumFilter {
 		if(processingInfo.hasErrorMessages()) {
 			return processingInfo;
 		}
+		SubMonitor subMonitor = SubMonitor.convert(monitor, massSpectra.size());
 		for(IScanMSD massSpectrum : massSpectra) {
+			SubMonitor childMonitor = subMonitor.newChild(1);
 			if(massSpectrum instanceof IStandaloneMassSpectrum standaloneMassSpectrum) {
-				estimateNoise(standaloneMassSpectrum, monitor);
+				estimateNoise(standaloneMassSpectrum, childMonitor);
 			}
 		}
 		return processingInfo;
@@ -56,11 +59,11 @@ public class MedianAbsoluteDeviationFilter extends AbstractMassSpectrumFilter {
 
 		double center = Calculations.getMedian(y);
 
-		monitor.beginTask("Calculate noise", y.length);
+		SubMonitor subMonitor = SubMonitor.convert(monitor, "Calculate noise", y.length);
 		double[] deviations = new double[y.length];
 		for(int i = 0; i < y.length; i++) {
 			deviations[i] = Math.abs(y[i] - center);
-			monitor.worked(1);
+			subMonitor.worked(1);
 		}
 
 		double noise = NORMAL_CONSISTENCY_FACTOR * Calculations.getMedian(deviations);

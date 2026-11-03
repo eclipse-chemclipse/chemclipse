@@ -23,6 +23,7 @@ import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 public class LoessInterpolatorFilter extends AbstractMassSpectrumFilter {
 
@@ -33,9 +34,11 @@ public class LoessInterpolatorFilter extends AbstractMassSpectrumFilter {
 		if(processingInfo.hasErrorMessages()) {
 			return processingInfo;
 		}
+		SubMonitor subMonitor = SubMonitor.convert(monitor, massSpectra.size());
 		for(IScanMSD massSpectrum : massSpectra) {
+			SubMonitor childMonitor = subMonitor.newChild(1);
 			if(massSpectrum instanceof IStandaloneMassSpectrum standaloneMassSpectrum) {
-				estimateNoise(standaloneMassSpectrum, monitor);
+				estimateNoise(standaloneMassSpectrum, childMonitor);
 			}
 		}
 		return processingInfo;
@@ -49,16 +52,16 @@ public class LoessInterpolatorFilter extends AbstractMassSpectrumFilter {
 		double[] x = new double[numberIons];
 		double[] y = new double[numberIons];
 
-		monitor.beginTask("Copy ions", numberIons);
+		SubMonitor subMonitor = SubMonitor.convert(monitor, "Copy ions", numberIons);
 		for(int i = 0; i < numberIons; i++) {
 			IIon ion = standaloneMassSpectrum.getIons().get(i);
 			x[i] = ion.getIon();
 			y[i] = ion.getAbundance();
-			monitor.worked(1);
+			subMonitor.worked(1);
 		}
 
 		LoessInterpolator loessInterpolator = new LoessInterpolator();
-		monitor.beginTask("Smooth", IProgressMonitor.UNKNOWN);
+		subMonitor.subTask("Smooth");
 		double[] smoothed = loessInterpolator.smooth(x, y);
 		for(double noise : smoothed) {
 			standaloneMassSpectrum.getNoise().add(noise);

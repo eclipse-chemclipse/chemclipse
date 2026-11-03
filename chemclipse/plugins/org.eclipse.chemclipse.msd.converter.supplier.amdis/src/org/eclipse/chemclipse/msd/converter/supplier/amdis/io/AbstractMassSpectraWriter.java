@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2025 Lablicate GmbH.
+ * Copyright (c) 2016, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -26,6 +26,7 @@ import org.eclipse.chemclipse.msd.model.core.IMassSpectra;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.implementation.MassSpectra;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 public abstract class AbstractMassSpectraWriter extends AbstractWriter implements IMassSpectraFileWriter {
 
@@ -52,13 +53,14 @@ public abstract class AbstractMassSpectraWriter extends AbstractWriter implement
 				logger.error("Failed to delete file " + file);
 			}
 			List<IMassSpectra> splittedMassSpectra = getSplittedMassSpectra(massSpectra);
+			SubMonitor subMonitor = SubMonitor.convert(monitor, splittedMassSpectra.size());
 			int counter = 1;
 			for(IMassSpectra massSpectraChunk : splittedMassSpectra) {
 				String filePath = file.getAbsolutePath();
 				String fileExtension = filePath.substring(filePath.lastIndexOf("."), filePath.length());
 				filePath = filePath.replace(fileExtension, "-" + counter + fileExtension);
 				FileWriter fileWriter = new FileWriter(new File(filePath), append);
-				writeMassSpectra(fileWriter, massSpectraChunk, monitor);
+				writeMassSpectra(fileWriter, massSpectraChunk, subMonitor.newChild(1));
 				fileWriter.close();
 				counter++;
 			}
@@ -110,17 +112,16 @@ public abstract class AbstractMassSpectraWriter extends AbstractWriter implement
 		 * Get all mass spectra, test to null and append them with the given
 		 * file writer.
 		 */
-		monitor.beginTask(ConverterMessages.writeMassSpectra, massSpectra.size());
+		SubMonitor subMonitor = SubMonitor.convert(monitor, ConverterMessages.writeMassSpectra, massSpectra.size());
 		for(int i = 1; i <= massSpectra.size(); i++) {
 			IScanMSD massSpectrum = massSpectra.getMassSpectrum(i);
 			/*
 			 * There must be at least one ion.
 			 */
 			if(massSpectrum != null && !massSpectrum.isEmpty()) {
-				writeMassSpectrum(fileWriter, massSpectrum, monitor);
+				writeMassSpectrum(fileWriter, massSpectrum, subMonitor);
 			}
-			monitor.worked(1);
+			subMonitor.worked(1);
 		}
-		monitor.done();
 	}
 }
