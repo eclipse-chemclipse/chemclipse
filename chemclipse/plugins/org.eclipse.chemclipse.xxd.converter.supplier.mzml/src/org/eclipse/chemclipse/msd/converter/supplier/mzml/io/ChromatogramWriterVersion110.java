@@ -56,6 +56,7 @@ import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SourceFileT
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SpectrumListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SpectrumType;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.osgi.framework.FrameworkUtil;
 
 import jakarta.xml.bind.JAXBContext;
@@ -69,12 +70,12 @@ public class ChromatogramWriterVersion110 extends AbstractChromatogramWriter imp
 	@Override
 	public void writeChromatogram(File file, IChromatogram chromatogram, IProgressMonitor monitor) {
 
-		monitor.beginTask(ConverterMessages.exportChromatogram, IProgressMonitor.UNKNOWN);
+		SubMonitor subMonitor = SubMonitor.convert(monitor, ConverterMessages.exportChromatogram, 1);
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(ObjectFactory.class);
 			Marshaller marshaller = jaxbContext.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "http://psi.hupo.org/ms/mzml http://psidev.info/files/ms/mzML/xsd/mzML1.1.0.xsd");
-			marshaller.marshal(createMzML(chromatogram, monitor), file);
+			marshaller.marshal(createMzML(chromatogram, subMonitor.newChild(1)), file);
 		} catch(JAXBException e) {
 			logger.warn(e);
 		}
@@ -108,9 +109,10 @@ public class ChromatogramWriterVersion110 extends AbstractChromatogramWriter imp
 		}
 		SpectrumListType spectrumList = createSpectrumList(chromatogram, dataProcessingList);
 		run.setSpectrumList(spectrumList);
-		writeScans(chromatogram, spectrumList, monitor);
+		SubMonitor subMonitor = SubMonitor.convert(monitor, 1 + chromatogram.getReferencedChromatograms().size());
+		writeScans(chromatogram, spectrumList, subMonitor.newChild(1));
 		for(IChromatogram referencedChromatograms : chromatogram.getReferencedChromatograms()) {
-			writeScans(referencedChromatograms, spectrumList, monitor);
+			writeScans(referencedChromatograms, spectrumList, subMonitor.newChild(1));
 		}
 		run.setChromatogramList(createChromatogramListType(dataProcessingList, chromatogram));
 		setDate(chromatogram, run);
@@ -239,7 +241,7 @@ public class ChromatogramWriterVersion110 extends AbstractChromatogramWriter imp
 
 		boolean zipCompression = PreferenceSupplier.getChromatogramSaveCompression();
 		String numpress = PreferenceSupplier.getSaveNumpress();
-		monitor.beginTask(ConverterMessages.writeScans, chromatogram.getNumberOfScans());
+		SubMonitor subMonitor = SubMonitor.convert(monitor, ConverterMessages.writeScans, chromatogram.getNumberOfScans());
 		for(IScan scan : chromatogram.getScans()) {
 			SpectrumType spectrum = new SpectrumType();
 			spectrum.setId("scan=" + scan.getScanNumber());
@@ -268,7 +270,7 @@ public class ChromatogramWriterVersion110 extends AbstractChromatogramWriter imp
 				spectrum.setBinaryDataArrayList(XmlWriter110.createFullSpectrumBinaryDataArrayList(scanWSD, zipCompression, numpress));
 			}
 			spectrumList.getSpectrum().add(spectrum);
-			monitor.worked(1);
+			subMonitor.worked(1);
 		}
 	}
 

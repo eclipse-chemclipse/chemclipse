@@ -41,6 +41,7 @@ import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.XmlHelper;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ChromatogramType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.MzMLType;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 import jakarta.xml.bind.JAXBException;
 
@@ -83,18 +84,19 @@ public class ChromatogramReaderIndexedVersion110 extends AbstractChromatogramRea
 
 			IndexedMzML indexedMzML = XmlHelper.parseFiltered(file, IndexedMzML.class, null, "mzML");
 			int indexSize = indexedMzML.getIndexList().getCount().intValue();
-			monitor.beginTask(ConverterMessages.importChromatogramOverview, indexSize * 2);
+			SubMonitor subMonitor = SubMonitor.convert(monitor, ConverterMessages.importChromatogramOverview, indexSize * 2);
 			for(IndexType index : indexedMzML.getIndexList().getIndex()) {
 				if(index.getName().equals("chromatogram")) {
 					readChromatograms(file, index.getOffset(), chromatogram);
 				}
-				monitor.worked(1);
+				subMonitor.worked(1);
 			}
 			for(IndexType index : indexedMzML.getIndexList().getIndex()) {
 				if(index.getName().equals("spectrum")) {
-					readSpectra(index.getOffset(), file, monitor, chromatogram);
+					readSpectra(index.getOffset(), file, subMonitor.newChild(1), chromatogram);
+				} else {
+					subMonitor.worked(1);
 				}
-				monitor.worked(1);
 			}
 		} catch(JAXBException e) {
 			logger.warn(e);
@@ -138,7 +140,7 @@ public class ChromatogramReaderIndexedVersion110 extends AbstractChromatogramRea
 
 		int i = 1;
 		List<IVendorScanProxy> scanProxies = new ArrayList<>();
-		monitor.beginTask(ConverterMessages.importScan, offsets.size());
+		SubMonitor subMonitor = SubMonitor.convert(monitor, ConverterMessages.importScan, offsets.size());
 		for(OffsetType offset : offsets) {
 			IScanMSD scan = chromatogram.getScan(i);
 			if(scan == null) {
@@ -150,7 +152,7 @@ public class ChromatogramReaderIndexedVersion110 extends AbstractChromatogramRea
 			scanProxy.setRetentionTime(scan.getRetentionTime());
 			scanProxy.setIdentifier(offset.getIdRef());
 			scanProxies.add(scanProxy);
-			monitor.worked(1);
+			subMonitor.worked(1);
 			i++;
 		}
 		chromatogram.getScans().clear();
