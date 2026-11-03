@@ -117,11 +117,10 @@ public class MaceReader extends AbstractMassSpectraReader {
 		String referenceIdentifierPrefix = org.eclipse.chemclipse.msd.converter.preferences.PreferenceSupplier.getReferenceIdentifierPrefix();
 		ConcurrentHashMap<Integer, IRegularLibraryMassSpectrum> indexedMassSpectra = new ConcurrentHashMap<>();
 		if(indexedMassSpectraData.size() > 1) {
-			monitor.beginTask("Extract mass spectra", IProgressMonitor.UNKNOWN);
+			monitor.subTask("Extract mass spectra");
 			indexedMassSpectraData.entrySet().parallelStream().forEach(entry -> {
 				addMassSpectrum(indexedMassSpectra, entry, referenceIdentifierMarker, referenceIdentifierPrefix);
 			});
-			monitor.done();
 		} else if(indexedMassSpectraData.size() == 1) {
 			String[] splittedMassSpectra = indexedMassSpectraData.entrySet().iterator().next().getValue().split("(NAME:|name:)");
 			int index = 0;

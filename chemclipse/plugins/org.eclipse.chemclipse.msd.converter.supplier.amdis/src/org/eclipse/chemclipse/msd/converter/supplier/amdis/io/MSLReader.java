@@ -313,14 +313,13 @@ public class MSLReader extends AbstractMassSpectraReader {
 		 * Monitor cancel and worked crash with parallelStream as the monitor thread can't be accessed from another thread.
 		 * Display.getDefault().asyncExec(...) can't be used here, as the model bundle must not contain UI dependencies.
 		 */
-		monitor.beginTask("Extract mass spectra", IProgressMonitor.UNKNOWN);
+		monitor.subTask("Extract mass spectra");
 		ConcurrentHashMap<Integer, IVendorLibraryMassSpectrum> indexedMassSpectra = new ConcurrentHashMap<>();
 		indexedMassSpectraData.entrySet().parallelStream().forEach(massSpectrumData -> {
 			addMassSpectrum(indexedMassSpectra, massSpectrumData, referenceIdentifierMarker, referenceIdentifierPrefix);
 		});
 		TreeMap<Integer, IVendorLibraryMassSpectrum> sortedMassSpectra = new TreeMap<>(indexedMassSpectra);
 		massSpectra.addMassSpectra(sortedMassSpectra.values());
-		monitor.done();
 
 		return massSpectra;
 	}

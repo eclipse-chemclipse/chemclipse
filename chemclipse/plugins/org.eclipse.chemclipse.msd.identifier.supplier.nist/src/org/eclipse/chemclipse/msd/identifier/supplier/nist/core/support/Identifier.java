@@ -479,7 +479,7 @@ public class Identifier {
 	 */
 	private Compounds runNistApplication(final IExtendedRuntimeSupport runtimeSupport, final long maxProcessTime, int waitTime, final IProgressMonitor monitor) throws IOException {
 
-		monitor.beginTask("Run the NIST-DB application.", IProgressMonitor.UNKNOWN);
+		monitor.subTask("Run the NIST-DB application.");
 		boolean batchModus = runtimeSupport.isBatchModus();
 		Process process = runtimeSupport.executeRunCommand();
 		logger.debug("Spawned " + process);

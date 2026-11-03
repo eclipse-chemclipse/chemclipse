@@ -30,6 +30,7 @@ import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.implementation.MassSpectra;
 import org.eclipse.chemclipse.support.model.SeparationColumnType;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 public class MaceWriter extends AbstractMassSpectraWriter {
 
@@ -48,15 +49,14 @@ public class MaceWriter extends AbstractMassSpectraWriter {
 	public void write(File file, IMassSpectra massSpectra, boolean append, IProgressMonitor monitor) throws FileIsNotWriteableException, IOException {
 
 		try (FileWriter fileWriter = new FileWriter(file, append)) {
-			monitor.beginTask(ConverterMessages.writeMassSpectra, massSpectra.size());
+			SubMonitor subMonitor = SubMonitor.convert(monitor, ConverterMessages.writeMassSpectra, massSpectra.size());
 			for(int i = 1; i <= massSpectra.size(); i++) {
 				IScanMSD massSpectrum = massSpectra.getMassSpectrum(i);
 				if(massSpectrum != null && !massSpectrum.isEmpty()) {
 					writeMassSpectrum(fileWriter, massSpectrum);
 				}
-				monitor.worked(1);
+				subMonitor.worked(1);
 			}
-			monitor.done();
 		}
 	}
 

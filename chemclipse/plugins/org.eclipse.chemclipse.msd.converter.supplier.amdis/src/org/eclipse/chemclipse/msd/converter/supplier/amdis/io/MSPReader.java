@@ -200,11 +200,10 @@ public class MSPReader extends AbstractMassSpectraReader {
 			 * Monitor cancel and worked crash with parallelStream as the monitor thread can't be accessed from another thread.
 			 * Display.getDefault().asyncExec(...) can't be used here, as the model bundle must not contain UI dependencies.
 			 */
-			monitor.beginTask("Extract mass spectra", IProgressMonitor.UNKNOWN);
+			monitor.subTask("Extract mass spectra");
 			indexedMassSpectraData.entrySet().parallelStream().forEach(massSpectrumData -> {
 				addMassSpectrum(indexedMassSpectra, massSpectrumData, referenceIdentifierMarker, referenceIdentifierPrefix);
 			});
-			monitor.done();
 		} else if(indexedMassSpectraData.size() == 1) {
 			/*
 			 * Sometimes, mass spectra are not separated by an empty line.

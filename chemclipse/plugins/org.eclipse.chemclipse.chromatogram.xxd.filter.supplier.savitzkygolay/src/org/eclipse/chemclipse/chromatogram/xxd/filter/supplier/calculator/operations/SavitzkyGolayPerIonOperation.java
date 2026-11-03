@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
 
 public class SavitzkyGolayPerIonOperation extends AbstractOperation implements ISavitzkyGolayOperation {
 
@@ -71,13 +72,12 @@ public class SavitzkyGolayPerIonOperation extends AbstractOperation implements I
 
 		try {
 			previousScans = new ArrayList<>();
-			monitor.beginTask("Copy Scans", chromatogramSelection.getChromatogram().getNumberOfScans());
+			SubMonitor subMonitor = SubMonitor.convert(monitor, "Copy Scans", chromatogramSelection.getChromatogram().getNumberOfScans());
 			for(IScan scan : chromatogramSelection.getChromatogram().getScans()) {
 				IScanMSD scanMSD = (IScanMSD)scan;
 				previousScans.add(scanMSD.makeDeepCopy());
-				monitor.worked(1);
+				subMonitor.worked(1);
 			}
-			monitor.done();
 			ExtractedMatrix extractedMatrix = new ExtractedMatrix(chromatogramSelection);
 			double[][] matrix = extractedMatrix.getMatrix();
 			SavitzkyGolayProcessor.apply(matrix, filterSettings);
