@@ -30,12 +30,14 @@ import org.eclipse.chemclipse.wsd.converter.supplier.mzml.converter.model.Vendor
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.BinaryReader110;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.MetadataReader110;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.BinaryDataArrayListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.BinaryDataArrayType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.CVParamType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ChromatogramListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ChromatogramType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.MzMLType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.RunType;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SpectrumListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SpectrumType;
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -81,16 +83,26 @@ public class ChromatogramWSDReaderVersion110 extends AbstractChromatogramReader 
 
 	private void readFullSpectrum(RunType run, IVendorChromatogramWSD chromatogram) throws DataFormatException {
 
+		SpectrumListType spectrumList = run.getSpectrumList();
+		if(spectrumList == null) {
+			return;
+		}
+
 		int i = 1;
-		for(SpectrumType spectrum : run.getSpectrumList().getSpectrum()) {
+		for(SpectrumType spectrum : spectrumList.getSpectrum()) {
 			if(spectrum.getCvParam().stream().noneMatch(n -> //
 			("MS:1000804".equals(n.getAccession()) && "electromagnetic radiation spectrum".equals(n.getName())) || //
 					("MS:1000806".equals(n.getAccession()) && "absorption spectrum".equals(n.getName())))) {
 				continue;
 			}
+			BinaryDataArrayListType binaryDataArrayList = spectrum.getBinaryDataArrayList();
+			if(binaryDataArrayList == null) {
+				i++;
+				continue;
+			}
 			double[] wavelengths = new double[0];
 			double[] intensities = new double[0];
-			for(BinaryDataArrayType binaryDataArrayType : spectrum.getBinaryDataArrayList().getBinaryDataArray()) {
+			for(BinaryDataArrayType binaryDataArrayType : binaryDataArrayList.getBinaryDataArray()) {
 				Pair<String, double[]> binaryData = BinaryReader110.parseBinaryData(binaryDataArrayType);
 				if(binaryData.getKey().equals("wavelength")) {
 					wavelengths = binaryData.getValue();
