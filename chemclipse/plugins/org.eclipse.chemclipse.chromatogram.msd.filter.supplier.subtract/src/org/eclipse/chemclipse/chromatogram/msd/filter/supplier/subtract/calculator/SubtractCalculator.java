@@ -29,6 +29,9 @@ import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 public class SubtractCalculator {
 
@@ -39,6 +42,15 @@ public class SubtractCalculator {
 	 * Subtracts the mass spectrum stored in the filter settings from each scan of the chromatogram selection.
 	 */
 	public void subtractPeakMassSpectraFromChromatogramSelection(IChromatogramSelectionMSD chromatogramSelection, ChromatogramFilterSettings filterSettings) {
+
+		subtractPeakMassSpectraFromChromatogramSelection(chromatogramSelection, filterSettings, new NullProgressMonitor());
+	}
+
+	/**
+	 * Subtracts the mass spectrum stored in the filter settings from each scan of the chromatogram selection.
+	 * If the monitor gets cancelled, the remaining scans are left as they are.
+	 */
+	public void subtractPeakMassSpectraFromChromatogramSelection(IChromatogramSelectionMSD chromatogramSelection, ChromatogramFilterSettings filterSettings, IProgressMonitor monitor) {
 
 		/*
 		 * Test if null.
@@ -68,7 +80,11 @@ public class SubtractCalculator {
 		int startScan = chromatogram.getScanNumber(chromatogramSelection.getStartRetentionTime());
 		int stopScan = chromatogram.getScanNumber(chromatogramSelection.getStopRetentionTime());
 
+		SubMonitor subMonitor = SubMonitor.convert(monitor, "Subtract Mass Spectrum", stopScan - startScan + 1);
 		for(int scanNumber = startScan; scanNumber <= stopScan; scanNumber++) {
+			if(subMonitor.isCanceled()) {
+				break;
+			}
 			IScan scan = chromatogram.getScan(scanNumber);
 			if(scan instanceof IScanMSD targetMassSpectrum) {
 				/*
@@ -76,6 +92,7 @@ public class SubtractCalculator {
 				 */
 				adjustIntensityValues(targetMassSpectrum, subtractMassSpectrumMap, useNominalMasses, useNormalize);
 			}
+			subMonitor.worked(1);
 		}
 		/*
 		 * Delete the chromatogram and baseline integration results.

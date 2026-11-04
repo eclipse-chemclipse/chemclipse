@@ -36,11 +36,15 @@ public class ChromatogramFilter extends AbstractChromatogramFilterMSD {
 		if(!processingInfo.hasErrorMessages()) {
 			if(chromatogramFilterSettings instanceof ChromatogramFilterSettings filterSettings) {
 				SubtractCalculator subtractCalculator = new SubtractCalculator();
-				subtractCalculator.subtractPeakMassSpectraFromChromatogramSelection(chromatogramSelection, filterSettings);
+				subtractCalculator.subtractPeakMassSpectraFromChromatogramSelection(chromatogramSelection, filterSettings, monitor);
+				chromatogramSelection.getChromatogram().setDirty(true);
+				if(monitor != null && monitor.isCanceled()) {
+					processingInfo.addMessage(new ProcessingMessage(MessageType.WARN, DESCRIPTION, "The filter has been cancelled. The scans processed until then have been changed."));
+					return processingInfo;
+				}
 				processingInfo.addMessage(new ProcessingMessage(MessageType.INFO, DESCRIPTION, "The mass spectrum has been subtracted successfully from the chromatogram selection."));
 				IChromatogramFilterResult chromatogramFilterResult = new ChromatogramFilterResult(ResultStatus.OK, "The subtract filter has been applied successfully.");
 				processingInfo.setProcessingResult(chromatogramFilterResult);
-				chromatogramSelection.getChromatogram().setDirty(true);
 			} else {
 				processingInfo.addErrorMessage(DESCRIPTION, "The filter settings instance is not a type of:" + ChromatogramFilterSettings.class);
 			}
