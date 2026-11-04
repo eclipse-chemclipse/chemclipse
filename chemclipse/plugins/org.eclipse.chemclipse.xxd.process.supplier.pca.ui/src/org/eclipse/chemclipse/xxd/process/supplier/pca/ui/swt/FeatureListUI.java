@@ -184,6 +184,16 @@ public class FeatureListUI extends ExtendedTableViewer {
 		} else {
 			createColumns(titles, bounds, labelProviderPreprocessed, comparator);
 		}
+		/*
+		 * Tell what the values are (e.g. "Concentration [mg/L]").
+		 */
+		String valueLabel = featureDataMatrix.getValueLabel();
+		if(!valueLabel.isBlank()) {
+			TableColumn[] columns = getTable().getColumns();
+			for(int i = TITLES.length; i < columns.length; i++) {
+				columns[i].setToolTipText(columns[i].getText() + ": " + valueLabel);
+			}
+		}
 	}
 
 	private void createColumns(String[] titles, int[] bounds, ITableLabelProvider labelProvider, ViewerComparator comparator) {

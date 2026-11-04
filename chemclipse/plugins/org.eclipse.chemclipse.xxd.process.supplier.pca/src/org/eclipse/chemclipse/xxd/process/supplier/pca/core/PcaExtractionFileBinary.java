@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2025 Lablicate GmbH.
+ * Copyright (c) 2022, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -9,11 +9,13 @@
  * 
  * Contributors:
  * Philip Wenig - initial API and implementation
+ * Lorenz Gerber - support for additional fields in trailer
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.core;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -43,6 +45,15 @@ public class PcaExtractionFileBinary implements IExtractionData {
 	public static final String FILE_NAME = DESCRIPTION.replaceAll("\\s", "") + FILE_EXTENSION;
 	public static final String FILTER_EXTENSION = "*" + FILE_EXTENSION;
 	public static final String FILTER_NAME = DESCRIPTION + " (*" + FILE_EXTENSION + ")";
+	/*
+	 * Optional trailer after the variables block, carrying metadata about the values (e.g. area or
+	 * concentration + unit). Files written before the trailer existed simply end after the variables
+	 * block and are read with the defaults; readers that predate the trailer stop after the variables
+	 * block and never look at it. Bump TRAILER_VERSION when appending fields - older readers of a newer
+	 * trailer version still read the matrix itself and fall back to the defaults.
+	 */
+	private static final int TRAILER_MAGIC = 0x50434454; // "PCDT"
+	private static final int TRAILER_VERSION = 1;
 
 	private File file;
 
@@ -92,6 +103,13 @@ public class PcaExtractionFileBinary implements IExtractionData {
 				dataOutputStream.writeUTF(variable.getClassification());
 				dataOutputStream.writeUTF(variable.getDescription());
 			}
+			/*
+			 * Trailer
+			 */
+			dataOutputStream.writeInt(TRAILER_MAGIC);
+			dataOutputStream.writeInt(TRAILER_VERSION);
+			dataOutputStream.writeUTF(samples.getValueType());
+			dataOutputStream.writeUTF(samples.getValueUnit());
 			dataOutputStream.flush();
 		} catch(Exception e) {
 			logger.warn(e);
@@ -164,10 +182,34 @@ public class PcaExtractionFileBinary implements IExtractionData {
 					logger.warn(e);
 				}
 			}
+			/*
+			 * Trailer (optional)
+			 */
+			readTrailer(dataInputStream, samples);
 		} catch(Exception e) {
 			logger.warn(e);
 		}
 
 		return samples;
+	}
+
+	private static void readTrailer(DataInputStream dataInputStream, Samples samples) {
+
+		try {
+			if(dataInputStream.readInt() != TRAILER_MAGIC) {
+				return;
+			}
+			int version = dataInputStream.readInt();
+			if(version < 1 || version > TRAILER_VERSION) {
+				logger.info("Unsupported PCA data binary trailer version " + version + ", using default value type.");
+				return;
+			}
+			samples.setValueType(dataInputStream.readUTF());
+			samples.setValueUnit(dataInputStream.readUTF());
+		} catch(EOFException e) {
+			// No (or truncated) trailer, e.g. a file written before the trailer existed - keep the defaults.
+		} catch(Exception e) {
+			logger.warn(e);
+		}
 	}
 }
