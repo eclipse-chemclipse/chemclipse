@@ -24,6 +24,7 @@ import org.eclipse.chemclipse.csd.model.core.IScanCSD;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
+import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.MessageType;
@@ -59,6 +60,12 @@ public class FilterCleaner extends AbstractChromatogramFilter {
 		int stopScan = chromatogram.getScanNumber(chromatogramSelection.getStopRetentionTime());
 		List<Integer> scansToRemove = new ArrayList<>();
 		/*
+		 * Import all scans.
+		 */
+		if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
+			chromatogramMSD.enforceLoadScanProxies(monitor);
+		}
+		/*
 		 * Iterate through all selected scans and mark those to be removed.
 		 */
 		SubMonitor subMonitorLoad = SubMonitor.convert(monitor, "Check scans.", stopScan - startScan);
@@ -68,7 +75,6 @@ public class FilterCleaner extends AbstractChromatogramFilter {
 				/*
 				 * MSD
 				 */
-				scanMSD.enforceLoadScanProxy();
 				if(scanMSD.isEmpty()) {
 					scansToRemove.add(scan);
 				}
