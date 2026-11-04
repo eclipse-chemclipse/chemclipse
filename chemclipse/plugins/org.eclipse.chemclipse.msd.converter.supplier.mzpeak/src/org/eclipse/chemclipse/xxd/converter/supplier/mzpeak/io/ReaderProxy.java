@@ -55,6 +55,7 @@ public class ReaderProxy implements IReaderProxy {
 			while((pageReadStore = parquetFileReader.readNextRowGroup()) != null) {
 				RecordReader<Group> recordReader = ParquetReaderSupport.getRecordReader(schema, pageReadStore);
 				long rows = pageReadStore.getRowCount();
+				monitor.beginTask(ConverterMessages.importScan, (int)rows);
 				for(long row = 0; row < rows; row++) {
 					Group record = recordReader.read();
 					Group point = ParquetReaderSupport.getGroup(record, ParquetReaderSupport.POINT);
