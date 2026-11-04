@@ -29,6 +29,7 @@ import org.apache.parquet.hadoop.ParquetFileReader;
 import org.apache.parquet.io.RecordReader;
 import org.apache.parquet.schema.MessageType;
 import org.eclipse.chemclipse.converter.io.AbstractChromatogramReader;
+import org.eclipse.chemclipse.converter.l10n.ConverterMessages;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.msd.converter.io.IChromatogramMSDReader;
@@ -83,7 +84,7 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 		Path chromatogramMetadataParquet = extract(file, CHROMATOGRAMS_METADATA);
 		int ticIndex = extractTicIndexFromMetadata(chromatogramMetadataParquet);
 		Path chromatogramDataParquet = extract(file, CHROMATOGRAMS_DATA);
-		readTIC(chromatogramDataParquet, ticIndex, chromatogram);
+		readTIC(chromatogramDataParquet, ticIndex, chromatogram, monitor);
 
 		return chromatogram;
 	}
@@ -111,7 +112,7 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 		if(chromatogram == null) { // no mass spectra selected or none contained
 			chromatogram = new VendorChromatogram();
 			readPackage(file, chromatogram);
-			readTIC(chromatogramDataParquet, ticIndex, chromatogram);
+			readTIC(chromatogramDataParquet, ticIndex, chromatogram, monitor);
 		}
 
 		return chromatogram;
@@ -220,7 +221,7 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 		return 0;
 	}
 
-	private static void readTIC(Path chromatogramDataParquet, int ticIndex, IVendorChromatogram chromatogram) {
+	private static void readTIC(Path chromatogramDataParquet, int ticIndex, IVendorChromatogram chromatogram, IProgressMonitor monitor) {
 
 		readChromatogram(chromatogramDataParquet, ticIndex, (retentionTime, intensity, msLevel) -> {
 			IVendorScan scan = new VendorScan();
@@ -229,7 +230,7 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 			scan.addIon(tic);
 			scan.setMassSpectrometer(msLevel);
 			chromatogram.addScan(scan);
-		});
+		}, monitor);
 	}
 
 	private void addScanProxies(Path chromatogramDataParquet, Path spectraParquet, int ticIndex, IVendorChromatogram chromatogram, IReaderProxy readerProxy, IProgressMonitor monitor) {
@@ -253,10 +254,10 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 				scanProxy.setCycleNumber(cycleNumber[0]);
 			}
 			chromatogram.addScan(scanProxy);
-		});
+		}, monitor);
 	}
 
-	private static void readChromatogram(Path chromatogramDataParquet, int ticIndex, IScanBuilder scanBuilder) {
+	private static void readChromatogram(Path chromatogramDataParquet, int ticIndex, IScanBuilder scanBuilder, IProgressMonitor monitor) {
 
 		try (ParquetFileReader parquetFileReader = ParquetReaderSupport.open(chromatogramDataParquet)) {
 			MessageType schema = parquetFileReader.getFooter().getFileMetaData().getSchema();
@@ -264,6 +265,7 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 			while((pageReadStore = parquetFileReader.readNextRowGroup()) != null) {
 				RecordReader<Group> recordReader = ParquetReaderSupport.getRecordReader(schema, pageReadStore);
 				long rows = pageReadStore.getRowCount();
+				monitor.beginTask(ConverterMessages.importChromatogram, (int)rows);
 				for(long row = 0; row < rows; row++) {
 					Group group = recordReader.read();
 					Group point = ParquetReaderSupport.getGroup(group, ParquetReaderSupport.POINT);
@@ -277,6 +279,7 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 					if(chunk != null && ParquetReaderSupport.getNumber(chunk, CHROMATOGRAM_INDEX, 0) == ticIndex) {
 						readChunk(chunk, scanBuilder);
 					}
+					monitor.worked(1);
 				}
 			}
 		} catch(IOException e) {
