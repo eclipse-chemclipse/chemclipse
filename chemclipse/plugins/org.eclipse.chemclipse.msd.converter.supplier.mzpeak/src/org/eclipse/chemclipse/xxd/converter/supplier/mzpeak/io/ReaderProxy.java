@@ -6,7 +6,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Matthias Mailänder - initial API and implementation
  *******************************************************************************/
@@ -14,6 +14,8 @@ package org.eclipse.chemclipse.xxd.converter.supplier.mzpeak.io;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Map;
+import java.util.function.IntFunction;
 
 import org.apache.parquet.column.page.PageReadStore;
 import org.apache.parquet.example.data.Group;
@@ -26,6 +28,7 @@ import org.eclipse.chemclipse.msd.converter.supplier.mzpeak.model.IVendorIon;
 import org.eclipse.chemclipse.msd.converter.supplier.mzpeak.model.IVendorScanProxy;
 import org.eclipse.chemclipse.msd.converter.supplier.mzpeak.model.VendorIon;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 public class ReaderProxy implements IReaderProxy {
 
@@ -45,38 +48,71 @@ public class ReaderProxy implements IReaderProxy {
 	@Override
 	public void readMassSpectrum(IVendorScanProxy scanProxy, IProgressMonitor monitor) throws IOException {
 
-		monitor.beginTask(ConverterMessages.importScan, IProgressMonitor.UNKNOWN);
-
 		int spectrumIndex = scanProxy.getScanNumber() - 1;
+		try {
+			readSpectra(index -> index == spectrumIndex ? scanProxy : null, monitor);
+		} catch(IOException e) {
+			logger.error(e);
+		}
+	}
+
+	@Override
+	public void readMassSpectra(Map<Integer, IVendorScanProxy> scanProxies, IProgressMonitor monitor) throws IOException {
+
+		if(scanProxies.isEmpty()) {
+			return;
+		}
+		readSpectra(index -> {
+			IVendorScanProxy scanProxy = scanProxies.get(index);
+			if(scanProxy != null && !scanProxy.isLoaded()) {
+				/*
+				 * Leave the proxy mode without reading the file again,
+				 * the ions are added while passing through the file.
+				 */
+				scanProxy.loadWithoutImport();
+			}
+			return scanProxy;
+		}, monitor);
+	}
+
+	/**
+	 * Passes once through the spectra file and adds each ion to the scan proxy
+	 * the resolver returns for its spectrum index, or skips it on null.
+	 */
+	private void readSpectra(IntFunction<IVendorScanProxy> resolver, IProgressMonitor monitor) throws IOException {
 
 		try (ParquetFileReader parquetFileReader = ParquetReaderSupport.open(spectraParquet)) {
 			MessageType schema = parquetFileReader.getFooter().getFileMetaData().getSchema();
+			SubMonitor subMonitor = SubMonitor.convert(monitor, ConverterMessages.importScan, (int)Math.min(Integer.MAX_VALUE, parquetFileReader.getRecordCount()));
 			PageReadStore pageReadStore;
 			while((pageReadStore = parquetFileReader.readNextRowGroup()) != null) {
 				RecordReader<Group> recordReader = ParquetReaderSupport.getRecordReader(schema, pageReadStore);
 				long rows = pageReadStore.getRowCount();
-				monitor.beginTask(ConverterMessages.importScan, (int)rows);
 				for(long row = 0; row < rows; row++) {
 					Group record = recordReader.read();
 					Group point = ParquetReaderSupport.getGroup(record, ParquetReaderSupport.POINT);
 					if(point != null) {
-						if((long)ParquetReaderSupport.getNumber(point, SPECTRUM_INDEX, -1) == spectrumIndex) {
+						IVendorScanProxy scanProxy = resolver.apply((int)ParquetReaderSupport.getNumber(point, SPECTRUM_INDEX, -1));
+						if(scanProxy != null) {
 							addIon(scanProxy, ParquetReaderSupport.getNumber(point, MZ, 0), (float)ParquetReaderSupport.getNumber(point, INTENSITY, 0));
 						}
 					} else {
 						Group chunk = ParquetReaderSupport.getGroup(record, ParquetReaderSupport.CHUNK);
-						if(chunk != null && (long)ParquetReaderSupport.getNumber(chunk, SPECTRUM_INDEX, -1) == spectrumIndex) {
-							readChunk(scanProxy, chunk);
+						if(chunk != null) {
+							IVendorScanProxy scanProxy = resolver.apply((int)ParquetReaderSupport.getNumber(chunk, SPECTRUM_INDEX, -1));
+							if(scanProxy != null) {
+								readChunk(scanProxy, chunk);
+							}
 						}
 					}
-					monitor.worked(1);
+					subMonitor.worked(1);
 				}
 			}
-		} catch(IOException e) {
-			logger.error(e);
+		} finally {
+			if(monitor != null) {
+				monitor.done();
+			}
 		}
-
-		monitor.done();
 	}
 
 	private static void readChunk(IVendorScanProxy scanProxy, Group chunk) {
