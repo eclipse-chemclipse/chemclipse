@@ -92,7 +92,7 @@ public class ReaderProxy implements IReaderProxy {
 
 		if(mz > 0 && !Float.isNaN(intensity)) {
 			IVendorIon ion = new VendorIon(mz, intensity);
-			scanProxy.addIon(ion);
+			scanProxy.addIon(ion, false);
 		}
 	}
 }
