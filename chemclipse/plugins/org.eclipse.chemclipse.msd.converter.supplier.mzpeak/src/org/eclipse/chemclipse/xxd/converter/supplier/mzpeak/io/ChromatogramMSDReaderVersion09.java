@@ -49,6 +49,7 @@ import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzpeak.preferences.PreferenceSupplier;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -96,12 +97,19 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 		int ticIndex = extractTicIndexFromMetadata(chromatogramMetadataParquet);
 		Path chromatogramDataParquet = extract(file, CHROMATOGRAMS_DATA);
 
+		boolean importCentroidedSpectra = PreferenceSupplier.isImportCentroidedSpectra();
+		boolean importProfileSpectra = PreferenceSupplier.isImportProfileSpectra();
+		/*
+		 * One share per pass that runs. The TIC only fallback is the only pass if no spectra are imported.
+		 */
+		int passes = (importCentroidedSpectra ? 1 : 0) + (importProfileSpectra ? 1 : 0);
+		SubMonitor subMonitor = SubMonitor.convert(monitor, Math.max(1, passes));
 		IVendorChromatogram chromatogram = null;
-		if(PreferenceSupplier.isImportCentroidedSpectra()) {
-			chromatogram = readSpectra(file, SPECTRA_PEAKS, "Centroided", chromatogramDataParquet, ticIndex, monitor);
+		if(importCentroidedSpectra) {
+			chromatogram = readSpectra(file, SPECTRA_PEAKS, "Centroided", chromatogramDataParquet, ticIndex, subMonitor.newChild(1));
 		}
-		if(PreferenceSupplier.isImportProfileSpectra()) {
-			IVendorChromatogram profileChromatogram = readSpectra(file, SPECTRA_DATA, "Profile", chromatogramDataParquet, ticIndex, monitor);
+		if(importProfileSpectra) {
+			IVendorChromatogram profileChromatogram = readSpectra(file, SPECTRA_DATA, "Profile", chromatogramDataParquet, ticIndex, subMonitor.newChild(1));
 			if(chromatogram == null) {
 				chromatogram = profileChromatogram;
 			} else if(profileChromatogram != null) {
@@ -112,7 +120,7 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 		if(chromatogram == null) { // no mass spectra selected or none contained
 			chromatogram = new VendorChromatogram();
 			readPackage(file, chromatogram);
-			readTIC(chromatogramDataParquet, ticIndex, chromatogram, monitor);
+			readTIC(chromatogramDataParquet, ticIndex, chromatogram, subMonitor.newChild(1));
 		}
 
 		return chromatogram;
@@ -261,12 +269,13 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 
 		try (ParquetFileReader parquetFileReader = ParquetReaderSupport.open(chromatogramDataParquet)) {
 			MessageType schema = parquetFileReader.getFooter().getFileMetaData().getSchema();
+			SubMonitor subMonitor = SubMonitor.convert(monitor, ConverterMessages.importChromatogram, (int)parquetFileReader.getRecordCount());
 			PageReadStore pageReadStore;
 			while((pageReadStore = parquetFileReader.readNextRowGroup()) != null) {
 				RecordReader<Group> recordReader = ParquetReaderSupport.getRecordReader(schema, pageReadStore);
 				long rows = pageReadStore.getRowCount();
-				monitor.beginTask(ConverterMessages.importChromatogram, (int)rows);
 				for(long row = 0; row < rows; row++) {
+					subMonitor.worked(1);
 					Group group = recordReader.read();
 					Group point = ParquetReaderSupport.getGroup(group, ParquetReaderSupport.POINT);
 					if(point != null) {
@@ -279,7 +288,6 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 					if(chunk != null && ParquetReaderSupport.getNumber(chunk, CHROMATOGRAM_INDEX, 0) == ticIndex) {
 						readChunk(chunk, scanBuilder);
 					}
-					monitor.worked(1);
 				}
 			}
 		} catch(IOException e) {
