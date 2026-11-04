@@ -27,6 +27,8 @@ public class VendorScanProxy extends AbstractRegularMassSpectrumProxy implements
 	private static final Logger logger = Logger.getLogger(VendorScanProxy.class);
 
 	private IReaderProxy readerProxy;
+	private boolean loaded = false;
+	private boolean skipImport = false;
 
 	public VendorScanProxy(IReaderProxy readerProxy, IProgressMonitor monitor) {
 
@@ -35,8 +37,35 @@ public class VendorScanProxy extends AbstractRegularMassSpectrumProxy implements
 	}
 
 	@Override
+	public IReaderProxy getReaderProxy() {
+
+		return readerProxy;
+	}
+
+	@Override
+	public boolean isLoaded() {
+
+		return loaded;
+	}
+
+	@Override
+	public void loadWithoutImport() {
+
+		skipImport = true;
+		try {
+			enforceLoadScanProxy();
+		} finally {
+			skipImport = false;
+		}
+	}
+
+	@Override
 	public void importIons(IProgressMonitor monitor) {
 
+		loaded = true;
+		if(skipImport) {
+			return;
+		}
 		try {
 			readerProxy.readMassSpectrum(this, monitor);
 		} catch(IOException e) {
