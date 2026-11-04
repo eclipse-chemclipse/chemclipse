@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -10,6 +10,7 @@
  * Contributors:
  * Jan Holy - initial API and implementation
  * Philip Wenig - improvements classifier
+ * Lorenz Gerber - label area/concentration
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.extraction;
 
@@ -45,6 +46,10 @@ public class PeakExtractionSupport {
 				int retentionTimeWindow = extractionSettings.getGroupValueWindow();
 				samples = peakRetentionTimeExtractor.extractPeakData(peaks, retentionTimeWindow, descriptionOption, valueOption);
 				break;
+		}
+
+		if(samples != null && ValueOption.CONCENTRATION.equals(valueOption)) {
+			samples.setValueType(Samples.VALUE_TYPE_CONCENTRATION);
 		}
 
 		return samples;

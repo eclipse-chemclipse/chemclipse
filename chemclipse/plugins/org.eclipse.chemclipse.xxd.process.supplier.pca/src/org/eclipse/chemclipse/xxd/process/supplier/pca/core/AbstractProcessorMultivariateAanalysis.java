@@ -42,6 +42,7 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultMVA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultsMVA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.ISamplesPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.ResultMVA;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Samples;
 
 public abstract class AbstractProcessorMultivariateAanalysis {
 
@@ -86,7 +87,12 @@ public abstract class AbstractProcessorMultivariateAanalysis {
 			}
 		}
 
-		evaluation.setFeatureDataMatrix(new FeatureDataMatrix(sampleNames, groupNames, features));
+		FeatureDataMatrix featureDataMatrix = new FeatureDataMatrix(sampleNames, groupNames, features);
+		Object samplesObject = samplesPCA;
+		if(samplesObject instanceof Samples pcaSamples) {
+			featureDataMatrix.setValueLabel(pcaSamples.getValueLabel());
+		}
+		evaluation.setFeatureDataMatrix(featureDataMatrix);
 	}
 
 	protected <V extends IVariable, S extends ISample> Map<S, double[]> extractData(ISamples<V, S> samples, Algorithm algorithm, IAnalysisSettings settings, boolean[] isSelectedVariable) {

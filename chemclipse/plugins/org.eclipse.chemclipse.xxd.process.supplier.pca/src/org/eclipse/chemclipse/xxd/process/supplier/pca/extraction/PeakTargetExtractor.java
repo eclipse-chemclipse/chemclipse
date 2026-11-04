@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2025 Lablicate GmbH.
+ * Copyright (c) 2020, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -9,6 +9,7 @@
  * 
  * Contributors:
  * Philip Wenig - initial API and implementation
+ * Lorenz Gerber - warn for duplicate entries in files
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.extraction;
 
@@ -23,6 +24,7 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IPeak;
 import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
@@ -37,6 +39,8 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Sample;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Samples;
 
 public class PeakTargetExtractor extends AbstractClassifierDescriptionExtractor {
+
+	private static final Logger logger = Logger.getLogger(PeakTargetExtractor.class);
 
 	public Samples extractPeakData(Map<IDataInputEntry, List<IPeak>> peaks, DescriptionOption descriptionOption, ValueOption valueOption) {
 
@@ -83,6 +87,7 @@ public class PeakTargetExtractor extends AbstractClassifierDescriptionExtractor 
 			String name = peakEnry.getKey();
 			List<IPeak> peaks = peakEnry.getValue();
 			TreeMap<String, IPeak> peakTree = new TreeMap<>();
+			int duplicates = 0;
 
 			for(IPeak peak : peaks) {
 				String target;
@@ -92,9 +97,18 @@ public class PeakTargetExtractor extends AbstractClassifierDescriptionExtractor 
 				} else {
 					target = "";
 				}
-				peakTree.put(target, peak);
+				IPeak previous = peakTree.put(target, peak);
+				if(previous != null && !target.isEmpty()) {
+					/*
+					 * Matching is by name only - only the last peak per name is used.
+					 */
+					duplicates++;
+				}
 			}
 			pcaPeaks.put(name, peakTree);
+			if(duplicates > 0) {
+				logger.warn("Sample '" + name + "': " + duplicates + " peak(s) ignored, as another peak in the same sample has the same name.");
+			}
 		}
 
 		return pcaPeaks;

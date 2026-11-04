@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2025 Lablicate GmbH.
+ * Copyright (c) 2020, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -9,6 +9,7 @@
  * 
  * Contributors:
  * Philip Wenig - initial API and implementation
+ * Lorenz Gerber - field for area/concentration label
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.model;
 
@@ -21,6 +22,7 @@ public class FeatureDataMatrix {
 	private List<String> sampleNames = new ArrayList<>();
 	private List<Feature> features = new ArrayList<>();
 	private List<String> groupNames = new ArrayList<>();
+	private String valueLabel = "";
 
 	public FeatureDataMatrix(List<String> sampleNames, List<String> groupNames, List<Feature> features) {
 
@@ -48,6 +50,19 @@ public class FeatureDataMatrix {
 	public List<String> getGroupNames() {
 
 		return groupNames;
+	}
+
+	/**
+	 * @return what the sample values represent, e.g. "Area" or "Concentration [mg/L]", or "" if unknown
+	 */
+	public String getValueLabel() {
+
+		return valueLabel;
+	}
+
+	public void setValueLabel(String valueLabel) {
+
+		this.valueLabel = valueLabel == null ? "" : valueLabel;
 	}
 
 	public List<Feature> getFeatures() {

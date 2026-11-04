@@ -35,6 +35,7 @@ public class FeatureLabelProvider extends AbstractChemClipseLabelProvider {
 
 	public static final int BOUND_SAMPLE = 100;
 	private DecimalFormat decimalFormat = getDecimalFormat();
+	private DecimalFormat scientificFormat = getScientificDecimalFormatInstance();
 	private FeatureMode featureMode = FeatureMode.ORIGINAL;
 
 	public static final String[] TITLES = {//
@@ -105,7 +106,7 @@ public class FeatureLabelProvider extends AbstractChemClipseLabelProvider {
 						} else {
 							value = sampleData.get(index).getModifiedData();
 						}
-						text = Double.isNaN(value) ? "NaN" : decimalFormat.format(value);
+						text = Double.isNaN(value) ? "NaN" : format(value);
 					} else {
 						text = "--";
 					}
@@ -113,6 +114,18 @@ public class FeatureLabelProvider extends AbstractChemClipseLabelProvider {
 			}
 		}
 		return text;
+	}
+
+	/**
+	 * Original values can be small (e.g. concentrations) - show them in scientific notation instead of
+	 * letting the default pattern round them to 0.
+	 */
+	private String format(double value) {
+
+		if(featureMode.equals(FeatureMode.ORIGINAL) && value != 0 && Math.abs(value) < 0.01) {
+			return scientificFormat.format(value);
+		}
+		return decimalFormat.format(value);
 	}
 
 	@Override
