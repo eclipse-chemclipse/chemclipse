@@ -20,6 +20,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Enumeration;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -244,9 +245,10 @@ public class ChromatogramMSDReaderVersion09 extends AbstractChromatogramReader i
 	private void addScanProxies(Path chromatogramDataParquet, Path spectraParquet, int ticIndex, IVendorChromatogram chromatogram, IReaderProxy readerProxy, IProgressMonitor monitor) {
 
 		int[] cycleNumber = new int[]{isMultiStageMassSpectrum ? 1 : 0};
+		AtomicInteger spectrumIndex = new AtomicInteger();
 
 		readChromatogram(chromatogramDataParquet, ticIndex, (retentionTime, intensity, msLevel) -> {
-			IVendorScanProxy scanProxy = new VendorScanProxy(readerProxy, monitor);
+			IVendorScanProxy scanProxy = new VendorScanProxy(readerProxy, spectrumIndex.getAndIncrement(), monitor);
 			scanProxy.setRetentionTime(retentionTime);
 			scanProxy.setTotalSignal(intensity);
 			scanProxy.setMassSpectrometer(msLevel);

@@ -49,7 +49,7 @@ public class VendorChromatogram extends AbstractChromatogramMSD implements IVend
 					scanProxies = new HashMap<>();
 					scanProxiesByReader.put(scanProxy.getReaderProxy(), scanProxies);
 				}
-				scanProxies.put(scanProxy.getScanNumber() - 1, scanProxy);
+				scanProxies.put(scanProxy.getSpectrumIndex(), scanProxy);
 			}
 		}
 

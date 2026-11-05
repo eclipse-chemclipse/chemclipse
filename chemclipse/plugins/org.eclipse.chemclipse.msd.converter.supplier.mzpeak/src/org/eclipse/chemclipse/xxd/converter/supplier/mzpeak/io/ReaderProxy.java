@@ -72,7 +72,7 @@ public class ReaderProxy implements IReaderProxy {
 	@Override
 	public void readMassSpectrum(IVendorScanProxy scanProxy, IProgressMonitor monitor) throws IOException {
 
-		int spectrumIndex = scanProxy.getScanNumber() - 1;
+		int spectrumIndex = scanProxy.getSpectrumIndex();
 		try {
 			readSpectra(index -> index == spectrumIndex ? scanProxy : null, getRowRanges(spectrumIndex), monitor);
 		} catch(IOException e) {

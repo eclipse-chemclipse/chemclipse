@@ -20,6 +20,12 @@ public interface IVendorScanProxy extends IVendorScan, IMassSpectrumProxy {
 	IReaderProxy getReaderProxy();
 
 	/**
+	 * Returns the index of the spectrum in the Parquet table.
+	 * It stays the same when scans are removed from the chromatogram.
+	 */
+	int getSpectrumIndex();
+
+	/**
 	 * Returns true once the proxy has left the proxy mode, i.e. its ions are available.
 	 */
 	boolean isLoaded();
