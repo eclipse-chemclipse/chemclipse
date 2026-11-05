@@ -27,19 +27,27 @@ public class VendorScanProxy extends AbstractRegularMassSpectrumProxy implements
 	private static final Logger logger = Logger.getLogger(VendorScanProxy.class);
 
 	private IReaderProxy readerProxy;
+	private int spectrumIndex;
 	private boolean loaded = false;
 	private boolean skipImport = false;
 
-	public VendorScanProxy(IReaderProxy readerProxy, IProgressMonitor monitor) {
+	public VendorScanProxy(IReaderProxy readerProxy, int spectrumIndex, IProgressMonitor monitor) {
 
 		super(monitor);
 		this.readerProxy = readerProxy;
+		this.spectrumIndex = spectrumIndex;
 	}
 
 	@Override
 	public IReaderProxy getReaderProxy() {
 
 		return readerProxy;
+	}
+
+	@Override
+	public int getSpectrumIndex() {
+
+		return spectrumIndex;
 	}
 
 	@Override
