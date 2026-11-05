@@ -44,7 +44,10 @@ public class FilterCleaner extends AbstractChromatogramFilter {
 
 		IProcessingInfo<IChromatogramFilterResult> processingInfo = validate(chromatogramSelection, chromatogramFilterSettings);
 		if(!processingInfo.hasErrorMessages()) {
-			applyChromatogramCleanerFilter(chromatogramSelection, monitor);
+			if(!applyChromatogramCleanerFilter(chromatogramSelection, monitor)) {
+				processingInfo.addMessage(new ProcessingMessage(MessageType.WARN, "Chromatogram Cleaner", "The filter has been cancelled, no scans have been removed."));
+				return processingInfo;
+			}
 			processingInfo.addMessage(new ProcessingMessage(MessageType.INFO, "Chromatogram Cleaner", "Empty scans have been removed successfully."));
 			processingInfo.setProcessingResult(new ChromatogramFilterResult(ResultStatus.OK, "Empty scans have been removed successfully."));
 			chromatogramSelection.getChromatogram().setDirty(true);
@@ -53,23 +56,33 @@ public class FilterCleaner extends AbstractChromatogramFilter {
 		return processingInfo;
 	}
 
-	private void applyChromatogramCleanerFilter(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor) {
+	/**
+	 * Returns false if the user cancelled before the scans were removed. Nothing is removed then.
+	 */
+	private boolean applyChromatogramCleanerFilter(IChromatogramSelection chromatogramSelection, IProgressMonitor monitor) {
 
 		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
 		int startScan = chromatogram.getScanNumber(chromatogramSelection.getStartRetentionTime());
 		int stopScan = chromatogram.getScanNumber(chromatogramSelection.getStopRetentionTime());
 		List<Integer> scansToRemove = new ArrayList<>();
+		SubMonitor subMonitor = SubMonitor.convert(monitor, "Remove empty scans.", 100);
 		/*
 		 * Import all scans.
 		 */
 		if(chromatogram instanceof IChromatogramMSD chromatogramMSD) {
-			chromatogramMSD.enforceLoadScanProxies(monitor);
+			chromatogramMSD.enforceLoadScanProxies(subMonitor.newChild(80));
+		}
+		if(subMonitor.isCanceled()) {
+			return false;
 		}
 		/*
 		 * Iterate through all selected scans and mark those to be removed.
 		 */
-		SubMonitor subMonitorLoad = SubMonitor.convert(monitor, "Check scans.", stopScan - startScan);
+		SubMonitor subMonitorLoad = SubMonitor.convert(subMonitor.newChild(10), "Check scans.", stopScan - startScan + 1);
 		for(int scan = startScan; scan <= stopScan; scan++) {
+			if(subMonitorLoad.isCanceled()) {
+				return false;
+			}
 			IScan chromatogramScan = chromatogram.getScan(scan);
 			if(chromatogramScan instanceof IScanMSD scanMSD) {
 				/*
@@ -98,20 +111,21 @@ public class FilterCleaner extends AbstractChromatogramFilter {
 		/*
 		 * Use a remove counter, because each time a scan will be removed, the chromatogram contains one scan less.
 		 */
-		SubMonitor subMonitorRemove = SubMonitor.convert(monitor, "Remove empty scans.", scansToRemove.size());
+		SubMonitor subMonitorRemove = SubMonitor.convert(subMonitor.newChild(10), "Remove empty scans.", scansToRemove.size());
 		try {
 			int removeCounter = 0;
 			for(Integer scan : scansToRemove) {
 				scan -= removeCounter;
 				chromatogram.removeScan(scan);
 				removeCounter++;
+				subMonitorRemove.worked(1);
 			}
-			subMonitorRemove.worked(1);
 		} finally {
 			SubMonitor.done(subMonitorRemove);
 		}
 
 		chromatogram.recalculateScanNumbers();
 		chromatogramSelection.reset();
+		return true;
 	}
 }

@@ -105,6 +105,12 @@ public abstract class AbstractChromatogramMSD extends AbstractChromatogram imple
 
 		monitor.beginTask("Load Scans", getScans().size());
 		for(IScan scan : getScans()) {
+			/*
+			 * Scans that are not loaded yet are loaded on demand later.
+			 */
+			if(monitor.isCanceled()) {
+				return;
+			}
 			if(scan instanceof IScanMSD scanMSD && !isUnloaded()) {
 				scanMSD.enforceLoadScanProxy();
 			}
