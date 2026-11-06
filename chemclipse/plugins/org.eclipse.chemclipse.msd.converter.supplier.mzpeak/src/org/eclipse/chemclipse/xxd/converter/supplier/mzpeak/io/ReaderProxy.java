@@ -40,6 +40,7 @@ import org.eclipse.chemclipse.msd.converter.supplier.mzpeak.model.IVendorIon;
 import org.eclipse.chemclipse.msd.converter.supplier.mzpeak.model.IVendorScanProxy;
 import org.eclipse.chemclipse.msd.converter.supplier.mzpeak.model.VendorIon;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 
 public class ReaderProxy implements IReaderProxy {
@@ -70,11 +71,11 @@ public class ReaderProxy implements IReaderProxy {
 	}
 
 	@Override
-	public void readMassSpectrum(IVendorScanProxy scanProxy, IProgressMonitor monitor) throws IOException {
+	public void readMassSpectrum(IVendorScanProxy scanProxy) throws IOException {
 
 		int spectrumIndex = scanProxy.getSpectrumIndex();
 		try {
-			readSpectra(index -> index == spectrumIndex ? scanProxy : null, getRowRanges(spectrumIndex), monitor);
+			readSpectra(index -> index == spectrumIndex ? scanProxy : null, getRowRanges(spectrumIndex), new NullProgressMonitor());
 		} catch(IOException e) {
 			logger.error(e);
 		}
@@ -137,10 +138,6 @@ public class ReaderProxy implements IReaderProxy {
 					}
 					subMonitor.worked(1);
 				}
-			}
-		} finally {
-			if(monitor != null) {
-				monitor.done();
 			}
 		}
 	}

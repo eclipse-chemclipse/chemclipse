@@ -20,7 +20,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 public interface IReaderProxy {
 
-	void readMassSpectrum(IVendorScanProxy massSpectrum, IProgressMonitor monitor) throws IOException;
+	void readMassSpectrum(IVendorScanProxy massSpectrum) throws IOException;
 
 	/**
 	 * Reads the ions of all given scan proxies in a single pass over the spectra file.
