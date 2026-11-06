@@ -75,7 +75,7 @@ public class VendorScanProxy extends AbstractRegularMassSpectrumProxy implements
 			return;
 		}
 		try {
-			readerProxy.readMassSpectrum(this, monitor);
+			readerProxy.readMassSpectrum(this);
 		} catch(IOException e) {
 			logger.error(e);
 		}

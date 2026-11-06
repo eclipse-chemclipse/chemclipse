@@ -61,6 +61,7 @@ import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.msd.model.core.Polarity;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.SubMonitor;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.Version;
@@ -123,17 +124,16 @@ public class ChromatogramMSDWriterVersion09 extends AbstractChromatogramWriter i
 	public void writeChromatogram(File file, IChromatogramMSD chromatogram, IProgressMonitor monitor) throws IOException {
 
 		List<IScanMSD> scans = getScans(chromatogram);
-		monitor.beginTask(ConverterMessages.exportChromatogram, scans.size());
+		SubMonitor subMonitor = SubMonitor.convert(monitor, ConverterMessages.exportChromatogram, scans.size());
 		Path directory = Files.createTempDirectory("mzpeak");
 		try {
 			MzPeakIndex mzPeakIndex = new MzPeakIndex();
-			writeSpectra(directory, scans, mzPeakIndex, monitor);
+			writeSpectra(directory, scans, mzPeakIndex, subMonitor);
 			writeChromatograms(directory, scans, mzPeakIndex);
 			mzPeakIndex.setMetadata(createMetadata(chromatogram, scans));
 			writeArchive(file, directory, mzPeakIndex);
 		} finally {
 			delete(directory);
-			monitor.done();
 		}
 	}
 
