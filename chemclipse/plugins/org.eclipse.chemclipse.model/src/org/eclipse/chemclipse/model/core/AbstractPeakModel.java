@@ -266,13 +266,13 @@ public abstract class AbstractPeakModel extends AbstractPeakModelStrict {
 	private void checkModelConditions(IScan peakMaximum, IPeakIntensityValues peakIntensityValues) throws PeakException {
 
 		if(peakMaximum == null) {
-			throw new PeakException("The peak maximum must not be null.");
+			throw new PeakException("The peak maximum must not be null."); //$NON-NLS-1$
 		}
 		/*
 		 * Test if there are intensity values stored.
 		 */
 		if(peakIntensityValues == null || peakIntensityValues.size() < IPeakModel.MINIMUM_SCANS) {
-			throw new PeakException("The intensity values must not be null or must contain at least 3 key value pairs.");
+			throw new PeakException("The intensity values must not be null or must contain at least 3 key value pairs."); //$NON-NLS-1$
 		}
 		/*
 		 * Check that the highest intensity is 100.0f. If it is more or less,
@@ -280,7 +280,7 @@ public abstract class AbstractPeakModel extends AbstractPeakModelStrict {
 		 */
 		Map.Entry<Integer, Float> entry = peakIntensityValues.getHighestIntensityValue();
 		if(entry == null) {
-			throw new PeakException("Failed to create the peak: there must be at least one intensity value stored with a relative intensity of IPeakIntensityValues.MAX_INTENSITY.");
+			throw new PeakException("Failed to create the peak: there must be at least one intensity value stored with a relative intensity of IPeakIntensityValues.MAX_INTENSITY."); //$NON-NLS-1$
 		}
 		/*
 		 * Sets the peak maximum retention time.
@@ -468,6 +468,6 @@ public abstract class AbstractPeakModel extends AbstractPeakModelStrict {
 	@Override
 	public String toString() {
 
-		return "AbstractPeakModel [peakMaximum=" + peakMaximum + ", backgroundEquation=" + backgroundEquation + ", peakIntensityValues=" + peakIntensityValues + ", gradientAngle=" + gradientAngle + ", startBackgroundAbundance=" + startBackgroundAbundance + ", stopBackgroundAbundance=" + stopBackgroundAbundance + ", temporarilyInfo=" + temporarilyInfo + "]";
+		return "AbstractPeakModel [peakMaximum=" + peakMaximum + ", backgroundEquation=" + backgroundEquation + ", peakIntensityValues=" + peakIntensityValues + ", gradientAngle=" + gradientAngle + ", startBackgroundAbundance=" + startBackgroundAbundance + ", stopBackgroundAbundance=" + stopBackgroundAbundance + ", temporarilyInfo=" + temporarilyInfo + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
 	}
 }

@@ -50,7 +50,7 @@ public class AnalysisSupport implements IAnalysisSupport {
 		if(segmentWidth >= 3 && numberOfScans >= segmentWidth) {
 			analysisSegments = initializeAnalysisSegments(numberOfScans, 1, segmentWidth, SimpleSegment::new);
 		} else {
-			throw new AnalysisSupportException("The segmentWidth must be >= 3 and the number of scans must be >= segmentWidth.");
+			throw new AnalysisSupportException("The segmentWidth must be >= 3 and the number of scans must be >= segmentWidth."); //$NON-NLS-1$
 		}
 	}
 
@@ -70,7 +70,7 @@ public class AnalysisSupport implements IAnalysisSupport {
 	public AnalysisSupport(IScanRange scanRange, int segmentWidth) throws AnalysisSupportException {
 
 		if(scanRange == null) {
-			throw new AnalysisSupportException("The scan range must not be null.");
+			throw new AnalysisSupportException("The scan range must not be null."); //$NON-NLS-1$
 		}
 		/*
 		 * Starts at scan position scanRange.getStartScan().
@@ -78,7 +78,7 @@ public class AnalysisSupport implements IAnalysisSupport {
 		if(segmentWidth >= 3 && scanRange.getWidth() >= segmentWidth) {
 			analysisSegments = initializeAnalysisSegments(scanRange.getWidth(), scanRange.getStartScan(), segmentWidth, SimpleSegment::new);
 		} else {
-			throw new AnalysisSupportException("The segmentWidth must be >= 3 and the number of scans must be >= segmentWidth.");
+			throw new AnalysisSupportException("The segmentWidth must be >= 3 and the number of scans must be >= segmentWidth."); //$NON-NLS-1$
 		}
 	}
 
@@ -96,8 +96,8 @@ public class AnalysisSupport implements IAnalysisSupport {
 
 	private static <X extends IAnalysisSegment> List<X> initializeAnalysisSegments(int numberOfScans, int startScan, int segmentWidth, BiFunction<Integer, Integer, X> constructor) {
 
-		assert numberOfScans > 0 : "The number of scans must be > 0";
-		assert segmentWidth > 0 : "The segment width must be > 0";
+		assert numberOfScans > 0 : "The number of scans must be > 0"; //$NON-NLS-1$
+		assert segmentWidth > 0 : "The segment width must be > 0"; //$NON-NLS-1$
 		boolean addLastSegment = false;
 		/*
 		 * Calculate the number of scans in the last segment and afterwards the

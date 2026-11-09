@@ -86,11 +86,11 @@ public class RetentionTimeRange implements IRetentionTimeRange {
 
 		StringBuilder builder = new StringBuilder();
 		builder.append(getClass().getName());
-		builder.append("[");
-		builder.append("startRetentionTime=" + startRetentionTime);
-		builder.append(",");
-		builder.append("stopRetentionTime=" + stopRetentionTime);
-		builder.append("]");
+		builder.append("["); //$NON-NLS-1$
+		builder.append("startRetentionTime=" + startRetentionTime); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("stopRetentionTime=" + stopRetentionTime); //$NON-NLS-1$
+		builder.append("]"); //$NON-NLS-1$
 		return builder.toString();
 	}
 	// --------------------------------------equals, hashCode, toString

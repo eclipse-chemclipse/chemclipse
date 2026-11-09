@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -37,14 +37,14 @@ public class TimeRanges {
 
 	private static final Logger logger = Logger.getLogger(TimeRanges.class);
 
-	public static final String DESCRIPTION = "Time Ranges";
-	public static final String FILE_EXTENSION = ".tra";
-	public static final String FILE_NAME = DESCRIPTION.replaceAll("\\s", "") + FILE_EXTENSION;
-	public static final String FILTER_EXTENSION = "*" + FILE_EXTENSION;
-	public static final String FILTER_NAME = DESCRIPTION + " (*" + FILE_EXTENSION + ")";
+	public static final String DESCRIPTION = "Time Ranges"; //$NON-NLS-1$
+	public static final String FILE_EXTENSION = ".tra"; //$NON-NLS-1$
+	public static final String FILE_NAME = DESCRIPTION.replaceAll("\\s", "") + FILE_EXTENSION; //$NON-NLS-1$ //$NON-NLS-2$
+	public static final String FILTER_EXTENSION = "*" + FILE_EXTENSION; //$NON-NLS-1$
+	public static final String FILTER_NAME = DESCRIPTION + " (*" + FILE_EXTENSION + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 
 	private TimeRangeListUtil timeRangeListUtil = new TimeRangeListUtil();
-	private DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0.000");
+	private DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0.000"); //$NON-NLS-1$
 	/*
 	 * The map is used to have an easier access to the stored time ranges.
 	 * To keep the map and time range instances in sync, this put method
@@ -130,12 +130,12 @@ public class TimeRanges {
 
 		if(item != null && !item.isBlank()) {
 			ValueParserSupport valueParserSupport = new ValueParserSupport();
-			String[] values = item.split("\\" + TimeRangeListUtil.SEPARATOR_ENTRY);
-			String identifier = valueParserSupport.parseString(values, 0, "");
+			String[] values = item.split("\\" + TimeRangeListUtil.SEPARATOR_ENTRY); //$NON-NLS-1$
+			String identifier = valueParserSupport.parseString(values, 0, ""); //$NON-NLS-1$
 			int start = calculateRetentionTime(valueParserSupport.parseDouble(values, 1, 0));
 			int maximum = calculateRetentionTime(valueParserSupport.parseDouble(values, 2, 0));
 			int stop = calculateRetentionTime(valueParserSupport.parseDouble(values, 3, 0));
-			String traces = valueParserSupport.parseString(values, 4, "");
+			String traces = valueParserSupport.parseString(values, 4, ""); //$NON-NLS-1$
 			timeRange = new TimeRange(identifier, start, maximum, stop);
 			timeRange.setTraces(traces);
 		}
@@ -246,9 +246,9 @@ public class TimeRanges {
 		while(iterator.hasNext()) {
 			builder.append(iterator.next());
 			if(iterator.hasNext()) {
-				builder.append(" ");
+				builder.append(" "); //$NON-NLS-1$
 				builder.append(TimeRangeListUtil.SEPARATOR_ENTRY);
-				builder.append(" ");
+				builder.append(" "); //$NON-NLS-1$
 			}
 		}
 	}

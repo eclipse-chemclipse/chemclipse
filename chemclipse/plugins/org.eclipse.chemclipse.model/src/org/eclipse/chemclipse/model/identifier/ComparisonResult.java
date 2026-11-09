@@ -59,6 +59,6 @@ public class ComparisonResult extends AbstractComparisonResult {
 	@Override
 	public String toString() {
 
-		return "ComparisonResult [getAlgorithmId()=" + getAlgorithmId() + ", getPenalty()=" + getPenalty() + ", isMatch()=" + isMatch() + ", getMetricValues()=" + getMetricValues() + "]";
+		return "ComparisonResult [getAlgorithmId()=" + getAlgorithmId() + ", getPenalty()=" + getPenalty() + ", isMatch()=" + isMatch() + ", getMetricValues()=" + getMetricValues() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 	}
 }

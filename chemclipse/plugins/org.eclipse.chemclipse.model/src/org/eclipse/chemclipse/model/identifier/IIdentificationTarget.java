@@ -186,9 +186,9 @@ public interface IIdentificationTarget extends ITarget {
 		ILibraryInformation libraryInformation = new LibraryInformation();
 		libraryInformation.setName(name);
 		libraryInformation.setCasNumber(casNumber);
-		libraryInformation.setComments("");
-		libraryInformation.setContributor("");
-		libraryInformation.setReferenceIdentifier("");
+		libraryInformation.setComments(""); //$NON-NLS-1$
+		libraryInformation.setContributor(""); //$NON-NLS-1$
+		libraryInformation.setReferenceIdentifier(""); //$NON-NLS-1$
 
 		IComparisonResult comparisonResult = new ComparisonResult(matchFactor, matchFactor, matchFactor, matchFactor);
 		IIdentificationTarget identificationTarget = new IdentificationTarget(libraryInformation, comparisonResult);

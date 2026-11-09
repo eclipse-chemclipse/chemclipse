@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -46,7 +46,7 @@ public abstract class AnalysisSegment implements IAnalysisSegment {
 		if(startScan > 0) {
 			this.startScan = startScan;
 		} else {
-			throw new IllegalArgumentException("start scan must be > 0");
+			throw new IllegalArgumentException("start scan must be > 0"); //$NON-NLS-1$
 		}
 	}
 
@@ -55,7 +55,7 @@ public abstract class AnalysisSegment implements IAnalysisSegment {
 		if(stopScan >= startScan) {
 			this.stopScan = stopScan;
 		} else {
-			throw new IllegalArgumentException("stop scan must be >= start scan");
+			throw new IllegalArgumentException("stop scan must be >= start scan"); //$NON-NLS-1$
 		}
 	}
 }

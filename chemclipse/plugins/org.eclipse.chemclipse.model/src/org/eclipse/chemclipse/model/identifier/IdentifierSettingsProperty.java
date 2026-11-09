@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -27,7 +27,7 @@ public @interface IdentifierSettingsProperty {
 	/*
 	 * @IdentifierSettingsProperty(value = "Number of Targets", defaultValue = "15", minValue = "1", maxValue = "30", identifierIds = {"net.a", "net.b", "net.c"}, identifierNames = {"A", "B", "C"})
 	 */
-	public final static String USE_DEFAULT_NAME = "";
+	public final static String USE_DEFAULT_NAME = ""; //$NON-NLS-1$
 	public final static int INDEX_UNKNOWN = -1;
 
 	String value() default USE_DEFAULT_NAME;

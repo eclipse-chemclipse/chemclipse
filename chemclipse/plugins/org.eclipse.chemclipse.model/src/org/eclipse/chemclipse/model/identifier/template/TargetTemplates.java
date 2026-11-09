@@ -30,11 +30,11 @@ public class TargetTemplates extends HashMap<String, TargetTemplate> {
 	private static final long serialVersionUID = -439374805911311705L;
 	private static final Logger logger = Logger.getLogger(TargetTemplates.class);
 
-	public static final String DESCRIPTION = "Target Templates";
-	public static final String FILE_EXTENSION = ".txt";
-	public static final String FILE_NAME = DESCRIPTION.replaceAll("\\s", "") + FILE_EXTENSION;
-	public static final String FILTER_EXTENSION = "*" + FILE_EXTENSION;
-	public static final String FILTER_NAME = DESCRIPTION + " (*" + FILE_EXTENSION + ")";
+	public static final String DESCRIPTION = "Target Templates"; //$NON-NLS-1$
+	public static final String FILE_EXTENSION = ".txt"; //$NON-NLS-1$
+	public static final String FILE_NAME = DESCRIPTION.replaceAll("\\s", "") + FILE_EXTENSION; //$NON-NLS-1$ //$NON-NLS-2$
+	public static final String FILTER_EXTENSION = "*" + FILE_EXTENSION; //$NON-NLS-1$
+	public static final String FILTER_NAME = DESCRIPTION + " (*" + FILE_EXTENSION + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 
 	private TargetListUtil targetListUtil = new TargetListUtil();
 
@@ -127,7 +127,7 @@ public class TargetTemplates extends HashMap<String, TargetTemplate> {
 
 	private void loadSettings(String targetTemplates) {
 
-		if(!"".equals(targetTemplates)) {
+		if(!"".equals(targetTemplates)) { //$NON-NLS-1$
 			String[] items = targetListUtil.parseString(targetTemplates);
 			if(items.length > 0) {
 				for(String item : items) {
@@ -151,14 +151,14 @@ public class TargetTemplates extends HashMap<String, TargetTemplate> {
 
 		TargetTemplate targetTemplate = null;
 
-		if(!"".equals(item)) {
-			String[] values = item.split("\\" + TargetListUtil.SEPARATOR_ENTRY);
+		if(!"".equals(item)) { //$NON-NLS-1$
+			String[] values = item.split("\\" + TargetListUtil.SEPARATOR_ENTRY); //$NON-NLS-1$
 			targetTemplate = new TargetTemplate();
-			targetTemplate.setName((values.length > 0) ? values[0].trim() : "");
-			targetTemplate.setCasNumber((values.length > 1) ? values[1].trim() : "");
-			targetTemplate.setComments((values.length > 2) ? values[2].trim() : "");
-			targetTemplate.setContributor((values.length > 3) ? values[3].trim() : "");
-			targetTemplate.setReferenceId((values.length > 4) ? values[4].trim() : "");
+			targetTemplate.setName((values.length > 0) ? values[0].trim() : ""); //$NON-NLS-1$
+			targetTemplate.setCasNumber((values.length > 1) ? values[1].trim() : ""); //$NON-NLS-1$
+			targetTemplate.setComments((values.length > 2) ? values[2].trim() : ""); //$NON-NLS-1$
+			targetTemplate.setContributor((values.length > 3) ? values[3].trim() : ""); //$NON-NLS-1$
+			targetTemplate.setReferenceId((values.length > 4) ? values[4].trim() : ""); //$NON-NLS-1$
 		}
 
 		return targetTemplate;
@@ -167,21 +167,21 @@ public class TargetTemplates extends HashMap<String, TargetTemplate> {
 	private void extractTargetTemplate(TargetTemplate targetTemplate, StringBuilder builder) {
 
 		builder.append(targetTemplate.getName());
-		builder.append(" ");
+		builder.append(" "); //$NON-NLS-1$
 		builder.append(TargetListUtil.SEPARATOR_ENTRY);
-		builder.append(" ");
+		builder.append(" "); //$NON-NLS-1$
 		builder.append(targetTemplate.getCasNumber());
-		builder.append(" ");
+		builder.append(" "); //$NON-NLS-1$
 		builder.append(TargetListUtil.SEPARATOR_ENTRY);
-		builder.append(" ");
+		builder.append(" "); //$NON-NLS-1$
 		builder.append(targetTemplate.getComments());
-		builder.append(" ");
+		builder.append(" "); //$NON-NLS-1$
 		builder.append(TargetListUtil.SEPARATOR_ENTRY);
-		builder.append(" ");
+		builder.append(" "); //$NON-NLS-1$
 		builder.append(targetTemplate.getContributor());
-		builder.append(" ");
+		builder.append(" "); //$NON-NLS-1$
 		builder.append(TargetListUtil.SEPARATOR_ENTRY);
-		builder.append(" ");
+		builder.append(" "); //$NON-NLS-1$
 		builder.append(targetTemplate.getReferenceId());
 	}
 }

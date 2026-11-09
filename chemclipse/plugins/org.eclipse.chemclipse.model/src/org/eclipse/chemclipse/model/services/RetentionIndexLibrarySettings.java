@@ -19,13 +19,13 @@ import org.eclipse.chemclipse.support.model.SeparationColumnType;
 
 public class RetentionIndexLibrarySettings {
 
-	private String searchColumn = "DB5";
+	private String searchColumn = "DB5"; //$NON-NLS-1$
 	private boolean caseSensitive = false;
 	private boolean removeWhiteSpace = false;
 	private boolean matchPartly = false;
 	private SeparationColumnType separationColumnTypeFallback = SeparationColumnType.DEFAULT;
 	private int retentionIndexDelta = 10;
-	private String specificDatabase = ""; // If empty, take all.
+	private String specificDatabase = ""; // If empty, take all. //$NON-NLS-1$
 
 	private List<IRetentionIndexLibraryService> retentionIndexLibraryServices = new ArrayList<>();
 

@@ -26,7 +26,7 @@ public abstract class AbstractComparisonRatingSupplier implements IRatingSupplie
 	@Override
 	public String getAdvise() {
 
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	@Override

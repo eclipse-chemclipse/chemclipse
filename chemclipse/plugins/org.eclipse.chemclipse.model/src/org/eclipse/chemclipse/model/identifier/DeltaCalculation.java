@@ -12,15 +12,16 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.identifier;
 
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
 import org.eclipse.chemclipse.support.text.ILabel;
 
 public enum DeltaCalculation implements ILabel {
-	NONE("None"), //
-	RETENTION_TIME_MS("Retention Time [ms]"), //
-	RETENTION_TIME_MIN("Retention Time [min]"), //
-	RETENTION_INDEX("Retention Index"); //
+	NONE(ModelMessages.none), //
+	RETENTION_TIME_MS(ModelMessages.retentionTimeMs), //
+	RETENTION_TIME_MIN(ModelMessages.retentionTimeMin), //
+	RETENTION_INDEX(ModelMessages.retentionIndex); //
 
-	private String label = "";
+	private String label = ""; //$NON-NLS-1$
 
 	private DeltaCalculation(String label) {
 

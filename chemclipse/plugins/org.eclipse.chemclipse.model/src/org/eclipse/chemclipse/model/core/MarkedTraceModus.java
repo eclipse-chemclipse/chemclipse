@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -14,13 +14,14 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.core;
 
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
 import org.eclipse.chemclipse.support.text.ILabel;
 
 public enum MarkedTraceModus implements ILabel {
-	EXCLUDE("Exclude"), //
-	INCLUDE("Include");
+	EXCLUDE(ModelMessages.exclude), //
+	INCLUDE(ModelMessages.include);
 
-	private String label = "";
+	private String label = ""; //$NON-NLS-1$
 
 	private MarkedTraceModus(String label) {
 

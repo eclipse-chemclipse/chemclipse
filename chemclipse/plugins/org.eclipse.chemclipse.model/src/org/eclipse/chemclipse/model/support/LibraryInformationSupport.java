@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -163,7 +163,7 @@ public class LibraryInformationSupport {
 
 		if(name != null && libraryInformation != null) {
 			boolean setNameTraditionally = true;
-			if(referenceIdentifierMarker != null && !referenceIdentifierMarker.equals("")) {
+			if(referenceIdentifierMarker != null && !referenceIdentifierMarker.equals("")) { //$NON-NLS-1$
 				if(name.contains(referenceIdentifierMarker)) {
 					String[] values = name.split(referenceIdentifierMarker);
 					if(values.length >= 2) {
@@ -181,7 +181,7 @@ public class LibraryInformationSupport {
 						for(int i = 1; i < size; i++) {
 							builder.append(values[i]);
 							if(i < size - 1) {
-								builder.append(" ");
+								builder.append(" "); //$NON-NLS-1$
 							}
 						}
 						libraryInformation.setReferenceIdentifier(builder.toString().trim());

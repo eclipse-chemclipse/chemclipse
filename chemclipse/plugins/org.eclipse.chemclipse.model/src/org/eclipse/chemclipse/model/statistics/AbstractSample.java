@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -20,15 +20,15 @@ import java.util.Objects;
 
 public abstract class AbstractSample<D extends ISampleData<?>> implements ISample {
 
-	private String sampleName = "";
-	private String sampleDetails = "";
-	private String groupName = "";
-	private String classification = "";
-	private String description = "";
+	private String sampleName = ""; //$NON-NLS-1$
+	private String sampleDetails = ""; //$NON-NLS-1$
+	private String groupName = ""; //$NON-NLS-1$
+	private String classification = ""; //$NON-NLS-1$
+	private String description = ""; //$NON-NLS-1$
 	private List<D> sampleData = new ArrayList<>();
 	private boolean selected = true;
 	private boolean predicted = false;
-	private String rgb = "255,0,0";
+	private String rgb = "255,0,0"; //$NON-NLS-1$
 
 	public AbstractSample(String sampleName) {
 

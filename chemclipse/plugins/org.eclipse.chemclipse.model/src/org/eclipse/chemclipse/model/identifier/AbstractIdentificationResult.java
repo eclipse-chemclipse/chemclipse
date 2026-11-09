@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2025 Lablicate GmbH.
+ * Copyright (c) 2010, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -106,9 +106,9 @@ public abstract class AbstractIdentificationResult implements IIdentificationRes
 
 		StringBuilder builder = new StringBuilder();
 		builder.append(getClass().getName());
-		builder.append("[");
-		builder.append("size=" + entries.size());
-		builder.append("]");
+		builder.append("["); //$NON-NLS-1$
+		builder.append("size=" + entries.size()); //$NON-NLS-1$
+		builder.append("]"); //$NON-NLS-1$
 		return builder.toString();
 	}
 	// ----------------------------hashCode, equals, toString

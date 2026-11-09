@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2025 Lablicate GmbH.
+ * Copyright (c) 2013, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -105,7 +105,7 @@ public abstract class AbstractQuantitationSignal implements IQuantitationSignal 
 	@Override
 	public String toString() {
 
-		return "AbstractQuantitationSignal [signal=" + signal + ", relativeResponse=" + relativeResponse + ", uncertainty=" + uncertainty + ", use=" + use + "]";
+		return "AbstractQuantitationSignal [signal=" + signal + ", relativeResponse=" + relativeResponse + ", uncertainty=" + uncertainty + ", use=" + use + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 	}
 
 	@Override

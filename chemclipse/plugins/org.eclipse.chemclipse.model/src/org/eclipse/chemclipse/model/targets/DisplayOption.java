@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2025 Lablicate GmbH.
+ * Copyright (c) 2022, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -12,22 +12,23 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.targets;
 
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
 import org.eclipse.chemclipse.support.text.ILabel;
 
 public enum DisplayOption implements ILabel {
 
-	STANDARD("Standard"), //
-	NUMBERS("Numbers"), //
-	NUMBERS_STANDARD("Numbers [Display Field]"), //
-	RETENTION_TIME("Retention Time"), //
-	RETENTION_TIME_STANDARD("Retention Time [Display Field]"), //
-	RETENTION_INDEX("Retention Index"), //
-	RETENTION_INDEX_STANDARD("Retention Index [Display Field]"), //
-	RETENTION_INDEX_AREA_PERCENT("Retention Index (Area%)"), //
-	AREA_PERCENT("Area%"), //
-	AREA_PERCENT_STANDARD("Area% [Display Field]"); //
+	STANDARD(ModelMessages.standard), //
+	NUMBERS(ModelMessages.numbers), //
+	NUMBERS_STANDARD(ModelMessages.numbersDisplayField), //
+	RETENTION_TIME(ModelMessages.retentionTime), //
+	RETENTION_TIME_STANDARD(ModelMessages.retentionTimeDisplayField), //
+	RETENTION_INDEX(ModelMessages.retentionIndex), //
+	RETENTION_INDEX_STANDARD(ModelMessages.retentionIndexDisplayField), //
+	RETENTION_INDEX_AREA_PERCENT(ModelMessages.retentionIndexAreaPercent), //
+	AREA_PERCENT(ModelMessages.areaPercent), //
+	AREA_PERCENT_STANDARD(ModelMessages.areaPercentDisplayField); //
 
-	private String label = "";
+	private String label = ""; //$NON-NLS-1$
 
 	private DisplayOption(String label) {
 

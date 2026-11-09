@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -17,20 +17,20 @@ import java.util.List;
 
 public enum SearchField {
 
-	ALL(Arrays.asList("all")), //
-	NAME(Arrays.asList("name")), //
-	REFERENCE_IDENTIFIER(Arrays.asList("ref", "id")), //
-	FORMULA(Arrays.asList("formula")), //
-	SMILES(Arrays.asList("smiles")), //
-	INCHI(Arrays.asList("inchi")), //
-	INCHI_KEY(Arrays.asList("inchikey")), //
-	CAS(Arrays.asList("cas")), //
-	COMMENTS(Arrays.asList("comment", "comments")), //
-	SYNONYMS(Arrays.asList("synonym", "synonyms")), //
-	DATABASE(Arrays.asList("database", "db")), //
-	FLAVOR_ODOR(Arrays.asList("odor")), //
-	FLAVOR_MATRIX(Arrays.asList("matrix")), //
-	FLAVOR_SOLVENT(Arrays.asList("solvent"));
+	ALL(Arrays.asList("all")), // //$NON-NLS-1$
+	NAME(Arrays.asList("name")), // //$NON-NLS-1$
+	REFERENCE_IDENTIFIER(Arrays.asList("ref", "id")), // //$NON-NLS-1$ //$NON-NLS-2$
+	FORMULA(Arrays.asList("formula")), // //$NON-NLS-1$
+	SMILES(Arrays.asList("smiles")), // //$NON-NLS-1$
+	INCHI(Arrays.asList("inchi")), // //$NON-NLS-1$
+	INCHI_KEY(Arrays.asList("inchikey")), // //$NON-NLS-1$
+	CAS(Arrays.asList("cas")), // //$NON-NLS-1$
+	COMMENTS(Arrays.asList("comment", "comments")), // //$NON-NLS-1$ //$NON-NLS-2$
+	SYNONYMS(Arrays.asList("synonym", "synonyms")), // //$NON-NLS-1$ //$NON-NLS-2$
+	DATABASE(Arrays.asList("database", "db")), // //$NON-NLS-1$ //$NON-NLS-2$
+	FLAVOR_ODOR(Arrays.asList("odor")), // //$NON-NLS-1$
+	FLAVOR_MATRIX(Arrays.asList("matrix")), // //$NON-NLS-1$
+	FLAVOR_SOLVENT(Arrays.asList("solvent")); //$NON-NLS-1$
 
 	private List<String> keywords;
 

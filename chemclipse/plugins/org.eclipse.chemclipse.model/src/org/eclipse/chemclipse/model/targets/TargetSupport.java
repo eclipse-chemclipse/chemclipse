@@ -35,7 +35,7 @@ public class TargetSupport {
 			}
 		}
 
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	/**

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2025 Lablicate GmbH.
+ * Copyright (c) 2022, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -18,8 +18,8 @@ public class OdorThreshold implements IOdorThreshold {
 
 	private static final long serialVersionUID = -426496543275664637L;
 
-	private String content = "";
-	private String unit = "";
+	private String content = ""; //$NON-NLS-1$
+	private String unit = ""; //$NON-NLS-1$
 
 	public OdorThreshold(String content, String unit) {
 
@@ -61,6 +61,6 @@ public class OdorThreshold implements IOdorThreshold {
 	@Override
 	public String toString() {
 
-		return "OdorThreshold [content=" + content + ", unit=" + unit + "]";
+		return "OdorThreshold [content=" + content + ", unit=" + unit + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 }

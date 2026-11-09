@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2025 Lablicate GmbH.
+ * Copyright (c) 2022, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -22,13 +22,13 @@ import org.eclipse.chemclipse.support.model.SeparationColumnType;
 
 public class ColumnIndexSupport {
 
-	public static final String COLUMN_TYPE_CHROMATOGRAM = "{chromatogram}";
-	public static final String COLUMN_TYPES = "polar" + "\n" + //
-			"semi-polar" + "\n" + //
-			"non-polar (apolar)" + "\n" + //
-			"DB-5";
-	public static final String COLUMN_TYPE_DESCRIPTION = "Select the column that shall be used to select the retention index. Use e.g.:\n" + //
-			COLUMN_TYPE_CHROMATOGRAM + "\n" + //
+	public static final String COLUMN_TYPE_CHROMATOGRAM = "{chromatogram}"; //$NON-NLS-1$
+	public static final String COLUMN_TYPES = "polar" + "\n" + // //$NON-NLS-1$ //$NON-NLS-2$
+			"semi-polar" + "\n" + // //$NON-NLS-1$ //$NON-NLS-2$
+			"non-polar (apolar)" + "\n" + // //$NON-NLS-1$ //$NON-NLS-2$
+			"DB-5"; //$NON-NLS-1$
+	public static final String COLUMN_TYPE_DESCRIPTION = "Select the column that shall be used to select the retention index. Use e.g.:\n" + // //$NON-NLS-1$
+			COLUMN_TYPE_CHROMATOGRAM + "\n" + // //$NON-NLS-1$
 			COLUMN_TYPES;
 
 	public static float getRetentionIndex(List<IColumnIndexMarker> columnIndexMarkers, String searchColumn, boolean caseSensitive, boolean removeWhiteSpace, boolean matchPartly) {
@@ -97,7 +97,7 @@ public class ColumnIndexSupport {
 
 	protected static String adjustValue(String value, boolean caseSensitive, boolean removeWhiteSpace) {
 
-		value = removeWhiteSpace ? value.replace(" ", "") : value;
+		value = removeWhiteSpace ? value.replace(" ", "") : value; //$NON-NLS-1$ //$NON-NLS-2$
 		return caseSensitive ? value : value.toLowerCase();
 	}
 

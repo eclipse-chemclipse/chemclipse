@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012, 2025 Lablicate GmbH.
+ * Copyright (c) 2012, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -15,9 +15,9 @@ package org.eclipse.chemclipse.model.core;
 public abstract class AbstractMeasurementResult<T> implements IMeasurementResult<T> {
 
 	private static final long serialVersionUID = 6203262781404791751L;
-	private String name = "";
-	private String identifier = "";
-	private String description = "";
+	private String name = ""; //$NON-NLS-1$
+	private String identifier = ""; //$NON-NLS-1$
+	private String description = ""; //$NON-NLS-1$
 	private final T result;
 
 	public AbstractMeasurementResult(String name, String identifier, String description, T result) {
@@ -55,7 +55,7 @@ public abstract class AbstractMeasurementResult<T> implements IMeasurementResult
 	@Override
 	public String toString() {
 
-		return "AbstractMeasurementResult [name=" + name + ", identifier=" + identifier + ", description=" + description + ", result=" + result + "]";
+		return "AbstractMeasurementResult [name=" + name + ", identifier=" + identifier + ", description=" + description + ", result=" + result + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 	}
 
 	@Override

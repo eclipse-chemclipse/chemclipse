@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -18,22 +18,24 @@ import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.identifier.LibraryInformation;
 import org.eclipse.chemclipse.model.implementation.IdentificationTarget;
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.osgi.util.NLS;
 
 public class TargetValidator implements IValidator<Object> {
 
-	public static final String IDENTIFIER = "Manual";
+	public static final String IDENTIFIER = "Manual"; //$NON-NLS-1$
 
-	private static final String ERROR_TARGET = "Please enter target, e.g.: " + TargetListUtil.EXAMPLE;
-	private static final String ERROR_TOKEN = "The target must not contain: " + TargetListUtil.SEPARATOR_TOKEN;
+	private static final String ERROR_TARGET = NLS.bind(ModelMessages.enterTargetExample, TargetListUtil.EXAMPLE);
+	private static final String ERROR_TOKEN = NLS.bind(ModelMessages.targetMustNotContain, TargetListUtil.SEPARATOR_TOKEN);
 
-	private String name = "";
-	private String casNumber = "";
-	private String comments = "";
-	private String contributor = "";
-	private String referenceId = "";
+	private String name = ""; //$NON-NLS-1$
+	private String casNumber = ""; //$NON-NLS-1$
+	private String comments = ""; //$NON-NLS-1$
+	private String contributor = ""; //$NON-NLS-1$
+	private String referenceId = ""; //$NON-NLS-1$
 
 	@Override
 	public IStatus validate(Object value) {
@@ -41,11 +43,11 @@ public class TargetValidator implements IValidator<Object> {
 		/*
 		 * Reset
 		 */
-		name = "";
-		casNumber = "";
-		comments = "";
-		contributor = "";
-		referenceId = "";
+		name = ""; //$NON-NLS-1$
+		casNumber = ""; //$NON-NLS-1$
+		comments = ""; //$NON-NLS-1$
+		contributor = ""; //$NON-NLS-1$
+		referenceId = ""; //$NON-NLS-1$
 
 		String message = null;
 		if(value == null) {
@@ -55,13 +57,13 @@ public class TargetValidator implements IValidator<Object> {
 				text = text.trim();
 				if(text.contains(TargetListUtil.SEPARATOR_TOKEN)) {
 					message = ERROR_TOKEN;
-				} else if("".equals(text.trim())) {
+				} else if("".equals(text.trim())) { //$NON-NLS-1$
 					message = ERROR_TARGET;
 				} else {
 					/*
 					 * Extract name, casNumber, ...
 					 */
-					String[] values = text.trim().split("\\" + TargetListUtil.SEPARATOR_ENTRY); // The pipe needs to be escaped.
+					String[] values = text.trim().split("\\" + TargetListUtil.SEPARATOR_ENTRY); // The pipe needs to be escaped. //$NON-NLS-1$
 					if(values.length > 0) {
 						name = values[0].trim();
 

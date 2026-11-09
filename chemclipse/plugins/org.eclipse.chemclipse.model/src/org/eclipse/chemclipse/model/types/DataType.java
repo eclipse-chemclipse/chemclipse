@@ -13,37 +13,38 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.types;
 
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
 import org.eclipse.chemclipse.processing.DataCategory;
 import org.eclipse.chemclipse.support.text.ILabel;
 
 public enum DataType implements ILabel {
 
-	NONE("--"), // Used e.g. as an initial value for the Scan Table
-	AUTO_DETECT("Auto-Detect"), //
-	MSD_NOMINAL("Quadrupole, Ion Trap"), //
-	MSD_TANDEM("MS/MS"), //
-	MSD_HIGHRES("Orbitrap, TOF-MS"), //
-	MSD("Mass Selective Data (MSD)"), //
-	CSD("Current Selective Cata (CSD)"), //
-	WSD("Wavelength Selective Data (WSD)"), //
-	DSD("DNA Sequencing Data (DSD)"), //
-	VSD("Vibrational Spectroscopy Data (VSD)"), //
-	FSD("Fluorescence Spectroscopy Data (FSD)"), //
-	SCAN_VSD("Vibrational Spectroscopy Scan (FT-IR, Raman)"), //
-	SCAN_WSD("Wavelength Selective Scan (UV/Vis)"), //
-	SCAN_FSD("Fluorescence Spectroscopy Scan (FS)"), //
-	TSD("Time Selective Data (GC-IMS, GCxGC, ..)"), //
-	NMR("Nuclear Magnetic Resonance"), //
-	CAL("Retention Index Calibration"), //
-	PCR("Polymerase Chain Reaction"), //
-	SEQ("Sequences"), //
-	OBJ("Batch Jobs"), //
-	MTH("Methods"), //
-	QDB("Quantitation Databases"), //
-	MALDI("MALDI-TOF MS"), //
-	MSD_DATABASE("Mass Spectral Databases"); //
+	NONE("--"), // Used e.g. as an initial value for the Scan Table //$NON-NLS-1$
+	AUTO_DETECT(ModelMessages.autoDetect), //
+	MSD_NOMINAL(ModelMessages.quadrupoleIonTrap), //
+	MSD_TANDEM("MS/MS"), // //$NON-NLS-1$
+	MSD_HIGHRES(ModelMessages.orbitrapTofMs), //
+	MSD(ModelMessages.massSelectiveDataMsd), //
+	CSD(ModelMessages.currentSelectiveDataCsd), //
+	WSD(ModelMessages.wavelengthSelectiveDataWsd), //
+	DSD(ModelMessages.dnaSequencingDataDsd), //
+	VSD(ModelMessages.vibrationalSpectroscopyDataVsd), //
+	FSD(ModelMessages.fluorescenceSpectroscopyDataFsd), //
+	SCAN_VSD(ModelMessages.vibrationalSpectroscopyScan), //
+	SCAN_WSD(ModelMessages.wavelengthSelectiveScan), //
+	SCAN_FSD(ModelMessages.fluorescenceSpectroscopyScan), //
+	TSD(ModelMessages.timeSelectiveData), //
+	NMR(ModelMessages.nuclearMagneticResonance), //
+	CAL(ModelMessages.retentionIndexCalibration), //
+	PCR(ModelMessages.polymeraseChainReaction), //
+	SEQ(ModelMessages.sequences), //
+	OBJ(ModelMessages.batchJobs), //
+	MTH(ModelMessages.methods), //
+	QDB(ModelMessages.quantitationDatabases), //
+	MALDI("MALDI-TOF MS"), // //$NON-NLS-1$
+	MSD_DATABASE(ModelMessages.massSpectralDatabases); //
 
-	private String label = "";
+	private String label = ""; //$NON-NLS-1$
 
 	private DataType(String label) {
 
@@ -112,7 +113,7 @@ public enum DataType implements ILabel {
 	 */
 	public static String ISD_LEGACY() {
 
-		return "ISD";
+		return "ISD"; //$NON-NLS-1$
 	}
 
 	/**

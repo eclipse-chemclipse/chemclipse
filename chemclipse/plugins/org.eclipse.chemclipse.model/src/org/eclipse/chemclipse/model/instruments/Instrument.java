@@ -19,13 +19,13 @@ public class Instrument {
 	/*
 	 * Use an empty string as the default id.
 	 */
-	private String identifier = "";
-	private String name = "";
-	private String description = "";
+	private String identifier = ""; //$NON-NLS-1$
+	private String name = ""; //$NON-NLS-1$
+	private String description = ""; //$NON-NLS-1$
 
 	public Instrument() {
 
-		this("", "Default", "This is the default instrument.");
+		this("", "Default", "This is the default instrument."); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	public Instrument(String identifier, String name, String description) {
@@ -107,20 +107,20 @@ public class Instrument {
 	@Override
 	public String toString() {
 
-		return "Instrument [identifier=" + identifier + //
-				", name=" + name + //
-				", description=" + description + //
-				"]";
+		return "Instrument [identifier=" + identifier + // //$NON-NLS-1$
+				", name=" + name + // //$NON-NLS-1$
+				", description=" + description + // //$NON-NLS-1$
+				"]"; //$NON-NLS-1$
 	}
 
 	private String removeNonAlphaNumericTokens(String value) {
 
-		return value.replaceAll("\\P{Alnum}", "");
+		return value.replaceAll("\\P{Alnum}", ""); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private String removeSeparatorTokens(String value) {
 
-		return value.replaceAll("\\" + InstrumentListUtil.SEPARATOR_ENTRY, "") //
-				.replaceAll(InstrumentListUtil.SEPARATOR_TOKEN, "");
+		return value.replaceAll("\\" + InstrumentListUtil.SEPARATOR_ENTRY, "") // //$NON-NLS-1$ //$NON-NLS-2$
+				.replaceAll(InstrumentListUtil.SEPARATOR_TOKEN, ""); //$NON-NLS-1$
 	}
 }

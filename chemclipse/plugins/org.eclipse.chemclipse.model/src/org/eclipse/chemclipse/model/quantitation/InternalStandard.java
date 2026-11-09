@@ -14,11 +14,11 @@ package org.eclipse.chemclipse.model.quantitation;
 
 public class InternalStandard implements IInternalStandard {
 
-	private String name = "";
+	private String name = ""; //$NON-NLS-1$
 	private double concentration;
 	private String concentrationUnit;
 	private double compensationFactor;
-	private String chemicalClass = "";
+	private String chemicalClass = ""; //$NON-NLS-1$
 
 	public InternalStandard(String name, double concentration, String concentrationUnit) {
 
@@ -43,7 +43,7 @@ public class InternalStandard implements IInternalStandard {
 	public void setName(String name) {
 
 		if(name == null) {
-			this.name = "";
+			this.name = ""; //$NON-NLS-1$
 		} else {
 			this.name = name;
 		}
@@ -138,6 +138,6 @@ public class InternalStandard implements IInternalStandard {
 	@Override
 	public String toString() {
 
-		return "InternalStandard [name=" + name + ", concentration=" + concentration + ", concentrationUnit=" + concentrationUnit + ", compensationFactor=" + compensationFactor + ", chemicalClass=" + chemicalClass + "]";
+		return "InternalStandard [name=" + name + ", concentration=" + concentration + ", concentrationUnit=" + concentrationUnit + ", compensationFactor=" + compensationFactor + ", chemicalClass=" + chemicalClass + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
 	}
 }

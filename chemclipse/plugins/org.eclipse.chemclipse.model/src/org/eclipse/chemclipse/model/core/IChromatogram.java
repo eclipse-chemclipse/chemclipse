@@ -33,7 +33,7 @@ import org.eclipse.chemclipse.support.history.ISupplierEditHistory;
  */
 public interface IChromatogram extends SegmentedMeasurement, IChromatogramOverview, IChromatogramPeaks, ISupplierEditHistory, IChromatogramBaseline, IUpdater, IChromatogramIntegrationSupport, IChromatogramProcessorSupport, ITargetSupplier, ITargetDisplaySettings {
 
-	String DEFAULT_CHROMATOGRAM_NAME = "Chromatogram";
+	String DEFAULT_CHROMATOGRAM_NAME = "Chromatogram"; //$NON-NLS-1$
 	int MIN_SCANDELAY = 0;
 	int MAX_SCANDELAY = 216000000; // 1h = 1000ms * 60 (-> 1sec) * 60 (-> 1min) * 60 (-> 1h)
 	int MIN_SCANINTERVAL = 1;

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2025 Lablicate GmbH.
+ * Copyright (c) 2013, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -22,7 +22,7 @@ public class QuantitationPeaks extends ArrayList<IQuantitationPeak> implements I
 	private static final long serialVersionUID = -4303659297540195715L;
 	private static final Logger logger = Logger.getLogger(QuantitationPeaks.class);
 
-	private String concentrationUnit = "";
+	private String concentrationUnit = ""; //$NON-NLS-1$
 
 	public QuantitationPeaks(String concentrationUnit) {
 		this.concentrationUnit = concentrationUnit;
@@ -49,14 +49,14 @@ public class QuantitationPeaks extends ArrayList<IQuantitationPeak> implements I
 	@Override
 	public boolean addAll(Collection<? extends IQuantitationPeak> quantitationPeaks) {
 
-		logger.warn("Please use the add() method.");
+		logger.warn("Please use the add() method."); //$NON-NLS-1$
 		return false;
 	}
 
 	@Override
 	public boolean addAll(int index, Collection<? extends IQuantitationPeak> quantitationPeaks) {
 
-		logger.warn("Please use the add() method.");
+		logger.warn("Please use the add() method."); //$NON-NLS-1$
 		return false;
 	}
 
@@ -65,7 +65,7 @@ public class QuantitationPeaks extends ArrayList<IQuantitationPeak> implements I
 		if(quantitationPeak != null && concentrationUnit.equals(quantitationPeak.getConcentrationUnit())) {
 			return true;
 		} else {
-			logger.warn("Can't add the IQuantitationPeak, cause it has a different concentration unit.");
+			logger.warn("Can't add the IQuantitationPeak, cause it has a different concentration unit."); //$NON-NLS-1$
 			return false;
 		}
 	}

@@ -94,13 +94,13 @@ public abstract class AbstractTotalScanSignal implements ITotalScanSignal {
 
 		StringBuilder builder = new StringBuilder();
 		builder.append(getClass().getName());
-		builder.append("[");
-		builder.append("retentionTime=" + getRetentionTime());
-		builder.append(",");
-		builder.append("retentionIndex=" + getRetentionIndex());
-		builder.append(",");
-		builder.append("totalSignal=" + getTotalSignal());
-		builder.append("]");
+		builder.append("["); //$NON-NLS-1$
+		builder.append("retentionTime=" + getRetentionTime()); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("retentionIndex=" + getRetentionIndex()); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("totalSignal=" + getTotalSignal()); //$NON-NLS-1$
+		builder.append("]"); //$NON-NLS-1$
 		return builder.toString();
 	}
 	// ------------------------------------hashCode, toString, equals

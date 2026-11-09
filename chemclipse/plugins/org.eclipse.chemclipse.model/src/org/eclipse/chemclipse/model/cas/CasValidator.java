@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024, 2025 Lablicate GmbH.
+ * Copyright (c) 2024, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -12,13 +12,14 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.cas;
 
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
 
 public class CasValidator implements IValidator<String> {
 
-	private static final String ERROR_MESSAGE = "The CAS# is invalid.";
+	private static final String ERROR_MESSAGE = ModelMessages.casIsInvalid;
 	private boolean allowEmpty = false;
 
 	public CasValidator(boolean allowEmpty) {

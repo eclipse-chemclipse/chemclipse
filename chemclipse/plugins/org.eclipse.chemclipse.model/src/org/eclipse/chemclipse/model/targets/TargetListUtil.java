@@ -18,14 +18,14 @@ import java.util.List;
 
 public class TargetListUtil {
 
-	public static final String EXAMPLE = "Styrene | 100-42-5 | comment | contributor | referenceId";
-	public static final String SEPARATOR_TOKEN = ";";
-	public static final String SEPARATOR_ENTRY = "|";
+	public static final String EXAMPLE = "Styrene | 100-42-5 | comment | contributor | referenceId"; //$NON-NLS-1$
+	public static final String SEPARATOR_TOKEN = ";"; //$NON-NLS-1$
+	public static final String SEPARATOR_ENTRY = "|"; //$NON-NLS-1$
 
 	public String createList(String[] items) {
 
 		List<String> list = getValues(items);
-		String values = "";
+		String values = ""; //$NON-NLS-1$
 		for(String value : list) {
 			values = values.concat(value + SEPARATOR_TOKEN);
 		}
@@ -46,7 +46,7 @@ public class TargetListUtil {
 	public List<String> getList(String preferenceEntry) {
 
 		List<String> values = new ArrayList<>();
-		if(!"".equals(preferenceEntry)) {
+		if(!"".equals(preferenceEntry)) { //$NON-NLS-1$
 			String[] items = parseString(preferenceEntry);
 			if(items.length > 0) {
 				for(String item : items) {

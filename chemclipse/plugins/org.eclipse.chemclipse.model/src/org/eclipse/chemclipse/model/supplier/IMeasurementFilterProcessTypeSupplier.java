@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -22,6 +22,7 @@ import java.util.function.Function;
 
 import org.eclipse.chemclipse.model.core.IMeasurement;
 import org.eclipse.chemclipse.model.filter.IMeasurementFilter;
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
 import org.eclipse.chemclipse.processing.ProcessorFactory;
 import org.eclipse.chemclipse.processing.core.ICategories;
 import org.eclipse.chemclipse.processing.supplier.AbstractProcessSupplier;
@@ -29,6 +30,7 @@ import org.eclipse.chemclipse.processing.supplier.IProcessSupplier;
 import org.eclipse.chemclipse.processing.supplier.IProcessTypeSupplier;
 import org.eclipse.chemclipse.processing.supplier.ProcessExecutionContext;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.osgi.util.NLS;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -62,7 +64,7 @@ public class IMeasurementFilterProcessTypeSupplier implements IProcessTypeSuppli
 
 	public static String getID(IMeasurementFilter<?> filter) {
 
-		return "MeasurementFilter:" + filter.getID();
+		return "MeasurementFilter:" + filter.getID(); //$NON-NLS-1$
 	}
 
 	private static final class MeasurementFilterProcessSupplier<SettingsClass> extends AbstractProcessSupplier<SettingsClass> implements IMeasurementProcessSupplier<SettingsClass> {
@@ -95,12 +97,12 @@ public class IMeasurementFilterProcessTypeSupplier implements IProcessTypeSuppli
 						// we can't process this item either...
 						resultList.add(measurement);
 						subMonitor.worked(1);
-						context.addWarnMessage(getName(), "measurement " + measurement.getDataName() + " is incompatible with this filter");
+						context.addWarnMessage(getName(), NLS.bind(ModelMessages.measurementIncompatibleWithFilter, measurement.getDataName()));
 						unprocessed++;
 					}
 				}
 				if(unprocessed > 0) {
-					context.addWarnMessage(getName(), unprocessed + " measurements are skipped because they are incompatible with this filter");
+					context.addWarnMessage(getName(), NLS.bind(ModelMessages.measurementsSkippedIncompatibleWithFilter, unprocessed));
 				}
 				return resultList;
 			}

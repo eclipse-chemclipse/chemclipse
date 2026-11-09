@@ -31,12 +31,12 @@ import org.eclipse.chemclipse.model.support.IntegrationConstraints;
 
 public abstract class AbstractPeak implements IPeak {
 
-	private String modelDescription = "";
+	private String modelDescription = ""; //$NON-NLS-1$
 	private PeakType peakType = PeakType.DEFAULT;
 	private int suggestedNumberOfComponents = 0; // 0 is the default
-	private String integratorDescription = "";
-	private String detectorDescription = "";
-	private String quantifierDescription = "";
+	private String integratorDescription = ""; //$NON-NLS-1$
+	private String detectorDescription = ""; //$NON-NLS-1$
+	private String quantifierDescription = ""; //$NON-NLS-1$
 	private boolean activeForAnalysis = true;
 	private List<IIntegrationEntry> integrationEntries = new ArrayList<>();
 	private final IIntegrationConstraints integrationConstraints = new IntegrationConstraints();
@@ -47,7 +47,7 @@ public abstract class AbstractPeak implements IPeak {
 	/*
 	 * Transient
 	 */
-	private String temporaryData = "";
+	private String temporaryData = ""; //$NON-NLS-1$
 	private boolean markedAsDeleted = false;
 
 	@Override
@@ -244,7 +244,7 @@ public abstract class AbstractPeak implements IPeak {
 	protected void validatePeakModel(IPeakModel peakModel) throws PeakException {
 
 		if(peakModel == null) {
-			throw new PeakException("The peak model must not be null");
+			throw new PeakException("The peak model must not be null"); //$NON-NLS-1$
 		}
 	}
 
@@ -254,7 +254,7 @@ public abstract class AbstractPeak implements IPeak {
 		 * Do not allow that the parentChromatogram is null.
 		 */
 		if(chromatogram == null) {
-			throw new PeakException("The parent chromatogram must not be null");
+			throw new PeakException("The parent chromatogram must not be null"); //$NON-NLS-1$
 		}
 	}
 
@@ -269,7 +269,7 @@ public abstract class AbstractPeak implements IPeak {
 		int startPeakModel = peakModel.getStartRetentionTime();
 		int stopPeakModel = peakModel.getStopRetentionTime();
 		if(startPeakModel < start || stopPeakModel > stop) {
-			throw new PeakException("The start and stop retention times of the peak must be within the chromatogram retention time borders (" + startPeakModel + " >= " + start + " && " + stop + " <= " + stopPeakModel + ").");
+			throw new PeakException("The start and stop retention times of the peak must be within the chromatogram retention time borders (" + startPeakModel + " >= " + start + " && " + stop + " <= " + stopPeakModel + ")."); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 		}
 	}
 

@@ -55,7 +55,7 @@ public class RetentionIndexEntry implements IRetentionIndexEntry {
 	public void setName(String name) {
 
 		if(name == null) {
-			this.name = "";
+			this.name = ""; //$NON-NLS-1$
 		} else {
 			this.name = name;
 		}
@@ -88,13 +88,13 @@ public class RetentionIndexEntry implements IRetentionIndexEntry {
 
 		StringBuilder builder = new StringBuilder();
 		builder.append(getClass().getName());
-		builder.append("[");
-		builder.append("retentionTime=" + retentionTime);
-		builder.append(",");
-		builder.append("retentionIndex=" + retentionIndex);
-		builder.append(",");
-		builder.append("name=" + name);
-		builder.append("]");
+		builder.append("["); //$NON-NLS-1$
+		builder.append("retentionTime=" + retentionTime); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("retentionIndex=" + retentionIndex); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("name=" + name); //$NON-NLS-1$
+		builder.append("]"); //$NON-NLS-1$
 		return builder.toString();
 	}
 }

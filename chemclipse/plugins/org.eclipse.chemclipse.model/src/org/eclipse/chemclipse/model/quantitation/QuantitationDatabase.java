@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -25,10 +25,10 @@ public class QuantitationDatabase extends HashSet<IQuantitationCompound> impleme
 	 * File and ConverterId are set by the DB converter.
 	 */
 	private File file = null;
-	private String converterId = "";
+	private String converterId = ""; //$NON-NLS-1$
 
-	private String operator = "";
-	private String description = "";
+	private String operator = ""; //$NON-NLS-1$
+	private String description = ""; //$NON-NLS-1$
 
 	@Override
 	public File getFile() {

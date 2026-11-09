@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024, 2025 Lablicate GmbH.
+ * Copyright (c) 2024, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -20,15 +20,15 @@ public class FileHeaderDataSupport {
 	/*
 	 * A line break is not supported by this regular expression header field option.
 	 */
-	public static final String VALUE_DELIMITER = "=====";
-	public static final String SETTING_DEFAULT = "SHORT_INFO=====(.*)=====0";
+	public static final String VALUE_DELIMITER = "====="; //$NON-NLS-1$
+	public static final String SETTING_DEFAULT = "SHORT_INFO=====(.*)=====0"; //$NON-NLS-1$
 
 	public static void load(FileHeaderData fileHeaderData, String value) {
 
 		/*
 		 * Escape the delimiter.
 		 */
-		String[] values = value.split("\\" + VALUE_DELIMITER);
+		String[] values = value.split("\\" + VALUE_DELIMITER); //$NON-NLS-1$
 		if(values.length == 3) {
 			fileHeaderData.setHeaderField(getHeaderField(values[0]));
 			fileHeaderData.setRegularExpression(values[1].trim());

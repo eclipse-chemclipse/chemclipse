@@ -19,7 +19,7 @@ public interface IChromatogramBaseline {
 	/*
 	 * Do not translate this ID.
 	 */
-	String DEFAULT_BASELINE_ID = "Default"; // $NON-NLS-1$
+	String DEFAULT_BASELINE_ID = "Default"; //$NON-NLS-1$
 
 	/**
 	 * Returns the active baseline model.<br/>

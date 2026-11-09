@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2025 Lablicate GmbH.
+ * Copyright (c) 2022, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -127,7 +127,7 @@ public class RetentionIndexMap {
 		 */
 		if(treeMap.size() >= 2) {
 			Entry<Integer, Integer> firstEntry = treeMap.firstEntry();
-			separationColumnIndices.put(new RetentionIndexEntry(firstEntry.getValue(), firstEntry.getKey(), "Start"));
+			separationColumnIndices.put(new RetentionIndexEntry(firstEntry.getValue(), firstEntry.getKey(), "Start")); //$NON-NLS-1$
 			/*
 			 * Check C1 - C99
 			 */
@@ -166,7 +166,7 @@ public class RetentionIndexMap {
 			Entry<Integer, Integer> lastEntry = treeMap.lastEntry();
 			int retentionTime = lastEntry.getValue();
 			if(!separationColumnIndices.containsKey(retentionTime)) {
-				separationColumnIndices.put(new RetentionIndexEntry(lastEntry.getValue(), lastEntry.getKey(), "Stop"));
+				separationColumnIndices.put(new RetentionIndexEntry(lastEntry.getValue(), lastEntry.getKey(), "Stop")); //$NON-NLS-1$
 			}
 		}
 	}

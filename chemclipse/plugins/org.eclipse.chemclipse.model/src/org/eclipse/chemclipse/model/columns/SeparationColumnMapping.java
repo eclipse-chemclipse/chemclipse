@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -31,15 +31,15 @@ public class SeparationColumnMapping extends HashMap<String, SeparationColumnTyp
 	private static final Logger logger = Logger.getLogger(SeparationColumnMapping.class);
 	private static final long serialVersionUID = 5357306927108529230L;
 
-	public static final String DESCRIPTION = "Separation Column Mapping";
-	public static final String FILE_EXTENSION = ".scm";
-	public static final String FILE_NAME = DESCRIPTION.replaceAll("\\s", "") + FILE_EXTENSION;
-	public static final String FILTER_EXTENSION = "*" + FILE_EXTENSION;
-	public static final String FILTER_NAME = DESCRIPTION + " (*" + FILE_EXTENSION + ")";
+	public static final String DESCRIPTION = "Separation Column Mapping"; //$NON-NLS-1$
+	public static final String FILE_EXTENSION = ".scm"; //$NON-NLS-1$
+	public static final String FILE_NAME = DESCRIPTION.replaceAll("\\s", "") + FILE_EXTENSION; //$NON-NLS-1$ //$NON-NLS-2$
+	public static final String FILTER_EXTENSION = "*" + FILE_EXTENSION; //$NON-NLS-1$
+	public static final String FILTER_NAME = DESCRIPTION + " (*" + FILE_EXTENSION + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 
-	public static final String SEPARATOR_TOKEN = ";";
-	public static final String SEPARATOR_ENTRY = "|";
-	public static final String LINE_DELIMITER = "\n";
+	public static final String SEPARATOR_TOKEN = ";"; //$NON-NLS-1$
+	public static final String SEPARATOR_ENTRY = "|"; //$NON-NLS-1$
+	public static final String LINE_DELIMITER = "\n"; //$NON-NLS-1$
 
 	public void load(String items) {
 
@@ -106,7 +106,7 @@ public class SeparationColumnMapping extends HashMap<String, SeparationColumnTyp
 
 	private void loadSettings(String items) {
 
-		if(!"".equals(items)) {
+		if(!"".equals(items)) { //$NON-NLS-1$
 			String[] parsedItems = parseString(items);
 			if(parsedItems.length > 0) {
 				for(String item : parsedItems) {
@@ -118,7 +118,7 @@ public class SeparationColumnMapping extends HashMap<String, SeparationColumnTyp
 
 	private void addItem(String item) {
 
-		String[] values = item.split("\\" + SEPARATOR_ENTRY);
+		String[] values = item.split("\\" + SEPARATOR_ENTRY); //$NON-NLS-1$
 		if(values.length == 2) {
 			try {
 				SeparationColumnType separationColumnType = SeparationColumnType.valueOf(values[1].trim());

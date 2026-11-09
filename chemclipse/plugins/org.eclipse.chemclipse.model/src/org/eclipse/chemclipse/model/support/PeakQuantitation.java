@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2025 Lablicate GmbH.
+ * Copyright (c) 2016, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -24,11 +24,11 @@ public class PeakQuantitation {
 
 	private int retentionTime = 0;
 	private double integratedArea = 0;
-	private String name = "";
-	private String casNumber = "";
-	private String referenceIdentifier = "";
-	private String classifier = "";
-	private String quantifier = "";
+	private String name = ""; //$NON-NLS-1$
+	private String casNumber = ""; //$NON-NLS-1$
+	private String referenceIdentifier = ""; //$NON-NLS-1$
+	private String classifier = ""; //$NON-NLS-1$
+	private String quantifier = ""; //$NON-NLS-1$
 	private List<Double> concentrations = new ArrayList<>();
 	/*
 	 * Used as a reference

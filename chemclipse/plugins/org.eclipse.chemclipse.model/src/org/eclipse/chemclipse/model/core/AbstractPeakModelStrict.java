@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2025 Lablicate GmbH.
+ * Copyright (c) 2013, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -54,7 +54,7 @@ public abstract class AbstractPeakModelStrict implements IPeakModel {
 		if(areInflectionPointsAvailable()) {
 			point = Equations.calculateIntersection(increasingInflectionPointEquation, decreasingInflectionPointEquation);
 		} else {
-			throw new SolverException("The increasing/decreasing equation is missing.");
+			throw new SolverException("The increasing/decreasing equation is missing."); //$NON-NLS-1$
 		}
 
 		return point;
@@ -67,7 +67,7 @@ public abstract class AbstractPeakModelStrict implements IPeakModel {
 		if(areInflectionPointsAvailable()) {
 			point = Equations.calculateIntersection(increasing ? increasingInflectionPointEquation : decreasingInflectionPointEquation, linearEquation);
 		} else {
-			throw new SolverException("The increasing/decreasing equation is missing.");
+			throw new SolverException("The increasing/decreasing equation is missing."); //$NON-NLS-1$
 		}
 
 		return point;

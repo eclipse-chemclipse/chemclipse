@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -59,7 +59,7 @@ public class SeparationColumnIndices extends TreeMap<Integer, IRetentionIndexEnt
 	@Override
 	public String toString() {
 
-		return "SeparationColumnIndices [separationColumn=" + separationColumn + "]";
+		return "SeparationColumnIndices [separationColumn=" + separationColumn + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	@Override

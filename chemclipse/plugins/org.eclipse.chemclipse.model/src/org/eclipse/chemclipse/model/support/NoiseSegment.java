@@ -21,7 +21,7 @@ public class NoiseSegment implements INoiseSegment {
 
 	private IAnalysisSegment analysisSegment = null;
 	private double noiseFactor = 0.0d;
-	private String traces = "";
+	private String traces = ""; //$NON-NLS-1$
 	private boolean use = false;
 	private boolean userSelection = false;
 

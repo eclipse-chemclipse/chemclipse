@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022, 2025 Lablicate GmbH.
+ * Copyright (c) 2022, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -12,13 +12,14 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.settings;
 
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
 import org.eclipse.chemclipse.support.text.ILabel;
 
 public enum Delimiter implements ILabel {
 
-	COMMA(',', "Comma"), //
-	SEMICOLON(';', "Semicolon"), //
-	TAB('\t', "Tab");
+	COMMA(',', ModelMessages.comma), //
+	SEMICOLON(';', ModelMessages.semicolon), //
+	TAB('\t', ModelMessages.tab);
 
 	private char character;
 	private String label;

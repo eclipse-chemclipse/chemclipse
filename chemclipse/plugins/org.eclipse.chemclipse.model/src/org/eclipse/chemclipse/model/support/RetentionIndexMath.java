@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2025 Lablicate GmbH.
+ * Copyright (c) 2014, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -24,7 +24,7 @@ public class RetentionIndexMath {
 
 	public static final int RETENTION_INDEX_MISSING = 0;
 	public static final int RETENTION_TIME_MISSING = -1;
-	public static final String ALKANE_PREFIX = "C";
+	public static final String ALKANE_PREFIX = "C"; //$NON-NLS-1$
 
 	/**
 	 * Calculate the value if both entries exists.

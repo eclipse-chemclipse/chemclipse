@@ -32,10 +32,10 @@ import org.eclipse.chemclipse.support.text.ValueFormat;
 
 public class TargetReference implements ITargetReference {
 
-	private static final DecimalFormat FORMAT = ValueFormat.getDecimalFormatEnglish("0.000");
+	private static final DecimalFormat FORMAT = ValueFormat.getDecimalFormatEnglish("0.000"); //$NON-NLS-1$
 
-	private String id = "";
-	private String retentionTimeMinutes = "";
+	private String id = ""; //$NON-NLS-1$
+	private String retentionTimeMinutes = ""; //$NON-NLS-1$
 	private float retentionIndex = 0.0f;
 	private TargetReferenceType type = TargetReferenceType.NONE;
 	private ISignal signal = null;
@@ -50,7 +50,7 @@ public class TargetReference implements ITargetReference {
 
 	public static String createID(TargetReferenceType type, String retentionTimeMinutes) {
 
-		return type.label() + "." + retentionTimeMinutes;
+		return type.label() + "." + retentionTimeMinutes; //$NON-NLS-1$
 	}
 
 	public <X extends ISignal & ITargetSupplier> TargetReference(X item, TargetReferenceType type, String retentionTimeMinutes, float retentionIndex) {

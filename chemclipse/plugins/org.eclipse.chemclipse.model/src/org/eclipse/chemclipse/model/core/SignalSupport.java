@@ -36,7 +36,7 @@ public class SignalSupport {
 		} else if(signals.size() == 1 && signals.get(0) == ITrace.TOTAL_INTENSITY) {
 			return ITrace.TOTAL_INTENSITY_DESCRIPTION;
 		} else {
-			return signals.stream().sorted().map(value -> decimalFormat.format(value)).collect(Collectors.joining(", "));
+			return signals.stream().sorted().map(value -> decimalFormat.format(value)).collect(Collectors.joining(", ")); //$NON-NLS-1$
 		}
 	}
 

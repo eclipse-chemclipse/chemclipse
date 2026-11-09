@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2025 Lablicate GmbH.
+ * Copyright (c) 2020, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -16,8 +16,8 @@ import java.util.Objects;
 
 public class NamedTrace {
 
-	private String identifier = "";
-	private String traces = "";
+	private String identifier = ""; //$NON-NLS-1$
+	private String traces = ""; //$NON-NLS-1$
 
 	public NamedTrace(String identifier, String traces) {
 
@@ -67,6 +67,6 @@ public class NamedTrace {
 	@Override
 	public String toString() {
 
-		return "NamedTrace [identifier=" + identifier + ", traces=" + traces + "]";
+		return "NamedTrace [identifier=" + identifier + ", traces=" + traces + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 }

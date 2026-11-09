@@ -20,7 +20,7 @@ public class SeparationColumn extends AbstractSeparationColumn {
 
 	public SeparationColumn(String name, SeparationColumnType separationColumnType) {
 
-		this(name, separationColumnType, "", "", "");
+		this(name, separationColumnType, "", "", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	public SeparationColumn(String name, SeparationColumnType separationColumnType, String length, String diameter, String phase) {

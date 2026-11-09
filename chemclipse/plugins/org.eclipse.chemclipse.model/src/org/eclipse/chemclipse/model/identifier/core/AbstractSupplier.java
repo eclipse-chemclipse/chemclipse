@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -21,9 +21,9 @@ import org.eclipse.chemclipse.support.literature.LiteratureReference;
 
 public abstract class AbstractSupplier<S extends IIdentifierSettings> implements ISupplierSetter {
 
-	private String description = "";
-	private String id = "";
-	private String identifierName = "";
+	private String description = ""; //$NON-NLS-1$
+	private String id = ""; //$NON-NLS-1$
+	private String identifierName = ""; //$NON-NLS-1$
 	private Class<? extends S> identifierSettingsClass;
 	private List<LiteratureReference> literatureReference = new ArrayList<>();
 
@@ -112,13 +112,13 @@ public abstract class AbstractSupplier<S extends IIdentifierSettings> implements
 
 		StringBuilder builder = new StringBuilder();
 		builder.append(getClass().getName());
-		builder.append("[");
-		builder.append("id=" + this.id);
-		builder.append(",");
-		builder.append("description=" + this.description);
-		builder.append(",");
-		builder.append("identifierName=" + this.identifierName);
-		builder.append("]");
+		builder.append("["); //$NON-NLS-1$
+		builder.append("id=" + this.id); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("description=" + this.description); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("identifierName=" + this.identifierName); //$NON-NLS-1$
+		builder.append("]"); //$NON-NLS-1$
 		return builder.toString();
 	}
 }

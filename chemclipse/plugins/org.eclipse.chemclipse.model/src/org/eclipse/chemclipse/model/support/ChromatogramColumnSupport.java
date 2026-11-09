@@ -60,7 +60,7 @@ public class ChromatogramColumnSupport {
 
 	private static void mapSeparationColumn(IChromatogram chromatogram, ColumnField columnField, SeparationColumnMapping separationColumnMapping) {
 
-		String mappedData = ColumnUtil.getColumnData(chromatogram, columnField, "");
+		String mappedData = ColumnUtil.getColumnData(chromatogram, columnField, ""); //$NON-NLS-1$
 		if(!mappedData.isEmpty()) {
 			ISeparationColumn separationColumn = getSeparationColumn(separationColumnMapping, mappedData);
 			if(separationColumn != null) {

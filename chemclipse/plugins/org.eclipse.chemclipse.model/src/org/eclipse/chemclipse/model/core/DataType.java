@@ -12,17 +12,18 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.core;
 
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
 import org.eclipse.chemclipse.support.text.ILabel;
 
 public enum DataType implements ILabel {
 
-	STRING("String"), //
-	BOOLEAN("Boolean"), //
-	INTEGER("Integer"), //
-	FLOAT("Float"), //
-	DOUBLE("Double");
+	STRING(ModelMessages.stringType), //
+	BOOLEAN(ModelMessages.booleanType), //
+	INTEGER(ModelMessages.integerType), //
+	FLOAT(ModelMessages.floatType), //
+	DOUBLE(ModelMessages.doubleType);
 
-	private String label = "";
+	private String label = ""; //$NON-NLS-1$
 
 	private DataType(String label) {
 

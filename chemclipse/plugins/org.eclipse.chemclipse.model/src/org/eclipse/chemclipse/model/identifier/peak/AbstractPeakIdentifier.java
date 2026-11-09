@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -28,7 +28,7 @@ public abstract class AbstractPeakIdentifier implements IPeakIdentifier {
 	public void validatePeak(IPeak peak) throws ValueMustNotBeNullException {
 
 		if(peak == null) {
-			throw new ValueMustNotBeNullException("The peak must not be null.");
+			throw new ValueMustNotBeNullException("The peak must not be null."); //$NON-NLS-1$
 		}
 	}
 
@@ -41,7 +41,7 @@ public abstract class AbstractPeakIdentifier implements IPeakIdentifier {
 	public void validateSettings(IIdentifierSettings identifierSettings) throws ValueMustNotBeNullException {
 
 		if(identifierSettings == null) {
-			throw new ValueMustNotBeNullException("The identifier settings must not be null.");
+			throw new ValueMustNotBeNullException("The identifier settings must not be null."); //$NON-NLS-1$
 		}
 	}
 }

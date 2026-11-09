@@ -21,18 +21,18 @@ import org.eclipse.chemclipse.support.traces.ITrace;
 public abstract class AbstractQuantitationEntry implements IQuantitationEntry {
 
 	private static final long serialVersionUID = -9169349509443899583L;
-	private static final String DESCRIPTION_DELIMITER = " | ";
+	private static final String DESCRIPTION_DELIMITER = " | "; //$NON-NLS-1$
 
 	private List<Double> signals = new ArrayList<>();
-	private String name = "";
-	private String group = ""; // Used e.g. for repetitions
-	private String chemicalClass = "";
+	private String name = ""; //$NON-NLS-1$
+	private String group = ""; // Used e.g. for repetitions //$NON-NLS-1$
+	private String chemicalClass = ""; //$NON-NLS-1$
 	private double concentration = 0.0d;
-	private String concentrationUnit = "";
+	private String concentrationUnit = ""; //$NON-NLS-1$
 	private double area = 0.0d;
-	private String calibrationMethod = "";
+	private String calibrationMethod = ""; //$NON-NLS-1$
 	private boolean usedCrossZero = true;
-	private String description = "";
+	private String description = ""; //$NON-NLS-1$
 	private QuantitationFlag quantitationFlag = QuantitationFlag.NONE;
 
 	public AbstractQuantitationEntry(String name, String group, double concentration, String concentrationUnit, double area) {
@@ -208,6 +208,6 @@ public abstract class AbstractQuantitationEntry implements IQuantitationEntry {
 	@Override
 	public String toString() {
 
-		return "AbstractQuantitationEntry [signals=" + signals + ", name=" + name + ", group=" + group + ", chemicalClass=" + chemicalClass + ", concentration=" + concentration + ", concentrationUnit=" + concentrationUnit + ", area=" + area + ", calibrationMethod=" + calibrationMethod + ", usedCrossZero=" + usedCrossZero + ", description=" + description + ", quantitationFlag=" + quantitationFlag + "]";
+		return "AbstractQuantitationEntry [signals=" + signals + ", name=" + name + ", group=" + group + ", chemicalClass=" + chemicalClass + ", concentration=" + concentration + ", concentrationUnit=" + concentrationUnit + ", area=" + area + ", calibrationMethod=" + calibrationMethod + ", usedCrossZero=" + usedCrossZero + ", description=" + description + ", quantitationFlag=" + quantitationFlag + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
 	}
 }

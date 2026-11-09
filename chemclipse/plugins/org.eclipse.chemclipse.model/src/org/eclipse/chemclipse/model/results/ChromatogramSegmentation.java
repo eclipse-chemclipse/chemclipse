@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
 import org.eclipse.chemclipse.model.support.AnalysisSupport;
 import org.eclipse.chemclipse.model.support.ChromatogramSegment;
 
@@ -37,7 +38,7 @@ public class ChromatogramSegmentation extends AnalysisSegmentMeasurementResult<C
 	@Override
 	public String getName() {
 
-		return "Chromatogram Segments";
+		return ModelMessages.chromatogramSegments;
 	}
 
 	@Override

@@ -28,7 +28,7 @@ public class TimeRange {
 
 	public static final float MINUTE_FACTOR = 60000.0f;
 
-	private String identifier = "";
+	private String identifier = ""; //$NON-NLS-1$
 	/*
 	 * Milliseconds
 	 * ---
@@ -44,7 +44,7 @@ public class TimeRange {
 	 * use specific traces e.g. m/z values for the given range.
 	 * Designed to be used with TraceFactory.parseTraces(...).
 	 */
-	private String traces = "";
+	private String traces = ""; //$NON-NLS-1$
 	/*
 	 * Transient
 	 */
@@ -82,10 +82,10 @@ public class TimeRange {
 		 * Validity checks.
 		 */
 		if(start < 0 || maximum < 0 || stop < 0) {
-			throw new IllegalArgumentException("Start/Maximum/Stop must be >= 0.");
+			throw new IllegalArgumentException("Start/Maximum/Stop must be >= 0."); //$NON-NLS-1$
 		}
 
-		this.identifier = (identifier != null) ? identifier : "";
+		this.identifier = (identifier != null) ? identifier : ""; //$NON-NLS-1$
 		this.start = Math.min(start, stop);
 		this.stop = Math.max(start, stop);
 		updateMaximum();
@@ -255,6 +255,6 @@ public class TimeRange {
 	@Override
 	public String toString() {
 
-		return "TimeRange [identifier=" + identifier + ", start=" + start + ", maximum=" + maximum + ", stop=" + stop + ", traces=" + traces + "]";
+		return "TimeRange [identifier=" + identifier + ", start=" + start + ", maximum=" + maximum + ", stop=" + stop + ", traces=" + traces + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
 	}
 }

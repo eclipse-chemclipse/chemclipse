@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024, 2025 Lablicate GmbH.
+ * Copyright (c) 2024, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.validators;
 
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
 import org.eclipse.chemclipse.model.ranges.TimeRange;
 import org.eclipse.chemclipse.support.util.ValueParserSupport;
 import org.eclipse.core.databinding.validation.IValidator;
@@ -20,7 +21,7 @@ import org.eclipse.core.runtime.IStatus;
 
 public class TimeRangeValidator extends ValueParserSupport implements IValidator<Object> {
 
-	private String identifier = "";
+	private String identifier = ""; //$NON-NLS-1$
 	private int start = 0;
 	private int center = 0;
 	private int stop = 0;
@@ -30,56 +31,56 @@ public class TimeRangeValidator extends ValueParserSupport implements IValidator
 
 		String message = null;
 		if(value == null) {
-			message = "Value can't be null";
+			message = ModelMessages.valueMustNotBeNull;
 		} else {
 			if(value instanceof String) {
 				String text = ((String)value).trim();
 				if(text.isEmpty()) {
-					message = "Entry can't be empty";
+					message = ModelMessages.entryMustNotBeEmpty;
 				} else {
 					/*
 					 * Extract the name
 					 */
-					identifier = "";
+					identifier = ""; //$NON-NLS-1$
 					start = 0;
 					center = 0;
 					stop = 0;
 
-					String[] values = text.trim().split("\\" + '|'); // The pipe needs to be escaped.
+					String[] values = text.trim().split("\\" + '|'); // The pipe needs to be escaped. //$NON-NLS-1$
 					if(values.length > 1) {
 						/*
 						 * Evaluation
 						 */
 						identifier = parseString(values, 0);
 						if(identifier.isBlank()) {
-							message = "The identifier must not be blank.";
+							message = ModelMessages.identifierMustNotBeBlank;
 						}
 
 						start = parseInteger(values, 1);
 						if(start < 0) {
-							message = "The start must not be < 0.";
+							message = ModelMessages.startMustNotBeNegative;
 						}
 
 						center = parseInteger(values, 2);
 						if(start < 0) {
-							message = "The center must not be < 0.";
+							message = ModelMessages.centerMustNotBeNegative;
 						}
 
 						stop = parseInteger(values, 1);
 						if(stop < 0) {
-							message = "The stop must not be < 0.";
+							message = ModelMessages.stopMustNotBeNegative;
 						}
 
 						if(start > stop) {
-							message = "Start must not be > than stop.";
+							message = ModelMessages.startMustNotBeGreaterThanStop;
 						}
 
 					} else {
-						message = "Please enter a valid identifier.";
+						message = ModelMessages.enterValidIdentifier;
 					}
 				}
 			} else {
-				message = "Value has to be a string.";
+				message = ModelMessages.valueHasToBeString;
 			}
 		}
 

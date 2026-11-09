@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -16,8 +16,8 @@ import java.util.Objects;
 
 public class UserLocation {
 
-	private String name = "";
-	private String path = "";
+	private String name = ""; //$NON-NLS-1$
+	private String path = ""; //$NON-NLS-1$
 
 	public UserLocation(String name, String path) {
 
@@ -67,6 +67,6 @@ public class UserLocation {
 	@Override
 	public String toString() {
 
-		return "UserLocation [name=" + name + ", path=" + path + "]";
+		return "UserLocation [name=" + name + ", path=" + path + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 }

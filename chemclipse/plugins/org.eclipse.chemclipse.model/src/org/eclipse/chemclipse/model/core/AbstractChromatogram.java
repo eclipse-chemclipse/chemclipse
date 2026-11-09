@@ -53,10 +53,10 @@ public abstract class AbstractChromatogram extends AbstractMeasurementTarget imp
 	private static final long serialVersionUID = -2540103992883061431L;
 	private static final Logger logger = Logger.getLogger(AbstractChromatogram.class);
 
-	private static final String COLUMN_DETAILS = "Column Details";
+	private static final String COLUMN_DETAILS = "Column Details"; //$NON-NLS-1$
 
 	private boolean finalized = false;
-	private String converterId = "";
+	private String converterId = ""; //$NON-NLS-1$
 	private File file = null; // The file object of the chromatogram.
 	private int scanDelay = 4500;
 	private int scanInterval = 1000; // 1000ms = 1 scan per second
@@ -97,7 +97,7 @@ public abstract class AbstractChromatogram extends AbstractMeasurementTarget imp
 	/*
 	 * Integration entries.
 	 */
-	private String integratorDescription = "";
+	private String integratorDescription = ""; //$NON-NLS-1$
 	private List<IIntegrationEntry> chromatogramIntegrationEntries = new ArrayList<>();
 	private List<IIntegrationEntry> backgroundIntegrationEntries = new ArrayList<>();
 
@@ -130,7 +130,7 @@ public abstract class AbstractChromatogram extends AbstractMeasurementTarget imp
 	protected AbstractChromatogram() {
 
 		baselineModelMap.put(DEFAULT_BASELINE_ID, new BaselineModel(this));
-		putHeaderData(COLUMN_DETAILS, "");
+		putHeaderData(COLUMN_DETAILS, ""); //$NON-NLS-1$
 		resetNoiseFactor();
 	}
 
@@ -143,7 +143,7 @@ public abstract class AbstractChromatogram extends AbstractMeasurementTarget imp
 	@Override
 	public void setColumnDetails(String columnDetails) {
 
-		putHeaderData(COLUMN_DETAILS, columnDetails != null ? columnDetails : "");
+		putHeaderData(COLUMN_DETAILS, columnDetails != null ? columnDetails : ""); //$NON-NLS-1$
 	}
 
 	@Override
@@ -220,7 +220,7 @@ public abstract class AbstractChromatogram extends AbstractMeasurementTarget imp
 	@Override
 	public String getConverterId() {
 
-		return finalized ? "" : converterId;
+		return finalized ? "" : converterId; //$NON-NLS-1$
 	}
 
 	@Override
@@ -959,19 +959,19 @@ public abstract class AbstractChromatogram extends AbstractMeasurementTarget imp
 
 		StringBuilder builder = new StringBuilder();
 		builder.append(getClass().getName());
-		builder.append("[");
-		builder.append("numberOfScans=" + getNumberOfScans());
-		builder.append(",");
-		builder.append("totalSignal=" + getTotalSignal());
-		builder.append(",");
-		builder.append("minSignal=" + getMinSignal());
-		builder.append(",");
-		builder.append("maxSignal=" + getMaxSignal());
-		builder.append(",");
-		builder.append("startRetentionTime=" + getStartRetentionTime());
-		builder.append(",");
-		builder.append("stopRetentionTime=" + getStopRetentionTime());
-		builder.append("]");
+		builder.append("["); //$NON-NLS-1$
+		builder.append("numberOfScans=" + getNumberOfScans()); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("totalSignal=" + getTotalSignal()); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("minSignal=" + getMinSignal()); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("maxSignal=" + getMaxSignal()); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("startRetentionTime=" + getStartRetentionTime()); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("stopRetentionTime=" + getStopRetentionTime()); //$NON-NLS-1$
+		builder.append("]"); //$NON-NLS-1$
 		return builder.toString();
 	}
 }
