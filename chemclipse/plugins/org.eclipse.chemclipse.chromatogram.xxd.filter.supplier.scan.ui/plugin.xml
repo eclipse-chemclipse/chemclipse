@@ -4,11 +4,11 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.scan.ui.icon.MenuIconScanDensity"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/scanDensity.gif"
             id="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.scandensity">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.scan.ui.icon.MenuIconScanRemover"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/scanremover.gif"
             id="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.scanremover">
       </icon>      
    </extension>  

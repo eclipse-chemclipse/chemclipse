@@ -4,11 +4,11 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.edit.supplier.snip.ui.icon.SnipBaselineMenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/baselineSnip.gif"
             id="org.eclipse.chemclipse.chromatogram.xxd.baseline.detector.supplier.snip">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.edit.supplier.snip.ui.icon.SnipPeakMenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/snipMassSpectrumPeaks.gif"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.snip.peak">
       </icon>
    </extension>

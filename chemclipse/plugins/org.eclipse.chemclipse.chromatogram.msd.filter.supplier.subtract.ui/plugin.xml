@@ -10,15 +10,15 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.ui.icon.MenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/subtractScanDefault.gif"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.chromatogram">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.ui.icon.MenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/subtractScanDefault.gif"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.peak">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.ui.icon.MenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/subtractScanDefault.gif"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.subtract.massspectrum">
       </icon>
    </extension>

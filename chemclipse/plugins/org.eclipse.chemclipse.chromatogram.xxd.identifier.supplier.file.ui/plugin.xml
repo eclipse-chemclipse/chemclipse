@@ -13,35 +13,35 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.ui.icon.MenuIconFile"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/massSpectrumFile.gif"
             id="org.eclipse.chemclipse.chromatogram.msd.identifier.supplier.file.peak">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.ui.icon.MenuIconFile"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/massSpectrumFile.gif"
             id="org.eclipse.chemclipse.chromatogram.msd.identifier.supplier.file.massSpectrum">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.ui.icon.MenuIconFile"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/massSpectrumFile.gif"
             id="org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.chromatogram">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.ui.icon.MenuIconUnknown"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/scalable/unknown.svg"
             id="org.eclipse.chemclipse.chromatogram.msd.identifier.supplier.unknown.peak">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.ui.icon.MenuIconUnknown"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/scalable/unknown.svg"
             id="org.eclipse.chemclipse.chromatogram.msd.identifier.supplier.unknown.massSpectrum">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.ui.icon.MenuIconUnknown"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/scalable/unknown.svg"
             id="org.eclipse.chemclipse.chromatogram.csd.identifier.supplier.unknown.peak">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.ui.icon.MenuIconUnknown"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/scalable/unknown.svg"
             id="org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.unknown.peak">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.identifier.supplier.file.ui.icon.MenuIconUnknown"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/scalable/unknown.svg"
             id="org.eclipse.chemclipse.chromatogram.wsd.identifier.supplier.unknown.waveSpectrum">
       </icon>
    </extension>

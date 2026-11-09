@@ -13,14 +13,14 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.msd.converter.supplier.mzxml.ui.icon.MenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/scalable/generic_xml_obj.svg"
             id="org.eclipse.chemclipse.msd.converter.supplier.mzxml">
       </icon>
    </extension>
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.msd.converter.supplier.mzxml.ui.icon.MenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/scalable/generic_xml_obj.svg"
             id="org.eclipse.chemclipse.msd.converter.supplier.mzxml.ms">
       </icon>
    </extension>

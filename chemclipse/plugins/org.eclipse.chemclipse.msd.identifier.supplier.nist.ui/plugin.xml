@@ -13,15 +13,15 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.msd.identifier.supplier.nist.ui.icon.MenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/nist.gif"
             id="org.eclipse.chemclipse.msd.identifier.supplier.nist.peak">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.msd.identifier.supplier.nist.ui.icon.MenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/nist.gif"
             id="org.eclipse.chemclipse.msd.identifier.supplier.nist.massSpectrum">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.msd.identifier.supplier.nist.ui.icon.MenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/nist.gif"
             id="org.eclipse.chemclipse.msd.identifier.supplier.nist.massSpectrumDirect">
       </icon>
    </extension>

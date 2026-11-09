@@ -52,7 +52,7 @@
          <attribute name="class" type="string">
             <annotation>
                <documentation>
-                  Provides the icon, e.g. one of the shared ChemClipse images.
+                  Provides the icon when it can't be named by the icon attribute.
                </documentation>
                <appinfo>
                   <meta.attribute kind="java" basedOn=":org.eclipse.chemclipse.xxd.process.ui.menu.IMenuIcon"/>
@@ -62,7 +62,7 @@
          <attribute name="icon" type="string">
             <annotation>
                <documentation>
-                  The path of a 16x16 image in the contributing bundle, used instead of class.
+                  The path of a 16x16 image in the contributing bundle, used instead of class. Images of other bundles are named by a platform:/plugin/ URL, e.g. platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/baseline.gif for one of the shared ChemClipse images.
                </documentation>
                <appinfo>
                   <meta.attribute kind="resource"/>

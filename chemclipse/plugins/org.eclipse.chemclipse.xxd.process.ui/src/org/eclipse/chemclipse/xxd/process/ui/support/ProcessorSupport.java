@@ -51,6 +51,7 @@ public class ProcessorSupport {
 	 */
 	private static final String VALUE_DELIMITER = "§";
 	private static final String PROCESSOR_DELIMITER = "%";
+	private static final String PLATFORM_PLUGIN = "platform:/plugin/";
 
 	private static ValueParserSupport valueParseSupport = new ValueParserSupport();
 
@@ -185,10 +186,17 @@ public class ProcessorSupport {
 		String icon = element.getAttribute("icon");
 		if(icon != null) {
 			String bundleName = element.getContributor().getName();
-			String key = bundleName + "/" + icon;
+			String path = icon;
+			int separator = icon.indexOf('/', PLATFORM_PLUGIN.length());
+			if(icon.startsWith(PLATFORM_PLUGIN) && separator > 0) {
+				// an image of another bundle, e.g. one of the shared ChemClipse images
+				bundleName = icon.substring(PLATFORM_PLUGIN.length(), separator);
+				path = icon.substring(separator + 1);
+			}
+			String key = bundleName + "/" + path;
 			ImageRegistry imageRegistry = JFaceResources.getImageRegistry();
 			if(imageRegistry.getDescriptor(key) == null) {
-				ResourceLocator.imageDescriptorFromBundle(bundleName, icon).ifPresent(descriptor -> imageRegistry.put(key, descriptor));
+				ResourceLocator.imageDescriptorFromBundle(bundleName, path).ifPresent(descriptor -> imageRegistry.put(key, descriptor));
 			}
 			return imageRegistry.get(key);
 		}

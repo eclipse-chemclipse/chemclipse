@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.chromatogram.wsd.peak.detector.supplier.firstderivative.ui.icon.MenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/peakdetector.gif"
             id="org.eclipse.chemclipse.chromatogram.wsd.peak.detector.supplier.firstderivative">
       </icon>
    </extension>

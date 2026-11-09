@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.baseline.detector.ui.icon.BaselineDeleteMenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/baselineDelete.gif"
             id="org.eclipse.chemclipse.chromatogram.xxd.baseline.detector.impl.delete">
       </icon>
    </extension>

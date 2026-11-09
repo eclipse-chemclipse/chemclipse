@@ -13,14 +13,14 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.msd.converter.supplier.amdis.ui.icon.ChromatogramCombinedSpectrumMenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/massSpectrumLibrary.gif"
             id="org.eclipse.chemclipse.msd.converter.supplier.amdis.chromatogram.combined.msl">
       </icon>
    </extension>
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.msd.converter.supplier.amdis.ui.icon.ChromatogramExportMenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/nist_peaks.gif"
             id="org.eclipse.chemclipse.msd.converter.supplier.amdis.chromatogram">
       </icon>
    </extension>
