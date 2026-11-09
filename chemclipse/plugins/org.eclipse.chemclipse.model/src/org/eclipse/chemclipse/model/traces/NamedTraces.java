@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2025 Lablicate GmbH.
+ * Copyright (c) 2020, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -34,11 +34,11 @@ public class NamedTraces {
 
 	private static final Logger logger = Logger.getLogger(NamedTraces.class);
 
-	public static final String DESCRIPTION = "Named Traces";
-	public static final String FILE_EXTENSION = ".ntr";
-	public static final String FILE_NAME = DESCRIPTION.replaceAll("\\s", "") + FILE_EXTENSION;
-	public static final String FILTER_EXTENSION = "*" + FILE_EXTENSION;
-	public static final String FILTER_NAME = DESCRIPTION + " (*" + FILE_EXTENSION + ")";
+	public static final String DESCRIPTION = "Named Traces"; //$NON-NLS-1$
+	public static final String FILE_EXTENSION = ".ntr"; //$NON-NLS-1$
+	public static final String FILE_NAME = DESCRIPTION.replaceAll("\\s", "") + FILE_EXTENSION; //$NON-NLS-1$ //$NON-NLS-2$
+	public static final String FILTER_EXTENSION = "*" + FILE_EXTENSION; //$NON-NLS-1$
+	public static final String FILTER_NAME = DESCRIPTION + " (*" + FILE_EXTENSION + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 
 	private NamedTraceListUtil namedTraceListUtil = new NamedTraceListUtil();
 	private final Map<String, NamedTrace> namedTraceMap = new HashMap<>();
@@ -124,10 +124,10 @@ public class NamedTraces {
 
 		NamedTrace namedTrace = null;
 
-		if(!"".equals(item)) {
-			String[] values = item.split("\\" + NamedTraceListUtil.SEPARATOR_ENTRY);
-			String identifier = ((values.length > 0) ? values[0].trim() : "");
-			String traces = ((values.length > 1) ? values[1].trim() : "");
+		if(!"".equals(item)) { //$NON-NLS-1$
+			String[] values = item.split("\\" + NamedTraceListUtil.SEPARATOR_ENTRY); //$NON-NLS-1$
+			String identifier = ((values.length > 0) ? values[0].trim() : ""); //$NON-NLS-1$
+			String traces = ((values.length > 1) ? values[1].trim() : ""); //$NON-NLS-1$
 			namedTrace = new NamedTrace(identifier, traces);
 		}
 
@@ -201,7 +201,7 @@ public class NamedTraces {
 
 	private void loadSettings(String timeRanges) {
 
-		if(!"".equals(timeRanges)) {
+		if(!"".equals(timeRanges)) { //$NON-NLS-1$
 			String[] items = namedTraceListUtil.parseString(timeRanges);
 			if(items.length > 0) {
 				for(String item : items) {
@@ -217,9 +217,9 @@ public class NamedTraces {
 	private void extractNamedTrace(NamedTrace namedTrace, StringBuilder builder) {
 
 		builder.append(namedTrace.getIdentifier());
-		builder.append(" ");
+		builder.append(" "); //$NON-NLS-1$
 		builder.append(NamedTraceListUtil.SEPARATOR_ENTRY);
-		builder.append(" ");
+		builder.append(" "); //$NON-NLS-1$
 		builder.append(namedTrace.getTraces());
 	}
 }

@@ -22,44 +22,44 @@ import org.eclipse.chemclipse.support.preferences.IPreferenceSupplier;
 
 public class PreferenceSupplier extends AbstractPreferenceSupplier {
 
-	public static final String P_MISC_SEPARATOR = "miscSeparator";
-	public static final String DEF_MISC_SEPARATOR = "!";
-	public static final String P_MISC_SEPARATED_DELIMITER = "miscSeparatedDelimiter";
-	public static final String DEF_MISC_SEPARATED_DELIMITER = " ";
-	public static final String P_USE_RETENTION_INDEX_QC = "useRetentionIndexQC";
+	public static final String P_MISC_SEPARATOR = "miscSeparator"; //$NON-NLS-1$
+	public static final String DEF_MISC_SEPARATOR = "!"; //$NON-NLS-1$
+	public static final String P_MISC_SEPARATED_DELIMITER = "miscSeparatedDelimiter"; //$NON-NLS-1$
+	public static final String DEF_MISC_SEPARATED_DELIMITER = " "; //$NON-NLS-1$
+	public static final String P_USE_RETENTION_INDEX_QC = "useRetentionIndexQC"; //$NON-NLS-1$
 	public static final boolean DEF_USE_RETENTION_INDEX_QC = false; // Must be activated manually.
-	public static final String P_CONDENSE_CYCLE_NUMBER_SCANS = "condenseCycleNumberScans";
+	public static final String P_CONDENSE_CYCLE_NUMBER_SCANS = "condenseCycleNumberScans"; //$NON-NLS-1$
 	public static final boolean DEF_CONDENSE_CYCLE_NUMBER_SCANS = true;
-	public static final String P_SHOW_RETENTION_INDEX_WITHOUT_DECIMALS = "showRetentionIndexWithoutDecimals";
+	public static final String P_SHOW_RETENTION_INDEX_WITHOUT_DECIMALS = "showRetentionIndexWithoutDecimals"; //$NON-NLS-1$
 	public static final boolean DEF_SHOW_RETENTION_INDEX_WITHOUT_DECIMALS = true;
-	public static final String P_SHOW_AREA_WITHOUT_DECIMALS = "showAreaWithoutDecimals";
+	public static final String P_SHOW_AREA_WITHOUT_DECIMALS = "showAreaWithoutDecimals"; //$NON-NLS-1$
 	public static final boolean DEF_SHOW_AREA_WITHOUT_DECIMALS = true;
-	public static final String P_SORT_CASE_SENSITIVE = "sortCaseSensitive";
+	public static final String P_SORT_CASE_SENSITIVE = "sortCaseSensitive"; //$NON-NLS-1$
 	public static final boolean DEF_SORT_CASE_SENSITIVE = true;
-	public static final String P_SEARCH_CASE_SENSITIVE = "searchCaseSensitive";
+	public static final String P_SEARCH_CASE_SENSITIVE = "searchCaseSensitive"; //$NON-NLS-1$
 	public static final boolean DEF_SEARCH_CASE_SENSITIVE = false;
-	public static final String P_BEST_TARGET_LIBRARY_FIELD = "bestTargetLibraryField";
+	public static final String P_BEST_TARGET_LIBRARY_FIELD = "bestTargetLibraryField"; //$NON-NLS-1$
 	public static final String DEF_BEST_TARGET_LIBRARY_FIELD = LibraryField.NAME.name();
-	public static final String P_ION_ROUND_METHOD = "ionRoundMethod"; // When changing this value, call clearCacheActiveIonRoundMethod.
+	public static final String P_ION_ROUND_METHOD = "ionRoundMethod"; // When changing this value, call clearCacheActiveIonRoundMethod. //$NON-NLS-1$
 	public static final String DEF_ION_ROUND_METHOD = IonRoundMethod.DEFAULT.name();
 	/*
 	 * Separation Columns
 	 */
-	public static final String P_PARSE_SEPARATION_COLUMN_FROM_HEADER = "parseSeparationColumnFromHeader";
+	public static final String P_PARSE_SEPARATION_COLUMN_FROM_HEADER = "parseSeparationColumnFromHeader"; //$NON-NLS-1$
 	public static final boolean DEF_PARSE_SEPARATION_COLUMN_FROM_HEADER = true;
-	public static final String P_SEPARATION_COLUMN_HEADER_FIELD = "separationColumnHeaderField";
+	public static final String P_SEPARATION_COLUMN_HEADER_FIELD = "separationColumnHeaderField"; //$NON-NLS-1$
 	public static final String DEF_SEPARATION_COLUMN_HEADER_FIELD = ColumnField.COLUMN_DETAILS.name();
-	public static final String P_PARSE_SEPARATION_COLUMN_REFERENCED_CHROMATOGRAMS = "parseSeparationColumnReferencedChromatograms";
+	public static final String P_PARSE_SEPARATION_COLUMN_REFERENCED_CHROMATOGRAMS = "parseSeparationColumnReferencedChromatograms"; //$NON-NLS-1$
 	public static final boolean DEF_PARSE_SEPARATION_COLUMN_REFERENCED_CHROMATOGRAMS = true;
-	public static final String P_SEPARATION_COLUMN_MAPPINGS = "separationColumnMappings";
-	public static final String DEF_SEPARATION_COLUMN_MAPPINGS = "";
+	public static final String P_SEPARATION_COLUMN_MAPPINGS = "separationColumnMappings"; //$NON-NLS-1$
+	public static final String DEF_SEPARATION_COLUMN_MAPPINGS = ""; //$NON-NLS-1$
 	/*
 	 * Don't show in the preference page
 	 */
-	public static final String P_LIST_PATH_IMPORT = "listPathImport";
-	public static final String DEF_LIST_PATH_IMPORT = "";
-	public static final String P_LIST_PATH_EXPORT = "listPathExport";
-	public static final String DEF_LIST_PATH_EXPORT = "";
+	public static final String P_LIST_PATH_IMPORT = "listPathImport"; //$NON-NLS-1$
+	public static final String DEF_LIST_PATH_IMPORT = ""; //$NON-NLS-1$
+	public static final String P_LIST_PATH_EXPORT = "listPathExport"; //$NON-NLS-1$
+	public static final String DEF_LIST_PATH_EXPORT = ""; //$NON-NLS-1$
 	/*
 	 * Used to cache the round method.
 	 * Call clearCacheActiveIonRoundMethod to force a reload.

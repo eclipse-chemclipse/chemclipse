@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -28,12 +28,12 @@ public class SeparationColumnFactory {
 		if(separationColumn != null) {
 			String label = separationColumn.getSeparationColumnType().label();
 			if(label.length() > labelLength) {
-				label = label.substring(0, labelLength) + "...";
+				label = label.substring(0, labelLength) + "..."; //$NON-NLS-1$
 			}
 			return label;
 		}
 
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	public static List<ISeparationColumn> getSeparationColumns() {
@@ -56,7 +56,7 @@ public class SeparationColumnFactory {
 
 	public static ISeparationColumn getSeparationColumn(String name) {
 
-		return getSeparationColumn(name, "", "", "");
+		return getSeparationColumn(name, "", "", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	public static ISeparationColumn getSeparationColumn(String name, String length, String diameter, String phase) {
@@ -67,7 +67,7 @@ public class SeparationColumnFactory {
 
 	public static ISeparationColumn getSeparationColumn(SeparationColumnType separationColumnType) {
 
-		return new SeparationColumn(separationColumnType.name(), separationColumnType, "", "", "");
+		return new SeparationColumn(separationColumnType.name(), separationColumnType, "", "", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	public static ISeparationColumnIndices getSeparationColumnIndices(SeparationColumnType separationColumnType) {
@@ -116,9 +116,9 @@ public class SeparationColumnFactory {
 			/*
 			 * Backward compatibility (RetentionIndexType)
 			 */
-			addColumnMapping(separationColumnMapping, "POLAR", SeparationColumnType.POLAR);
-			addColumnMapping(separationColumnMapping, "SEMIPOLAR", SeparationColumnType.SEMI_POLAR);
-			addColumnMapping(separationColumnMapping, "APOLAR", SeparationColumnType.NON_POLAR);
+			addColumnMapping(separationColumnMapping, "POLAR", SeparationColumnType.POLAR); //$NON-NLS-1$
+			addColumnMapping(separationColumnMapping, "SEMIPOLAR", SeparationColumnType.SEMI_POLAR); //$NON-NLS-1$
+			addColumnMapping(separationColumnMapping, "APOLAR", SeparationColumnType.NON_POLAR); //$NON-NLS-1$
 			/*
 			 * Standards
 			 */

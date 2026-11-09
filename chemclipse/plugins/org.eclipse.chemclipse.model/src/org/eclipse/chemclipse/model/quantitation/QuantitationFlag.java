@@ -12,17 +12,18 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.quantitation;
 
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
 import org.eclipse.chemclipse.support.text.ILabel;
 
 public enum QuantitationFlag implements ILabel {
-	NONE("", ""), //
-	ZERO("0", "Z"), //
-	NEGATIVE("< 0", "N"), //
-	LOWER_MIN_AREA("< Min Area", "L"), //
-	HIGHER_MAX_AREA("> Max Area", "H");
+	NONE("", ""), // //$NON-NLS-1$ //$NON-NLS-2$
+	ZERO("0", "Z"), // //$NON-NLS-1$ //$NON-NLS-2$
+	NEGATIVE("< 0", "N"), // //$NON-NLS-1$ //$NON-NLS-2$
+	LOWER_MIN_AREA(ModelMessages.lessThanMinArea, "L"), // //$NON-NLS-1$
+	HIGHER_MAX_AREA(ModelMessages.greaterThanMaxArea, "H"); //$NON-NLS-1$
 
-	private String label = "";
-	private String shortcut = "";
+	private String label = ""; //$NON-NLS-1$
+	private String shortcut = ""; //$NON-NLS-1$
 
 	private QuantitationFlag(String label, String shortcut) {
 

@@ -21,11 +21,11 @@ public abstract class AbstractQuantitationCompound implements IQuantitationCompo
 
 	private static final long serialVersionUID = 1901297052527290065L;
 
-	private String name = ""; // Styrene
-	private String chemicalClass = ""; // Styrene-Butadiene
+	private String name = ""; // Styrene //$NON-NLS-1$
+	private String chemicalClass = ""; // Styrene-Butadiene //$NON-NLS-1$
 	private IRetentionTimeWindow retentionTimeWindow = new RetentionTimeWindow();
 	private IRetentionIndexWindow retentionIndexWindow = new RetentionIndexWindow();
-	private String concentrationUnit = ""; // mg/kg
+	private String concentrationUnit = ""; // mg/kg //$NON-NLS-1$
 	private boolean useTIC = true;
 	private CalibrationMethod calibrationMethod = CalibrationMethod.LINEAR;
 	private boolean useCrossZero = true;
@@ -201,7 +201,7 @@ public abstract class AbstractQuantitationCompound implements IQuantitationCompo
 	@Override
 	public String toString() {
 
-		return "AbstractQuantitationCompound [name=" + name + ", chemicalClass=" + chemicalClass + ", concentrationUnit=" + concentrationUnit + ", useTIC=" + useTIC + ", calibrationMethod=" + calibrationMethod + ", useCrossZero=" + useCrossZero + "]";
+		return "AbstractQuantitationCompound [name=" + name + ", chemicalClass=" + chemicalClass + ", concentrationUnit=" + concentrationUnit + ", useTIC=" + useTIC + ", calibrationMethod=" + calibrationMethod + ", useCrossZero=" + useCrossZero + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
 	}
 
 	@Override

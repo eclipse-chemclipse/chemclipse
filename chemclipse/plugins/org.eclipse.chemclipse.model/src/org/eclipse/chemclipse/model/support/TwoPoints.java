@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -24,7 +24,7 @@ public class TwoPoints implements ITwoPoints {
 
 	public TwoPoints(IPoint p1, IPoint p2) throws PointIsNullException {
 		if(p1 == null || p2 == null) {
-			throw new PointIsNullException("The points p1 and p2 must not be null.");
+			throw new PointIsNullException("The points p1 and p2 must not be null."); //$NON-NLS-1$
 		}
 		this.p1 = p1;
 		this.p2 = p2;

@@ -58,7 +58,7 @@ public class PeakFilterProcessTypeSupplier implements IProcessTypeSupplier {
 
 	public static String getID(IPeakFilter<?> filter) {
 
-		return "PeakFilter:" + filter.getID();
+		return "PeakFilter:" + filter.getID(); //$NON-NLS-1$
 	}
 
 	public class PeakFilterProcessSupplier<ConfigType> extends AbstractProcessSupplier<ConfigType> implements IChromatogramSelectionProcessSupplier<ConfigType> {

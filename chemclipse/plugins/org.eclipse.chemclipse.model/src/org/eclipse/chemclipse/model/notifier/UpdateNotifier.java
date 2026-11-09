@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2025 Lablicate GmbH.
+ * Copyright (c) 2020, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -109,7 +109,7 @@ public class UpdateNotifier {
 
 		IEventBroker eventBroker = Activator.getDefault().getEventBroker();
 		if(eventBroker != null) {
-			eventBroker.send(IChemClipseEvents.TOPIC_PART_UPDATE, "Force the listening parts to update their content.");
+			eventBroker.send(IChemClipseEvents.TOPIC_PART_UPDATE, "Force the listening parts to update their content."); //$NON-NLS-1$
 		}
 	}
 }

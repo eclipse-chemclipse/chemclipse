@@ -177,6 +177,6 @@ public class ExtractTransferDefinition {
 	@Override
 	public String toString() {
 
-		return "ExtractTransferDefinition [sourceField=" + sourceField + ", regularExpression=" + regularExpression + ", groupIndex=" + groupIndex + "]";
+		return "ExtractTransferDefinition [sourceField=" + sourceField + ", regularExpression=" + regularExpression + ", groupIndex=" + groupIndex + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 }

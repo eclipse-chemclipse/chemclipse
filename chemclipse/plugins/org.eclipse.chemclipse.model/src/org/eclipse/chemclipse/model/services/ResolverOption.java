@@ -12,17 +12,18 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.services;
 
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
 import org.eclipse.chemclipse.support.text.ILabel;
 
 public enum ResolverOption implements ILabel {
 
-	SYNONYM("Synonym"), //
-	CAS("CAS"), //
-	SMILES("SMILES"), //
-	INCHI("InChI"), //
-	INCHIKEY("InChIKey"); //
+	SYNONYM(ModelMessages.synonym), //
+	CAS("CAS"), // //$NON-NLS-1$
+	SMILES("SMILES"), // //$NON-NLS-1$
+	INCHI("InChI"), // //$NON-NLS-1$
+	INCHIKEY("InChIKey"); // //$NON-NLS-1$
 
-	private String label = "";
+	private String label = ""; //$NON-NLS-1$
 
 	private ResolverOption(String label) {
 

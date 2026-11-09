@@ -12,14 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.quantitation;
 
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
 import org.eclipse.chemclipse.support.text.ILabel;
 
 public enum WeightingOption implements ILabel {
 
-	STANDARD("Standard"), //
-	ONE_OVER_X("1/x"); //
+	STANDARD(ModelMessages.standard), //
+	ONE_OVER_X("1/x"); // //$NON-NLS-1$
 
-	private String label = "";
+	private String label = ""; //$NON-NLS-1$
 
 	private WeightingOption(String label) {
 

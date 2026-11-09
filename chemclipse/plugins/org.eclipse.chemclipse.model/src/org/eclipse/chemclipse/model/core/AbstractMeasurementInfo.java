@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -33,26 +33,26 @@ public abstract class AbstractMeasurementInfo implements IMeasurementInfo {
 	/*
 	 * Generic Fields
 	 */
-	public static final String MODULATION_TIME = "Modulation Time";
+	public static final String MODULATION_TIME = "Modulation Time"; //$NON-NLS-1$
 	/*
 	 * Harmonized Header Data
 	 */
-	private static final String INSTRUMENT = "Instrument";
-	private static final String OPERATOR = "Operator";
-	private static final String DATE = "Date";
-	private static final String MISC_INFO = "Misc Info";
-	private static final String MISC_INFO_SEPARATED = "Misc Info Separated";
-	private static final String SHORT_INFO = "Short Info";
-	private static final String DETAILED_INFO = "Detailed Info";
-	private static final String SAMPLE_NAME = "Sample Name";
-	private static final String SAMPLE_GROUP = "Sample Group";
-	private static final String BARCODE = "Barcode";
-	private static final String BARCODE_TYPE = "Barcode Type";
-	private static final String SAMPLE_WEIGHT = "Sample Weight";
-	private static final String SAMPLE_WEIGHT_UNIT = "Sample Weight Unit";
-	private static final String DATA_NAME = "Data Name";
-	private static final String FINDINGS = "Findings";
-	private static final String TAGS = "Tags";
+	private static final String INSTRUMENT = "Instrument"; //$NON-NLS-1$
+	private static final String OPERATOR = "Operator"; //$NON-NLS-1$
+	private static final String DATE = "Date"; //$NON-NLS-1$
+	private static final String MISC_INFO = "Misc Info"; //$NON-NLS-1$
+	private static final String MISC_INFO_SEPARATED = "Misc Info Separated"; //$NON-NLS-1$
+	private static final String SHORT_INFO = "Short Info"; //$NON-NLS-1$
+	private static final String DETAILED_INFO = "Detailed Info"; //$NON-NLS-1$
+	private static final String SAMPLE_NAME = "Sample Name"; //$NON-NLS-1$
+	private static final String SAMPLE_GROUP = "Sample Group"; //$NON-NLS-1$
+	private static final String BARCODE = "Barcode"; //$NON-NLS-1$
+	private static final String BARCODE_TYPE = "Barcode Type"; //$NON-NLS-1$
+	private static final String SAMPLE_WEIGHT = "Sample Weight"; //$NON-NLS-1$
+	private static final String SAMPLE_WEIGHT_UNIT = "Sample Weight Unit"; //$NON-NLS-1$
+	private static final String DATA_NAME = "Data Name"; //$NON-NLS-1$
+	private static final String FINDINGS = "Findings"; //$NON-NLS-1$
+	private static final String TAGS = "Tags"; //$NON-NLS-1$
 
 	private Set<String> protectKeys = new HashSet<>();
 	private Map<String, String> headerMap = new HashMap<>();
@@ -61,22 +61,22 @@ public abstract class AbstractMeasurementInfo implements IMeasurementInfo {
 
 	public AbstractMeasurementInfo() {
 
-		headerMap.put(INSTRUMENT, "");
-		headerMap.put(OPERATOR, "");
+		headerMap.put(INSTRUMENT, ""); //$NON-NLS-1$
+		headerMap.put(OPERATOR, ""); //$NON-NLS-1$
 		headerMap.put(DATE, dateFormat.format(new Date()));
-		headerMap.put(MISC_INFO, "");
-		headerMap.put(MISC_INFO_SEPARATED, "");
-		headerMap.put(SHORT_INFO, "");
-		headerMap.put(DETAILED_INFO, "");
-		headerMap.put(SAMPLE_NAME, "");
-		headerMap.put(SAMPLE_GROUP, "");
-		headerMap.put(BARCODE, "");
-		headerMap.put(BARCODE_TYPE, "");
+		headerMap.put(MISC_INFO, ""); //$NON-NLS-1$
+		headerMap.put(MISC_INFO_SEPARATED, ""); //$NON-NLS-1$
+		headerMap.put(SHORT_INFO, ""); //$NON-NLS-1$
+		headerMap.put(DETAILED_INFO, ""); //$NON-NLS-1$
+		headerMap.put(SAMPLE_NAME, ""); //$NON-NLS-1$
+		headerMap.put(SAMPLE_GROUP, ""); //$NON-NLS-1$
+		headerMap.put(BARCODE, ""); //$NON-NLS-1$
+		headerMap.put(BARCODE_TYPE, ""); //$NON-NLS-1$
 		headerMap.put(SAMPLE_WEIGHT, Double.toString(0.0d));
-		headerMap.put(SAMPLE_WEIGHT_UNIT, "");
-		headerMap.put(DATA_NAME, "");
-		headerMap.put(FINDINGS, "");
-		headerMap.put(TAGS, "");
+		headerMap.put(SAMPLE_WEIGHT_UNIT, ""); //$NON-NLS-1$
+		headerMap.put(DATA_NAME, ""); //$NON-NLS-1$
+		headerMap.put(FINDINGS, ""); //$NON-NLS-1$
+		headerMap.put(TAGS, ""); //$NON-NLS-1$
 
 		protectKeys.addAll(headerMap.keySet());
 	}
@@ -129,7 +129,7 @@ public abstract class AbstractMeasurementInfo implements IMeasurementInfo {
 	public void removeHeaderData(String key) throws InvalidHeaderModificationException {
 
 		if(isKeyProtected(key)) {
-			throw new InvalidHeaderModificationException("It's not possible to remove the following key: " + key);
+			throw new InvalidHeaderModificationException("It's not possible to remove the following key: " + key); //$NON-NLS-1$
 		} else {
 			headerMap.remove(key);
 		}
@@ -182,7 +182,7 @@ public abstract class AbstractMeasurementInfo implements IMeasurementInfo {
 		if(date != null) {
 			putHeaderData(DATE, dateFormat.format(date));
 		} else {
-			putHeaderData(DATE, "");
+			putHeaderData(DATE, ""); //$NON-NLS-1$
 		}
 	}
 
@@ -209,8 +209,8 @@ public abstract class AbstractMeasurementInfo implements IMeasurementInfo {
 				putHeaderData(MISC_INFO, miscInfo);
 			}
 		} else {
-			putHeaderData(MISC_INFO, "");
-			putHeaderData(MISC_INFO_SEPARATED, "");
+			putHeaderData(MISC_INFO, ""); //$NON-NLS-1$
+			putHeaderData(MISC_INFO_SEPARATED, ""); //$NON-NLS-1$
 		}
 	}
 
@@ -238,7 +238,7 @@ public abstract class AbstractMeasurementInfo implements IMeasurementInfo {
 		if(shortInfo != null) {
 			putHeaderData(SHORT_INFO, shortInfo);
 		} else {
-			putHeaderData(SHORT_INFO, "");
+			putHeaderData(SHORT_INFO, ""); //$NON-NLS-1$
 		}
 	}
 
@@ -254,7 +254,7 @@ public abstract class AbstractMeasurementInfo implements IMeasurementInfo {
 		if(detailedInfo != null) {
 			putHeaderData(DETAILED_INFO, detailedInfo);
 		} else {
-			putHeaderData(DETAILED_INFO, "");
+			putHeaderData(DETAILED_INFO, ""); //$NON-NLS-1$
 		}
 	}
 
@@ -270,7 +270,7 @@ public abstract class AbstractMeasurementInfo implements IMeasurementInfo {
 		if(sampleName != null) {
 			putHeaderData(SAMPLE_NAME, sampleName);
 		} else {
-			putHeaderData(SAMPLE_NAME, "");
+			putHeaderData(SAMPLE_NAME, ""); //$NON-NLS-1$
 		}
 	}
 
@@ -286,7 +286,7 @@ public abstract class AbstractMeasurementInfo implements IMeasurementInfo {
 		if(sampleGroup != null) {
 			putHeaderData(SAMPLE_GROUP, sampleGroup);
 		} else {
-			putHeaderData(SAMPLE_GROUP, "");
+			putHeaderData(SAMPLE_GROUP, ""); //$NON-NLS-1$
 		}
 	}
 
@@ -302,7 +302,7 @@ public abstract class AbstractMeasurementInfo implements IMeasurementInfo {
 		if(barcode != null) {
 			putHeaderData(BARCODE, barcode);
 		} else {
-			putHeaderData(BARCODE, "");
+			putHeaderData(BARCODE, ""); //$NON-NLS-1$
 		}
 	}
 
@@ -318,7 +318,7 @@ public abstract class AbstractMeasurementInfo implements IMeasurementInfo {
 		if(barcodeType != null) {
 			putHeaderData(BARCODE_TYPE, barcodeType);
 		} else {
-			putHeaderData(BARCODE_TYPE, "");
+			putHeaderData(BARCODE_TYPE, ""); //$NON-NLS-1$
 		}
 	}
 
@@ -354,7 +354,7 @@ public abstract class AbstractMeasurementInfo implements IMeasurementInfo {
 		if(sampleWeightUnit != null) {
 			putHeaderData(SAMPLE_WEIGHT_UNIT, sampleWeightUnit);
 		} else {
-			putHeaderData(SAMPLE_WEIGHT_UNIT, "");
+			putHeaderData(SAMPLE_WEIGHT_UNIT, ""); //$NON-NLS-1$
 		}
 	}
 
@@ -370,7 +370,7 @@ public abstract class AbstractMeasurementInfo implements IMeasurementInfo {
 		if(dataName != null) {
 			putHeaderData(DATA_NAME, dataName);
 		} else {
-			putHeaderData(DATA_NAME, "");
+			putHeaderData(DATA_NAME, ""); //$NON-NLS-1$
 		}
 	}
 
@@ -383,7 +383,7 @@ public abstract class AbstractMeasurementInfo implements IMeasurementInfo {
 	@Override
 	public void setFindings(String findings) {
 
-		putHeaderData(FINDINGS, findings != null ? findings : "");
+		putHeaderData(FINDINGS, findings != null ? findings : ""); //$NON-NLS-1$
 	}
 
 	@Override
@@ -395,6 +395,6 @@ public abstract class AbstractMeasurementInfo implements IMeasurementInfo {
 	@Override
 	public void setTags(String tags) {
 
-		putHeaderData(TAGS, tags != null ? tags : "");
+		putHeaderData(TAGS, tags != null ? tags : ""); //$NON-NLS-1$
 	}
 }

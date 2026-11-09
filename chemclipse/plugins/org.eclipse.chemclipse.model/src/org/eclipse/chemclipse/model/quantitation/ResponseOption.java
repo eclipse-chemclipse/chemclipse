@@ -12,14 +12,15 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.quantitation;
 
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
 import org.eclipse.chemclipse.support.text.ILabel;
 
 public enum ResponseOption implements ILabel {
 
-	COMPENSATION_FACTOR("Compensation Factor"), //
-	RESPONSE_FACTOR("Response Factor"); //
+	COMPENSATION_FACTOR(ModelMessages.compensationFactor), //
+	RESPONSE_FACTOR(ModelMessages.responseFactor); //
 
-	private String label = "";
+	private String label = ""; //$NON-NLS-1$
 
 	private ResponseOption(String label) {
 

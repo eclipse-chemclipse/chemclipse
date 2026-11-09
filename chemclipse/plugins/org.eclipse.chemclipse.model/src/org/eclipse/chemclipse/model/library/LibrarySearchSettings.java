@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023, 2025 Lablicate GmbH.
+ * Copyright (c) 2023, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -19,7 +19,7 @@ import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 
 public class LibrarySearchSettings {
 
-	private String searchColumn = "";
+	private String searchColumn = ""; //$NON-NLS-1$
 	private int retentionTime = 0;
 	private int retentionIndex = 0;
 	private List<IIdentificationTarget> identificationTargets = new ArrayList<>();

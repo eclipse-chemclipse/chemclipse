@@ -70,7 +70,7 @@ public interface IMeasurementFilter<ConfigType> extends Filter<ConfigType> {
 		if(acceptsIMeasurements(items)) {
 			return createNewConfiguration();
 		} else {
-			throw new IllegalArgumentException("incompatible items in collection");
+			throw new IllegalArgumentException("incompatible items in collection"); //$NON-NLS-1$
 		}
 	}
 }

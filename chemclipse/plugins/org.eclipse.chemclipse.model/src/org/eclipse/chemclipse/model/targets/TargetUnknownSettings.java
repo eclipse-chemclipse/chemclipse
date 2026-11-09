@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2025 Lablicate GmbH.
+ * Copyright (c) 2021, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -17,12 +17,12 @@ public class TargetUnknownSettings {
 	/*
 	 * Unknown [57,71,43,85,41]
 	 */
-	private String targetName = "Unknown";
+	private String targetName = "Unknown"; //$NON-NLS-1$
 	private float matchQuality = 100.0f;
 	private int numberTraces = 5;
 	private boolean includeIntensityPercent = false;
-	private String markerStart = "[";
-	private String markerStop = "]";
+	private String markerStart = "["; //$NON-NLS-1$
+	private String markerStop = "]"; //$NON-NLS-1$
 	private boolean includeRetentionTime = false;
 	private boolean includeRetentionIndex = false;
 
@@ -33,7 +33,7 @@ public class TargetUnknownSettings {
 
 	public void setTargetName(String targetName) {
 
-		this.targetName = (targetName == null) ? "" : targetName;
+		this.targetName = (targetName == null) ? "" : targetName; //$NON-NLS-1$
 	}
 
 	public float getMatchQuality() {
@@ -73,7 +73,7 @@ public class TargetUnknownSettings {
 
 	public void setMarkerStart(String markerStart) {
 
-		this.markerStart = (markerStart == null) ? "" : markerStart;
+		this.markerStart = (markerStart == null) ? "" : markerStart; //$NON-NLS-1$
 	}
 
 	public String getMarkerStop() {
@@ -83,7 +83,7 @@ public class TargetUnknownSettings {
 
 	public void setMarkerStop(String markerStop) {
 
-		this.markerStop = (markerStop == null) ? "" : markerStop;
+		this.markerStop = (markerStop == null) ? "" : markerStop; //$NON-NLS-1$
 	}
 
 	public boolean isIncludeRetentionTime() {

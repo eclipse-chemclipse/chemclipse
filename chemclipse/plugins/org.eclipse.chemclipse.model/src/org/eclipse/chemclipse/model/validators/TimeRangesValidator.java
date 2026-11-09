@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024, 2025 Lablicate GmbH.
+ * Copyright (c) 2024, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -12,12 +12,14 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.validators;
 
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
 import org.eclipse.chemclipse.model.ranges.TimeRange;
 import org.eclipse.chemclipse.model.ranges.TimeRanges;
 import org.eclipse.chemclipse.support.util.ValueParserSupport;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.osgi.util.NLS;
 
 public class TimeRangesValidator extends ValueParserSupport implements IValidator<Object> {
 
@@ -26,20 +28,20 @@ public class TimeRangesValidator extends ValueParserSupport implements IValidato
 
 		String message = null;
 		if(value == null) {
-			message = "The time ranges are empty.";
+			message = ModelMessages.timeRangesAreEmpty;
 		} else {
 			if(value instanceof TimeRanges timeRanges) {
 				for(TimeRange timeRange : timeRanges.values()) {
 					if(timeRange.getIdentifier().isEmpty()) {
-						message = "The identifier is empty.";
+						message = ModelMessages.identifierIsEmpty;
 					} else {
 						if(timeRange.getStart() > timeRange.getStop()) {
-							message = "The start must not be greater than the stop value.";
+							message = ModelMessages.startMustNotBeGreaterThanStopValue;
 						}
 					}
 				}
 			} else {
-				message = "The settings class is not of type: " + TimeRanges.class.getName();
+				message = NLS.bind(ModelMessages.settingsClassNotOfType, TimeRanges.class.getName());
 			}
 		}
 

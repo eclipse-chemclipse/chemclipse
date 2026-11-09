@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -22,7 +22,7 @@ import org.eclipse.chemclipse.support.text.ValueFormat;
 
 public class RetentionTime extends AbstractVariable implements IRetentionTime {
 
-	private DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0.000");
+	private DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0.000"); //$NON-NLS-1$
 	private int retentionTime = 0;
 
 	public static List<RetentionTime> create(List<Integer> retentionTimes) {

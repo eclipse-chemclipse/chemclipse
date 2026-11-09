@@ -85,7 +85,7 @@ public class BaselineSegment implements IBaselineSegment {
 		if(startRetentionTime >= 0 && startRetentionTime <= this.stopRetentionTime) {
 			this.startRetentionTime = startRetentionTime;
 		} else {
-			logger.warn("The start retention time must be lower or equal than the stop retention time. " + "start: " + startRetentionTime + " - " + "stop: " + stopRetentionTime);
+			logger.warn("The start retention time must be lower or equal than the stop retention time. " + "start: " + startRetentionTime + " - " + "stop: " + stopRetentionTime); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		}
 	}
 
@@ -101,7 +101,7 @@ public class BaselineSegment implements IBaselineSegment {
 		if(stopRetentionTime >= 0 && stopRetentionTime >= this.startRetentionTime) {
 			this.stopRetentionTime = stopRetentionTime;
 		} else {
-			logger.warn("The stop retention time must be higher or equal than the start retention time. " + "start: " + startRetentionTime + " - " + "stop: " + stopRetentionTime);
+			logger.warn("The stop retention time must be higher or equal than the start retention time. " + "start: " + startRetentionTime + " - " + "stop: " + stopRetentionTime); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		}
 	}
 
@@ -144,6 +144,6 @@ public class BaselineSegment implements IBaselineSegment {
 	@Override
 	public String toString() {
 
-		return "BaselineSegment [startRetentionTime=" + startRetentionTime + ", startBackgroundAbundance=" + startBackgroundAbundance + ", stopRetentionTime=" + stopRetentionTime + ", stopBackgroundAbundance=" + stopBackgroundAbundance + ", trace=" + trace + "]";
+		return "BaselineSegment [startRetentionTime=" + startRetentionTime + ", startBackgroundAbundance=" + startBackgroundAbundance + ", stopRetentionTime=" + stopRetentionTime + ", stopBackgroundAbundance=" + stopBackgroundAbundance + ", trace=" + trace + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
 	}
 }

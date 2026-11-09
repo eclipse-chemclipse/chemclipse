@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2025 Lablicate GmbH.
+ * Copyright (c) 2020, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -108,11 +108,11 @@ public class Instruments {
 
 		Instrument instrument = null;
 
-		if(!"".equals(item)) {
-			String[] values = item.split("\\" + InstrumentListUtil.SEPARATOR_ENTRY);
-			String identifier = ((values.length > 0) ? values[0].trim() : "");
-			String name = ((values.length > 1) ? values[1].trim() : "");
-			String description = ((values.length > 2) ? values[2].trim() : "");
+		if(!"".equals(item)) { //$NON-NLS-1$
+			String[] values = item.split("\\" + InstrumentListUtil.SEPARATOR_ENTRY); //$NON-NLS-1$
+			String identifier = ((values.length > 0) ? values[0].trim() : ""); //$NON-NLS-1$
+			String name = ((values.length > 1) ? values[1].trim() : ""); //$NON-NLS-1$
+			String description = ((values.length > 2) ? values[2].trim() : ""); //$NON-NLS-1$
 			instrument = new Instrument(identifier, name, description);
 		}
 
@@ -186,7 +186,7 @@ public class Instruments {
 
 	private void loadSettings(String instruments) {
 
-		if(!"".equals(instruments)) {
+		if(!"".equals(instruments)) { //$NON-NLS-1$
 			String[] items = instrumentListUtil.parseString(instruments);
 			if(items.length > 0) {
 				for(String item : items) {
@@ -202,13 +202,13 @@ public class Instruments {
 	private void extractInstrument(Instrument instrument, StringBuilder builder) {
 
 		builder.append(instrument.getIdentifier());
-		builder.append(" ");
+		builder.append(" "); //$NON-NLS-1$
 		builder.append(InstrumentListUtil.SEPARATOR_ENTRY);
-		builder.append(" ");
+		builder.append(" "); //$NON-NLS-1$
 		builder.append(instrument.getName());
-		builder.append(" ");
+		builder.append(" "); //$NON-NLS-1$
 		builder.append(InstrumentListUtil.SEPARATOR_ENTRY);
-		builder.append(" ");
+		builder.append(" "); //$NON-NLS-1$
 		builder.append(instrument.getDescription());
 	}
 }

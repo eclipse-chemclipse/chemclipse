@@ -20,7 +20,7 @@ public class QuantitationEntry extends AbstractQuantitationEntry {
 
 	public QuantitationEntry(String name, double concentration, String concentrationUnit, double area) {
 
-		this(name, "", concentration, concentrationUnit, area);
+		this(name, "", concentration, concentrationUnit, area); //$NON-NLS-1$
 	}
 
 	public QuantitationEntry(String name, String group, double concentration, String concentrationUnit, double area) {

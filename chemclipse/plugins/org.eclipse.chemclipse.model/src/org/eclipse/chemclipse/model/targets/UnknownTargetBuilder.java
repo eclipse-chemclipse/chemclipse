@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2025 Lablicate GmbH.
+ * Copyright (c) 2021, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -22,8 +22,8 @@ import org.eclipse.chemclipse.support.text.ValueFormat;
 
 public class UnknownTargetBuilder {
 
-	public static final String DELIMITER_TRACES = ",";
-	public static final String DELIMITER_INTENSITY = "|";
+	public static final String DELIMITER_TRACES = ","; //$NON-NLS-1$
+	public static final String DELIMITER_INTENSITY = "|"; //$NON-NLS-1$
 
 	private static final float MIN_FACTOR = 0.0f;
 	private static final float MAX_FACTOR = 100.0f;
@@ -40,7 +40,7 @@ public class UnknownTargetBuilder {
 
 		StringBuilder builder = new StringBuilder();
 		builder.append(targetUnknownSettings.getTargetName());
-		builder.append(" ");
+		builder.append(" "); //$NON-NLS-1$
 		builder.append(targetUnknownSettings.getMarkerStart());
 		/*
 		 * Traces
@@ -50,21 +50,21 @@ public class UnknownTargetBuilder {
 		 * Retention Time
 		 */
 		if(targetUnknownSettings.isIncludeRetentionTime()) {
-			builder.append(" ");
-			builder.append("RT");
-			builder.append(" ");
+			builder.append(" "); //$NON-NLS-1$
+			builder.append("RT"); //$NON-NLS-1$
+			builder.append(" "); //$NON-NLS-1$
 			double retentionTimeInMinutes = unknown.getRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR;
-			builder.append(ValueFormat.getDecimalFormatEnglish("0.000").format(retentionTimeInMinutes));
+			builder.append(ValueFormat.getDecimalFormatEnglish("0.000").format(retentionTimeInMinutes)); //$NON-NLS-1$
 		}
 		/*
 		 * Retention Index
 		 */
 		if(targetUnknownSettings.isIncludeRetentionIndex()) {
-			builder.append(" ");
-			builder.append("RI");
-			builder.append(" ");
+			builder.append(" "); //$NON-NLS-1$
+			builder.append("RI"); //$NON-NLS-1$
+			builder.append(" "); //$NON-NLS-1$
 			float retentionIndex = unknown.getRetentionIndex();
-			builder.append(ValueFormat.getDecimalFormatEnglish("0").format(retentionIndex));
+			builder.append(ValueFormat.getDecimalFormatEnglish("0").format(retentionIndex)); //$NON-NLS-1$
 		}
 		/*
 		 * Trim the entry to prevent a white space at the end

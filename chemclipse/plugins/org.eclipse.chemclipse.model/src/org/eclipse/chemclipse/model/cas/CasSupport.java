@@ -24,9 +24,9 @@ package org.eclipse.chemclipse.model.cas;
 public class CasSupport {
 
 	public static final int MAX_ID = 1000000000;
-	public static final String CAS_DEFAULT = "0-00-0";
+	public static final String CAS_DEFAULT = "0-00-0"; //$NON-NLS-1$
 
-	private static final String SEPARATOR = "-";
+	private static final String SEPARATOR = "-"; //$NON-NLS-1$
 	private static final char SEPARATOR_CHAR = '-';
 
 	/**
@@ -40,11 +40,11 @@ public class CasSupport {
 	 */
 	public static String calculateChecksum(String casPrefix) {
 
-		String checksumValue = "";
+		String checksumValue = ""; //$NON-NLS-1$
 		if(casPrefix != null && casPrefix.endsWith(SEPARATOR)) {
 			String[] parts = casPrefix.split(SEPARATOR);
 			if(parts.length == 2) {
-				int checksum = calculateChecksumFromPrefix(casPrefix.replace(SEPARATOR, ""));
+				int checksum = calculateChecksumFromPrefix(casPrefix.replace(SEPARATOR, "")); //$NON-NLS-1$
 				checksumValue = Integer.toString(checksum);
 			}
 		}
@@ -73,7 +73,7 @@ public class CasSupport {
 				if(count == 2) {
 					if(cas.charAt(length - 2) == SEPARATOR_CHAR && cas.charAt(length - 5) == SEPARATOR_CHAR) {
 						try {
-							int casNumber = Integer.parseInt(cas.replace(SEPARATOR, ""));
+							int casNumber = Integer.parseInt(cas.replace(SEPARATOR, "")); //$NON-NLS-1$
 							return verifyChecksum(casNumber);
 						} catch(NumberFormatException e) {
 
@@ -141,10 +141,10 @@ public class CasSupport {
 		 * 0-00-0
 		 */
 		if(cas != null) {
-			if("0".equals(cas)) {
+			if("0".equals(cas)) { //$NON-NLS-1$
 				cas = CAS_DEFAULT;
 			} else if(!cas.contains(SEPARATOR)) {
-				if(cas.matches("(\\d+)")) {
+				if(cas.matches("(\\d+)")) { //$NON-NLS-1$
 					int length = cas.length();
 					if(length >= 4) {
 						StringBuilder builder = new StringBuilder();

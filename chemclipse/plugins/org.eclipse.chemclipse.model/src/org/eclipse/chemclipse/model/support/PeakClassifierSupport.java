@@ -22,7 +22,7 @@ import org.eclipse.chemclipse.model.core.IPeak;
 
 public class PeakClassifierSupport {
 
-	private static final String SEPARATOR = "|";
+	private static final String SEPARATOR = "|"; //$NON-NLS-1$
 
 	/**
 	 * Returns the classifier as String or "" if none is set yet.
@@ -35,10 +35,10 @@ public class PeakClassifierSupport {
 		if(object instanceof IPeak peak) {
 			List<String> classifier = new ArrayList<>(peak.getClassifiers());
 			Collections.sort(classifier);
-			return StringUtils.join(classifier, " " + SEPARATOR + " ");
+			return StringUtils.join(classifier, " " + SEPARATOR + " "); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	public static void setClassifier(Object object, String content) {
@@ -46,7 +46,7 @@ public class PeakClassifierSupport {
 		if(object instanceof IPeak peak) {
 			if(content != null) {
 				peak.clearClassifiers();
-				for(String part : content.split("\\" + SEPARATOR)) { // Escape is required here.
+				for(String part : content.split("\\" + SEPARATOR)) { // Escape is required here. //$NON-NLS-1$
 					String classification = part.trim();
 					if(!classification.isEmpty()) {
 						peak.addClassifier(classification);

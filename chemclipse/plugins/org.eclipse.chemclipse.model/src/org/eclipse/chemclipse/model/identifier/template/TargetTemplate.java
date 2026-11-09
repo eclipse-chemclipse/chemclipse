@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -14,15 +14,15 @@ package org.eclipse.chemclipse.model.identifier.template;
 
 public class TargetTemplate {
 
-	private String name = "";
-	private String casNumber = "";
-	private String comments = "";
-	private String contributor = "";
-	private String referenceId = "";
+	private String name = ""; //$NON-NLS-1$
+	private String casNumber = ""; //$NON-NLS-1$
+	private String comments = ""; //$NON-NLS-1$
+	private String contributor = ""; //$NON-NLS-1$
+	private String referenceId = ""; //$NON-NLS-1$
 
 	public TargetTemplate() {
 
-		this("", "");
+		this("", ""); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	public TargetTemplate(String name, String casNumber) {
@@ -111,6 +111,6 @@ public class TargetTemplate {
 	@Override
 	public String toString() {
 
-		return "TargetTemplate [name=" + name + ", casNumber=" + casNumber + ", comments=" + comments + ", contributor=" + contributor + ", referenceId=" + referenceId + "]";
+		return "TargetTemplate [name=" + name + ", casNumber=" + casNumber + ", comments=" + comments + ", contributor=" + contributor + ", referenceId=" + referenceId + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
 	}
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024, 2025 Lablicate GmbH.
+ * Copyright (c) 2024, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -21,7 +21,7 @@ import org.eclipse.chemclipse.support.text.ValueFormat;
 
 public class PeakNumber extends AbstractVariable implements IPeakNumber {
 
-	private DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0");
+	private DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0"); //$NON-NLS-1$
 	private int peakNumber = 0;
 
 	public PeakNumber(Integer peakNumber) {

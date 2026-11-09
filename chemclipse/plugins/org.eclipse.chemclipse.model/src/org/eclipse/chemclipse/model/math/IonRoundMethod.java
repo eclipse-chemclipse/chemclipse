@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2025 Lablicate GmbH.
+ * Copyright (c) 2021, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -15,9 +15,11 @@ package org.eclipse.chemclipse.model.math;
 import java.text.DecimalFormat;
 import java.util.function.Function;
 
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
 import org.eclipse.chemclipse.model.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.support.text.ILabel;
 import org.eclipse.chemclipse.support.text.ValueFormat;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * Methods are defined to offer m/z round options.
@@ -31,7 +33,7 @@ import org.eclipse.chemclipse.support.text.ValueFormat;
  */
 public enum IonRoundMethod implements ILabel {
 
-	DEFAULT(v -> Math.round(v), "Default: round to nearest integer"), //
+	DEFAULT(v -> Math.round(v), ModelMessages.defaultRoundToNearestInteger), //
 	MINUS_00(v -> round(v, 100), createDescription(-0.0d)), //
 	MINUS_01(v -> round(v, 90), createDescription(-0.1d)), //
 	MINUS_02(v -> round(v, 80), createDescription(-0.2d)), //
@@ -115,7 +117,7 @@ public enum IonRoundMethod implements ILabel {
 
 	private static String createDescription(double offset) {
 
-		DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0.0#");
-		return "Round m/z from " + decimalFormat.format(offset) + " (incl.) to +" + decimalFormat.format(offset + 1.0d) + " (excl.)";
+		DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0.0#"); //$NON-NLS-1$
+		return NLS.bind(ModelMessages.roundMzFromTo, decimalFormat.format(offset), decimalFormat.format(offset + 1.0d));
 	}
 }

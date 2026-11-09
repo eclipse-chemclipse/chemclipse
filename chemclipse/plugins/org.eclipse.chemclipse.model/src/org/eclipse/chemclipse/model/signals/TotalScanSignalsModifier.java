@@ -82,7 +82,7 @@ public class TotalScanSignalsModifier {
 	public static void meanNormalize(ITotalScanSignals totalIonSignals) throws NoTotalSignalStoredException, CalculationException {
 
 		if(totalIonSignals == null || totalIonSignals.size() == 0) {
-			throw new NoTotalSignalStoredException("There are no total ion signals stored.");
+			throw new NoTotalSignalStoredException("There are no total ion signals stored."); //$NON-NLS-1$
 		}
 		/*
 		 * Get all total abundance values.
@@ -98,7 +98,7 @@ public class TotalScanSignalsModifier {
 		 */
 		float meanSignal = Math.abs(Calculations.getMean(allSignals));
 		if(meanSignal == 0) {
-			throw new CalculationException("The mean abundance must not be 0.");
+			throw new CalculationException("The mean abundance must not be 0."); //$NON-NLS-1$
 		}
 		/*
 		 * Create the mean normalized total ion signals instance.
@@ -126,7 +126,7 @@ public class TotalScanSignalsModifier {
 	public static void medianNormalize(ITotalScanSignals totalIonSignals) throws NoTotalSignalStoredException, CalculationException {
 
 		if(totalIonSignals == null || totalIonSignals.size() == 0) {
-			throw new NoTotalSignalStoredException("There are no total ion signals stored.");
+			throw new NoTotalSignalStoredException("There are no total ion signals stored."); //$NON-NLS-1$
 		}
 		/*
 		 * Get all total abundance values.
@@ -144,7 +144,7 @@ public class TotalScanSignalsModifier {
 		int middle = allSignals.length / 2;
 		float medianSignal = (allSignals.length % 2 == 1) ? allSignals[middle] : (allSignals[middle - 1] + allSignals[middle]) / 2.0f;
 		if(medianSignal == 0) {
-			throw new CalculationException("The median abundance must not be 0.");
+			throw new CalculationException("The median abundance must not be 0."); //$NON-NLS-1$
 		}
 		/*
 		 * Create the mean normalized total ion signals instance.
@@ -172,7 +172,7 @@ public class TotalScanSignalsModifier {
 	public static void multiply(ITotalScanSignals totalIonSignals, float multiplier) throws NoTotalSignalStoredException {
 
 		if(totalIonSignals == null || totalIonSignals.size() == 0) {
-			throw new NoTotalSignalStoredException("There are no total ion signals stored.");
+			throw new NoTotalSignalStoredException("There are no total ion signals stored."); //$NON-NLS-1$
 		}
 		/*
 		 * Create the multiplied total ion signals instance.
@@ -198,7 +198,7 @@ public class TotalScanSignalsModifier {
 	public static void divide(ITotalScanSignals totalIonSignals, float divisor) throws NoTotalSignalStoredException {
 
 		if(totalIonSignals == null || totalIonSignals.size() == 0) {
-			throw new NoTotalSignalStoredException("There are no total ion signals stored.");
+			throw new NoTotalSignalStoredException("There are no total ion signals stored."); //$NON-NLS-1$
 		}
 		/*
 		 * Create the multiplied total ion signals instance.
@@ -261,7 +261,7 @@ public class TotalScanSignalsModifier {
 	public static void unitSumNormalize(ITotalScanSignals totalIonSignals, double areaSumIntensity) throws NoTotalSignalStoredException {
 
 		if(totalIonSignals == null || totalIonSignals.size() == 0) {
-			throw new NoTotalSignalStoredException("There are no total ion signals stored.");
+			throw new NoTotalSignalStoredException("There are no total ion signals stored."); //$NON-NLS-1$
 		}
 		/*
 		 * Recalculate the total signals.

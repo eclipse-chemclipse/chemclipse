@@ -85,11 +85,11 @@ public class ScanRange implements IScanRange {
 
 		StringBuilder builder = new StringBuilder();
 		builder.append(getClass().getName());
-		builder.append("[");
-		builder.append("startScan=" + getStartScan());
-		builder.append(",");
-		builder.append("stopScan=" + getStopScan());
-		builder.append("]");
+		builder.append("["); //$NON-NLS-1$
+		builder.append("startScan=" + getStartScan()); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("stopScan=" + getStopScan()); //$NON-NLS-1$
+		builder.append("]"); //$NON-NLS-1$
 		return builder.toString();
 	}
 }

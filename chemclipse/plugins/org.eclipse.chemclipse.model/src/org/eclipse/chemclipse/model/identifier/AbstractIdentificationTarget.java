@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, 2025 Lablicate GmbH.
+ * Copyright (c) 2010, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -21,7 +21,7 @@ public abstract class AbstractIdentificationTarget extends AbstractTarget implem
 
 	private ILibraryInformation libraryInformation;
 	private IComparisonResult comparisonResult;
-	private String identifier = "";
+	private String identifier = ""; //$NON-NLS-1$
 	private boolean verified = false;
 
 	/**
@@ -34,10 +34,10 @@ public abstract class AbstractIdentificationTarget extends AbstractTarget implem
 	public AbstractIdentificationTarget(ILibraryInformation libraryInformation, IComparisonResult comparisonResult) throws ReferenceMustNotBeNullException {
 
 		if(libraryInformation == null) {
-			throw new ReferenceMustNotBeNullException("The reference libraryInformation must be not null.");
+			throw new ReferenceMustNotBeNullException("The reference libraryInformation must be not null."); //$NON-NLS-1$
 		}
 		if(comparisonResult == null) {
-			throw new ReferenceMustNotBeNullException("The reference comparisonResult must be not null.");
+			throw new ReferenceMustNotBeNullException("The reference comparisonResult must be not null."); //$NON-NLS-1$
 		}
 		this.libraryInformation = libraryInformation;
 		this.comparisonResult = comparisonResult;
@@ -116,15 +116,15 @@ public abstract class AbstractIdentificationTarget extends AbstractTarget implem
 
 		StringBuilder builder = new StringBuilder();
 		builder.append(getClass().getName());
-		builder.append("[");
-		builder.append("identifier=" + identifier);
-		builder.append(",");
-		builder.append("name=" + getLibraryInformation().getName());
-		builder.append(",");
-		builder.append("cas=" + getLibraryInformation().getCasNumber());
-		builder.append(",");
+		builder.append("["); //$NON-NLS-1$
+		builder.append("identifier=" + identifier); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("name=" + getLibraryInformation().getName()); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("cas=" + getLibraryInformation().getCasNumber()); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
 		builder.append(getComparisonResult().toString());
-		builder.append("]");
+		builder.append("]"); //$NON-NLS-1$
 		return builder.toString();
 	}
 }

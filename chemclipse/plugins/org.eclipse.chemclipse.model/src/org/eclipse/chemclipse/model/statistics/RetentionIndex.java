@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -21,7 +21,7 @@ import org.eclipse.chemclipse.support.text.ValueFormat;
 
 public class RetentionIndex extends AbstractVariable implements IRetentionIndex {
 
-	private DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0");
+	private DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0"); //$NON-NLS-1$
 	private int retentionIndex = 0;
 
 	public static List<RetentionIndex> create(List<Integer> retentionIndices) {

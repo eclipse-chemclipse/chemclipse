@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2025 Lablicate GmbH.
+ * Copyright (c) 2021, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -14,7 +14,7 @@ package org.eclipse.chemclipse.model.statistics;
 
 public interface IMassToChargeRatio extends IVariable {
 
-	String TYPE = "[m/z]";
+	String TYPE = "[m/z]"; //$NON-NLS-1$
 
 	double getMassToChargeRatio();
 

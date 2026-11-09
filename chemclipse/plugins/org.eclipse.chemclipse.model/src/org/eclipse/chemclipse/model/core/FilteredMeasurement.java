@@ -78,7 +78,7 @@ public class FilteredMeasurement<FilteredType extends IMeasurement, ConfigType> 
 
 		this.context = context;
 		if(context == null) {
-			throw new IllegalArgumentException("filtered measurement can't be null!");
+			throw new IllegalArgumentException("filtered measurement can't be null!"); //$NON-NLS-1$
 		}
 		measurement = context.getFilteredObject();
 	}
@@ -529,6 +529,6 @@ public class FilteredMeasurement<FilteredType extends IMeasurement, ConfigType> 
 	@Override
 	public void addProtectedKey(String key) {
 
-		throw new UnsupportedOperationException("Keys are never protected.");
+		throw new UnsupportedOperationException("Keys are never protected."); //$NON-NLS-1$
 	}
 }

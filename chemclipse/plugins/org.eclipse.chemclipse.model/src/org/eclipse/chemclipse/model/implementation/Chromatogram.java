@@ -31,7 +31,7 @@ public class Chromatogram extends AbstractChromatogram {
 	@Override
 	protected String getNoiseCalculatorId() {
 
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	@Override

@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
+
 /**
  * They are the default metric set of an {@link IComparisonResult}.
  */
@@ -24,14 +26,14 @@ public class ComparisonMetricsClassic {
 	/**
 	 * Algorithm id of the classical spectral match.
 	 */
-	public static final String ALGORITHM_CLASSIC = "classic";
+	public static final String ALGORITHM_CLASSIC = "classic"; //$NON-NLS-1$
 
-	public static final String MATCH_FACTOR = "matchFactor";
-	public static final String REVERSE_MATCH_FACTOR = "reverseMatchFactor";
-	public static final String MATCH_FACTOR_DIRECT = "matchFactorDirect";
-	public static final String REVERSE_MATCH_FACTOR_DIRECT = "reverseMatchFactorDirect";
-	public static final String PROBABILITY = "probability";
-	public static final String IN_LIB_FACTOR = "inLibFactor";
+	public static final String MATCH_FACTOR = "matchFactor"; //$NON-NLS-1$
+	public static final String REVERSE_MATCH_FACTOR = "reverseMatchFactor"; //$NON-NLS-1$
+	public static final String MATCH_FACTOR_DIRECT = "matchFactorDirect"; //$NON-NLS-1$
+	public static final String REVERSE_MATCH_FACTOR_DIRECT = "reverseMatchFactorDirect"; //$NON-NLS-1$
+	public static final String PROBABILITY = "probability"; //$NON-NLS-1$
+	public static final String IN_LIB_FACTOR = "inLibFactor"; //$NON-NLS-1$
 
 	private static final List<IComparisonMetric> METRICS = createMetrics();
 
@@ -52,12 +54,12 @@ public class ComparisonMetricsClassic {
 	private static List<IComparisonMetric> createMetrics() {
 
 		List<IComparisonMetric> metrics = new ArrayList<>();
-		metrics.add(new ComparisonMetric(MATCH_FACTOR, "Match Factor", "Similarity of the unknown spectrum to the library spectrum.", "0.0", true, ComparisonMetric.HIGHER_IS_BETTER));
-		metrics.add(new ComparisonMetric(REVERSE_MATCH_FACTOR, "Reverse Match Factor", "Similarity, ignoring ions that are absent in the library spectrum.", "0.0", true, ComparisonMetric.HIGHER_IS_BETTER));
-		metrics.add(new ComparisonMetric(MATCH_FACTOR_DIRECT, "Match Factor Direct", "Match factor without pre-processing of the spectra.", "0.0", true, ComparisonMetric.HIGHER_IS_BETTER));
-		metrics.add(new ComparisonMetric(REVERSE_MATCH_FACTOR_DIRECT, "Reverse Match Factor Direct", "Reverse match factor without pre-processing of the spectra.", "0.0", true, ComparisonMetric.HIGHER_IS_BETTER));
-		metrics.add(new ComparisonMetric(PROBABILITY, "Probability", "Probability that the hit is correct, relative to the other hits.", "0.0", false, ComparisonMetric.HIGHER_IS_BETTER));
-		metrics.add(new ComparisonMetric(IN_LIB_FACTOR, "InLib Factor", "Rank of the hit reported by an InLib search.", "0.0", false, ComparisonMetric.HIGHER_IS_BETTER));
+		metrics.add(new ComparisonMetric(MATCH_FACTOR, ModelMessages.matchFactor, ModelMessages.similarityOfUnknownToLibrarySpectrum, "0.0", true, ComparisonMetric.HIGHER_IS_BETTER)); //$NON-NLS-1$
+		metrics.add(new ComparisonMetric(REVERSE_MATCH_FACTOR, ModelMessages.reverseMatchFactor, ModelMessages.similarityIgnoringAbsentIons, "0.0", true, ComparisonMetric.HIGHER_IS_BETTER)); //$NON-NLS-1$
+		metrics.add(new ComparisonMetric(MATCH_FACTOR_DIRECT, ModelMessages.matchFactorDirect, ModelMessages.matchFactorWithoutPreprocessing, "0.0", true, ComparisonMetric.HIGHER_IS_BETTER)); //$NON-NLS-1$
+		metrics.add(new ComparisonMetric(REVERSE_MATCH_FACTOR_DIRECT, ModelMessages.reverseMatchFactorDirect, ModelMessages.reverseMatchFactorWithoutPreprocessing, "0.0", true, ComparisonMetric.HIGHER_IS_BETTER)); //$NON-NLS-1$
+		metrics.add(new ComparisonMetric(PROBABILITY, ModelMessages.probability, ModelMessages.probabilityHitIsCorrect, "0.0", false, ComparisonMetric.HIGHER_IS_BETTER)); //$NON-NLS-1$
+		metrics.add(new ComparisonMetric(IN_LIB_FACTOR, ModelMessages.inLibFactor, ModelMessages.rankOfInLibHit, "0.0", false, ComparisonMetric.HIGHER_IS_BETTER)); //$NON-NLS-1$
 
 		return Collections.unmodifiableList(metrics);
 	}

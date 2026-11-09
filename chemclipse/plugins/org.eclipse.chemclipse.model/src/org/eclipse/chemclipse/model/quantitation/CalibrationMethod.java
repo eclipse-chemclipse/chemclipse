@@ -15,6 +15,7 @@ package org.eclipse.chemclipse.model.quantitation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
 import org.eclipse.chemclipse.support.text.ILabel;
 
 public enum CalibrationMethod implements ILabel {
@@ -23,13 +24,13 @@ public enum CalibrationMethod implements ILabel {
 	 * ISTD is used for internal standards only.
 	 * All other are used for external calibration.
 	 */
-	LINEAR("Linear"), //
-	QUADRATIC("Quadratic (Classic)"), // Keep name for backward compatibility
-	QUADRATIC_CHEMSTATION("Quadratic (ChemStation - experimental)"), //
-	AVERAGE("Average"), //
-	ISTD("Internal Standard");
+	LINEAR(ModelMessages.linear), //
+	QUADRATIC(ModelMessages.quadraticClassic), // Keep name for backward compatibility
+	QUADRATIC_CHEMSTATION(ModelMessages.quadraticChemStationExperimental), //
+	AVERAGE(ModelMessages.average), //
+	ISTD(ModelMessages.internalStandard);
 
-	private String label = "";
+	private String label = ""; //$NON-NLS-1$
 
 	private CalibrationMethod(String label) {
 

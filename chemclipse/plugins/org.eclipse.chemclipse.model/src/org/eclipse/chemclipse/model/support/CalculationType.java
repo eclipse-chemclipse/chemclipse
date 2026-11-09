@@ -16,11 +16,11 @@ import org.eclipse.chemclipse.support.text.ILabel;
 
 public enum CalculationType implements ILabel {
 
-	SUM("Sum"), //
-	MEAN("Mean"), //
-	MEDIAN("Median");
+	SUM("Sum"), // //$NON-NLS-1$
+	MEAN("Mean"), // //$NON-NLS-1$
+	MEDIAN("Median"); //$NON-NLS-1$
 
-	private String label = "";
+	private String label = ""; //$NON-NLS-1$
 
 	private CalculationType(String label) {
 

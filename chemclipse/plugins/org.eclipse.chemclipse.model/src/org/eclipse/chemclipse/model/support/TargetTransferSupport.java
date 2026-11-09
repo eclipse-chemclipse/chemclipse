@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2019, 2025 Lablicate GmbH.
+ * Copyright (c) 2019, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -23,6 +23,7 @@ import org.eclipse.chemclipse.model.identifier.IIdentificationTarget;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
 import org.eclipse.chemclipse.model.identifier.LibraryInformation;
 import org.eclipse.chemclipse.model.implementation.IdentificationTarget;
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
 
 public class TargetTransferSupport {
 
@@ -61,10 +62,10 @@ public class TargetTransferSupport {
 					}
 				}
 			} else {
-				return "The sink chromatogram contains no peaks.";
+				return ModelMessages.sinkChromatogramContainsNoPeaks;
 			}
 		} else {
-			return "The source chromatogram contains no peaks.";
+			return ModelMessages.sourceChromatogramContainsNoPeaks;
 		}
 
 		return null;
@@ -90,7 +91,7 @@ public class TargetTransferSupport {
 				}
 			}
 		} else {
-			return "The source chromatogram contains no identified scans.";
+			return ModelMessages.sourceChromatogramContainsNoIdentifiedScans;
 		}
 
 		return null;

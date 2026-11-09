@@ -39,8 +39,8 @@ public class QuantitationSupport {
 		if(isTotalSignalIntegrated()) {
 			return true;
 		} else {
-			String info = (peak != null) ? peak.toString() : "--";
-			logger.warn("Quantitation: The peak integration entry doesn't match: " + info);
+			String info = (peak != null) ? peak.toString() : "--"; //$NON-NLS-1$
+			logger.warn("Quantitation: The peak integration entry doesn't match: " + info); //$NON-NLS-1$
 		}
 		return false;
 	}
@@ -62,11 +62,11 @@ public class QuantitationSupport {
 			return true;
 		} else {
 			StringBuilder builder = new StringBuilder();
-			builder.append("Quantitation: The peak integration entries do not match quantitation entries: ");
-			builder.append((peak != null) ? peak : "--");
-			builder.append(" Integrated Signals: ");
+			builder.append("Quantitation: The peak integration entries do not match quantitation entries: "); //$NON-NLS-1$
+			builder.append((peak != null) ? peak : "--"); //$NON-NLS-1$
+			builder.append(" Integrated Signals: "); //$NON-NLS-1$
 			builder.append(integratedSignals);
-			builder.append(" Selected Quantitation Signals: ");
+			builder.append(" Selected Quantitation Signals: "); //$NON-NLS-1$
 			builder.append(selectedSignals);
 			logger.warn(builder.toString());
 		}

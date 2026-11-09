@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023, 2025 Lablicate GmbH.
+ * Copyright (c) 2023, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -28,8 +28,8 @@ public class PeakQuantifierSupport {
 
 	private static final Logger logger = Logger.getLogger(PeakQuantifierSupport.class);
 
-	private static final String MARKER_COMPENSATION = "x";
-	private static final String PATTERN_DECIMAL_FORMAT = "0.#####";
+	private static final String MARKER_COMPENSATION = "x"; //$NON-NLS-1$
+	private static final String PATTERN_DECIMAL_FORMAT = "0.#####"; //$NON-NLS-1$
 
 	/**
 	 * Parses e.g. 20 mg/g x1.0.
@@ -45,16 +45,16 @@ public class PeakQuantifierSupport {
 
 		if(name != null && value != null) {
 			if(!name.isBlank()) {
-				String[] parts = value.trim().split(" ");
+				String[] parts = value.trim().split(" "); //$NON-NLS-1$
 				if(parts.length >= 2) {
 					ValueParserSupport valueParserSupport = new ValueParserSupport();
 					double concentration = valueParserSupport.parseDouble(parts, 0, 0);
-					String unit = valueParserSupport.parseString(parts, 1, "");
-					String compensation = valueParserSupport.parseString(parts, 2, ""); // x10.0
+					String unit = valueParserSupport.parseString(parts, 1, ""); //$NON-NLS-1$
+					String compensation = valueParserSupport.parseString(parts, 2, ""); // x10.0 //$NON-NLS-1$
 					double compensationFactor = 1.0d;
 					if(compensation.startsWith(MARKER_COMPENSATION)) {
 						try {
-							compensationFactor = Double.parseDouble(compensation.replace(MARKER_COMPENSATION, ""));
+							compensationFactor = Double.parseDouble(compensation.replace(MARKER_COMPENSATION, "")); //$NON-NLS-1$
 						} catch(Exception e) {
 							logger.warn(e);
 						}
@@ -81,7 +81,7 @@ public class PeakQuantifierSupport {
 	 */
 	public static String getInternalStandardConcentrations(Object object) {
 
-		String concentrations = "";
+		String concentrations = ""; //$NON-NLS-1$
 		if(object instanceof IPeak peak) {
 			List<IInternalStandard> internalStandards = new ArrayList<>(peak.getInternalStandards());
 			if(!internalStandards.isEmpty()) {
@@ -93,17 +93,17 @@ public class PeakQuantifierSupport {
 
 				StringBuilder builder = new StringBuilder();
 				builder.append(ValueFormat.getDecimalFormatEnglish(PATTERN_DECIMAL_FORMAT).format(internalStandard.getConcentration()));
-				builder.append(" ");
+				builder.append(" "); //$NON-NLS-1$
 				builder.append(internalStandard.getConcentrationUnit());
-				builder.append(" ");
+				builder.append(" "); //$NON-NLS-1$
 				builder.append(MARKER_COMPENSATION);
 				builder.append(ValueFormat.getDecimalFormatEnglish(PATTERN_DECIMAL_FORMAT).format(internalStandard.getCompensationFactor()));
 
 				int size = internalStandards.size();
 				if(size > 1) {
-					builder.append(" [*");
+					builder.append(" [*"); //$NON-NLS-1$
 					builder.append(size);
-					builder.append("]");
+					builder.append("]"); //$NON-NLS-1$
 				}
 
 				concentrations = builder.toString();
@@ -124,7 +124,7 @@ public class PeakQuantifierSupport {
 	 */
 	public static String getPeakConcentrations(Object object) {
 
-		String concentrations = "";
+		String concentrations = ""; //$NON-NLS-1$
 		if(object instanceof IPeak peak) {
 			List<IQuantitationEntry> quantitationEntries = new ArrayList<>(peak.getQuantitationEntries());
 			if(!quantitationEntries.isEmpty()) {
@@ -136,13 +136,13 @@ public class PeakQuantifierSupport {
 
 				StringBuilder builder = new StringBuilder();
 				builder.append(ValueFormat.getDecimalFormatEnglish(PATTERN_DECIMAL_FORMAT).format(quantitationEntry.getConcentration()));
-				builder.append(" ");
+				builder.append(" "); //$NON-NLS-1$
 				builder.append(quantitationEntry.getConcentrationUnit());
 				int size = quantitationEntries.size();
 				if(size > 1) {
-					builder.append(" [*");
+					builder.append(" [*"); //$NON-NLS-1$
 					builder.append(size);
-					builder.append("]");
+					builder.append("]"); //$NON-NLS-1$
 				}
 
 				concentrations = builder.toString();

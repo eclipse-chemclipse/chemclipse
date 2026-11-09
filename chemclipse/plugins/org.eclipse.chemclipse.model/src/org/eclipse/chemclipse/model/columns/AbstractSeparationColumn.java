@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -20,14 +20,14 @@ public abstract class AbstractSeparationColumn implements ISeparationColumn {
 
 	private static final long serialVersionUID = -49804898484216859L;
 
-	private String name = "";
+	private String name = ""; //$NON-NLS-1$
 	private SeparationColumnType separationColumnType = SeparationColumnType.DEFAULT;
 	private SeparationColumnPackaging separationColumnPackaging = SeparationColumnPackaging.CAPILLARY;
-	private String calculationType = ""; // Kovats RI, Lee RI, ...
-	private String length = "";
-	private String diameter = "";
-	private String phase = "";
-	private String thickness = "";
+	private String calculationType = ""; // Kovats RI, Lee RI, ... //$NON-NLS-1$
+	private String length = ""; //$NON-NLS-1$
+	private String diameter = ""; //$NON-NLS-1$
+	private String phase = ""; //$NON-NLS-1$
+	private String thickness = ""; //$NON-NLS-1$
 
 	@Override
 	public void copyFrom(ISeparationColumn separationColumn) {
@@ -162,6 +162,6 @@ public abstract class AbstractSeparationColumn implements ISeparationColumn {
 	@Override
 	public String toString() {
 
-		return "AbstractSeparationColumn [name=" + name + ", separationColumnType=" + separationColumnType + ", separationColumnPackaging=" + separationColumnPackaging + ", calculationType=" + calculationType + ", length=" + length + ", diameter=" + diameter + ", phase=" + phase + ", thickness=" + thickness + "]";
+		return "AbstractSeparationColumn [name=" + name + ", separationColumnType=" + separationColumnType + ", separationColumnPackaging=" + separationColumnPackaging + ", calculationType=" + calculationType + ", length=" + length + ", diameter=" + diameter + ", phase=" + phase + ", thickness=" + thickness + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
 	}
 }

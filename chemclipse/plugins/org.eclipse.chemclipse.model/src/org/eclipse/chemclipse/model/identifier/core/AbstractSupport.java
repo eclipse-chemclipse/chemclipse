@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -61,7 +61,7 @@ public abstract class AbstractSupport<S extends ISupplier> implements ISupport {
 			availableIdentifiers.add(supplier.getId());
 		}
 		if(availableIdentifiers.isEmpty()) {
-			throw new NoIdentifierAvailableException("There is no appropriate identifier available.");
+			throw new NoIdentifierAvailableException("There is no appropriate identifier available."); //$NON-NLS-1$
 		}
 		return availableIdentifiers;
 	}
@@ -77,7 +77,7 @@ public abstract class AbstractSupport<S extends ISupplier> implements ISupport {
 		 * Test if the index is out of range.
 		 */
 		if(index < 0 || index > suppliers.size() - 1) {
-			throw new NoIdentifierAvailableException("There is no identifier stored.");
+			throw new NoIdentifierAvailableException("There is no identifier stored."); //$NON-NLS-1$
 		}
 		S supplier = suppliers.get(index);
 		return supplier.getId();
@@ -108,8 +108,8 @@ public abstract class AbstractSupport<S extends ISupplier> implements ISupport {
 		 * Test if the suppliers ArrayList is empty.
 		 */
 		areIdentifiersStored();
-		if(identifierId == null || identifierId.equals("")) {
-			throw new NoIdentifierAvailableException("There is no identifier supplier available with the following id: " + identifierId + ".");
+		if(identifierId == null || identifierId.equals("")) { //$NON-NLS-1$
+			throw new NoIdentifierAvailableException("There is no identifier supplier available with the following id: " + identifierId + "."); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		endsearch:
 		for(S supplier : suppliers) {
@@ -119,7 +119,7 @@ public abstract class AbstractSupport<S extends ISupplier> implements ISupport {
 			}
 		}
 		if(identifierSupplier == null) {
-			throw new NoIdentifierAvailableException("There is no identifier supplier available with the following id: " + identifierId + ".");
+			throw new NoIdentifierAvailableException("There is no identifier supplier available with the following id: " + identifierId + "."); //$NON-NLS-1$ //$NON-NLS-2$
 		} else {
 			return identifierSupplier;
 		}

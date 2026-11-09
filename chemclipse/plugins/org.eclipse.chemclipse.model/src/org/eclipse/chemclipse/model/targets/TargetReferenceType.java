@@ -16,11 +16,11 @@ package org.eclipse.chemclipse.model.targets;
 import org.eclipse.chemclipse.support.text.ILabel;
 
 public enum TargetReferenceType implements ILabel {
-	NONE("None"), //
-	SCAN("Scan"), //
-	PEAK("Peak");
+	NONE("None"), // //$NON-NLS-1$
+	SCAN("Scan"), // //$NON-NLS-1$
+	PEAK("Peak"); //$NON-NLS-1$
 
-	private String label = "";
+	private String label = ""; //$NON-NLS-1$
 
 	private TargetReferenceType(String label) {
 

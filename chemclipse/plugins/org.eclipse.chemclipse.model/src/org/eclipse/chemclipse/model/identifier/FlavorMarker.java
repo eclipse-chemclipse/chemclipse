@@ -22,11 +22,11 @@ public class FlavorMarker implements IFlavorMarker {
 	private static final long serialVersionUID = -2057882168172746294L;
 
 	private boolean manuallyVerified = false;
-	private String odor = "";
-	private String matrix = "";
-	private String solvent = "";
-	private String samplePreparation = "";
-	private String literatureReference = ""; // if possible, DOI
+	private String odor = ""; //$NON-NLS-1$
+	private String matrix = ""; //$NON-NLS-1$
+	private String solvent = ""; //$NON-NLS-1$
+	private String samplePreparation = ""; //$NON-NLS-1$
+	private String literatureReference = ""; // if possible, DOI //$NON-NLS-1$
 	private Set<IOdorThreshold> odorThresholds = new HashSet<>();
 
 	public FlavorMarker(String odor, String matrix, String solvent) {
@@ -40,11 +40,11 @@ public class FlavorMarker implements IFlavorMarker {
 	public void clear() {
 
 		manuallyVerified = false;
-		odor = "";
-		matrix = "";
-		solvent = "";
-		samplePreparation = "";
-		literatureReference = "";
+		odor = ""; //$NON-NLS-1$
+		matrix = ""; //$NON-NLS-1$
+		solvent = ""; //$NON-NLS-1$
+		samplePreparation = ""; //$NON-NLS-1$
+		literatureReference = ""; //$NON-NLS-1$
 		odorThresholds.clear();
 	}
 
@@ -151,6 +151,6 @@ public class FlavorMarker implements IFlavorMarker {
 	@Override
 	public String toString() {
 
-		return "FlavorMarker [odorQuality=" + odor + ", matrix=" + matrix + ", solvent=" + solvent + "]";
+		return "FlavorMarker [odorQuality=" + odor + ", matrix=" + matrix + ", solvent=" + solvent + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 }

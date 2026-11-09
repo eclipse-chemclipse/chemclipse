@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2025 Lablicate GmbH.
+ * Copyright (c) 2015, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -19,9 +19,9 @@ public class TripleQuadMethod implements IMethod {
 	/*
 	 * These are default values for TripleQuad instruments.
 	 */
-	private String instrumentName = "QQQ";
-	private String ionSource = "EI";
-	private String stopMode = "ByChromatographTime";
+	private String instrumentName = "QQQ"; //$NON-NLS-1$
+	private String ionSource = "EI"; //$NON-NLS-1$
+	private String stopMode = "ByChromatographTime"; //$NON-NLS-1$
 	private int stopTime = 60000; // milliseconds => 1s
 	private int solventDelay = 360000; // milliseconds => 6s
 	private boolean collisionGasOn = true;

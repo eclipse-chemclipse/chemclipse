@@ -12,12 +12,14 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.identifier;
 
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
+
 public class RatingSupplier extends AbstractComparisonRatingSupplier {
 
 	private static final long serialVersionUID = 80242122334050614L;
 
-	private static final String ADVISE_INCOMPLETE = "Incomplete Target (Bad Conditions)";
-	private static final String ADVISE_IMPURITIES = "Convoluted Target (Impurities)";
+	private static final String ADVISE_INCOMPLETE = ModelMessages.incompleteTargetBadConditions;
+	private static final String ADVISE_IMPURITIES = ModelMessages.convolutedTargetImpurities;
 
 	private static final float MIN_LIMIT_MATCH_FACTOR = 20.0f;
 	private static final float MAX_LIMIT_MATCH_FACTOR = 80.0f;
@@ -36,7 +38,7 @@ public class RatingSupplier extends AbstractComparisonRatingSupplier {
 	@Override
 	public String getAdvise() {
 
-		String advise = "";
+		String advise = ""; //$NON-NLS-1$
 		/*
 		 * Only take match and reverse match factor into account (classical search)
 		 */

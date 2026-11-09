@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2024, 2025 Lablicate GmbH.
+ * Copyright (c) 2024, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -33,7 +33,7 @@ public class FileHeaderData {
 		/*
 		 * Extract all data from the given field.
 		 */
-		this(HeaderField.DEFAULT, "(.*)", 0);
+		this(HeaderField.DEFAULT, "(.*)", 0); //$NON-NLS-1$
 	}
 
 	public FileHeaderData(HeaderField headerField, String regularExpression, int groupIndex) {
@@ -127,6 +127,6 @@ public class FileHeaderData {
 	@Override
 	public String toString() {
 
-		return "FileHeaderData [headerField=" + headerField + ", regularExpression=" + regularExpression + ", groupIndex=" + groupIndex + "]";
+		return "FileHeaderData [headerField=" + headerField + ", regularExpression=" + regularExpression + ", groupIndex=" + groupIndex + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 }

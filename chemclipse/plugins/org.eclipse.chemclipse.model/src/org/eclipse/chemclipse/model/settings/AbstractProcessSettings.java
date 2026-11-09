@@ -82,14 +82,14 @@ public abstract class AbstractProcessSettings implements IProcessSettings {
 		/*
 		 * Replace the variable place holder by the according chromatogram header data.
 		 */
-		fileName = replaceVariable(fileName, VARIABLE_CHROMATOGRAM_NAME, chromatogram.getName(), "Name");
-		fileName = replaceVariable(fileName, VARIABLE_CHROMATOGRAM_DATANAME, chromatogram.getDataName(), "DataName");
-		fileName = replaceVariable(fileName, VARIABLE_CHROMATOGRAM_SAMPLEGROUP, chromatogram.getSampleGroup(), "SampleGroup");
-		fileName = replaceVariable(fileName, VARIABLE_CHROMATOGRAM_SHORTINFO, chromatogram.getShortInfo(), "ShortInfo");
-		fileName = replaceVariable(fileName, VARIABLE_CHROMATOGRAM_SAMPLENAME, chromatogram.getSampleName(), "SampleName");
-		fileName = replaceVariable(fileName, VARIABLE_CHROMATOGRAM_OPERATOR, chromatogram.getOperator(), "Operator");
-		fileName = replaceVariable(fileName, VARIABLE_CHROMATOGRAM_INSTRUMENT, chromatogram.getInstrument(), "Instrument");
-		fileName = replaceVariable(fileName, VARIABLE_CHROMATOGRAM_TAGS, chromatogram.getTags(), "Tags");
+		fileName = replaceVariable(fileName, VARIABLE_CHROMATOGRAM_NAME, chromatogram.getName(), "Name"); //$NON-NLS-1$
+		fileName = replaceVariable(fileName, VARIABLE_CHROMATOGRAM_DATANAME, chromatogram.getDataName(), "DataName"); //$NON-NLS-1$
+		fileName = replaceVariable(fileName, VARIABLE_CHROMATOGRAM_SAMPLEGROUP, chromatogram.getSampleGroup(), "SampleGroup"); //$NON-NLS-1$
+		fileName = replaceVariable(fileName, VARIABLE_CHROMATOGRAM_SHORTINFO, chromatogram.getShortInfo(), "ShortInfo"); //$NON-NLS-1$
+		fileName = replaceVariable(fileName, VARIABLE_CHROMATOGRAM_SAMPLENAME, chromatogram.getSampleName(), "SampleName"); //$NON-NLS-1$
+		fileName = replaceVariable(fileName, VARIABLE_CHROMATOGRAM_OPERATOR, chromatogram.getOperator(), "Operator"); //$NON-NLS-1$
+		fileName = replaceVariable(fileName, VARIABLE_CHROMATOGRAM_INSTRUMENT, chromatogram.getInstrument(), "Instrument"); //$NON-NLS-1$
+		fileName = replaceVariable(fileName, VARIABLE_CHROMATOGRAM_TAGS, chromatogram.getTags(), "Tags"); //$NON-NLS-1$
 
 		return fileName;
 	}

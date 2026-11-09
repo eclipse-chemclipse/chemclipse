@@ -30,29 +30,29 @@ public abstract class AbstractLibraryInformation implements ILibraryInformation 
 
 	private static final long serialVersionUID = 3604067975171089730L;
 
-	private String name = "";
+	private String name = ""; //$NON-NLS-1$
 	private final Set<String> synonyms = new LinkedHashSet<>();
 	private final List<String> casNumbers = new ArrayList<>();
-	private String comments = "";
-	private String referenceIdentifier = "";
-	private String miscellaneous = "";
-	private String formula = "";
-	private String inChI = "";
-	private String inChIKey = "";
-	private String smiles = "";
+	private String comments = ""; //$NON-NLS-1$
+	private String referenceIdentifier = ""; //$NON-NLS-1$
+	private String miscellaneous = ""; //$NON-NLS-1$
+	private String formula = ""; //$NON-NLS-1$
+	private String inChI = ""; //$NON-NLS-1$
+	private String inChIKey = ""; //$NON-NLS-1$
+	private String smiles = ""; //$NON-NLS-1$
 	private double molWeight = 0.0d;
 	private double exactMass = 0.0d;
-	private String database = "";
+	private String database = ""; //$NON-NLS-1$
 	private int databaseIndex = -1;
-	private String contributor = "";
+	private String contributor = ""; //$NON-NLS-1$
 	private final Set<String> classification = new LinkedHashSet<>();
 	private int retentionTime = 0;
 	private final Set<IColumnIndexMarker> columnIndexMarkers = new LinkedHashSet<>();
 	private final Set<IFlavorMarker> flavorMarkers = new HashSet<>();
-	private String moleculeStructure = "";
-	private String compoundClass = "";
+	private String moleculeStructure = ""; //$NON-NLS-1$
+	private String compoundClass = ""; //$NON-NLS-1$
 	private int taxID = 0;
-	private String genBankAccession = "";
+	private String genBankAccession = ""; //$NON-NLS-1$
 	/*
 	 * Default Column Position Marker
 	 */
@@ -131,7 +131,7 @@ public abstract class AbstractLibraryInformation implements ILibraryInformation 
 	@Override
 	public String getCasNumber() {
 
-		return casNumbers.isEmpty() ? "" : casNumbers.get(0);
+		return casNumbers.isEmpty() ? "" : casNumbers.get(0); //$NON-NLS-1$
 	}
 
 	@Override
@@ -526,19 +526,19 @@ public abstract class AbstractLibraryInformation implements ILibraryInformation 
 
 		StringBuilder builder = new StringBuilder();
 		builder.append(getClass().getName());
-		builder.append("[");
-		builder.append("name=" + name);
-		builder.append(",");
-		builder.append("casNumber=" + getCasNumber());
-		builder.append(",");
-		builder.append("comments=" + comments);
-		builder.append(",");
-		builder.append("miscellaneous=" + miscellaneous);
-		builder.append(",");
-		builder.append("formula=" + formula);
-		builder.append(",");
-		builder.append("molWeight=" + molWeight);
-		builder.append("]");
+		builder.append("["); //$NON-NLS-1$
+		builder.append("name=" + name); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("casNumber=" + getCasNumber()); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("comments=" + comments); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("miscellaneous=" + miscellaneous); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("formula=" + formula); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("molWeight=" + molWeight); //$NON-NLS-1$
+		builder.append("]"); //$NON-NLS-1$
 		return builder.toString();
 	}
 }

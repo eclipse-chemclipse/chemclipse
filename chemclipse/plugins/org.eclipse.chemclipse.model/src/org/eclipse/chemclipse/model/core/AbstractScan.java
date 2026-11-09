@@ -57,7 +57,7 @@ public abstract class AbstractScan extends AbstractSignal implements IScan {
 	 * Do not persist (only for internal use)
 	 */
 	private boolean isDirty = false;
-	private String identifier = "";
+	private String identifier = ""; //$NON-NLS-1$
 
 	protected AbstractScan() {
 
@@ -333,13 +333,13 @@ public abstract class AbstractScan extends AbstractSignal implements IScan {
 		StringBuilder builder = new StringBuilder();
 		builder.append(super.toString());
 		builder.append(getClass().getName());
-		builder.append("[");
-		builder.append("retentionIndex=" + retentionIndex);
-		builder.append(",");
-		builder.append("retentionTime=" + retentionTime);
-		builder.append(",");
-		builder.append("scanNumber=" + scanNumber);
-		builder.append("]");
+		builder.append("["); //$NON-NLS-1$
+		builder.append("retentionIndex=" + retentionIndex); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("retentionTime=" + retentionTime); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("scanNumber=" + scanNumber); //$NON-NLS-1$
+		builder.append("]"); //$NON-NLS-1$
 		return builder.toString();
 	}
 }

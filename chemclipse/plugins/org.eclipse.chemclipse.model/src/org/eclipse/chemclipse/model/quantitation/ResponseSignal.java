@@ -85,6 +85,6 @@ public class ResponseSignal implements IResponseSignal {
 	@Override
 	public String toString() {
 
-		return "AbstractConcentrationResponseEntry [signal=" + signal + ", concentration=" + concentration + ", response=" + response + "]";
+		return "AbstractConcentrationResponseEntry [signal=" + signal + ", concentration=" + concentration + ", response=" + response + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 }

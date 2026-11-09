@@ -34,16 +34,16 @@ import org.eclipse.core.runtime.Platform;
  */
 public class ComparisonMetricRegistry {
 
-	private static final String EXTENSION_POINT = "org.eclipse.chemclipse.model.comparisonMetrics";
-	private static final String ELEMENT_METRIC = "Metric";
-	private static final String ATTRIBUTE_ID = "id";
-	private static final String ATTRIBUTE_LABEL = "label";
-	private static final String ATTRIBUTE_DESCRIPTION = "description";
-	private static final String ATTRIBUTE_FORMAT = "format";
-	private static final String ATTRIBUTE_ORDER = "order";
-	private static final String ATTRIBUTE_PENALTY_APPLICABLE = "penaltyApplicable";
-	private static final String ATTRIBUTE_RATING_SUPPLIER = "ratingSupplier";
-	private static final String ORDER_ASCENDING = "ascending";
+	private static final String EXTENSION_POINT = "org.eclipse.chemclipse.model.comparisonMetrics"; //$NON-NLS-1$
+	private static final String ELEMENT_METRIC = "Metric"; //$NON-NLS-1$
+	private static final String ATTRIBUTE_ID = "id"; //$NON-NLS-1$
+	private static final String ATTRIBUTE_LABEL = "label"; //$NON-NLS-1$
+	private static final String ATTRIBUTE_DESCRIPTION = "description"; //$NON-NLS-1$
+	private static final String ATTRIBUTE_FORMAT = "format"; //$NON-NLS-1$
+	private static final String ATTRIBUTE_ORDER = "order"; //$NON-NLS-1$
+	private static final String ATTRIBUTE_PENALTY_APPLICABLE = "penaltyApplicable"; //$NON-NLS-1$
+	private static final String ATTRIBUTE_RATING_SUPPLIER = "ratingSupplier"; //$NON-NLS-1$
+	private static final String ORDER_ASCENDING = "ascending"; //$NON-NLS-1$
 
 	private static Map<String, Algorithm> algorithms = null;
 
@@ -181,7 +181,7 @@ public class ComparisonMetricRegistry {
 
 		String metricId = element.getAttribute(ATTRIBUTE_ID);
 		if(metricId == null || metricId.isEmpty()) {
-			Logger.getLogger(ComparisonMetricRegistry.class).warn("A metric without an id has been skipped.");
+			Logger.getLogger(ComparisonMetricRegistry.class).warn("A metric without an id has been skipped."); //$NON-NLS-1$
 			return null;
 		}
 

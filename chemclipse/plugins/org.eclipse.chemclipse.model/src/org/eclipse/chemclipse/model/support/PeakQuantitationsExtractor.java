@@ -55,13 +55,13 @@ public class PeakQuantitationsExtractor {
 			/*
 			 * Add the titles.
 			 */
-			peakQuantitations.getTitles().add("Time [min]");
-			peakQuantitations.getTitles().add("Name");
-			peakQuantitations.getTitles().add("CAS#");
-			peakQuantitations.getTitles().add("Reference Identifier");
-			peakQuantitations.getTitles().add("Area");
-			peakQuantitations.getTitles().add("Classifier");
-			peakQuantitations.getTitles().add("Quantifier");
+			peakQuantitations.getTitles().add("Time [min]"); //$NON-NLS-1$
+			peakQuantitations.getTitles().add("Name"); //$NON-NLS-1$
+			peakQuantitations.getTitles().add("CAS#"); //$NON-NLS-1$
+			peakQuantitations.getTitles().add("Reference Identifier"); //$NON-NLS-1$
+			peakQuantitations.getTitles().add("Area"); //$NON-NLS-1$
+			peakQuantitations.getTitles().add("Classifier"); //$NON-NLS-1$
+			peakQuantitations.getTitles().add("Quantifier"); //$NON-NLS-1$
 			for(String quantitationColumn : quantitationColumns) {
 				peakQuantitations.getTitles().add(quantitationColumn);
 			}
@@ -93,7 +93,7 @@ public class PeakQuantitationsExtractor {
 
 	private String getName(IIdentificationTarget identificationTarget) {
 
-		String name = "";
+		String name = ""; //$NON-NLS-1$
 		if(identificationTarget != null) {
 			name = identificationTarget.getLibraryInformation().getName();
 		}
@@ -102,7 +102,7 @@ public class PeakQuantitationsExtractor {
 
 	private String getCasNumber(IIdentificationTarget identificationTarget) {
 
-		String casNumber = "";
+		String casNumber = ""; //$NON-NLS-1$
 		if(identificationTarget != null) {
 			casNumber = identificationTarget.getLibraryInformation().getCasNumber();
 		}
@@ -111,7 +111,7 @@ public class PeakQuantitationsExtractor {
 
 	private String getReferenceIdentifier(IIdentificationTarget identificationTarget) {
 
-		String referenceIdentifier = "";
+		String referenceIdentifier = ""; //$NON-NLS-1$
 		if(identificationTarget != null) {
 			referenceIdentifier = identificationTarget.getLibraryInformation().getReferenceIdentifier();
 		}
@@ -120,9 +120,9 @@ public class PeakQuantitationsExtractor {
 
 	private String getQuantifier(IPeak peak) {
 
-		String quantifier = "";
+		String quantifier = ""; //$NON-NLS-1$
 		if(peak != null) {
-			quantifier = !peak.getInternalStandards().isEmpty() ? "ISTD" : "";
+			quantifier = !peak.getInternalStandards().isEmpty() ? "ISTD" : ""; //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		return quantifier;
 	}
@@ -142,6 +142,6 @@ public class PeakQuantitationsExtractor {
 
 	private String getIdentifier(final String name, String concentrationUnit) {
 
-		return name + " [" + concentrationUnit + "]";
+		return name + " [" + concentrationUnit + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

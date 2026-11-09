@@ -33,8 +33,8 @@ public interface IClassifier {
 	static String asString(Iterable<? extends CharSequence> classifiers) {
 
 		if(classifiers != null) {
-			return String.join(", ", classifiers);
+			return String.join(", ", classifiers); //$NON-NLS-1$
 		}
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 }

@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
+
 /**
  * They are the default metric set of an {@link IComparisonResult}
  * when there is just a single match factor.
@@ -25,12 +27,12 @@ public class ComparisonMetricsSimple {
 	/**
 	 * Algorithm id of the simple matching.
 	 */
-	public static final String ALGORITHM_SIMPLE = "simple";
+	public static final String ALGORITHM_SIMPLE = "simple"; //$NON-NLS-1$
 
 	/**
 	 * Just a single match factor
 	 */
-	public static final String MATCH_FACTOR = "matchFactor";
+	public static final String MATCH_FACTOR = "matchFactor"; //$NON-NLS-1$
 
 	private static final List<IComparisonMetric> METRICS = createMetrics();
 
@@ -51,7 +53,7 @@ public class ComparisonMetricsSimple {
 	private static List<IComparisonMetric> createMetrics() {
 
 		List<IComparisonMetric> metrics = new ArrayList<>();
-		metrics.add(new ComparisonMetric(MATCH_FACTOR, "Match Factor", "Similarity of the unknown to the library entry.", "0.0", true, ComparisonMetric.HIGHER_IS_BETTER));
+		metrics.add(new ComparisonMetric(MATCH_FACTOR, ModelMessages.matchFactor, ModelMessages.similarityOfUnknownToLibraryEntry, "0.0", true, ComparisonMetric.HIGHER_IS_BETTER)); //$NON-NLS-1$
 
 		return Collections.unmodifiableList(metrics);
 	}

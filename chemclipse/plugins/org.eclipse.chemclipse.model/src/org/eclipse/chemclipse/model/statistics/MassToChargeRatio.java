@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2025 Lablicate GmbH.
+ * Copyright (c) 2021, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -20,7 +20,7 @@ import org.eclipse.chemclipse.support.text.ValueFormat;
 
 public class MassToChargeRatio extends AbstractVariable implements IMassToChargeRatio {
 
-	private DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0");
+	private DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0"); //$NON-NLS-1$
 	private double mz = 0;
 
 	public static List<MassToChargeRatio> create(List<Double> massToChargeRotatios) {

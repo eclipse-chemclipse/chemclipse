@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -14,6 +14,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.model.core;
 
+import org.eclipse.chemclipse.model.l10n.ModelMessages;
 import org.eclipse.chemclipse.support.text.ILabel;
 
 /**
@@ -35,21 +36,21 @@ public enum PeakType implements ILabel {
 	/*
 	 * Some peak type defaults are listed here.
 	 */
-	DEFAULT("--"), //
-	BB("BB (Baseline)"), //
-	BV("BV (Baseline, Valley)"), //
-	VV("VV (Valley)"), //
-	VB("VB (Valley, Baseline)"), //
-	MM("MM (Manual)"), //
-	PV("PV (Perpendicular Drop, Valley)"), //
-	PB("PB (Perpendicular Drop, Baseline)"), //
-	VP("VP (Valley, Perpendicular Drop)"), //
-	BP("BP (Baseline, Perpendicular Drop)"), //
-	DD("DD (Deconvolution)"), //
-	TS("TS (Tangent Skim)"), //
-	CB("CB (Chromatogram Baseline)"); //
+	DEFAULT("--"), // //$NON-NLS-1$
+	BB(ModelMessages.bbBaseline), //
+	BV(ModelMessages.bvBaselineValley), //
+	VV(ModelMessages.vvValley), //
+	VB(ModelMessages.vbValleyBaseline), //
+	MM(ModelMessages.mmManual), //
+	PV(ModelMessages.pvPerpendicularDropValley), //
+	PB(ModelMessages.pbPerpendicularDropBaseline), //
+	VP(ModelMessages.vpValleyPerpendicularDrop), //
+	BP(ModelMessages.bpBaselinePerpendicularDrop), //
+	DD(ModelMessages.ddDeconvolution), //
+	TS(ModelMessages.tsTangentSkim), //
+	CB(ModelMessages.cbChromatogramBaseline); //
 
-	private String label = "";
+	private String label = ""; //$NON-NLS-1$
 
 	private PeakType(String label) {
 

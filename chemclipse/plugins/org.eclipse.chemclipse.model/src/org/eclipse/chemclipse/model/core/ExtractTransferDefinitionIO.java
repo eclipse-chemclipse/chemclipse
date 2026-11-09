@@ -27,13 +27,13 @@ public class ExtractTransferDefinitionIO {
 
 	private static final Logger logger = Logger.getLogger(ExtractTransferDefinitionIO.class);
 
-	public static final String DESCRIPTION = "Extract Transfer Definitions";
-	public static final String FILE_EXTENSION = ".etd";
-	public static final String FILE_NAME = DESCRIPTION.replaceAll("\\s", "") + FILE_EXTENSION;
-	public static final String FILTER_EXTENSION = "*" + FILE_EXTENSION;
-	public static final String FILTER_NAME = DESCRIPTION + " (*" + FILE_EXTENSION + ")";
+	public static final String DESCRIPTION = "Extract Transfer Definitions"; //$NON-NLS-1$
+	public static final String FILE_EXTENSION = ".etd"; //$NON-NLS-1$
+	public static final String FILE_NAME = DESCRIPTION.replaceAll("\\s", "") + FILE_EXTENSION; //$NON-NLS-1$ //$NON-NLS-2$
+	public static final String FILTER_EXTENSION = "*" + FILE_EXTENSION; //$NON-NLS-1$
+	public static final String FILTER_NAME = DESCRIPTION + " (*" + FILE_EXTENSION + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 
-	public static final String SEPARATOR_TOKEN = "\t";
+	public static final String SEPARATOR_TOKEN = "\t"; //$NON-NLS-1$
 
 	public static List<ExtractTransferDefinition> importDefinitions(File file) {
 
@@ -42,7 +42,7 @@ public class ExtractTransferDefinitionIO {
 			String line;
 			while((line = bufferedReader.readLine()) != null) {
 				line = line.trim();
-				if(!line.isEmpty() && !line.startsWith("#")) {
+				if(!line.isEmpty() && !line.startsWith("#")) { //$NON-NLS-1$
 					ExtractTransferDefinition definition = parseDefinition(line);
 					if(definition != null) {
 						definitions.add(definition);

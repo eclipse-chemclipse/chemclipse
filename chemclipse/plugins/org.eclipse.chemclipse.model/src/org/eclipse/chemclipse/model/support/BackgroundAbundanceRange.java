@@ -84,11 +84,11 @@ public class BackgroundAbundanceRange implements IBackgroundAbundanceRange {
 
 		StringBuilder builder = new StringBuilder();
 		builder.append(getClass().getName());
-		builder.append("[");
-		builder.append("startBackgroundAbundance=" + getStartBackgroundAbundance());
-		builder.append(",");
-		builder.append("stopBackgroundAbundance=" + getStopBackgroundAbundance());
-		builder.append("]");
+		builder.append("["); //$NON-NLS-1$
+		builder.append("startBackgroundAbundance=" + getStartBackgroundAbundance()); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("stopBackgroundAbundance=" + getStopBackgroundAbundance()); //$NON-NLS-1$
+		builder.append("]"); //$NON-NLS-1$
 		return builder.toString();
 	}
 	// -----------------------------equals, hashCode, toString

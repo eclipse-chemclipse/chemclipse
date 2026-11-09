@@ -53,7 +53,7 @@ public abstract class AbstractChromatogramSelection implements IChromatogramSele
 		 * Check
 		 */
 		if(chromatogram == null) {
-			throw new ChromatogramIsNullException("The chromatogram must not be null.");
+			throw new ChromatogramIsNullException("The chromatogram must not be null."); //$NON-NLS-1$
 		}
 
 		this.chromatogram = chromatogram;
@@ -416,13 +416,13 @@ public abstract class AbstractChromatogramSelection implements IChromatogramSele
 
 		StringBuilder builder = new StringBuilder();
 		builder.append(getClass().getName());
-		builder.append("[");
-		builder.append("chromatogram=" + chromatogram);
-		builder.append(",");
-		builder.append("startRetentionTime=" + startRetentionTime);
-		builder.append(",");
-		builder.append("stopRetentionTime=" + stopRetentionTime);
-		builder.append("]");
+		builder.append("["); //$NON-NLS-1$
+		builder.append("chromatogram=" + chromatogram); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("startRetentionTime=" + startRetentionTime); //$NON-NLS-1$
+		builder.append(","); //$NON-NLS-1$
+		builder.append("stopRetentionTime=" + stopRetentionTime); //$NON-NLS-1$
+		builder.append("]"); //$NON-NLS-1$
 		return builder.toString();
 	}
 }
