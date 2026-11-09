@@ -13,7 +13,6 @@
 package org.eclipse.chemclipse.model.selection;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
-import org.eclipse.chemclipse.model.core.IScan;
 
 public class ChromatogramSelectionSupport {
 
@@ -55,21 +54,5 @@ public class ChromatogramSelectionSupport {
 		} else {
 			return stopRetentionTimeNew;
 		}
-	}
-
-	public static boolean containsEmptyScans(IChromatogramSelection chromatogramSelection) {
-
-		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
-		int retentionTimeStart = chromatogramSelection.getStartRetentionTime();
-		int retentionTimeStop = chromatogramSelection.getStopRetentionTime();
-		for(IScan scan : chromatogram.getScans()) {
-			int retentionTime = scan.getRetentionTime();
-			if(retentionTime >= retentionTimeStart && retentionTime <= retentionTimeStop) {
-				if(scan.getTotalSignal() == 0) {
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 }

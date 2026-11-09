@@ -23,12 +23,16 @@ import org.eclipse.chemclipse.chromatogram.peak.detector.support.IDetectorSlope;
 import org.eclipse.chemclipse.chromatogram.peak.detector.support.IRawPeak;
 import org.eclipse.chemclipse.chromatogram.peak.detector.support.RawPeak;
 import org.eclipse.chemclipse.chromatogram.xxd.peak.detector.supplier.firstderivative.support.IFirstDerivativeDetectorSlopes;
+import org.eclipse.chemclipse.csd.model.core.IScanCSD;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.model.core.IPeakModel;
-import org.eclipse.chemclipse.model.selection.ChromatogramSelectionSupport;
+import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.numeric.miscellaneous.Evaluation;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
+import org.eclipse.chemclipse.vsd.model.core.IScanVSD;
+import org.eclipse.chemclipse.wsd.model.core.IScanWSD;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 
@@ -41,7 +45,7 @@ public class BasePeakDetector extends AbstractPeakDetector {
 	public IProcessingInfo<?> validate(IChromatogramSelection chromatogramSelection, IPeakDetectorSettings peakDetectorSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<?> processingInfo = super.validate(chromatogramSelection, peakDetectorSettings, monitor);
-		if(ChromatogramSelectionSupport.containsEmptyScans(chromatogramSelection)) {
+		if(containsEmptyScans(chromatogramSelection)) {
 			processingInfo.addErrorMessage("Peak Detector", "Selection must not contain empty scans.", "Apply Chromatogram Filter - Remove Empty Scans.");
 		}
 
@@ -200,5 +204,35 @@ public class BasePeakDetector extends AbstractPeakDetector {
 			}
 		}
 		return peakStop;
+	}
+
+	public static boolean containsEmptyScans(IChromatogramSelection chromatogramSelection) {
+
+		IChromatogram chromatogram = chromatogramSelection.getChromatogram();
+		int retentionTimeStart = chromatogramSelection.getStartRetentionTime();
+		int retentionTimeStop = chromatogramSelection.getStopRetentionTime();
+		for(IScan scan : chromatogram.getScans()) {
+			int retentionTime = scan.getRetentionTime();
+			if(retentionTime >= retentionTimeStart && retentionTime <= retentionTimeStop) {
+				if(scan instanceof IScanMSD scanMSD) {
+					if(scanMSD.getNumberOfIons() == 0) {
+						return true;
+					}
+				} else if(scan instanceof IScanCSD scanCSD) {
+					if(scanCSD.getTotalSignal() == 0) {
+						return true;
+					}
+				} else if(scan instanceof IScanWSD scanWSD) {
+					if(scanWSD.getNumberOfScanSignals() == 0) {
+						return true;
+					}
+				} else if(scan instanceof IScanVSD scanVSD) {
+					if(scanVSD.getProcessedSignals().isEmpty()) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }
