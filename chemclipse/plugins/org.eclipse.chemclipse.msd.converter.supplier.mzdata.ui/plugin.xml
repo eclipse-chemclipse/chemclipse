@@ -4,14 +4,14 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.msd.converter.supplier.mzdata.ui.icon.MenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/scalable/generic_xml_obj.svg"
             id="org.eclipse.chemclipse.msd.converter.supplier.mzdata">
       </icon>
    </extension>
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.msd.converter.supplier.mzdata.ui.icon.MenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/scalable/generic_xml_obj.svg"
             id="org.eclipse.chemclipse.msd.converter.supplier.mzdata.ms">
       </icon>
    </extension>

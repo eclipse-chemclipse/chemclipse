@@ -13,7 +13,7 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.baselinesubtract.ui.icon.BaselineSubtractMenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/baseline.gif"
             id="org.eclipse.chemclipse.msd.filter.supplier.baseline.subtract">
       </icon>
    </extension>

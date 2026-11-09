@@ -23,7 +23,7 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.denoising.ui.icon.MenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/denoising.gif"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.denoising">
       </icon>
    </extension>   

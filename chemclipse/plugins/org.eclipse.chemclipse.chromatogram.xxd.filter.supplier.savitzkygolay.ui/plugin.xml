@@ -4,19 +4,19 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.savitzkygolay.ui.icon.MenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/savitzkygolay.gif"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.savitzkygolay">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.savitzkygolay.ui.icon.MenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/savitzkygolay.gif"
             id="org.eclipse.chemclipse.chromatogram.csd.filter.supplier.savitzkygolay">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.savitzkygolay.ui.icon.MenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/savitzkygolay.gif"
             id="org.eclipse.chemclipse.chromatogram.wsd.filter.supplier.savitzkygolay">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.filter.supplier.savitzkygolay.ui.icon.MenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/savitzkygolay.gif"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.supplier.savitzkygolay.massspectrum">
       </icon>
    </extension>

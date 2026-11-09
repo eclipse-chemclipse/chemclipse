@@ -14,14 +14,14 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.chromatogram.filter.ui.icon.ResetSelectionMenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/unzoomChromatogram.gif"
             id="org.eclipse.chemclipse.chromatogram.filter.resetChromatogramSelection">
       </icon>
    </extension>
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.chromatogram.filter.ui.icon.SetSelectionMenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/execute_add.gif"
             id="org.eclipse.chemclipse.chromatogram.filter.setChromatogramSelection">
       </icon>
    </extension>

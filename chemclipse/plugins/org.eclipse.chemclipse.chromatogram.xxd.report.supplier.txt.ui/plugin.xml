@@ -13,19 +13,19 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.report.supplier.txt.ui.icon.PeakIdentificationMenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/targets.gif"
             id="org.eclipse.chemclipse.chromatogram.xxd.report.supplier.txt.peaksidentifications">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.report.supplier.txt.ui.icon.AreaPercentMenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/integrationResults.gif"
             id="org.eclipse.chemclipse.chromatogram.xxd.report.supplier.txt.areapercent">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.report.supplier.txt.ui.icon.QuantitationMenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/integrationResults.gif"
             id="org.eclipse.chemclipse.chromatogram.xxd.report.supplier.txt.quantitation">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.report.supplier.txt.ui.icon.PeakTableMenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/peaks.gif"
             id="org.eclipse.chemclipse.chromatogram.xxd.report.supplier.txt.peaktable">
       </icon>
    </extension> 

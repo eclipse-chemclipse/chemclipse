@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.pcr.report.supplier.txt.ui.icon.MenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/scalable/file_obj.svg"
             id="org.eclipse.chemclipse.pcr.report.supplier.txt">
       </icon>
    </extension>

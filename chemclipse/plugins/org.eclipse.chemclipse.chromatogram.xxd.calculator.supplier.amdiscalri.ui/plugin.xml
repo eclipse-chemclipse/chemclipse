@@ -54,23 +54,23 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.ui.icon.CalibrationExportMenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/sample-calibration.gif"
             id="org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.chromatogram.cal">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.ui.icon.RetentionIndexMenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/retentionIndex.gif"
             id="org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.ui.icon.IndexResetMenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/reset.gif"
             id="org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.resetri">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.ui.icon.RetentionIndexMenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/retentionIndex.gif"
             id="org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.retentionindex">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.amdiscalri.ui.icon.IndexAssignerMenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/scalable/import.svg"
             id="org.eclipse.chemclipse.chromatogram.xxd.calculator.supplier.retentionindexassigner">
       </icon>      
    </extension>

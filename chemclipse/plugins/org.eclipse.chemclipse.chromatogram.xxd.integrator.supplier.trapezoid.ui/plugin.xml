@@ -4,15 +4,15 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.ui.icon.ChromatogramIntegratorMenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/chromatogramIntegrator.gif"
             id="org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.chromatogramIntegrator">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.ui.icon.CombinedIntegratorMenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/combinedIntegrator.gif"
             id="org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.combinedIntegrator">
       </icon>
       <icon
-            class="org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.ui.icon.PeakIntegratorMenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/peakIntegrator.gif"
             id="org.eclipse.chemclipse.chromatogram.xxd.integrator.supplier.trapezoid.peakIntegrator">
       </icon>
    </extension>

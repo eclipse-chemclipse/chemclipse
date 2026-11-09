@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.msd.converter.supplier.excel.ui.icon.MenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/scalable/excel.svg"
             id="org.eclipse.chemclipse.msd.converter.supplier.excel">
       </icon>
    </extension>

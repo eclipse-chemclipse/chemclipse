@@ -25,7 +25,7 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            class="org.eclipse.chemclipse.pcr.report.supplier.tabular.excel.ui.icon.MenuIcon"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/scalable/excel.svg"
             id="org.eclipse.chemclipse.pcr.report.supplier.tabular.excel">
       </icon>
    </extension>
