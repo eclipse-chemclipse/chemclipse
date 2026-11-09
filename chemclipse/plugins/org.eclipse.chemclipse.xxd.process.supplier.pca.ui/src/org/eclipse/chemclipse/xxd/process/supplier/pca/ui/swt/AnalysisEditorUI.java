@@ -53,6 +53,7 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.Activator;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.internal.runnable.CalculationExecutor;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.internal.wizards.BatchProcessWizardDialog;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.internal.wizards.GroupNamingWizard;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.preferences.PreferencePage;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.preferences.PreferencePageLoadingPlot;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.preferences.PreferencePageScorePlot;
@@ -90,7 +91,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 	private static final Logger logger = Logger.getLogger(AnalysisEditorUI.class);
 	public static final int DEFAULT_WIDTH = 500;
 	public static final int DEFAULT_HEIGHT = 600;
-	private static final String OPLS_GROUP_TARGET_NONE = "--";
+	private static final String OPLS_GROUP_TARGET_NONE = "--"; //$NON-NLS-1$
 	private AtomicReference<Button> buttonToolbarSearchControl = new AtomicReference<>();
 	private AtomicReference<SearchSupportUI> toolbarSearch = new AtomicReference<>();
 	private AtomicReference<Spinner> spinnerControlPC = new AtomicReference<>();
@@ -181,9 +182,9 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 		gridData.horizontalAlignment = SWT.END;
 		composite.setLayoutData(gridData);
 		composite.setLayout(new GridLayout(7, false));
-		createLabel(composite, "Number of PCs:");
+		createLabel(composite, StatisticsMessages.numberOfPcs);
 		createSpinnerPrincipleComponents(composite);
-		createLabel(composite, "Algorithm:");
+		createLabel(composite, StatisticsMessages.algorithm);
 		createComboViewerAlgorithm(composite);
 		createButtonRun(composite);
 		createCheckboxCrossValidation(composite);
@@ -200,7 +201,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 	private void createSpinnerPrincipleComponents(Composite parent) {
 
 		Spinner spinner = new Spinner(parent, SWT.BORDER);
-		spinner.setToolTipText("Number of Principal Components");
+		spinner.setToolTipText(StatisticsMessages.numberOfPrincipalComponents);
 		spinner.setMinimum(PreferenceSupplier.MIN_NUMBER_OF_COMPONENTS);
 		spinner.setIncrement(1);
 		spinner.setSelection(PreferenceSupplier.getNumberOfPrincipalComponents());
@@ -237,7 +238,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 			}
 		});
 		Combo combo = comboViewer.getCombo();
-		combo.setToolTipText("PCA Algorithm");
+		combo.setToolTipText(StatisticsMessages.pcaAlgorithm);
 		combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		combo.addSelectionListener(new SelectionAdapter() {
 
@@ -269,7 +270,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 	private Button createButtonRun(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Run the Multivariate analysis.");
+		button.setToolTipText(StatisticsMessages.runMultivariateAnalysis);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EXECUTE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -286,8 +287,8 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 	private void createCheckboxCrossValidation(Composite parent) {
 
 		Button button = new Button(parent, SWT.CHECK);
-		button.setToolTipText("Run cross-validation if available for selected algorithm.");
-		button.setText("Cross Validate");
+		button.setToolTipText(StatisticsMessages.runCrossValidationIfAvailable);
+		button.setText(StatisticsMessages.crossValidate);
 		button.setSelection(PreferenceSupplier.isCrossValidation());
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -344,7 +345,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 	private void createSamplesSection(TabFolder tabFolder) {
 
 		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
-		tabItem.setText("Samples");
+		tabItem.setText(StatisticsMessages.samples);
 		Composite composite = new Composite(tabFolder, SWT.NONE);
 		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 		composite.setLayout(new GridLayout(1, true));
@@ -392,7 +393,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 				return null;
 			}
 		});
-		combo.setToolTipText("Label Option");
+		combo.setToolTipText(StatisticsMessages.labelOption);
 		combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		combo.addSelectionListener(new SelectionAdapter() {
 
@@ -429,11 +430,11 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 				if(element instanceof String value) {
 					return value;
 				} else {
-					return "";
+					return ""; //$NON-NLS-1$
 				}
 			}
 		});
-		combo.setToolTipText("Using Classification Column for OPLS");
+		combo.setToolTipText(StatisticsMessages.usingClassificationColumnForOpls);
 		GridData gridData = new GridData();
 		gridData.widthHint = 250;
 		combo.setLayoutData(gridData);
@@ -447,9 +448,9 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 					if(analysisSettings != null) {
 						analysisSettings.setOplsTargetGroupName(comboViewer.getStructuredSelection().getFirstElement().toString());
 						if(comboViewer.getStructuredSelection().getFirstElement().toString().equals(OPLS_GROUP_TARGET_NONE)) {
-							combo.setToolTipText("Using Classification Column for OPLS");
+							combo.setToolTipText(StatisticsMessages.usingClassificationColumnForOpls);
 						} else {
-							combo.setToolTipText("Using selected Group against the rest for OPLS");
+							combo.setToolTipText(StatisticsMessages.usingSelectedGroupForOpls);
 						}
 					}
 				}
@@ -461,7 +462,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 	private Button createButtonNamingWizard(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Group Naming Wizard.");
+		button.setToolTipText(StatisticsMessages.groupNamingWizard);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EDIT, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -478,7 +479,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 	private Button createButtonColorScheme(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Apply color scheme.");
+		button.setToolTipText(StatisticsMessages.applyColorScheme);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SAMPLE_COLORIZE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -494,7 +495,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 	private Button createButtonImport(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Import sample settings.");
+		button.setToolTipText(StatisticsMessages.importSampleSettings);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_IMPORT, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -503,7 +504,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 
 				if(samples != null) {
 					FileDialog fileDialog = new FileDialog(getShell(), SWT.READ_ONLY);
-					fileDialog.setText("Import");
+					fileDialog.setText(StatisticsMessages.importLabel);
 					fileDialog.setFilterExtensions(SampleTemplateIO.FILTER_EXTENSION);
 					fileDialog.setFilterNames(SampleTemplateIO.FILTER_NAME);
 					fileDialog.setFilterPath(PreferenceSupplier.getPathImportFile());
@@ -515,7 +516,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 							SampleTemplateIO.read(file, samples.getSamples());
 							updateSampleList();
 						} catch(IOException e1) {
-							MessageDialog.openWarning(getShell(), "Import", "Failed to read the sample template.");
+							MessageDialog.openWarning(getShell(), StatisticsMessages.importLabel, StatisticsMessages.failedToReadSampleTemplate);
 						}
 					}
 				}
@@ -527,7 +528,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 	private Button createButtonExport(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Export sample settings.");
+		button.setToolTipText(StatisticsMessages.exportSampleSettings);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EXPORT, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -537,7 +538,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 				if(samples != null) {
 					FileDialog fileDialog = new FileDialog(getShell(), SWT.SAVE);
 					fileDialog.setOverwrite(true);
-					fileDialog.setText("Export");
+					fileDialog.setText(StatisticsMessages.exportLabel);
 					fileDialog.setFilterExtensions(SampleTemplateIO.FILTER_EXTENSION);
 					fileDialog.setFilterNames(SampleTemplateIO.FILTER_NAME);
 					fileDialog.setFileName(SampleTemplateIO.FILE_NAME);
@@ -548,9 +549,9 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 							PreferenceSupplier.setPathExportFile(fileDialog.getFilterPath());
 							File file = new File(path);
 							SampleTemplateIO.write(file, samples.getSamples());
-							MessageDialog.openInformation(getShell(), "Export", "The sample template has been exported successfully.");
+							MessageDialog.openInformation(getShell(), StatisticsMessages.exportLabel, StatisticsMessages.sampleTemplateExported);
 						} catch(FileNotFoundException e1) {
-							MessageDialog.openWarning(getShell(), "Export", "The sample template file couldn't be found.");
+							MessageDialog.openWarning(getShell(), StatisticsMessages.exportLabel, StatisticsMessages.sampleTemplateFileNotFound);
 						}
 					}
 				}
@@ -562,7 +563,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 	private Button createButtonSaveWorkspace(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Save workspace (experimental).");
+		button.setToolTipText(StatisticsMessages.saveWorkspaceExperimental);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SAVE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -571,7 +572,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 
 				FileDialog fileDialog = new FileDialog(getShell(), SWT.SAVE);
 				fileDialog.setOverwrite(true);
-				fileDialog.setText("Save Workspace");
+				fileDialog.setText(StatisticsMessages.saveWorkspace);
 				fileDialog.setFilterExtensions(WorkspaceIO.FILTER_EXTENSION);
 				fileDialog.setFilterNames(WorkspaceIO.FILTER_NAME);
 				fileDialog.setFileName(WorkspaceIO.FILE_NAME);
@@ -579,7 +580,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 				String path = fileDialog.open();
 				if(path != null) {
 					if(evaluation == null) {
-						MessageDialog.openWarning(getShell(), "Save Workspace", "No analysis results available. Please run an analysis before saving the workspace.");
+						MessageDialog.openWarning(getShell(), StatisticsMessages.saveWorkspace, StatisticsMessages.noAnalysisResults);
 						return;
 					}
 					if(!path.endsWith(WorkspaceIO.FILE_EXTENSION)) {
@@ -588,9 +589,9 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 					try {
 						PreferenceSupplier.setPathExportFile(fileDialog.getFilterPath());
 						WorkspaceIO.write(new File(path), evaluation);
-						MessageDialog.openInformation(getShell(), "Save Workspace", "The workspace has been saved successfully.");
+						MessageDialog.openInformation(getShell(), StatisticsMessages.saveWorkspace, StatisticsMessages.workspaceSaved);
 					} catch(IOException e1) {
-						MessageDialog.openWarning(getShell(), "Save Workspace", "Failed to save the workspace.");
+						MessageDialog.openWarning(getShell(), StatisticsMessages.saveWorkspace, StatisticsMessages.failedToSaveWorkspace);
 					}
 				}
 			}
@@ -624,13 +625,13 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 			@Override
 			public String getCategory() {
 
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 
 			@Override
 			public String getName() {
 
-				return "Toggle 'Use'";
+				return StatisticsMessages.toggleUse;
 			}
 
 			@Override
@@ -650,13 +651,13 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 			@Override
 			public String getCategory() {
 
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 
 			@Override
 			public String getName() {
 
-				return "Apply Selection to Classification Column";
+				return StatisticsMessages.applySelectionToClassificationColumn;
 			}
 
 			@Override
@@ -664,7 +665,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 
 				Shell shell = extendedTableViewer.getControl().getShell();
 				Display display = shell.getDisplay();
-				InputDialog inputDialog = new InputDialog(shell, "Apply Selected Samples to Classification columm", "Enter Character to apply:", "", null);
+				InputDialog inputDialog = new InputDialog(shell, StatisticsMessages.applySelectedSamplesToClassificationColumn, StatisticsMessages.enterCharacterToApply, "", null); //$NON-NLS-1$
 				if(inputDialog.open() == Window.OK) {
 					String userInput = inputDialog.getValue();
 					if(userInput.length() == 1) {
@@ -687,13 +688,13 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 			@Override
 			public String getCategory() {
 
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 
 			@Override
 			public String getName() {
 
-				return "Use All Sample";
+				return StatisticsMessages.useAllSamples;
 			}
 
 			@Override
@@ -727,7 +728,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 	private void createPreprocessingUI(TabFolder tabFolder) {
 
 		TabItem tabItem = new TabItem(tabFolder, SWT.NONE);
-		tabItem.setText("Preprocessing");
+		tabItem.setText(StatisticsMessages.preprocessing);
 		PreprocessingSettingsUI preprocessingSettingsUI = new PreprocessingSettingsUI(tabFolder, SWT.NONE);
 		preprocessingSettingsUI.setLayoutData(new GridData(GridData.FILL_BOTH));
 		tabItem.setControl(preprocessingSettingsUI);
@@ -828,7 +829,7 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 	private void applyColorSchemeDialog() {
 
 		if(samples != null) {
-			if(MessageDialog.openQuestion(getShell(), "Color Scheme", "Would like to apply the current color scheme on the samples?")) {
+			if(MessageDialog.openQuestion(getShell(), StatisticsMessages.colorScheme, StatisticsMessages.applyColorSchemeToSamples)) {
 				String colorScheme = applyColorScheme();
 				if(colorScheme != null) {
 					UpdateNotifierUI.update(getDisplay(), IChemClipseEvents.TOPIC_PCA_UPDATE_COLORSCHEME, colorScheme);
@@ -882,8 +883,8 @@ public class AnalysisEditorUI extends Composite implements IExtendedPartUI {
 		if(samples != null) {
 			for(ISample sample : samples.getSamples()) {
 				if(sample.getGroupName() == null) {
-					logger.warn("Fix GroupName (must not be null): " + sample);
-					sample.setGroupName("");
+					logger.warn("Fix GroupName (must not be null): " + sample); //$NON-NLS-1$
+					sample.setGroupName(""); //$NON-NLS-1$
 				}
 			}
 			/*

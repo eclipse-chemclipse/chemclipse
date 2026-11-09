@@ -25,6 +25,8 @@ import org.eclipse.chemclipse.model.statistics.IVariable;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.EvaluationPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultsMVA;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Color;
@@ -48,8 +50,8 @@ import org.eclipse.swtchart.extensions.core.SeriesData;
 
 public class LoadingBarChart extends BarChart {
 
-	private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.00E0", new DecimalFormatSymbols(Locale.ENGLISH));
-	private String title = "Loading Bar Chart";
+	private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.00E0", new DecimalFormatSymbols(Locale.ENGLISH)); //$NON-NLS-1$
+	private String title = StatisticsMessages.loadingBarChart;
 	private int currentPC = 0;
 	private ICustomPaintListener currentPaintListener = null;
 
@@ -87,13 +89,13 @@ public class LoadingBarChart extends BarChart {
 
 		// X-axis settings (sample names)
 		IPrimaryAxisSettings xAxisSettings = chartSettings.getPrimaryAxisSettingsX();
-		xAxisSettings.setTitle("Variables (sorted by loadings)");
+		xAxisSettings.setTitle(StatisticsMessages.variablesSortedByLoadings);
 		xAxisSettings.setVisible(true);
 		xAxisSettings.setDecimalFormat(DECIMAL_FORMAT);
 
 		// Y-axis settings (scores)
 		IPrimaryAxisSettings yAxisSettings = chartSettings.getPrimaryAxisSettingsY();
-		yAxisSettings.setTitle("Loading");
+		yAxisSettings.setTitle(StatisticsMessages.loading);
 		yAxisSettings.setVisible(true);
 		yAxisSettings.setDecimalFormat(DECIMAL_FORMAT);
 
@@ -112,7 +114,7 @@ public class LoadingBarChart extends BarChart {
 
 		IResultsMVA results = evaluationPCA.getResults();
 
-		String chartTitle = String.format("Loading Plot - PC%d", this.currentPC + 1);
+		String chartTitle = NLS.bind(StatisticsMessages.loadingPlotPc, this.currentPC + 1);
 		getChartSettings().setTitle(chartTitle);
 
 		List<VariableLoading> variableLoadings = new ArrayList<>();
@@ -138,7 +140,7 @@ public class LoadingBarChart extends BarChart {
 		for(int i = 0; i < numberOfBars; i++) {
 			xValues[i] = i;
 			yValues[i] = variableLoadings.get(i).getLoading();
-			labels[i] = "";
+			labels[i] = ""; //$NON-NLS-1$
 
 			String variableName = variableLoadings.get(i).getVariableName();
 			barColors[i] = highlightedNames.contains(variableName) ? Colors.BLUE : Colors.RED;
@@ -146,7 +148,7 @@ public class LoadingBarChart extends BarChart {
 
 		// Create a SINGLE series
 		List<IBarSeriesData> barSeriesDataList = new ArrayList<>();
-		IBarSeriesData barData = new BarSeriesData(new SeriesData(xValues, yValues, "Loadings"));
+		IBarSeriesData barData = new BarSeriesData(new SeriesData(xValues, yValues, "Loadings")); //$NON-NLS-1$
 		IBarSeriesSettings settings = barData.getSettings();
 		settings.setBarColor(Colors.RED);
 		settings.setBarWidthStyle(BarWidthStyle.STRETCHED);
@@ -164,7 +166,7 @@ public class LoadingBarChart extends BarChart {
 			@Override
 			public void paintControl(PaintEvent e) {
 
-				ISeries<?> series = getBaseChart().getSeriesSet().getSeries("Loadings");
+				ISeries<?> series = getBaseChart().getSeriesSet().getSeries("Loadings"); //$NON-NLS-1$
 				if(series instanceof IBarSeries) {
 					IBarSeries<?> barSeries = (IBarSeries<?>)series;
 					Rectangle[] bounds = barSeries.getBounds();

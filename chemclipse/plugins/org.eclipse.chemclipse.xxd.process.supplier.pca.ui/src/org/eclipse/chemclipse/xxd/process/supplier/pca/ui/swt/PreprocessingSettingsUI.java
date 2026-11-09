@@ -42,6 +42,7 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.core.preprocessing.SmallV
 import org.eclipse.chemclipse.xxd.process.supplier.pca.core.preprocessing.TransformationLOG10;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.core.preprocessing.TransformationPower;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.Activator;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
@@ -62,12 +63,12 @@ import org.eclipse.swt.widgets.Label;
 
 public class PreprocessingSettingsUI extends Composite {
 
-	private static final String KEY_IMAGE = "IMAGE";
-	private static final String LABEL_NORMALIZE = "Normalize Samples:";
-	private static final String LABEL_REPLACE = "Replace Data:";
-	private static final String LABEL_TRANSFORM = "Transform Data:";
-	private static final String LABEL_CENTER = "Center Variables:";
-	private static final String LABEL_SCALE = "Scale Variables:";
+	private static final String KEY_IMAGE = "IMAGE"; //$NON-NLS-1$
+	private static final String LABEL_NORMALIZE = StatisticsMessages.normalizeSamples;
+	private static final String LABEL_REPLACE = StatisticsMessages.replaceData;
+	private static final String LABEL_TRANSFORM = StatisticsMessages.transformData;
+	private static final String LABEL_CENTER = StatisticsMessages.centerVariables;
+	private static final String LABEL_SCALE = StatisticsMessages.scaleVariables;
 
 	private IPreprocessingSettings preprocessingSettings = new PreprocessingSettings();
 
@@ -80,11 +81,11 @@ public class PreprocessingSettingsUI extends Composite {
 	private Label labelFormula;
 	private Canvas canvasFormula;
 
-	private Object[] normalizeInput = new Object[]{"--", new Normalization1Norm(), new Normalization2Norm(), new NormalizationInfNorm()};
+	private Object[] normalizeInput = new Object[]{"--", new Normalization1Norm(), new Normalization2Norm(), new NormalizationInfNorm()}; //$NON-NLS-1$
 	private Object[] replacerInput = new Object[]{new MeanValuesReplacer(), new MedianValuesReplacer(), new SmallValuesReplacer(), new HalfMinimumValuesReplacer()};
-	private Object[] transformationInput = new Object[]{"--", new TransformationLOG10(), new TransformationPower()};
-	private Object[] centeringInput = new Object[]{"--", new CenteringMean(), new CenteringMedian()};
-	private Object[] scaleInputEmpty = new Object[]{"--"};
+	private Object[] transformationInput = new Object[]{"--", new TransformationLOG10(), new TransformationPower()}; //$NON-NLS-1$
+	private Object[] centeringInput = new Object[]{"--", new CenteringMean(), new CenteringMedian()}; //$NON-NLS-1$
+	private Object[] scaleInputEmpty = new Object[]{"--"}; //$NON-NLS-1$
 	private Object[] scalingInputMean = createScaleElements(ICentering.MEAN);
 	private Object[] scalingInputMedian = createScaleElements(ICentering.MEDIAN);
 
@@ -147,7 +148,7 @@ public class PreprocessingSettingsUI extends Composite {
 		gridData.horizontalSpan = 3;
 		composite.setLayoutData(gridData);
 
-		return createLabel(composite, "Formula:");
+		return createLabel(composite, StatisticsMessages.formulaLabel);
 	}
 
 	private Label createLabel(Composite parent, String text) {
@@ -161,7 +162,7 @@ public class PreprocessingSettingsUI extends Composite {
 
 	private ComboViewer createComboViewerNormalize(Composite parent) {
 
-		ComboViewer comboViewer = createComboViewer(parent, normalizeInput, "Normalization");
+		ComboViewer comboViewer = createComboViewer(parent, normalizeInput, StatisticsMessages.normalization);
 		Combo combo = comboViewer.getCombo();
 		combo.addSelectionListener(new SelectionAdapter() {
 
@@ -184,7 +185,7 @@ public class PreprocessingSettingsUI extends Composite {
 
 	private ComboViewer createComboViewerReplace(Composite parent) {
 
-		ComboViewer comboViewer = createComboViewer(parent, replacerInput, "Replacement");
+		ComboViewer comboViewer = createComboViewer(parent, replacerInput, StatisticsMessages.replacement);
 		Combo combo = comboViewer.getCombo();
 		combo.select(0);
 		combo.addSelectionListener(new SelectionAdapter() {
@@ -208,7 +209,7 @@ public class PreprocessingSettingsUI extends Composite {
 
 	private ComboViewer createComboViewerTransform(Composite parent) {
 
-		ComboViewer comboViewer = createComboViewer(parent, transformationInput, "Transformation");
+		ComboViewer comboViewer = createComboViewer(parent, transformationInput, StatisticsMessages.transformation);
 		Combo combo = comboViewer.getCombo();
 		combo.addSelectionListener(new SelectionAdapter() {
 
@@ -231,7 +232,7 @@ public class PreprocessingSettingsUI extends Composite {
 
 	private ComboViewer createComboViewerCenter(Composite parent) {
 
-		ComboViewer comboViewer = createComboViewer(parent, centeringInput, "Centering");
+		ComboViewer comboViewer = createComboViewer(parent, centeringInput, StatisticsMessages.centering);
 		Combo combo = comboViewer.getCombo();
 		combo.addSelectionListener(new SelectionAdapter() {
 
@@ -281,7 +282,7 @@ public class PreprocessingSettingsUI extends Composite {
 
 	private ComboViewer createComboViewerScale(Composite parent) {
 
-		ComboViewer comboViewer = createComboViewer(parent, scaleInputEmpty, "Scaling");
+		ComboViewer comboViewer = createComboViewer(parent, scaleInputEmpty, StatisticsMessages.scaling);
 		Combo combo = comboViewer.getCombo();
 		combo.addSelectionListener(new SelectionAdapter() {
 
@@ -332,7 +333,7 @@ public class PreprocessingSettingsUI extends Composite {
 	private Button createButtonInfoFormula(Composite parent, ComboViewer comboViewer) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Show the formula.");
+		button.setToolTipText(StatisticsMessages.showFormula);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_INFO, IApplicationImageProvider.SIZE_16x16));
 
 		button.addSelectionListener(new SelectionAdapter() {
@@ -350,7 +351,7 @@ public class PreprocessingSettingsUI extends Composite {
 	private Canvas createCanvas(Composite parent) {
 
 		Canvas canvas = new Canvas(parent, SWT.BORDER);
-		canvas.setToolTipText("Formula");
+		canvas.setToolTipText(StatisticsMessages.formula);
 		canvas.setData(KEY_IMAGE, null);
 		canvas.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_LIST_BACKGROUND));
 
@@ -442,7 +443,7 @@ public class PreprocessingSettingsUI extends Composite {
 
 	private void updateFormulaDescription(ComboViewer comboViewer) {
 
-		String text = "--";
+		String text = "--"; //$NON-NLS-1$
 		Image image = null;
 		Object object = comboViewer.getStructuredSelection().getFirstElement();
 

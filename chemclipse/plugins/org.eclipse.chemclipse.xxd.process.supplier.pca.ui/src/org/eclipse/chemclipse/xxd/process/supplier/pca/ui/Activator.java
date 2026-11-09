@@ -31,29 +31,29 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractActivatorUI {
 
-	public static final String ICON_NORM_1NORM = "ICON_NORM_1NORM"; // $NON-NLS-1$
-	public static final String ICON_NORM_2NORM = "ICON_NORM_2NORM"; // $NON-NLS-1$
-	public static final String ICON_NORM_INFNORM = "ICON_NORM_INFNORM"; // $NON-NLS-1$
-	public static final String ICON_REPLACE_MEAN = "ICON_REPLACE_MEAN"; // $NON-NLS-1$
-	public static final String ICON_REPLACE_MEDIAN = "ICON_REPLACE_MEDIAN"; // $NON-NLS-1$
-	public static final String ICON_REPLACE_RANDOM = "ICON_REPLACE_RANDOM"; // $NON-NLS-1$
-	public static final String ICON_REPLACE_HALF_MIN = "ICON_REPLACE_HALF_MIN"; // $NON-NLS-1$
-	public static final String ICON_CENTER_MEAN = "ICON_CENTER_MEAN"; // $NON-NLS-1$
-	public static final String ICON_CENTER_MEDIAN = "ICON_CENTER_MEDIAN"; // $NON-NLS-1$
-	public static final String ICON_DEVIATION = "ICON_DEVIATION"; // $NON-NLS-1$
-	public static final String ICON_NORM_CENTER = "ICON_NORM_CENTER"; // $NON-NLS-1$
-	public static final String ICON_NORM_SCALE_AUTO = "ICON_NORM_SCALE_AUTO"; // $NON-NLS-1$
-	public static final String ICON_NORM_SCALE_LEVEL = "ICON_NORM_SCALE_LEVEL"; // $NON-NLS-1$
-	public static final String ICON_NORM_SCALE_MAX2 = "ICON_NORM_SCALE_MAX2"; // $NON-NLS-1$
-	public static final String ICON_NORM_SCALE_MAX = "ICON_NORM_SCALE_MAX"; // $NON-NLS-1$
-	public static final String ICON_NORM_SCALE_PARETO = "ICON_NORM_SCALE_PARETO"; // $NON-NLS-1$
-	public static final String ICON_NORM_SCALE_RANGE2 = "ICON_NORM_SCALE_RANGE2"; // $NON-NLS-1$
-	public static final String ICON_NORM_SCALE_RANGE = "ICON_NORM_SCALE_RANGE"; // $NON-NLS-1$
-	public static final String ICON_NORM_SCALE_VAST = "ICON_NORM_SCALE_VAST"; // $NON-NLS-1$
-	public static final String ICON_NORM_TRANS = "ICON_NORM_TRANS"; // $NON-NLS-1$
-	public static final String ICON_NORM_TRANS_LOG = "ICON_NORM_TRANS_LOG"; // $NON-NLS-1$
-	public static final String ICON_NORM_TRANS_NONE = "ICON_NORM_TRANS_NONE"; // $NON-NLS-1$
-	public static final String ICON_NORM_TRANS_POWER = "ICON_NORM_TRANS_POWER"; // $NON-NLS-1$
+	public static final String ICON_NORM_1NORM = "ICON_NORM_1NORM"; //$NON-NLS-1$
+	public static final String ICON_NORM_2NORM = "ICON_NORM_2NORM"; //$NON-NLS-1$
+	public static final String ICON_NORM_INFNORM = "ICON_NORM_INFNORM"; //$NON-NLS-1$
+	public static final String ICON_REPLACE_MEAN = "ICON_REPLACE_MEAN"; //$NON-NLS-1$
+	public static final String ICON_REPLACE_MEDIAN = "ICON_REPLACE_MEDIAN"; //$NON-NLS-1$
+	public static final String ICON_REPLACE_RANDOM = "ICON_REPLACE_RANDOM"; //$NON-NLS-1$
+	public static final String ICON_REPLACE_HALF_MIN = "ICON_REPLACE_HALF_MIN"; //$NON-NLS-1$
+	public static final String ICON_CENTER_MEAN = "ICON_CENTER_MEAN"; //$NON-NLS-1$
+	public static final String ICON_CENTER_MEDIAN = "ICON_CENTER_MEDIAN"; //$NON-NLS-1$
+	public static final String ICON_DEVIATION = "ICON_DEVIATION"; //$NON-NLS-1$
+	public static final String ICON_NORM_CENTER = "ICON_NORM_CENTER"; //$NON-NLS-1$
+	public static final String ICON_NORM_SCALE_AUTO = "ICON_NORM_SCALE_AUTO"; //$NON-NLS-1$
+	public static final String ICON_NORM_SCALE_LEVEL = "ICON_NORM_SCALE_LEVEL"; //$NON-NLS-1$
+	public static final String ICON_NORM_SCALE_MAX2 = "ICON_NORM_SCALE_MAX2"; //$NON-NLS-1$
+	public static final String ICON_NORM_SCALE_MAX = "ICON_NORM_SCALE_MAX"; //$NON-NLS-1$
+	public static final String ICON_NORM_SCALE_PARETO = "ICON_NORM_SCALE_PARETO"; //$NON-NLS-1$
+	public static final String ICON_NORM_SCALE_RANGE2 = "ICON_NORM_SCALE_RANGE2"; //$NON-NLS-1$
+	public static final String ICON_NORM_SCALE_RANGE = "ICON_NORM_SCALE_RANGE"; //$NON-NLS-1$
+	public static final String ICON_NORM_SCALE_VAST = "ICON_NORM_SCALE_VAST"; //$NON-NLS-1$
+	public static final String ICON_NORM_TRANS = "ICON_NORM_TRANS"; //$NON-NLS-1$
+	public static final String ICON_NORM_TRANS_LOG = "ICON_NORM_TRANS_LOG"; //$NON-NLS-1$
+	public static final String ICON_NORM_TRANS_NONE = "ICON_NORM_TRANS_NONE"; //$NON-NLS-1$
+	public static final String ICON_NORM_TRANS_POWER = "ICON_NORM_TRANS_POWER"; //$NON-NLS-1$
 
 	private static Activator plugin;
 
@@ -122,28 +122,28 @@ public class Activator extends AbstractActivatorUI {
 
 		Map<String, String> imageHashMap = new HashMap<>();
 
-		imageHashMap.put(ICON_NORM_1NORM, "icons/1norm.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_NORM_2NORM, "icons/2norm.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_NORM_INFNORM, "icons/infnorm.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_REPLACE_MEAN, "icons/mean.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_REPLACE_MEDIAN, "icons/median.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_REPLACE_RANDOM, "icons/linear_congruent_generator.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_CENTER_MEAN, "icons/center_mean.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_CENTER_MEDIAN, "icons/center_median.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_DEVIATION, "icons/deviation.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_NORM_CENTER, "icons/norm_center.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_NORM_SCALE_AUTO, "icons/norm_scal_auto.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_NORM_SCALE_LEVEL, "icons/norm_scal_level.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_NORM_SCALE_MAX2, "icons/norm_scal_max2.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_NORM_SCALE_MAX, "icons/norm_scal_max.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_NORM_SCALE_PARETO, "icons/norm_scal_pareto.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_NORM_SCALE_RANGE2, "icons/norm_scal_range2.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_NORM_SCALE_RANGE, "icons/norm_scal_range.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_NORM_SCALE_VAST, "icons/norm_scal_vast.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_NORM_TRANS, "icons/norm_trans.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_NORM_TRANS_LOG, "icons/trans_log.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_NORM_TRANS_NONE, "icons/trans_none.jpg"); // $NON-NLS-1$
-		imageHashMap.put(ICON_NORM_TRANS_POWER, "icons/trans_power.jpg"); // $NON-NLS-1$
+		imageHashMap.put(ICON_NORM_1NORM, "icons/1norm.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_NORM_2NORM, "icons/2norm.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_NORM_INFNORM, "icons/infnorm.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_REPLACE_MEAN, "icons/mean.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_REPLACE_MEDIAN, "icons/median.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_REPLACE_RANDOM, "icons/linear_congruent_generator.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_CENTER_MEAN, "icons/center_mean.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_CENTER_MEDIAN, "icons/center_median.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_DEVIATION, "icons/deviation.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_NORM_CENTER, "icons/norm_center.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_NORM_SCALE_AUTO, "icons/norm_scal_auto.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_NORM_SCALE_LEVEL, "icons/norm_scal_level.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_NORM_SCALE_MAX2, "icons/norm_scal_max2.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_NORM_SCALE_MAX, "icons/norm_scal_max.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_NORM_SCALE_PARETO, "icons/norm_scal_pareto.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_NORM_SCALE_RANGE2, "icons/norm_scal_range2.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_NORM_SCALE_RANGE, "icons/norm_scal_range.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_NORM_SCALE_VAST, "icons/norm_scal_vast.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_NORM_TRANS, "icons/norm_trans.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_NORM_TRANS_LOG, "icons/trans_log.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_NORM_TRANS_NONE, "icons/trans_none.jpg"); //$NON-NLS-1$
+		imageHashMap.put(ICON_NORM_TRANS_POWER, "icons/trans_power.jpg"); //$NON-NLS-1$
 
 		return imageHashMap;
 	}

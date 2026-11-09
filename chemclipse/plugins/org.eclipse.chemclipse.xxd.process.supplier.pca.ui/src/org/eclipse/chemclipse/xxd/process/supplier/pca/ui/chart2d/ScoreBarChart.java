@@ -26,6 +26,8 @@ import org.eclipse.chemclipse.swt.ui.support.Colors;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.EvaluationPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultMVA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultsMVA;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Color;
@@ -49,8 +51,8 @@ import org.eclipse.swtchart.extensions.core.SeriesData;
 
 public class ScoreBarChart extends BarChart {
 
-	private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.00E0", new DecimalFormatSymbols(Locale.ENGLISH));
-	private String title = "Score Bar Chart";
+	private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.00E0", new DecimalFormatSymbols(Locale.ENGLISH)); //$NON-NLS-1$
+	private String title = StatisticsMessages.scoreBarChart;
 	private int currentPC = 0;
 	private double explainedVariance = 0.0;
 	private ICustomPaintListener currentPaintListener = null;
@@ -89,13 +91,13 @@ public class ScoreBarChart extends BarChart {
 
 		// X-axis settings (sample names)
 		IPrimaryAxisSettings xAxisSettings = chartSettings.getPrimaryAxisSettingsX();
-		xAxisSettings.setTitle("Samples (sorted by score)");
+		xAxisSettings.setTitle(StatisticsMessages.samplesSortedByScore);
 		xAxisSettings.setVisible(true);
 		xAxisSettings.setDecimalFormat(DECIMAL_FORMAT);
 
 		// Y-axis settings (scores)
 		IPrimaryAxisSettings yAxisSettings = chartSettings.getPrimaryAxisSettingsY();
-		yAxisSettings.setTitle("Score");
+		yAxisSettings.setTitle(StatisticsMessages.score);
 		yAxisSettings.setVisible(true);
 		yAxisSettings.setDecimalFormat(DECIMAL_FORMAT);
 
@@ -120,7 +122,7 @@ public class ScoreBarChart extends BarChart {
 			this.explainedVariance = explainedVariances[this.currentPC];
 		}
 
-		String chartTitle = String.format("Score Plot - PC%d (%.1f%%)", this.currentPC + 1, explainedVariance * 100);
+		String chartTitle = NLS.bind(StatisticsMessages.scorePlotPc, this.currentPC + 1, String.format("%.1f", explainedVariance * 100)); //$NON-NLS-1$
 		getChartSettings().setTitle(chartTitle);
 
 		List<SampleScore> sampleScores = new ArrayList<>();
@@ -149,7 +151,7 @@ public class ScoreBarChart extends BarChart {
 		for(int i = 0; i < numberOfBars; i++) {
 			xValues[i] = i;
 			yValues[i] = sampleScores.get(i).getScore();
-			labels[i] = "";
+			labels[i] = ""; //$NON-NLS-1$
 
 			String sampleName = sampleScores.get(i).getSampleName();
 			barColors[i] = highlightedNames.contains(sampleName) ? Colors.BLUE : Colors.RED;
@@ -157,7 +159,7 @@ public class ScoreBarChart extends BarChart {
 
 		// Create a SINGLE series
 		List<IBarSeriesData> barSeriesDataList = new ArrayList<>();
-		IBarSeriesData barData = new BarSeriesData(new SeriesData(xValues, yValues, "Scores"));
+		IBarSeriesData barData = new BarSeriesData(new SeriesData(xValues, yValues, "Scores")); //$NON-NLS-1$
 		IBarSeriesSettings settings = barData.getSettings();
 		settings.setBarColor(Colors.RED);
 		settings.setBarWidthStyle(BarWidthStyle.STRETCHED);
@@ -175,7 +177,7 @@ public class ScoreBarChart extends BarChart {
 			@Override
 			public void paintControl(PaintEvent e) {
 
-				ISeries<?> series = getBaseChart().getSeriesSet().getSeries("Scores");
+				ISeries<?> series = getBaseChart().getSeriesSet().getSeries("Scores"); //$NON-NLS-1$
 				if(series instanceof IBarSeries) {
 					IBarSeries<?> barSeries = (IBarSeries<?>)series;
 					Rectangle[] bounds = barSeries.getBounds();

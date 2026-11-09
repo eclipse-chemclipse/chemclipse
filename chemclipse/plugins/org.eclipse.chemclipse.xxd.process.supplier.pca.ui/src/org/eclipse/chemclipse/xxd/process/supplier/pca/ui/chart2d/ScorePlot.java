@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -22,6 +22,7 @@ import org.eclipse.chemclipse.model.statistics.ISample;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.EvaluationPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultMVA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultsMVA;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.support.SeriesConverter;
 import org.eclipse.swt.widgets.Composite;
 
@@ -31,7 +32,7 @@ public class ScorePlot extends AbstractPlotPCA {
 
 	public ScorePlot(Composite parent, int style) {
 
-		super(parent, style, "Score Plot");
+		super(parent, style, StatisticsMessages.scorePlot);
 	}
 
 	public void setInput(EvaluationPCA evaluationPCA, int pcX, int pcY) {

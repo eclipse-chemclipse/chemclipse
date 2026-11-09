@@ -26,6 +26,7 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.core.LongFileExtractor;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IDataInputEntry;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Samples;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -39,6 +40,7 @@ import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -57,7 +59,7 @@ import org.eclipse.swt.widgets.Text;
 
 public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage {
 
-	private static final DecimalFormat COSINE_FORMAT = new DecimalFormat("0.000000");
+	private static final DecimalFormat COSINE_FORMAT = new DecimalFormat("0.000000"); //$NON-NLS-1$
 
 	private static class RankedSampleRow {
 
@@ -121,9 +123,9 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 
 	protected FilesLongFormatFilterWizardPage() {
 
-		super("Name Filter");
-		setTitle("Name Filter Entries");
-		setDescription("Filter Entries");
+		super("Name Filter"); //$NON-NLS-1$
+		setTitle(StatisticsMessages.nameFilterEntries);
+		setDescription(StatisticsMessages.filterEntries);
 	}
 
 	@Override
@@ -152,7 +154,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 		rankingTableViewer.setContentProvider(ArrayContentProvider.getInstance());
 
 		TableViewerColumn rankColumn = new TableViewerColumn(rankingTableViewer, SWT.NONE);
-		rankColumn.getColumn().setText("Rank");
+		rankColumn.getColumn().setText(StatisticsMessages.rank);
 		rankColumn.getColumn().setWidth(70);
 		rankColumn.setLabelProvider(new ColumnLabelProvider() {
 
@@ -162,12 +164,12 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 				if(element instanceof RankedSampleRow row) {
 					return Integer.toString(row.getRank());
 				}
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 		});
 
 		TableViewerColumn sampleColumn = new TableViewerColumn(rankingTableViewer, SWT.NONE);
-		sampleColumn.getColumn().setText("Sample");
+		sampleColumn.getColumn().setText(StatisticsMessages.sample);
 		sampleColumn.getColumn().setWidth(220);
 		sampleColumn.setLabelProvider(new ColumnLabelProvider() {
 
@@ -177,12 +179,12 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 				if(element instanceof RankedSampleRow row) {
 					return row.getSampleName();
 				}
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 		});
 
 		TableViewerColumn detailsColumn = new TableViewerColumn(rankingTableViewer, SWT.NONE);
-		detailsColumn.getColumn().setText("Sample Detail");
+		detailsColumn.getColumn().setText(StatisticsMessages.sampleDetail);
 		detailsColumn.getColumn().setWidth(280);
 		detailsColumn.setLabelProvider(new ColumnLabelProvider() {
 
@@ -190,14 +192,14 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 			public String getText(Object element) {
 
 				if(element instanceof RankedSampleRow row) {
-					return row.getSampleDetails() != null ? row.getSampleDetails() : "";
+					return row.getSampleDetails() != null ? row.getSampleDetails() : ""; //$NON-NLS-1$
 				}
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 		});
 
 		TableViewerColumn similarityColumn = new TableViewerColumn(rankingTableViewer, SWT.NONE);
-		similarityColumn.getColumn().setText("Cosine Similarity");
+		similarityColumn.getColumn().setText(StatisticsMessages.cosineSimilarity);
 		similarityColumn.getColumn().setWidth(140);
 		similarityColumn.setLabelProvider(new ColumnLabelProvider() {
 
@@ -207,7 +209,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 				if(element instanceof RankedSampleRow row) {
 					return COSINE_FORMAT.format(row.getCosineSimilarity());
 				}
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 		});
 	}
@@ -222,7 +224,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		TabItem filtersTab = new TabItem(tabFolder, SWT.NONE);
-		filtersTab.setText("Filters");
+		filtersTab.setText(StatisticsMessages.filters);
 		Composite filtersComposite = new Composite(tabFolder, SWT.NONE);
 		filtersComposite.setLayout(new GridLayout(1, false));
 		createSampleSpinner(filtersComposite);
@@ -232,7 +234,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 		filtersTab.setControl(filtersComposite);
 
 		TabItem cosimilarityTab = new TabItem(tabFolder, SWT.NONE);
-		cosimilarityTab.setText("Cosine Similarity");
+		cosimilarityTab.setText(StatisticsMessages.cosineSimilarity);
 		Composite cosimilarityComposite = new Composite(tabFolder, SWT.NONE);
 		cosimilarityComposite.setLayout(new GridLayout(1, false));
 		createTransformControls(cosimilarityComposite);
@@ -244,14 +246,14 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 	private void createSampleSpinner(Composite parent) {
 
 		sampleSpinnerGroup = new Group(parent, SWT.NONE);
-		sampleSpinnerGroup.setText("# of Samples to use");
+		sampleSpinnerGroup.setText(StatisticsMessages.numberOfSamplesToUse);
 		sampleSpinnerGroup.setLayout(new GridLayout(1, false));
 		sampleSpinnerGroup.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 		sampleSpinnerGroup.setVisible(false);
 		((GridData)sampleSpinnerGroup.getLayoutData()).exclude = true;
 
 		sampleSpinner = new Spinner(sampleSpinnerGroup, SWT.BORDER);
-		sampleSpinner.setToolTipText("Number of Samples to Filter");
+		sampleSpinner.setToolTipText(StatisticsMessages.numberOfSamplesToFilter);
 		sampleSpinner.setMinimum(PreferenceSupplier.MIN_NUMBER_OF_SAMPLES_TO_FILTER);
 		sampleSpinner.setIncrement(1);
 		sampleSpinner.setSelection(PreferenceSupplier.DEF_NUMBER_OF_SAMPLES_TO_FILTER);
@@ -273,7 +275,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 	private void createInExClusionSelection(Composite parent) {
 
 		Group nameFilterGroup = new Group(parent, SWT.NONE);
-		nameFilterGroup.setText("Name Filter");
+		nameFilterGroup.setText(StatisticsMessages.nameFilter);
 		nameFilterGroup.setLayout(new GridLayout(1, false));
 		nameFilterGroup.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
@@ -282,21 +284,21 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 		logicRow.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		Label logicLabel = new Label(logicRow, SWT.NONE);
-		logicLabel.setText("Include logic:");
+		logicLabel.setText(StatisticsMessages.includeLogic);
 
 		Button radioOr = new Button(logicRow, SWT.RADIO);
-		radioOr.setText("OR");
+		radioOr.setText(StatisticsMessages.or);
 		radioOr.setSelection(true);
 
 		radioAnd = new Button(logicRow, SWT.RADIO);
-		radioAnd.setText("AND");
+		radioAnd.setText(StatisticsMessages.and);
 
 		Composite nameSelection = new Composite(nameFilterGroup, SWT.NONE);
 		nameSelection.setLayout(new GridLayout(2, false));
 		nameSelection.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
 		Group includeGroup = new Group(nameSelection, SWT.NONE);
-		includeGroup.setText("Include names");
+		includeGroup.setText(StatisticsMessages.includeNames);
 		includeGroup.setLayout(new GridLayout(1, false));
 		includeGroup.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
@@ -308,7 +310,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 		includeText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		Button includeAddBtn = new Button(includeInputArea, SWT.PUSH);
-		includeAddBtn.setText("Add");
+		includeAddBtn.setText(StatisticsMessages.add);
 
 		includeList = new List(includeGroup, SWT.BORDER | SWT.V_SCROLL);
 		GridData includeGD = new GridData(SWT.FILL, SWT.FILL, true, false);
@@ -316,10 +318,10 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 		includeList.setLayoutData(includeGD);
 
 		Button includeRemoveBtn = new Button(includeGroup, SWT.PUSH);
-		includeRemoveBtn.setText("Remove selected");
+		includeRemoveBtn.setText(StatisticsMessages.removeSelected);
 
 		Group excludeGroup = new Group(nameSelection, SWT.NONE);
-		excludeGroup.setText("Exclude names");
+		excludeGroup.setText(StatisticsMessages.excludeNames);
 		excludeGroup.setLayout(new GridLayout(1, false));
 		excludeGroup.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
@@ -331,7 +333,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 		excludeText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		Button excludeAddBtn = new Button(excludeInputArea, SWT.PUSH);
-		excludeAddBtn.setText("Add");
+		excludeAddBtn.setText(StatisticsMessages.add);
 
 		excludeList = new List(excludeGroup, SWT.BORDER | SWT.V_SCROLL);
 		GridData excludeGD = new GridData(SWT.FILL, SWT.FILL, true, false);
@@ -339,7 +341,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 		excludeList.setLayoutData(excludeGD);
 
 		Button excludeRemoveBtn = new Button(excludeGroup, SWT.PUSH);
-		excludeRemoveBtn.setText("Remove selected");
+		excludeRemoveBtn.setText(StatisticsMessages.removeSelected);
 
 		Listener radioListener = e -> {
 			if(((Button)e.widget).getSelection()) {
@@ -356,7 +358,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 			String text = includeText.getText().trim();
 			if(!text.isEmpty()) {
 				includeList.add(text);
-				includeText.setText("");
+				includeText.setText(""); //$NON-NLS-1$
 				if(extractor != null && filterFile != null && !filterFile.isEmpty()) {
 					samples = extractor.filter(sampleSpinner.getSelection());
 					updateRankingTable();
@@ -381,7 +383,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 			String text = excludeText.getText().trim();
 			if(!text.isEmpty()) {
 				excludeList.add(text);
-				excludeText.setText("");
+				excludeText.setText(""); //$NON-NLS-1$
 				if(extractor != null && filterFile != null && !filterFile.isEmpty()) {
 					samples = extractor.filter(sampleSpinner.getSelection());
 					updateRankingTable();
@@ -406,7 +408,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 	private void createGroupSelection(Composite parent) {
 
 		Label groupLabel = new Label(parent, SWT.NONE);
-		groupLabel.setText("Groups to include:");
+		groupLabel.setText(StatisticsMessages.groupsToInclude);
 
 		groupViewer = CheckboxTableViewer.newCheckList(parent, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 
@@ -433,12 +435,12 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 	private void createTransformControls(Composite parent) {
 
 		Group transformGroup = new Group(parent, SWT.NONE);
-		transformGroup.setText("Feature Transform");
+		transformGroup.setText(StatisticsMessages.featureTransform);
 		transformGroup.setLayout(new GridLayout(1, false));
 		transformGroup.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
 		chkLogTransform = new Button(transformGroup, SWT.CHECK);
-		chkLogTransform.setText("Log transform features — reduces dominance of large components (e.g. solvent)");
+		chkLogTransform.setText(StatisticsMessages.logTransformFeatures);
 		chkLogTransform.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		chkLogTransform.setSelection(false);
 	}
@@ -446,31 +448,31 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 	private void createPunishmentControls(Composite parent) {
 
 		Group punishGroup = new Group(parent, SWT.NONE);
-		punishGroup.setText("Similarity Punishments");
+		punishGroup.setText(StatisticsMessages.similarityPunishments);
 		punishGroup.setLayout(new GridLayout(3, false));
 		punishGroup.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 
 		chkCountPunish = new Button(punishGroup, SWT.CHECK);
-		chkCountPunish.setText("Enable count-based punishment (Matching Count Features / total Count Features)");
+		chkCountPunish.setText(StatisticsMessages.enableCountBasedPunishment);
 		GridData chkGd = new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1);
 		chkCountPunish.setLayoutData(chkGd);
 		chkCountPunish.setSelection(false);
 
 		Label lblCountExp = new Label(punishGroup, SWT.NONE);
-		lblCountExp.setText("Count exponent (0.0 - 10.0):");
+		lblCountExp.setText(StatisticsMessages.countExponent);
 		txtCountExponent = new Text(punishGroup, SWT.BORDER);
 		txtCountExponent.setText(Double.toString(PreferenceSupplier.getCountExponent()));
 		txtCountExponent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		new Label(punishGroup, SWT.NONE);
 
 		chkSumPunish = new Button(punishGroup, SWT.CHECK);
-		chkSumPunish.setText("Enable sum-based punishment (sum Matching Features / sum Total Features)");
+		chkSumPunish.setText(StatisticsMessages.enableSumBasedPunishment);
 		GridData chkGd2 = new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1);
 		chkSumPunish.setLayoutData(chkGd2);
 		chkSumPunish.setSelection(false);
 
 		Label lblSumExp = new Label(punishGroup, SWT.NONE);
-		lblSumExp.setText("Sum exponent (0.0 - 10.0):");
+		lblSumExp.setText(StatisticsMessages.sumExponent);
 		txtSumExponent = new Text(punishGroup, SWT.BORDER);
 		txtSumExponent.setText(Double.toString(PreferenceSupplier.getSumExponent()));
 		txtSumExponent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -488,8 +490,8 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 		applyArea.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
 		applyButton = new Button(applyArea, SWT.PUSH);
-		applyButton.setText("Apply");
-		applyButton.setToolTipText("Apply changes to punishment factors and (re)load the data.");
+		applyButton.setText(StatisticsMessages.apply);
+		applyButton.setToolTipText(StatisticsMessages.applyPunishmentFactors);
 		applyButton.addListener(SWT.Selection, _ -> {
 			applyPunishmentSettingsToExtractor();
 			if(extractor == null) {
@@ -552,7 +554,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 	private void createMatchCount(Composite parent) {
 
 		matchCountLabel = new Label(parent, SWT.NONE);
-		matchCountLabel.setText("Matches: 0 of 0 samples");
+		matchCountLabel.setText(NLS.bind(StatisticsMessages.matchesOfSamples, 0, 0));
 	}
 
 	public void setMainFile(java.util.List<IDataInputEntry> mainFile) {
@@ -638,7 +640,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 
 		Samples allSamples = samples;
 		if(allSamples == null) {
-			matchCountLabel.setText("Matches: 0 of 0 samples");
+			matchCountLabel.setText(NLS.bind(StatisticsMessages.matchesOfSamples, 0, 0));
 			matchCountLabel.getParent().layout();
 			return;
 		}
@@ -649,14 +651,14 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 			if(matchesCurrentFilters(sample)) {
 				matched++;
 			} else {
-				if("0".equals(sample.getClassification())) {
+				if("0".equals(sample.getClassification())) { //$NON-NLS-1$
 					samplesToRemove.add(sample);
 				}
 			}
 		}
 		int total = samples.getSamples().size();
 
-		matchCountLabel.setText("Matches: " + matched + " of " + total + " samples");
+		matchCountLabel.setText(NLS.bind(StatisticsMessages.matchesOfSamples, matched, total));
 		matchCountLabel.getParent().layout();
 	}
 
@@ -747,7 +749,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 		final Samples[] loaded = new Samples[1];
 
 		IRunnableWithProgress runnable = monitor -> {
-			monitor.beginTask("Loading PCA long-format data...", IProgressMonitor.UNKNOWN);
+			monitor.beginTask(StatisticsMessages.loadingPcaLongFormatData, IProgressMonitor.UNKNOWN);
 			try {
 				// ensure extractor has latest settings from UI in case Apply was pressed earlier
 				Display.getDefault().syncExec(() -> applyPunishmentSettingsToExtractor());
@@ -787,7 +789,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 				setControlsEnabled(true);
 			});
 		} else {
-			Job loadJob = new Job("Loading data") {
+			Job loadJob = new Job(StatisticsMessages.loadingData) {
 
 				@Override
 				protected IStatus run(IProgressMonitor monitor) {
@@ -848,7 +850,7 @@ public class FilesLongFormatFilterWizardPage extends AbstractAnalysisWizardPage 
 		for(Map.Entry<String, Double> entry : rankedSamples) {
 			ISample sample = findSampleByName(entry.getKey());
 			if(matchesCurrentFilters(sample)) {
-				String sampleDetails = sample != null ? sample.getSampleDetails() : "";
+				String sampleDetails = sample != null ? sample.getSampleDetails() : ""; //$NON-NLS-1$
 				rows.add(new RankedSampleRow(rank++, entry.getKey(), sampleDetails, entry.getValue()));
 				if(rows.size() >= limit) {
 					break;

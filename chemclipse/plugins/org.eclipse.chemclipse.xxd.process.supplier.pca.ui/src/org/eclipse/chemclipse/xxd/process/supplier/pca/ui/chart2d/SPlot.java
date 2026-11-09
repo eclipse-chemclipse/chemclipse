@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.EvaluationPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultsMVA;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.support.SeriesConverter;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swtchart.extensions.scattercharts.IScatterSeriesData;
@@ -29,7 +30,7 @@ public class SPlot extends AbstractPlotPCA {
 
 	public SPlot(Composite parent, int style) {
 
-		super(parent, style, "S Plot");
+		super(parent, style, StatisticsMessages.sPlot);
 	}
 
 	public int getLabelsType() {
@@ -61,8 +62,8 @@ public class SPlot extends AbstractPlotPCA {
 				series = SeriesConverter.sPlotToSeriesDescription(results, evaluationPCA.getHighlightedVariables());
 			}
 
-			getChartSettings().getPrimaryAxisSettingsX().setTitle("p");
-			getChartSettings().getPrimaryAxisSettingsY().setTitle("p(corr)");
+			getChartSettings().getPrimaryAxisSettingsX().setTitle("p"); //$NON-NLS-1$
+			getChartSettings().getPrimaryAxisSettingsY().setTitle("p(corr)"); //$NON-NLS-1$
 			applySettings(getChartSettings());
 
 			addSeriesData(series);

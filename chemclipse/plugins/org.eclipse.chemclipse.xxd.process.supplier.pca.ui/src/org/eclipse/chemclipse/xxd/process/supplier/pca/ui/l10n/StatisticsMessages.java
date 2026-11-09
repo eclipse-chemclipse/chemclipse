@@ -1,0 +1,263 @@
+/*******************************************************************************
+ * Copyright (c) 2026 Lablicate GmbH.
+ *
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ * Matthias Mailänder - initial API and implementation
+ *******************************************************************************/
+package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n;
+
+import org.eclipse.osgi.util.NLS;
+
+public class StatisticsMessages extends NLS {
+
+	public static String add;
+	public static String addNewFiles;
+	public static String algorithm;
+	public static String and;
+	public static String apply;
+	public static String applyColorScheme;
+	public static String applyColorSchemeToSamples;
+	public static String applyPunishmentFactors;
+	public static String applySelectedSamplesToClassificationColumn;
+	public static String applySelectionToClassificationColumn;
+	public static String assignGroupNameToSelectedSamples;
+	public static String caseSensitive;
+	public static String centering;
+	public static String centerVariables;
+	public static String chromatogramMsdInputFiles;
+	public static String classification;
+	public static String clearAllSelections;
+	public static String closestScan;
+	public static String colorScheme;
+	public static String containsString;
+	public static String cosineSimilarity;
+	public static String count;
+	public static String countExponent;
+	public static String counts;
+	public static String crossValidate;
+	public static String crossValidationQ2;
+	public static String cumulativeCrossValidationQ2;
+	public static String cumulativeVariances;
+	public static String dataCanBePreprocessedLater;
+	public static String defaultProperties;
+	public static String demoDataMatrix;
+	public static String description;
+	public static String descriptionLabel;
+	public static String descriptionOption;
+	public static String enableCountBasedPunishment;
+	public static String enableSumBasedPunishment;
+	public static String endsWithString;
+	public static String enterCharacterToApply;
+	public static String enterGroupNameToAssign;
+	public static String errorResidues;
+	public static String errorValues;
+	public static String excessKurtosis;
+	public static String excludeNames;
+	public static String explainedVariance;
+	public static String explainedVarianceCrossValidationQ2;
+	public static String explainedVariances;
+	public static String exportFeatureTable;
+	public static String exportLabel;
+	public static String exportSampleSettings;
+	public static String failedToLoadWorkspace;
+	public static String failedToReadSampleTemplate;
+	public static String failedToSaveWorkspace;
+	public static String featureDataMatrixFileNotFound;
+	public static String features;
+	public static String featuresCount;
+	public static String featureTransform;
+	public static String fileDataMatrix;
+	public static String filename;
+	public static String files;
+	public static String filesLongFormat;
+	public static String filterDataFile;
+	public static String filterEntries;
+	public static String filters;
+	public static String filterVisualSelectedFeatures;
+	public static String foldChangePlot;
+	public static String fontSize;
+	public static String fontSizeXAxis;
+	public static String formula;
+	public static String formulaLabel;
+	public static String group;
+	public static String group1;
+	public static String group2;
+	public static String groupBy;
+	public static String groupName;
+	public static String groupNameLabel;
+	public static String groupNames;
+	public static String groupNamingTool;
+	public static String groupNamingWizard;
+	public static String groupOneForComparison;
+	public static String groupsToInclude;
+	public static String groupTwoForComparison;
+	public static String highlightSymbolType;
+	public static String importLabel;
+	public static String importSampleSettings;
+	public static String includeLogic;
+	public static String includeNames;
+	public static String inputFiles;
+	public static String interpolateScan;
+	public static String interpolation;
+	public static String inverseSampleSelection;
+	public static String labelOption;
+	public static String loading;
+	public static String loadingBarChart;
+	public static String loadingData;
+	public static String loadingInProgress;
+	public static String loadingPcaLongFormatData;
+	public static String loadingPlot;
+	public static String loadingPlotPc;
+	public static String loadingsPlot;
+	public static String loadPcaWorkspace;
+	public static String loadSavedPcaWorkspace;
+	public static String log2FoldChange;
+	public static String logTransformFeatures;
+	public static String mainDataFile;
+	public static String mainDataFileForLongDataImport;
+	public static String massSpectraDatabases;
+	public static String massSpectrumInputFiles;
+	public static String matchesOfSamples;
+	public static String max;
+	public static String maximumNumberOfScans;
+	public static String mean;
+	public static String min;
+	public static String name;
+	public static String nameFilter;
+	public static String nameFilterEntries;
+	public static String navigateToPcaPerspective;
+	public static String noAnalysisResults;
+	public static String normalization;
+	public static String normalizeSamples;
+	public static String numberOfComponents;
+	public static String numberOfOverlaps;
+	public static String numberOfPcs;
+	public static String numberOfPrincipalComponents;
+	public static String numberOfSamplesToFilter;
+	public static String numberOfSamplesToUse;
+	public static String or;
+	public static String originalData;
+	public static String path;
+	public static String pathToDataMatrixFile;
+	public static String pathToLongFormatDataFile;
+	public static String pathToLongFormatFilterFile;
+	public static String pcaAlgorithm;
+	public static String pcaEditor;
+	public static String pcaWorkspace;
+	public static String peakFilesInput;
+	public static String peakInputFiles;
+	public static String peaks;
+	public static String preprocessData;
+	public static String preprocessedData;
+	public static String preprocessing;
+	public static String principalComponent;
+	public static String principalComponentLabel;
+	public static String rank;
+	public static String regularExpression;
+	public static String removeAllFiles;
+	public static String removeAllUnusedVariables;
+	public static String removeSelected;
+	public static String removeSelectedFiles;
+	public static String removeUnusedVariables;
+	public static String removeUselessVariables;
+	public static String replaceData;
+	public static String replacement;
+	public static String resetFeatureTable;
+	public static String resetGroupNames;
+	public static String resetPlot2d;
+	public static String retentionIndexWindow;
+	public static String retentionTimeWindowMs;
+	public static String runCrossValidation;
+	public static String runCrossValidationIfAvailable;
+	public static String runMultivariateAnalysis;
+	public static String sample;
+	public static String sampleDetail;
+	public static String sampleName;
+	public static String sampleNames;
+	public static String samples;
+	public static String samplesSortedByScore;
+	public static String sampleTemplateExported;
+	public static String sampleTemplateFileNotFound;
+	public static String sampleValue;
+	public static String saveDemoDataMatrix;
+	public static String saveWorkspace;
+	public static String saveWorkspaceExperimental;
+	public static String scaleVariables;
+	public static String scaling;
+	public static String scans;
+	public static String score;
+	public static String scoreBarChart;
+	public static String scorePlot;
+	public static String scorePlotPc;
+	public static String selectChromatogramMsdInputFiles;
+	public static String selectClosestScan;
+	public static String selectColumnLabel;
+	public static String selectDataMatrix;
+	public static String selectExtractionOption;
+	public static String selectFilterDataFile;
+	public static String selectMassSpectrumInputFiles;
+	public static String selectPcXAxis;
+	public static String selectPcYAxis;
+	public static String selectPcZAxis;
+	public static String selectPeakInputFiles;
+	public static String selectSeveralChromatogramMsdInputFiles;
+	public static String selectSeveralDatabaseInputFiles;
+	public static String selectSeveralPeakInputFiles;
+	public static String selectVariance;
+	public static String setGroupName;
+	public static String setGroupNameAccordingToName;
+	public static String setGroupNames;
+	public static String setMainParameters;
+	public static String setMainPcaParameters;
+	public static String settings;
+	public static String showFormula;
+	public static String showOriginalOrPreprocessedData;
+	public static String signal;
+	public static String similarityPunishments;
+	public static String skewness;
+	public static String sPlot;
+	public static String startsWithString;
+	public static String stringOrRegularExpression;
+	public static String sumExponent;
+	public static String symbolSize;
+	public static String symbolType;
+	public static String title;
+	public static String titleOfCurrentAnalysis;
+	public static String toggleUse;
+	public static String toolForNamingGroups;
+	public static String transformation;
+	public static String transformData;
+	public static String useAllFeatures;
+	public static String useAllSamples;
+	public static String useDefaultPropertiesIfPossible;
+	public static String useValue;
+	public static String usingClassificationColumnForOpls;
+	public static String usingSelectedGroupForOpls;
+	public static String valueMustBePositive;
+	public static String valueOption;
+	public static String variable;
+	public static String variableLabel;
+	public static String variableLinePlot;
+	public static String variables;
+	public static String variablesSortedByLoadings;
+	public static String variableToPlot;
+	public static String variableValue;
+	public static String variance;
+	public static String workspace;
+	public static String workspaceFileInvalid;
+	public static String workspaceSaved;
+
+	static {
+		NLS.initializeMessages("org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.messages", StatisticsMessages.class); //$NON-NLS-1$
+	}
+
+	private StatisticsMessages() {
+
+	}
+}

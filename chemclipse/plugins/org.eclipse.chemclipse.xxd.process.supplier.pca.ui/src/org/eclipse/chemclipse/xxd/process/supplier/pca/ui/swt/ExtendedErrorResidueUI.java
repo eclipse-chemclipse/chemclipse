@@ -28,6 +28,8 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.EvaluationPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultMVA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.Activator;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.chart2d.ErrorResidueChart;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
@@ -147,7 +149,7 @@ public class ExtendedErrorResidueUI extends Composite implements IExtendedPartUI
 					int barIndex = (int)Math.round(xValue);
 					if(barIndex >= 0 && barIndex < resultPerSample.size()) {
 						String sampleName = resultPerSample.get(barIndex).getSample().getSampleName();
-						String tooltip = "Sample: " + sampleName + "\nValue: " + String.format("%.2f", resultPerSample.get(barIndex).getErrorMetric());
+						String tooltip = NLS.bind(StatisticsMessages.sampleValue, sampleName, String.format("%.2f", resultPerSample.get(barIndex).getErrorMetric())); //$NON-NLS-1$
 						baseChart.getPlotArea().setToolTipText(tooltip);
 					} else {
 						baseChart.getPlotArea().setToolTipText(null);
@@ -426,7 +428,7 @@ public class ExtendedErrorResidueUI extends Composite implements IExtendedPartUI
 			}
 		}
 
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 }

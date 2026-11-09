@@ -13,13 +13,14 @@
 package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.support;
 
 import org.eclipse.chemclipse.support.text.ILabel;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 
 public enum FeatureColumnLabels implements ILabel {
 
-	SAMPLENAMES("Sample Names"), //
-	GROUPNAMES("Group Names");
+	SAMPLENAMES(StatisticsMessages.sampleNames), //
+	GROUPNAMES(StatisticsMessages.groupNames);
 
-	private String label = "";
+	private String label = ""; //$NON-NLS-1$
 
 	FeatureColumnLabels(String label) {
 

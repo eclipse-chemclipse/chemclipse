@@ -39,6 +39,7 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.ResultDelta;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.Activator;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.chart2d.ScorePlot;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.help.HelpContext;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.preferences.PreferencePage;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.preferences.PreferencePageScorePlot;
 import org.eclipse.swt.SWT;
@@ -527,7 +528,7 @@ public class ExtendedScorePlot2D extends Composite implements IExtendedPartUI {
 	private Button createButtonReset(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Reset the 2D plot.");
+		button.setToolTipText(StatisticsMessages.resetPlot2d);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_RESET, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -618,6 +619,6 @@ public class ExtendedScorePlot2D extends Composite implements IExtendedPartUI {
 			}
 		}
 
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 }

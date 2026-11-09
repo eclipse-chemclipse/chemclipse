@@ -16,6 +16,7 @@ package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.internal.wizards;
 import org.eclipse.chemclipse.support.ui.provider.AbstractLabelProvider;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Algorithm;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
@@ -32,8 +33,8 @@ public class MassSpectrumSettingsWizardPage extends AbstractAnalysisWizardPage {
 
 	public MassSpectrumSettingsWizardPage() {
 
-		super("Main Parameters");
-		setTitle("Set Main Parameters");
+		super("Main Parameters"); //$NON-NLS-1$
+		setTitle(StatisticsMessages.setMainParameters);
 	}
 
 	@Override
@@ -42,11 +43,11 @@ public class MassSpectrumSettingsWizardPage extends AbstractAnalysisWizardPage {
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayout(new GridLayout(1, false));
 
-		createLabel(composite, "Title:");
+		createLabel(composite, StatisticsMessages.title);
 		createTextTitle(composite, 1);
-		createLabel(composite, "Number of PCs:");
+		createLabel(composite, StatisticsMessages.numberOfPcs);
 		createSpinnerPrincipleComponents(composite);
-		createLabel(composite, "Algorithm:");
+		createLabel(composite, StatisticsMessages.algorithm);
 		createComboViewerAlgorithm(composite);
 
 		setControl(composite);
@@ -62,7 +63,7 @@ public class MassSpectrumSettingsWizardPage extends AbstractAnalysisWizardPage {
 	private Spinner createSpinnerPrincipleComponents(Composite parent) {
 
 		Spinner spinner = new Spinner(parent, SWT.BORDER);
-		spinner.setToolTipText("Number of Principal Components");
+		spinner.setToolTipText(StatisticsMessages.numberOfPrincipalComponents);
 		spinner.setMinimum(PreferenceSupplier.MIN_NUMBER_OF_COMPONENTS);
 		spinner.setIncrement(1);
 		spinner.setSelection(analysisSettings.getNumberOfPrincipalComponents());
@@ -97,7 +98,7 @@ public class MassSpectrumSettingsWizardPage extends AbstractAnalysisWizardPage {
 		});
 
 		Combo combo = comboViewer.getCombo();
-		combo.setToolTipText("PCA Algorithm");
+		combo.setToolTipText(StatisticsMessages.pcaAlgorithm);
 		combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		combo.addSelectionListener(new SelectionAdapter() {
 

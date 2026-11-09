@@ -62,13 +62,13 @@ public class FeatureEditingSupport extends EditingSupport {
 				case FeatureLabelProvider.CLASSIFICATION:
 					String classification = variable.getClassification();
 					if(classification == null) {
-						return "";
+						return ""; //$NON-NLS-1$
 					}
 					return classification;
 				case FeatureLabelProvider.DESCRIPTION:
 					String description = variable.getDescription();
 					if(description == null) {
-						return "";
+						return ""; //$NON-NLS-1$
 					}
 					return description;
 			}
@@ -87,16 +87,16 @@ public class FeatureEditingSupport extends EditingSupport {
 					break;
 				case FeatureLabelProvider.CLASSIFICATION:
 					String classification = (String)value;
-					if("".equals(classification)) {
-						variable.setClassification("");
+					if("".equals(classification)) { //$NON-NLS-1$
+						variable.setClassification(""); //$NON-NLS-1$
 					} else {
 						variable.setClassification(classification);
 					}
 					break;
 				case FeatureLabelProvider.DESCRIPTION:
 					String description = (String)value;
-					if("".equals(description)) {
-						variable.setDescription("");
+					if("".equals(description)) { //$NON-NLS-1$
+						variable.setDescription(""); //$NON-NLS-1$
 					} else {
 						variable.setDescription(description);
 					}

@@ -23,6 +23,7 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.custom.IRangeSupport;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IEvaluation;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResult;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.ISamplesPCA;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.support.SeriesConverter;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.swt.FoldChangeLimits;
 import org.eclipse.swt.SWT;
@@ -46,8 +47,8 @@ import org.eclipse.swtchart.extensions.scattercharts.ScatterChart;
 
 public class FoldChangePlot extends ScatterChart implements IRangeSupport {
 
-	private DecimalFormat decimalFormat = new DecimalFormat(("0.00E0"), new DecimalFormatSymbols(Locale.ENGLISH));
-	private String title = "";
+	private DecimalFormat decimalFormat = new DecimalFormat(("0.00E0"), new DecimalFormatSymbols(Locale.ENGLISH)); //$NON-NLS-1$
+	private String title = ""; //$NON-NLS-1$
 
 	private Range selectedRangeX = null;
 	private Range selectedRangeY = null;
@@ -56,7 +57,7 @@ public class FoldChangePlot extends ScatterChart implements IRangeSupport {
 	public FoldChangePlot(Composite parent, int style) {
 
 		super(parent, style);
-		this.title = "Fold Change Plot";
+		this.title = StatisticsMessages.foldChangePlot;
 		initialize();
 	}
 
@@ -125,27 +126,27 @@ public class FoldChangePlot extends ScatterChart implements IRangeSupport {
 	private void setPrimaryAxisSet(IChartSettings chartSettings) {
 
 		IPrimaryAxisSettings primaryAxisSettingsX = chartSettings.getPrimaryAxisSettingsX();
-		primaryAxisSettingsX.setTitle("log2(fold change)");
+		primaryAxisSettingsX.setTitle(StatisticsMessages.log2FoldChange);
 		primaryAxisSettingsX.setDecimalFormat(decimalFormat);
 		primaryAxisSettingsX.setColor(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_FOREGROUND));
 
 		IPrimaryAxisSettings primaryAxisSettingsY = chartSettings.getPrimaryAxisSettingsY();
-		primaryAxisSettingsY.setTitle("-log10(pValue)");
+		primaryAxisSettingsY.setTitle("-log10(pValue)"); //$NON-NLS-1$
 		primaryAxisSettingsY.setDecimalFormat(decimalFormat);
 		primaryAxisSettingsY.setColor(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_FOREGROUND));
 	}
 
 	private void addSecondaryAxisSet(IChartSettings chartSettings) {
 
-		ISecondaryAxisSettings secondaryAxisSettingsX = new SecondaryAxisSettings("log2(fold change)", new PassThroughConverter());
-		secondaryAxisSettingsX.setTitle("");
+		ISecondaryAxisSettings secondaryAxisSettingsX = new SecondaryAxisSettings(StatisticsMessages.log2FoldChange, new PassThroughConverter());
+		secondaryAxisSettingsX.setTitle(""); //$NON-NLS-1$
 		secondaryAxisSettingsX.setPosition(Position.Secondary);
 		secondaryAxisSettingsX.setDecimalFormat(decimalFormat);
 		secondaryAxisSettingsX.setColor(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_FOREGROUND));
 		chartSettings.getSecondaryAxisSettingsListX().add(secondaryAxisSettingsX);
 
-		ISecondaryAxisSettings secondaryAxisSettingsY = new SecondaryAxisSettings("-log10(pValue)", new PassThroughConverter());
-		secondaryAxisSettingsY.setTitle("");
+		ISecondaryAxisSettings secondaryAxisSettingsY = new SecondaryAxisSettings("-log10(pValue)", new PassThroughConverter()); //$NON-NLS-1$
+		secondaryAxisSettingsY.setTitle(""); //$NON-NLS-1$
 		secondaryAxisSettingsY.setPosition(Position.Secondary);
 		secondaryAxisSettingsY.setDecimalFormat(decimalFormat);
 		secondaryAxisSettingsY.setColor(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_FOREGROUND));

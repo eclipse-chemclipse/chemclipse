@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -14,6 +14,7 @@
 package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.internal.wizards;
 
 import org.eclipse.chemclipse.xxd.process.supplier.pca.core.IPreprocessingSettings;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.swt.PreprocessingSettingsUI;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -25,9 +26,9 @@ public class PreprocessingWizardPage extends WizardPage {
 
 	public PreprocessingWizardPage() {
 
-		super("Preprocess");
-		setTitle("Preprocess Data");
-		setDescription("Data can be also preprocessed later in the process in Data Preprocessing page");
+		super("Preprocess"); //$NON-NLS-1$
+		setTitle(StatisticsMessages.preprocessData);
+		setDescription(StatisticsMessages.dataCanBePreprocessedLater);
 	}
 
 	@Override

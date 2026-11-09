@@ -13,13 +13,14 @@
 package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.support;
 
 import org.eclipse.chemclipse.support.text.ILabel;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 
 public enum FeatureMode implements ILabel {
 
-	ORIGINAL("Original Data"), //
-	PREPROCESSED("Preprocessed Data");
+	ORIGINAL(StatisticsMessages.originalData), //
+	PREPROCESSED(StatisticsMessages.preprocessedData);
 
-	private String label = "";
+	private String label = ""; //$NON-NLS-1$
 
 	FeatureMode(String label) {
 

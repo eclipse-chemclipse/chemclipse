@@ -41,8 +41,8 @@ public class FeatureListUI extends ExtendedTableViewer {
 	private static final String[] TITLES = FeatureLabelProvider.TITLES;
 	private static final int[] BOUNDS = FeatureLabelProvider.BOUNDS;
 
-	private final FeatureLabelProvider labelProviderOriginal = new FeatureLabelProvider("#,##0.##", FeatureMode.ORIGINAL);
-	private final FeatureLabelProvider labelProviderPreprocessed = new FeatureLabelProvider("0.00##", FeatureMode.PREPROCESSED);
+	private final FeatureLabelProvider labelProviderOriginal = new FeatureLabelProvider("#,##0.##", FeatureMode.ORIGINAL); //$NON-NLS-1$
+	private final FeatureLabelProvider labelProviderPreprocessed = new FeatureLabelProvider("0.00##", FeatureMode.PREPROCESSED); //$NON-NLS-1$
 	private final ViewerComparator comparator = new FeatureComparator();
 	private final FeatureListFilter listFilter = new FeatureListFilter();
 	private final VisualSelectionFilter selectFilter = new VisualSelectionFilter();
@@ -191,7 +191,7 @@ public class FeatureListUI extends ExtendedTableViewer {
 		if(!valueLabel.isBlank()) {
 			TableColumn[] columns = getTable().getColumns();
 			for(int i = TITLES.length; i < columns.length; i++) {
-				columns[i].setToolTipText(columns[i].getText() + ": " + valueLabel);
+				columns[i].setToolTipText(columns[i].getText() + ": " + valueLabel); //$NON-NLS-1$
 			}
 		}
 	}

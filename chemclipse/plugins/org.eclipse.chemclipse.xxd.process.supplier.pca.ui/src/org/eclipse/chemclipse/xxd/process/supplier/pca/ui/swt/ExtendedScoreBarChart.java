@@ -33,6 +33,8 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultsMVA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.ISamplesPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.Activator;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.chart2d.ScoreBarChart;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -144,7 +146,7 @@ public class ExtendedScoreBarChart extends Composite implements IExtendedPartUI 
 	private void createPCSelector(Composite parent) {
 
 		Label label = new Label(parent, SWT.NONE);
-		label.setText("Principal Component:");
+		label.setText(StatisticsMessages.principalComponentLabel);
 
 		comboPrincipalComponent = new Combo(parent, SWT.READ_ONLY);
 		comboPrincipalComponent.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -195,7 +197,7 @@ public class ExtendedScoreBarChart extends Composite implements IExtendedPartUI 
 					int barIndex = (int)Math.round(xValue);
 					if(barIndex >= 0 && barIndex < sampleScores.size()) {
 						String sampleName = sampleScores.get(barIndex).getSampleName();
-						String tooltip = "Sample: " + sampleName + "\nValue: " + String.format("%.2f", sampleScores.get(barIndex).getScore());
+						String tooltip = NLS.bind(StatisticsMessages.sampleValue, sampleName, String.format("%.2f", sampleScores.get(barIndex).getScore())); //$NON-NLS-1$
 						baseChart.getPlotArea().setToolTipText(tooltip);
 					} else {
 						baseChart.getPlotArea().setToolTipText(null);
@@ -461,7 +463,7 @@ public class ExtendedScoreBarChart extends Composite implements IExtendedPartUI 
 			int maxPCs = Math.min(numberOfPCs, explainedVariances.length);
 
 			for(int i = 0; i < maxPCs; i++) {
-				String label = String.format("PC%d (%.1f%%)", i + 1, explainedVariances[i] * 100);
+				String label = String.format("PC%d (%.1f%%)", i + 1, explainedVariances[i] * 100); //$NON-NLS-1$
 				comboPrincipalComponent.add(label);
 			}
 
@@ -590,6 +592,6 @@ public class ExtendedScoreBarChart extends Composite implements IExtendedPartUI 
 			}
 		}
 
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 }

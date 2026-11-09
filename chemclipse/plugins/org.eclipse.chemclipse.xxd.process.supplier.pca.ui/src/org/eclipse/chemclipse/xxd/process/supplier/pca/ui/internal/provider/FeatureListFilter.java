@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2025 Lablicate GmbH.
+ * Copyright (c) 2020, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -31,7 +31,7 @@ public class FeatureListFilter extends ViewerFilter {
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
 
-		if(searchText == null || searchText.equals("")) {
+		if(searchText == null || searchText.equals("")) { //$NON-NLS-1$
 			return true;
 		}
 
@@ -39,8 +39,8 @@ public class FeatureListFilter extends ViewerFilter {
 			IVariable variable = feature.getVariable();
 
 			String value = variable.getValue();
-			String classification = variable.getClassification() == null ? "" : variable.getClassification();
-			String description = variable.getDescription() == null ? "" : variable.getDescription();
+			String classification = variable.getClassification() == null ? "" : variable.getClassification(); //$NON-NLS-1$
+			String description = variable.getDescription() == null ? "" : variable.getDescription(); //$NON-NLS-1$
 
 			if(!caseSensitive) {
 				searchText = searchText.toLowerCase();

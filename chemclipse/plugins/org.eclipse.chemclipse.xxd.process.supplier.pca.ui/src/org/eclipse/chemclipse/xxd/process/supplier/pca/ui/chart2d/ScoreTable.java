@@ -20,6 +20,7 @@ import org.eclipse.chemclipse.model.statistics.ISample;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.EvaluationPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultMVA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultsMVA;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.support.ScoreRow;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -40,7 +41,7 @@ public class ScoreTable extends Composite {
 	private TableViewer tableViewer;
 	private EvaluationPCA evaluationPCA;
 	private int numberOfComponents = 0;
-	private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.0000");
+	private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.0000"); //$NON-NLS-1$
 
 	public ScoreTable(Composite parent, int style) {
 
@@ -115,7 +116,7 @@ public class ScoreTable extends Composite {
 
 		TableViewerColumn viewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
 		TableColumn column = viewerColumn.getColumn();
-		column.setText("Sample Name");
+		column.setText(StatisticsMessages.sampleName);
 		column.setWidth(200);
 		column.setResizable(true);
 		column.setMoveable(false);
@@ -128,7 +129,7 @@ public class ScoreTable extends Composite {
 				if(element instanceof ScoreRow) {
 					return ((ScoreRow)element).getSampleName();
 				}
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 		});
 
@@ -158,7 +159,7 @@ public class ScoreTable extends Composite {
 
 		TableViewerColumn viewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
 		TableColumn column = viewerColumn.getColumn();
-		column.setText("Group Name");
+		column.setText(StatisticsMessages.groupName);
 		column.setWidth(150);
 		column.setResizable(true);
 		column.setMoveable(true);
@@ -170,9 +171,9 @@ public class ScoreTable extends Composite {
 
 				if(element instanceof ScoreRow) {
 					String groupName = ((ScoreRow)element).getGroupName();
-					return groupName != null ? groupName : "";
+					return groupName != null ? groupName : ""; //$NON-NLS-1$
 				}
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 		});
 
@@ -188,8 +189,8 @@ public class ScoreTable extends Composite {
 
 						ScoreRow r1 = (ScoreRow)e1;
 						ScoreRow r2 = (ScoreRow)e2;
-						String g1 = r1.getGroupName() != null ? r1.getGroupName() : "";
-						String g2 = r2.getGroupName() != null ? r2.getGroupName() : "";
+						String g1 = r1.getGroupName() != null ? r1.getGroupName() : ""; //$NON-NLS-1$
+						String g2 = r2.getGroupName() != null ? r2.getGroupName() : ""; //$NON-NLS-1$
 						int direction = getSortDirection(column);
 						return direction * g1.compareTo(g2);
 					}
@@ -203,7 +204,7 @@ public class ScoreTable extends Composite {
 
 		TableViewerColumn viewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
 		TableColumn column = viewerColumn.getColumn();
-		column.setText("Classification");
+		column.setText(StatisticsMessages.classification);
 		column.setWidth(120);
 		column.setResizable(true);
 		column.setMoveable(true);
@@ -215,9 +216,9 @@ public class ScoreTable extends Composite {
 
 				if(element instanceof ScoreRow) {
 					String classification = ((ScoreRow)element).getClassification();
-					return classification != null ? classification : "";
+					return classification != null ? classification : ""; //$NON-NLS-1$
 				}
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 		});
 
@@ -233,8 +234,8 @@ public class ScoreTable extends Composite {
 
 						ScoreRow r1 = (ScoreRow)e1;
 						ScoreRow r2 = (ScoreRow)e2;
-						String c1 = r1.getClassification() != null ? r1.getClassification() : "";
-						String c2 = r2.getClassification() != null ? r2.getClassification() : "";
+						String c1 = r1.getClassification() != null ? r1.getClassification() : ""; //$NON-NLS-1$
+						String c2 = r2.getClassification() != null ? r2.getClassification() : ""; //$NON-NLS-1$
 						int direction = getSortDirection(column);
 						return direction * c1.compareTo(c2);
 					}
@@ -248,7 +249,7 @@ public class ScoreTable extends Composite {
 
 		TableViewerColumn viewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
 		TableColumn column = viewerColumn.getColumn();
-		column.setText("Description");
+		column.setText(StatisticsMessages.description);
 		column.setWidth(200);
 		column.setResizable(true);
 		column.setMoveable(true);
@@ -260,9 +261,9 @@ public class ScoreTable extends Composite {
 
 				if(element instanceof ScoreRow) {
 					String description = ((ScoreRow)element).getDescription();
-					return description != null ? description : "";
+					return description != null ? description : ""; //$NON-NLS-1$
 				}
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 		});
 
@@ -278,8 +279,8 @@ public class ScoreTable extends Composite {
 
 						ScoreRow r1 = (ScoreRow)e1;
 						ScoreRow r2 = (ScoreRow)e2;
-						String d1 = r1.getDescription() != null ? r1.getDescription() : "";
-						String d2 = r2.getDescription() != null ? r2.getDescription() : "";
+						String d1 = r1.getDescription() != null ? r1.getDescription() : ""; //$NON-NLS-1$
+						String d2 = r2.getDescription() != null ? r2.getDescription() : ""; //$NON-NLS-1$
 						int direction = getSortDirection(column);
 						return direction * d1.compareTo(d2);
 					}
@@ -302,7 +303,7 @@ public class ScoreTable extends Composite {
 			}
 		}
 
-		column.setText(String.format("PC%d (%.1f%%)", pcIndex + 1, explainedVariance));
+		column.setText(String.format("PC%d (%.1f%%)", pcIndex + 1, explainedVariance)); //$NON-NLS-1$
 		column.setWidth(120);
 		column.setResizable(true);
 		column.setMoveable(true);
@@ -318,7 +319,7 @@ public class ScoreTable extends Composite {
 						return DECIMAL_FORMAT.format(scores[pcIndex]);
 					}
 				}
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 		});
 

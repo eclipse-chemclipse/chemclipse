@@ -37,7 +37,7 @@ public class FeatureStatListUI extends org.eclipse.chemclipse.support.ui.swt.Ext
 	private final ViewerComparator comparator = new FeatureStatComparator();
 	private final FeatureListFilter listFilter = new FeatureListFilter();
 	private final VisualSelectionFilter selectFilter = new VisualSelectionFilter();
-	private final FeatureStatLabelProvider labelProvider = new FeatureStatLabelProvider("#,##0.####");
+	private final FeatureStatLabelProvider labelProvider = new FeatureStatLabelProvider("#,##0.####"); //$NON-NLS-1$
 
 	private IUpdateListener updateListener = null;
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -20,6 +20,7 @@ import java.util.Set;
 import org.eclipse.chemclipse.support.text.ValueFormat;
 import org.eclipse.chemclipse.swt.ui.support.Colors;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IAnalysisSettings;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swtchart.IBarSeries.BarWidthStyle;
@@ -83,11 +84,11 @@ public class FilterDistributionChart extends BarChart {
 	private void setPrimaryAxisSet(IChartSettings chartSettings) {
 
 		IPrimaryAxisSettings primaryAxisSettingsX = chartSettings.getPrimaryAxisSettingsX();
-		primaryAxisSettingsX.setTitle("Number of Overlaps");
+		primaryAxisSettingsX.setTitle(StatisticsMessages.numberOfOverlaps);
 		primaryAxisSettingsX.setDecimalFormat(ValueFormat.getDecimalFormatEnglish());
 
 		IPrimaryAxisSettings primaryAxisSettingsY = chartSettings.getPrimaryAxisSettingsY();
-		primaryAxisSettingsY.setTitle("Count");
+		primaryAxisSettingsY.setTitle(StatisticsMessages.count);
 		primaryAxisSettingsY.setDecimalFormat(ValueFormat.getDecimalFormatEnglish());
 	}
 
@@ -124,7 +125,7 @@ public class FilterDistributionChart extends BarChart {
 
 	private ISeriesData getSeries(IAnalysisSettings settings) {
 
-		String label = "Counts";
+		String label = StatisticsMessages.counts;
 		double[] ySeries = new double[settings.getFilterDistribution().values().size()];
 		int index = settings.getFilterDistribution().values().size() - 1;
 		for(Map.Entry<Integer, Integer> entry : settings.getFilterDistribution().entrySet()) {

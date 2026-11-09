@@ -66,7 +66,7 @@ public class SamplesEditingSupport extends EditingSupport {
 		if(element instanceof ISample sample) {
 			switch(column) {
 				case SamplesLabelProvider.SAMPLE_NAME_LONG:
-					return sample.getDescription() != null ? sample.getSampleDetails() : "";
+					return sample.getDescription() != null ? sample.getSampleDetails() : ""; //$NON-NLS-1$
 				case SamplesLabelProvider.USE:
 					return sample.isSelected();
 				case SamplesLabelProvider.PREDICT:
@@ -74,11 +74,11 @@ public class SamplesEditingSupport extends EditingSupport {
 				case SamplesLabelProvider.COLOR:
 					return Colors.getColor(sample.getRGB()).getRGB();
 				case SamplesLabelProvider.GROUP_NAME:
-					return sample.getGroupName() != null ? sample.getGroupName() : "";
+					return sample.getGroupName() != null ? sample.getGroupName() : ""; //$NON-NLS-1$
 				case SamplesLabelProvider.CLASSIFICATION:
-					return sample.getClassification() != null ? sample.getClassification() : "";
+					return sample.getClassification() != null ? sample.getClassification() : ""; //$NON-NLS-1$
 				case SamplesLabelProvider.DESCRIPTION:
-					return sample.getDescription() != null ? sample.getDescription() : "";
+					return sample.getDescription() != null ? sample.getDescription() : ""; //$NON-NLS-1$
 			}
 		}
 		return false;

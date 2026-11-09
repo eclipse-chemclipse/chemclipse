@@ -23,10 +23,12 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.io.WorkspaceIO;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IEvaluation;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResult;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.handlers.CreatePcaEvaluation;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -42,13 +44,13 @@ public class WorkspaceTileDefinition implements ITileDefinition {
 	@Override
 	public String getTitle() {
 
-		return "Workspace";
+		return StatisticsMessages.workspace;
 	}
 
 	@Override
 	public String getDescription() {
 
-		return "Load a saved PCA workspace.";
+		return StatisticsMessages.loadSavedPcaWorkspace;
 	}
 
 	@Override
@@ -61,7 +63,7 @@ public class WorkspaceTileDefinition implements ITileDefinition {
 	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, IEclipseContext context) {
 
 		FileDialog fileDialog = new FileDialog(shell, SWT.OPEN);
-		fileDialog.setText("Load PCA Workspace");
+		fileDialog.setText(StatisticsMessages.loadPcaWorkspace);
 		fileDialog.setFilterExtensions(WorkspaceIO.FILTER_EXTENSION);
 		fileDialog.setFilterNames(WorkspaceIO.FILTER_NAME);
 		String path = fileDialog.open();
@@ -71,12 +73,12 @@ public class WorkspaceTileDefinition implements ITileDefinition {
 				if(workspace != null && workspace.getSamples() != null) {
 					CreatePcaEvaluation.createPart(workspace, context, new File(path).getName());
 				} else {
-					MessageDialog.openWarning(shell, "PCA Workspace", "The workspace file does not contain valid data.");
+					MessageDialog.openWarning(shell, StatisticsMessages.pcaWorkspace, StatisticsMessages.workspaceFileInvalid);
 				}
 			} catch(IOException e) {
 				logger.warn(e);
 				Throwable cause = e.getCause() != null ? e.getCause() : e;
-				MessageDialog.openError(shell, "PCA Workspace", "Failed to load the workspace:\n" + cause.getMessage());
+				MessageDialog.openError(shell, StatisticsMessages.pcaWorkspace, NLS.bind(StatisticsMessages.failedToLoadWorkspace, cause.getMessage()));
 			}
 		}
 	}

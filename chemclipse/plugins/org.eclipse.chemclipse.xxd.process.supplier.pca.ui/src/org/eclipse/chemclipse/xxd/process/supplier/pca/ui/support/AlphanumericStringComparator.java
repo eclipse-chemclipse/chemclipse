@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 
 public class AlphanumericStringComparator implements Comparator<String> {
 
-	private static final Pattern NUMBER_PATTERN = Pattern.compile("(\\d+|\\D+)");
+	private static final Pattern NUMBER_PATTERN = Pattern.compile("(\\d+|\\D+)"); //$NON-NLS-1$
 
 	@Override
 	public int compare(String s1, String s2) {
@@ -30,8 +30,8 @@ public class AlphanumericStringComparator implements Comparator<String> {
 			String part1 = m1.group();
 			String part2 = m2.group();
 
-			boolean isNum1 = part1.matches("\\d+");
-			boolean isNum2 = part2.matches("\\d+");
+			boolean isNum1 = part1.matches("\\d+"); //$NON-NLS-1$
+			boolean isNum2 = part2.matches("\\d+"); //$NON-NLS-1$
 
 			if(isNum1 && isNum2) {
 				int num1 = Integer.parseInt(part1);

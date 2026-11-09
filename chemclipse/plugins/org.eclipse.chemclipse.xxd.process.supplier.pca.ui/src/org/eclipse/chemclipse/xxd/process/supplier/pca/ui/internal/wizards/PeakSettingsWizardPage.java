@@ -21,6 +21,7 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.core.ValueOption;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Algorithm;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.DescriptionOption;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.conversion.IConverter;
@@ -58,9 +59,9 @@ public class PeakSettingsWizardPage extends AbstractAnalysisWizardPage {
 
 	public PeakSettingsWizardPage() {
 
-		super("Main Properties");
-		setTitle("PCA");
-		setDescription("Set main PCA parameters.");
+		super("Main Properties"); //$NON-NLS-1$
+		setTitle("PCA"); //$NON-NLS-1$
+		setDescription(StatisticsMessages.setMainPcaParameters);
 
 		groupValueWindow.setValue(groupWindow);
 	}
@@ -73,19 +74,19 @@ public class PeakSettingsWizardPage extends AbstractAnalysisWizardPage {
 
 		WizardPageSupport.create(this, dataBindingContext);
 
-		createLabel(composite, "Title:");
+		createLabel(composite, StatisticsMessages.title);
 		createTextTitle(composite, 1);
-		createLabel(composite, "Description:");
+		createLabel(composite, StatisticsMessages.descriptionLabel);
 		createComboViewerDescriptionOption(composite);
-		createLabel(composite, "Group By:");
+		createLabel(composite, StatisticsMessages.groupBy);
 		createComboViewerExtractionOption(composite);
-		createLabel(composite, "Use Value:");
+		createLabel(composite, StatisticsMessages.useValue);
 		createComboViewerValueOption(composite);
 		createGroupLabel(composite);
 		createVariableSection(composite);
-		createLabel(composite, "Number of PCs:");
+		createLabel(composite, StatisticsMessages.numberOfPcs);
 		createSpinnerPrincipleComponents(composite);
-		createLabel(composite, "Algorithm:");
+		createLabel(composite, StatisticsMessages.algorithm);
 		createComboViewerAlgorithm(composite);
 
 		updateWidgets();
@@ -130,7 +131,7 @@ public class PeakSettingsWizardPage extends AbstractAnalysisWizardPage {
 		});
 
 		Combo combo = comboViewer.getCombo();
-		combo.setToolTipText("Description Option");
+		combo.setToolTipText(StatisticsMessages.descriptionOption);
 		combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		combo.addSelectionListener(new SelectionAdapter() {
 
@@ -167,7 +168,7 @@ public class PeakSettingsWizardPage extends AbstractAnalysisWizardPage {
 			}
 		});
 
-		combo.setToolTipText("Select an extraction option.");
+		combo.setToolTipText(StatisticsMessages.selectExtractionOption);
 		combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		combo.addSelectionListener(new SelectionAdapter() {
 
@@ -205,7 +206,7 @@ public class PeakSettingsWizardPage extends AbstractAnalysisWizardPage {
 		});
 
 		Combo combo = comboViewer.getCombo();
-		combo.setToolTipText("Value Option (in case of concentration: take care that only one conc. is set.");
+		combo.setToolTipText(StatisticsMessages.valueOption);
 		combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		combo.addSelectionListener(new SelectionAdapter() {
 
@@ -227,7 +228,7 @@ public class PeakSettingsWizardPage extends AbstractAnalysisWizardPage {
 
 	private void createGroupLabel(Composite parent) {
 
-		Label label = createLabel(parent, "Retention Time Window [ms]:");
+		Label label = createLabel(parent, StatisticsMessages.retentionTimeWindowMs);
 		labelGroupControl.set(label);
 	}
 
@@ -257,7 +258,7 @@ public class PeakSettingsWizardPage extends AbstractAnalysisWizardPage {
 			if(o1 > 0) {
 				return ValidationStatus.ok();
 			}
-			return ValidationStatus.error("Warning: The value must be positive.");
+			return ValidationStatus.error(StatisticsMessages.valueMustBePositive);
 		});
 
 		UpdateValueStrategy<Integer, String> modelToWidget = UpdateValueStrategy.create(IConverter.create(Integer.class, String.class, o1 -> Integer.toString((o1))));
@@ -269,7 +270,7 @@ public class PeakSettingsWizardPage extends AbstractAnalysisWizardPage {
 	private Spinner createSpinnerPrincipleComponents(Composite parent) {
 
 		Spinner spinner = new Spinner(parent, SWT.BORDER);
-		spinner.setToolTipText("Number of Principal Components");
+		spinner.setToolTipText(StatisticsMessages.numberOfPrincipalComponents);
 		spinner.setMinimum(PreferenceSupplier.MIN_NUMBER_OF_COMPONENTS);
 		spinner.setIncrement(1);
 		spinner.setSelection(analysisSettings.getNumberOfPrincipalComponents());
@@ -303,7 +304,7 @@ public class PeakSettingsWizardPage extends AbstractAnalysisWizardPage {
 		});
 
 		Combo combo = comboViewer.getCombo();
-		combo.setToolTipText("PCA Algorithm");
+		combo.setToolTipText(StatisticsMessages.pcaAlgorithm);
 		combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		combo.addSelectionListener(new SelectionAdapter() {
 
@@ -329,11 +330,11 @@ public class PeakSettingsWizardPage extends AbstractAnalysisWizardPage {
 		switch(extractionOption) {
 			case RETENTION_TIME_MS:
 				enabled = true;
-				labelGroupControl.get().setText("Retention Time Window [ms]:");
+				labelGroupControl.get().setText(StatisticsMessages.retentionTimeWindowMs);
 				break;
 			case RETENTION_INDEX:
 				enabled = true;
-				labelGroupControl.get().setText("Retention Index Window:");
+				labelGroupControl.get().setText(StatisticsMessages.retentionIndexWindow);
 				break;
 			default:
 				break;

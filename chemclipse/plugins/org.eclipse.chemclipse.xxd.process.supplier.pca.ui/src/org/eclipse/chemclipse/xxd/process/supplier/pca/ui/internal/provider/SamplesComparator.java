@@ -29,13 +29,13 @@ public class SamplesComparator extends AbstractRecordTableComparator {
 
 			switch(getPropertyIndex()) {
 				case 0:
-					String name1 = sample1.getSampleName() != null ? sample1.getSampleName() : "";
-					String name2 = sample2.getSampleName() != null ? sample2.getSampleName() : "";
+					String name1 = sample1.getSampleName() != null ? sample1.getSampleName() : ""; //$NON-NLS-1$
+					String name2 = sample2.getSampleName() != null ? sample2.getSampleName() : ""; //$NON-NLS-1$
 					sortOrder = stringComp.compare(name1, name2);
 					break;
 				case 1:
-					String detail1 = sample1.getSampleDetails() != null ? sample1.getSampleDetails() : "";
-					String detail2 = sample2.getSampleDetails() != null ? sample2.getSampleDetails() : "";
+					String detail1 = sample1.getSampleDetails() != null ? sample1.getSampleDetails() : ""; //$NON-NLS-1$
+					String detail2 = sample2.getSampleDetails() != null ? sample2.getSampleDetails() : ""; //$NON-NLS-1$
 					sortOrder = stringComp.compare(detail1, detail2);
 					break;
 				case 2:
@@ -47,18 +47,18 @@ public class SamplesComparator extends AbstractRecordTableComparator {
 				case 4: // Color is defined by the group name
 				case 5:
 
-					String groupName1 = sample1.getGroupName() != null ? sample1.getGroupName() : "";
-					String groupName2 = sample2.getGroupName() != null ? sample2.getGroupName() : "";
+					String groupName1 = sample1.getGroupName() != null ? sample1.getGroupName() : ""; //$NON-NLS-1$
+					String groupName2 = sample2.getGroupName() != null ? sample2.getGroupName() : ""; //$NON-NLS-1$
 					sortOrder = stringComp.compare(groupName1, groupName2);
 					break;
 				case 6:
-					String classification1 = sample1.getClassification() != null ? sample1.getClassification() : "";
-					String classification2 = sample2.getClassification() != null ? sample2.getClassification() : "";
+					String classification1 = sample1.getClassification() != null ? sample1.getClassification() : ""; //$NON-NLS-1$
+					String classification2 = sample2.getClassification() != null ? sample2.getClassification() : ""; //$NON-NLS-1$
 					sortOrder = stringComp.compare(classification1, classification2);
 					break;
 				case 7:
-					String description1 = sample1.getDescription() != null ? sample1.getDescription() : "";
-					String description2 = sample2.getDescription() != null ? sample2.getDescription() : "";
+					String description1 = sample1.getDescription() != null ? sample1.getDescription() : ""; //$NON-NLS-1$
+					String description2 = sample2.getDescription() != null ? sample2.getDescription() : ""; //$NON-NLS-1$
 					sortOrder = stringComp.compare(description1, description2);
 					break;
 			}

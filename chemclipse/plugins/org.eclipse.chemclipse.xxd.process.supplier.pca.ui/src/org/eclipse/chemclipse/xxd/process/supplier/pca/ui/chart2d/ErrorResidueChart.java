@@ -24,6 +24,7 @@ import org.eclipse.chemclipse.swt.ui.support.Colors;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.EvaluationPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultMVA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultsMVA;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Color;
@@ -57,7 +58,7 @@ public class ErrorResidueChart extends BarChart {
 	private void initialize() {
 
 		IChartSettings chartSettings = getChartSettings();
-		chartSettings.setTitle("Error Residues");
+		chartSettings.setTitle(StatisticsMessages.errorResidues);
 		chartSettings.setTitleVisible(true);
 		chartSettings.setOrientation(SWT.HORIZONTAL);
 		chartSettings.setHorizontalSliderVisible(false);
@@ -103,7 +104,7 @@ public class ErrorResidueChart extends BarChart {
 		for(int i = 0; i < numberOfBars; i++) {
 			xValues[i] = i;
 			yValues[i] = resultList.get(i).getErrorMetric();
-			labels[i] = "";
+			labels[i] = ""; //$NON-NLS-1$
 
 			String sampleName = resultList.get(i).getSample().getSampleName();
 			barColors[i] = highlightedNames.contains(sampleName) ? Colors.BLUE : Colors.RED;
@@ -111,7 +112,7 @@ public class ErrorResidueChart extends BarChart {
 
 		// Create a SINGLE series
 		List<IBarSeriesData> barSeriesDataList = new ArrayList<>();
-		IBarSeriesData barData = new BarSeriesData(new SeriesData(xValues, yValues, "Scores"));
+		IBarSeriesData barData = new BarSeriesData(new SeriesData(xValues, yValues, "Scores")); //$NON-NLS-1$
 		IBarSeriesSettings settings = barData.getSettings();
 		settings.setBarColor(Colors.RED);
 		settings.setBarWidthStyle(BarWidthStyle.STRETCHED);
@@ -129,7 +130,7 @@ public class ErrorResidueChart extends BarChart {
 			@Override
 			public void paintControl(PaintEvent e) {
 
-				ISeries<?> series = getBaseChart().getSeriesSet().getSeries("Scores");
+				ISeries<?> series = getBaseChart().getSeriesSet().getSeries("Scores"); //$NON-NLS-1$
 				if(series instanceof IBarSeries) {
 					IBarSeries<?> barSeries = (IBarSeries<?>)series;
 					Rectangle[] bounds = barSeries.getBounds();
@@ -163,11 +164,11 @@ public class ErrorResidueChart extends BarChart {
 	private void setPrimaryAxisSet(IChartSettings chartSettings) {
 
 		IPrimaryAxisSettings primaryAxisSettingsX = chartSettings.getPrimaryAxisSettingsX();
-		primaryAxisSettingsX.setTitle("Sample Name");
+		primaryAxisSettingsX.setTitle(StatisticsMessages.sampleName);
 		primaryAxisSettingsX.setDecimalFormat(ValueFormat.getDecimalFormatEnglish());
 
 		IPrimaryAxisSettings primaryAxisSettingsY = chartSettings.getPrimaryAxisSettingsY();
-		primaryAxisSettingsY.setTitle("Error Values");
+		primaryAxisSettingsY.setTitle(StatisticsMessages.errorValues);
 		primaryAxisSettingsY.setDecimalFormat(ValueFormat.getDecimalFormatEnglish());
 	}
 
