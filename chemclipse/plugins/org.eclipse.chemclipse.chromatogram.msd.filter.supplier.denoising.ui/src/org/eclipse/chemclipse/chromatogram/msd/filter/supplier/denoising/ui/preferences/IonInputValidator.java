@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.denoising.ui.preferences;
 
+import org.eclipse.chemclipse.chromatogram.msd.filter.supplier.denoising.ui.l10n.ExtensionMessages;
 import org.eclipse.jface.dialogs.IInputValidator;
 
 public class IonInputValidator implements IInputValidator {
@@ -26,7 +27,7 @@ public class IonInputValidator implements IInputValidator {
 		try {
 			String.valueOf(Integer.parseInt(newText));
 		} catch(NumberFormatException e) {
-			return "The input must be an integer value.";
+			return ExtensionMessages.inputMustBeInteger;
 		}
 		return null;
 	}
