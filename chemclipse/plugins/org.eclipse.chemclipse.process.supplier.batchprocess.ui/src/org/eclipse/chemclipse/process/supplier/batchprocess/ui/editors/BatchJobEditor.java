@@ -34,6 +34,7 @@ import org.eclipse.chemclipse.process.supplier.batchprocess.io.JobWriter;
 import org.eclipse.chemclipse.process.supplier.batchprocess.ui.Activator;
 import org.eclipse.chemclipse.process.supplier.batchprocess.ui.internal.runnables.ExportRunnable;
 import org.eclipse.chemclipse.process.supplier.batchprocess.ui.internal.runnables.ImportRunnable;
+import org.eclipse.chemclipse.process.supplier.batchprocess.ui.l10n.ExtensionMessages;
 import org.eclipse.chemclipse.process.supplier.batchprocess.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.methods.ProcessMethod;
@@ -66,10 +67,10 @@ import jakarta.inject.Inject;
  */
 public class BatchJobEditor implements IChemClipseEditor, IRunnableWithProgress {
 
-	public static final String ID = "org.eclipse.chemclipse.process.supplier.batchprocess.ui.editors.BatchJobEditor";
-	public static final String CONTRIBUTION_URI = "bundleclass://org.eclipse.chemclipse.process.supplier.batchprocess.ui/org.eclipse.chemclipse.process.supplier.batchprocess.ui.editors.BatchJobEditor";
-	public static final String ICON_URI = "platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/batchprocess.gif";
-	public static final String TOOLTIP = "Batch Process Job";
+	public static final String ID = "org.eclipse.chemclipse.process.supplier.batchprocess.ui.editors.BatchJobEditor"; //$NON-NLS-1$
+	public static final String CONTRIBUTION_URI = "bundleclass://org.eclipse.chemclipse.process.supplier.batchprocess.ui/org.eclipse.chemclipse.process.supplier.batchprocess.ui.editors.BatchJobEditor"; //$NON-NLS-1$
+	public static final String ICON_URI = "platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/batchprocess.gif"; //$NON-NLS-1$
+	public static final String TOOLTIP = ExtensionMessages.batchProcessJob;
 
 	private static final Logger logger = Logger.getLogger(BatchJobEditor.class);
 
@@ -113,7 +114,7 @@ public class BatchJobEditor implements IChemClipseEditor, IRunnableWithProgress 
 		Display display = Display.getCurrent();
 		Shell shell = display.getActiveShell();
 		FileDialog dialog = new FileDialog(shell, SWT.SAVE);
-		dialog.setText("Save the batch job");
+		dialog.setText(ExtensionMessages.saveBatchJob);
 		dialog.setFileName(BatchProcessJob.FILE_NAME);
 		String fileName = dialog.open();
 		if(fileName != null) {
