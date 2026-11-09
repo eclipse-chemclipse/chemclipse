@@ -49,20 +49,10 @@
 
    <element name="icon">
       <complexType>
-         <attribute name="class" type="string">
+         <attribute name="icon" type="string" use="required">
             <annotation>
                <documentation>
-                  Provides the icon when it can't be named by the icon attribute.
-               </documentation>
-               <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.chemclipse.xxd.process.ui.menu.IMenuIcon"/>
-               </appinfo>
-            </annotation>
-         </attribute>
-         <attribute name="icon" type="string">
-            <annotation>
-               <documentation>
-                  The path of a 16x16 image in the contributing bundle, used instead of class. Images of other bundles are named by a platform:/plugin/ URL, e.g. platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/baseline.gif for one of the shared ChemClipse images.
+                  The path of a 16x16 image in the contributing bundle. Images of other bundles are named by a platform:/plugin/ URL, e.g. platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/baseline.gif for one of the shared ChemClipse images.
                </documentation>
                <appinfo>
                   <meta.attribute kind="resource"/>
@@ -97,7 +87,7 @@
       </appinfo>
       <documentation>
          /*******************************************************************************
- * Copyright (c) 2022 Lablicate GmbH.
+ * Copyright (c) 2022, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
