@@ -13,6 +13,7 @@
 package org.eclipse.chemclipse.process.supplier.batchprocess.ui.preferences;
 
 import org.eclipse.chemclipse.process.supplier.batchprocess.ui.Activator;
+import org.eclipse.chemclipse.process.supplier.batchprocess.ui.l10n.ExtensionMessages;
 import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.ui.IWorkbench;
@@ -24,14 +25,14 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 
 		super(GRID);
 		setPreferenceStore(Activator.getDefault().getPreferenceStore());
-		setTitle("Batch Process");
-		setDescription("");
+		setTitle(ExtensionMessages.batchProcess);
+		setDescription(""); //$NON-NLS-1$
 	}
 
 	@Override
 	public void createFieldEditors() {
 
-		addField(new DirectoryFieldEditor(PreferenceSupplier.P_FILTER_PATH_IMPORT_RECORDS, "Path Import Records", getFieldEditorParent()));
+		addField(new DirectoryFieldEditor(PreferenceSupplier.P_FILTER_PATH_IMPORT_RECORDS, ExtensionMessages.pathImportRecords, getFieldEditorParent()));
 	}
 
 	@Override
