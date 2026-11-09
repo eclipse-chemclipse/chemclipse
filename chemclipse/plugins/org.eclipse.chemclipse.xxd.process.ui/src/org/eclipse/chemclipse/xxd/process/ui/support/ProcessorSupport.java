@@ -28,9 +28,7 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.support.util.ValueParserSupport;
-import org.eclipse.chemclipse.xxd.process.ui.menu.IMenuIcon;
 import org.eclipse.chemclipse.xxd.process.ui.toolbar.Processor;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
@@ -52,6 +50,7 @@ public class ProcessorSupport {
 	private static final String VALUE_DELIMITER = "§";
 	private static final String PROCESSOR_DELIMITER = "%";
 	private static final String PLATFORM_PLUGIN = "platform:/plugin/";
+	private static final String MENU_ICON_EXTENSION_POINT = "org.eclipse.chemclipse.xxd.process.ui.menu.icon";
 
 	private static ValueParserSupport valueParseSupport = new ValueParserSupport();
 
@@ -172,7 +171,7 @@ public class ProcessorSupport {
 	private static Image getMenuIcon(Predicate<String> matcher) {
 
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
-		for(IConfigurationElement element : registry.getConfigurationElementsFor(IMenuIcon.EXTENSION_POINT_ID)) {
+		for(IConfigurationElement element : registry.getConfigurationElementsFor(MENU_ICON_EXTENSION_POINT)) {
 			String id = element.getAttribute("id");
 			if(id != null && matcher.test(id)) {
 				return createMenuIcon(element);
@@ -199,14 +198,6 @@ public class ProcessorSupport {
 				ResourceLocator.imageDescriptorFromBundle(bundleName, path).ifPresent(descriptor -> imageRegistry.put(key, descriptor));
 			}
 			return imageRegistry.get(key);
-		}
-
-		try {
-			if(element.createExecutableExtension("class") instanceof IMenuIcon menuIcon) {
-				return menuIcon.getImage();
-			}
-		} catch(CoreException e) {
-			logger.warn(e);
 		}
 		return null;
 	}
