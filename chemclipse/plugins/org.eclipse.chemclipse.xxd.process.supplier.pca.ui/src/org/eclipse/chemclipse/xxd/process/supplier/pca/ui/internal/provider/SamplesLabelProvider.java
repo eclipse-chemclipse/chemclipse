@@ -22,14 +22,14 @@ import org.eclipse.swt.graphics.Image;
 
 public class SamplesLabelProvider extends AbstractChemClipseLabelProvider {
 
-	public static final String SAMPLE_NAME = "Sample Name";
-	public static final String SAMPLE_NAME_LONG = "Sample Details";
-	public static final String USE = "Use";
-	public static final String PREDICT = "Predict";
-	public static final String COLOR = "Color";
-	public static final String GROUP_NAME = "Group Name";
-	public static final String CLASSIFICATION = "Classification";
-	public static final String DESCRIPTION = "Description";
+	public static final String SAMPLE_NAME = "Sample Name"; //$NON-NLS-1$
+	public static final String SAMPLE_NAME_LONG = "Sample Details"; //$NON-NLS-1$
+	public static final String USE = "Use"; //$NON-NLS-1$
+	public static final String PREDICT = "Predict"; //$NON-NLS-1$
+	public static final String COLOR = "Color"; //$NON-NLS-1$
+	public static final String GROUP_NAME = "Group Name"; //$NON-NLS-1$
+	public static final String CLASSIFICATION = "Classification"; //$NON-NLS-1$
+	public static final String DESCRIPTION = "Description"; //$NON-NLS-1$
 
 	public static final int INDEX_COLOR = 4;
 
@@ -83,33 +83,33 @@ public class SamplesLabelProvider extends AbstractChemClipseLabelProvider {
 	@Override
 	public String getColumnText(Object element, int columnIndex) {
 
-		String text = "";
+		String text = ""; //$NON-NLS-1$
 		if(element instanceof ISample sample) {
 
 			switch(columnIndex) {
 				case 0:
-					text = sample.getSampleName() != null ? sample.getSampleName() : "";
+					text = sample.getSampleName() != null ? sample.getSampleName() : ""; //$NON-NLS-1$
 					break;
 				case 1:
-					text = sample.getSampleDetails() != null ? sample.getSampleDetails() : "";
+					text = sample.getSampleDetails() != null ? sample.getSampleDetails() : ""; //$NON-NLS-1$
 					break;
 				case 2:
-					text = ""; // Checkbox
+					text = ""; // Checkbox //$NON-NLS-1$
 					break;
 				case 3:
-					text = ""; // Checkbox
+					text = ""; // Checkbox //$NON-NLS-1$
 					break;
 				case 4:
-					text = ""; // Color
+					text = ""; // Color //$NON-NLS-1$
 					break;
 				case 5:
-					text = sample.getGroupName() != null ? sample.getGroupName() : "";
+					text = sample.getGroupName() != null ? sample.getGroupName() : ""; //$NON-NLS-1$
 					break;
 				case 6:
-					text = sample.getClassification() != null ? sample.getClassification() : "";
+					text = sample.getClassification() != null ? sample.getClassification() : ""; //$NON-NLS-1$
 					break;
 				case 7:
-					text = sample.getDescription() != null ? sample.getDescription() : "";
+					text = sample.getDescription() != null ? sample.getDescription() : ""; //$NON-NLS-1$
 					break;
 			}
 		}

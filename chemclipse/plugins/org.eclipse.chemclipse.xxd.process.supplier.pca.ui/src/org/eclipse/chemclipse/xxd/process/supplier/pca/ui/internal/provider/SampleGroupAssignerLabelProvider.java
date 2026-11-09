@@ -21,10 +21,10 @@ import org.eclipse.swt.graphics.Image;
 
 public class SampleGroupAssignerLabelProvider extends AbstractChemClipseLabelProvider {
 
-	public static final String SAMPLE_NAME = "Sample Name";
-	public static final String DESCRIPTION = "Description";
-	public static final String SELECT = "Select";
-	public static final String GROUP_NAME = "Group Name";
+	public static final String SAMPLE_NAME = "Sample Name"; //$NON-NLS-1$
+	public static final String DESCRIPTION = "Description"; //$NON-NLS-1$
+	public static final String SELECT = "Select"; //$NON-NLS-1$
+	public static final String GROUP_NAME = "Group Name"; //$NON-NLS-1$
 
 	public static final String[] TITLES = {//
 			SAMPLE_NAME, //
@@ -60,21 +60,21 @@ public class SampleGroupAssignerLabelProvider extends AbstractChemClipseLabelPro
 	@Override
 	public String getColumnText(Object element, int columnIndex) {
 
-		String text = "";
+		String text = ""; //$NON-NLS-1$
 		if(element instanceof ISample sample) {
 
 			switch(columnIndex) {
 				case 0:
-					text = sample.getSampleName() != null ? sample.getSampleName() : "";
+					text = sample.getSampleName() != null ? sample.getSampleName() : ""; //$NON-NLS-1$
 					break;
 				case 1:
-					text = sample.getDescription() != null ? sample.getDescription() : "";
+					text = sample.getDescription() != null ? sample.getDescription() : ""; //$NON-NLS-1$
 					break;
 				case 2:
-					text = ""; // Checkbox
+					text = ""; // Checkbox //$NON-NLS-1$
 					break;
 				case 3:
-					text = sample.getGroupName() != null ? sample.getGroupName() : "";
+					text = sample.getGroupName() != null ? sample.getGroupName() : ""; //$NON-NLS-1$
 					break;
 			}
 		}

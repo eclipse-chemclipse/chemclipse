@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -16,6 +16,7 @@ package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.preferences;
 import org.eclipse.chemclipse.support.ui.preferences.fieldeditors.ExtendedIntegerFieldEditor;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.Activator;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.swtchart.extensions.preferences.PreferenceSupport;
@@ -28,8 +29,8 @@ public class PreferencePageLoadingPlot extends FieldEditorPreferencePage impleme
 
 		super(GRID);
 		setPreferenceStore(Activator.getDefault().getPreferenceStore());
-		setTitle("Loading Plot");
-		setDescription("");
+		setTitle(StatisticsMessages.loadingPlot);
+		setDescription(""); //$NON-NLS-1$
 	}
 
 	@Override
@@ -40,8 +41,8 @@ public class PreferencePageLoadingPlot extends FieldEditorPreferencePage impleme
 	@Override
 	protected void createFieldEditors() {
 
-		addField(new ComboFieldEditor(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_TYPE, "Symbol type:", PreferenceSupport.SYMBOL_TYPES, getFieldEditorParent()));
-		addField(new ComboFieldEditor(PreferenceSupplier.P_LOADING_PLOT_2D_HIGHLIGHT_SYMBOL_TYPE, "Highlight Symbol type:", PreferenceSupport.SYMBOL_TYPES, getFieldEditorParent()));
-		addField(new ExtendedIntegerFieldEditor(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_SIZE, "Symbol size", PreferenceSupplier.MIN_LOADING_PLOT_2D_SYMBOL_SIZE, PreferenceSupplier.MAX_LOADING_PLOT_2D_SYMBOL_SIZE, getFieldEditorParent()));
+		addField(new ComboFieldEditor(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_TYPE, StatisticsMessages.symbolType, PreferenceSupport.SYMBOL_TYPES, getFieldEditorParent()));
+		addField(new ComboFieldEditor(PreferenceSupplier.P_LOADING_PLOT_2D_HIGHLIGHT_SYMBOL_TYPE, StatisticsMessages.highlightSymbolType, PreferenceSupport.SYMBOL_TYPES, getFieldEditorParent()));
+		addField(new ExtendedIntegerFieldEditor(PreferenceSupplier.P_LOADING_PLOT_2D_SYMBOL_SIZE, StatisticsMessages.symbolSize, PreferenceSupplier.MIN_LOADING_PLOT_2D_SYMBOL_SIZE, PreferenceSupplier.MAX_LOADING_PLOT_2D_SYMBOL_SIZE, getFieldEditorParent()));
 	}
 }

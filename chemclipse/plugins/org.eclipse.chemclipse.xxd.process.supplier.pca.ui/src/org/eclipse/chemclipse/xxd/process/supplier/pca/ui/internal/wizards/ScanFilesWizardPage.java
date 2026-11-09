@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -25,22 +25,23 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.DataInputEntry;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IDataInputEntry;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.Activator;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 
 public class ScanFilesWizardPage extends DataInputPageWizard {
 
 	public ScanFilesWizardPage() {
 
-		super("DataInputFiles");
-		setTitle("Chromatogram MSD Input Files");
-		setDescription("This wizard lets you select chromatogram MSD input files and set bulk group name.");
+		super("DataInputFiles"); //$NON-NLS-1$
+		setTitle(StatisticsMessages.chromatogramMsdInputFiles);
+		setDescription(StatisticsMessages.selectChromatogramMsdInputFiles);
 	}
 
 	@Override
 	protected void addFiles() {
 
 		InputWizardSettings inputWizardSettings = InputWizardSettings.create(Activator.getDefault().getPreferenceStore(), PreferenceSupplier.N_INPUT_FILE, DataType.MSD);
-		inputWizardSettings.setTitle("Chromatogram MSD Input Files");
-		inputWizardSettings.setDescription("This wizard lets you select several chromatogram MSD input files.");
+		inputWizardSettings.setTitle(StatisticsMessages.chromatogramMsdInputFiles);
+		inputWizardSettings.setDescription(StatisticsMessages.selectSeveralChromatogramMsdInputFiles);
 
 		List<IDataInputEntry> dataInputEntries = new ArrayList<>();
 		for(File file : InputEntriesWizard.openWizard(getShell(), inputWizardSettings).keySet()) {

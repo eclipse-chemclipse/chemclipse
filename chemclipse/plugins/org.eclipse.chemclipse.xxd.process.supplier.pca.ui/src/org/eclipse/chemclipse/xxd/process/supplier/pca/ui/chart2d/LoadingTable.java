@@ -19,6 +19,7 @@ import java.util.List;
 import org.eclipse.chemclipse.model.statistics.IVariable;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.EvaluationPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultsMVA;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.support.LoadingRow;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -39,7 +40,7 @@ public class LoadingTable extends Composite {
 	private TableViewer tableViewer;
 	private EvaluationPCA evaluationPCA;
 	private int numberOfComponents = 0;
-	private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.000000");
+	private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.000000"); //$NON-NLS-1$
 
 	public LoadingTable(Composite parent, int style) {
 
@@ -108,7 +109,7 @@ public class LoadingTable extends Composite {
 
 		TableViewerColumn viewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
 		TableColumn column = viewerColumn.getColumn();
-		column.setText("Variable");
+		column.setText(StatisticsMessages.variable);
 		column.setWidth(200);
 		column.setResizable(true);
 		column.setMoveable(false);
@@ -121,7 +122,7 @@ public class LoadingTable extends Composite {
 				if(element instanceof LoadingRow) {
 					return ((LoadingRow)element).getVariableName();
 				}
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 		});
 
@@ -161,7 +162,7 @@ public class LoadingTable extends Composite {
 			}
 		}
 
-		column.setText(String.format("PC%d (%.1f%%)", pcIndex + 1, explainedVariance));
+		column.setText(String.format("PC%d (%.1f%%)", pcIndex + 1, explainedVariance)); //$NON-NLS-1$
 		column.setWidth(120);
 		column.setResizable(true);
 		column.setMoveable(true);
@@ -177,7 +178,7 @@ public class LoadingTable extends Composite {
 						return DECIMAL_FORMAT.format(loadings[pcIndex]);
 					}
 				}
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 		});
 

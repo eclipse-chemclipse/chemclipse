@@ -28,6 +28,7 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Algorithm;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.DataInputEntry;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IDataInputEntry;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
@@ -53,9 +54,9 @@ public class FileSettingsWizardPage extends AbstractAnalysisWizardPage {
 
 	public FileSettingsWizardPage() {
 
-		super("Main Properties");
-		setTitle("PCA");
-		setDescription("Set main PCA parameters.");
+		super("Main Properties"); //$NON-NLS-1$
+		setTitle("PCA"); //$NON-NLS-1$
+		setDescription(StatisticsMessages.setMainPcaParameters);
 	}
 
 	public void setFile(File file) {
@@ -69,16 +70,16 @@ public class FileSettingsWizardPage extends AbstractAnalysisWizardPage {
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayout(new GridLayout(3, false));
 
-		createLabel(composite, "Title:");
+		createLabel(composite, StatisticsMessages.title);
 		createTextTitle(composite, 2);
 
-		createLabel(composite, "Number of PCs:");
+		createLabel(composite, StatisticsMessages.numberOfPcs);
 		createSpinnerPrincipleComponents(composite);
 
-		createLabel(composite, "Algorithm:");
+		createLabel(composite, StatisticsMessages.algorithm);
 		createComboViewerAlgorithm(composite);
 
-		createLabel(composite, "File Data Matrix:");
+		createLabel(composite, StatisticsMessages.fileDataMatrix);
 		textFile = createTextFile(composite);
 		createButtonSelectFile(composite);
 
@@ -109,7 +110,7 @@ public class FileSettingsWizardPage extends AbstractAnalysisWizardPage {
 	private Spinner createSpinnerPrincipleComponents(Composite parent) {
 
 		Spinner spinner = new Spinner(parent, SWT.BORDER);
-		spinner.setToolTipText("Number of Principal Components");
+		spinner.setToolTipText(StatisticsMessages.numberOfPrincipalComponents);
 		spinner.setMinimum(PreferenceSupplier.MIN_NUMBER_OF_COMPONENTS);
 		spinner.setIncrement(1);
 		spinner.setSelection(analysisSettings.getNumberOfPrincipalComponents());
@@ -147,7 +148,7 @@ public class FileSettingsWizardPage extends AbstractAnalysisWizardPage {
 		});
 
 		Combo combo = comboViewer.getCombo();
-		combo.setToolTipText("PCA Algorithm");
+		combo.setToolTipText(StatisticsMessages.pcaAlgorithm);
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.horizontalSpan = 2;
 		combo.setLayoutData(gridData);
@@ -171,7 +172,7 @@ public class FileSettingsWizardPage extends AbstractAnalysisWizardPage {
 	private Text createTextFile(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setToolTipText("Path to data matrix file.");
+		text.setToolTipText(StatisticsMessages.pathToDataMatrixFile);
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		if(file != null) {
@@ -184,7 +185,7 @@ public class FileSettingsWizardPage extends AbstractAnalysisWizardPage {
 	private void createButtonSelectFile(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Select the data matrix.");
+		button.setToolTipText(StatisticsMessages.selectDataMatrix);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_FILE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -192,9 +193,9 @@ public class FileSettingsWizardPage extends AbstractAnalysisWizardPage {
 			public void widgetSelected(SelectionEvent e) {
 
 				FileDialog fileDialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.READ_ONLY);
-				fileDialog.setText("Import");
-				fileDialog.setFilterExtensions(PcaExtractionFileText.FILTER_EXTENSION + ";" + PcaExtractionFileBinary.FILTER_EXTENSION);
-				fileDialog.setFilterNames(PcaExtractionFileText.FILTER_NAME + ";" + PcaExtractionFileBinary.FILTER_NAME);
+				fileDialog.setText(StatisticsMessages.importLabel);
+				fileDialog.setFilterExtensions(PcaExtractionFileText.FILTER_EXTENSION + ";" + PcaExtractionFileBinary.FILTER_EXTENSION); //$NON-NLS-1$
+				fileDialog.setFilterNames(PcaExtractionFileText.FILTER_NAME + ";" + PcaExtractionFileBinary.FILTER_NAME); //$NON-NLS-1$
 				fileDialog.setFilterPath(PreferenceSupplier.getPathImportFile());
 				String path = fileDialog.open();
 				if(path != null) {
@@ -211,8 +212,8 @@ public class FileSettingsWizardPage extends AbstractAnalysisWizardPage {
 	private void createButtonDemoFile(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setText("Demo Data Matrix (*.pdm)");
-		button.setToolTipText("Save a demo data matrix.");
+		button.setText(StatisticsMessages.demoDataMatrix);
+		button.setToolTipText(StatisticsMessages.saveDemoDataMatrix);
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.horizontalSpan = 3;
 		button.setLayoutData(gridData);

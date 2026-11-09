@@ -37,6 +37,7 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.preferences.PreferenceSup
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.Activator;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.chart2d.VariableLinePlot;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.help.HelpContext;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.preferences.PreferencePage;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.preferences.PreferencePageFoldChangePlot;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.support.AlphanumericStringComparator;
@@ -69,7 +70,7 @@ import org.eclipse.swtchart.extensions.events.IHandledEventProcessor;
 
 public class ExtendedVariableLinePlot extends Composite implements IExtendedPartUI {
 
-	private static final String VARIABLE_LINE_PLOT_SELECT_NONE = "--";
+	private static final String VARIABLE_LINE_PLOT_SELECT_NONE = "--"; //$NON-NLS-1$
 	private AtomicReference<VariableLinePlot> plotControl = new AtomicReference<>();
 	private AtomicReference<ComboViewer> comboViewerVariables = new AtomicReference<>();
 	private AtomicReference<ComboViewer> comboViewerCategoryLabelType = new AtomicReference<>();
@@ -184,9 +185,9 @@ public class ExtendedVariableLinePlot extends Composite implements IExtendedPart
 		composite.setLayout(new GridLayout(7, false));
 
 		createComboViewerCategoryLabelType(composite);
-		createLabel(composite, "Font Size");
+		createLabel(composite, StatisticsMessages.fontSize);
 		createSpinnerFontSize(composite);
-		createLabel(composite, "Variable:");
+		createLabel(composite, StatisticsMessages.variableLabel);
 		createComboViewerVariable(composite);
 		createSettingsButton(composite);
 		createButtonHelp(composite, HelpContext.FOLD_CHANGE_PLOT);
@@ -215,7 +216,7 @@ public class ExtendedVariableLinePlot extends Composite implements IExtendedPart
 			}
 		});
 		Combo combo = comboViewer.getCombo();
-		combo.setToolTipText("Select Column Label");
+		combo.setToolTipText(StatisticsMessages.selectColumnLabel);
 		combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		combo.addSelectionListener(new SelectionAdapter() {
 
@@ -246,7 +247,7 @@ public class ExtendedVariableLinePlot extends Composite implements IExtendedPart
 	private void createSpinnerFontSize(Composite parent) {
 
 		Spinner spinner = new Spinner(parent, SWT.BORDER);
-		spinner.setToolTipText("Font Size X-Axis");
+		spinner.setToolTipText(StatisticsMessages.fontSizeXAxis);
 		spinner.setMinimum(PreferenceSupplier.MIN_VARIABLE_LINE_PLOT_XAXIS_FONT_SIZE);
 		spinner.setIncrement(1);
 		spinner.setSelection(PreferenceSupplier.DEF_VARIABLE_LINE_PLOT_XAXIS_FONT_SIZE);
@@ -281,12 +282,12 @@ public class ExtendedVariableLinePlot extends Composite implements IExtendedPart
 				if(element instanceof String value) {
 					return value;
 				} else {
-					return "";
+					return ""; //$NON-NLS-1$
 				}
 			}
 		});
 		Combo combo = comboViewer.getCombo();
-		combo.setToolTipText("Variable to plot");
+		combo.setToolTipText(StatisticsMessages.variableToPlot);
 		GridData gridData = new GridData();
 		gridData.widthHint = 350;
 		combo.setLayoutData(gridData);
@@ -639,11 +640,11 @@ public class ExtendedVariableLinePlot extends Composite implements IExtendedPart
 		if(samples != null) {
 			for(IVariable variable : samples.getVariables()) {
 				if(variable.getDescription() == null) {
-					variable.setDescription("");
+					variable.setDescription(""); //$NON-NLS-1$
 				}
 			}
 
-			variables.addAll(samples.getVariables().stream().map(x -> x.getValue() + " " + x.getDescription()).toList());
+			variables.addAll(samples.getVariables().stream().map(x -> x.getValue() + " " + x.getDescription()).toList()); //$NON-NLS-1$
 		}
 	}
 
@@ -748,7 +749,7 @@ public class ExtendedVariableLinePlot extends Composite implements IExtendedPart
 			}
 		}
 
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 }

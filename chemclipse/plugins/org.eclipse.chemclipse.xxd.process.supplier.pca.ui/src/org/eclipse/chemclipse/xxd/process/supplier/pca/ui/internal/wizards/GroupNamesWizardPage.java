@@ -21,6 +21,7 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IDataInputEntry;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.support.InputFilesTable;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.wizard.WizardPage;
@@ -51,9 +52,9 @@ public class GroupNamesWizardPage extends WizardPage {
 
 	public GroupNamesWizardPage() {
 
-		super("Sample Grouping");
-		setTitle("Set Group Name");
-		setDescription("Set mass group name according to name");
+		super("Sample Grouping"); //$NON-NLS-1$
+		setTitle(StatisticsMessages.setGroupName);
+		setDescription(StatisticsMessages.setGroupNameAccordingToName);
 	}
 
 	@Override
@@ -64,9 +65,9 @@ public class GroupNamesWizardPage extends WizardPage {
 		/*
 		 * Select the process entry.
 		 */
-		createLabel(composite, "Group Name");
+		createLabel(composite, StatisticsMessages.groupName);
 		textGroupName = createText(composite);
-		createLabel(composite, "String or regular expression to match the group names");
+		createLabel(composite, StatisticsMessages.stringOrRegularExpression);
 		textSelectNames = createText(composite);
 		createOptionGroup(composite);
 		createToolbar(composite);
@@ -106,13 +107,13 @@ public class GroupNamesWizardPage extends WizardPage {
 		Group group = new Group(parent, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		group.setLayout(new GridLayout(1, false));
-		group.setText("Settings");
+		group.setText(StatisticsMessages.settings);
 
-		caseSensitive = createCheckBox(group, "Case Sensitive");
-		createRadioButton(group, "Contains String", true, CONTAINS_STRING);
-		createRadioButton(group, "Starts with String", false, STARTS_WITH_STRING);
-		createRadioButton(group, "Ends with String", false, ENDS_WITH_STRING);
-		createRadioButton(group, "Regular Expression", false, REGEXP);
+		caseSensitive = createCheckBox(group, StatisticsMessages.caseSensitive);
+		createRadioButton(group, StatisticsMessages.containsString, true, CONTAINS_STRING);
+		createRadioButton(group, StatisticsMessages.startsWithString, false, STARTS_WITH_STRING);
+		createRadioButton(group, StatisticsMessages.endsWithString, false, ENDS_WITH_STRING);
+		createRadioButton(group, StatisticsMessages.regularExpression, false, REGEXP);
 	}
 
 	private InputFilesTable createInputFilesTable(Composite parent) {
@@ -139,8 +140,8 @@ public class GroupNamesWizardPage extends WizardPage {
 	private Button createButtonProcess(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Set the group names");
-		button.setText("Set the group names");
+		button.setToolTipText(StatisticsMessages.setGroupNames);
+		button.setText(StatisticsMessages.setGroupNames);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EXECUTE, IApplicationImageProvider.SIZE_16x16));
 		button.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		button.addSelectionListener(new SelectionAdapter() {
@@ -182,7 +183,7 @@ public class GroupNamesWizardPage extends WizardPage {
 	private Button createButtonReset(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Reset the group names");
+		button.setToolTipText(StatisticsMessages.resetGroupNames);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_RESET, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -245,7 +246,7 @@ public class GroupNamesWizardPage extends WizardPage {
 
 		IInputWizard inputWizard = (IInputWizard)getWizard();
 		for(IDataInputEntry dataInputEntry : inputWizard.getDataInputEntries()) {
-			dataInputEntry.setGroupName("");
+			dataInputEntry.setGroupName(""); //$NON-NLS-1$
 		}
 		update();
 	}

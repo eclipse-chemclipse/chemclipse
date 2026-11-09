@@ -23,6 +23,7 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.ISamplesPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Sample;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.swt.SampleGroupAssignerListUI;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -47,8 +48,8 @@ public class GroupNamingWizardPage extends AbstractAnalysisWizardPage {
 	public GroupNamingWizardPage(ISamplesPCA<IVariable, ISample> samplesPCA) {
 
 		super(GroupNamingWizardPage.class.getName());
-		setTitle("Group Naming Tool");
-		setDescription("Tool for quickly naming/creating/assigning Groups");
+		setTitle(StatisticsMessages.groupNamingTool);
+		setDescription(StatisticsMessages.toolForNamingGroups);
 		/*
 		 * Make a deep copy of the sample and group name to
 		 * avoid modifying the original sample.
@@ -104,7 +105,7 @@ public class GroupNamingWizardPage extends AbstractAnalysisWizardPage {
 	private Label createLabelGroupName(Composite parent) {
 
 		Label label = new Label(parent, SWT.NONE);
-		label.setText("Group Name:");
+		label.setText(StatisticsMessages.groupNameLabel);
 
 		return label;
 	}
@@ -112,7 +113,7 @@ public class GroupNamingWizardPage extends AbstractAnalysisWizardPage {
 	private Button createButtonAssign(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Assign the group name to the selected samples.");
+		button.setToolTipText(StatisticsMessages.assignGroupNameToSelectedSamples);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EXECUTE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -129,7 +130,7 @@ public class GroupNamingWizardPage extends AbstractAnalysisWizardPage {
 	private void createTextGroupName(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setToolTipText("Enter the group name to be assigned to the selected samples.");
+		text.setToolTipText(StatisticsMessages.enterGroupNameToAssign);
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.widthHint = 150;
 		text.setLayoutData(gridData);
@@ -150,7 +151,7 @@ public class GroupNamingWizardPage extends AbstractAnalysisWizardPage {
 	private Button createButtonClearSelection(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Clear all selections.");
+		button.setToolTipText(StatisticsMessages.clearAllSelections);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_CLEAR, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -170,7 +171,7 @@ public class GroupNamingWizardPage extends AbstractAnalysisWizardPage {
 	private Button createButtonInverseSelection(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Inverse the sample selection.");
+		button.setToolTipText(StatisticsMessages.inverseSampleSelection);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_SELECTED, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 

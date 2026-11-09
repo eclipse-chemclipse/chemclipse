@@ -15,14 +15,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.handlers;
 
-import jakarta.inject.Named;
-
 import org.eclipse.chemclipse.model.statistics.ISample;
 import org.eclipse.chemclipse.model.statistics.IVariable;
 import org.eclipse.chemclipse.rcp.app.ui.handlers.OpenSnippetHandler;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IEvaluation;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResult;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.ISamplesPCA;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.MApplication;
@@ -33,12 +32,14 @@ import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 
+import jakarta.inject.Named;
+
 public class CreatePcaEvaluation {
 
-	public static final String PCA_PERSPECTIVE = "org.eclipse.chemclipse.xxd.process.supplier.pca.perspective";
-	public static final String PCA_EDITOR_STACK = "org.eclipse.chemclipse.xxd.process.supplier.pca.ui.stackId.pcaeditorStack";
+	public static final String PCA_PERSPECTIVE = "org.eclipse.chemclipse.xxd.process.supplier.pca.perspective"; //$NON-NLS-1$
+	public static final String PCA_EDITOR_STACK = "org.eclipse.chemclipse.xxd.process.supplier.pca.ui.stackId.pcaeditorStack"; //$NON-NLS-1$
 
-	private static final String EDITOR_ID = "org.eclipse.chemclipse.xxd.process.supplier.pca.ui.part.pcaeditor";
+	private static final String EDITOR_ID = "org.eclipse.chemclipse.xxd.process.supplier.pca.ui.part.pcaeditor"; //$NON-NLS-1$
 
 	public static void createPart(ISamplesPCA<?, ?> samples, IEclipseContext context, String title) {
 
@@ -76,7 +77,7 @@ public class CreatePcaEvaluation {
 				if(perspective != null) {
 					if(!perspective.isOnTop()) {
 						if(shell != null) {
-							MessageDialog.openInformation(shell, "PCA", "Please navigate to the PCA perspective to start an analysis.");
+							MessageDialog.openInformation(shell, "PCA", StatisticsMessages.navigateToPcaPerspective); //$NON-NLS-1$
 						}
 					}
 				}

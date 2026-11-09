@@ -28,10 +28,10 @@ import org.eclipse.swt.graphics.Image;
 
 public class FeatureLabelProvider extends AbstractChemClipseLabelProvider {
 
-	public static final String VARIABLE = "Variable"; // e.g. Retention Time
-	public static final String USE = "Use";
-	public static final String CLASSIFICATION = "Classification";
-	public static final String DESCRIPTION = "Description";
+	public static final String VARIABLE = "Variable"; // e.g. Retention Time //$NON-NLS-1$
+	public static final String USE = "Use"; //$NON-NLS-1$
+	public static final String CLASSIFICATION = "Classification"; //$NON-NLS-1$
+	public static final String DESCRIPTION = "Description"; //$NON-NLS-1$
 
 	public static final int BOUND_SAMPLE = 100;
 	private DecimalFormat decimalFormat = getDecimalFormat();
@@ -79,7 +79,7 @@ public class FeatureLabelProvider extends AbstractChemClipseLabelProvider {
 	@Override
 	public String getColumnText(Object element, int columnIndex) {
 
-		String text = "";
+		String text = ""; //$NON-NLS-1$
 		if(element instanceof Feature feature) {
 			IVariable variable = feature.getVariable();
 
@@ -88,7 +88,7 @@ public class FeatureLabelProvider extends AbstractChemClipseLabelProvider {
 					text = variable.getValue();
 					break;
 				case 1:
-					text = ""; // Icon
+					text = ""; // Icon //$NON-NLS-1$
 					break;
 				case 2:
 					text = variable.getClassification();
@@ -106,9 +106,9 @@ public class FeatureLabelProvider extends AbstractChemClipseLabelProvider {
 						} else {
 							value = sampleData.get(index).getModifiedData();
 						}
-						text = Double.isNaN(value) ? "NaN" : format(value);
+						text = Double.isNaN(value) ? "NaN" : format(value); //$NON-NLS-1$
 					} else {
-						text = "--";
+						text = "--"; //$NON-NLS-1$
 					}
 					break;
 			}

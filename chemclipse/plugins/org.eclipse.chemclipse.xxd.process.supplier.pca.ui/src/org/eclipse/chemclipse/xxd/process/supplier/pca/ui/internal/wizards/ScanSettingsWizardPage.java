@@ -17,6 +17,7 @@ import org.eclipse.chemclipse.support.ui.provider.AbstractLabelProvider;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.extraction.ScanExtractionSupport.ExtractionType;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Algorithm;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.conversion.IConverter;
@@ -49,8 +50,8 @@ public class ScanSettingsWizardPage extends AbstractAnalysisWizardPage {
 
 	public ScanSettingsWizardPage() {
 
-		super("Main Parameters");
-		setTitle("Set Main Parameters");
+		super("Main Parameters"); //$NON-NLS-1$
+		setTitle(StatisticsMessages.setMainParameters);
 		retentionTimeWindow.setValue(1500); // 1.5 sec
 		maximalNumberScans.setValue(5000);
 		extractionType = ExtractionType.CLOSEST_SCAN;
@@ -85,20 +86,20 @@ public class ScanSettingsWizardPage extends AbstractAnalysisWizardPage {
 
 		WizardPageSupport.create(this, dataBindingContext);
 
-		createLabel(composite, "Title:");
+		createLabel(composite, StatisticsMessages.title);
 		createTextTitle(composite, 1);
 
-		createLabel(composite, "Retention Time Window [ms]:");
+		createLabel(composite, StatisticsMessages.retentionTimeWindowMs);
 		createVariableSection(composite);
-		createLabel(composite, "Maximum Number of Scans:");
+		createLabel(composite, StatisticsMessages.maximumNumberOfScans);
 		createSpinnerNumberOfScans(composite);
 		createCheckBoxDefaultProperties(composite);
 		createRadioButtonClosestScan(composite, true);
 		createRadioButtonInterpolate(composite, false);
 
-		createLabel(composite, "Number of PCs:");
+		createLabel(composite, StatisticsMessages.numberOfPcs);
 		createSpinnerPrincipleComponents(composite);
-		createLabel(composite, "Algorithm:");
+		createLabel(composite, StatisticsMessages.algorithm);
 		createComboViewerAlgorithm(composite);
 
 		setControl(composite);
@@ -131,7 +132,7 @@ public class ScanSettingsWizardPage extends AbstractAnalysisWizardPage {
 					return ValidationStatus.ok();
 				}
 			}
-			return ValidationStatus.error("Warning: The value must be positive.");
+			return ValidationStatus.error(StatisticsMessages.valueMustBePositive);
 		});
 
 		UpdateValueStrategy<Integer, String> modelToWidget = UpdateValueStrategy.create(IConverter.create(Integer.class, String.class, o1 -> Integer.toString((o1))));
@@ -153,8 +154,8 @@ public class ScanSettingsWizardPage extends AbstractAnalysisWizardPage {
 	private Button createCheckBoxDefaultProperties(Composite parent) {
 
 		Button button = new Button(parent, SWT.CHECK);
-		button.setText("Use default properties if it is possible (chromatogram have same start retention time and same scan interval)");
-		button.setToolTipText("Default Properties");
+		button.setText(StatisticsMessages.useDefaultPropertiesIfPossible);
+		button.setToolTipText(StatisticsMessages.defaultProperties);
 		button.setSelection(true);
 		button.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
@@ -173,8 +174,8 @@ public class ScanSettingsWizardPage extends AbstractAnalysisWizardPage {
 	private Button createRadioButtonClosestScan(Composite parent, boolean selected) {
 
 		Button button = new Button(parent, SWT.RADIO);
-		button.setText("Select the closest scan");
-		button.setToolTipText("Closest Scan");
+		button.setText(StatisticsMessages.selectClosestScan);
+		button.setToolTipText(StatisticsMessages.closestScan);
 		button.setSelection(selected);
 		button.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
@@ -193,8 +194,8 @@ public class ScanSettingsWizardPage extends AbstractAnalysisWizardPage {
 	private Button createRadioButtonInterpolate(Composite parent, boolean selected) {
 
 		Button button = new Button(parent, SWT.RADIO);
-		button.setText("Interpolate scan");
-		button.setToolTipText("Interpolation");
+		button.setText(StatisticsMessages.interpolateScan);
+		button.setToolTipText(StatisticsMessages.interpolation);
 		button.setSelection(selected);
 		button.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
@@ -213,7 +214,7 @@ public class ScanSettingsWizardPage extends AbstractAnalysisWizardPage {
 	private Spinner createSpinnerPrincipleComponents(Composite parent) {
 
 		Spinner spinner = new Spinner(parent, SWT.BORDER);
-		spinner.setToolTipText("Number of Principal Components");
+		spinner.setToolTipText(StatisticsMessages.numberOfPrincipalComponents);
 		spinner.setMinimum(PreferenceSupplier.MIN_NUMBER_OF_COMPONENTS);
 		spinner.setIncrement(1);
 		spinner.setSelection(analysisSettings.getNumberOfPrincipalComponents());
@@ -248,7 +249,7 @@ public class ScanSettingsWizardPage extends AbstractAnalysisWizardPage {
 		});
 
 		Combo combo = comboViewer.getCombo();
-		combo.setToolTipText("PCA Algorithm");
+		combo.setToolTipText(StatisticsMessages.pcaAlgorithm);
 		combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		combo.addSelectionListener(new SelectionAdapter() {
 

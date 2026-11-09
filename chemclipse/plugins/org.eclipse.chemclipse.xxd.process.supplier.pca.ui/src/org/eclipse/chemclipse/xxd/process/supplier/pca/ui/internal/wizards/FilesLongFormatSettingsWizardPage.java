@@ -25,6 +25,7 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Algorithm;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.DataInputEntry;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IDataInputEntry;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.preferences.PreferenceSupplier;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
@@ -50,9 +51,9 @@ public class FilesLongFormatSettingsWizardPage extends AbstractAnalysisWizardPag
 
 	public FilesLongFormatSettingsWizardPage() {
 
-		super("Main Properties");
-		setTitle("PCA");
-		setDescription("Set Main PCA parameters");
+		super("Main Properties"); //$NON-NLS-1$
+		setTitle("PCA"); //$NON-NLS-1$
+		setDescription(StatisticsMessages.setMainPcaParameters);
 	}
 
 	public void setFile(File file) {
@@ -67,20 +68,20 @@ public class FilesLongFormatSettingsWizardPage extends AbstractAnalysisWizardPag
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayout(new GridLayout(3, false));
 
-		createLabel(composite, "Title:");
+		createLabel(composite, StatisticsMessages.title);
 		createTextTitle(composite, 2);
 
-		createLabel(composite, "Number of PCs:");
+		createLabel(composite, StatisticsMessages.numberOfPcs);
 		createSpinnerPrincipleComponents(composite);
 
-		createLabel(composite, "Algorithm:");
+		createLabel(composite, StatisticsMessages.algorithm);
 		createComboViewerAlgorithm(composite);
 
-		createLabel(composite, "Main Data File:");
+		createLabel(composite, StatisticsMessages.mainDataFile);
 		dataTextFile = createTextMainFile(composite);
 		createButtonSelectDataFile(composite);
 
-		createLabel(composite, "Filter Data File:");
+		createLabel(composite, StatisticsMessages.filterDataFile);
 		filterTextFile = createTextFilterFile(composite);
 		createButtonSelectFilterFile(composite);
 
@@ -121,7 +122,7 @@ public class FilesLongFormatSettingsWizardPage extends AbstractAnalysisWizardPag
 	private Spinner createSpinnerPrincipleComponents(Composite parent) {
 
 		Spinner spinner = new Spinner(parent, SWT.BORDER);
-		spinner.setToolTipText("Number of Principal Components");
+		spinner.setToolTipText(StatisticsMessages.numberOfPrincipalComponents);
 		spinner.setMinimum(PreferenceSupplier.MIN_NUMBER_OF_COMPONENTS);
 		spinner.setIncrement(1);
 		spinner.setSelection(analysisSettings.getNumberOfPrincipalComponents());
@@ -159,7 +160,7 @@ public class FilesLongFormatSettingsWizardPage extends AbstractAnalysisWizardPag
 		});
 
 		Combo combo = comboViewer.getCombo();
-		combo.setToolTipText("PCA Algorithm");
+		combo.setToolTipText(StatisticsMessages.pcaAlgorithm);
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.horizontalSpan = 2;
 		combo.setLayoutData(gridData);
@@ -183,7 +184,7 @@ public class FilesLongFormatSettingsWizardPage extends AbstractAnalysisWizardPag
 	private Text createTextMainFile(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setToolTipText("Path to long format data  file.");
+		text.setToolTipText(StatisticsMessages.pathToLongFormatDataFile);
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		if(mainFile != null) {
@@ -196,7 +197,7 @@ public class FilesLongFormatSettingsWizardPage extends AbstractAnalysisWizardPag
 	private Text createTextFilterFile(Composite parent) {
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setToolTipText("Path to long format filter file.");
+		text.setToolTipText(StatisticsMessages.pathToLongFormatFilterFile);
 		text.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		if(filterFile != null) {
@@ -209,7 +210,7 @@ public class FilesLongFormatSettingsWizardPage extends AbstractAnalysisWizardPag
 	private void createButtonSelectDataFile(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Select the data matrix.");
+		button.setToolTipText(StatisticsMessages.selectDataMatrix);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_FILE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -217,9 +218,9 @@ public class FilesLongFormatSettingsWizardPage extends AbstractAnalysisWizardPag
 			public void widgetSelected(SelectionEvent e) {
 
 				FileDialog fileDialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.READ_ONLY);
-				fileDialog.setText("Import");
-				fileDialog.setFilterExtensions(PcaExtractionFileLongText.FILTER_EXTENSION + ";");
-				fileDialog.setFilterNames(PcaExtractionFileLongText.FILTER_NAME + ";");
+				fileDialog.setText(StatisticsMessages.importLabel);
+				fileDialog.setFilterExtensions(PcaExtractionFileLongText.FILTER_EXTENSION + ";"); //$NON-NLS-1$
+				fileDialog.setFilterNames(PcaExtractionFileLongText.FILTER_NAME + ";"); //$NON-NLS-1$
 				fileDialog.setFilterPath(PreferenceSupplier.getPathImportFile());
 				String path = fileDialog.open();
 				if(path != null) {
@@ -236,7 +237,7 @@ public class FilesLongFormatSettingsWizardPage extends AbstractAnalysisWizardPag
 	private void createButtonSelectFilterFile(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Select the filter data file.");
+		button.setToolTipText(StatisticsMessages.selectFilterDataFile);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_FILE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -244,9 +245,9 @@ public class FilesLongFormatSettingsWizardPage extends AbstractAnalysisWizardPag
 			public void widgetSelected(SelectionEvent e) {
 
 				FileDialog fileDialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.READ_ONLY);
-				fileDialog.setText("Import");
-				fileDialog.setFilterExtensions(PcaExtractionFileLongText.FILTER_EXTENSION + ";");
-				fileDialog.setFilterNames(PcaExtractionFileLongText.FILTER_NAME + ";");
+				fileDialog.setText(StatisticsMessages.importLabel);
+				fileDialog.setFilterExtensions(PcaExtractionFileLongText.FILTER_EXTENSION + ";"); //$NON-NLS-1$
+				fileDialog.setFilterNames(PcaExtractionFileLongText.FILTER_NAME + ";"); //$NON-NLS-1$
 				fileDialog.setFilterPath(PreferenceSupplier.getPathImportFile());
 				String path = fileDialog.open();
 				if(path != null) {

@@ -119,7 +119,7 @@ public class SamplesListUI extends ExtendedTableViewer {
 						if(element instanceof ISample sample) {
 							cell.setBackground(Colors.getColor(sample.getRGB()));
 							cell.setForeground(Colors.BLACK);
-							cell.setText("");
+							cell.setText(""); //$NON-NLS-1$
 						}
 						super.update(cell);
 					}

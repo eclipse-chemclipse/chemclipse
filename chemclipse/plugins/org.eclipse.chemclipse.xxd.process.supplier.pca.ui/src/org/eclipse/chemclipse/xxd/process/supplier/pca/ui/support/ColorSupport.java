@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2025 Lablicate GmbH.
+ * Copyright (c) 2020, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -30,7 +30,7 @@ import org.eclipse.swt.graphics.Color;
 
 public class ColorSupport {
 
-	public static final String COLOR_GROUP_DEFAULT = "Unknown";
+	public static final String COLOR_GROUP_DEFAULT = "Unknown"; //$NON-NLS-1$
 	public static final Color COLOR_FALLBACK = Colors.DARK_RED;
 
 	public static Map<String, Color> getColorMapResults(List<IResultMVA> resultList, LabelOptionPCA labelOptionPCA, String colorScheme) {
@@ -91,7 +91,7 @@ public class ColorSupport {
 		if(colorGroup == null) {
 			colorGroup = ColorSupport.COLOR_GROUP_DEFAULT;
 		} else {
-			colorGroup = colorGroup.trim().replace(" ", "_");
+			colorGroup = colorGroup.trim().replace(" ", "_"); //$NON-NLS-1$ //$NON-NLS-2$
 			if(colorGroup.isEmpty()) {
 				colorGroup = ColorSupport.COLOR_GROUP_DEFAULT;
 			}

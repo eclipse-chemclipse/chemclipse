@@ -27,6 +27,7 @@ import org.eclipse.chemclipse.swt.ui.notifier.UpdateNotifierUI;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IEvaluation;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResult;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.ISamplesPCA;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.swt.AnalysisEditorUI;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.di.Focus;
@@ -40,11 +41,11 @@ import jakarta.inject.Inject;
 
 public class PCAEditor {
 
-	public static final String CONTRIBUTION_URI = "bundleclass://org.eclipse.chemclipse.xxd.process.supplier.pca.ui/org.eclipse.chemclipse.xxd.process.supplier.pca.ui.parts.PCAEditor";
+	public static final String CONTRIBUTION_URI = "bundleclass://org.eclipse.chemclipse.xxd.process.supplier.pca.ui/org.eclipse.chemclipse.xxd.process.supplier.pca.ui.parts.PCAEditor"; //$NON-NLS-1$
 	public static final String ICON_URI = ApplicationImageFactory.getInstance().getURI(IApplicationImage.IMAGE_CHROMATOGRAM, IApplicationImageProvider.SIZE_16x16);
-	public static final String ID = "org.eclipse.chemclipse.xxd.process.supplier.pca.ui.parts.PCAEditor";
-	public static final String LABEL = "PCA Editor";
-	public static final String TOOL_TIPS = "PCA Editor";
+	public static final String ID = "org.eclipse.chemclipse.xxd.process.supplier.pca.ui.parts.PCAEditor"; //$NON-NLS-1$
+	public static final String LABEL = StatisticsMessages.pcaEditor;
+	public static final String TOOL_TIPS = StatisticsMessages.pcaEditor;
 
 	@Inject
 	private Composite parent;

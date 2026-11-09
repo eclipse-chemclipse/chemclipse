@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -22,9 +22,11 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IDataInputEntry;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.support.InputFilesTable;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -36,7 +38,6 @@ import org.eclipse.swt.widgets.Label;
 
 public abstract class DataInputPageWizard extends WizardPage {
 
-	private static final String FILES = "Input Files: ";
 
 	private List<IDataInputEntry> dataInputEntries = new ArrayList<>();
 
@@ -71,7 +72,7 @@ public abstract class DataInputPageWizard extends WizardPage {
 		composite.setLayout(new GridLayout(1, true));
 
 		inputFilesTable = createInputFilesTable(composite);
-		countFiles = createLabel(composite, FILES + "0");
+		countFiles = createLabel(composite, NLS.bind(StatisticsMessages.inputFiles, 0));
 		createToolbarBottom(composite);
 
 		setControl(composite);
@@ -129,7 +130,7 @@ public abstract class DataInputPageWizard extends WizardPage {
 	private Button createButtonAdd(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Add new files.");
+		button.setToolTipText(StatisticsMessages.addNewFiles);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_ADD, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -146,7 +147,7 @@ public abstract class DataInputPageWizard extends WizardPage {
 	private Button createButtonRemove(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Remove selected files.");
+		button.setToolTipText(StatisticsMessages.removeSelectedFiles);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DELETE, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -164,7 +165,7 @@ public abstract class DataInputPageWizard extends WizardPage {
 	private Button createButtonRemoveAll(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Remove all files.");
+		button.setToolTipText(StatisticsMessages.removeAllFiles);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_DELETE_ALL, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -181,6 +182,6 @@ public abstract class DataInputPageWizard extends WizardPage {
 
 	private void redrawCountFiles() {
 
-		countFiles.setText(FILES + Integer.toString(dataInputEntries.size()));
+		countFiles.setText(NLS.bind(StatisticsMessages.inputFiles, dataInputEntries.size()));
 	}
 }

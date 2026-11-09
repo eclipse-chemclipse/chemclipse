@@ -81,7 +81,7 @@ public abstract class WizardTile implements IProcessTileDefinition {
 			if(samples != null) {
 				CreatePcaEvaluation.createPart(samples, context, title);
 			} else {
-				logger.warn("Failed to create PCA analysis.");
+				logger.warn("Failed to create PCA analysis."); //$NON-NLS-1$
 			}
 		} finally {
 			wizard.dispose();
@@ -97,7 +97,7 @@ public abstract class WizardTile implements IProcessTileDefinition {
 	@Override
 	public String getContext() {
 
-		return "pca-quickstart-default-wizard";
+		return "pca-quickstart-default-wizard"; //$NON-NLS-1$
 	}
 
 	protected abstract IInputWizard createWizard();

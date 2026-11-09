@@ -44,6 +44,7 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Feature;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.FeatureDataMatrix;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.Activator;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.preferences.PreferencePage;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.support.FeatureColumnLabels;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.support.FeatureMode;
@@ -52,6 +53,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -67,7 +69,7 @@ import org.eclipse.swt.widgets.TableItem;
 
 public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI {
 
-	private static final String TOOLTIP_FILTER_VISUAL_SELECTED = "Filter Visual Selected Features.";
+	private static final String TOOLTIP_FILTER_VISUAL_SELECTED = StatisticsMessages.filterVisualSelectedFeatures;
 	private static final String IMAGE_FILTER_VISUAL_SELECTED = IApplicationImage.IMAGE_FILTER;
 	private Button buttonToolbarSearch;
 	private AtomicReference<SearchSupportUI> toolbarSearch = new AtomicReference<>();
@@ -171,7 +173,7 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 				return topic;
 			}
 		}
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	private boolean doUpdate(EvaluationPCA evaluationPCA) {
@@ -242,13 +244,13 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 			@Override
 			public String getName() {
 
-				return "Toggle Use";
+				return StatisticsMessages.toggleUse;
 			}
 
 			@Override
 			public String getCategory() {
 
-				return "Features";
+				return StatisticsMessages.features;
 			}
 
 			@Override
@@ -269,13 +271,13 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 			@Override
 			public String getCategory() {
 
-				return "Features";
+				return StatisticsMessages.features;
 			}
 
 			@Override
 			public String getName() {
 
-				return "Use All Features";
+				return StatisticsMessages.useAllFeatures;
 			}
 
 			@Override
@@ -335,14 +337,14 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 	private Button createButtonCleanVariables(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Remove unused variables.");
+		button.setToolTipText(StatisticsMessages.removeUnusedVariables);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_CLEAR, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
-				if(MessageDialog.openConfirm(e.display.getActiveShell(), "Variables", "Remove all unused variables?")) {
+				if(MessageDialog.openConfirm(e.display.getActiveShell(), StatisticsMessages.variables, StatisticsMessages.removeAllUnusedVariables)) {
 					ProcessorPCA processorPCA = new ProcessorPCA();
 					processorPCA.cleanUnusedVariables(evaluationPCA, new NullProgressMonitor());
 					updateInput(true);
@@ -356,7 +358,7 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 	private Button createButtonReset(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Reset the feature table.");
+		button.setToolTipText(StatisticsMessages.resetFeatureTable);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_RESET, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -403,7 +405,7 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 	private Button createButtonExport(Composite parent) {
 
 		Button button = new Button(parent, SWT.PUSH);
-		button.setToolTipText("Export the feature table.");
+		button.setToolTipText(StatisticsMessages.exportFeatureTable);
 		button.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_EXPORT, IApplicationImageProvider.SIZE_16x16));
 		button.addSelectionListener(new SelectionAdapter() {
 
@@ -413,7 +415,7 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 				if(featureDataMatrix != null) {
 					FileDialog fileDialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
 					fileDialog.setOverwrite(true);
-					fileDialog.setText("Export");
+					fileDialog.setText(StatisticsMessages.exportLabel);
 					fileDialog.setFilterExtensions(FeatureDataMatrixIO.FILTER_EXTENSION);
 					fileDialog.setFilterNames(FeatureDataMatrixIO.FILTER_NAME);
 					fileDialog.setFileName(FeatureDataMatrixIO.FILE_NAME);
@@ -426,7 +428,7 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 							FeatureDataMatrixIO.write(file, featureDataMatrix);
 							SystemEditor.open(file);
 						} catch(FileNotFoundException e1) {
-							MessageDialog.openWarning(e.display.getActiveShell(), "Export", "The feature data matrix file couldn't be found.");
+							MessageDialog.openWarning(e.display.getActiveShell(), StatisticsMessages.exportLabel, StatisticsMessages.featureDataMatrixFileNotFound);
 						}
 					}
 				}
@@ -457,7 +459,7 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 	private void updateInput() {
 
 		listControl.get().clear();
-		toolbarInfo.get().setText("Loading...");
+		toolbarInfo.get().setText(StatisticsMessages.loadingInProgress);
 
 		getDisplay().asyncExec(() -> {
 			updateWidgets();
@@ -476,9 +478,9 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 
 		String searchText = toolbarSearch.get().getSearchText();
 		int count = listControl.get().getTable().getItemCount();
-		String marker = "".equals(searchText) ? "" : "*";
-		String search = "".equals(searchText) ? "" : " (" + searchText + ")";
-		toolbarInfo.get().setText("Features" + marker + ": " + count + search);
+		String marker = "".equals(searchText) ? "" : "*"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		String search = "".equals(searchText) ? "" : " (" + searchText + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		toolbarInfo.get().setText(NLS.bind(StatisticsMessages.featuresCount, new Object[]{marker, count, search}));
 	}
 
 	private void createComboViewerFeatureMode(Composite parent) {
@@ -497,7 +499,7 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 			}
 		});
 		Combo combo = comboViewer.getCombo();
-		combo.setToolTipText("Show Original or Pre-processed Data");
+		combo.setToolTipText(StatisticsMessages.showOriginalOrPreprocessedData);
 		combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		combo.addSelectionListener(new SelectionAdapter() {
 
@@ -541,7 +543,7 @@ public class ExtendedFeatureListUI extends Composite implements IExtendedPartUI 
 			}
 		});
 		Combo combo = comboViewer.getCombo();
-		combo.setToolTipText("Select Column Label");
+		combo.setToolTipText(StatisticsMessages.selectColumnLabel);
 		combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		combo.addSelectionListener(new SelectionAdapter() {
 

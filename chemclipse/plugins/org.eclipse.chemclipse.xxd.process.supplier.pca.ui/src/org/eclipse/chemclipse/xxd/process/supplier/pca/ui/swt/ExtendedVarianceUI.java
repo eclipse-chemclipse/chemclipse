@@ -25,6 +25,7 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.EvaluationPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Variance;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.Activator;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.chart2d.VarianceChart;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.preferences.PreferencePage;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.preferences.PreferencePageScorePlot;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -112,7 +113,7 @@ public class ExtendedVarianceUI extends Composite implements IExtendedPartUI {
 		});
 
 		Combo combo = comboViewer.getCombo();
-		combo.setToolTipText("Select the variance");
+		combo.setToolTipText(StatisticsMessages.selectVariance);
 		combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		combo.addSelectionListener(new SelectionAdapter() {
 
@@ -167,6 +168,6 @@ public class ExtendedVarianceUI extends Composite implements IExtendedPartUI {
 			}
 		}
 
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 }

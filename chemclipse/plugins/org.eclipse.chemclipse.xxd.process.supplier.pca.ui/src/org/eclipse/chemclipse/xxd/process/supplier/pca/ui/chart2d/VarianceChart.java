@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2025 Lablicate GmbH.
+ * Copyright (c) 2020, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -21,6 +21,7 @@ import org.eclipse.chemclipse.swt.ui.support.Colors;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.EvaluationPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultsMVA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Variance;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swtchart.IAxis;
@@ -94,11 +95,11 @@ public class VarianceChart extends BarChart {
 	private void setPrimaryAxisSet(IChartSettings chartSettings) {
 
 		IPrimaryAxisSettings primaryAxisSettingsX = chartSettings.getPrimaryAxisSettingsX();
-		primaryAxisSettingsX.setTitle("Principal Component");
+		primaryAxisSettingsX.setTitle(StatisticsMessages.principalComponent);
 		primaryAxisSettingsX.setDecimalFormat(ValueFormat.getDecimalFormatEnglish());
 
 		IPrimaryAxisSettings primaryAxisSettingsY = chartSettings.getPrimaryAxisSettingsY();
-		primaryAxisSettingsY.setTitle("Variance");
+		primaryAxisSettingsY.setTitle(StatisticsMessages.variance);
 		primaryAxisSettingsY.setDecimalFormat(ValueFormat.getDecimalFormatEnglish());
 	}
 
@@ -116,11 +117,11 @@ public class VarianceChart extends BarChart {
 			IPrimaryAxisSettings primaryAxisSettingsY = chartSettings.getPrimaryAxisSettingsY();
 			if(resultsPCA.getCrossValidations() != null) {
 				primaryAxisSettingsY.setEnableCategory(true);
-				primaryAxisSettingsY.setCategorySeries(new String[]{"Variance", "Q2"});
-				chartSettings.setTitle("Explained Variance + CrossValidation Q2");
+				primaryAxisSettingsY.setCategorySeries(new String[]{StatisticsMessages.variance, "Q2"}); //$NON-NLS-1$
+				chartSettings.setTitle(StatisticsMessages.explainedVarianceCrossValidationQ2);
 				chartSettings.setTitleVisible(true);
 			} else {
-				chartSettings.setTitle("Explained Variance");
+				chartSettings.setTitle(StatisticsMessages.explainedVariance);
 				chartSettings.setTitleVisible(true);
 			}
 			primaryAxisSettingsY.setTitleVisible(false);
@@ -155,7 +156,7 @@ public class VarianceChart extends BarChart {
 		String[] categories = new String[size];
 
 		for(int i = 0; i < size; i++) {
-			categories[i] = "PC" + (i + 1);
+			categories[i] = "PC" + (i + 1); //$NON-NLS-1$
 		}
 
 		return categories;
@@ -169,11 +170,11 @@ public class VarianceChart extends BarChart {
 		switch(variance) {
 			case CUMULATIVE:
 				ySeries = pcaResults.getCumulativeExplainedVariances();
-				label = "Cumulative Variances";
+				label = StatisticsMessages.cumulativeVariances;
 				break;
 			default:
 				ySeries = pcaResults.getExplainedVariances();
-				label = "Explained Variances";
+				label = StatisticsMessages.explainedVariances;
 				break;
 		}
 
@@ -191,11 +192,11 @@ public class VarianceChart extends BarChart {
 		switch(variance) {
 			case CUMULATIVE:
 				ySeries = pcaResults.getCumulativeCrossValidations();
-				label = "Cumulative Cross Validation Q2";
+				label = StatisticsMessages.cumulativeCrossValidationQ2;
 				break;
 			default:
 				ySeries = pcaResults.getCrossValidations();
-				label = "CrossValidation Q2";
+				label = StatisticsMessages.crossValidationQ2;
 				break;
 		}
 

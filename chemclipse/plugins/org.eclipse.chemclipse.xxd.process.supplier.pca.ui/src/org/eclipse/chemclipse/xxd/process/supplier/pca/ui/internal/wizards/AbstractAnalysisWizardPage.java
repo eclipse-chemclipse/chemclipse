@@ -15,6 +15,7 @@ package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.internal.wizards;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Algorithm;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.AnalysisSettings;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IAnalysisSettings;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -39,7 +40,7 @@ public abstract class AbstractAnalysisWizardPage extends WizardPage {
 	protected Text createTextTitle(Composite parent, int horizontalSpan) {
 
 		Text text = new Text(parent, SWT.BORDER);
-		text.setToolTipText("The title of the current analysis.");
+		text.setToolTipText(StatisticsMessages.titleOfCurrentAnalysis);
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.horizontalSpan = horizontalSpan;
 		text.setLayoutData(gridData);

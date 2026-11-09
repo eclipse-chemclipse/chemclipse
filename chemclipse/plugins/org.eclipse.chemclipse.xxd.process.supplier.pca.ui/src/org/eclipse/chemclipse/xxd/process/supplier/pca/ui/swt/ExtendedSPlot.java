@@ -542,6 +542,6 @@ public class ExtendedSPlot extends Composite implements IExtendedPartUI {
 			}
 		}
 
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 }

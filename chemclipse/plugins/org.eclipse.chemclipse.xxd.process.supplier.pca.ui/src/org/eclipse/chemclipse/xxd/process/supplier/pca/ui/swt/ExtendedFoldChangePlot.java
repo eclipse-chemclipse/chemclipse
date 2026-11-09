@@ -40,6 +40,7 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.VariableDelta;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.Activator;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.chart2d.FoldChangePlot;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.help.HelpContext;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.preferences.PreferencePage;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.preferences.PreferencePageFoldChangePlot;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.support.AlphanumericStringComparator;
@@ -64,7 +65,7 @@ import org.eclipse.swtchart.extensions.events.IHandledEventProcessor;
 
 public class ExtendedFoldChangePlot extends Composite implements IExtendedPartUI {
 
-	private static final String FOLD_CHANGE_GROUP_NONE = "--";
+	private static final String FOLD_CHANGE_GROUP_NONE = "--"; //$NON-NLS-1$
 	private AtomicReference<FoldChangePlot> plotControl = new AtomicReference<>();
 	private AtomicReference<ComboViewer> comboViewerGroup1 = new AtomicReference<>();
 	private AtomicReference<ComboViewer> comboViewerGroup2 = new AtomicReference<>();
@@ -158,9 +159,9 @@ public class ExtendedFoldChangePlot extends Composite implements IExtendedPartUI
 		composite.setLayoutData(gridData);
 		composite.setLayout(new GridLayout(6, false));
 
-		createLabel(composite, "Group 1:");
+		createLabel(composite, StatisticsMessages.group1);
 		createComboViewerGroup1(composite);
-		createLabel(composite, "Group 2:");
+		createLabel(composite, StatisticsMessages.group2);
 		createComboViewerGroup2(composite);
 		createSettingsButton(composite);
 		createButtonHelp(composite, HelpContext.FOLD_CHANGE_PLOT);
@@ -186,12 +187,12 @@ public class ExtendedFoldChangePlot extends Composite implements IExtendedPartUI
 				if(element instanceof String value) {
 					return value;
 				} else {
-					return "";
+					return ""; //$NON-NLS-1$
 				}
 			}
 		});
 		Combo combo = comboViewer.getCombo();
-		combo.setToolTipText("Group one for comparison");
+		combo.setToolTipText(StatisticsMessages.groupOneForComparison);
 		GridData gridData = new GridData();
 		gridData.widthHint = 150;
 		combo.setLayoutData(gridData);
@@ -225,11 +226,11 @@ public class ExtendedFoldChangePlot extends Composite implements IExtendedPartUI
 				if(element instanceof String value) {
 					return value;
 				} else {
-					return "";
+					return ""; //$NON-NLS-1$
 				}
 			}
 		});
-		combo.setToolTipText("Group two for comparison");
+		combo.setToolTipText(StatisticsMessages.groupTwoForComparison);
 		GridData gridData = new GridData();
 		gridData.widthHint = 150;
 		combo.setLayoutData(gridData);
@@ -437,8 +438,8 @@ public class ExtendedFoldChangePlot extends Composite implements IExtendedPartUI
 		if(samples != null) {
 			for(ISample sample : samples.getSamples()) {
 				if(sample.getGroupName() == null) {
-					logger.warn("Fix GroupName (must not be null): " + sample);
-					sample.setGroupName("");
+					logger.warn("Fix GroupName (must not be null): " + sample); //$NON-NLS-1$
+					sample.setGroupName(""); //$NON-NLS-1$
 				}
 			}
 			/*

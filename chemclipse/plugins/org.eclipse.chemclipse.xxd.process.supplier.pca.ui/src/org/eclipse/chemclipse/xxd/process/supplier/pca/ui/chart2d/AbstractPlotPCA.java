@@ -43,8 +43,8 @@ import org.eclipse.swtchart.extensions.scattercharts.ScatterChart;
 
 public abstract class AbstractPlotPCA extends ScatterChart implements IRangeSupport {
 
-	private DecimalFormat decimalFormat = new DecimalFormat(("0.00E0"), new DecimalFormatSymbols(Locale.ENGLISH));
-	private String title = "";
+	private DecimalFormat decimalFormat = new DecimalFormat(("0.00E0"), new DecimalFormatSymbols(Locale.ENGLISH)); //$NON-NLS-1$
+	private String title = ""; //$NON-NLS-1$
 
 	private Range selectedRangeX = null;
 	private Range selectedRangeY = null;
@@ -58,14 +58,14 @@ public abstract class AbstractPlotPCA extends ScatterChart implements IRangeSupp
 
 	private void addSecondaryAxisSet(IChartSettings chartSettings) {
 
-		ISecondaryAxisSettings secondaryAxisSettingsX = new SecondaryAxisSettings("PC1", new PassThroughConverter());
-		secondaryAxisSettingsX.setTitle("");
+		ISecondaryAxisSettings secondaryAxisSettingsX = new SecondaryAxisSettings("PC1", new PassThroughConverter()); //$NON-NLS-1$
+		secondaryAxisSettingsX.setTitle(""); //$NON-NLS-1$
 		secondaryAxisSettingsX.setPosition(Position.Secondary);
 		secondaryAxisSettingsX.setDecimalFormat(decimalFormat);
 		chartSettings.getSecondaryAxisSettingsListX().add(secondaryAxisSettingsX);
 
-		ISecondaryAxisSettings secondaryAxisSettingsY = new SecondaryAxisSettings("PC2", new PassThroughConverter());
-		secondaryAxisSettingsY.setTitle("");
+		ISecondaryAxisSettings secondaryAxisSettingsY = new SecondaryAxisSettings("PC2", new PassThroughConverter()); //$NON-NLS-1$
+		secondaryAxisSettingsY.setTitle(""); //$NON-NLS-1$
 		secondaryAxisSettingsY.setPosition(Position.Secondary);
 		secondaryAxisSettingsY.setDecimalFormat(decimalFormat);
 		chartSettings.getSecondaryAxisSettingsListY().add(secondaryAxisSettingsY);
@@ -140,11 +140,11 @@ public abstract class AbstractPlotPCA extends ScatterChart implements IRangeSupp
 	private void setPrimaryAxisSet(IChartSettings chartSettings) {
 
 		IPrimaryAxisSettings primaryAxisSettingsX = chartSettings.getPrimaryAxisSettingsX();
-		primaryAxisSettingsX.setTitle("PC1");
+		primaryAxisSettingsX.setTitle("PC1"); //$NON-NLS-1$
 		primaryAxisSettingsX.setDecimalFormat(decimalFormat);
 
 		IPrimaryAxisSettings primaryAxisSettingsY = chartSettings.getPrimaryAxisSettingsY();
-		primaryAxisSettingsY.setTitle("PC2");
+		primaryAxisSettingsY.setTitle("PC2"); //$NON-NLS-1$
 		primaryAxisSettingsY.setDecimalFormat(decimalFormat);
 	}
 
@@ -161,20 +161,20 @@ public abstract class AbstractPlotPCA extends ScatterChart implements IRangeSupp
 		double variance = explainedVariance * 100.0d;
 		DecimalFormat decimalFormat;
 		if(variance > 1.0d) {
-			decimalFormat = ValueFormat.getDecimalFormatEnglish("0.00");
+			decimalFormat = ValueFormat.getDecimalFormatEnglish("0.00"); //$NON-NLS-1$
 		} else {
-			decimalFormat = ValueFormat.getDecimalFormatEnglish("0.0000");
+			decimalFormat = ValueFormat.getDecimalFormatEnglish("0.0000"); //$NON-NLS-1$
 		}
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("PC");
-		builder.append(" ");
+		builder.append("PC"); //$NON-NLS-1$
+		builder.append(" "); //$NON-NLS-1$
 		builder.append(pc);
-		builder.append(" ");
-		builder.append("(");
+		builder.append(" "); //$NON-NLS-1$
+		builder.append("("); //$NON-NLS-1$
 		builder.append(decimalFormat.format(variance));
-		builder.append("%");
-		builder.append(")");
+		builder.append("%"); //$NON-NLS-1$
+		builder.append(")"); //$NON-NLS-1$
 
 		return builder.toString();
 	}

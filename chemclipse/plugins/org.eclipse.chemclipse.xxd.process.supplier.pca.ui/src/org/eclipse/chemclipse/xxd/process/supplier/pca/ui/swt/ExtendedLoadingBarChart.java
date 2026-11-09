@@ -34,6 +34,8 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResultsMVA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.ISamplesPCA;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.Activator;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.chart2d.LoadingBarChart;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -149,7 +151,7 @@ public class ExtendedLoadingBarChart extends Composite implements IExtendedPartU
 	private void createPCSelector(Composite parent) {
 
 		Label label = new Label(parent, SWT.NONE);
-		label.setText("Principal Component:");
+		label.setText(StatisticsMessages.principalComponentLabel);
 
 		comboPrincipalComponent = new Combo(parent, SWT.READ_ONLY);
 		comboPrincipalComponent.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -201,7 +203,7 @@ public class ExtendedLoadingBarChart extends Composite implements IExtendedPartU
 					int barIndex = (int)Math.round(xValue);
 					if(barIndex >= 0 && barIndex < variableLoadings.size()) {
 						String variableName = variableLoadings.get(barIndex).getVariableName();
-						String tooltip = "Variable: " + variableName + "\nValue: " + String.format("%.4f", variableLoadings.get(barIndex).getLoading());
+						String tooltip = NLS.bind(StatisticsMessages.variableValue, variableName, String.format("%.4f", variableLoadings.get(barIndex).getLoading())); //$NON-NLS-1$
 						baseChart.getPlotArea().setToolTipText(tooltip);
 					} else {
 						baseChart.getPlotArea().setToolTipText(null);
@@ -468,7 +470,7 @@ public class ExtendedLoadingBarChart extends Composite implements IExtendedPartU
 			int maxPCs = Math.min(numberOfPCs, numberOfLoadingVectors);
 
 			for(int i = 0; i < maxPCs; i++) {
-				String label = String.format("PC%d", i + 1);
+				String label = String.format("PC%d", i + 1); //$NON-NLS-1$
 				comboPrincipalComponent.add(label);
 			}
 
@@ -597,6 +599,6 @@ public class ExtendedLoadingBarChart extends Composite implements IExtendedPartU
 			}
 		}
 
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 }

@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IDataInputEntry;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CellLabelProvider;
@@ -42,7 +43,7 @@ public class InputFilesTable {
 
 	private void createColumns() {
 
-		String[] titles = {"Name", "Group", "Filename", "Path"};
+		String[] titles = {StatisticsMessages.name, StatisticsMessages.group, StatisticsMessages.filename, StatisticsMessages.path};
 		int[] bounds = {100, 100, 100, 100};
 		// first column is for the first name
 		TableViewerColumn tableViewerColumn = createTableViewerColumn(titles[0], bounds[0]);
@@ -62,7 +63,7 @@ public class InputFilesTable {
 			public void update(ViewerCell cell) {
 
 				IDataInputEntry input = (IDataInputEntry)cell.getElement();
-				String text = input.getGroupName() != null ? input.getGroupName() : "";
+				String text = input.getGroupName() != null ? input.getGroupName() : ""; //$NON-NLS-1$
 				cell.setText(text);
 			}
 		});
@@ -88,7 +89,7 @@ public class InputFilesTable {
 				IDataInputEntry inputData = (IDataInputEntry)element;
 				String groupName = inputData.getGroupName();
 				if(groupName == null) {
-					return "";
+					return ""; //$NON-NLS-1$
 				} else {
 					return groupName;
 				}

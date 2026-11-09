@@ -167,7 +167,7 @@ public class SeriesConverter {
 				x = i;
 			}
 			double y = eigenSpace[pcY - 1]; // e.g. 1 = PC2
-			String sampleInstanceId = pcaResult.getSample().getClass().getName() + "@" + Integer.toHexString(System.identityHashCode(pcaResult.getSample()));
+			String sampleInstanceId = pcaResult.getSample().getClass().getName() + "@" + Integer.toHexString(System.identityHashCode(pcaResult.getSample())); //$NON-NLS-1$
 			ISeriesData seriesData = new SeriesData(new double[]{x}, new double[]{y}, sampleInstanceId);
 			/*
 			 * Set the color.
@@ -204,7 +204,7 @@ public class SeriesConverter {
 		 */
 		for(int i = 0; i < samples.getVariables().size(); i++) {
 			IVariable currentVariable = samples.getVariables().get(i);
-			if((currentVariable.getValue() + " " + currentVariable.getDescription()).equals(comboViwewerVariable)) {
+			if((currentVariable.getValue() + " " + currentVariable.getDescription()).equals(comboViwewerVariable)) { //$NON-NLS-1$
 				selectedVariable = i;
 			}
 		}
@@ -238,7 +238,7 @@ public class SeriesConverter {
 				}
 
 			}
-			ISeriesData seriesData = new SeriesData(xData, yData, "main");
+			ISeriesData seriesData = new SeriesData(xData, yData, "main"); //$NON-NLS-1$
 			ILineSeriesData lineSeriesData = new LineSeriesData(seriesData);
 			ILineSeriesSettings settings = lineSeriesData.getSettings();
 			settings.setEnableArea(false);

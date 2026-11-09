@@ -25,22 +25,23 @@ import org.eclipse.chemclipse.xxd.process.supplier.pca.model.DataInputEntry;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IDataInputEntry;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.Activator;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 
 public class PeakFilesWizardPage extends DataInputPageWizard {
 
 	public PeakFilesWizardPage() {
 
-		super("Peak Files Input");
-		setTitle("Peak Files Input");
-		setDescription("This wizard lets you select peak input files.");
+		super("Peak Files Input"); //$NON-NLS-1$
+		setTitle(StatisticsMessages.peakFilesInput);
+		setDescription(StatisticsMessages.selectPeakInputFiles);
 	}
 
 	@Override
 	protected void addFiles() {
 
 		InputWizardSettings inputWizardSettings = InputWizardSettings.create(Activator.getDefault().getPreferenceStore(), PreferenceSupplier.N_INPUT_FILE, DataType.MSD, DataType.CSD);
-		inputWizardSettings.setTitle("Peak Input Files");
-		inputWizardSettings.setDescription("This wizard lets you select several peak input files.");
+		inputWizardSettings.setTitle(StatisticsMessages.peakInputFiles);
+		inputWizardSettings.setDescription(StatisticsMessages.selectSeveralPeakInputFiles);
 
 		List<IDataInputEntry> dataInputEntries = new ArrayList<>();
 		for(File file : InputEntriesWizard.openWizard(getShell(), inputWizardSettings).keySet()) {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2025 Lablicate GmbH.
+ * Copyright (c) 2020, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -30,15 +30,15 @@ public class SamplesListFilter extends ViewerFilter {
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
 
-		if(searchText == null || searchText.equals("")) {
+		if(searchText == null || searchText.equals("")) { //$NON-NLS-1$
 			return true;
 		}
 
 		if(element instanceof ISample sample) {
 			String name = sample.getSampleName();
-			String groupName = (sample.getGroupName() != null) ? sample.getGroupName() : "";
-			String classification = (sample.getClassification() != null) ? sample.getClassification() : "";
-			String description = (sample.getDescription() != null) ? sample.getDescription() : "";
+			String groupName = (sample.getGroupName() != null) ? sample.getGroupName() : ""; //$NON-NLS-1$
+			String classification = (sample.getClassification() != null) ? sample.getClassification() : ""; //$NON-NLS-1$
+			String description = (sample.getDescription() != null) ? sample.getDescription() : ""; //$NON-NLS-1$
 
 			if(!caseSensitive) {
 				searchText = searchText.toLowerCase();

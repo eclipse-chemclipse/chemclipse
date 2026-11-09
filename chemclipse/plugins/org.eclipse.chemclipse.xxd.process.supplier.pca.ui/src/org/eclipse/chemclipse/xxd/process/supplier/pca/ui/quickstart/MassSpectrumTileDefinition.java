@@ -16,6 +16,7 @@ package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.quickstart;
 import org.eclipse.chemclipse.ux.extension.ui.definitions.ITileDefinition;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.internal.wizards.IInputWizard;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.internal.wizards.MassSpectrumInputWizard;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.osgi.service.component.annotations.Component;
 
 @Component(service = ITileDefinition.class)
@@ -24,7 +25,7 @@ public class MassSpectrumTileDefinition extends WizardTile {
 	@Override
 	public String getTitle() {
 
-		return "Mass Spectra\nDatabases";
+		return StatisticsMessages.massSpectraDatabases;
 	}
 
 	@Override

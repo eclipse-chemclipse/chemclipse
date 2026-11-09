@@ -24,6 +24,7 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.custom.IRangeSupport;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IEvaluation;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IResult;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.ISamplesPCA;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.support.FeatureColumnLabels;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.support.SeriesConverter;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.swt.VariableLinePlotHighlights;
@@ -49,8 +50,8 @@ import org.eclipse.swtchart.extensions.linecharts.LineChart;
 
 public class VariableLinePlot extends LineChart implements IRangeSupport {
 
-	private DecimalFormat decimalFormat = new DecimalFormat(("0.00E0"), new DecimalFormatSymbols(Locale.ENGLISH));
-	private String title = "";
+	private DecimalFormat decimalFormat = new DecimalFormat(("0.00E0"), new DecimalFormatSymbols(Locale.ENGLISH)); //$NON-NLS-1$
+	private String title = ""; //$NON-NLS-1$
 
 	private Range selectedRangeX = null;
 	private Range selectedRangeY = null;
@@ -62,7 +63,7 @@ public class VariableLinePlot extends LineChart implements IRangeSupport {
 	public VariableLinePlot(Composite parent, int style) {
 
 		super(parent, style);
-		this.title = "Variable Line Plot";
+		this.title = StatisticsMessages.variableLinePlot;
 		this.addDisposeListener(new DisposeListener() {
 
 			@Override
@@ -167,11 +168,11 @@ public class VariableLinePlot extends LineChart implements IRangeSupport {
 	private void setPrimaryAxisSet(IChartSettings chartSettings) {
 
 		IPrimaryAxisSettings primaryAxisSettingsX = chartSettings.getPrimaryAxisSettingsX();
-		primaryAxisSettingsX.setTitle("Samples");
+		primaryAxisSettingsX.setTitle(StatisticsMessages.samples);
 		primaryAxisSettingsX.setColor(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_FOREGROUND));
 
 		IPrimaryAxisSettings primaryAxisSettingsY = chartSettings.getPrimaryAxisSettingsY();
-		primaryAxisSettingsY.setTitle("Signal");
+		primaryAxisSettingsY.setTitle(StatisticsMessages.signal);
 		primaryAxisSettingsY.setDecimalFormat(decimalFormat);
 		primaryAxisSettingsY.setColor(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_FOREGROUND));
 

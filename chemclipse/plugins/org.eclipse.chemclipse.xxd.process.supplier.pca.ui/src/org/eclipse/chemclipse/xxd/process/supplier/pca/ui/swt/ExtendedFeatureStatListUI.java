@@ -137,7 +137,7 @@ public class ExtendedFeatureStatListUI extends Composite implements IExtendedPar
 				return topic;
 			}
 		}
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	private boolean doUpdate(IEvaluation<IVariable, ISample, IResult> evaluation) {

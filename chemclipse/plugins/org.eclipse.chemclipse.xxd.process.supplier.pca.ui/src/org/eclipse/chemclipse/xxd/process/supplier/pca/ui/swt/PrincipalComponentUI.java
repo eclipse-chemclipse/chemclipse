@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2025 Lablicate GmbH.
+ * Copyright (c) 2020, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -13,6 +13,7 @@
 package org.eclipse.chemclipse.xxd.process.supplier.pca.ui.swt;
 
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IAnalysisSettings;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -114,14 +115,14 @@ public class PrincipalComponentUI extends Composite {
 		gridLayout.marginRight = 0;
 		setLayout(gridLayout);
 
-		createLabel(this, "PC (X):");
-		spinnerX = createSpinner(this, "Select the PC for the x axis.", maximum, isSpinnerActive(SPINNER_X), 1);
+		createLabel(this, "PC (X):"); //$NON-NLS-1$
+		spinnerX = createSpinner(this, StatisticsMessages.selectPcXAxis, maximum, isSpinnerActive(SPINNER_X), 1);
 
-		createLabel(this, "PC (Y):");
-		spinnerY = createSpinner(this, "Select the PC for the y axis.", maximum, isSpinnerActive(SPINNER_Y), 2);
+		createLabel(this, "PC (Y):"); //$NON-NLS-1$
+		spinnerY = createSpinner(this, StatisticsMessages.selectPcYAxis, maximum, isSpinnerActive(SPINNER_Y), 2);
 
-		createLabel(this, "PC (Z):");
-		spinnerZ = createSpinner(this, "Select the PC for the z axis.", maximum, isSpinnerActive(SPINNER_Z), 3);
+		createLabel(this, "PC (Z):"); //$NON-NLS-1$
+		spinnerZ = createSpinner(this, StatisticsMessages.selectPcZAxis, maximum, isSpinnerActive(SPINNER_Z), 3);
 	}
 
 	private Label createLabel(Composite parent, String text) {

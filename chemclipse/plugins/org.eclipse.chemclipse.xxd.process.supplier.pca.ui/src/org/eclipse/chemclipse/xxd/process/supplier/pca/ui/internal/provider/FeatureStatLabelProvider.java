@@ -20,19 +20,20 @@ import org.eclipse.chemclipse.model.statistics.ISampleData;
 import org.eclipse.chemclipse.model.statistics.IVariable;
 import org.eclipse.chemclipse.support.ui.provider.AbstractChemClipseLabelProvider;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.Feature;
+import org.eclipse.chemclipse.xxd.process.supplier.pca.ui.l10n.StatisticsMessages;
 import org.eclipse.swt.graphics.Image;
 
 public class FeatureStatLabelProvider extends AbstractChemClipseLabelProvider {
 
-	public static final String VARIABLE = "Variable";
-	public static final String NAME = "Name";
-	public static final String COUNT = "Count";
-	public static final String MEAN = "Mean";
-	public static final String MIN = "Min";
-	public static final String MAX = "Max";
-	public static final String RELATIVESTDDEV = "RSD";
-	public static final String SKEWNESS = "Skewness";
-	public static final String KURTOSIS = "Excess Kurtosis";
+	public static final String VARIABLE = StatisticsMessages.variable;
+	public static final String NAME = StatisticsMessages.name;
+	public static final String COUNT = StatisticsMessages.count;
+	public static final String MEAN = StatisticsMessages.mean;
+	public static final String MIN = StatisticsMessages.min;
+	public static final String MAX = StatisticsMessages.max;
+	public static final String RELATIVESTDDEV = "RSD"; //$NON-NLS-1$
+	public static final String SKEWNESS = StatisticsMessages.skewness;
+	public static final String KURTOSIS = StatisticsMessages.excessKurtosis;
 
 	private DecimalFormat decimalFormat = getDecimalFormat();
 
@@ -67,7 +68,7 @@ public class FeatureStatLabelProvider extends AbstractChemClipseLabelProvider {
 	@Override
 	public String getColumnText(Object element, int columnIndex) {
 
-		String text = "";
+		String text = ""; //$NON-NLS-1$
 		if(element instanceof Feature feature) {
 			IVariable variable = feature.getVariable();
 			List<ISampleData<?>> sampleData = feature.getSampleData();
@@ -89,31 +90,31 @@ public class FeatureStatLabelProvider extends AbstractChemClipseLabelProvider {
 					break;
 				case 2:
 					value = stats.getN();
-					text = Double.isNaN(value) ? "NaN" : decimalFormat.format(value);
+					text = Double.isNaN(value) ? "NaN" : decimalFormat.format(value); //$NON-NLS-1$
 					break;
 				case 3:
 					value = stats.getMean();
-					text = Double.isNaN(value) ? "NaN" : decimalFormat.format(value);
+					text = Double.isNaN(value) ? "NaN" : decimalFormat.format(value); //$NON-NLS-1$
 					break;
 				case 4:
 					value = stats.getMin();
-					text = Double.isNaN(value) ? "NaN" : decimalFormat.format(value);
+					text = Double.isNaN(value) ? "NaN" : decimalFormat.format(value); //$NON-NLS-1$
 					break;
 				case 5:
 					value = stats.getMax();
-					text = Double.isNaN(value) ? "NaN" : decimalFormat.format(value);
+					text = Double.isNaN(value) ? "NaN" : decimalFormat.format(value); //$NON-NLS-1$
 					break;
 				case 6:
 					value = 100.0 / stats.getSum() * stats.getStandardDeviation();
-					text = Double.isNaN(value) ? "NaN" : decimalFormat.format(value);
+					text = Double.isNaN(value) ? "NaN" : decimalFormat.format(value); //$NON-NLS-1$
 					break;
 				case 7:
 					value = stats.getSkewness();
-					text = Double.isNaN(value) ? "NaN" : decimalFormat.format(value);
+					text = Double.isNaN(value) ? "NaN" : decimalFormat.format(value); //$NON-NLS-1$
 					break;
 				case 8:
 					value = stats.getKurtosis() - 3.0;
-					text = Double.isNaN(value) ? "NaN" : decimalFormat.format(value);
+					text = Double.isNaN(value) ? "NaN" : decimalFormat.format(value); //$NON-NLS-1$
 					break;
 				default:
 					break;

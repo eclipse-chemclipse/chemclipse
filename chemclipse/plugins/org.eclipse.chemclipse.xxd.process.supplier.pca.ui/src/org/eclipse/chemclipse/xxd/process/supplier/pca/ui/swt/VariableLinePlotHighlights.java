@@ -47,8 +47,8 @@ public class VariableLinePlotHighlights extends AbstractBaseChartPaintListener {
 
 		BaseChart baseChart = getBaseChart();
 		if(!baseChart.getSeriesIds().isEmpty()) {
-			double[] xSeries = baseChart.getSeriesSet().getSeries("main").getXSeries();
-			double[] ySeries = baseChart.getSeriesSet().getSeries("main").getYSeries();
+			double[] xSeries = baseChart.getSeriesSet().getSeries("main").getXSeries(); //$NON-NLS-1$
+			double[] ySeries = baseChart.getSeriesSet().getSeries("main").getYSeries(); //$NON-NLS-1$
 
 			for(int index : highlightedIndices) {
 				int[] highlightPoint = convertDataToPixelCoordinates(baseChart, xSeries[index], ySeries[index]);

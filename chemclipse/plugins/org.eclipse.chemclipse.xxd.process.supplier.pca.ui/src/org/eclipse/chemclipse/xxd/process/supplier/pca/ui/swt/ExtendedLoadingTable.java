@@ -208,6 +208,6 @@ public class ExtendedLoadingTable extends Composite implements IExtendedPartUI {
 			}
 		}
 
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 }
