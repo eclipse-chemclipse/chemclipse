@@ -257,11 +257,6 @@ public interface IScanMSD extends IScan, IMassSpectrumCloneable, IMassSpectrumNo
 	IScanMSD getMassSpectrum(IMarkedTraces<ITrace> excludedIons);
 
 	/**
-	 * Returns false, if no ions are stored in this mass spectrum.
-	 */
-	boolean hasIons();
-
-	/**
 	 * Specialized classes could be of type proxy.
 	 * This method enforces the proxy to load its data completely.
 	 */

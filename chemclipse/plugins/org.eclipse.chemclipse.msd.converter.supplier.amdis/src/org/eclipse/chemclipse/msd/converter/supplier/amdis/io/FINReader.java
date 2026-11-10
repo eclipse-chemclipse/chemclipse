@@ -97,7 +97,7 @@ public class FINReader extends AbstractMassSpectraReader {
 									 */
 									String massSpectrumData = builder.toString();
 									IVendorLibraryMassSpectrum massSpectrum = mslReader.extractMassSpectrum(massSpectrumData);
-									if(massSpectrum != null && massSpectrum.hasIons()) {
+									if(massSpectrum != null && !massSpectrum.isEmpty()) {
 										massSpectra.addMassSpectrum(massSpectrum);
 									}
 									/*

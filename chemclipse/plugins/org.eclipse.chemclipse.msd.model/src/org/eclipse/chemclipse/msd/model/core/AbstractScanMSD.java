@@ -362,7 +362,7 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 	@Override
 	public IExtractedIonSignal getExtractedIonSignal() {
 
-		if(hasIons()) {
+		if(!isEmpty()) {
 			IIonBounds bounds = getIonBounds();
 			double startIon = bounds.getLowestIon().getIon();
 			double stopIon = bounds.getHighestIon().getIon();
@@ -376,7 +376,7 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 	public IExtractedIonSignal getExtractedIonSignal(double startIon, double stopIon) {
 
 		ExtractedIonSignal extractedIonSignal;
-		if(hasIons()) {
+		if(!isEmpty()) {
 			extractedIonSignal = new ExtractedIonSignal(startIon, stopIon);
 			for(IIon ion : getIons()) {
 				/*
@@ -394,7 +394,7 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 	@Override
 	public double getBasePeak() {
 
-		if(hasIons()) {
+		if(!isEmpty()) {
 			return getHighestAbundance().getIon();
 		} else {
 			return 0.0f;
@@ -404,7 +404,7 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 	@Override
 	public float getBasePeakAbundance() {
 
-		if(hasIons()) {
+		if(!isEmpty()) {
 			return getHighestAbundance().getAbundance();
 		} else {
 			return 0.0f;
@@ -414,7 +414,7 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 	@Override
 	public IIon getHighestAbundance() {
 
-		if(hasIons()) {
+		if(!isEmpty()) {
 			Comparator<IIon> comparator = new IonCombinedComparator(IonComparatorMode.ABUNDANCE_FIRST);
 			return Collections.max(ionsList, comparator);
 		} else {
@@ -425,7 +425,7 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 	@Override
 	public IIon getHighestIon() {
 
-		if(hasIons()) {
+		if(!isEmpty()) {
 			Comparator<IIon> comparator = new IonCombinedComparator(IonComparatorMode.MZ_FIRST);
 			return Collections.max(ionsList, comparator);
 		} else {
@@ -436,7 +436,7 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 	@Override
 	public IIon getLowestAbundance() {
 
-		if(hasIons()) {
+		if(!isEmpty()) {
 			Comparator<IIon> comparator = new IonCombinedComparator(IonComparatorMode.ABUNDANCE_FIRST);
 			return Collections.min(ionsList, comparator);
 		} else {
@@ -447,7 +447,7 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 	@Override
 	public IIon getLowestIon() {
 
-		if(hasIons()) {
+		if(!isEmpty()) {
 			Comparator<IIon> comparator = new IonCombinedComparator(IonComparatorMode.MZ_FIRST);
 			return Collections.min(ionsList, comparator);
 		} else {
@@ -460,7 +460,7 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 
 		IIon lowest = null;
 		IIon highest = null;
-		if(hasIons()) {
+		if(!isEmpty()) {
 			Comparator<IIon> comparator = new IonCombinedComparator(IonComparatorMode.MZ_FIRST);
 			lowest = Collections.min(ionsList, comparator);
 			highest = Collections.max(ionsList, comparator);
@@ -485,7 +485,7 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 	@Override
 	public IIon getIon(int ion) {
 
-		if(hasIons()) {
+		if(!isEmpty()) {
 			IExtractedIonSignal extractedIonSignal = new ExtractedIonSignal(ion, ion);
 			for(IIon actualIon : ionsList) {
 				extractedIonSignal.setAbundance(actualIon);
@@ -505,7 +505,7 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 	@Override
 	public IIon getIon(double ion) {
 
-		if(hasIons()) {
+		if(!isEmpty()) {
 			for(IIon actualIon : ionsList) {
 				if(actualIon.getIon() == ion) {
 					return actualIon;
@@ -521,7 +521,7 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 	@Override
 	public IIon getIon(double ion, int precision) {
 
-		if(hasIons()) {
+		if(!isEmpty()) {
 			for(IIon actualIon : ionsList) {
 				double accurateIon = AbstractIon.getIon(actualIon.getIon(), precision);
 				if(accurateIon == AbstractIon.getIon(ion, precision)) {
@@ -624,12 +624,6 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 	}
 
 	@Override
-	public boolean hasIons() {
-
-		return !ionsList.isEmpty();
-	}
-
-	@Override
 	public void enforceLoadScanProxy() {
 
 		/*
@@ -668,7 +662,7 @@ public abstract class AbstractScanMSD extends AbstractScan implements IScanMSD {
 		/*
 		 * Return if there are no ions stored.
 		 */
-		if(!hasIons()) {
+		if(isEmpty()) {
 			return this;
 		}
 		/*

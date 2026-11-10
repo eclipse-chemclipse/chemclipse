@@ -84,10 +84,10 @@ public abstract class AbstractRegularMassSpectrumProxy extends AbstractRegularMa
 	}
 
 	@Override
-	public boolean hasIons() {
+	public boolean isEmpty() {
 
 		checkProxyAndImportOnDemand();
-		return super.hasIons();
+		return super.isEmpty();
 	}
 
 	@Override
