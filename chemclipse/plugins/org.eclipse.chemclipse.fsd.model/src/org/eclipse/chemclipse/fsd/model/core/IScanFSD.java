@@ -46,7 +46,5 @@ public interface IScanFSD extends IScan {
 
 	void removeScanSignals(Set<Integer> wavelengths);
 
-	boolean hasScanSignals();
-
 	float getTotalSignal(IMarkedTraces<ITrace> excludedWavelenths);
 }

@@ -203,8 +203,8 @@ public abstract class AbstractScanFSD extends AbstractScan implements IScanFSD {
 	}
 
 	@Override
-	public boolean hasScanSignals() {
+	public boolean isEmpty() {
 
-		return !scanSignals.isEmpty();
+		return scanSignals.isEmpty();
 	}
 }
