@@ -55,8 +55,6 @@ public interface IScanWSD extends IScan {
 
 	Optional<IExtractedSingleWavelengthSignal> getExtractedSingleWavelengthSignal(float wavelength);
 
-	boolean hasScanSignals();
-
 	IWavelengthBounds getWavelengthBounds();
 
 	float getTotalSignal(IMarkedTraces<ITrace> excludedWavelenths);

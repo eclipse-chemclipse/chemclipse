@@ -24,6 +24,7 @@ public class Scan extends AbstractScan {
 	private float totalSignal;
 
 	public Scan(float totalSignal) {
+
 		if(totalSignal >= 0) {
 			this.totalSignal = totalSignal;
 		}
@@ -41,5 +42,11 @@ public class Scan extends AbstractScan {
 		if(totalSignal >= 0) {
 			this.totalSignal = totalSignal;
 		}
+	}
+
+	@Override
+	public boolean isEmpty() {
+
+		return totalSignal == 0;
 	}
 }

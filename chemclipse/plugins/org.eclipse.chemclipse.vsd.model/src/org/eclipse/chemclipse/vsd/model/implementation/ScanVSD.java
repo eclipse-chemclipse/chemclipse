@@ -56,4 +56,10 @@ public class ScanVSD extends AbstractScanVSD {
 
 		return processedSignals;
 	}
+
+	@Override
+	public boolean isEmpty() {
+
+		return processedSignals.isEmpty();
+	}
 }

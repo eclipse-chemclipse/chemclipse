@@ -210,7 +210,7 @@ public abstract class AbstractScanWSD extends AbstractScan implements IScanWSD {
 	@Deprecated
 	public IExtractedWavelengthSignal getExtractedWavelengthSignal() {
 
-		if(hasScanSignals()) {
+		if(!isEmpty()) {
 			IWavelengthBounds bounds = getWavelengthBounds();
 			float startWavelength = bounds.getLowestWavelength().getWavelength();
 			float stopWavelength = bounds.getHighestWavelength().getWavelength();
@@ -225,7 +225,7 @@ public abstract class AbstractScanWSD extends AbstractScan implements IScanWSD {
 	public IExtractedWavelengthSignal getExtractedWavelengthSignal(float startWavelength, float stopWavelength) {
 
 		ExtractedWavelengthSignal extractedWavelengthSignal;
-		if(hasScanSignals()) {
+		if(!isEmpty()) {
 			extractedWavelengthSignal = new ExtractedWavelengthSignal(startWavelength, stopWavelength);
 			extractedWavelengthSignal.setRetentionTime(getRetentionTime());
 			for(IScanSignalWSD scanSignal : getScanSignals()) {
@@ -251,12 +251,9 @@ public abstract class AbstractScanWSD extends AbstractScan implements IScanWSD {
 	}
 
 	@Override
-	public boolean hasScanSignals() {
+	public boolean isEmpty() {
 
-		if(scanSignals.isEmpty()) {
-			return false;
-		}
-		return true;
+		return scanSignals.isEmpty();
 	}
 
 	@Override
@@ -264,7 +261,7 @@ public abstract class AbstractScanWSD extends AbstractScan implements IScanWSD {
 
 		IScanSignalWSD lowest = null;
 		IScanSignalWSD highest = null;
-		if(hasScanSignals()) {
+		if(!isEmpty()) {
 			Comparator<IScanSignalWSD> comparator = new WavelengthCombinedComparator(WavelengthComparatorMode.WAVELENGTH_FIRST);
 			lowest = Collections.min(scanSignals, comparator);
 			highest = Collections.max(scanSignals, comparator);

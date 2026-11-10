@@ -192,4 +192,6 @@ public interface IScan extends ISignal, IAdaptable, Serializable, ITargetSupplie
 	 * available signal range.
 	 */
 	void adjustTotalSignal(float totalSignal);
+
+	boolean isEmpty();
 }
