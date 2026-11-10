@@ -34,11 +34,27 @@ public class BackgroundAbundanceRange implements IBackgroundAbundanceRange {
 	 */
 	public BackgroundAbundanceRange(float startBackgroundAbundance, float stopBackgroundAbundance) {
 
-		if(startBackgroundAbundance < MIN_BACKGROUND_ABUNDANCE || startBackgroundAbundance > MAX_BACKGROUND_ABUNDANCE) {
-			startBackgroundAbundance = MIN_BACKGROUND_ABUNDANCE;
-		}
-		if(stopBackgroundAbundance > MAX_BACKGROUND_ABUNDANCE || stopBackgroundAbundance < MIN_BACKGROUND_ABUNDANCE) {
-			stopBackgroundAbundance = MAX_BACKGROUND_ABUNDANCE;
+		this(startBackgroundAbundance, stopBackgroundAbundance, true);
+	}
+
+	/**
+	 * Creates a new BackgroundAbundanceRange object.<br/>
+	 * If validate is true, the limitations of {@link #BackgroundAbundanceRange(float, float)} apply.
+	 * Otherwise, the values are used as given, e.g. to support detectors with a negative baseline.
+	 *
+	 * @param startBackgroundAbundance
+	 * @param stopBackgroundAbundance
+	 * @param validate
+	 */
+	public BackgroundAbundanceRange(float startBackgroundAbundance, float stopBackgroundAbundance, boolean validate) {
+
+		if(validate) {
+			if(startBackgroundAbundance < MIN_BACKGROUND_ABUNDANCE || startBackgroundAbundance > MAX_BACKGROUND_ABUNDANCE) {
+				startBackgroundAbundance = MIN_BACKGROUND_ABUNDANCE;
+			}
+			if(stopBackgroundAbundance > MAX_BACKGROUND_ABUNDANCE || stopBackgroundAbundance < MIN_BACKGROUND_ABUNDANCE) {
+				stopBackgroundAbundance = MAX_BACKGROUND_ABUNDANCE;
+			}
 		}
 		this.startBackgroundAbundance = startBackgroundAbundance;
 		this.stopBackgroundAbundance = stopBackgroundAbundance;

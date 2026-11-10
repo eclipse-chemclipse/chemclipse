@@ -96,6 +96,12 @@ public class TotalWavelengthSignalExtractor extends TotalScanSignalExtractor imp
 	@Override
 	public ITotalScanSignals getTotalScanSignals(int startScan, int stopScan, IMarkedTraces<ITrace> excludedWavelengths) {
 
+		return getTotalScanSignals(startScan, stopScan, excludedWavelengths, true);
+	}
+
+	@Override
+	public ITotalScanSignals getTotalScanSignals(int startScan, int stopScan, IMarkedTraces<ITrace> excludedWavelengths, boolean validatePositive) {
+
 		if(startScan > stopScan) {
 			throw new IllegalArgumentException("The start scan " + startScan + " must be lower or equal the stop scan " + stopScan + ".");
 		}
@@ -114,7 +120,7 @@ public class TotalWavelengthSignalExtractor extends TotalScanSignalExtractor imp
 		 */
 		for(int scan = startScan; scan <= stopScan; scan++) {
 			IScanWSD scanWSD = chromatogram.getScan(scan);
-			ITotalScanSignal totalWavelengthSignal = new TotalScanSignal(scanWSD.getRetentionTime(), scanWSD.getRetentionIndex(), scanWSD.getTotalSignal(excludedWavelengths));
+			ITotalScanSignal totalWavelengthSignal = new TotalScanSignal(scanWSD.getRetentionTime(), scanWSD.getRetentionIndex(), scanWSD.getTotalSignal(excludedWavelengths), validatePositive);
 			signals.add(totalWavelengthSignal);
 		}
 		return signals;
