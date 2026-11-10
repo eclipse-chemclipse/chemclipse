@@ -25,4 +25,9 @@ public interface ITotalWavelengthSignalExtractor extends ITotalScanSignalExtract
 	ITotalScanSignals getTotalWavelengthSignals(IChromatogramSelectionWSD chromatogramSelection, IMarkedTraces<ITrace> excludedWavelengths);
 
 	ITotalScanSignals getTotalScanSignals(int startScan, int stopScan, IMarkedTraces<ITrace> excludedWavelengths);
+
+	/**
+	 * If validatePositive is false, negative total signals are kept.
+	 */
+	ITotalScanSignals getTotalScanSignals(int startScan, int stopScan, IMarkedTraces<ITrace> excludedWavelengths, boolean validatePositive);
 }

@@ -100,17 +100,17 @@ public class PeakBuilderCSD {
 		 */
 		switch(peakType) {
 			case VV:
-				backgroundAbundanceRange = new BackgroundAbundanceRange(startBackgroundAbundance, stopBackgroundAbundance);
+				backgroundAbundanceRange = new BackgroundAbundanceRange(startBackgroundAbundance, stopBackgroundAbundance, false);
 				break;
 			case CB:
 				IBaselineModel baselineModel = chromatogram.getBaselineModel();
 				startBackgroundAbundance = baselineModel.getBackground(totalScanSignalStart.getRetentionTime());
 				stopBackgroundAbundance = baselineModel.getBackground(totalScanSignalStop.getRetentionTime());
-				backgroundAbundanceRange = new BackgroundAbundanceRange(startBackgroundAbundance, stopBackgroundAbundance);
+				backgroundAbundanceRange = new BackgroundAbundanceRange(startBackgroundAbundance, stopBackgroundAbundance, false);
 				break;
 			default:
 				float base = Math.min(startBackgroundAbundance, stopBackgroundAbundance);
-				backgroundAbundanceRange = new BackgroundAbundanceRange(base, base);
+				backgroundAbundanceRange = new BackgroundAbundanceRange(base, base, false);
 				break;
 		}
 		/*
@@ -146,7 +146,7 @@ public class PeakBuilderCSD {
 		float lastSignal = totalScanSignals.getLastTotalScanSignal().getTotalSignal();
 		startIntensity = startIntensity <= firstSignal ? startIntensity : firstSignal;
 		stopIntensity = stopIntensity <= lastSignal ? stopIntensity : lastSignal;
-		LinearEquation backgroundEquation = getBackgroundEquation(totalScanSignals, scanRange, new BackgroundAbundanceRange(startIntensity, stopIntensity));
+		LinearEquation backgroundEquation = getBackgroundEquation(totalScanSignals, scanRange, new BackgroundAbundanceRange(startIntensity, stopIntensity, false));
 		ITotalScanSignals peakIntensityTotalScanSignals = adjustTotalScanSignals(totalScanSignals, backgroundEquation);
 		IPeakIntensityValues peakIntensityValues = getPeakIntensityValues(peakIntensityTotalScanSignals);
 		/*
@@ -291,7 +291,7 @@ public class PeakBuilderCSD {
 		 */
 		try {
 			ITotalScanSignalExtractor totalScanSignalExtractor = new TotalScanSignalExtractor(chromatogram);
-			return totalScanSignalExtractor.getTotalScanSignals(scanRange.getStartScan(), scanRange.getStopScan());
+			return totalScanSignalExtractor.getTotalScanSignals(scanRange.getStartScan(), scanRange.getStopScan(), false);
 		} catch(ChromatogramIsNullException e) {
 			throw new PeakException("The chromatogram must not be null.");
 		}
@@ -349,7 +349,7 @@ public class PeakBuilderCSD {
 		 * If necessary correct the background abundance range.
 		 */
 		if(adjustBackgroundAbundance) {
-			backgroundAbundanceRange = new BackgroundAbundanceRange(startBackgroundAbundance, stopBackgroundAbundance);
+			backgroundAbundanceRange = new BackgroundAbundanceRange(startBackgroundAbundance, stopBackgroundAbundance, false);
 		}
 		return backgroundAbundanceRange;
 	}

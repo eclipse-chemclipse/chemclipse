@@ -293,16 +293,6 @@ public abstract class AbstractPeakModel extends AbstractPeakModelStrict {
 	private LinearEquation calculateBackgroundEquation(float startBackgroundAbundance, float stopBackgroundAbundance) {
 
 		/*
-		 * A value < 0 for start and stop background abundance is not
-		 * applicable.
-		 */
-		if(startBackgroundAbundance < 0) {
-			startBackgroundAbundance = 0;
-		}
-		if(stopBackgroundAbundance < 0) {
-			stopBackgroundAbundance = 0;
-		}
-		/*
 		 * Create the background equation.<br/> With the equation you can
 		 * calculate the background abundance for a given retention time.
 		 */
