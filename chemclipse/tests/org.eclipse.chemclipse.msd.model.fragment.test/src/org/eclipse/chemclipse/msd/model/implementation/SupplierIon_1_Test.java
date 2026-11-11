@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -12,100 +12,111 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.model.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.junit.jupiter.api.Test;
 
 /**
- * Constructor test. TODO: add actual checks/verifications
+ * Value validation of {@link Ion}: negative m/z and abundance values are
+ * rejected, everything else is accepted.
  */
 public class SupplierIon_1_Test {
 
 	@Test
-	public void testConstructor_1() {
+	public void testConstructorStoresValues() {
 
-		new Ion(0.5f);
+		IIon ion = new Ion(43.5d, 1200.0f);
+		assertEquals(43.5d, ion.getIon());
+		assertEquals(1200.0f, ion.getAbundance());
 	}
 
 	@Test
-	public void testConstructor_2() {
+	public void testConstructorWithoutAbundance() {
 
-		new Ion(0.4f);
+		IIon ion = new Ion(43.5d);
+		assertEquals(43.5d, ion.getIon());
+		assertEquals(0.0f, ion.getAbundance());
 	}
 
 	@Test
-	public void testConstructor_3() {
+	public void testConstructorIgnoresNegativeIon() {
 
-		new Ion(65535.0f);
+		IIon ion = new Ion(-0.1d, 100.0f);
+		assertEquals(0.0d, ion.getIon());
+		assertEquals(100.0f, ion.getAbundance());
 	}
 
 	@Test
-	public void testConstructor_4() {
+	public void testConstructorIgnoresNegativeAbundance() {
 
-		new Ion(65535.1f);
+		IIon ion = new Ion(43.5d, -0.1f);
+		assertEquals(43.5d, ion.getIon());
+		assertEquals(0.0f, ion.getAbundance());
 	}
 
 	@Test
-	public void testConstructor_5() {
+	public void testSetIon() {
 
-		IIon ion = new Ion(1.0f);
-		ion.setIon(0.4f);
+		IIon ion = new Ion(1.0d);
+		assertTrue(ion.setIon(0.4d));
+		assertEquals(0.4d, ion.getIon());
 	}
 
 	@Test
-	public void testConstructor_6() {
+	public void testSetIonZero() {
 
-		IIon ion = new Ion(1.0f);
-		ion.setIon(65535.0f);
+		IIon ion = new Ion(1.0d);
+		assertTrue(ion.setIon(0.0d));
+		assertEquals(0.0d, ion.getIon());
 	}
 
 	@Test
-	public void testConstructor_7() {
+	public void testSetIonHasNoUpperLimit() {
 
-		IIon ion = new Ion(1.0f);
-		ion.setIon(65535.1f);
+		IIon ion = new Ion(1.0d);
+		assertTrue(ion.setIon(65535.1d));
+		assertEquals(65535.1d, ion.getIon());
 	}
 
 	@Test
-	public void testConstructor_8() {
+	public void testSetIonRejectsNegative() {
 
-		new Ion(0.5f, 0.0f);
+		IIon ion = new Ion(1.0d);
+		assertFalse(ion.setIon(-0.1d));
+		assertEquals(1.0d, ion.getIon());
 	}
 
 	@Test
-	public void testConstructor_9() {
+	public void testSetAbundance() {
 
-		new Ion(65535.0f, 0.0f);
+		IIon ion = new Ion(1.0d, 10.0f);
+		assertTrue(ion.setAbundance(0.0f));
+		assertEquals(0.0f, ion.getAbundance());
 	}
 
 	@Test
-	public void testConstructor_10() {
+	public void testSetAbundanceRejectsNegative() {
 
-		new Ion(65535.1f, 0.0f);
+		IIon ion = new Ion(1.0d, 10.0f);
+		assertFalse(ion.setAbundance(-0.1f));
+		assertEquals(10.0f, ion.getAbundance());
 	}
 
 	@Test
-	public void testConstructor_11() {
+	public void testCopyConstructor() {
 
-		new Ion(0.4f, 0.0f);
+		IIon copy = new Ion(new Ion(43.5d, 1200.0f));
+		assertEquals(43.5d, copy.getIon());
+		assertEquals(1200.0f, copy.getAbundance());
 	}
 
 	@Test
-	public void testConstructor_12() {
+	public void testCopyConstructorRejectsNull() {
 
-		new Ion(0.5f, -0.1f);
-	}
-
-	@Test
-	public void testConstructor_13() {
-
-		IIon ion = new Ion(0.5f, 0.0f);
-		ion.setAbundance(-0.1f);
-	}
-
-	@Test
-	public void testConstructor_14() {
-
-		IIon ion = new Ion(0.5f, 0.1f);
-		ion.setIon(0.4f);
+		assertThrows(IllegalArgumentException.class, () -> new Ion((IIon)null));
 	}
 }
