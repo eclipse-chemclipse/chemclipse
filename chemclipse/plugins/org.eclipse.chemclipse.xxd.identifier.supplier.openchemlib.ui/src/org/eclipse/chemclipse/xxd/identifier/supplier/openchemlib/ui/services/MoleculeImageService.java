@@ -14,10 +14,12 @@ package org.eclipse.chemclipse.xxd.identifier.supplier.openchemlib.ui.services;
 
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.identifier.ILibraryInformation;
+import org.eclipse.chemclipse.support.ui.workbench.PreferencesSupport;
 import org.eclipse.chemclipse.swt.ui.services.IMoleculeImageService;
 import org.eclipse.chemclipse.xxd.identifier.supplier.openchemlib.ui.support.MoleculeParser;
 import org.eclipse.chemclipse.xxd.identifier.supplier.openchemlib.ui.support.SWTDepictor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
@@ -41,6 +43,14 @@ public class MoleculeImageService implements IMoleculeImageService {
 	 */
 	private static final int MAX_BOND_LENGTH = 50;
 	private static final int MARGIN = 10;
+	/*
+	 * Same colors as the charts in the ChemClipse themes.
+	 */
+	private static final int OPAQUE = 0xFF000000;
+	private static final int BACKGROUND_LIGHT = 0xFFFFFF;
+	private static final int FOREGROUND_LIGHT = 0x000000;
+	private static final int BACKGROUND_DARK = 0x2F2F2F;
+	private static final int FOREGROUND_DARK = 0xFCFCF7;
 	/*
 	 * Plain structural formula without stereo annotations (abs, R/S) and their colors.
 	 */
@@ -98,10 +108,17 @@ public class MoleculeImageService implements IMoleculeImageService {
 		try {
 			gc.setAntialias(SWT.ON);
 			gc.setTextAntialias(SWT.ON);
-			gc.setBackground(display.getSystemColor(SWT.COLOR_WHITE));
+			boolean darkTheme = PreferencesSupport.isDarkTheme();
+			int background = darkTheme ? BACKGROUND_DARK : BACKGROUND_LIGHT;
+			int foreground = darkTheme ? FOREGROUND_DARK : FOREGROUND_LIGHT;
+			gc.setBackground(new Color((background >> 16) & 0xFF, (background >> 8) & 0xFF, background & 0xFF));
 			gc.fillRectangle(0, 0, width, height);
-			depictor.setForegroundColor(0x000000, 0xFFFFFF);
-			GenericRectangle viewRect = new GenericRectangle(MARGIN, MARGIN, width - 2 * MARGIN, height - 2 * MARGIN);
+			/*
+			 * OpenChemLib treats 0 as unset, hence the opaque alpha channel.
+			 * The background lets it pick atom colors with enough contrast.
+			 */
+			depictor.setForegroundColor(OPAQUE | foreground, OPAQUE | background);
+			GenericRectangle viewRect = new GenericRectangle(MARGIN, MARGIN, width - 2.0d * MARGIN, height - 2.0d * MARGIN);
 			depictor.validateView(gc, viewRect, AbstractDepictor.cModeInflateToMaxAVBL | MAX_BOND_LENGTH);
 			depictor.paint(gc);
 			return image;
