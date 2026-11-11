@@ -21,11 +21,5 @@
             id="org.eclipse.chemclipse.xxd.converter.supplier.chemclipse.ui.preferences.converterPreferencePageOCM"
             name="Process Method Data (*.ocm)">
       </page>
-      <page
-            category="org.eclipse.chemclipse.xxd.converter.supplier.chemclipse.ui.preferences.converterPreferencePage"
-            class="org.eclipse.chemclipse.xxd.converter.supplier.ocx.ui.preferences.PreferencePageOCS"
-            id="org.eclipse.chemclipse.xxd.converter.supplier.chemclipse.ui.preferences.converterPreferencePageOCS"
-            name="Sequence Data (*.ocs)">
-      </page>
    </extension>
 </plugin>
