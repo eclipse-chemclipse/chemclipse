@@ -27,9 +27,4 @@
          version="0.0.0"
          unpack="false"/>
 
-   <plugin
-         id="org.eclipse.chemclipse.xxd.identifier.supplier.wikidata.ui"
-         version="0.0.0"/>
-
-
 </feature>
