@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -154,9 +154,8 @@ public class ChromatogramReader_1501 extends AbstractChromatogramReader implemen
 			 */
 			chromatogram = new VendorChromatogram();
 			readMethod(getDataInputStream(object, directoryPrefix + Format.FILE_SYSTEM_SETTINGS_CSD), closeStream, chromatogram);
-			readScans(getDataInputStream(object, directoryPrefix + Format.FILE_SCANS_CSD), closeStream, chromatogram);
+			readScans(getDataInputStream(object, directoryPrefix + Format.FILE_SCANS_CSD), closeStream, chromatogram, subMonitor.split(20));
 			readBaseline(getDataInputStream(object, directoryPrefix + Format.FILE_BASELINE_CSD), closeStream, chromatogram);
-			subMonitor.worked(20);
 			readPeaks(getDataInputStream(object, directoryPrefix + Format.FILE_PEAKS_CSD), closeStream, chromatogram);
 			readArea(getDataInputStream(object, directoryPrefix + Format.FILE_AREA_CSD), closeStream, chromatogram);
 			subMonitor.worked(20);
@@ -204,12 +203,13 @@ public class ChromatogramReader_1501 extends AbstractChromatogramReader implemen
 		}
 	}
 
-	private void readScans(DataInputStream dataInputStream, boolean closeStream, IChromatogramCSD chromatogram) throws IOException {
+	private void readScans(DataInputStream dataInputStream, boolean closeStream, IChromatogramCSD chromatogram, IProgressMonitor monitor) throws IOException {
 
 		/*
 		 * Scans
 		 */
 		int scans = dataInputStream.readInt();
+		SubMonitor subMonitor = SubMonitor.convert(monitor, scans);
 		for(int scan = 1; scan <= scans; scan++) {
 			int retentionTime = dataInputStream.readInt();
 			int relativeRetentionTime = dataInputStream.readInt();
@@ -242,6 +242,7 @@ public class ChromatogramReader_1501 extends AbstractChromatogramReader implemen
 			reader1501.readIdentificationTargets(dataInputStream, false, scanCSD);
 
 			chromatogram.addScan(scanCSD);
+			subMonitor.worked(1);
 		}
 
 		if(closeStream) {
