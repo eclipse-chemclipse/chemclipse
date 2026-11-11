@@ -68,7 +68,7 @@ public class AsymmetryFilter extends AbstractPeakFilter<AsymmetryFilterSettings>
 	@Override
 	public String getDescription() {
 
-		return "Filter peaks by peak asymmetry factor (As)";
+		return "Filter peaks by peak asymmetry factor.";
 	}
 
 	@Override
