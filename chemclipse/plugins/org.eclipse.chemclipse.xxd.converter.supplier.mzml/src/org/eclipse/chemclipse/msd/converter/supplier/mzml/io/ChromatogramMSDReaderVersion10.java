@@ -320,7 +320,13 @@ public class ChromatogramMSDReaderVersion10 extends AbstractChromatogramReader i
 		SampleListType sampleList = mzML.getSampleList();
 		if(sampleList != null) {
 			for(SampleType sample : sampleList.getSample()) {
-				chromatogram.setSampleName(sample.getName());
+				String sampleName = sample.getName();
+				for(CVParamType cvParam : sample.getCvParam()) {
+					if("MS:1000002".equals(cvParam.getAccession()) && cvParam.getValue() != null && !cvParam.getValue().isBlank()) {
+						sampleName = cvParam.getValue();
+					}
+				}
+				chromatogram.setSampleName(sampleName);
 			}
 		}
 	}

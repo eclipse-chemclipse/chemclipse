@@ -44,10 +44,9 @@ public class MetadataReader110 {
 		SampleListType sampleList = mzML.getSampleList();
 		if(sampleList != null) {
 			for(SampleType sample : sampleList.getSample()) {
-				if(sample.getName() != null && !sample.getName().isBlank()) {
-					chromatogram.setSampleName(sample.getName());
-				} else if(sample.getId() != null && !sample.getId().isBlank()) {
-					chromatogram.setSampleName(sample.getId());
+				String sampleName = getSampleName(sample);
+				if(sampleName != null) {
+					chromatogram.setSampleName(sampleName);
 				}
 			}
 		}
@@ -87,5 +86,21 @@ public class MetadataReader110 {
 				chromatogram.setInstrument(cvParam.getName());
 			}
 		}
+	}
+
+	private static String getSampleName(SampleType sample) {
+
+		for(CVParamType cvParam : sample.getCvParam()) {
+			if("MS:1000002".equals(cvParam.getAccession()) && cvParam.getValue() != null && !cvParam.getValue().isBlank()) {
+				return cvParam.getValue();
+			}
+		}
+		if(sample.getName() != null && !sample.getName().isBlank()) {
+			return sample.getName();
+		}
+		if(sample.getId() != null && !sample.getId().isBlank()) {
+			return sample.getId(); // might be distorted with XML escaping
+		}
+		return null;
 	}
 }
