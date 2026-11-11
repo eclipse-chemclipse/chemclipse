@@ -171,9 +171,8 @@ public class ChromatogramReader_1502 extends AbstractChromatogramReader implemen
 			 */
 			chromatogram = new VendorChromatogram();
 			readMethod(getDataInputStream(object, directoryPrefix + Format.FILE_SYSTEM_SETTINGS_WSD), closeStream, chromatogram);
-			readScans(getDataInputStream(object, directoryPrefix + Format.FILE_SCANS_WSD), closeStream, chromatogram);
+			readScans(getDataInputStream(object, directoryPrefix + Format.FILE_SCANS_WSD), closeStream, chromatogram, subMonitor.split(20));
 			readBaseline(getDataInputStream(object, directoryPrefix + Format.FILE_BASELINE_WSD), closeStream, chromatogram);
-			subMonitor.worked(20);
 			readPeaks(getDataInputStream(object, directoryPrefix + Format.FILE_PEAKS_WSD), closeStream, chromatogram);
 			readArea(getDataInputStream(object, directoryPrefix + Format.FILE_AREA_WSD), closeStream, chromatogram);
 			subMonitor.worked(20);
@@ -238,9 +237,10 @@ public class ChromatogramReader_1502 extends AbstractChromatogramReader implemen
 		}
 	}
 
-	private void readScans(DataInputStream dataInputStream, boolean closeStream, IChromatogramWSD chromatogram) throws IOException {
+	private void readScans(DataInputStream dataInputStream, boolean closeStream, IChromatogramWSD chromatogram, IProgressMonitor monitor) throws IOException {
 
 		int scans = dataInputStream.readInt();
+		SubMonitor subMonitor = SubMonitor.convert(monitor, scans);
 		for(int scan = 1; scan <= scans; ++scan) {
 			IScanWSD scanWSD = new VendorScan();
 			int scanSignals = dataInputStream.readInt();
@@ -287,6 +287,7 @@ public class ChromatogramReader_1502 extends AbstractChromatogramReader implemen
 			reader.readIdentificationTargets(dataInputStream, false, scanWSD);
 
 			chromatogram.addScan(scanWSD);
+			subMonitor.worked(1);
 		}
 
 		if(closeStream) {

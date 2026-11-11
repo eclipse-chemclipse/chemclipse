@@ -175,11 +175,11 @@ public class ChromatogramReader_1502 extends AbstractChromatogramReader {
 			readMethod(getDataInputStream(object, directoryPrefix + Format.FILE_SYSTEM_SETTINGS_MSD), closeStream, chromatogram);
 			if(useScanProxies) {
 				readScanProxies((ZipFile)object, directoryPrefix, file, chromatogram, monitor);
+				subMonitor.worked(20);
 			} else {
-				readScans(getDataInputStream(object, directoryPrefix + Format.FILE_SCANS_MSD), closeStream, chromatogram, monitor);
+				readScans(getDataInputStream(object, directoryPrefix + Format.FILE_SCANS_MSD), closeStream, chromatogram, subMonitor.split(20));
 			}
 			readBaseline(getDataInputStream(object, directoryPrefix + Format.FILE_BASELINE_MSD), closeStream, chromatogram);
-			subMonitor.worked(20);
 			readPeaks(getDataInputStream(object, directoryPrefix + Format.FILE_PEAKS_MSD), closeStream, chromatogram);
 			readArea(getDataInputStream(object, directoryPrefix + Format.FILE_AREA_MSD), closeStream, chromatogram);
 			subMonitor.worked(20);
@@ -302,13 +302,15 @@ public class ChromatogramReader_1502 extends AbstractChromatogramReader {
 		 * Scans
 		 */
 		int scans = dataInputStream.readInt();
+		SubMonitor subMonitor = SubMonitor.convert(monitor, scans);
 		for(int scan = 1; scan <= scans; scan++) {
-			if(monitor.isCanceled()) {
+			if(subMonitor.isCanceled()) {
 				break;
 			}
 			IVendorScan massSpectrum = new VendorScan();
 			readerProxy.readMassSpectrum(massSpectrum, dataInputStream, ionTransitionSettings);
 			chromatogram.addScan(massSpectrum);
+			subMonitor.worked(1);
 		}
 
 		if(closeStream) {
