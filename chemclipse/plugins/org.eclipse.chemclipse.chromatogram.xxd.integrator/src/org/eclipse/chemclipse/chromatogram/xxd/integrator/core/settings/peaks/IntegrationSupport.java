@@ -90,7 +90,6 @@ public class IntegrationSupport implements IIntegrationSupport {
 		return minimumSignalToNoiseRatio;
 	}
 
-	// TODO JUnit
 	@Override
 	public void setMinimumSignalToNoiseRatio(float minimumSignalToNoiseRatio) {
 
@@ -135,12 +134,10 @@ public class IntegrationSupport implements IIntegrationSupport {
 		 * S/N
 		 */
 		if(peak instanceof IChromatogramPeakMSD chromatogramPeak) {
-			// TODO JUnit
 			if(chromatogramPeak.getSignalToNoiseRatio() < minimumSignalToNoiseRatio) {
 				return false;
 			}
 		} else if(peak instanceof IChromatogramPeakCSD chromatogramPeak) {
-			// TODO JUnit
 			if(chromatogramPeak.getSignalToNoiseRatio() < minimumSignalToNoiseRatio) {
 				return false;
 			}
