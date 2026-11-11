@@ -297,10 +297,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.chemclipse.xxd.identifier.supplier.cactus.feature"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.chemclipse.msd.filter.supplier.normalizer.feature"
          version="0.0.0"/>
 
