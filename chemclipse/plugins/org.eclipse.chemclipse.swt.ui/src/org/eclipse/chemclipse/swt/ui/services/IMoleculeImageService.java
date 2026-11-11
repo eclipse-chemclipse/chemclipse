@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2020, 2025 Lablicate GmbH.
+ * Copyright (c) 2020, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -19,7 +19,6 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 /**
  * The implementation shall return a molecule image, given by the information stored in the library information.
- * 
  */
 public interface IMoleculeImageService {
 
@@ -28,8 +27,6 @@ public interface IMoleculeImageService {
 	String getDescription();
 
 	String getVersion();
-
-	boolean isOnline();
 
 	Image create(Display display, ILibraryInformation libraryInformation, int width, int height);
 
