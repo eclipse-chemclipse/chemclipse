@@ -12,9 +12,6 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.xxd.ui.support;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.chemclipse.support.ui.provider.AbstractLabelProvider;
 import org.eclipse.chemclipse.swt.ui.services.IMoleculeImageService;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
@@ -54,10 +51,7 @@ public class MoleculeImageServiceSupport {
 			 */
 			moleculeImageServiceSelection = getMoleculeImageServicesPreference(moleculeImageServices);
 			if(moleculeImageServiceSelection == null) {
-				List<IMoleculeImageService> moleculeImageServicesOffline = getMoleculeImageServicesOffline(moleculeImageServices);
-				if(!moleculeImageServicesOffline.isEmpty()) {
-					moleculeImageServiceSelection = moleculeImageServicesOffline.get(0);
-				}
+				moleculeImageServiceSelection = (IMoleculeImageService)moleculeImageServices[0];
 			}
 		}
 
@@ -76,12 +70,7 @@ public class MoleculeImageServiceSupport {
 
 				if(element instanceof IMoleculeImageService moleculeImageService) {
 					combo.setToolTipText(moleculeImageService.getDescription());
-					StringBuilder builder = new StringBuilder();
-					builder.append(moleculeImageService.getName());
-					builder.append(" (");
-					builder.append(moleculeImageService.isOnline() ? "online" : "offline");
-					builder.append(")");
-					return builder.toString();
+					return moleculeImageService.getName();
 				}
 
 				return null;
@@ -128,18 +117,5 @@ public class MoleculeImageServiceSupport {
 		}
 
 		return null;
-	}
-
-	private static List<IMoleculeImageService> getMoleculeImageServicesOffline(Object[] moleculeImageServices) {
-
-		List<IMoleculeImageService> moleculeImageServicesOffline = new ArrayList<>();
-		for(int i = 0; i < moleculeImageServices.length; i++) {
-			IMoleculeImageService moleculeImageService = (IMoleculeImageService)moleculeImageServices[i];
-			if(!moleculeImageService.isOnline()) {
-				moleculeImageServicesOffline.add(moleculeImageService);
-			}
-		}
-
-		return moleculeImageServicesOffline;
 	}
 }

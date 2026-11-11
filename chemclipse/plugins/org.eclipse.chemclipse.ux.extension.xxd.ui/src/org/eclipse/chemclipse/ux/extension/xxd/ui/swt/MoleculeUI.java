@@ -154,12 +154,8 @@ public class MoleculeUI extends Composite implements IExtendedPartUI {
 			@Override
 			public void mouseScrolled(MouseEvent event) {
 
-				if(moleculeImageService != null && moleculeImageService.isOnline()) {
-					return;
-				} else {
-					scaleFactor += (event.count > 0) ? SCALE_DELTA : -SCALE_DELTA;
-					canvas.redraw();
-				}
+				scaleFactor += (event.count > 0) ? SCALE_DELTA : -SCALE_DELTA;
+				canvas.redraw();
 			}
 		});
 
