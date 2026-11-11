@@ -42,6 +42,7 @@ import org.eclipse.chemclipse.wsd.converter.chromatogram.ChromatogramConverterWS
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.wsd.model.core.selection.ChromatogramSelectionWSD;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 
 public class ChromatogramImportRunnable implements IRunnableWithProgress {
@@ -92,8 +93,9 @@ public class ChromatogramImportRunnable implements IRunnableWithProgress {
 			/*
 			 * Don't fire an update.
 			 */
-			monitor.beginTask("Import Chromatograms", IProgressMonitor.UNKNOWN);
+			SubMonitor subMonitor = SubMonitor.convert(monitor, "Import Chromatograms", files.size());
 			for(File file : files) {
+				IProgressMonitor fileMonitor = subMonitor.newChild(1, SubMonitor.SUPPRESS_NONE);
 				boolean fireUpdate = false;
 				switch(dataType) {
 					case MSD_NOMINAL:
@@ -102,9 +104,9 @@ public class ChromatogramImportRunnable implements IRunnableWithProgress {
 					case MSD:
 						IProcessingInfo<IChromatogramMSD> processingInfoMSD;
 						if(supplierId != null) {
-							processingInfoMSD = ChromatogramConverterMSD.getInstance().convert(file, supplierId, monitor);
+							processingInfoMSD = ChromatogramConverterMSD.getInstance().convert(file, supplierId, fileMonitor);
 						} else {
-							processingInfoMSD = ChromatogramConverterMSD.getInstance().convert(file, monitor);
+							processingInfoMSD = ChromatogramConverterMSD.getInstance().convert(file, fileMonitor);
 						}
 						ProcessingInfoPartSupport.getInstance().update(processingInfoMSD);
 						IChromatogramMSD chromatogramMSD = processingInfoMSD.getProcessingResult();
@@ -113,9 +115,9 @@ public class ChromatogramImportRunnable implements IRunnableWithProgress {
 					case CSD:
 						IProcessingInfo<IChromatogramCSD> processingInfoCSD;
 						if(supplierId != null) {
-							processingInfoCSD = ChromatogramConverterCSD.getInstance().convert(file, supplierId, monitor);
+							processingInfoCSD = ChromatogramConverterCSD.getInstance().convert(file, supplierId, fileMonitor);
 						} else {
-							processingInfoCSD = ChromatogramConverterCSD.getInstance().convert(file, monitor);
+							processingInfoCSD = ChromatogramConverterCSD.getInstance().convert(file, fileMonitor);
 						}
 						ProcessingInfoPartSupport.getInstance().update(processingInfoCSD);
 						IChromatogramCSD chromatogramCSD = processingInfoCSD.getProcessingResult();
@@ -124,9 +126,9 @@ public class ChromatogramImportRunnable implements IRunnableWithProgress {
 					case WSD:
 						IProcessingInfo<IChromatogramWSD> processingInfoWSD;
 						if(supplierId != null) {
-							processingInfoWSD = ChromatogramConverterWSD.getInstance().convert(file, supplierId, monitor);
+							processingInfoWSD = ChromatogramConverterWSD.getInstance().convert(file, supplierId, fileMonitor);
 						} else {
-							processingInfoWSD = ChromatogramConverterWSD.getInstance().convert(file, monitor);
+							processingInfoWSD = ChromatogramConverterWSD.getInstance().convert(file, fileMonitor);
 						}
 						ProcessingInfoPartSupport.getInstance().update(processingInfoWSD);
 						IChromatogramWSD chromatogramWSD = processingInfoWSD.getProcessingResult();
@@ -135,9 +137,9 @@ public class ChromatogramImportRunnable implements IRunnableWithProgress {
 					case DSD:
 						IProcessingInfo<IChromatogramDSD> processingInfoDSD;
 						if(supplierId != null) {
-							processingInfoDSD = ChromatogramConverterDSD.getInstance().convert(file, supplierId, monitor);
+							processingInfoDSD = ChromatogramConverterDSD.getInstance().convert(file, supplierId, fileMonitor);
 						} else {
-							processingInfoDSD = ChromatogramConverterDSD.getInstance().convert(file, monitor);
+							processingInfoDSD = ChromatogramConverterDSD.getInstance().convert(file, fileMonitor);
 						}
 						ProcessingInfoPartSupport.getInstance().update(processingInfoDSD);
 						IChromatogramDSD chromatogramDSD = processingInfoDSD.getProcessingResult();
@@ -146,9 +148,9 @@ public class ChromatogramImportRunnable implements IRunnableWithProgress {
 					case VSD:
 						IProcessingInfo<IChromatogramVSD> processingInfoVSD;
 						if(supplierId != null) {
-							processingInfoVSD = ChromatogramConverterVSD.getInstance().convert(file, supplierId, monitor);
+							processingInfoVSD = ChromatogramConverterVSD.getInstance().convert(file, supplierId, fileMonitor);
 						} else {
-							processingInfoVSD = ChromatogramConverterVSD.getInstance().convert(file, monitor);
+							processingInfoVSD = ChromatogramConverterVSD.getInstance().convert(file, fileMonitor);
 						}
 						ProcessingInfoPartSupport.getInstance().update(processingInfoVSD);
 						IChromatogramVSD chromatogramVSD = processingInfoVSD.getProcessingResult();
@@ -157,9 +159,9 @@ public class ChromatogramImportRunnable implements IRunnableWithProgress {
 					case FSD:
 						IProcessingInfo<IChromatogramFSD> processingInfoFSD;
 						if(supplierId != null) {
-							processingInfoFSD = ChromatogramConverterFSD.getInstance().convert(file, supplierId, monitor);
+							processingInfoFSD = ChromatogramConverterFSD.getInstance().convert(file, supplierId, fileMonitor);
 						} else {
-							processingInfoFSD = ChromatogramConverterFSD.getInstance().convert(file, monitor);
+							processingInfoFSD = ChromatogramConverterFSD.getInstance().convert(file, fileMonitor);
 						}
 						ProcessingInfoPartSupport.getInstance().update(processingInfoFSD);
 						IChromatogramFSD chromatogramFSD = processingInfoFSD.getProcessingResult();
