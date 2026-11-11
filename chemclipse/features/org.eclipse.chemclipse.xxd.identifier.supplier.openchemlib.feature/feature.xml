@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.chemclipse.xxd.identifier.supplier.openchemlib.feature"
+      label="OpenChemLib Feature"
+      version="0.9.0.qualifier"
+      provider-name="ChemClipse"
+      plugin="org.eclipse.chemclipse.feature.branding"
+      license-feature="org.eclipse.license"
+      license-feature-version="2.0.2.qualifier">
+
+   <description url="https://www.chemclipse.net">
+      Draws structural formulas offline using OpenChemLib.
+   </description>
+
+   <copyright url="http://www.chemclipse.net">
+      Copyright (c) 2026 Lablicate GmbH
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.eclipse.chemclipse.xxd.identifier.supplier.openchemlib.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

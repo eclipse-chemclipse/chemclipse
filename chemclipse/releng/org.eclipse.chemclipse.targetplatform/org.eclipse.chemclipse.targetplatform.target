@@ -122,6 +122,16 @@
 			</dependency>
 		</dependencies>
 	</location>
+	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>com.actelion.research</groupId>
+				<artifactId>openchemlib</artifactId>
+				<version>2026.11.0</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
 </locations>
 	<targetJRE path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-25"/>
 </target>
