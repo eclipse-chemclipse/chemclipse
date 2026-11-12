@@ -29,6 +29,7 @@ import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.support.ChromatogramSupport;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 public class ChromatogramReader extends AbstractChromatogramCSDReader {
 
@@ -76,7 +77,9 @@ public class ChromatogramReader extends AbstractChromatogramCSDReader {
 				RetentionTimeFormat retentionTimeFormat = PreferenceSupplier.getRetentionTimeFormat();
 
 				String line;
+				SubMonitor subMonitor = SubMonitor.convert(monitor, (int)Math.min(Integer.MAX_VALUE, file.length()));
 				while((line = bufferedReader.readLine()) != null && !monitor.isCanceled()) {
+					subMonitor.worked(line.length() + 1);
 					/*
 					 * Parse each line.
 					 */
