@@ -42,6 +42,7 @@ import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.Baseli
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.IBaselineElement;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 /**
  * Methods are copied to ensure that file formats are kept readable even if they contain errors.
@@ -55,7 +56,7 @@ public class ChromatogramReader_1006 extends AbstractChromatogramReader implemen
 		IChromatogramWSD chromatogram = null;
 		try (ZipFile zipFile = new ZipFile(file)) {
 			if(isValidFileFormat(zipFile)) {
-				chromatogram = readFromZipFile(zipFile, "", file);
+				chromatogram = readFromZipFile(zipFile, "", file, monitor);
 			}
 		}
 		return chromatogram;
@@ -76,18 +77,18 @@ public class ChromatogramReader_1006 extends AbstractChromatogramReader implemen
 	@Override
 	public IChromatogramWSD read(ZipInputStream zipInputStream, String directoryPrefix, IProgressMonitor monitor) throws IOException {
 
-		return readZipData(zipInputStream, directoryPrefix, null);
+		return readZipData(zipInputStream, directoryPrefix, null, monitor);
 	}
 
 	@Override
 	public IChromatogramWSD read(ZipFile zipFile, String directoryPrefix, IProgressMonitor monitor) throws IOException {
 
-		return readFromZipFile(zipFile, directoryPrefix, null);
+		return readFromZipFile(zipFile, directoryPrefix, null, monitor);
 	}
 
-	private IChromatogramWSD readFromZipFile(ZipFile zipFile, String directoryPrefix, File file) throws IOException {
+	private IChromatogramWSD readFromZipFile(ZipFile zipFile, String directoryPrefix, File file, IProgressMonitor monitor) throws IOException {
 
-		return readZipData(zipFile, directoryPrefix, file);
+		return readZipData(zipFile, directoryPrefix, file, monitor);
 	}
 
 	private IChromatogramOverview readOverviewFromZipFile(ZipFile zipFile, String directoryPrefix) throws IOException {
@@ -108,7 +109,7 @@ public class ChromatogramReader_1006 extends AbstractChromatogramReader implemen
 	 * @param file
 	 * @return
 	 */
-	private IChromatogramWSD readZipData(Object object, String directoryPrefix, File file) throws IOException {
+	private IChromatogramWSD readZipData(Object object, String directoryPrefix, File file, IProgressMonitor monitor) throws IOException {
 
 		boolean closeStream;
 		if(object instanceof ZipFile) {
@@ -131,7 +132,7 @@ public class ChromatogramReader_1006 extends AbstractChromatogramReader implemen
 		 */
 		chromatogram = new VendorChromatogram();
 		readMethod(getDataInputStream(object, directoryPrefix + Format.FILE_SYSTEM_SETTINGS_WSD), closeStream, chromatogram);
-		readScans(getDataInputStream(object, directoryPrefix + Format.FILE_SCANS_WSD), closeStream, chromatogram);
+		readScans(getDataInputStream(object, directoryPrefix + Format.FILE_SCANS_WSD), closeStream, chromatogram, monitor);
 		readBaselines(getDataInputStream(object, directoryPrefix + Format.FILE_BASELINE_WSD), closeStream, chromatogram);
 		readHistory(getDataInputStream(object, directoryPrefix + Format.FILE_HISTORY_WSD), closeStream, chromatogram);
 		readMiscellaneous(getDataInputStream(object, directoryPrefix + Format.FILE_MISC_WSD), closeStream, chromatogram);
@@ -192,9 +193,10 @@ public class ChromatogramReader_1006 extends AbstractChromatogramReader implemen
 		}
 	}
 
-	private void readScans(DataInputStream dataInputStream, boolean closeStream, IChromatogramWSD chromatogram) throws IOException {
+	private void readScans(DataInputStream dataInputStream, boolean closeStream, IChromatogramWSD chromatogram, IProgressMonitor monitor) throws IOException {
 
 		int scans = dataInputStream.readInt();
+		SubMonitor subMonitor = SubMonitor.convert(monitor, scans);
 		for(int scan = 1; scan <= scans; ++scan) {
 			IScanWSD scanWSD = new VendorScan();
 			int scanSignals = dataInputStream.readInt();
@@ -234,6 +236,7 @@ public class ChromatogramReader_1006 extends AbstractChromatogramReader implemen
 			scanWSD.setCycleNumber(cycleNumber);
 			scanWSD.adjustTotalSignal(totalSignal);
 			chromatogram.addScan(scanWSD);
+			subMonitor.worked(1);
 		}
 
 		if(closeStream) {
