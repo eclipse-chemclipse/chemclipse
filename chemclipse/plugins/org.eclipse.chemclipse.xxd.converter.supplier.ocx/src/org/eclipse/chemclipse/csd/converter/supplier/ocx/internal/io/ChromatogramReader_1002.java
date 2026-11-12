@@ -44,6 +44,7 @@ import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.Baseli
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.internal.support.IBaselineElement;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 /**
  * Methods are copied to ensure that file formats are kept readable even if they contain errors.
@@ -59,7 +60,7 @@ public class ChromatogramReader_1002 extends AbstractChromatogramReader implemen
 		IChromatogramCSD chromatogram = null;
 		try (ZipFile zipFile = new ZipFile(file)) {
 			if(isValidFileFormat(zipFile)) {
-				chromatogram = readFromZipFile(zipFile, "", file);
+				chromatogram = readFromZipFile(zipFile, "", file, monitor);
 			}
 		}
 		return chromatogram;
@@ -71,7 +72,7 @@ public class ChromatogramReader_1002 extends AbstractChromatogramReader implemen
 		IChromatogramOverview chromatogramOverview = null;
 		try (ZipFile zipFile = new ZipFile(file)) {
 			if(isValidFileFormat(zipFile)) {
-				chromatogramOverview = readFromZipFile(zipFile, "", file);
+				chromatogramOverview = readFromZipFile(zipFile, "", file, monitor);
 			}
 		}
 		return chromatogramOverview;
@@ -80,18 +81,18 @@ public class ChromatogramReader_1002 extends AbstractChromatogramReader implemen
 	@Override
 	public IChromatogramCSD read(ZipInputStream zipInputStream, String directoryPrefix, IProgressMonitor monitor) throws IOException {
 
-		return readZipData(zipInputStream, directoryPrefix, null);
+		return readZipData(zipInputStream, directoryPrefix, null, monitor);
 	}
 
 	@Override
 	public IChromatogramCSD read(ZipFile zipFile, String directoryPrefix, IProgressMonitor monitor) throws IOException {
 
-		return readFromZipFile(zipFile, directoryPrefix, null);
+		return readFromZipFile(zipFile, directoryPrefix, null, monitor);
 	}
 
-	private IChromatogramCSD readFromZipFile(ZipFile zipFile, String directoryPrefix, File file) throws IOException {
+	private IChromatogramCSD readFromZipFile(ZipFile zipFile, String directoryPrefix, File file, IProgressMonitor monitor) throws IOException {
 
-		return readZipData(zipFile, directoryPrefix, file);
+		return readZipData(zipFile, directoryPrefix, file, monitor);
 	}
 
 	/*
@@ -100,7 +101,7 @@ public class ChromatogramReader_1002 extends AbstractChromatogramReader implemen
 	 * @param file
 	 * @return
 	 */
-	private IChromatogramCSD readZipData(Object object, String directoryPrefix, File file) throws IOException {
+	private IChromatogramCSD readZipData(Object object, String directoryPrefix, File file, IProgressMonitor monitor) throws IOException {
 
 		boolean closeStream;
 		if(object instanceof ZipFile) {
@@ -122,7 +123,7 @@ public class ChromatogramReader_1002 extends AbstractChromatogramReader implemen
 		 * Read the chromatographic information.
 		 */
 		chromatogram = new VendorChromatogram();
-		readScans(getDataInputStream(object, directoryPrefix + Format.FILE_SCANS_FID), closeStream, chromatogram);
+		readScans(getDataInputStream(object, directoryPrefix + Format.FILE_SCANS_FID), closeStream, chromatogram, monitor);
 		readBaseline(getDataInputStream(object, directoryPrefix + Format.FILE_BASELINE_FID), closeStream, chromatogram);
 		readPeaks(getDataInputStream(object, directoryPrefix + Format.FILE_PEAKS_FID), closeStream, chromatogram);
 
@@ -131,12 +132,13 @@ public class ChromatogramReader_1002 extends AbstractChromatogramReader implemen
 		return chromatogram;
 	}
 
-	private void readScans(DataInputStream dataInputStream, boolean closeStream, IChromatogramCSD chromatogram) throws IOException {
+	private void readScans(DataInputStream dataInputStream, boolean closeStream, IChromatogramCSD chromatogram, IProgressMonitor monitor) throws IOException {
 
 		/*
 		 * Scans
 		 */
 		int scans = dataInputStream.readInt();
+		SubMonitor subMonitor = SubMonitor.convert(monitor, scans);
 		for(int scan = 1; scan <= scans; scan++) {
 			int retentionTime = dataInputStream.readInt();
 			float retentionIndex = dataInputStream.readFloat();
@@ -145,6 +147,7 @@ public class ChromatogramReader_1002 extends AbstractChromatogramReader implemen
 			IVendorScan scanFID = new VendorScan(retentionTime, totalSignal);
 			scanFID.setRetentionIndex(retentionIndex);
 			chromatogram.addScan(scanFID);
+			subMonitor.worked(1);
 		}
 		if(closeStream) {
 			dataInputStream.close();
