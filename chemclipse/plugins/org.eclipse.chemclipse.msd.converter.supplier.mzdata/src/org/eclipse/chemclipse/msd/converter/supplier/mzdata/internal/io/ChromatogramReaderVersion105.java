@@ -50,6 +50,7 @@ import org.eclipse.chemclipse.msd.model.implementation.IonTransition;
 import org.eclipse.chemclipse.support.history.EditInformation;
 import org.eclipse.chemclipse.support.xml.XmlParserFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -69,6 +70,7 @@ public class ChromatogramReaderVersion105 extends AbstractChromatogramReader {
 
 		IVendorChromatogram chromatogram = null;
 		try {
+			SubMonitor subMonitor = SubMonitor.convert(monitor);
 			MzData mzData = readMzData(file);
 			/*
 			 * Metadata
@@ -85,6 +87,7 @@ public class ChromatogramReaderVersion105 extends AbstractChromatogramReader {
 			/*
 			 * Mass Spectra
 			 */
+			subMonitor.setWorkRemaining(mzData.getSpectrumList().getSpectrum().size());
 			for(Spectrum spectrum : mzData.getSpectrumList().getSpectrum()) {
 				if(monitor.isCanceled()) {
 					break;
@@ -110,6 +113,7 @@ public class ChromatogramReaderVersion105 extends AbstractChromatogramReader {
 				 * m/z
 				 */
 				readIons(spectrum, massSpectrum, chromatogram);
+				subMonitor.worked(1);
 			}
 		} catch(SAXException e) {
 			logger.warn(e);
