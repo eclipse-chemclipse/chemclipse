@@ -97,11 +97,12 @@ public class BaselineDetector extends AbstractBaselineDetector {
 					Set<Integer> ions = getUnitResolutionTraces(specificTraces);
 					if(!ions.isEmpty()) {
 						Map<Integer, ITotalScanSignals> totalScanSignalsMap = getExtractedIonSignals(chromatogramMSD, startScan, stopScan, ions);
+						SubMonitor subMonitor = SubMonitor.convert(monitor, ions.size());
 						for(int ion : ions) {
 							TraceNominalMSD traceNominalMSD = new TraceNominalMSD();
 							traceNominalMSD.setMZ(ion);
 							ITotalScanSignals totalScanSignals = totalScanSignalsMap.get(ion);
-							applyBaseline(totalScanSignals, chromatogram, startScan, stopScan, iterations, traceNominalMSD, monitor);
+							applyBaseline(totalScanSignals, chromatogram, startScan, stopScan, iterations, traceNominalMSD, subMonitor.newChild(1, SubMonitor.SUPPRESS_NONE));
 						}
 					} else {
 						applyBaselineTIC(chromatogramMSD, startScan, stopScan, iterations, monitor);
@@ -110,11 +111,12 @@ public class BaselineDetector extends AbstractBaselineDetector {
 					Set<Integer> wavelengths = getUnitResolutionTraces(specificTraces);
 					if(!wavelengths.isEmpty()) {
 						Map<Integer, ITotalScanSignals> totalScanSignalsMap = getExtractedWavelengthSignals(chromatogramWSD, startScan, stopScan, wavelengths);
+						SubMonitor subMonitor = SubMonitor.convert(monitor, wavelengths.size());
 						for(int wavelength : wavelengths) {
 							TraceRasteredWSD traceRasteredWSD = new TraceRasteredWSD();
 							traceRasteredWSD.setWavelength(wavelength);
 							ITotalScanSignals totalScanSignals = totalScanSignalsMap.get(wavelength);
-							applyBaseline(totalScanSignals, chromatogram, startScan, stopScan, iterations, traceRasteredWSD, monitor);
+							applyBaseline(totalScanSignals, chromatogram, startScan, stopScan, iterations, traceRasteredWSD, subMonitor.newChild(1, SubMonitor.SUPPRESS_NONE));
 						}
 					} else {
 						applyBaselineTIC(chromatogramWSD, startScan, stopScan, iterations, monitor);
