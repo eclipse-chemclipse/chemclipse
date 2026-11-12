@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2025 Lablicate GmbH.
+ * Copyright (c) 2021, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -37,6 +37,7 @@ import org.eclipse.chemclipse.msd.converter.supplier.mzdata.internal.v105.model.
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
@@ -118,8 +119,9 @@ public class ChromatogramWriterVersion105 extends AbstractChromatogramWriter imp
 
 		SpectrumList spectrumList = new SpectrumList();
 		spectrumList.setCount(chromatogram.getNumberOfScans());
+		SubMonitor subMonitor = SubMonitor.convert(monitor, chromatogram.getNumberOfScans());
 		for(IScan scan : chromatogram.getScans()) {
-			spectrumList.getSpectrum().add(createSpectrum(scan, monitor));
+			spectrumList.getSpectrum().add(createSpectrum(scan, subMonitor.newChild(1, SubMonitor.SUPPRESS_NONE)));
 		}
 		return spectrumList;
 	}

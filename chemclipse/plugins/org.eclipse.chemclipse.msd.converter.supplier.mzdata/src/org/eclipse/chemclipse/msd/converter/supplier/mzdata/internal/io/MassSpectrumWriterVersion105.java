@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -46,6 +46,7 @@ import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.core.runtime.IProduct;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Version;
 
@@ -71,10 +72,11 @@ public class MassSpectrumWriterVersion105 implements IMassSpectraWriter {
 
 	private void writeMassSpectra(File file, IMassSpectra massSpectra, IProgressMonitor monitor) {
 
+		SubMonitor subMonitor = SubMonitor.convert(monitor, massSpectra.size());
 		for(int i = 1; i <= massSpectra.size(); i++) {
 			IScanMSD massSpectrum = massSpectra.getMassSpectrum(i);
 			if(massSpectrum != null && massSpectrum.getNumberOfIons() > 0) {
-				writeMassSpectrum(file, massSpectrum, monitor);
+				writeMassSpectrum(file, massSpectrum, subMonitor.newChild(1, SubMonitor.SUPPRESS_NONE));
 			}
 		}
 	}
