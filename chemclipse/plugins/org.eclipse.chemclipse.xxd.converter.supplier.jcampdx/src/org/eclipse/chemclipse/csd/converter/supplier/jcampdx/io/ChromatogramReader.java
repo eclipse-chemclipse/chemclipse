@@ -37,6 +37,7 @@ import org.eclipse.chemclipse.model.implementation.IdentificationTarget;
 import org.eclipse.chemclipse.model.support.ChromatogramSupport;
 import org.eclipse.chemclipse.xxd.converter.supplier.jcampdx.io.DataTypeXY;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 import jakarta.activation.UnsupportedDataTypeException;
 
@@ -97,7 +98,9 @@ public class ChromatogramReader extends AbstractChromatogramCSDReader {
 			 */
 			String line;
 			String name = "";
+			SubMonitor subMonitor = SubMonitor.convert(monitor, (int)Math.min(Integer.MAX_VALUE, file.length()));
 			while((line = bufferedReader.readLine()) != null && !monitor.isCanceled()) {
+				subMonitor.worked(line.length() + 1);
 				/*
 				 * Each scan starts with the marker:
 				 * [##NAME=Acetoin (Butanon-2, 3-hydroxy-)]
@@ -129,6 +132,7 @@ public class ChromatogramReader extends AbstractChromatogramCSDReader {
 					boolean searchForRetentionTime = true;
 					while(searchForRetentionTime) {
 						if((line = bufferedReader.readLine()) != null) {
+							subMonitor.worked(line.length() + 1);
 							if(isRetentionTimeMarker(line)) {
 								searchForRetentionTime = false;
 							}
@@ -151,6 +155,7 @@ public class ChromatogramReader extends AbstractChromatogramCSDReader {
 								boolean findHitMarker = true;
 								float matchFactor = 100.0f;
 								while((line = bufferedReader.readLine()) != null && findHitMarker) {
+									subMonitor.worked(line.length() + 1);
 									if(line.startsWith(HIT_MARKER)) {
 										try {
 											String hitValue = line.replace(HIT_MARKER, "").trim();
@@ -208,7 +213,9 @@ public class ChromatogramReader extends AbstractChromatogramCSDReader {
 			int nPoints = 0;
 			int index = 0;
 
+			SubMonitor subMonitor = SubMonitor.convert(monitor, (int)Math.min(Integer.MAX_VALUE, file.length()));
 			while((line = bufferedReader.readLine()) != null && !monitor.isCanceled()) {
+				subMonitor.worked(line.length() + 1);
 				if(line.contains(COMMENT_MARKER)) {
 					line = line.substring(0, line.indexOf(COMMENT_MARKER));
 				}

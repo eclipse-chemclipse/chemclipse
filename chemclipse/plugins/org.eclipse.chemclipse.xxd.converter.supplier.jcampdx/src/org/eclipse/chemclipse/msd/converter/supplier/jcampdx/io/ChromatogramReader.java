@@ -37,6 +37,7 @@ import org.eclipse.chemclipse.msd.converter.supplier.jcampdx.model.VendorScan;
 import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 public class ChromatogramReader extends AbstractChromatogramMSDReader {
 
@@ -132,7 +133,9 @@ public class ChromatogramReader extends AbstractChromatogramMSDReader {
 			boolean specialCaseTIC = false;
 
 			String line;
+			SubMonitor subMonitor = SubMonitor.convert(monitor, (int)Math.min(Integer.MAX_VALUE, file.length()));
 			while((line = bufferedReader.readLine()) != null && !monitor.isCanceled()) {
+				subMonitor.worked(line.length() + 1);
 				/*
 				 * Each scan starts with the marker:
 				 * ##SCAN_NUMBER= 1

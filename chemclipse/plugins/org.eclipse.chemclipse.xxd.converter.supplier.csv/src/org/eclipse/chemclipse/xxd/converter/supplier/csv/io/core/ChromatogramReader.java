@@ -36,6 +36,7 @@ import org.eclipse.chemclipse.xxd.converter.supplier.csv.model.VendorIon;
 import org.eclipse.chemclipse.xxd.converter.supplier.csv.model.VendorScan;
 import org.eclipse.chemclipse.xxd.converter.supplier.csv.preferences.PreferenceSupplier;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 public class ChromatogramReader extends AbstractChromatogramMSDReader {
 
@@ -96,12 +97,16 @@ public class ChromatogramReader extends AbstractChromatogramMSDReader {
 			 * Get the header inclusive ion description.
 			 */
 			Map<Integer, Float> ionsMap = getIonMap(csvParser);
-			for(CSVRecord csvRecord : csvParser.getRecords()) {
+			SubMonitor subMonitor = SubMonitor.convert(monitor, (int)Math.min(Integer.MAX_VALUE, file.length()));
+			long position = 0;
+			for(CSVRecord csvRecord : csvParser) {
 				if(monitor.isCanceled()) {
 					break;
 				}
 				IScanMSD scanMSD = getScan(csvRecord, ionsMap, zeroMarker, overview);
 				chromatogram.addScan(scanMSD);
+				subMonitor.worked((int)(csvRecord.getCharacterPosition() - position));
+				position = csvRecord.getCharacterPosition();
 			}
 
 			int scanDelay = chromatogram.getScan(1).getRetentionTime();
