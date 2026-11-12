@@ -31,6 +31,7 @@ import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.versions.VersionConstants;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 public class ChromatogramReferencesSupport {
 
@@ -44,6 +45,7 @@ public class ChromatogramReferencesSupport {
 		List<IChromatogram> chromatogramReferences = chromatogram.getReferencedChromatograms();
 		DecimalFormat decimalFormat = getDecimalFormatIndex(chromatogramReferences.size());
 
+		SubMonitor subMonitor = SubMonitor.convert(monitor, chromatogramReferences.size());
 		int i = 1;
 		for(IChromatogram chromatogramReference : chromatogramReferences) {
 			if(!chromatogramReference.getScans().isEmpty()) {
@@ -52,19 +54,19 @@ public class ChromatogramReferencesSupport {
 					 * CSD
 					 */
 					File fileReference = getFileReference(file, chromatogramReference, headerField, decimalFormat.format(i), "CSD");
-					chromatogramWriterCSD.writeChromatogram(fileReference, referencedChromatogramCSD, monitor);
+					chromatogramWriterCSD.writeChromatogram(fileReference, referencedChromatogramCSD, subMonitor.newChild(1, SubMonitor.SUPPRESS_NONE));
 				} else if(chromatogramReference instanceof IChromatogramMSD referencedChromatogramMSD) {
 					/*
 					 * MSD
 					 */
 					File fileReference = getFileReference(file, chromatogramReference, headerField, decimalFormat.format(i), "MSD");
-					chromatogramWriterMSD.writeChromatogram(fileReference, referencedChromatogramMSD, monitor);
+					chromatogramWriterMSD.writeChromatogram(fileReference, referencedChromatogramMSD, subMonitor.newChild(1, SubMonitor.SUPPRESS_NONE));
 				} else if(chromatogramReference instanceof IChromatogramWSD referencedChromatogramWSD) {
 					/*
 					 * WSD
 					 */
 					File fileReference = getFileReference(file, chromatogramReference, headerField, decimalFormat.format(i), "WSD");
-					chromatogramWriterWSD.writeChromatogram(fileReference, referencedChromatogramWSD, monitor);
+					chromatogramWriterWSD.writeChromatogram(fileReference, referencedChromatogramWSD, subMonitor.newChild(1, SubMonitor.SUPPRESS_NONE));
 				}
 			}
 			i++;
