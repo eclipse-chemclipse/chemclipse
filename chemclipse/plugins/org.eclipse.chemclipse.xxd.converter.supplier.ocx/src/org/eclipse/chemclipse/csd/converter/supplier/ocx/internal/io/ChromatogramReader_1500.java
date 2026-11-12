@@ -190,8 +190,7 @@ public class ChromatogramReader_1500 extends AbstractChromatogramReader implemen
 				 * Get the size could lead to an exception if no reference info is stored.
 				 */
 				int size = readChromatogramReferenceInfo(getDataInputStream(object, directoryPrefix + Format.FILE_REFERENCE_INFO), closeStream);
-				readReferencedChromatograms(object, directoryPrefix, chromatogram, size, closeStream, monitor);
-				subMonitor.worked(20);
+				readReferencedChromatograms(object, directoryPrefix, chromatogram, size, closeStream, subMonitor.newChild(20, SubMonitor.SUPPRESS_NONE));
 			} catch(IOException e) {
 				logger.info(e);
 			}
@@ -649,6 +648,7 @@ public class ChromatogramReader_1500 extends AbstractChromatogramReader implemen
 
 	private void readReferencedChromatograms(Object object, String directoryPrefix, IChromatogramCSD chromatogram, int size, boolean closeStream, IProgressMonitor monitor) throws IOException {
 
+		SubMonitor subMonitor = SubMonitor.convert(monitor, size);
 		for(int i = 0; i < size; i++) {
 
 			String directory = directoryPrefix + Format.DIR_CHROMATOGRAM_REFERENCE + Format.CHROMATOGRAM_REFERENCE_SEPARATOR + i + Format.DIR_SEPARATOR;
@@ -659,7 +659,7 @@ public class ChromatogramReader_1500 extends AbstractChromatogramReader implemen
 				dataInputStream.close();
 			}
 
-			parseChromatogram(object, dataType, directory, chromatogram, monitor);
+			parseChromatogram(object, dataType, directory, chromatogram, subMonitor.newChild(1, SubMonitor.SUPPRESS_NONE));
 		}
 	}
 
