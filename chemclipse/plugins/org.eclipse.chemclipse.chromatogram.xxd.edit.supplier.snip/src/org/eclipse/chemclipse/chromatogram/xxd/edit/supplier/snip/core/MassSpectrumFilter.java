@@ -31,6 +31,7 @@ import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.MessageType;
 import org.eclipse.chemclipse.processing.core.ProcessingMessage;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 public class MassSpectrumFilter extends AbstractMassSpectrumFilter {
 
@@ -53,9 +54,10 @@ public class MassSpectrumFilter extends AbstractMassSpectrumFilter {
 
 		int iterations = massSpectrumFilterSettings.getIterations();
 
+		SubMonitor subMonitor = SubMonitor.convert(monitor, massSpectra.size());
 		for(IScanMSD scanMSD : massSpectra) {
 			double[] abundances = scanMSD.getIons().stream().mapToDouble(IIon::getAbundance).toArray();
-			double[] baseline = SnipCalculator.calculateBaselineIntensityValues(abundances, iterations, monitor);
+			double[] baseline = SnipCalculator.calculateBaselineIntensityValues(abundances, iterations, subMonitor.newChild(1, SubMonitor.SUPPRESS_NONE));
 			if(scanMSD instanceof IStandaloneMassSpectrum standaloneMassSpectrum) {
 				standaloneMassSpectrum.setBaseline(new ArrayList<>(Arrays.stream(baseline).boxed().toList()));
 			}
