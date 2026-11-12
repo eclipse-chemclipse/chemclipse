@@ -114,12 +114,15 @@ public class PeakDetectorWSD extends BasePeakDetector implements IPeakDetectorWS
 		List<IChromatogramPeakWSD> extractPeaks = new ArrayList<>();
 		Collection<IMarkedTraces<ITrace>> filterWavelengths = peakDetectorSettings.getFilterWavelengths();
 		IChromatogramWSD chromatogram = chromatogramSelection.getChromatogram();
+		SubMonitor subMonitor = SubMonitor.convert(monitor, filterWavelengths.size());
 		for(IMarkedTraces<ITrace> wavelengths : filterWavelengths) {
+			SubMonitor traceMonitor = subMonitor.newChild(1);
 			Threshold threshold = peakDetectorSettings.getThreshold();
 			int windowSize = peakDetectorSettings.getMovingAverageWindowSize();
 			List<IRawPeak> rawPeaks = new ArrayList<>();
 
 			if(noiseSegments != null && !noiseSegments.isEmpty()) {
+				traceMonitor.setWorkRemaining(noiseSegments.size() + 1);
 				/*
 				 * Initial retention time range before running the detection using
 				 * noise segments.
@@ -136,7 +139,7 @@ public class PeakDetectorWSD extends BasePeakDetector implements IPeakDetectorWS
 				if(noiseSegment != null) {
 					chromatogramSelection.setRangeRetentionTime(startRetentionTime, noiseSegment.getStartRetentionTime());
 					IFirstDerivativeDetectorSlopes slopes = getFirstDerivativeSlopes(chromatogramSelection, windowSize, wavelengths);
-					rawPeaks.addAll(getRawPeaks(slopes, threshold, monitor));
+					rawPeaks.addAll(getRawPeaks(slopes, threshold, traceMonitor.newChild(1)));
 				}
 				/*
 				 * Ranges between the noise segments
@@ -148,7 +151,7 @@ public class PeakDetectorWSD extends BasePeakDetector implements IPeakDetectorWS
 					int nextStartRetentionTimeSegment = noiseSegment.getStartRetentionTime();
 					chromatogramSelection.setRangeRetentionTime(previousStopRetentionTimeSegment, nextStartRetentionTimeSegment);
 					IFirstDerivativeDetectorSlopes slopes = getFirstDerivativeSlopes(chromatogramSelection, windowSize, wavelengths);
-					rawPeaks.addAll(getRawPeaks(slopes, threshold, monitor));
+					rawPeaks.addAll(getRawPeaks(slopes, threshold, traceMonitor.newChild(1)));
 				}
 				/*
 				 * Range from the last noise segment to the end of the chromatogram selection
@@ -157,7 +160,7 @@ public class PeakDetectorWSD extends BasePeakDetector implements IPeakDetectorWS
 				if(noiseSegment != null) {
 					chromatogramSelection.setRangeRetentionTime(noiseSegment.getStopRetentionTime(), stopRetentionTime);
 					IFirstDerivativeDetectorSlopes slopes = getFirstDerivativeSlopes(chromatogramSelection, windowSize, wavelengths);
-					rawPeaks.addAll(getRawPeaks(slopes, threshold, monitor));
+					rawPeaks.addAll(getRawPeaks(slopes, threshold, traceMonitor.newChild(1)));
 				}
 				/*
 				 * Reset the retention time range to its initial values.
@@ -168,7 +171,7 @@ public class PeakDetectorWSD extends BasePeakDetector implements IPeakDetectorWS
 				 * Default: no noise segments
 				 */
 				IFirstDerivativeDetectorSlopes slopes = getFirstDerivativeSlopes(chromatogramSelection, windowSize, wavelengths);
-				rawPeaks = getRawPeaks(slopes, peakDetectorSettings.getThreshold(), monitor);
+				rawPeaks = getRawPeaks(slopes, peakDetectorSettings.getThreshold(), traceMonitor);
 			}
 			List<IChromatogramPeakWSD> peaks = extractPeaks(rawPeaks, chromatogram, peakDetectorSettings, wavelengths);
 			if(peakDetectorSettings.isIndividualWavelengths()) {

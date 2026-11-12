@@ -118,6 +118,7 @@ public class PeakDetectorCSD extends BasePeakDetector implements IPeakDetectorCS
 		List<IRawPeak> rawPeaks = new ArrayList<>();
 
 		if(noiseSegments != null && !noiseSegments.isEmpty()) {
+			SubMonitor subMonitor = SubMonitor.convert(monitor, noiseSegments.size() + 1);
 			/*
 			 * Initial retention time range before running the detection using
 			 * noise segments.
@@ -134,7 +135,7 @@ public class PeakDetectorCSD extends BasePeakDetector implements IPeakDetectorCS
 			if(noiseSegment != null) {
 				chromatogramSelection.setRangeRetentionTime(startRetentionTime, noiseSegment.getStartRetentionTime());
 				IFirstDerivativeDetectorSlopes slopes = getFirstDerivativeSlopes(chromatogramSelection, windowSize);
-				rawPeaks.addAll(getRawPeaks(slopes, threshold, monitor));
+				rawPeaks.addAll(getRawPeaks(slopes, threshold, subMonitor.newChild(1)));
 			}
 			/*
 			 * Ranges between the noise segments
@@ -146,7 +147,7 @@ public class PeakDetectorCSD extends BasePeakDetector implements IPeakDetectorCS
 				int stopRetentionTimeSegment = noiseSegment.getStartRetentionTime();
 				chromatogramSelection.setRangeRetentionTime(startRetentionTimeSegment, stopRetentionTimeSegment);
 				IFirstDerivativeDetectorSlopes slopes = getFirstDerivativeSlopes(chromatogramSelection, windowSize);
-				rawPeaks.addAll(getRawPeaks(slopes, threshold, monitor));
+				rawPeaks.addAll(getRawPeaks(slopes, threshold, subMonitor.newChild(1)));
 			}
 			/*
 			 * Range from the last noise segment to the end of the chromatogram selection
@@ -155,7 +156,7 @@ public class PeakDetectorCSD extends BasePeakDetector implements IPeakDetectorCS
 			if(noiseSegment != null) {
 				chromatogramSelection.setRangeRetentionTime(noiseSegment.getStopRetentionTime(), stopRetentionTime);
 				IFirstDerivativeDetectorSlopes slopes = getFirstDerivativeSlopes(chromatogramSelection, windowSize);
-				rawPeaks.addAll(getRawPeaks(slopes, threshold, monitor));
+				rawPeaks.addAll(getRawPeaks(slopes, threshold, subMonitor.newChild(1)));
 			}
 			/*
 			 * Reset the retention time range to its initial values.
