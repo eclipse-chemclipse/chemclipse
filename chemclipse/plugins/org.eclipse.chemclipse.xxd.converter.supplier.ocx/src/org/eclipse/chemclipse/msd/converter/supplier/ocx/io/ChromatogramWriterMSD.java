@@ -58,14 +58,15 @@ public class ChromatogramWriterMSD extends AbstractChromatogramWriter implements
 
 	public void writeChromatogram(File file, String version, IChromatogramMSD chromatogram, IProgressMonitor monitor) throws FileIsNotWriteableException, IOException {
 
-		SubMonitor subMonitor = SubMonitor.convert(monitor, 2);
+		boolean exportReferences = PreferenceSupplier.isChromatogramExportReferencesSeparately();
+		SubMonitor subMonitor = SubMonitor.convert(monitor, exportReferences ? 3 : 2);
 		IChromatogramMSDZipWriter chromatogramWriter = getChromatogramWriter(chromatogram, version, subMonitor.newChild(1, SubMonitor.SUPPRESS_NONE));
 		chromatogramWriter.writeChromatogram(file, chromatogram, subMonitor.newChild(1, SubMonitor.SUPPRESS_NONE));
 		/*
 		 * Export References
 		 */
-		if(PreferenceSupplier.isChromatogramExportReferencesSeparately()) {
-			ChromatogramReferencesSupport.exportReferences(file, chromatogram, monitor);
+		if(exportReferences) {
+			ChromatogramReferencesSupport.exportReferences(file, chromatogram, subMonitor.newChild(1, SubMonitor.SUPPRESS_NONE));
 		}
 	}
 
