@@ -127,12 +127,15 @@ public class PeakDetectorMSD extends BasePeakDetector implements IPeakDetectorMS
 		List<IChromatogramPeakMSD> extractPeaks = new ArrayList<>();
 		Collection<IMarkedTraces<ITrace>> filterIons = peakDetectorSettings.getFilterIons();
 		IChromatogramMSD chromatogram = chromatogramSelection.getChromatogram();
+		SubMonitor subMonitor = SubMonitor.convert(monitor, filterIons.size());
 		for(IMarkedTraces<ITrace> ions : filterIons) {
+			SubMonitor traceMonitor = subMonitor.newChild(1);
 			Threshold threshold = peakDetectorSettings.getThreshold();
 			int windowSize = peakDetectorSettings.getMovingAverageWindowSize();
 			List<IRawPeak> rawPeaks = new ArrayList<>();
 
 			if(noiseSegments != null && !noiseSegments.isEmpty()) {
+				traceMonitor.setWorkRemaining(noiseSegments.size() + 1);
 				/*
 				 * Initial retention time range before running the detection using
 				 * noise segments.
@@ -149,7 +152,7 @@ public class PeakDetectorMSD extends BasePeakDetector implements IPeakDetectorMS
 				if(noiseSegment != null) {
 					chromatogramSelection.setRangeRetentionTime(startRetentionTime, noiseSegment.getStartRetentionTime());
 					IFirstDerivativeDetectorSlopes slopes = getFirstDerivativeSlopes(chromatogramSelection, windowSize, ions);
-					rawPeaks.addAll(getRawPeaks(slopes, threshold, monitor));
+					rawPeaks.addAll(getRawPeaks(slopes, threshold, traceMonitor.newChild(1)));
 				}
 				/*
 				 * Ranges between the noise segments
@@ -161,7 +164,7 @@ public class PeakDetectorMSD extends BasePeakDetector implements IPeakDetectorMS
 					int nextStartRetentionTimeSegment = noiseSegment.getStartRetentionTime();
 					chromatogramSelection.setRangeRetentionTime(previousStopRetentionTimeSegment, nextStartRetentionTimeSegment);
 					IFirstDerivativeDetectorSlopes slopes = getFirstDerivativeSlopes(chromatogramSelection, windowSize, ions);
-					rawPeaks.addAll(getRawPeaks(slopes, threshold, monitor));
+					rawPeaks.addAll(getRawPeaks(slopes, threshold, traceMonitor.newChild(1)));
 				}
 				/*
 				 * Range from the last noise segment to the end of the chromatogram selection
@@ -170,7 +173,7 @@ public class PeakDetectorMSD extends BasePeakDetector implements IPeakDetectorMS
 				if(noiseSegment != null) {
 					chromatogramSelection.setRangeRetentionTime(noiseSegment.getStopRetentionTime(), stopRetentionTime);
 					IFirstDerivativeDetectorSlopes slopes = getFirstDerivativeSlopes(chromatogramSelection, windowSize, ions);
-					rawPeaks.addAll(getRawPeaks(slopes, threshold, monitor));
+					rawPeaks.addAll(getRawPeaks(slopes, threshold, traceMonitor.newChild(1)));
 				}
 				/*
 				 * Reset the retention time range to its initial values.
@@ -181,7 +184,7 @@ public class PeakDetectorMSD extends BasePeakDetector implements IPeakDetectorMS
 				 * Default: no noise segments
 				 */
 				IFirstDerivativeDetectorSlopes slopes = getFirstDerivativeSlopes(chromatogramSelection, windowSize, ions);
-				rawPeaks.addAll(getRawPeaks(slopes, threshold, monitor));
+				rawPeaks.addAll(getRawPeaks(slopes, threshold, traceMonitor));
 			}
 			List<IChromatogramPeakMSD> peaks = extractPeaks(rawPeaks, chromatogram, peakDetectorSettings, ions);
 			if(peakDetectorSettings.isUseIndividualTraces()) {
