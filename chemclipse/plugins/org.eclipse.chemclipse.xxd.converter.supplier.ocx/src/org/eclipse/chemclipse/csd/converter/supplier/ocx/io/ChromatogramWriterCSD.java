@@ -39,6 +39,7 @@ import org.eclipse.chemclipse.xxd.converter.supplier.ocx.ChromatogramReferencesS
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 public class ChromatogramWriterCSD extends AbstractChromatogramWriter implements IChromatogramCSDZipWriter {
 
@@ -50,13 +51,15 @@ public class ChromatogramWriterCSD extends AbstractChromatogramWriter implements
 
 	public void writeChromatogram(File file, String version, IChromatogramCSD chromatogram, IProgressMonitor monitor) throws FileIsNotWriteableException, IOException {
 
+		boolean exportReferences = PreferenceSupplier.isChromatogramExportReferencesSeparately();
+		SubMonitor subMonitor = SubMonitor.convert(monitor, exportReferences ? 2 : 1);
 		IChromatogramCSDZipWriter chromatogramWriter = getChromatogramWriter(version, monitor);
-		chromatogramWriter.writeChromatogram(file, chromatogram, monitor);
+		chromatogramWriter.writeChromatogram(file, chromatogram, subMonitor.newChild(1, SubMonitor.SUPPRESS_NONE));
 		/*
 		 * Export References
 		 */
-		if(PreferenceSupplier.isChromatogramExportReferencesSeparately()) {
-			ChromatogramReferencesSupport.exportReferences(file, chromatogram, monitor);
+		if(exportReferences) {
+			ChromatogramReferencesSupport.exportReferences(file, chromatogram, subMonitor.newChild(1, SubMonitor.SUPPRESS_NONE));
 		}
 	}
 
