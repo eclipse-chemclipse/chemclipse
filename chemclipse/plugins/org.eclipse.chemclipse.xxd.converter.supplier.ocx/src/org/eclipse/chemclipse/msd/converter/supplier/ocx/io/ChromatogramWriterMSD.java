@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2025 Lablicate GmbH.
+ * Copyright (c) 2013, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -46,6 +46,7 @@ import org.eclipse.chemclipse.xxd.converter.supplier.ocx.ChromatogramReferencesS
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.xxd.converter.supplier.ocx.settings.Format;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 
 public class ChromatogramWriterMSD extends AbstractChromatogramWriter implements IChromatogramMSDZipWriter {
 
@@ -57,8 +58,9 @@ public class ChromatogramWriterMSD extends AbstractChromatogramWriter implements
 
 	public void writeChromatogram(File file, String version, IChromatogramMSD chromatogram, IProgressMonitor monitor) throws FileIsNotWriteableException, IOException {
 
-		IChromatogramMSDZipWriter chromatogramWriter = getChromatogramWriter(chromatogram, version, monitor);
-		chromatogramWriter.writeChromatogram(file, chromatogram, monitor);
+		SubMonitor subMonitor = SubMonitor.convert(monitor, 2);
+		IChromatogramMSDZipWriter chromatogramWriter = getChromatogramWriter(chromatogram, version, subMonitor.newChild(1, SubMonitor.SUPPRESS_NONE));
+		chromatogramWriter.writeChromatogram(file, chromatogram, subMonitor.newChild(1, SubMonitor.SUPPRESS_NONE));
 		/*
 		 * Export References
 		 */
@@ -70,8 +72,9 @@ public class ChromatogramWriterMSD extends AbstractChromatogramWriter implements
 	@Override
 	public void writeChromatogram(ZipOutputStream zipOutputStream, String directoryPrefix, IChromatogramMSD chromatogram, IProgressMonitor monitor) throws IOException {
 
-		IChromatogramMSDZipWriter chromatogramWriter = getChromatogramWriter(chromatogram, Format.CHROMATOGRAM_VERSION_LATEST, monitor);
-		chromatogramWriter.writeChromatogram(zipOutputStream, directoryPrefix, chromatogram, monitor);
+		SubMonitor subMonitor = SubMonitor.convert(monitor, 2);
+		IChromatogramMSDZipWriter chromatogramWriter = getChromatogramWriter(chromatogram, Format.CHROMATOGRAM_VERSION_LATEST, subMonitor.newChild(1, SubMonitor.SUPPRESS_NONE));
+		chromatogramWriter.writeChromatogram(zipOutputStream, directoryPrefix, chromatogram, subMonitor.newChild(1, SubMonitor.SUPPRESS_NONE));
 	}
 
 	private IChromatogramMSDZipWriter getChromatogramWriter(IChromatogramMSD chromatogram, String version, IProgressMonitor monitor) {
