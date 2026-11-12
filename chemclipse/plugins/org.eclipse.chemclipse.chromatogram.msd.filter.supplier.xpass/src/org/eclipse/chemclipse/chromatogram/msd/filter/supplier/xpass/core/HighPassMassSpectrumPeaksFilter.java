@@ -52,9 +52,10 @@ public class HighPassMassSpectrumPeaksFilter extends AbstractMassSpectrumFilter 
 		}
 
 		if(filterSettings instanceof HighPassMassSpectrumPeaksFilterSettings settings) {
+			SubMonitor subMonitor = SubMonitor.convert(monitor, massSpectra.size());
 			for(IScanMSD massSpectrum : massSpectra) {
 				if(massSpectrum instanceof IStandaloneMassSpectrum standaloneMassSpectrum) {
-					filterPeaks(standaloneMassSpectrum, settings, monitor);
+					filterPeaks(standaloneMassSpectrum, settings, subMonitor.newChild(1));
 					processingInfo.addMessage(new ProcessingMessage(MessageType.INFO, DESCRIPTION, "The mass spectrum has filtered successfully."));
 					IMassSpectrumFilterResult massSpectrumFilterResult = new MassSpectrumFilterResult(ResultStatus.OK, "The mass spectrum has filtered successfully.");
 					processingInfo.setProcessingResult(massSpectrumFilterResult);
