@@ -43,17 +43,17 @@ public abstract class AbstractMultivariateCalculator implements IMultivariateCal
 
 	public AbstractMultivariateCalculator(int numSamples, int numVars, int numComponents, int numPredictionSamples) throws MathIllegalArgumentException {
 
-		if(numComponents > numVars) {
-			throw new MathIllegalArgumentException("Number of components must be smaller than number of variables.");
+		if(numSamples <= 0) {
+			throw new MathIllegalArgumentException("No samples with usable data. Check that the input files contain peaks.");
 		}
 		if(numVars <= 0) {
-			throw new MathIllegalArgumentException("Number of variables must be larger than zero");
-		}
-		if(numSamples <= 0) {
-			throw new MathIllegalArgumentException("Number of samples must be larger than zero.");
+			throw new MathIllegalArgumentException("No variables left for the analysis. Variables found in fewer than two samples are removed when removing useless variables is enabled.");
 		}
 		if(numComponents <= 0) {
 			throw new MathIllegalArgumentException("Number of components must be larger than zero.");
+		}
+		if(numComponents > numVars) {
+			throw new MathIllegalArgumentException("Number of components (" + numComponents + ") must not exceed the number of variables (" + numVars + ").");
 		}
 		sampleData = new DMatrixRMaj(numSamples, numVars);
 		predictionData = new DMatrixRMaj(numPredictionSamples, numVars);
