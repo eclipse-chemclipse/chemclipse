@@ -60,7 +60,11 @@ public class ChromatogramImportConverterHandCrafted110_ITest {
 	@Test
 	public void testEditHistory() {
 
+		assertEquals(3, chromatogramWSD.getEditHistory().size());
 		assertEquals("Conversion to mzML", chromatogramWSD.getEditHistory().get(0).getDescription());
+		assertEquals("CompassXport 2.4.9", chromatogramWSD.getEditHistory().get(0).getEditor());
+		assertEquals("completion time", chromatogramWSD.getEditHistory().get(1).getDescription());
+		assertEquals("p2", chromatogramWSD.getEditHistory().get(2).getDescription());
 	}
 
 	@Test
