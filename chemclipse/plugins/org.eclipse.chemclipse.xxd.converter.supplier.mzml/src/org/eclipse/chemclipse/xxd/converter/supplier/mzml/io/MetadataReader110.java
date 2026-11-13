@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.support.history.EditInformation;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.CVParamType;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.DataProcessingListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.DataProcessingType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.InstrumentConfigurationType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.MzMLType;
@@ -26,6 +27,7 @@ import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.Referenceab
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SampleListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SampleType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SoftwareType;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.UserParamType;
 
 public class MetadataReader110 {
 
@@ -63,18 +65,39 @@ public class MetadataReader110 {
 			readInstrument(instrument.getCvParam(), chromatogram);
 		}
 
-		for(DataProcessingType dataProcessing : mzML.getDataProcessingList().getDataProcessing()) {
+		readEditHistory(mzML.getDataProcessingList(), chromatogram);
+
+		return chromatogram;
+	}
+
+	private static void readEditHistory(DataProcessingListType dataProcessingList, IChromatogram chromatogram) {
+
+		if(dataProcessingList == null) {
+			return;
+		}
+		for(DataProcessingType dataProcessing : dataProcessingList.getDataProcessing()) {
 			for(ProcessingMethodType processingMethod : dataProcessing.getProcessingMethod()) {
-				SoftwareType software = (SoftwareType)processingMethod.getSoftwareRef();
+				String editor = getEditor((SoftwareType)processingMethod.getSoftwareRef());
 				for(CVParamType cvParam : processingMethod.getCvParam()) {
-					String operation = cvParam.getName();
-					String editor = software.getId() + " " + software.getVersion();
-					chromatogram.getEditHistory().add(new EditInformation(operation, editor));
+					chromatogram.getEditHistory().add(new EditInformation(cvParam.getName(), editor));
+				}
+				for(UserParamType userParam : processingMethod.getUserParam()) {
+					chromatogram.getEditHistory().add(new EditInformation(userParam.getName(), editor));
 				}
 			}
 		}
+	}
 
-		return chromatogram;
+	private static String getEditor(SoftwareType software) {
+
+		if(software == null) {
+			return "";
+		}
+		String version = software.getVersion();
+		if(version == null || version.isBlank()) {
+			return software.getId();
+		}
+		return software.getId() + " " + version;
 	}
 
 	private static void readInstrument(List<CVParamType> cvParams, IChromatogram chromatogram) {

@@ -63,6 +63,7 @@ public class ChromatogramImportConverterTinyProteoWizard10_ITest {
 	@Test
 	public void testEditHistory() {
 
+		assertEquals(4, chromatogram.getEditHistory().size());
 		assertEquals("deisotoping", chromatogram.getEditHistory().get(0).getDescription());
 		assertEquals("charge deconvolution", chromatogram.getEditHistory().get(1).getDescription());
 		assertEquals("peak picking", chromatogram.getEditHistory().get(2).getDescription());

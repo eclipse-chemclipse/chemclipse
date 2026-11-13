@@ -37,28 +37,22 @@ import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.msd.model.core.Polarity;
 import org.eclipse.chemclipse.msd.model.implementation.IonTransition;
 import org.eclipse.chemclipse.msd.model.implementation.RegularMassSpectrum;
-import org.eclipse.chemclipse.support.history.EditInformation;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.BinaryReader110;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.MetadataReader110;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.XmlReader110;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.BinaryDataArrayType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.CVParamType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ChromatogramType;
-import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.DataProcessingListType;
-import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.DataProcessingType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.MzMLType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ParamGroupType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.PrecursorType;
-import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ProcessingMethodType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ProductType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ReferenceableParamGroupRefType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.RunType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ScanType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SelectedIonListType;
-import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SoftwareType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SpectrumListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SpectrumType;
-import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.UserParamType;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public class ChromatogramMSDReaderVersion110 extends AbstractChromatogramReader implements IChromatogramMSDReader {
@@ -89,7 +83,6 @@ public class ChromatogramMSDReaderVersion110 extends AbstractChromatogramReader 
 		chromatogram.setFile(file);
 		MetadataReader110.readMetadata(mzML, chromatogram);
 		readSpectrum(mzML, chromatogram, monitor);
-		readEditHistory(mzML, chromatogram);
 		return chromatogram;
 	}
 
@@ -255,29 +248,6 @@ public class ChromatogramMSDReaderVersion110 extends AbstractChromatogramReader 
 			}
 		}
 		return 0;
-	}
-
-	private void readEditHistory(MzMLType mzML, IVendorChromatogramMSD chromatogram) {
-
-		DataProcessingListType dataProcessinglist = mzML.getDataProcessingList();
-		if(dataProcessinglist == null) {
-			return;
-		}
-		for(DataProcessingType dataProcessing : dataProcessinglist.getDataProcessing()) {
-			for(ProcessingMethodType processingMethod : dataProcessing.getProcessingMethod()) {
-				SoftwareType software = (SoftwareType)processingMethod.getSoftwareRef();
-				for(CVParamType cvParam : processingMethod.getCvParam()) {
-					String operation = cvParam.getName();
-					String editor = software.getId();
-					chromatogram.getEditHistory().add(new EditInformation(operation, editor));
-				}
-				for(UserParamType userParam : processingMethod.getUserParam()) {
-					String operation = userParam.getName();
-					String editor = software.getId();
-					chromatogram.getEditHistory().add(new EditInformation(operation, editor));
-				}
-			}
-		}
 	}
 
 	private static double getSelectedIon(SpectrumType spectrum) {
