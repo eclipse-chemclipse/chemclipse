@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -28,6 +28,8 @@ import org.eclipse.chemclipse.msd.converter.peak.PeakConverterMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IPeaksMSD;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
+import org.eclipse.chemclipse.wsd.converter.chromatogram.ChromatogramConverterWSD;
+import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.extraction.ExtractionSettings;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.extraction.PeakExtractionSupport;
 import org.eclipse.chemclipse.xxd.process.supplier.pca.model.IDataInputEntry;
@@ -78,26 +80,31 @@ public class PcaExtractionPeaks implements IExtractionData {
 		List<IPeak> peaks = new ArrayList<>();
 		File file = new File(peakFile.getInputFile());
 
+		/*
+		 * MSD
+		 */
 		IProcessingInfo<IPeaksMSD> processingInfo = PeakConverterMSD.convert(file, monitor);
-		if(processingInfo.getProcessingResult() != null) {
-			/*
-			 * MSD
-			 */
-			IPeaksMSD result = processingInfo.getProcessingResult();
-			for(IPeakMSD peak : result.getPeaks()) {
+		IPeaksMSD peaksMSD = processingInfo.getProcessingResult();
+		if(peaksMSD != null) {
+			for(IPeakMSD peak : peaksMSD.getPeaks()) {
 				peaks.add(peak);
 			}
-		} else {
-			/*
-			 * CSD
-			 */
-			IChromatogramCSD chromatogram = ChromatogramConverterCSD.getInstance().convert(file, monitor).getProcessingResult();
-			if(!chromatogram.getPeaks().isEmpty()) {
-				for(IPeak peak : chromatogram.getPeaks()) {
-					peaks.add(peak);
-				}
-				return peaks;
-			}
+			return peaks;
+		}
+		/*
+		 * CSD
+		 */
+		IChromatogramCSD chromatogramCSD = ChromatogramConverterCSD.getInstance().convert(file, monitor).getProcessingResult();
+		if(chromatogramCSD != null && !chromatogramCSD.getPeaks().isEmpty()) {
+			peaks.addAll(chromatogramCSD.getPeaks());
+			return peaks;
+		}
+		/*
+		 * WSD
+		 */
+		IChromatogramWSD chromatogramWSD = ChromatogramConverterWSD.getInstance().convert(file, monitor).getProcessingResult();
+		if(chromatogramWSD != null) {
+			peaks.addAll(chromatogramWSD.getPeaks());
 		}
 		return peaks;
 	}
