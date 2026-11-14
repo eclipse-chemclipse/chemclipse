@@ -485,4 +485,5 @@ public interface IApplicationImage extends IApplicationImageProvider {
 	String IMAGE_OPTIMIZE_PATTERN = "optimizePattern.gif";
 	String IMAGE_BINARYDATA = "build_exec.svg";
 	String IMAGE_TRICKS = "tricks.svg";
+	String IMAGE_BITMAP = "bitmap.gif";
 }
