@@ -16,7 +16,7 @@
    <extension
          point="org.eclipse.chemclipse.xxd.process.ui.menu.icon">
       <icon
-            icon="platform:/plugin/org.eclipse.swtchart.extensions/resources/icons/16x16/bitmap.gif"
+            icon="platform:/plugin/org.eclipse.chemclipse.rcp.ui.icons/icons/16x16/bitmap.gif"
             id="org.eclipse.chemclipse.chromatogram.xxd.report.supplier.image.ui">
       </icon>
    </extension>
