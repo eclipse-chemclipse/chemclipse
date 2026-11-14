@@ -39,7 +39,7 @@ public class PeakFilesWizardPage extends DataInputPageWizard {
 	@Override
 	protected void addFiles() {
 
-		InputWizardSettings inputWizardSettings = InputWizardSettings.create(Activator.getDefault().getPreferenceStore(), PreferenceSupplier.N_INPUT_FILE, DataType.MSD, DataType.CSD);
+		InputWizardSettings inputWizardSettings = InputWizardSettings.create(Activator.getDefault().getPreferenceStore(), PreferenceSupplier.N_INPUT_FILE, DataType.MSD, DataType.CSD, DataType.WSD);
 		inputWizardSettings.setTitle(StatisticsMessages.peakInputFiles);
 		inputWizardSettings.setDescription(StatisticsMessages.selectSeveralPeakInputFiles);
 
