@@ -16,6 +16,7 @@ import org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.model.IVendo
 import org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.model.VendorIon;
 import org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.model.VendorScanMSD;
 import org.eclipse.chemclipse.msd.model.core.IIon;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.RetentionTimeSupport;
 
 public class XmlChromatogramReader {
 
@@ -28,7 +29,7 @@ public class XmlChromatogramReader {
 		int tic = Math.min(retentionTimes.length, intensities.length);
 		for(int i = 0; i < tic; i++) {
 			VendorScanMSD scan = new VendorScanMSD();
-			int retentionTime = (int)(retentionTimes[i]);
+			int retentionTime = RetentionTimeSupport.toMilliseconds(retentionTimes[i]);
 			scan.setRetentionTime(retentionTime);
 			float intensity = (float)intensities[i];
 			VendorIon ion = new VendorIon(IIon.TIC_ION, intensity);
