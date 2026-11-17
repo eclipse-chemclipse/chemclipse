@@ -98,5 +98,7 @@ public class ChromatogramImportConverterMyoDta104_ITest {
 		assertEquals(661.65d, massSpectrum.getPrecursorIon(), 0);
 		IIonMSn ionMSn = (IIonMSn)massSpectrum.getIons().get(0);
 		assertEquals(28d, ionMSn.getIonTransition().getCollisionEnergy(), 0);
+		assertEquals(661.65d, ionMSn.getIonTransition().getQ1Ion(), 0);
+		assertEquals(ionMSn.getIon(), ionMSn.getIonTransition().getQ3Ion(), 0);
 	}
 }

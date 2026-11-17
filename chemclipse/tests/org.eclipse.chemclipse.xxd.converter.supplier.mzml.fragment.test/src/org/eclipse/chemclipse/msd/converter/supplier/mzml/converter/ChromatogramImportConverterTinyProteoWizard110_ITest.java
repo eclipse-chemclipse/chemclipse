@@ -13,12 +13,16 @@
 package org.eclipse.chemclipse.msd.converter.supplier.mzml.converter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 import java.io.File;
 
 import org.eclipse.chemclipse.model.core.IChromatogram;
 import org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.model.IVendorChromatogramMSD;
 import org.eclipse.chemclipse.msd.converter.supplier.mzml.converter.model.VendorChromatogramMSD;
+import org.eclipse.chemclipse.msd.model.core.IIon;
+import org.eclipse.chemclipse.msd.model.core.IIonMSn;
+import org.eclipse.chemclipse.msd.model.core.IIonTransition;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.Polarity;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
@@ -123,5 +127,22 @@ public class ChromatogramImportConverterTinyProteoWizard110_ITest {
 		assertEquals(3f, massSpectrum.getIon(12).getAbundance(), 0);
 		assertEquals(2f, massSpectrum.getIon(13).getAbundance(), 0);
 		assertEquals(1f, massSpectrum.getIon(14).getAbundance(), 0);
+	}
+
+	@Test
+	public void testSecondScan() {
+
+		IRegularMassSpectrum massSpectrum = (IRegularMassSpectrum)chromatogram.getScan(2);
+		assertEquals("scan=20", massSpectrum.getIdentifier());
+		assertEquals(445.34d, massSpectrum.getPrecursorIon(), 0);
+		/*
+		 * Each fragment carries the transition: Q1 is the selected ion, not rounded.
+		 */
+		for(IIon ion : massSpectrum.getIons()) {
+			IIonMSn ionMSn = assertInstanceOf(IIonMSn.class, ion);
+			IIonTransition ionTransition = ionMSn.getIonTransition();
+			assertEquals(445.34d, ionTransition.getQ1Ion(), 0);
+			assertEquals(ion.getIon(), ionTransition.getQ3Ion(), 0);
+		}
 	}
 }
