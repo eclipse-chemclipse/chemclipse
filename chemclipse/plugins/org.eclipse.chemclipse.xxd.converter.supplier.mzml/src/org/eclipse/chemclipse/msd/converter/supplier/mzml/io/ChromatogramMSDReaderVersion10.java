@@ -248,7 +248,7 @@ public class ChromatogramMSDReaderVersion10 extends AbstractChromatogramReader i
 		for(CVParamType cvParam : scanType.getCvParam()) {
 			if(cvParam.getAccession().equals("MS:1000016") && cvParam.getName().equals("scan time")) {
 				int multiplicator = XmlReader10.getTimeMultiplicator(cvParam);
-				int retentionTime = Math.round(Float.parseFloat(cvParam.getValue()) * multiplicator);
+				int retentionTime = (int)Math.round(Double.parseDouble(cvParam.getValue()) * multiplicator);
 				massSpectrum.setRetentionTime(retentionTime);
 			}
 		}
