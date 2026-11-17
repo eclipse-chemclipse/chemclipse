@@ -30,6 +30,7 @@ import org.eclipse.chemclipse.wsd.converter.supplier.mzml.converter.model.Vendor
 import org.eclipse.chemclipse.wsd.model.core.IChromatogramWSD;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.BinaryReader110;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.MetadataReader110;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.RetentionTimeSupport;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.BinaryDataArrayListType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.BinaryDataArrayType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.CVParamType;
@@ -167,7 +168,7 @@ public class ChromatogramWSDReaderVersion110 extends AbstractChromatogramReader 
 		int rt = Math.min(retentionTimes.length, intensities.length);
 		for(int i = 0; i < rt; i++) {
 			IVendorScanWSD scan = new VendorScanWSD();
-			int retentionTime = (int)(retentionTimes[i]);
+			int retentionTime = RetentionTimeSupport.toMilliseconds(retentionTimes[i]);
 			scan.setRetentionTime(retentionTime);
 			float intensity = (float)intensities[i];
 			IVendorScanSignal signal = new VendorScanSignal();

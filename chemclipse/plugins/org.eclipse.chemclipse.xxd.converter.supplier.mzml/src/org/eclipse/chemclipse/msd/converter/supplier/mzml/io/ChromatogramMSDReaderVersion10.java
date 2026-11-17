@@ -36,6 +36,7 @@ import org.eclipse.chemclipse.msd.model.implementation.IonTransition;
 import org.eclipse.chemclipse.msd.model.implementation.RegularMassSpectrum;
 import org.eclipse.chemclipse.support.history.EditInformation;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.BinaryReader10;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.RetentionTimeSupport;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.io.XmlReader10;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v10.BinaryDataArrayType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v10.CVParamType;
@@ -248,7 +249,7 @@ public class ChromatogramMSDReaderVersion10 extends AbstractChromatogramReader i
 		for(CVParamType cvParam : scanType.getCvParam()) {
 			if(cvParam.getAccession().equals("MS:1000016") && cvParam.getName().equals("scan time")) {
 				int multiplicator = XmlReader10.getTimeMultiplicator(cvParam);
-				int retentionTime = (int)Math.round(Double.parseDouble(cvParam.getValue()) * multiplicator);
+				int retentionTime = RetentionTimeSupport.toMilliseconds(Double.parseDouble(cvParam.getValue()) * multiplicator);
 				massSpectrum.setRetentionTime(retentionTime);
 			}
 		}
