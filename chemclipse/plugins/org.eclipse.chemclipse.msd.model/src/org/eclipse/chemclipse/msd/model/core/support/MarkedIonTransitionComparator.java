@@ -39,13 +39,13 @@ public class MarkedIonTransitionComparator implements Comparator<IMarkedIonTrans
 		}
 		switch(sortOrder) {
 			case ASC:
-				result = (int)(transition2.getIonTransition().getQ1StartIon() - transition1.getIonTransition().getQ1StartIon());
+				result = Double.compare(transition2.getIonTransition().getQ1StartIon(), transition1.getIonTransition().getQ1StartIon());
 				break;
 			case DESC:
-				result = (int)(transition1.getIonTransition().getQ1StartIon() - transition2.getIonTransition().getQ1StartIon());
+				result = Double.compare(transition1.getIonTransition().getQ1StartIon(), transition2.getIonTransition().getQ1StartIon());
 				break;
 			default:
-				result = (int)(transition2.getIonTransition().getQ1StartIon() - transition1.getIonTransition().getQ1StartIon());
+				result = Double.compare(transition2.getIonTransition().getQ1StartIon(), transition1.getIonTransition().getQ1StartIon());
 		}
 		return result;
 	}

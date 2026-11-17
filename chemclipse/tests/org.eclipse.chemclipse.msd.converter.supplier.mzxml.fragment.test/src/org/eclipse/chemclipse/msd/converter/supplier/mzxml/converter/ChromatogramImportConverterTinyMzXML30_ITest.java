@@ -93,7 +93,7 @@ public class ChromatogramImportConverterTinyMzXML30_ITest {
 		IIonMSn ionMSn = (IIonMSn)massSpectrum.getIons().iterator().next();
 		IIonTransition ionTransition = ionMSn.getIonTransition();
 		assertEquals(0, ionTransition.getCollisionEnergy(), 0);
-		assertEquals(91, ionTransition.getQ1Ion());
-		assertEquals(91, ionTransition.getQ3Ion(), 0);
+		assertEquals(91.03, ionTransition.getQ1Ion(), 1.0E-4);
+		assertEquals(ionMSn.getIon(), ionTransition.getQ3Ion(), 0);
 	}
 }

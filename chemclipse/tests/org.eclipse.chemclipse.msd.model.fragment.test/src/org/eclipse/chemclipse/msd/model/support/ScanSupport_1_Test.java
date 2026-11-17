@@ -49,7 +49,7 @@ public class ScanSupport_1_Test {
 	public void test4() {
 
 		IIonMSn ion = new IonMSn(new Ion(58.1d), new IonTransition(168.7, 58.1, 15, 1.0d, 1.0d, 0));
-		assertEquals("169 > 58.1 @15", ScanSupport.getLabelTandemMS(ion));
+		assertEquals("168.7 > 58.1 @15", ScanSupport.getLabelTandemMS(ion));
 	}
 
 	@Test
@@ -63,13 +63,13 @@ public class ScanSupport_1_Test {
 	public void test6() {
 
 		IIonTransition ionTransition = new IonTransition(168.7, 58.1, 15, 1.0d, 1.0d, 0);
-		assertEquals("169 > 58.1 @15", ScanSupport.getLabelTandemMS(ionTransition));
+		assertEquals("168.7 > 58.1 @15", ScanSupport.getLabelTandemMS(ionTransition));
 	}
 
 	@Test
 	public void test7() {
 
 		IIonTransition ionTransition = new IonTransition(168.7, 169.7, 56.3, 57.3, 15, 1.0d, 1.0d, 0);
-		assertEquals("169 > 56.8 @15", ScanSupport.getLabelTandemMS(ionTransition));
+		assertEquals("169.2 > 56.8 @15", ScanSupport.getLabelTandemMS(ionTransition));
 	}
 }

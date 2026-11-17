@@ -57,7 +57,7 @@ public class ScanSignalListFilter extends ViewerFilter {
 			if(ionTransition != null) {
 				if(Double.toString(ionTransition.getQ3Ion()).contains(searchText)) {
 					return true;
-				} else if(Integer.toString(ionTransition.getQ1Ion()).contains(searchText)) {
+				} else if(Double.toString(ionTransition.getQ1Ion()).contains(searchText)) {
 					return true;
 				}
 			} else if(Double.toString(ion.getIon()).contains(searchText)) {

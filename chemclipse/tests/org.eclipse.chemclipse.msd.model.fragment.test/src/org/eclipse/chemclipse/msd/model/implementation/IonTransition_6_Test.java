@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2025 Lablicate GmbH.
+ * Copyright (c) 2015, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -23,23 +23,23 @@ public class IonTransition_6_Test {
 	public void test_1() {
 
 		IIonTransition ionTransition = new IonTransition(120.2d, 121.3d, 87.4d, 88.5d, 7.0d, 1.2, 1.3, 1);
-		assertEquals(121, ionTransition.getQ1Ion());
-		assertEquals(88.0d, ionTransition.getQ3Ion(), 0);
+		assertEquals(120.75d, ionTransition.getQ1Ion(), 1.0E-4);
+		assertEquals(87.95d, ionTransition.getQ3Ion(), 1.0E-4);
 	}
 
 	@Test
 	public void test_2() {
 
 		IIonTransition ionTransition = new IonTransition(120.1d, 120.9d, 87.2d, 87.7d, 7.0d, 1.2, 1.3, 1);
-		assertEquals(121, ionTransition.getQ1Ion());
-		assertEquals(87.5d, ionTransition.getQ3Ion(), 0);
+		assertEquals(120.5d, ionTransition.getQ1Ion(), 1.0E-4);
+		assertEquals(87.45d, ionTransition.getQ3Ion(), 1.0E-4);
 	}
 
 	@Test
 	public void test_3() {
 
 		IIonTransition ionTransition = new IonTransition(119.9d, 120.9d, 87.9d, 88.2d, 7.0d, 1.2, 1.3, 1);
-		assertEquals(120, ionTransition.getQ1Ion());
-		assertEquals(88.1d, ionTransition.getQ3Ion(), 0);
+		assertEquals(120.4d, ionTransition.getQ1Ion(), 1.0E-4);
+		assertEquals(88.05d, ionTransition.getQ3Ion(), 1.0E-4);
 	}
 }
