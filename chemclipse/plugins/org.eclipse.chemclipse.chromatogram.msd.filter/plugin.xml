@@ -17,10 +17,10 @@
    <extension
          point="org.eclipse.chemclipse.chromatogram.msd.filter.chromatogramFilterSupplier">
       <ChromatogramFilterSupplier
-            description="This filter removes and interpolates zero values in each ion channel."
+            description="Fills missing values (zeros) in ion channels by linear interpolation: channels with enough signal coverage get any gap filled, others only short gaps."
             filter="org.eclipse.chemclipse.chromatogram.msd.filter.impl.ChromatogramFilterZeroValueRemoval"
             filterName="Remove Zero Values in Ion Channels"
-            filterSettings="org.eclipse.chemclipse.chromatogram.msd.filter.impl.settings.FilterSettingsAdjust"
+            filterSettings="org.eclipse.chemclipse.chromatogram.msd.filter.impl.settings.FilterSettingsZeroValueRemoval"
             id="org.eclipse.chemclipse.chromatogram.msd.filter.removeZeroValues">
       </ChromatogramFilterSupplier>
    </extension>

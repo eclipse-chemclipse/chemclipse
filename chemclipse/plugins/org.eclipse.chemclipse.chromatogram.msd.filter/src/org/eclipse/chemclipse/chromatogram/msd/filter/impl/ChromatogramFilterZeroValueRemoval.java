@@ -6,83 +6,79 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
- * Lorenz Gerber - initial API and implementation
+ * Lorenz Gerber - initial API and implementation, advanced options
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.impl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.filter.result.ChromatogramFilterResult;
 import org.eclipse.chemclipse.chromatogram.filter.result.IChromatogramFilterResult;
 import org.eclipse.chemclipse.chromatogram.filter.result.ResultStatus;
 import org.eclipse.chemclipse.chromatogram.filter.settings.IChromatogramFilterSettings;
 import org.eclipse.chemclipse.chromatogram.msd.filter.core.chromatogram.AbstractChromatogramFilterMSD;
-import org.eclipse.chemclipse.chromatogram.msd.filter.impl.settings.FilterSettingsAdjust;
+import org.eclipse.chemclipse.chromatogram.msd.filter.impl.settings.FilterSettingsZeroValueRemoval;
+import org.eclipse.chemclipse.model.core.IScan;
+import org.eclipse.chemclipse.msd.model.core.IChromatogramMSD;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.selection.IChromatogramSelectionMSD;
-import org.eclipse.chemclipse.msd.model.matrix.ExtractedMatrix;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 
+/**
+ * Fills missing values (zeros) in the ion channels of the selected range, see
+ * {@link IonChannelGapFiller}.
+ */
 public class ChromatogramFilterZeroValueRemoval extends AbstractChromatogramFilterMSD {
+
+	private static final String DESCRIPTION = "Remove Zero Values in Ion Channels";
 
 	@Override
 	public IProcessingInfo<IChromatogramFilterResult> applyFilter(IChromatogramSelectionMSD chromatogramSelection, IChromatogramFilterSettings chromatogramFilterSettings, IProgressMonitor monitor) {
 
 		IProcessingInfo<IChromatogramFilterResult> processingInfo = new ProcessingInfo<>();
 		processingInfo.addMessages(validate(chromatogramSelection, chromatogramFilterSettings));
-
 		if(!processingInfo.hasErrorMessages()) {
-			if(chromatogramFilterSettings instanceof FilterSettingsAdjust) {
+			if(chromatogramFilterSettings instanceof FilterSettingsZeroValueRemoval settings) {
+				IChromatogramMSD chromatogram = chromatogramSelection.getChromatogram();
 				/*
-				 * No settings needed yet.
+				 * Scans may be lazily loaded proxies - load them for good, so the added ions stay.
 				 */
-				if(chromatogramSelection instanceof IChromatogramSelectionMSD) {
-					IChromatogramSelectionMSD chromatogramSelectionMSD = chromatogramSelection;
-					ExtractedMatrix extract = new ExtractedMatrix(chromatogramSelectionMSD);
-					double[][] matrix = extract.getMatrix();
-					int numberIons = matrix[0].length;
-					int numberScans = matrix.length;
-					for(int ionIndex = 0; ionIndex < numberIons; ionIndex++) {
-						int startIndex = 0;
-						// pre-loop to prevent iteration from first scan
-						for(int scanIndex = 0; scanIndex < numberScans; scanIndex++) {
-							if(matrix[scanIndex][ionIndex] != 0.0) {
-								startIndex = scanIndex;
-								break;
-							}
-						}
-						// main loop
-						for(int scanIndex = startIndex; scanIndex < numberScans; scanIndex++) {
-							if(matrix[scanIndex][ionIndex] == 0.0) {
-							} else {
-								if(scanIndex == startIndex + 1) {
-									startIndex = scanIndex;
-								} else {
-									matrix = linearInterpolation(matrix, startIndex, scanIndex, ionIndex);
-									startIndex = scanIndex;
-								}
-							}
-						}
-					}
-					extract.updateSignal();
+				chromatogram.enforceLoadScanProxies(monitor != null ? monitor : new NullProgressMonitor());
+				IonChannelGapFiller.Result result = IonChannelGapFiller.fill(getScans(chromatogramSelection), settings.getMinCoverage(), settings.getCoverageReference(), settings.getMaxShortGap());
+				if(result.highResolution()) {
+					processingInfo.addWarnMessage(DESCRIPTION, "High resolution data are not supported - nothing was filled.");
+					processingInfo.setProcessingResult(new ChromatogramFilterResult(ResultStatus.EXCEPTION, "High resolution data are not supported."));
+				} else if(result.filled() > 0) {
+					chromatogram.setDirty(true);
+					String message = result.filled() + " missing value(s) filled - " + result.describeChannels(5) + ".";
+					processingInfo.addInfoMessage(DESCRIPTION, message);
+					processingInfo.setProcessingResult(new ChromatogramFilterResult(ResultStatus.OK, message));
+				} else {
+					processingInfo.setProcessingResult(new ChromatogramFilterResult(ResultStatus.OK, "No missing values to fill."));
 				}
-				chromatogramSelection.getChromatogram().setDirty(true);
-
-				processingInfo.setProcessingResult(new ChromatogramFilterResult(ResultStatus.OK, "Chromatogram Filter Adjust applied"));
+			} else {
+				processingInfo.addErrorMessage(DESCRIPTION, "The filter settings instance is not a type of: " + FilterSettingsZeroValueRemoval.class);
 			}
 		}
-
 		return processingInfo;
 	}
 
-	private double[][] linearInterpolation(double[][] matrix, int startColumn, int stopColumn, int row) {
+	private List<IScanMSD> getScans(IChromatogramSelectionMSD chromatogramSelection) {
 
-		double startSignal = matrix[startColumn][row];
-		double stopSignal = matrix[stopColumn][row];
-		for(int index = 1; index < (stopColumn - startColumn); index++) {
-			matrix[startColumn + index][row] = (stopSignal - startSignal) / (stopColumn - startColumn) * index + startSignal;
+		int startScan = chromatogramSelection.getStartScan();
+		int stopScan = chromatogramSelection.getStopScan();
+		List<IScanMSD> scans = new ArrayList<>();
+		for(IScan scan : chromatogramSelection.getChromatogram().getScans()) {
+			if(scan instanceof IScanMSD scanMSD && scan.getScanNumber() >= startScan && scan.getScanNumber() <= stopScan) {
+				scans.add(scanMSD);
+			}
 		}
-		return (matrix);
+		return scans;
 	}
 }
