@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016, 2025 Lablicate GmbH.
+ * Copyright (c) 2016, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -25,6 +25,15 @@ public interface IInternalStandard {
 	String getConcentrationUnit();
 
 	double getCompensationFactor();
+
+	/**
+	 * Handle with care.
+	 * Set the compensation factor.
+	 * The factor must be > 0.
+	 * 
+	 * @param compensationFactor
+	 */
+	void setCompensationFactor(double compensationFactor);
 
 	/**
 	 * The response factor is the reciprocal of the compensation factor.
