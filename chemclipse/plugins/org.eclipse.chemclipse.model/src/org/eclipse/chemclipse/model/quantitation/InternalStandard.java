@@ -68,6 +68,14 @@ public class InternalStandard implements IInternalStandard {
 	}
 
 	@Override
+	public void setCompensationFactor(double compensationFactor) {
+
+		if(compensationFactor > 0) {
+			this.compensationFactor = compensationFactor;
+		}
+	}
+
+	@Override
 	public double getResponseFactor() {
 
 		if(compensationFactor > 0.0d) {
