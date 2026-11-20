@@ -176,8 +176,12 @@ public class TandemDataSupport {
 
 		IIonTransition ionTransition = ion.getIonTransition();
 		if(ionTransition != null) {
-			if(trace.getParentMZ() == ionTransition.getQ1Ion()) {
-				if(trace.getDaughterMZ() == ionTransition.getQ3Ion()) {
+			/*
+			 * The trace is defined nominal (parent) and with one decimal (daughter),
+			 * e.g. 173 > 121.2 @15, hence compare the transition at that precision.
+			 */
+			if(AbstractIon.getIon(trace.getValue()) == AbstractIon.getIon(ionTransition.getQ1Ion())) {
+				if(AbstractIon.getIon(trace.getDaughterMZ(), 1) == AbstractIon.getIon(ionTransition.getQ3Ion(), 1)) {
 					if(trace.getCollisionEnergy() == ionTransition.getCollisionEnergy()) {
 						return true;
 					}

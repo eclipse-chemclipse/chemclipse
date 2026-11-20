@@ -101,7 +101,7 @@ public class ChromatogramImportConverterTinyMzXML20_ITest {
 		IIonMSn ionMSn = (IIonMSn)massSpectrum.getHighestIon();
 		IIonTransition ionTransition = ionMSn.getIonTransition();
 		assertEquals(35, ionTransition.getCollisionEnergy(), 0, "CE");
-		assertEquals(445, ionTransition.getQ1Ion(), 0, "Q1");
-		assertEquals(531.1, ionTransition.getQ3Ion(), 0, "Q2");
+		assertEquals(445.35, ionTransition.getQ1Ion(), 1.0E-4, "Q1");
+		assertEquals(ionMSn.getIon(), ionTransition.getQ3Ion(), 0, "Q3");
 	}
 }

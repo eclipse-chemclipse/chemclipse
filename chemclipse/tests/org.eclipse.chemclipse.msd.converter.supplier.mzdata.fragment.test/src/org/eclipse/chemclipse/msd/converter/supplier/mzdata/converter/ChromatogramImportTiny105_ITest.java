@@ -103,6 +103,8 @@ public class ChromatogramImportTiny105_ITest {
 		assertEquals(445.34668d, massSpectrum.getPrecursorIon(), 0);
 		IIonMSn ionMSn = (IIonMSn)massSpectrum.getIons().iterator().next();
 		assertEquals(35d, ionMSn.getIonTransition().getCollisionEnergy(), 0);
+		assertEquals(445.34668d, ionMSn.getIonTransition().getQ1Ion(), 0);
+		assertEquals(ionMSn.getIon(), ionMSn.getIonTransition().getQ3Ion(), 0);
 		assertEquals(Polarity.POSITIVE, massSpectrum.getPolarity());
 		assertEquals(MassSpectrumType.PROFILE, massSpectrum.getMassSpectrumType());
 	}
