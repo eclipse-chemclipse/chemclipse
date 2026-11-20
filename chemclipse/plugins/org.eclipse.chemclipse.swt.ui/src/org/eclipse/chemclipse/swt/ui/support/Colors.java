@@ -9,6 +9,7 @@
  *
  * Contributors:
  * Philip Wenig - initial API and implementation
+ * Lorenz Gerber - Okabe-Ito color scheme
  *******************************************************************************/
 package org.eclipse.chemclipse.swt.ui.support;
 
@@ -132,6 +133,26 @@ public class Colors {
 			new Color(255, 149, 14) //
 	);
 	/*
+	 * Okabe-Ito
+	 * The colour-blind friendly palette of Okabe and Ito (Color Universal Design), extended to ten
+	 * colours by wine and olive from Paul Tol's "muted" palette. Ordered so that it doesn't start with
+	 * the hues of "Print" (dark blue, orange-red, ...), e.g. for ion traces shown next to chromatograms
+	 * drawn in "Print"; black and the light yellow come late.
+	 */
+	public static final String COLOR_SCHEME_OKABE_ITO = "Okabe-Ito";
+	private static final List<Color> colorsGradientOkabeIto = List.of( //
+			new Color(0, 158, 115), // bluish green
+			new Color(204, 121, 167), // reddish purple
+			new Color(86, 180, 233), // sky blue
+			new Color(213, 94, 0), // vermillion
+			new Color(0, 0, 0), // black
+			new Color(230, 159, 0), // orange
+			new Color(0, 114, 178), // blue
+			new Color(136, 34, 85), // wine (Paul Tol)
+			new Color(153, 153, 51), // olive (Paul Tol)
+			new Color(240, 228, 66) // yellow
+	);
+	/*
 	 * Grayscale
 	 */
 	public static final String COLOR_SCHEME_GRAYSCALE = "Grayscale";
@@ -182,7 +203,7 @@ public class Colors {
 
 	public static String[][] getAvailableColorSchemes() {
 
-		String[][] elements = new String[8][2];
+		String[][] elements = new String[9][2];
 
 		elements[0][0] = COLOR_SCHEME_RED;
 		elements[0][1] = COLOR_SCHEME_RED;
@@ -205,8 +226,11 @@ public class Colors {
 		elements[6][0] = COLOR_SCHEME_GRAYSCALE;
 		elements[6][1] = COLOR_SCHEME_GRAYSCALE;
 
-		elements[7][0] = COLOR_SCHEME_UNLIMITED;
-		elements[7][1] = COLOR_SCHEME_UNLIMITED;
+		elements[7][0] = COLOR_SCHEME_OKABE_ITO;
+		elements[7][1] = COLOR_SCHEME_OKABE_ITO;
+
+		elements[8][0] = COLOR_SCHEME_UNLIMITED;
+		elements[8][1] = COLOR_SCHEME_UNLIMITED;
 
 		return elements;
 	}
@@ -233,6 +257,9 @@ public class Colors {
 				break;
 			case COLOR_SCHEME_GRAYSCALE:
 				colorScheme = new ColorScheme(colorsGradientGrayscale);
+				break;
+			case COLOR_SCHEME_OKABE_ITO:
+				colorScheme = new ColorScheme(colorsGradientOkabeIto);
 				break;
 			case COLOR_SCHEME_ANALYSIS:
 				colorScheme = new ColorScheme(colorsGradientAnalysis);
