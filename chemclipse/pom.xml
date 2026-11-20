@@ -16,8 +16,8 @@
 		<!-- versions for plugins to use -->
 		<tycho.version>5.0.4</tycho.version>
 		<tycho.scmUrl>scm:git:https://github.com/eclipse-chemclipse/chemclipse</tycho.scmUrl>
-		<maven-install-plugin.version>3.1.4</maven-install-plugin.version>
-		<cbi-version>1.5.7</cbi-version>
+		<maven-install-plugin.version>3.2.0</maven-install-plugin.version>
+		<cbi-version>1.5.8</cbi-version>
 		<!-- definition of the target to use -->
 		<tycho.target>org.eclipse.chemclipse.targetplatform</tycho.target>
 		<!-- other settings -->
