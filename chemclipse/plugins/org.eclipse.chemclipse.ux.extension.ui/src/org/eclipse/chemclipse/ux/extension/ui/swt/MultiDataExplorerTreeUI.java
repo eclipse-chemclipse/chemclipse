@@ -503,6 +503,8 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 			Object[] selection = treeViewer.getStructuredSelection().toArray();
 			updateFileAndFolders(dataExplorerTreeUI, menuManager);
 			createNewDirectory(dataExplorerTreeUI, menuManager, selection);
+			copyFile(dataExplorerTreeUI, menuManager, selection);
+			renameFile(dataExplorerTreeUI, menuManager, selection);
 			deleteFile(dataExplorerTreeUI, menuManager, selection);
 			selectUserLocationDirectory(menuManager, selection);
 			selectMethodDirectory(menuManager, selection);
@@ -623,6 +625,106 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 				}
 			}
 		}
+	}
+
+	private void copyFile(DataExplorerTreeUI dataExplorerTreeUI, MenuManager menuManager, Object[] selection) {
+
+		if(selection.length >= 1) {
+			if(selection[0] instanceof File file) {
+				if(file.isFile()) {
+					menuManager.add(new Action(ExtensionMessages.copyFile, ApplicationImageFactory.getInstance().getImageDescriptor(IApplicationImage.IMAGE_COPY, IApplicationImageProvider.SIZE_16x16)) {
+
+						@Override
+						public void run() {
+
+							File directory = file.getParentFile();
+							InputDialog inputDialog = new InputDialog(getShell(), ExtensionMessages.copyFile, ExtensionMessages.messageCopyFile, getCopyFileName(file), name -> validateFileName(directory, name));
+							/*
+							 * Copy
+							 */
+							if(inputDialog.open() == Window.OK) {
+								File target = new File(directory, inputDialog.getValue().trim());
+								try {
+									Files.copy(file.toPath(), target.toPath());
+									TreeViewer treeViewer = dataExplorerTreeUI.getTreeViewer();
+									refreshDirectory(treeViewer, directory);
+									treeViewer.setSelection(new StructuredSelection(target), true);
+								} catch(IOException e) {
+									logger.warn(e);
+									MessageDialog.openError(getShell(), ExtensionMessages.copyFile, ExtensionMessages.errorCopyFile);
+								}
+							}
+						}
+					});
+				}
+			}
+		}
+	}
+
+	private void renameFile(DataExplorerTreeUI dataExplorerTreeUI, MenuManager menuManager, Object[] selection) {
+
+		if(selection.length >= 1) {
+			if(selection[0] instanceof File file) {
+				if(file.isFile()) {
+					menuManager.add(new Action(ExtensionMessages.renameFile, ApplicationImageFactory.getInstance().getImageDescriptor(IApplicationImage.IMAGE_EDIT, IApplicationImageProvider.SIZE_16x16)) {
+
+						@Override
+						public void run() {
+
+							File directory = file.getParentFile();
+							InputDialog inputDialog = new InputDialog(getShell(), ExtensionMessages.renameFile, ExtensionMessages.messageRenameFile, file.getName(), name -> validateFileName(directory, name));
+							/*
+							 * Rename
+							 */
+							if(inputDialog.open() == Window.OK) {
+								File target = new File(directory, inputDialog.getValue().trim());
+								try {
+									Files.move(file.toPath(), target.toPath());
+									TreeViewer treeViewer = dataExplorerTreeUI.getTreeViewer();
+									refreshDirectory(treeViewer, directory);
+									treeViewer.setSelection(new StructuredSelection(target), true);
+								} catch(IOException e) {
+									logger.warn(e);
+									MessageDialog.openError(getShell(), ExtensionMessages.renameFile, ExtensionMessages.errorRenameFile);
+								}
+							}
+						}
+					});
+				}
+			}
+		}
+	}
+
+	private String getCopyFileName(File file) {
+
+		String name = file.getName();
+		int index = name.lastIndexOf('.');
+		String baseName = index > 0 ? name.substring(0, index) : name;
+		String extension = index > 0 ? name.substring(index) : ""; //$NON-NLS-1$
+		/*
+		 * Suggest a name that doesn't exist yet.
+		 */
+		File directory = file.getParentFile();
+		String copyName = baseName + "_copy" + extension; //$NON-NLS-1$
+		int counter = 2;
+		while(new File(directory, copyName).exists()) {
+			copyName = baseName + "_copy" + counter++ + extension; //$NON-NLS-1$
+		}
+
+		return copyName;
+	}
+
+	private String validateFileName(File directory, String name) {
+
+		if(name.isBlank()) {
+			return ExtensionMessages.warnFileName;
+		} else if(name.contains("/") || name.contains("\\") || name.trim().equals(".") || name.trim().equals("..")) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+			return ExtensionMessages.warnFileNameValid;
+		} else if(new File(directory, name.trim()).exists()) {
+			return ExtensionMessages.warnFileNameExists;
+		}
+
+		return null;
 	}
 
 	private void refreshDirectory(TreeViewer treeViewer, File directory) {
