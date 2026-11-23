@@ -148,6 +148,7 @@ public class ChromatogramWSDReaderVersion110 extends AbstractChromatogramReader 
 								retentionTimes = binaryData.getValue();
 							} else if(binaryData.getKey().equals("intensity")) {
 								intensities = binaryData.getValue();
+								chromatogram.setIntensityUnit(BinaryReader110.getIntensityUnit(binaryDataArrayType));
 							}
 						}
 					}

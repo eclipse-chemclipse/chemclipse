@@ -45,6 +45,18 @@ public interface IChromatogram extends SegmentedMeasurement, IChromatogramOvervi
 
 	void setColumnDetails(String columnDetails);
 
+	/**
+	 * Returns the unit of the intensity axis, e.g. mAU, if the file format
+	 * provides it. An empty String is returned if the unit is not known.
+	 */
+	String getIntensityUnit();
+
+	/**
+	 * Sets the unit of the intensity axis, e.g. mAU.
+	 * Null or blank values reset the unit to unknown.
+	 */
+	void setIntensityUnit(String intensityUnit);
+
 	/*
 	 * By default, the separation column could be
 	 * parsed on import. If that shall be suppressed

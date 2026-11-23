@@ -68,6 +68,12 @@ public class ChromatogramImportConverterHandCrafted110_ITest {
 	}
 
 	@Test
+	public void testIntensityUnit() {
+
+		assertEquals("absorbance unit", chromatogramWSD.getIntensityUnit());
+	}
+
+	@Test
 	public void testNumberOfScans() {
 
 		assertEquals(15, chromatogramWSD.getNumberOfScans(), "NumberOfScans");
