@@ -550,19 +550,19 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 		if(selection.length >= 1) {
 			if(selection[0] instanceof File file) {
 				if(file.isDirectory()) {
-					menuManager.add(new Action("New Directory", ApplicationImageFactory.getInstance().getImageDescriptor(IApplicationImage.IMAGE_FOLDER_ADD, IApplicationImageProvider.SIZE_16x16)) {
+					menuManager.add(new Action(ExtensionMessages.newDirectory, ApplicationImageFactory.getInstance().getImageDescriptor(IApplicationImage.IMAGE_FOLDER_ADD, IApplicationImageProvider.SIZE_16x16)) {
 
 						@Override
 						public void run() {
 
-							InputDialog inputDialog = new InputDialog(Display.getDefault().getActiveShell(), "New Directory", "Create a new directory.", "", name -> {
+							InputDialog inputDialog = new InputDialog(Display.getDefault().getActiveShell(), ExtensionMessages.newDirectory, ExtensionMessages.messageNewDirectory, "", name -> {
 
 								if(name.isBlank()) {
-									return "Please select a name.";
+									return ExtensionMessages.warnNewDirectoryName;
 								} else if(name.contains("/") || name.contains("\\") || name.equals(".") || name.equals("..")) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-									return "The name is not valid.";
+									return ExtensionMessages.warnNewDirectoryValid;
 								} else if(new File(file, name.trim()).exists()) {
-									return "The name exists already.";
+									return ExtensionMessages.warnNewDirectoryExists;
 								}
 
 								return null;
@@ -578,7 +578,7 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 									treeViewer.setExpandedState(file, true);
 									treeViewer.setSelection(new StructuredSelection(directory), true);
 								} else {
-									MessageDialog.openError(Display.getDefault().getActiveShell(), "New Directory", "The directory could not be created.");
+									MessageDialog.openError(Display.getDefault().getActiveShell(), ExtensionMessages.newDirectory, ExtensionMessages.errorNewDirectory);
 								}
 							}
 						}

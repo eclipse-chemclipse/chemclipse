@@ -117,6 +117,12 @@ public class ExtensionMessages extends NLS {
 	public static String deleteFile;
 	public static String questionDeleteFile;
 	public static String errorDeleteFile;
+	public static String newDirectory;
+	public static String messageNewDirectory;
+	public static String warnNewDirectoryName;
+	public static String warnNewDirectoryValid;
+	public static String warnNewDirectoryExists;
+	public static String errorNewDirectory;
 
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, ExtensionMessages.class);
