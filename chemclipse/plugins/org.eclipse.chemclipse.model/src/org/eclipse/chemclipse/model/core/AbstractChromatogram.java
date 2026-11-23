@@ -57,6 +57,7 @@ public abstract class AbstractChromatogram extends AbstractMeasurementTarget imp
 
 	private boolean finalized = false;
 	private String converterId = ""; //$NON-NLS-1$
+	private String intensityUnit = ""; //$NON-NLS-1$
 	private File file = null; // The file object of the chromatogram.
 	private int scanDelay = 4500;
 	private int scanInterval = 1000; // 1000ms = 1 scan per second
@@ -144,6 +145,18 @@ public abstract class AbstractChromatogram extends AbstractMeasurementTarget imp
 	public void setColumnDetails(String columnDetails) {
 
 		putHeaderData(COLUMN_DETAILS, columnDetails != null ? columnDetails : ""); //$NON-NLS-1$
+	}
+
+	@Override
+	public String getIntensityUnit() {
+
+		return intensityUnit;
+	}
+
+	@Override
+	public void setIntensityUnit(String intensityUnit) {
+
+		this.intensityUnit = intensityUnit != null ? intensityUnit.trim() : ""; //$NON-NLS-1$
 	}
 
 	@Override

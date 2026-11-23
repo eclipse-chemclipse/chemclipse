@@ -32,6 +32,21 @@ public class BinaryReader110 extends AbstractBinaryReader {
 
 	}
 
+	/**
+	 * Returns the unit name of the intensity array, e.g. "absorbance unit"
+	 * or an empty String if it is not specified.
+	 */
+	public static String getIntensityUnit(BinaryDataArrayType binaryDataArrayType) {
+
+		for(CVParamType cvParam : binaryDataArrayType.getCvParam()) {
+			if("MS:1000515".equals(cvParam.getAccession()) && "intensity array".equals(cvParam.getName())) {
+				String unitName = cvParam.getUnitName();
+				return unitName != null ? unitName.trim() : "";
+			}
+		}
+		return "";
+	}
+
 	public static Pair<String, double[]> parseBinaryData(BinaryDataArrayType binaryDataArrayType) throws DataFormatException {
 
 		double[] values = new double[0];

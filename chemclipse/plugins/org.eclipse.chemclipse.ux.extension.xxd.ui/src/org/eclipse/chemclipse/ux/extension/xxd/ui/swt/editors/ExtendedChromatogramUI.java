@@ -1723,6 +1723,11 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 
 	private void adjustAxisSettings() {
 
+		String intensityUnit = "";
+		if(chromatogramSelection != null && chromatogramSelection.getChromatogram() != null) {
+			intensityUnit = chromatogramSelection.getChromatogram().getIntensityUnit();
+		}
+		chromatogramChartControl.get().setIntensityUnit(intensityUnit);
 		chromatogramChartControl.get().modifyAxes(true);
 		/*
 		 * Scan Axis

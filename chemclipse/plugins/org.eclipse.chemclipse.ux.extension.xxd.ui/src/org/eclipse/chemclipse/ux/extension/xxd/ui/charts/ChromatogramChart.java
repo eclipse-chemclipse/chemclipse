@@ -38,6 +38,7 @@ public class ChromatogramChart extends LineChart implements IRangeSupport {
 	private String titleSeconds = "";
 	private String titleMinutes = "";
 	private String titleRelativeIntensity = "";
+	private String intensityUnit = "";
 
 	private Range selectedRangeX = null;
 	private Range selectedRangeY = null;
@@ -135,6 +136,20 @@ public class ChromatogramChart extends LineChart implements IRangeSupport {
 		}
 	}
 
+	/**
+	 * Sets the unit shown in brackets after the intensity axis title.
+	 * Call modifyAxes afterwards to apply it.
+	 */
+	public void setIntensityUnit(String intensityUnit) {
+
+		this.intensityUnit = intensityUnit != null ? intensityUnit : "";
+	}
+
+	public String getIntensityUnit() {
+
+		return intensityUnit;
+	}
+
 	public String getTitleAxisRelativeIntensity() {
 
 		return titleRelativeIntensity;
@@ -202,7 +217,7 @@ public class ChromatogramChart extends LineChart implements IRangeSupport {
 
 		IChartSettings chartSettings = getChartSettings();
 		IPrimaryAxisSettings primaryAxisSettingsY = chartSettings.getPrimaryAxisSettingsY();
-		primaryAxisSettingsY.setTitle(ExtensionMessages.intensity);
+		primaryAxisSettingsY.setTitle(AxisTitleSupport.getAxisTitle(ExtensionMessages.intensity, intensityUnit));
 
 		String positionNode = PreferenceSupplier.P_POSITION_Y_AXIS_INTENSITY;
 		String patternNode = PreferenceSupplier.P_FORMAT_Y_AXIS_INTENSITY;
