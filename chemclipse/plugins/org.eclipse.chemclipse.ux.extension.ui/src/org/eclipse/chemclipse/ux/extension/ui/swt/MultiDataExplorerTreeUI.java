@@ -13,8 +13,11 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.ux.extension.ui.swt;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -500,6 +503,7 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 			Object[] selection = treeViewer.getStructuredSelection().toArray();
 			updateFileAndFolders(dataExplorerTreeUI, menuManager);
 			createNewDirectory(dataExplorerTreeUI, menuManager, selection);
+			deleteFile(dataExplorerTreeUI, menuManager, selection);
 			selectUserLocationDirectory(menuManager, selection);
 			selectMethodDirectory(menuManager, selection);
 			selectMethodFile(menuManager, selection);
@@ -570,11 +574,7 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 								File directory = new File(file, inputDialog.getValue().trim());
 								if(directory.mkdir()) {
 									TreeViewer treeViewer = dataExplorerTreeUI.getTreeViewer();
-									if(treeViewer.getContentProvider() instanceof LazyFileExplorerContentProvider contentProvider) {
-										contentProvider.refresh(file);
-									} else {
-										treeViewer.refresh(file);
-									}
+									refreshDirectory(treeViewer, file);
 									treeViewer.setExpandedState(file, true);
 									treeViewer.setSelection(new StructuredSelection(directory), true);
 								} else {
@@ -585,6 +585,62 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 					});
 				}
 			}
+		}
+	}
+
+	private void deleteFile(DataExplorerTreeUI dataExplorerTreeUI, MenuManager menuManager, Object[] selection) {
+
+		if(selection.length >= 1) {
+			if(selection[0] instanceof File file) {
+				if(file.isFile()) {
+					menuManager.add(new Action(ExtensionMessages.deleteFile, ApplicationImageFactory.getInstance().getImageDescriptor(IApplicationImage.IMAGE_DELETE, IApplicationImageProvider.SIZE_16x16)) {
+
+						@Override
+						public void run() {
+
+							if(MessageDialog.openQuestion(getShell(), ExtensionMessages.deleteFile, MessageFormat.format(ExtensionMessages.questionDeleteFile, file.getName()))) {
+
+								try {
+									File directory = file.getParentFile();
+									if(Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.MOVE_TO_TRASH)) {
+										if(Desktop.getDesktop().moveToTrash(file)) {
+											refreshDirectory(dataExplorerTreeUI.getTreeViewer(), directory);
+										} else {
+											throw new IOException("Failed to move the file to trash.");
+										}
+									} else {
+										logger.warn("Moving file to trash is not supported on this system. Fallback to file delete.");
+										Files.delete(file.toPath());
+										refreshDirectory(dataExplorerTreeUI.getTreeViewer(), directory);
+									}
+								} catch(IOException e) {
+									logger.warn(e);
+									MessageDialog.openError(getShell(), ExtensionMessages.deleteFile, ExtensionMessages.errorDeleteFile);
+								}
+							}
+						}
+					});
+				}
+			}
+		}
+	}
+
+	private void refreshDirectory(TreeViewer treeViewer, File directory) {
+
+		if(treeViewer == null) {
+			return;
+		}
+
+		if(directory == null) {
+			return;
+		}
+		/*
+		 * The content provider caches the children.
+		 */
+		if(treeViewer.getContentProvider() instanceof LazyFileExplorerContentProvider contentProvider) {
+			contentProvider.refresh(directory);
+		} else {
+			treeViewer.refresh(directory);
 		}
 	}
 
