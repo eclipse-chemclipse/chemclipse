@@ -123,6 +123,15 @@ public class ExtensionMessages extends NLS {
 	public static String warnNewDirectoryValid;
 	public static String warnNewDirectoryExists;
 	public static String errorNewDirectory;
+	public static String copyFile;
+	public static String messageCopyFile;
+	public static String errorCopyFile;
+	public static String renameFile;
+	public static String messageRenameFile;
+	public static String errorRenameFile;
+	public static String warnFileName;
+	public static String warnFileNameValid;
+	public static String warnFileNameExists;
 
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, ExtensionMessages.class);
