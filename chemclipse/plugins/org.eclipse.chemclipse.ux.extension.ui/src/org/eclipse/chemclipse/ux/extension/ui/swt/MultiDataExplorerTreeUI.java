@@ -499,6 +499,7 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 			 */
 			Object[] selection = treeViewer.getStructuredSelection().toArray();
 			updateFileAndFolders(dataExplorerTreeUI, menuManager);
+			createNewDirectory(dataExplorerTreeUI, menuManager, selection);
 			selectUserLocationDirectory(menuManager, selection);
 			selectMethodDirectory(menuManager, selection);
 			selectMethodFile(menuManager, selection);
@@ -538,6 +539,53 @@ public class MultiDataExplorerTreeUI extends Composite implements IExtendedPartU
 				treeViewer.refresh();
 			}
 		});
+	}
+
+	private void createNewDirectory(DataExplorerTreeUI dataExplorerTreeUI, MenuManager menuManager, Object[] selection) {
+
+		if(selection.length >= 1) {
+			if(selection[0] instanceof File file) {
+				if(file.isDirectory()) {
+					menuManager.add(new Action("New Directory", ApplicationImageFactory.getInstance().getImageDescriptor(IApplicationImage.IMAGE_FOLDER_ADD, IApplicationImageProvider.SIZE_16x16)) {
+
+						@Override
+						public void run() {
+
+							InputDialog inputDialog = new InputDialog(Display.getDefault().getActiveShell(), "New Directory", "Create a new directory.", "", name -> {
+
+								if(name.isBlank()) {
+									return "Please select a name.";
+								} else if(name.contains("/") || name.contains("\\") || name.equals(".") || name.equals("..")) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+									return "The name is not valid.";
+								} else if(new File(file, name.trim()).exists()) {
+									return "The name exists already.";
+								}
+
+								return null;
+							});
+							/*
+							 * Directory
+							 */
+							if(inputDialog.open() == Window.OK) {
+								File directory = new File(file, inputDialog.getValue().trim());
+								if(directory.mkdir()) {
+									TreeViewer treeViewer = dataExplorerTreeUI.getTreeViewer();
+									if(treeViewer.getContentProvider() instanceof LazyFileExplorerContentProvider contentProvider) {
+										contentProvider.refresh(file);
+									} else {
+										treeViewer.refresh(file);
+									}
+									treeViewer.setExpandedState(file, true);
+									treeViewer.setSelection(new StructuredSelection(directory), true);
+								} else {
+									MessageDialog.openError(Display.getDefault().getActiveShell(), "New Directory", "The directory could not be created.");
+								}
+							}
+						}
+					});
+				}
+			}
+		}
 	}
 
 	private void selectUserLocationDirectory(MenuManager menuManager, Object[] selection) {
