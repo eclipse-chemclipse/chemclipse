@@ -14,6 +14,8 @@
 package org.eclipse.chemclipse.ux.extension.ui.swt;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -36,9 +38,9 @@ import org.eclipse.chemclipse.processing.supplier.IProcessorPreferences;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
-import org.eclipse.chemclipse.support.settings.OperatingSystemUtils;
 import org.eclipse.chemclipse.support.updates.IUpdateListener;
 import org.eclipse.chemclipse.ux.extension.ui.methods.MethodSupport;
+import org.eclipse.chemclipse.ux.extension.ui.methods.ProcessEntryJson;
 import org.eclipse.chemclipse.ux.extension.ui.methods.ProcessingWizard;
 import org.eclipse.chemclipse.ux.extension.ui.methods.SettingsWizard;
 import org.eclipse.core.runtime.Adapters;
@@ -67,6 +69,8 @@ import org.eclipse.swt.widgets.ToolItem;
 
 public class ProcessMethodToolbar extends ToolBar {
 
+	private static final String CLIPBOARD_TITLE = "Clipboard";
+
 	private ToolItem buttonAdd;
 	private ToolItem buttonCopy;
 	private ToolItem buttonRemove;
@@ -74,6 +78,7 @@ public class ProcessMethodToolbar extends ToolBar {
 	private ToolItem buttonMoveUp;
 	private ToolItem buttonMoveDown;
 	private ToolItem buttonClipboard;
+	private ToolItem buttonPaste;
 	private ToolItem buttonModifyDescription;
 	private ToolItem buttonModifySettings;
 
@@ -163,55 +168,93 @@ public class ProcessMethodToolbar extends ToolBar {
 		buttonRemoveAll.setEnabled(canEdit && processMethod.getNumberOfEntries() > 0 && !readOnly);
 		buttonMoveUp.setEnabled(writeable && !readOnly);
 		buttonMoveDown.setEnabled(writeable && !readOnly);
-		buttonClipboard.setEnabled(true);
+		buttonClipboard.setEnabled(!getSelectedProcessEntries().isEmpty());
+		buttonPaste.setEnabled(isEditable);
 		buttonModifyDescription.setEnabled(writeable && !readOnly);
 		buttonModifySettings.setEnabled(writeable && preferencesSupplier != null);
 	}
 
+	/**
+	 * Copies the selected process entries as JSON to the clipboard.
+	 */
 	public void copyToClipboard(Display display) {
 
-		Clipboard clipboard = new Clipboard(display);
-		StringBuilder builder = new StringBuilder();
-		String lineDelimiter = OperatingSystemUtils.getLineDelimiter();
-
-		List<Object> objects = new ArrayList<>();
-		Object input = structuredViewer.getInput();
-		if(input instanceof ProcessMethod processMethod) {
-			objects.addAll(processMethod.getEntries());
-		} else if(input instanceof List) {
-			objects.addAll((List<?>)input);
+		List<IProcessEntry> processEntries = getSelectedProcessEntries();
+		if(processEntries.isEmpty()) {
+			return;
 		}
-		/*
-		 * Header
-		 */
-		builder.append("Name");
-		builder.append("\t");
-		builder.append("Description");
-		builder.append("\t");
-		builder.append("Settings");
-		builder.append("\t");
-		builder.append("Id");
-		builder.append(lineDelimiter);
-		/*
-		 * Data
-		 */
-		for(Object object : objects) {
-			if(object instanceof IProcessEntry processEntry) {
-				builder.append(processEntry.getName());
-				builder.append("\t");
-				builder.append(processEntry.getDescription());
-				builder.append("\t");
-				builder.append(processEntry.getSettings());
-				builder.append("\t");
-				builder.append(processEntry.getProcessorId());
-				builder.append(lineDelimiter);
+
+		String json;
+		try {
+			json = ProcessEntryJson.toJson(processEntries);
+		} catch(IOException e) {
+			MessageDialog.openError(getShell(), CLIPBOARD_TITLE, "The selected processors could not be copied.\n\n" + e.getMessage());
+			return;
+		}
+
+		Clipboard clipboard = new Clipboard(display);
+		try {
+			clipboard.setContents(new Object[]{json}, new Transfer[]{TextTransfer.getInstance()});
+		} finally {
+			clipboard.dispose();
+		}
+	}
+
+	/**
+	 * Adds the process entries described by the JSON in the clipboard to the end of the method.
+	 */
+	public void pasteFromClipboard(Display display) {
+
+		if(!isEditable(processMethod)) {
+			return;
+		}
+
+		String text;
+		Clipboard clipboard = new Clipboard(display);
+		try {
+			text = (String)clipboard.getContents(TextTransfer.getInstance());
+		} finally {
+			clipboard.dispose();
+		}
+
+		if(text == null || text.isBlank()) {
+			return;
+		}
+
+		List<IProcessEntry> processEntries;
+		try {
+			processEntries = ProcessEntryJson.fromJson(text);
+		} catch(IOException e) {
+			MessageDialog.openError(getShell(), CLIPBOARD_TITLE, "The clipboard does not contain processors in JSON format.\n\n" + e.getMessage());
+			return;
+		}
+
+		for(IProcessEntry processEntry : processEntries) {
+			if(processingSupport.getSupplier(processEntry.getProcessorId()) == null) {
+				MessageDialog.openError(getShell(), CLIPBOARD_TITLE, MessageFormat.format("The processor ''{0}'' is not available.", processEntry.getProcessorId()));
+				return;
 			}
 		}
 
-		Object[] data = new Object[]{builder.toString()};
-		TextTransfer textTransfer = TextTransfer.getInstance();
-		Transfer[] dataTypes = new Transfer[]{textTransfer};
-		clipboard.setContents(data, dataTypes);
+		List<IProcessEntry> addedEntries = new ArrayList<>();
+		for(IProcessEntry processEntry : processEntries) {
+			addedEntries.add(processMethod.addProcessEntry(processEntry));
+		}
+
+		fireUpdate();
+		select(addedEntries);
+	}
+
+	private List<IProcessEntry> getSelectedProcessEntries() {
+
+		List<IProcessEntry> processEntries = new ArrayList<>();
+		for(Object object : structuredViewer.getStructuredSelection().toList()) {
+			if(object instanceof IProcessEntry processEntry) {
+				processEntries.add(processEntry);
+			}
+		}
+
+		return processEntries;
 	}
 
 	public boolean modifyProcessEntry(Shell shell, IProcessEntry processEntry, IProcessSupplierContext supplierContext, boolean showHint) {
@@ -293,6 +336,7 @@ public class ProcessMethodToolbar extends ToolBar {
 		buttonMoveUp = createMoveUpButton(this);
 		buttonMoveDown = createMoveDownButton(this);
 		buttonClipboard = createClipboardButton(this);
+		buttonPaste = createPasteButton(this);
 		buttonModifyDescription = createModifyDescriptionButton(this);
 		buttonModifySettings = createModifySettingsButton(this);
 	}
@@ -504,13 +548,30 @@ public class ProcessMethodToolbar extends ToolBar {
 
 		final ToolItem item = new ToolItem(toolBar, SWT.PUSH);
 		item.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_COPY_CLIPBOARD, IApplicationImageProvider.SIZE_16x16));
-		item.setToolTipText("Copy method to clipboard.");
+		item.setToolTipText("Copy the selected processors to the clipboard (JSON).");
 		item.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
 				copyToClipboard(e.display);
+			}
+		});
+
+		return item;
+	}
+
+	private ToolItem createPasteButton(ToolBar toolBar) {
+
+		final ToolItem item = new ToolItem(toolBar, SWT.PUSH);
+		item.setImage(ApplicationImageFactory.getInstance().getImage(IApplicationImage.IMAGE_IMPORT, IApplicationImageProvider.SIZE_16x16));
+		item.setToolTipText("Add the processors from the clipboard (JSON).");
+		item.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				pasteFromClipboard(e.display);
 			}
 		});
 
