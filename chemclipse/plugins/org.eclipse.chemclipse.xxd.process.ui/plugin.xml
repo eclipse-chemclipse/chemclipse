@@ -22,6 +22,12 @@
             id="org.eclipse.chemclipse.xxd.process.ui.preferences.processPreferencePage"
             name="Process">
       </page>
+      <page
+            category="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePage"
+            class="org.eclipse.chemclipse.xxd.process.ui.preferences.PreferencePageProcessorMenuBlacklist"
+            id="org.eclipse.chemclipse.xxd.process.ui.preferences.processorMenuBlacklistPreferencePage"
+            name="Processor Menu Blacklist">
+      </page>
    </extension>
    
 </plugin>

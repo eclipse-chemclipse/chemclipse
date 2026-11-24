@@ -147,7 +147,9 @@ import org.eclipse.chemclipse.wsd.model.core.selection.IChromatogramSelectionWSD
 import org.eclipse.chemclipse.xxd.process.comparators.CategoryNameComparator;
 import org.eclipse.chemclipse.xxd.process.support.ProcessTypeSupport;
 import org.eclipse.chemclipse.xxd.process.ui.preferences.PreferencePageChromatogramExport;
+import org.eclipse.chemclipse.xxd.process.ui.preferences.PreferencePageProcessorMenuBlacklist;
 import org.eclipse.chemclipse.xxd.process.ui.preferences.PreferencePageReportExport;
+import org.eclipse.chemclipse.xxd.process.ui.support.ProcessorMenuBlacklist;
 import org.eclipse.core.commands.Category;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.common.NotDefinedException;
@@ -793,6 +795,10 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 
 		// MALDI
 		if(supplier instanceof IScanProcessSupplier) {
+			return false;
+		}
+
+		if(ProcessorMenuBlacklist.contains(supplier)) {
 			return false;
 		}
 
@@ -1469,6 +1475,7 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 				default:
 					break;
 			}
+			preferencePages.add(PreferencePageProcessorMenuBlacklist.class);
 			/*
 			 * Standard Pages
 			 */
@@ -1665,6 +1672,11 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 		updateChromatogram();
 		toolbarReferencesControl.get().update();
 		updateRetentionIndexDisplayStatus();
+		/*
+		 * Rebuild the processor menu, e.g. if the menu blacklist was modified.
+		 */
+		menuCache = null;
+		updateMenu();
 		UpdateNotifierUI.update(display, IChemClipseEvents.TOPIC_EDITOR_CHROMATOGRAM_TOOLBAR_UPDATE, true);
 	}
 

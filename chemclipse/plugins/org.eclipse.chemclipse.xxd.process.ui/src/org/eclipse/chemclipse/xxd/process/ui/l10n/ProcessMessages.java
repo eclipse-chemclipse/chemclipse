@@ -23,6 +23,8 @@ public class ProcessMessages extends NLS {
 	public static String labelNA;
 	public static String labelName;
 	public static String processorImage;
+	public static String processorMenuBlacklist;
+	public static String processorMenuBlacklistDescription;
 	public static String remove;
 	public static String searchAvailableProcessorItems;
 
