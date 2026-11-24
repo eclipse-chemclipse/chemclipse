@@ -26,6 +26,18 @@ import org.eclipse.chemclipse.processing.supplier.ProcessExecutionContext;
 public interface IChromatogramSelectionProcessSupplier<SettingType> extends IProcessSupplier<SettingType> {
 
 	/**
+	 * Checks whether this processor can sensibly be applied to the given {@link IChromatogramSelection}, e.g. to hide it from menus.
+	 *
+	 * @param chromatogramSelection
+	 *            the {@link IChromatogramSelection} to check
+	 * @return true by default
+	 */
+	default boolean isValidFor(IChromatogramSelection chromatogramSelection) {
+
+		return true;
+	}
+
+	/**
 	 * Apply this processor to the given {@link IChromatogramSelection}
 	 *
 	 * @param chromatogramSelection

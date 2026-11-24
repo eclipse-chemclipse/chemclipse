@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.core.massspectrum;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -20,6 +21,7 @@ import java.util.function.Function;
 
 import org.eclipse.chemclipse.chromatogram.msd.filter.exceptions.NoMassSpectrumFilterSupplierAvailableException;
 import org.eclipse.chemclipse.chromatogram.msd.filter.settings.IMassSpectrumFilterSettings;
+import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.selection.IChromatogramSelection;
 import org.eclipse.chemclipse.model.supplier.ChromatogramSelectionProcessSupplier;
 import org.eclipse.chemclipse.model.types.DataType;
@@ -30,6 +32,8 @@ import org.eclipse.chemclipse.processing.supplier.IProcessTypeSupplier;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public abstract class AbstractChromatogramSelectionMassSpectrumFilterProcessTypeSupplier implements IProcessTypeSupplier {
+
+	private static final Logger logger = Logger.getLogger(AbstractChromatogramSelectionMassSpectrumFilterProcessTypeSupplier.class);
 
 	private final String category;
 	private final String prefix;
@@ -84,6 +88,38 @@ public abstract class AbstractChromatogramSelectionMassSpectrumFilterProcessType
 			messageConsumer.addMessages(MassSpectrumFilter.applyFilter(massSpectras, processSettings, supplier.getId(), monitor));
 			chromatogramSelection.getChromatogram().setDirty(true);
 			return chromatogramSelection;
+		}
+
+		@Override
+		public boolean isValidFor(IChromatogramSelection chromatogramSelection) {
+
+			if(chromatogramSelection == null) {
+				return false;
+			}
+			IMassSpectrumFilterSettings massSpectrumFilterSettings = createSettings();
+			if(massSpectrumFilterSettings == null) {
+				return true;
+			}
+			/*
+			 * Valid if at least one mass spectrum qualifies,
+			 * e.g. MS/MS scans in a data-dependent acquisition.
+			 */
+			return extractionFunction.apply(chromatogramSelection).stream().anyMatch(massSpectrumFilterSettings::isValidFor);
+		}
+
+		private IMassSpectrumFilterSettings createSettings() {
+
+			Class<IMassSpectrumFilterSettings> settingsClass = getSettingsClass();
+			if(settingsClass != null) {
+				try {
+					return settingsClass.getDeclaredConstructor().newInstance();
+				} catch(InstantiationException | IllegalAccessException
+						| IllegalArgumentException | InvocationTargetException
+						| NoSuchMethodException | SecurityException e) {
+					logger.error(e);
+				}
+			}
+			return null;
 		}
 	}
 }

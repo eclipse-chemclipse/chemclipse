@@ -549,6 +549,8 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 			updateChromatogram();
 			updateSelection();
 			fireUpdate(shell.getDisplay());
+			menuCache = null;
+			updateMenu();
 		} catch(InterruptedException e) {
 			logger.error(e);
 			Thread.currentThread().interrupt();
@@ -800,6 +802,12 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 
 		if(ProcessorMenuBlacklist.contains(supplier)) {
 			return false;
+		}
+
+		if(supplier instanceof IChromatogramSelectionProcessSupplier<?> chromatogramSelectionProcessSupplier && chromatogramSelection != null) {
+			if(!chromatogramSelectionProcessSupplier.isValidFor(chromatogramSelection)) {
+				return false;
+			}
 		}
 
 		return dataCategoryPredicate != null && dataCategoryPredicate.test(supplier);
