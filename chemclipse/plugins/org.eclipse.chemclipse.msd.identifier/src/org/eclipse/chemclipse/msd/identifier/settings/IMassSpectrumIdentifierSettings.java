@@ -6,28 +6,34 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  * Philip Wenig - initial API and implementation
  * Matthias Mailänder - API and implementation
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.identifier.settings;
 
-import java.util.List;
-
 import org.eclipse.chemclipse.model.identifier.IIdentifierSettings;
+import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 
 public interface IMassSpectrumIdentifierSettings extends IIdentifierSettings {
 
 	/**
-	 * The mass spectrum types the identifier is able to handle, see {@link MassSpectrumType}.
+	 * Checks whether the identifier is able to handle the given mass spectrum.
+	 * By default, only {@link MassSpectrumType#CENTROID} spectra are accepted.
 	 * Identifiers that evaluate profile data need to override this method.
 	 *
-	 * @return List
+	 * @param scanMSD
+	 *            the {@link IScanMSD} to check
+	 * @return boolean
 	 */
-	default List<MassSpectrumType> appliesToMassSpectrumTypes() {
+	default boolean isValidFor(IScanMSD scanMSD) {
 
-		return List.of(MassSpectrumType.CENTROID);
+		if(scanMSD instanceof IRegularMassSpectrum regularMassSpectrum) {
+			return regularMassSpectrum.getMassSpectrumType() == MassSpectrumType.CENTROID;
+		}
+		return false;
 	}
 }

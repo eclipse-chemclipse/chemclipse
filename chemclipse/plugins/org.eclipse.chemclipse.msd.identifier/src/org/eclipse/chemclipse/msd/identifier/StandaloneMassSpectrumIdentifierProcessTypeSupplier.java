@@ -96,13 +96,15 @@ public class StandaloneMassSpectrumIdentifierProcessTypeSupplier implements IPro
 		@Override
 		public boolean isValidFor(IScan scan) {
 
-			if(scan instanceof IRegularMassSpectrum regularMassSpectrum) {
-				MassSpectrumType massSpectrumType = regularMassSpectrum.getMassSpectrumType();
-				IMassSpectrumIdentifierSettings massSpectrumIdentifierSettings = createSettings();
-				if(massSpectrumIdentifierSettings != null) {
-					return massSpectrumIdentifierSettings.appliesToMassSpectrumTypes().contains(massSpectrumType);
-				}
-				return MassSpectrumType.CENTROID.equals(massSpectrumType);
+			if(!(scan instanceof IScanMSD scanMSD)) {
+				return false;
+			}
+			IMassSpectrumIdentifierSettings massSpectrumIdentifierSettings = createSettings();
+			if(massSpectrumIdentifierSettings != null) {
+				return massSpectrumIdentifierSettings.isValidFor(scanMSD);
+			}
+			if(scanMSD instanceof IRegularMassSpectrum regularMassSpectrum) {
+				return regularMassSpectrum.getMassSpectrumType() == MassSpectrumType.CENTROID;
 			}
 			return false;
 		}
