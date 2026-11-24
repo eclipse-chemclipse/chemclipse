@@ -100,7 +100,7 @@ public abstract class AbstractChromatogramSelection implements IChromatogramSele
 			this.startRetentionTime = chromatogram.getStartRetentionTime();
 		}
 		/*
-		 * Fire update change if neccessary.
+		 * Fire update change if necessary.
 		 */
 		if(update) {
 			fireUpdateChange(false);
@@ -127,7 +127,7 @@ public abstract class AbstractChromatogramSelection implements IChromatogramSele
 			this.stopRetentionTime = chromatogram.getStopRetentionTime();
 		}
 		/*
-		 * Fire update change if neccessary.
+		 * Fire update change if necessary.
 		 */
 		if(update) {
 			fireUpdateChange(false);
@@ -154,7 +154,7 @@ public abstract class AbstractChromatogramSelection implements IChromatogramSele
 			this.startAbundance = 0.0f;
 		}
 		/*
-		 * Fire update change if neccessary.
+		 * Fire update change if necessary.
 		 */
 		if(update) {
 			fireUpdateChange(false);
@@ -181,7 +181,7 @@ public abstract class AbstractChromatogramSelection implements IChromatogramSele
 			this.stopAbundance = chromatogram.getMaxSignal();
 		}
 		/*
-		 * Fire update change if neccessary.
+		 * Fire update change if necessary.
 		 */
 		if(update) {
 			fireUpdateChange(false);
