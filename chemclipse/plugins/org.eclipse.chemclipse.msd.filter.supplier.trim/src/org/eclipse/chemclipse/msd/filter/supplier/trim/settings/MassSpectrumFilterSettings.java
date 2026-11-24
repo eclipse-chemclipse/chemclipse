@@ -13,8 +13,8 @@
 package org.eclipse.chemclipse.msd.filter.supplier.trim.settings;
 
 import org.eclipse.chemclipse.chromatogram.msd.filter.settings.AbstractMassSpectrumFilterSettings;
-import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
+import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.support.settings.IntSettingsProperty;
 
@@ -43,8 +43,8 @@ public class MassSpectrumFilterSettings extends AbstractMassSpectrumFilterSettin
 	@Override
 	public boolean isValidFor(IScanMSD scanMSD) {
 
-		if(scanMSD instanceof IRegularMassSpectrum regularMassSpectrum) {
-			return regularMassSpectrum.getMassSpectrumType() == MassSpectrumType.PROFILE;
+		if(scanMSD instanceof IStandaloneMassSpectrum standaloneMassSpectrum) {
+			return standaloneMassSpectrum.getMassSpectrumType() == MassSpectrumType.PROFILE;
 		}
 		return false;
 	}

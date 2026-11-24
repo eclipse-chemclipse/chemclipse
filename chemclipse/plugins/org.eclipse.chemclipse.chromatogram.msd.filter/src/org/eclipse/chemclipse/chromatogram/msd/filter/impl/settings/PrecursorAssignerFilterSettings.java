@@ -15,7 +15,6 @@ package org.eclipse.chemclipse.chromatogram.msd.filter.impl.settings;
 import org.eclipse.chemclipse.chromatogram.msd.filter.settings.AbstractMassSpectrumFilterSettings;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
-import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.support.settings.DoubleSettingsProperty;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -32,7 +31,7 @@ public class PrecursorAssignerFilterSettings extends AbstractMassSpectrumFilterS
 	public boolean isValidFor(IScanMSD scanMSD) {
 
 		if(scanMSD instanceof IRegularMassSpectrum regularMassSpectrum) {
-			return regularMassSpectrum.getMassSpectrumType() == MassSpectrumType.CENTROID;
+			return regularMassSpectrum.getMassSpectrometer() > 1;
 		}
 		return false;
 	}
