@@ -13,11 +13,12 @@
 package org.eclipse.chemclipse.xxd.edit.supplier.tophat.settings;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.chemclipse.chromatogram.msd.filter.settings.AbstractMassSpectrumFilterSettings;
 import org.eclipse.chemclipse.logging.core.Logger;
+import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.processing.core.ICategories;
 import org.eclipse.chemclipse.support.literature.LiteratureReference;
@@ -44,9 +45,12 @@ public class MassSpectrumFilterSettings extends AbstractMassSpectrumFilterSettin
 	}
 
 	@Override
-	public List<MassSpectrumType> appliesToMassSpectrumTypes() {
+	public boolean isValidFor(IScanMSD scanMSD) {
 
-		return Arrays.asList(MassSpectrumType.PROFILE);
+		if(scanMSD instanceof IRegularMassSpectrum regularMassSpectrum) {
+			return regularMassSpectrum.getMassSpectrumType() == MassSpectrumType.PROFILE;
+		}
+		return false;
 	}
 
 	@Override

@@ -12,19 +12,21 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.calculator.noise.mad;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.eclipse.chemclipse.chromatogram.msd.filter.settings.AbstractMassSpectrumFilterSettings;
+import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.processing.core.ICategories;
 
 public class MedianAbsoluteDeviationFilterSettings extends AbstractMassSpectrumFilterSettings {
 
 	@Override
-	public List<MassSpectrumType> appliesToMassSpectrumTypes() {
+	public boolean isValidFor(IScanMSD scanMSD) {
 
-		return Arrays.asList(MassSpectrumType.PROFILE);
+		if(scanMSD instanceof IRegularMassSpectrum regularMassSpectrum) {
+			return regularMassSpectrum.getMassSpectrumType() == MassSpectrumType.PROFILE;
+		}
+		return false;
 	}
 
 	@Override

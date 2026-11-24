@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2025 Lablicate GmbH.
+ * Copyright (c) 2014, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -13,6 +13,13 @@
 package org.eclipse.chemclipse.chromatogram.msd.filter.settings;
 
 import org.eclipse.chemclipse.model.settings.AbstractProcessSettings;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 
 public abstract class AbstractMassSpectrumFilterSettings extends AbstractProcessSettings implements IMassSpectrumFilterSettings {
+
+	@Override
+	public boolean isValidFor(IScanMSD scanMSD) {
+
+		return true;
+	}
 }

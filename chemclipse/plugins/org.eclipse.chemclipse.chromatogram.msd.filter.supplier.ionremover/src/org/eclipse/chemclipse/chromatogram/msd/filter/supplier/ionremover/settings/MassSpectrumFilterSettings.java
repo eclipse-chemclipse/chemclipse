@@ -12,11 +12,10 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.ionremover.settings;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.eclipse.chemclipse.chromatogram.msd.filter.settings.AbstractMassSpectrumFilterSettings;
 import org.eclipse.chemclipse.model.core.MarkedTraceModus;
+import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.support.settings.StringSettingsProperty;
 
@@ -58,8 +57,11 @@ public class MassSpectrumFilterSettings extends AbstractMassSpectrumFilterSettin
 	}
 
 	@Override
-	public List<MassSpectrumType> appliesToMassSpectrumTypes() {
+	public boolean isValidFor(IScanMSD scanMSD) {
 
-		return Arrays.asList(MassSpectrumType.CENTROID);
+		if(scanMSD instanceof IRegularMassSpectrum regularMassSpectrum) {
+			return regularMassSpectrum.getMassSpectrumType() == MassSpectrumType.CENTROID;
+		}
+		return false;
 	}
 }
