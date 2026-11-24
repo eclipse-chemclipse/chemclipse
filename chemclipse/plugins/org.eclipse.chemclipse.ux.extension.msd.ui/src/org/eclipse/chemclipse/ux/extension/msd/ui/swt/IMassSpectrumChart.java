@@ -18,4 +18,9 @@ import org.eclipse.chemclipse.support.updates.IUpdateListener;
 public interface IMassSpectrumChart extends IUpdateListener {
 
 	void update(IScanMSD massSpectrum);
+
+	/**
+	 * Rebuilds the processor menu, e.g. if the menu blacklist was modified.
+	 */
+	void refreshMenu();
 }

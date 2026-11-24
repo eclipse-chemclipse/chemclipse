@@ -115,6 +115,7 @@ import org.eclipse.chemclipse.xxd.process.comparators.CategoryNameComparator;
 import org.eclipse.chemclipse.xxd.process.support.ProcessTypeSupport;
 import org.eclipse.chemclipse.xxd.process.ui.preferences.PreferencePageChromatogramExport;
 import org.eclipse.chemclipse.xxd.process.ui.preferences.PreferencePageReportExport;
+import org.eclipse.chemclipse.xxd.process.ui.support.ProcessorMenuBlacklist;
 import org.eclipse.core.commands.Category;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.common.NotDefinedException;
@@ -633,6 +634,10 @@ public class ExtendedElectropherogramEditorUI extends Composite implements ITool
 		}
 
 		if(DISABLED_CATEGORIES.contains(supplier.getCategory())) {
+			return false;
+		}
+
+		if(ProcessorMenuBlacklist.contains(supplier)) {
 			return false;
 		}
 

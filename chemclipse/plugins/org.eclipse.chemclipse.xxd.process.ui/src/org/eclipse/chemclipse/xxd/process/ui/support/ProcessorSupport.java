@@ -14,6 +14,7 @@ package org.eclipse.chemclipse.xxd.process.ui.support;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -98,6 +99,26 @@ public class ProcessorSupport {
 		 * Sort by index
 		 */
 		return sortProcessorsByIndex(processors);
+	}
+
+	/**
+	 * Returns the ids of the active processors stored in the settings.
+	 */
+	public static Set<String> getActiveProcessorIds(String settings) {
+
+		Set<String> processorIds = new HashSet<>();
+		if(settings != null && !settings.isEmpty()) {
+			for(String processorSettings : settings.split(PROCESSOR_DELIMITER)) {
+				String[] values = processorSettings.split(VALUE_DELIMITER);
+				String id = getString(values, 0, "");
+				boolean active = getBoolean(values, 2, true);
+				if(!id.isEmpty() && active) {
+					processorIds.add(id);
+				}
+			}
+		}
+
+		return processorIds;
 	}
 
 	public static String getActiveProcessors(List<Processor> processors) {

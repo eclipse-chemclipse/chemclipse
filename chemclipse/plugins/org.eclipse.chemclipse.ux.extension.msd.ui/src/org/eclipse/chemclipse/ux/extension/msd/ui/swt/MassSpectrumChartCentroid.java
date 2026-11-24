@@ -57,6 +57,7 @@ import org.eclipse.chemclipse.ux.extension.ui.methods.SettingsWizard;
 import org.eclipse.chemclipse.ux.extension.ui.support.AuditTrailSupport;
 import org.eclipse.chemclipse.xxd.process.comparators.CategoryNameComparator;
 import org.eclipse.chemclipse.xxd.process.support.ProcessTypeSupport;
+import org.eclipse.chemclipse.xxd.process.ui.support.ProcessorMenuBlacklist;
 import org.eclipse.core.commands.Category;
 import org.eclipse.core.commands.Command;
 import org.eclipse.e4.core.commands.ECommandService;
@@ -139,6 +140,13 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 			updateAxis();
 			updateMenu();
 		}
+	}
+
+	@Override
+	public void refreshMenu() {
+
+		menuCache = null;
+		updateMenu();
 	}
 
 	public void update(IScanMSD combinedMassSpectrum, IScanMSD mirroredMassSpectrum) {
@@ -266,6 +274,10 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 		if(!category.equals(ICategories.MASS_SPECTRUM_FILTER) //
 				&& !category.equals(ICategories.MASS_SPECTRUM_IDENTIFIER) //
 				&& !category.equals(ICategories.MASS_SPECTRUM_REPORTS)) {
+			return false;
+		}
+
+		if(ProcessorMenuBlacklist.contains(supplier)) {
 			return false;
 		}
 

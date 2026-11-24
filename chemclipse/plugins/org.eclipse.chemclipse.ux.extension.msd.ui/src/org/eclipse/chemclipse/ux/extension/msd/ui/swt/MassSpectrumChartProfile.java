@@ -58,6 +58,7 @@ import org.eclipse.chemclipse.ux.extension.ui.editors.ProcessorSupplierMenuEntry
 import org.eclipse.chemclipse.ux.extension.ui.methods.SettingsWizard;
 import org.eclipse.chemclipse.xxd.process.comparators.CategoryNameComparator;
 import org.eclipse.chemclipse.xxd.process.support.ProcessTypeSupport;
+import org.eclipse.chemclipse.xxd.process.ui.support.ProcessorMenuBlacklist;
 import org.eclipse.chemclipse.xxd.process.ui.support.ProcessorSupport;
 import org.eclipse.core.commands.Category;
 import org.eclipse.core.commands.Command;
@@ -156,6 +157,13 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 		}
 	}
 
+	@Override
+	public void refreshMenu() {
+
+		menuCache = null;
+		updateMenu();
+	}
+
 	private void updateAxis() {
 
 		IChartSettings chartSettings = getChartSettings();
@@ -237,6 +245,10 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 				&& !category.equals(ICategories.NOISE_ESTIMATOR) //
 				&& !category.equals(ICategories.MASS_SPECTRUM_IDENTIFIER) //
 				&& !category.equals(ICategories.MASS_SPECTRUM_REPORTS)) {
+			return false;
+		}
+
+		if(ProcessorMenuBlacklist.contains(supplier)) {
 			return false;
 		}
 

@@ -43,6 +43,7 @@ import org.eclipse.chemclipse.ux.extension.ui.support.AuditTrailSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.ChartGridSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
 import org.eclipse.chemclipse.xxd.process.support.ProcessTypeSupport;
+import org.eclipse.chemclipse.xxd.process.ui.preferences.PreferencePageProcessorMenuBlacklist;
 import org.eclipse.jface.preference.IPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -406,7 +407,10 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 
 	private void createButtonSettings(Composite parent) {
 
-		createSettingsButton(parent, getPreferencePagesSupplier(), _ -> massSpectrumChart.update(), false);
+		createSettingsButton(parent, getPreferencePagesSupplier(), _ -> {
+			massSpectrumChart.refreshMenu();
+			massSpectrumChart.update();
+		}, false);
 	}
 
 	private Supplier<List<Class<? extends IPreferencePage>>> getPreferencePagesSupplier() {
@@ -415,6 +419,7 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 
 			List<Class<? extends IPreferencePage>> preferencePages = new ArrayList<>();
 			preferencePages.add(org.eclipse.chemclipse.msd.swt.ui.preferences.PreferencePage.class);
+			preferencePages.add(PreferencePageProcessorMenuBlacklist.class);
 			return preferencePages;
 		};
 	}
