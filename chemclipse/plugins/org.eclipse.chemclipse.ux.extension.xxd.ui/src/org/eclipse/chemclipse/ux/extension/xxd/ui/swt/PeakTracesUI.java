@@ -152,7 +152,7 @@ public class PeakTracesUI extends ScrollableChart {
 		int stopRetentionTime = peakModel.getStopRetentionTime() + offsetRetentionTime;
 		IPeakMassSpectrum massSpectrum = peakModel.getPeakMassSpectrum();
 		IChromatogramSelection chromatogramSelection = new ChromatogramSelection(chromatogram);
-		chromatogramSelection.setRangeRetentionTime(startRetentionTime, stopRetentionTime, false);
+		chromatogramSelection.setRangeRetentionTime(startRetentionTime, stopRetentionTime, true);
 
 		IColorScheme colors = Colors.getColorScheme(preferenceStore.getString(PreferenceSupplier.P_COLOR_SCHEME_PEAK_TRACES));
 		traces.addAll(extractTraces(massSpectrum));
@@ -186,7 +186,7 @@ public class PeakTracesUI extends ScrollableChart {
 		IScan peakMaximum = peakModel.getPeakMaximum();
 		if(peakMaximum instanceof IScanWSD scanWSD) {
 			IChromatogramSelection chromatogramSelection = new ChromatogramSelection(chromatogram);
-			chromatogramSelection.setRangeRetentionTime(startRetentionTime, stopRetentionTime, false);
+			chromatogramSelection.setRangeRetentionTime(startRetentionTime, stopRetentionTime, true);
 
 			IColorScheme colors = Colors.getColorScheme(preferenceStore.getString(PreferenceSupplier.P_COLOR_SCHEME_PEAK_TRACES));
 			traces.addAll(extractTraces(scanWSD));
