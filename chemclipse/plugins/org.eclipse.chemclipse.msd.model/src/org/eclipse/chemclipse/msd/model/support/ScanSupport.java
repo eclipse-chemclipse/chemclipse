@@ -28,7 +28,7 @@ public class ScanSupport {
 
 	/*
 	 * Returns the TandemMS label, e.g.:
-	 * 258 > 159.1 @30
+	 * 258.0 > 159.1 @30
 	 * ---
 	 * If the ion contains no transition information, the m/z will be returned, e.g.:
 	 * 159.1
@@ -41,7 +41,7 @@ public class ScanSupport {
 			if(ion instanceof IIonMSn ionMSn) {
 				IIonTransition ionTransition = ionMSn.getIonTransition();
 				if(ionTransition != null) {
-					builder.append(ionTransition.getQ1Ion());
+					builder.append(ValueFormat.getDecimalFormatEnglish("0.0").format(ionTransition.getQ1Ion()));
 					builder.append(" > ");
 					builder.append(ValueFormat.getDecimalFormatEnglish("0.0").format(ion.getIon()));
 					builder.append(" @");
@@ -58,14 +58,14 @@ public class ScanSupport {
 
 	/*
 	 * Returns the TandemMS label, e.g.:
-	 * 258 > 159 @30
+	 * 258.0 > 159.1 @30
 	 */
 	public static String getLabelTandemMS(IIonTransition ionTransition) {
 
 		String label = "";
 		if(ionTransition != null) {
 			StringBuilder builder = new StringBuilder();
-			builder.append(ionTransition.getQ1Ion());
+			builder.append(ValueFormat.getDecimalFormatEnglish("0.0").format(ionTransition.getQ1Ion()));
 			builder.append(" > ");
 			builder.append(ValueFormat.getDecimalFormatEnglish("0.0").format(ionTransition.getQ3Ion()));
 			builder.append(" @");

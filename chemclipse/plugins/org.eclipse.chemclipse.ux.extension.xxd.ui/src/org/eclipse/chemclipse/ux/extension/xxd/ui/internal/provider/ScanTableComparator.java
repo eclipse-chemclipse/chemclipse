@@ -107,7 +107,7 @@ public class ScanTableComparator extends AbstractRecordTableComparator {
 					sortOrder = Float.compare(ion2.getAbundance(), ion1.getAbundance());
 					break;
 				case 3: // parent m/z
-					sortOrder = (ionTransition1 == null || ionTransition2 == null) ? 0 : Integer.compare(ionTransition2.getQ1Ion(), ionTransition1.getQ1Ion());
+					sortOrder = (ionTransition1 == null || ionTransition2 == null) ? 0 : Double.compare(ionTransition2.getQ1Ion(), ionTransition1.getQ1Ion());
 					break;
 				case 4: // parent resolution
 					sortOrder = (ionTransition1 == null || ionTransition2 == null) ? 0 : Double.compare(ionTransition2.getQ1Resolution(), ionTransition1.getQ1Resolution());

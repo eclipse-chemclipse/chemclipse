@@ -24,7 +24,7 @@ public interface IIonTransition extends Serializable {
 
 	double getQ1StopIon();
 
-	int getQ1Ion(); // Q1 - precision 0
+	double getQ1Ion();
 
 	double getDeltaQ1Ion();
 
@@ -32,7 +32,7 @@ public interface IIonTransition extends Serializable {
 
 	double getQ3StopIon();
 
-	double getQ3Ion(); // Q3 - precision 1
+	double getQ3Ion();
 
 	/*
 	 * Handle with care. Only update this
