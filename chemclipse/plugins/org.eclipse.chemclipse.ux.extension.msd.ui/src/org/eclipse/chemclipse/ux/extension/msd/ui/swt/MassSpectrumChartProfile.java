@@ -18,7 +18,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
@@ -217,7 +216,7 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 			 * Dynamic Menu Items
 			 */
 			List<IProcessSupplier<?>> processSupplierList = new ArrayList<>(processTypeSupport.getSupplier(this::isValidSupplier));
-			Collections.sort(processSupplierList, new CategoryNameComparator());
+			processSupplierList.sort(new CategoryNameComparator());
 			for(IProcessSupplier<?> processSupplier : processSupplierList) {
 				IChartMenuEntry chartMenuEntry = new ProcessorSupplierMenuEntry<>(processSupplier, processTypeSupport, this::executeSupplier);
 				cachedMenuEntries.add(chartMenuEntry);
