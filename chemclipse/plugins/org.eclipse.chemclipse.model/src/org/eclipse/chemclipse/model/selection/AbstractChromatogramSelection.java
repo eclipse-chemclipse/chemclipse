@@ -215,7 +215,6 @@ public abstract class AbstractChromatogramSelection implements IChromatogramSele
 		setRanges(startRetentionTime, stopRetentionTime, startAbundance, stopAbundance, validate);
 	}
 
-	// TODO JUnit
 	@Override
 	public void setRanges(int startRetentionTime, int stopRetentionTime, float startAbundance, float stopAbundance, boolean validate) {
 
