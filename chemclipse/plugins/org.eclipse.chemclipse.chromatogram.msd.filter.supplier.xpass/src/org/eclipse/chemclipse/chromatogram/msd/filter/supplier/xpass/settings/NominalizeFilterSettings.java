@@ -12,10 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.supplier.xpass.settings;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.eclipse.chemclipse.chromatogram.msd.filter.settings.AbstractMassSpectrumFilterSettings;
+import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -38,8 +37,11 @@ public class NominalizeFilterSettings extends AbstractMassSpectrumFilterSettings
 	}
 
 	@Override
-	public List<MassSpectrumType> appliesToMassSpectrumTypes() {
+	public boolean isValidFor(IScanMSD scanMSD) {
 
-		return Arrays.asList(MassSpectrumType.CENTROID);
+		if(scanMSD instanceof IRegularMassSpectrum regularMassSpectrum) {
+			return regularMassSpectrum.getMassSpectrumType() == MassSpectrumType.CENTROID;
+		}
+		return false;
 	}
 }

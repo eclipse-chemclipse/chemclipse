@@ -24,7 +24,6 @@ import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.core.IScan;
 import org.eclipse.chemclipse.model.supplier.ScanProcessSupplier;
 import org.eclipse.chemclipse.model.types.DataType;
-import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.processing.core.ICategories;
 import org.eclipse.chemclipse.processing.core.IMessageConsumer;
@@ -85,14 +84,12 @@ public class MassSpectrumFilterProcessSupplier implements IProcessTypeSupplier {
 		@Override
 		public boolean isValidFor(IScan scan) {
 
-			if(!(scan instanceof IScanMSD)) {
+			if(!(scan instanceof IScanMSD scanMSD)) {
 				return false;
 			}
-			if(scan instanceof IRegularMassSpectrum regularMassSpectrum) {
-				IMassSpectrumFilterSettings massSpectrumFilterSettings = createSettings();
-				if(massSpectrumFilterSettings != null) {
-					return massSpectrumFilterSettings.appliesToMassSpectrumTypes().contains(regularMassSpectrum.getMassSpectrumType());
-				}
+			IMassSpectrumFilterSettings massSpectrumFilterSettings = createSettings();
+			if(massSpectrumFilterSettings != null) {
+				return massSpectrumFilterSettings.isValidFor(scanMSD);
 			}
 			return true;
 		}

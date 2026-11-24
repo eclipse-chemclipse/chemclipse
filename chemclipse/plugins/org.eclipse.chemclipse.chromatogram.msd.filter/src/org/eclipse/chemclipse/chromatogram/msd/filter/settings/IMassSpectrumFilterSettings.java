@@ -13,15 +13,13 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.chromatogram.msd.filter.settings;
 
-import java.util.List;
-
 import org.eclipse.chemclipse.model.settings.IProcessSettings;
-import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.processing.core.ICategories;
 
 public interface IMassSpectrumFilterSettings extends IProcessSettings {
 
-	List<MassSpectrumType> appliesToMassSpectrumTypes();
+	boolean isValidFor(IScanMSD scanMSD);
 
 	/**
 	 * The menu category the filter shall be listed in, see {@link ICategories}.

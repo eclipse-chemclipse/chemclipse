@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Lablicate GmbH.
+ * Copyright (c) 2025, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -12,10 +12,9 @@
  *******************************************************************************/
 package org.eclipse.chemclipse.msd.filter.supplier.normalizer.settings;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.eclipse.chemclipse.chromatogram.msd.filter.settings.AbstractMassSpectrumFilterSettings;
+import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
+import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -36,8 +35,11 @@ public class MassSpectrumFilterSettings extends AbstractMassSpectrumFilterSettin
 	}
 
 	@Override
-	public List<MassSpectrumType> appliesToMassSpectrumTypes() {
+	public boolean isValidFor(IScanMSD scanMSD) {
 
-		return Arrays.asList(MassSpectrumType.PROFILE);
+		if(scanMSD instanceof IRegularMassSpectrum regularMassSpectrum) {
+			return regularMassSpectrum.getMassSpectrumType() == MassSpectrumType.PROFILE;
+		}
+		return false;
 	}
 }
