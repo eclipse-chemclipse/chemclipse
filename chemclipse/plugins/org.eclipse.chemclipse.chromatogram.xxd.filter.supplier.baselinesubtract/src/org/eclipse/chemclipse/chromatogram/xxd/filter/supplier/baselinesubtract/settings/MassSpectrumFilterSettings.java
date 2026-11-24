@@ -23,7 +23,8 @@ public class MassSpectrumFilterSettings extends AbstractMassSpectrumFilterSettin
 	public boolean isValidFor(IScanMSD scanMSD) {
 
 		if(scanMSD instanceof IStandaloneMassSpectrum standaloneMassSpectrum) {
-			return standaloneMassSpectrum.getMassSpectrumType() == MassSpectrumType.PROFILE;
+			return standaloneMassSpectrum.getMassSpectrumType() == MassSpectrumType.PROFILE && //
+					!standaloneMassSpectrum.getBaseline().isEmpty();
 		}
 		return false;
 	}
