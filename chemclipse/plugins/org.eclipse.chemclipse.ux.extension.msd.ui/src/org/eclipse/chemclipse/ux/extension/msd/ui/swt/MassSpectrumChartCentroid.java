@@ -338,6 +338,10 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 			monitor.run(true, true, runnable);
 			massSpectrum.setDirty(true);
 			update();
+			if(!isDisposed()) {
+				menuCache = null;
+				updateMenu();
+			}
 		} catch(InterruptedException e) {
 			logger.error(e);
 			Thread.currentThread().interrupt();
