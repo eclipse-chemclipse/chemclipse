@@ -223,13 +223,15 @@ public class ChromatogramHeatmapUI extends Composite implements IExtendedPartUI 
 	public void clear() {
 
 		float[] heatmapData = new float[0];
-		intensityGraphFigure.setMin(0);
-		intensityGraphFigure.setMax(0);
-		intensityGraphFigure.setDataWidth(0);
-		intensityGraphFigure.setDataHeight(0);
-		intensityGraphFigure.setDataArray(heatmapData);
-		lightweightSystem.setContents(intensityGraphFigure);
-		intensityGraphFigure.repaint();
+		if(intensityGraphFigure != null) {
+			intensityGraphFigure.setMin(0);
+			intensityGraphFigure.setMax(0);
+			intensityGraphFigure.setDataWidth(0);
+			intensityGraphFigure.setDataHeight(0);
+			intensityGraphFigure.setDataArray(heatmapData);
+			lightweightSystem.setContents(intensityGraphFigure);
+			intensityGraphFigure.repaint();
+		}
 	}
 
 	private void createControl() {
