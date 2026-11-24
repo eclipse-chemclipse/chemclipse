@@ -308,6 +308,8 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 			massSpectrum.setDirty(true);
 			update();
 			if(!isDisposed()) {
+				menuCache = null;
+				updateMenu();
 				MassSpectrumUpdateNotifierUI.update(getDisplay(), massSpectrum);
 			}
 		} catch(InterruptedException e) {
