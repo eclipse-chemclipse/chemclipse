@@ -196,6 +196,8 @@ public class MethodTreeViewer extends TreeViewer {
 
 				if(e.stateMask == SWT.MOD1 && e.keyCode == 'c') {
 					toolbarButtons.get().copyToClipboard(e.display);
+				} else if(e.stateMask == SWT.MOD1 && e.keyCode == 'v') {
+					toolbarButtons.get().pasteFromClipboard(e.display);
 				}
 			}
 		});

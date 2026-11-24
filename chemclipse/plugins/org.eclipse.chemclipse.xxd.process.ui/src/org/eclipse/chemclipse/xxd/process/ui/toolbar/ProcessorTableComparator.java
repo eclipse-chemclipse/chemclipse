@@ -40,9 +40,6 @@ public class ProcessorTableComparator extends AbstractRecordTableComparator {
 				case 3:
 					sortOrder = processSupplier2.getDescription().compareTo(processSupplier1.getDescription());
 					break;
-				case 4:
-					sortOrder = processSupplier2.getId().compareTo(processSupplier1.getId());
-					break;
 				default:
 					sortOrder = 0;
 			}

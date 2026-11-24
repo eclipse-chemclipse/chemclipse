@@ -30,13 +30,11 @@ public class ProcessorLabelProvider extends AbstractChemClipseLabelProvider {
 			ProcessMessages.labelName, //
 			ProcessMessages.labelDataType, //
 			ProcessMessages.labelCategory, //
-			ProcessMessages.labelDescription, //
-			ProcessMessages.labelID //
+			ProcessMessages.labelDescription //
 	};
 
 	public static final int[] BOUNDS = { //
 			200, //
-			100, //
 			100, //
 			100, //
 			100 //
@@ -92,9 +90,6 @@ public class ProcessorLabelProvider extends AbstractChemClipseLabelProvider {
 					break;
 				case 3:
 					text = processSupplier.getDescription();
-					break;
-				case 4:
-					text = processSupplier.getId();
 					break;
 				default:
 					text = ProcessMessages.labelNA;

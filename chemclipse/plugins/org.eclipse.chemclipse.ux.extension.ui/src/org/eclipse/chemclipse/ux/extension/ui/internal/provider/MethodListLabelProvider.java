@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -42,8 +42,7 @@ public class MethodListLabelProvider extends AbstractChemClipseLabelProvider {
 			ExtensionMessages.name, //
 			ExtensionMessages.description, //
 			ExtensionMessages.type, //
-			ExtensionMessages.settings, //
-			ExtensionMessages.id //
+			ExtensionMessages.settings //
 	};
 
 	public static final int[] BOUNDS = {//
@@ -51,8 +50,7 @@ public class MethodListLabelProvider extends AbstractChemClipseLabelProvider {
 			250, //
 			250, //
 			160, //
-			300, //
-			110 //
+			300 //
 	};
 
 	public MethodListLabelProvider(IProcessSupplierContext processTypeSupport, BiFunction<IProcessEntry, IProcessSupplierContext, IProcessorPreferences<?>> preferencesSupplier) {
@@ -145,8 +143,6 @@ public class MethodListLabelProvider extends AbstractChemClipseLabelProvider {
 						return text.replace("\"", "");
 					}
 					break;
-				case 5:
-					return processEntry.getProcessorId();
 				default:
 					break;
 			}
