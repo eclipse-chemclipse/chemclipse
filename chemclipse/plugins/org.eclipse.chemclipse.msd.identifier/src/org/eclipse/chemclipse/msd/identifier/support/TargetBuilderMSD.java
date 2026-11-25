@@ -15,7 +15,9 @@ package org.eclipse.chemclipse.msd.identifier.support;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.exceptions.ReferenceMustNotBeNullException;
@@ -33,6 +35,8 @@ import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.support.text.ValueFormat;
+import org.eclipse.chemclipse.support.traces.TraceFactory;
+import org.eclipse.chemclipse.support.traces.TraceNominalMSD;
 
 public class TargetBuilderMSD {
 
@@ -164,37 +168,63 @@ public class TargetBuilderMSD {
 		int numberMZ = targetUnknownSettings.getNumberTraces();
 		if(numberMZ > 0) {
 			/*
-			 * m/z
+			 * Ignore m/z
 			 */
-			StringBuilder builder = new StringBuilder();
+			Set<Integer> tracesIgnore = new HashSet<>();
+			for(TraceNominalMSD traceIgnore : TraceFactory.parseTraces(targetUnknownSettings.getIgnoreTraces(), TraceNominalMSD.class)) {
+				tracesIgnore.add(traceIgnore.getMZ());
+			}
+			/*
+			 * Sort
+			 */
 			List<IIon> ionsSorted = new ArrayList<>(unknown.getIons());
 			Collections.sort(ionsSorted, (s1, s2) -> Float.compare(s2.getAbundance(), s1.getAbundance()));
 			boolean includeIntensityPercent = targetUnknownSettings.isIncludeIntensityPercent();
-
-			int size = (ionsSorted.size() >= numberMZ) ? numberMZ : ionsSorted.size();
 			double maxIntensity = !ionsSorted.isEmpty() ? ionsSorted.get(0).getAbundance() : 0;
 			double factorMax = maxIntensity > 0 ? (100 / maxIntensity) : 0;
 			DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0");
 			/*
-			 * Ions
+			 * Extract Ions
 			 */
-			for(int i = 0; i < size; i++) {
-				IIon ion = ionsSorted.get(i);
-				builder.append(AbstractIon.getIon(ion.getIon()));
+			StringBuilder builder = new StringBuilder();
+			int counter = 0;
+			exitloop:
+			for(IIon ion : ionsSorted) {
+				/*
+				 * Size reached
+				 */
+				if(counter >= numberMZ) {
+					break exitloop;
+				}
+				/*
+				 * Skip m/z
+				 */
+				int mz = AbstractIon.getIon(ion.getIon());
+				if(tracesIgnore.contains(mz)) {
+					continue;
+				}
+				/*
+				 * Report
+				 */
+				builder.append(mz);
 				if(includeIntensityPercent) {
 					builder.append(UnknownTargetBuilder.DELIMITER_INTENSITY);
 					double percent = factorMax * ion.getAbundance();
 					builder.append(decimalFormat.format(percent));
 				}
-				/*
-				 * Next entry available?
-				 */
-				if(i < size - 1) {
-					builder.append(UnknownTargetBuilder.DELIMITER_TRACES);
+				builder.append(UnknownTargetBuilder.DELIMITER_TRACES);
+				counter++;
+			}
+			/*
+			 * Remove trailing UnknownTargetBuilder.DELIMITER_TRACES
+			 */
+			traces = builder.toString();
+			if(!traces.isEmpty()) {
+				int position = traces.length() - 1;
+				if(traces.charAt(position) == UnknownTargetBuilder.DELIMITER_TRACES.charAt(0)) {
+					traces = traces.substring(0, position);
 				}
 			}
-
-			traces = builder.toString();
 		}
 
 		return traces;

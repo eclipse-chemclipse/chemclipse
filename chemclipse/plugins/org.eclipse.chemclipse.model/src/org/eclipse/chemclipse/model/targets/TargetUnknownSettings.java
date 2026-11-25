@@ -20,6 +20,7 @@ public class TargetUnknownSettings {
 	private String targetName = "Unknown"; //$NON-NLS-1$
 	private float matchQuality = 100.0f;
 	private int numberTraces = 5;
+	private String ignoreTraces = "";
 	private boolean includeIntensityPercent = false;
 	private String markerStart = "["; //$NON-NLS-1$
 	private String markerStop = "]"; //$NON-NLS-1$
@@ -54,6 +55,16 @@ public class TargetUnknownSettings {
 	public void setNumberTraces(int numberTraces) {
 
 		this.numberTraces = (numberTraces < 0) ? 0 : numberTraces;
+	}
+
+	public String getIgnoreTraces() {
+
+		return ignoreTraces;
+	}
+
+	public void setIgnoreTraces(String ignoreTraces) {
+
+		this.ignoreTraces = ignoreTraces;
 	}
 
 	public boolean isIncludeIntensityPercent() {
