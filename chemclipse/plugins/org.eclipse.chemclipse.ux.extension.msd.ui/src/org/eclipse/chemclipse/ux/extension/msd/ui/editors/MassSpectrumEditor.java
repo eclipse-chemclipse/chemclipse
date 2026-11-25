@@ -220,7 +220,9 @@ public class MassSpectrumEditor implements IMassSpectrumEditor {
 		if(massSpectra != null) {
 			try {
 				saveSuccessful = DatabaseFileSupport.saveMassSpectra(massSpectra);
-				dirtyable.setDirty(!saveSuccessful);
+				if(saveSuccessful) {
+					dirtyable.setDirty(false);
+				}
 			} catch(NoConverterAvailableException e) {
 				logger.warn(e);
 			}

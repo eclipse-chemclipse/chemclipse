@@ -167,20 +167,21 @@ public class DatabaseFileSupport {
 	public static boolean saveMassSpectra(IMassSpectra massSpectra) throws NoConverterAvailableException {
 
 		Shell shell = Display.getDefault().getActiveShell();
-		saveMassSpectra(shell, massSpectra, "MassSpectra");
-		return true;
+		return saveMassSpectra(shell, massSpectra, "MassSpectra");
 	}
 
 	/**
 	 * Opens a file dialog and tries to save the mass spectra
+	 *
+	 * @return true if the mass spectra have been written
 	 */
-	public static void saveMassSpectra(Shell shell, IMassSpectra massSpectra, String fileName) throws NoConverterAvailableException {
+	public static boolean saveMassSpectra(Shell shell, IMassSpectra massSpectra, String fileName) throws NoConverterAvailableException {
 
 		/*
 		 * If the mass spectra is null, exit.
 		 */
 		if(massSpectra == null || massSpectra.isEmpty()) {
-			return;
+			return false;
 		}
 		/*
 		 * Create the dialog.
@@ -204,9 +205,10 @@ public class DatabaseFileSupport {
 		 * will be taken.
 		 */
 		String filename = dialog.open();
-		if(filename != null) {
-			validateFile(dialog, converterSupport.getExportSupplier(), shell, massSpectra);
+		if(filename == null) {
+			return false;
 		}
+		return validateFile(dialog, converterSupport.getExportSupplier(), shell, massSpectra);
 	}
 
 	/**
@@ -215,12 +217,20 @@ public class DatabaseFileSupport {
 	 */
 	public static void writeFile(Shell shell, final File file, final IMassSpectra massSpectra, final ISupplier supplier) {
 
+		writeMassSpectra(shell, file, massSpectra, supplier);
+	}
+
+	/**
+	 * Returns true if the mass spectra have been written.
+	 */
+	private static boolean writeMassSpectra(Shell shell, final File file, final IMassSpectra massSpectra, final ISupplier supplier) {
+
 		/*
 		 * If one of these instances is null, no chance to get it running.<br/>
 		 * The only possibility is to exit.
 		 */
 		if(file == null || massSpectra == null || supplier == null) {
-			return;
+			return false;
 		}
 		/*
 		 * Convert the given mass spectrum.
@@ -236,6 +246,7 @@ public class DatabaseFileSupport {
 			logger.warn(e);
 			Thread.currentThread().interrupt();
 		}
+		return runnable.getData() != null;
 	}
 
 	/**
@@ -243,7 +254,7 @@ public class DatabaseFileSupport {
 	 * if the mass spectrum is stored in a directory or not and prepares the file
 	 * system in a convenient way.
 	 */
-	private static void validateFile(FileDialog dialog, List<ISupplier> supplier, Shell shell, IMassSpectra massSpectra) {
+	private static boolean validateFile(FileDialog dialog, List<ISupplier> supplier, Shell shell, IMassSpectra massSpectra) {
 
 		File massSpectrumFolder = null;
 		boolean overwrite = dialog.getOverwrite();
@@ -256,7 +267,7 @@ public class DatabaseFileSupport {
 		ISupplier selectedSupplier = supplier.get(dialog.getFilterIndex());
 		if(selectedSupplier == null) {
 			MessageDialog.openInformation(shell, "Mass Spectrum Converter", "The requested mass spectra converter does not exists.");
-			return;
+			return false;
 		}
 		/*
 		 * Get the file or directory name.
@@ -352,9 +363,10 @@ public class DatabaseFileSupport {
 				/*
 				 * Export the mass spectra.
 				 */
-				writeFile(shell, new File(filename), massSpectra, selectedSupplier);
+				return writeMassSpectra(shell, new File(filename), massSpectra, selectedSupplier);
 			}
 		}
+		return false;
 	}
 
 	/**
