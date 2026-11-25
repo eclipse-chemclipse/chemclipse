@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.chemclipse.chromatogram.msd.filter.massSpectrumFilterSupplier">
+      <MassSpectrumFilterSupplier
+            config="org.eclipse.chemclipse.msd.filter.supplier.shift.settings.MassSpectrumFilterSettings"
+            description="Shifts ions and precursors by separate fixed offsets to correct the mass calibration."
+            filter="org.eclipse.chemclipse.msd.filter.supplier.shift.core.MassSpectrumFilter"
+            filterName="Mass Shift"
+            id="org.eclipse.chemclipse.msd.filter.supplier.shift">
+      </MassSpectrumFilterSupplier>
+   </extension>
+</plugin>

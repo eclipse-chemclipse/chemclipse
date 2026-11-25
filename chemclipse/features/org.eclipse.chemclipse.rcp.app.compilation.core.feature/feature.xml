@@ -305,6 +305,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.chemclipse.msd.filter.supplier.shift.feature"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.chemclipse.chromatogram.msd.comparison.supplier.entropy.feature"
          version="0.0.0"/>
 
