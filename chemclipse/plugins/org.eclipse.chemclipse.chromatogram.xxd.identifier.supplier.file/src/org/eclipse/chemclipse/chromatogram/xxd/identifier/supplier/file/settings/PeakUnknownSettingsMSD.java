@@ -37,6 +37,10 @@ public class PeakUnknownSettingsMSD extends AbstractIdentifierSettings implement
 	@IntSettingsProperty(minValue = 0, maxValue = Integer.MAX_VALUE)
 	private int numberOfMZ = 5;
 
+	@JsonProperty(value = "Ignore m/z", defaultValue = "")
+	@JsonPropertyDescription(value = "Ignore the listed m/z values.")
+	private String ignoreMZ = "";
+
 	@JsonProperty(value = "Include Intensity [%]", defaultValue = "false")
 	private boolean includeIntensityPercent = false;
 
@@ -90,6 +94,17 @@ public class PeakUnknownSettingsMSD extends AbstractIdentifierSettings implement
 	public void setNumberOfMZ(int numberOfMZ) {
 
 		this.numberOfMZ = numberOfMZ;
+	}
+
+	@Override
+	public String getIgnoreTraces() {
+
+		return ignoreMZ;
+	}
+
+	public void setIgnoreMZ(String ignoreMZ) {
+
+		this.ignoreMZ = ignoreMZ;
 	}
 
 	@Override

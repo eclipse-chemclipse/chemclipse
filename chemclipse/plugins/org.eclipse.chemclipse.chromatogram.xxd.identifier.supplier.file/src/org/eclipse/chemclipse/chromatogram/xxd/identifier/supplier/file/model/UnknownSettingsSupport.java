@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021, 2025 Lablicate GmbH.
+ * Copyright (c) 2021, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -26,6 +26,7 @@ public class UnknownSettingsSupport {
 		targetUnknownSettings.setMatchQuality(unknownSettings.getMatchQuality());
 		if(unknownSettings instanceof IUnknownSettingsMSD unknownSettingsMSD) {
 			targetUnknownSettings.setNumberTraces(unknownSettingsMSD.getNumberOfTraces());
+			targetUnknownSettings.setIgnoreTraces(unknownSettingsMSD.getIgnoreTraces());
 			targetUnknownSettings.setIncludeIntensityPercent(unknownSettingsMSD.isIncludeIntensityPercent());
 		}
 		targetUnknownSettings.setMarkerStart(unknownSettings.getMarkerStart());
