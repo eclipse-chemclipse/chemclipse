@@ -47,7 +47,6 @@ import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.Chromatogra
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.MzMLType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ParamGroupType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.PrecursorType;
-import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ProductType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ReferenceableParamGroupRefType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.RunType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ScanType;
@@ -60,7 +59,7 @@ public class ChromatogramMSDReaderVersion110 extends AbstractChromatogramReader 
 
 	private static final Logger logger = Logger.getLogger(ChromatogramMSDReaderVersion110.class);
 
-	private MzMLType mzML;
+	private final MzMLType mzML;
 
 	public ChromatogramMSDReaderVersion110(MzMLType mzML) {
 
@@ -175,8 +174,8 @@ public class ChromatogramMSDReaderVersion110 extends AbstractChromatogramReader 
 				Pair<double[], double[]> binaryData = readBinaryData(chromatogramType);
 
 				double precursorIon = getPrecursorIon(chromatogramType);
-				double productIon = getProductIon(chromatogramType);
-				double collisionEnergy = getCollisionEnergy(chromatogramType);
+				double productIon = XmlReader110.getProductIon(chromatogramType.getProduct());
+				double collisionEnergy = XmlReader110.getCollisionEnergy(chromatogramType.getPrecursor());
 				IIonTransition ionTransition = new IonTransition(precursorIon, productIon, collisionEnergy, 1, 1, 0);
 				chromatogram.getIonTransitionSettings().getIonTransitions().add(ionTransition);
 
@@ -223,53 +222,6 @@ public class ChromatogramMSDReaderVersion110 extends AbstractChromatogramReader 
 		return 0;
 	}
 
-	private double getCollisionEnergy(ChromatogramType chromatogram) {
-
-		PrecursorType precursor = chromatogram.getPrecursor();
-		if(precursor == null) {
-			return 0;
-		}
-		for(CVParamType cvParam : precursor.getActivation().getCvParam()) {
-			if(cvParam.getAccession().equals("MS:1000045") && cvParam.getName().equals("collision energy")) {
-				return Double.parseDouble(cvParam.getValue());
-			}
-		}
-		return 0;
-	}
-
-	private double getProductIon(ChromatogramType chromatogram) {
-
-		ProductType product = chromatogram.getProduct();
-		if(product == null) {
-			return 0;
-		}
-		for(CVParamType cvParam : product.getIsolationWindow().getCvParam()) {
-			if(cvParam.getAccession().equals("MS:1000827") && cvParam.getName().equals("isolation window target m/z")) {
-				return Double.parseDouble(cvParam.getValue());
-			}
-		}
-		return 0;
-	}
-
-	private static double getSelectedIon(SpectrumType spectrum) {
-
-		if(spectrum.getPrecursorList() != null) {
-			for(PrecursorType precursorType : spectrum.getPrecursorList().getPrecursor()) {
-				SelectedIonListType selectedIonList = precursorType.getSelectedIonList();
-				if(selectedIonList != null) {
-					for(ParamGroupType paramGroupType : selectedIonList.getSelectedIon()) {
-						for(CVParamType cvParam : paramGroupType.getCvParam()) {
-							if(cvParam.getAccession().equals("MS:1000744") && cvParam.getName().equals("selected ion m/z")) {
-								return Double.parseDouble(cvParam.getValue());
-							}
-						}
-					}
-				}
-			}
-		}
-		return 0;
-	}
-
 	private static double getSelectedIonPeakIntensity(SpectrumType spectrum) {
 
 		if(spectrum.getPrecursorList() != null) {
@@ -282,20 +234,6 @@ public class ChromatogramMSDReaderVersion110 extends AbstractChromatogramReader 
 								return Double.parseDouble(cvParam.getValue());
 							}
 						}
-					}
-				}
-			}
-		}
-		return 0;
-	}
-
-	private static double getCollisionEnergy(SpectrumType spectrum) {
-
-		if(spectrum.getPrecursorList() != null) {
-			for(PrecursorType precursorType : spectrum.getPrecursorList().getPrecursor()) {
-				for(CVParamType cvParam : precursorType.getActivation().getCvParam()) {
-					if(cvParam.getAccession().equals("MS:1000045") && cvParam.getName().equals("collision energy")) {
-						return Double.parseDouble(cvParam.getValue());
 					}
 				}
 			}
@@ -324,10 +262,10 @@ public class ChromatogramMSDReaderVersion110 extends AbstractChromatogramReader 
 			logger.warn("Ignoring spectrum " + spectrum.getIndex() + " " + spectrum.getId());
 			return;
 		}
-		double selectedIon = getSelectedIon(spectrum);
+		double selectedIon = XmlReader110.getSelectedIon(spectrum);
 		massSpectrum.setPrecursorIon(selectedIon);
 		massSpectrum.setPrecursorBasePeak(getSelectedIonPeakIntensity(spectrum));
-		double collisionEnergy = getCollisionEnergy(spectrum);
+		double collisionEnergy = XmlReader110.getCollisionEnergy(spectrum);
 		int ions = Math.min(mzs.length, intensities.length);
 		for(int i = 0; i < ions; i++) {
 			if(selectedIon != 0) {

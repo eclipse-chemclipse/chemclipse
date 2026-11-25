@@ -24,6 +24,11 @@ import org.eclipse.chemclipse.support.xml.XmlParserFactory;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.CVParamType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.MzMLType;
 import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ObjectFactory;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ParamGroupType;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.PrecursorType;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.ProductType;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SelectedIonListType;
+import org.eclipse.chemclipse.xxd.converter.supplier.mzml.model.v110.SpectrumType;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -67,5 +72,67 @@ public class XmlReader110 {
 			multiplicator = (float)IChromatogramOverview.MINUTE_CORRELATION_FACTOR;
 		}
 		return multiplicator;
+	}
+
+	public static double getCollisionEnergy(SpectrumType spectrum) {
+
+		if(spectrum.getPrecursorList() != null) {
+			for(PrecursorType precursorType : spectrum.getPrecursorList().getPrecursor()) {
+				for(CVParamType cvParam : precursorType.getActivation().getCvParam()) {
+					if(cvParam.getAccession().equals("MS:1000045") && cvParam.getName().equals("collision energy")) {
+						return Double.parseDouble(cvParam.getValue());
+					}
+				}
+			}
+		}
+		return 0;
+	}
+
+	public static double getCollisionEnergy(PrecursorType precursor) {
+
+		if(precursor == null) {
+			return 0;
+		}
+		for(CVParamType cvParam : precursor.getActivation().getCvParam()) {
+			if(cvParam.getAccession().equals("MS:1000045") && cvParam.getName().equals("collision energy")) {
+				return Double.parseDouble(cvParam.getValue());
+			}
+			if(cvParam.getAccession().equals("MS:1000138") && cvParam.getName().equals("normalized collision energy")) {
+				return Double.parseDouble(cvParam.getValue()); // TODO: percent of what
+			}
+		}
+		return 0;
+	}
+
+	public static double getProductIon(ProductType product) {
+
+		if(product == null) {
+			return 0;
+		}
+		for(CVParamType cvParam : product.getIsolationWindow().getCvParam()) {
+			if(cvParam.getAccession().equals("MS:1000827") && cvParam.getName().equals("isolation window target m/z")) {
+				return Double.parseDouble(cvParam.getValue());
+			}
+		}
+		return 0;
+	}
+
+	public static double getSelectedIon(SpectrumType spectrum) {
+
+		if(spectrum.getPrecursorList() != null) {
+			for(PrecursorType precursorType : spectrum.getPrecursorList().getPrecursor()) {
+				SelectedIonListType selectedIonList = precursorType.getSelectedIonList();
+				if(selectedIonList != null) {
+					for(ParamGroupType paramGroupType : selectedIonList.getSelectedIon()) {
+						for(CVParamType cvParam : paramGroupType.getCvParam()) {
+							if(cvParam.getAccession().equals("MS:1000744") && cvParam.getName().equals("selected ion m/z")) {
+								return Double.parseDouble(cvParam.getValue());
+							}
+						}
+					}
+				}
+			}
+		}
+		return 0;
 	}
 }
