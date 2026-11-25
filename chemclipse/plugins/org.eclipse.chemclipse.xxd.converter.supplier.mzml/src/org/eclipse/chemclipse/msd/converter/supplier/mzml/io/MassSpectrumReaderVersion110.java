@@ -94,6 +94,10 @@ public class MassSpectrumReaderVersion110 extends AbstractMassSpectraReader {
 					} else if(cvParam.getAccession().equals("MS:1000130") && cvParam.getName().equals("positive scan")) {
 						massSpectrum.setPolarity(Polarity.POSITIVE);
 					}
+
+					if(cvParam.getAccession().equals("MS:1000511") && cvParam.getName().equals("ms level")) {
+						massSpectrum.setMassSpectrometer(Short.parseShort(cvParam.getValue()));
+					}
 				}
 
 				double[] mzs = null;
@@ -107,11 +111,18 @@ public class MassSpectrumReaderVersion110 extends AbstractMassSpectraReader {
 						intensities = binaryData.getValue();
 					}
 				}
-				XmlMassSpectrumReader.addIons(intensities, mzs, massSpectrum);
+
+				if(massSpectrum.getMassSpectrometer() > 1) {
+					double selectedIon = XmlReader110.getSelectedIon(spectrum);
+					massSpectrum.setPrecursorIon(selectedIon);
+					double collisionEnergy = XmlReader110.getCollisionEnergy(spectrum);
+					XmlMassSpectrumReader.addIons(intensities, mzs, massSpectrum, selectedIon, collisionEnergy);
+				} else {
+					XmlMassSpectrumReader.addIons(intensities, mzs, massSpectrum);
+				}
 
 				massSpectra.addMassSpectrum(massSpectrum);
 			}
-
 		} catch(SAXException e) {
 			logger.warn(e);
 		} catch(JAXBException e) {
