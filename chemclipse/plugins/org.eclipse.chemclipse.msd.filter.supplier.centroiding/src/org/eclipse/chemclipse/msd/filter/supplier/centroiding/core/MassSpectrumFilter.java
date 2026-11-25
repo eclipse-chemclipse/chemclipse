@@ -22,10 +22,14 @@ import org.eclipse.chemclipse.chromatogram.msd.filter.settings.IMassSpectrumFilt
 import org.eclipse.chemclipse.model.core.IMassSpectrumPeak;
 import org.eclipse.chemclipse.msd.filter.supplier.centroiding.settings.MassSpectrumFilterSettings;
 import org.eclipse.chemclipse.msd.model.core.IIon;
+import org.eclipse.chemclipse.msd.model.core.IIonMSn;
+import org.eclipse.chemclipse.msd.model.core.IIonTransition;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.msd.model.core.IStandaloneMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.MassSpectrumType;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
+import org.eclipse.chemclipse.msd.model.implementation.IonMSn;
+import org.eclipse.chemclipse.msd.model.implementation.IonTransition;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -60,10 +64,10 @@ public class MassSpectrumFilter extends AbstractMassSpectrumFilter {
 			if(processingInfo.hasErrorMessages()) {
 				return processingInfo;
 			}
+			IIonTransition ionTransition = getIonTransition(massSpectrum);
 			massSpectrum.removeAllIons();
 			for(IMassSpectrumPeak massSpectrumPeak : massSpectrum.getPeaks()) {
-				IIon ion = new Ion(massSpectrumPeak.getIon(), (float)massSpectrumPeak.getAbundance());
-				massSpectrum.addIon(ion);
+				massSpectrum.addIon(createIon(massSpectrumPeak, ionTransition));
 			}
 			massSpectrum.getPeaks().clear();
 			massSpectrum.setMassSpectrumType(MassSpectrumType.CENTROID);
@@ -74,6 +78,31 @@ public class MassSpectrumFilter extends AbstractMassSpectrumFilter {
 		}
 
 		return processingInfo;
+	}
+
+	/*
+	 * Tandem MS ions carry the precursor and collision energy in their transition.
+	 * All ions of one MSn scan share them, so any one of them is the template.
+	 */
+	private static IIonTransition getIonTransition(IScanMSD scanMSD) {
+
+		for(IIon ion : scanMSD.getIons()) {
+			if(ion instanceof IIonMSn ionMSn && ionMSn.getIonTransition() != null) {
+				return ionMSn.getIonTransition();
+			}
+		}
+		return null;
+	}
+
+	private static IIon createIon(IMassSpectrumPeak massSpectrumPeak, IIonTransition template) {
+
+		double mz = massSpectrumPeak.getIon();
+		float abundance = (float)massSpectrumPeak.getAbundance();
+		if(template == null) {
+			return new Ion(mz, abundance);
+		}
+		IIonTransition ionTransition = new IonTransition(template.getQ1StartIon(), template.getQ1StopIon(), mz, mz, template.getCollisionEnergy(), template.getQ1Resolution(), template.getQ3Resolution(), template.getTransitionGroup(), template.getCompoundName());
+		return new IonMSn(mz, abundance, ionTransition);
 	}
 
 	private IProcessingInfo<IMassSpectrumFilterResult> validate(IStandaloneMassSpectrum standaloneMassSpectrum) {
