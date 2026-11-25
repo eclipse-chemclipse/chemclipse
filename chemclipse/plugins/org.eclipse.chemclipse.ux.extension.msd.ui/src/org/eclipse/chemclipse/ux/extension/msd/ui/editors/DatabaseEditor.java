@@ -171,7 +171,7 @@ public class DatabaseEditor implements IChemClipseEditor {
 	public boolean saveAs() {
 
 		try {
-			DatabaseFileSupport.saveMassSpectra(Display.getCurrent().getActiveShell(), massSpectra, "Mass Spectra");
+			DatabaseFileSupport.saveMassSpectra(DisplayUtils.getShell(), massSpectra, "Mass Spectra");
 		} catch(NoConverterAvailableException e) {
 			logger.warn(e);
 			return false;

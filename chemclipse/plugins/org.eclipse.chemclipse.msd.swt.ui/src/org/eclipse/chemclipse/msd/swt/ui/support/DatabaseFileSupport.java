@@ -38,6 +38,7 @@ import org.eclipse.chemclipse.msd.model.implementation.ScanMSD;
 import org.eclipse.chemclipse.msd.swt.ui.Activator;
 import org.eclipse.chemclipse.msd.swt.ui.internal.support.DatabaseExportRunnable;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
+import org.eclipse.chemclipse.support.ui.workbench.DisplayUtils;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.swt.SWT;
@@ -166,7 +167,7 @@ public class DatabaseFileSupport {
 
 	public static boolean saveMassSpectra(IMassSpectra massSpectra) throws NoConverterAvailableException {
 
-		Shell shell = Display.getDefault().getActiveShell();
+		Shell shell = DisplayUtils.getShell();
 		return saveMassSpectra(shell, massSpectra, "MassSpectra");
 	}
 
