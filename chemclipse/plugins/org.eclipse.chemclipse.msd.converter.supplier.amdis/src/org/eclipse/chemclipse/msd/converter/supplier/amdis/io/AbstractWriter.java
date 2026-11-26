@@ -498,7 +498,16 @@ public abstract class AbstractWriter {
 		}
 	}
 
-	private void writeOptionalField(FileWriter fileWriter, String field, String value) throws IOException {
+	protected void writeInChIFields(FileWriter fileWriter, IIdentificationTarget identificationTarget) throws IOException {
+
+		if(identificationTarget != null) {
+			ILibraryInformation libraryInformation = identificationTarget.getLibraryInformation();
+			writeOptionalField(fileWriter, INCHI, libraryInformation.getInChI());
+			writeOptionalField(fileWriter, INCHIKEY, libraryInformation.getInChIKey());
+		}
+	}
+
+	protected void writeOptionalField(FileWriter fileWriter, String field, String value) throws IOException {
 
 		if(value != null && !value.isBlank()) {
 			writeField(fileWriter, field + value.trim());

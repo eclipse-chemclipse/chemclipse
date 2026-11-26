@@ -42,6 +42,7 @@ public class MSPWriter extends AbstractMassSpectraWriter {
 		fileWriter.write(getMWField(optimizedMassSpectrum) + CRLF);
 		fileWriter.write(getCasNumberField(identificationTarget) + CRLF);
 		fileWriter.write(getSmilesField(identificationTarget) + CRLF);
+		writeInChIFields(fileWriter, identificationTarget);
 		fileWriter.write(getDatabaseField(identificationTarget) + CRLF);
 		fileWriter.write(getReferenceIdentifierField(identificationTarget) + CRLF);
 		/*
