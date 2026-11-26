@@ -40,6 +40,7 @@ import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
+import org.eclipse.chemclipse.msd.model.core.Polarity;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.RegularLibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
@@ -82,6 +83,9 @@ public abstract class AbstractWriter {
 	private static final String PRECURSOR_TYPE = "Precursor_type: ";
 	private static final String PRECURSOR_MZ = "PrecursorMZ: ";
 	private static final String COLLISION_ENERGY = "Collision_energy: ";
+	private static final String INSTRUMENT = "Instrument: ";
+	private static final String INSTRUMENT_TYPE = "Instrument_type: ";
+	private static final String ION_MODE = "Ion_mode: ";
 
 	private static final String NO_IDENTIFIER = "NO IDENTIFIER AVAILABLE";
 
@@ -504,6 +508,21 @@ public abstract class AbstractWriter {
 			ILibraryInformation libraryInformation = identificationTarget.getLibraryInformation();
 			writeOptionalField(fileWriter, INCHI, libraryInformation.getInChI());
 			writeOptionalField(fileWriter, INCHIKEY, libraryInformation.getInChIKey());
+		}
+	}
+
+	protected void writeInstrumentFields(FileWriter fileWriter, IScanMSD massSpectrum) throws IOException {
+
+		if(massSpectrum instanceof IRegularLibraryMassSpectrum regularLibraryMassSpectrum) {
+			writeOptionalField(fileWriter, INSTRUMENT, regularLibraryMassSpectrum.getProperty(IRegularLibraryMassSpectrum.PROPERTY_INSTRUMENT_NAME));
+			writeOptionalField(fileWriter, INSTRUMENT_TYPE, regularLibraryMassSpectrum.getProperty(IRegularLibraryMassSpectrum.PROPERTY_INSTRUMENT_TYPE));
+		}
+
+		if(massSpectrum instanceof IRegularMassSpectrum regularMassSpectrum) {
+			Polarity polarity = regularMassSpectrum.getPolarity();
+			if(polarity != Polarity.NONE) {
+				writeField(fileWriter, ION_MODE + polarity.name());
+			}
 		}
 	}
 
