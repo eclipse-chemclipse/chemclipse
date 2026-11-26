@@ -74,7 +74,8 @@ pipeline {
 		always {
 			junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
 			recordIssues publishAllIssues: true, tools: [java(), mavenConsole(), javaDoc(),
-				taskScanner(normalTags: 'TODO', highTags: 'FIXME', includePattern: '**/*.java')]
+				taskScanner(normalTags: 'TODO', highTags: 'FIXME', includePattern: '**/*.java')],
+				trendChartType: 'NONE'
 		}
 	}
 }
