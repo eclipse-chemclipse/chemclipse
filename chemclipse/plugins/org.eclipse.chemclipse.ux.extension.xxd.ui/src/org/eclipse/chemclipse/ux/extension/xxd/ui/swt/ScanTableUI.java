@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017, 2025 Lablicate GmbH.
+ * Copyright (c) 2017, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -81,11 +81,14 @@ public class ScanTableUI extends ExtendedTableViewer {
 	public void setInput(IScan scan) {
 
 		this.scan = scan;
+
+		super.setInput(null);
+		setItemCount(0);
+
 		if(scan instanceof IScanMSD scanMSD) {
 			/*
 			 * MSD
 			 */
-			super.setInput(null); // Can only enable the hash look up before input has been set
 			IScanMSD optimizedScanMSD = scanMSD.getOptimizedMassSpectrum();
 
 			List<IIon> ions;
@@ -112,7 +115,6 @@ public class ScanTableUI extends ExtendedTableViewer {
 			/*
 			 * CSD
 			 */
-			super.setInput(null);
 			setLabelAndContentProviders(DataType.CSD);
 			List<IScanCSD> list = new ArrayList<>();
 			list.add(scanCSD);
@@ -121,19 +123,14 @@ public class ScanTableUI extends ExtendedTableViewer {
 			/*
 			 * WSD
 			 */
-			super.setInput(null);
 			setLabelAndContentProviders(DataType.WSD);
 			super.setInput(scanWSD.getScanSignals());
 		} else if(scan instanceof IScanVSD scanVSD) {
 			/*
 			 * VSD
 			 */
-			super.setInput(null);
 			setLabelAndContentProviders(DataType.VSD);
 			super.setInput(scanVSD.getProcessedSignals());
-		} else {
-			getTable().removeAll();
-			super.setInput(null);
 		}
 	}
 
