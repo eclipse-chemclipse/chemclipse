@@ -323,7 +323,7 @@ public class DatabaseEditor implements IChemClipseEditor {
 			 * Convert the mass spectra.
 			 */
 			String converterId = massSpectra.getConverterId();
-			if(converterId != null && !converterId.equals("")) {
+			if(converterId != null && !converterId.equals("") && isExportable(converterId)) {
 				monitor.subTask("Save Mass Spectra");
 				IProcessingInfo<File> processingInfo = DatabaseConverter.convert(massSpectrumFile, massSpectra, false, converterId, monitor);
 				isDirty = processingInfo.hasErrorMessages();
@@ -334,6 +334,15 @@ public class DatabaseEditor implements IChemClipseEditor {
 			} else {
 				throw new NoMassSpectrumConverterAvailableException();
 			}
+		}
+	}
+
+	private boolean isExportable(String converterId) {
+
+		try {
+			return DatabaseConverter.getDatabaseConverterSupport().getSupplier(converterId).isExportable();
+		} catch(NoConverterAvailableException e) {
+			return false;
 		}
 	}
 
