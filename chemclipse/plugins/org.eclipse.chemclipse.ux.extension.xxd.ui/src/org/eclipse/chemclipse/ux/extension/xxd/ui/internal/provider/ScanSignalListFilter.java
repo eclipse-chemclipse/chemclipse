@@ -14,6 +14,7 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider;
 
 import org.eclipse.chemclipse.csd.model.core.IScanCSD;
 import org.eclipse.chemclipse.fsd.model.core.IScanSignalFSD;
+import org.eclipse.chemclipse.msd.model.core.IIon;
 import org.eclipse.chemclipse.msd.model.core.IIonMSn;
 import org.eclipse.chemclipse.msd.model.core.IIonTransition;
 import org.eclipse.chemclipse.vsd.model.core.ISignalVSD;
@@ -61,6 +62,10 @@ public class ScanSignalListFilter extends ViewerFilter {
 					return true;
 				}
 			} else if(Double.toString(ion.getIon()).contains(searchText)) {
+				return true;
+			}
+		} else if(element instanceof IIon ion) {
+			if(Double.toString(ion.getIon()).contains(searchText)) {
 				return true;
 			}
 		} else if(element instanceof IScanCSD scanCSD) {
