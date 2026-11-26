@@ -311,7 +311,7 @@ public class MSPReader extends AbstractMassSpectraReader {
 			massSpectrum.setMassSpectrometer((short)2);
 		}
 		String precursorType = extractContentAsString(massSpectrumData, precursorTypePattern, 2);
-		massSpectrum.putProperty(IRegularLibraryMassSpectrum.PROPERTY_PRECURSOR_TYPE, precursorType);
+		massSpectrum.setPrecursorType(precursorType);
 
 		double precursorMZ = extractPrecursorAsDouble(massSpectrumData, precursorMassPattern);
 		massSpectrum.setPrecursorIon(precursorMZ);

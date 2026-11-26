@@ -483,7 +483,7 @@ public abstract class AbstractWriter {
 		}
 
 		if(massSpectrum instanceof IRegularLibraryMassSpectrum regularLibraryMassSpectrum) {
-			writeOptionalField(fileWriter, PRECURSOR_TYPE, regularLibraryMassSpectrum.getProperty(IRegularLibraryMassSpectrum.PROPERTY_PRECURSOR_TYPE));
+			writeOptionalField(fileWriter, PRECURSOR_TYPE, regularLibraryMassSpectrum.getPrecursorType());
 		}
 
 		if(massSpectrum instanceof IRegularMassSpectrum regularMassSpectrum) {
