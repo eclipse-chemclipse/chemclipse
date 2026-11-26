@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -123,7 +123,6 @@ public abstract class AbstractRegularLibraryMassSpectrum extends AbstractRegular
 			return super.getPolarity();
 		}
 		if(properties != null) {
-			String precursorType = getProperty(PROPERTY_PRECURSOR_TYPE);
 			if(precursorType.contains("]+")) {
 				return Polarity.POSITIVE;
 			} else if(precursorType.contains("]-")) {

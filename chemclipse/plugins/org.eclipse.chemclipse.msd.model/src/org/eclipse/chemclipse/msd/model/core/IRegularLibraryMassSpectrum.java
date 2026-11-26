@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2025 Lablicate GmbH.
+ * Copyright (c) 2008, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -16,7 +16,6 @@ import java.util.Set;
 
 public interface IRegularLibraryMassSpectrum extends IRegularMassSpectrum, ILibraryMassSpectrum {
 
-	public static final String PROPERTY_PRECURSOR_TYPE = "Precursor Type"; // [M+H]+, [M-H]-, ...
 	public static final String PROPERTY_COLLISION_ENERGY = "Collision Energy"; // 30
 	public static final String PROPERTY_INSTRUMENT_NAME = "Instrument Name"; // Agilent QTOF 6530
 	public static final String PROPERTY_INSTRUMENT_TYPE = "Instrument Type"; // LC-ESI-QTOF

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023, 2025 Lablicate GmbH.
+ * Copyright (c) 2023, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -13,7 +13,6 @@
 package org.eclipse.chemclipse.msd.model.implementation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.Polarity;
@@ -31,17 +30,11 @@ public class RegularLibraryMassSpectrum_6_Test {
 	public void setUp() {
 
 		massSpectrum = new RegularLibraryMassSpectrum();
-		massSpectrum.putProperty(IRegularLibraryMassSpectrum.PROPERTY_PRECURSOR_TYPE, "[M-H]-");
+		massSpectrum.setPrecursorType("[M-H]-");
 		massSpectrum.setPrecursorIon(687.3603d);
 		massSpectrum.setNeutralMass(688.3682407538258d);
 		massSpectrum.putProperty(IRegularLibraryMassSpectrum.PROPERTY_COLLISION_ENERGY, "30");
 		massSpectrum.putProperty(IRegularLibraryMassSpectrum.PROPERTY_INSTRUMENT_NAME, "Agilent QTOF 6530");
-	}
-
-	@Test
-	public void test1() {
-
-		assertNull(massSpectrum.getPrecursorType());
 	}
 
 	@Test
@@ -65,13 +58,13 @@ public class RegularLibraryMassSpectrum_6_Test {
 	@Test
 	public void test5() {
 
-		assertEquals(3, massSpectrum.getPropertyKeySet().size());
+		assertEquals(2, massSpectrum.getPropertyKeySet().size());
 	}
 
 	@Test
 	public void test6() {
 
-		assertEquals("[M-H]-", massSpectrum.getProperty(IRegularLibraryMassSpectrum.PROPERTY_PRECURSOR_TYPE));
+		assertEquals("[M-H]-", massSpectrum.getPrecursorType());
 	}
 
 	@Test
