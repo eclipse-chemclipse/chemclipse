@@ -15,6 +15,7 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.StringJoiner;
 
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.core.IScan;
@@ -59,63 +60,53 @@ public class ScanDataSupport {
 
 	public String getScanLabel(IScan scan) {
 
-		StringBuilder builder = new StringBuilder();
-		if(scan != null) {
-			if(scan instanceof IPeakMassSpectrum) {
-				builder.append("Peak Scan");
-			} else if(scan instanceof ILibraryMassSpectrum) {
-				builder.append("Library Spectrum");
-			} else {
-				builder.append("Scan: ");
-				builder.append(scan.getScanNumber());
-			}
-
-			if(!(scan instanceof ILibraryMassSpectrum)) {
-				builder.append(" | ");
-				builder.append("RT: ");
-				builder.append(decimalFormat.format(scan.getRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
-				builder.append(" | ");
-				builder.append("RI: ");
-				if(org.eclipse.chemclipse.model.preferences.PreferenceSupplier.showRetentionIndexWithoutDecimals()) {
-					builder.append(Integer.toString((int)scan.getRetentionIndex()));
-				} else {
-					builder.append(decimalFormat.format(scan.getRetentionIndex()));
-				}
-			}
-
-			if(scan instanceof IRegularMassSpectrum massSpectrum) {
-				builder.append(" | ");
-				builder.append("Detector: MS");
-				builder.append(massSpectrum.getMassSpectrometer());
-				if(massSpectrum.getMassSpectrumType() != null) {
-					builder.append(" | ");
-					builder.append("Type: ");
-					builder.append(massSpectrum.getMassSpectrumType().label());
-				}
-				if(massSpectrum.getPolarity() != Polarity.NONE) {
-					builder.append(" | ");
-					builder.append("Polarity: ");
-					builder.append(massSpectrum.getPolarity().label());
-				}
-			}
-
-			if(!(scan instanceof ILibraryMassSpectrum)) {
-				builder.append(" | ");
-				builder.append("Signal: ");
-				builder.append(BigDecimal.valueOf(scan.getTotalSignal()).toBigInteger());
-			}
-
-			if(scan instanceof IScanMSD scanMSD) {
-				IScanMSD optimizedMassSpectrum = scanMSD.getOptimizedMassSpectrum();
-				if(optimizedMassSpectrum != null) {
-					builder.append(" | ");
-					builder.append("optimized");
-				}
-			}
-		} else {
-			builder.append("No scan has been selected yet.");
+		if(scan == null) {
+			return "No scan has been selected yet.";
 		}
-		return builder.toString();
+
+		StringJoiner joiner = new StringJoiner(" | ");
+		if(scan instanceof IPeakMassSpectrum) {
+			joiner.add("Peak Scan");
+		} else if(scan instanceof ILibraryMassSpectrum) {
+			joiner.add("Library Spectrum");
+		} else if(scan.getScanNumber() != 0) {
+			joiner.add("Scan: " + scan.getScanNumber());
+		}
+
+		if(!(scan instanceof ILibraryMassSpectrum)) {
+			if(scan.getRetentionTime() != 0) {
+				joiner.add("RT: " + decimalFormat.format(scan.getRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
+			}
+			if(scan.getRetentionIndex() != 0) {
+				if(org.eclipse.chemclipse.model.preferences.PreferenceSupplier.showRetentionIndexWithoutDecimals()) {
+					joiner.add("RI: " + Integer.toString((int)scan.getRetentionIndex()));
+				} else {
+					joiner.add("RI: " + decimalFormat.format(scan.getRetentionIndex()));
+				}
+			}
+		}
+
+		if(scan instanceof IRegularMassSpectrum massSpectrum) {
+			joiner.add("Detector: MS" + massSpectrum.getMassSpectrometer());
+			if(massSpectrum.getMassSpectrumType() != null) {
+				joiner.add("Type: " + massSpectrum.getMassSpectrumType().label());
+			}
+			if(massSpectrum.getPolarity() != Polarity.NONE) {
+				joiner.add("Polarity: " + massSpectrum.getPolarity().label());
+			}
+		}
+
+		if(!(scan instanceof ILibraryMassSpectrum)) {
+			joiner.add("Signal: " + BigDecimal.valueOf(scan.getTotalSignal()).toBigInteger());
+		}
+
+		if(scan instanceof IScanMSD scanMSD) {
+			IScanMSD optimizedMassSpectrum = scanMSD.getOptimizedMassSpectrum();
+			if(optimizedMassSpectrum != null) {
+				joiner.add("optimized");
+			}
+		}
+		return joiner.toString();
 	}
 
 	public String getMassSpectrumLabel(IScanMSD scanMSD, String prefix, String title, String postfix) {
