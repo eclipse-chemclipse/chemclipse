@@ -40,6 +40,7 @@ import org.eclipse.chemclipse.msd.model.core.IPeakMSD;
 import org.eclipse.chemclipse.msd.model.core.IRegularLibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IRegularMassSpectrum;
 import org.eclipse.chemclipse.msd.model.core.IScanMSD;
+import org.eclipse.chemclipse.msd.model.core.Polarity;
 import org.eclipse.chemclipse.msd.model.implementation.Ion;
 import org.eclipse.chemclipse.msd.model.implementation.RegularLibraryMassSpectrum;
 import org.eclipse.chemclipse.msd.model.xic.IExtractedIonSignal;
@@ -77,6 +78,14 @@ public abstract class AbstractWriter {
 	private static final String ISTD = "ISTD: ";
 	private static final String QUANT = "QUANT: ";
 	private static final String AREA = "AREA: ";
+
+	private static final String SPECTRUM_TYPE = "Spectrum_type: ";
+	private static final String PRECURSOR_TYPE = "Precursor_type: ";
+	private static final String PRECURSOR_MZ = "PrecursorMZ: ";
+	private static final String COLLISION_ENERGY = "Collision_energy: ";
+	private static final String INSTRUMENT = "Instrument: ";
+	private static final String INSTRUMENT_TYPE = "Instrument_type: ";
+	private static final String ION_MODE = "Ion_mode: ";
 
 	private static final String NO_IDENTIFIER = "NO IDENTIFIER AVAILABLE";
 
@@ -462,6 +471,66 @@ public abstract class AbstractWriter {
 		}
 
 		return field;
+	}
+
+	protected void writeTandemMassSpectrometryFields(FileWriter fileWriter, IScanMSD massSpectrum) throws IOException {
+
+		if(massSpectrum instanceof IRegularMassSpectrum regularMassSpectrum) {
+			short massSpectrometer = regularMassSpectrum.getMassSpectrometer();
+			if(massSpectrometer > 0) {
+				writeField(fileWriter, SPECTRUM_TYPE + "MS" + massSpectrometer);
+			}
+		}
+
+		if(massSpectrum instanceof IRegularLibraryMassSpectrum regularLibraryMassSpectrum) {
+			writeOptionalField(fileWriter, PRECURSOR_TYPE, regularLibraryMassSpectrum.getProperty(IRegularLibraryMassSpectrum.PROPERTY_PRECURSOR_TYPE));
+		}
+
+		if(massSpectrum instanceof IRegularMassSpectrum regularMassSpectrum) {
+			double precursorIon = regularMassSpectrum.getPrecursorIon();
+			if(precursorIon > 0) {
+				writeField(fileWriter, PRECURSOR_MZ + precursorIon);
+			}
+		}
+
+		if(massSpectrum instanceof IRegularLibraryMassSpectrum regularLibraryMassSpectrum) {
+			double neutralMass = regularLibraryMassSpectrum.getNeutralMass();
+			if(neutralMass > 0) {
+				writeField(fileWriter, EXACT_MASS + neutralMass);
+			}
+			writeOptionalField(fileWriter, COLLISION_ENERGY, regularLibraryMassSpectrum.getProperty(IRegularLibraryMassSpectrum.PROPERTY_COLLISION_ENERGY));
+		}
+	}
+
+	protected void writeInChIFields(FileWriter fileWriter, IIdentificationTarget identificationTarget) throws IOException {
+
+		if(identificationTarget != null) {
+			ILibraryInformation libraryInformation = identificationTarget.getLibraryInformation();
+			writeOptionalField(fileWriter, INCHI, libraryInformation.getInChI());
+			writeOptionalField(fileWriter, INCHIKEY, libraryInformation.getInChIKey());
+		}
+	}
+
+	protected void writeInstrumentFields(FileWriter fileWriter, IScanMSD massSpectrum) throws IOException {
+
+		if(massSpectrum instanceof IRegularLibraryMassSpectrum regularLibraryMassSpectrum) {
+			writeOptionalField(fileWriter, INSTRUMENT, regularLibraryMassSpectrum.getProperty(IRegularLibraryMassSpectrum.PROPERTY_INSTRUMENT_NAME));
+			writeOptionalField(fileWriter, INSTRUMENT_TYPE, regularLibraryMassSpectrum.getProperty(IRegularLibraryMassSpectrum.PROPERTY_INSTRUMENT_TYPE));
+		}
+
+		if(massSpectrum instanceof IRegularMassSpectrum regularMassSpectrum) {
+			Polarity polarity = regularMassSpectrum.getPolarity();
+			if(polarity != Polarity.NONE) {
+				writeField(fileWriter, ION_MODE + polarity.name());
+			}
+		}
+	}
+
+	protected void writeOptionalField(FileWriter fileWriter, String field, String value) throws IOException {
+
+		if(value != null && !value.isBlank()) {
+			writeField(fileWriter, field + value.trim());
+		}
 	}
 
 	private IScanMSD getUnitOrHighMassResolutionCopy(IScanMSD massSpectrum) {
