@@ -48,6 +48,7 @@ public class ScanDataSupport {
 	public static final String[] SIGNAL_TYPES_VSD = new String[]{SignalType.AUTO_DETECT.toString(), SignalType.CENTROID.toString(), SignalType.PROFILE.toString()};
 
 	private DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0.0##");
+	private DecimalFormat decimalFormatPrecursor = ValueFormat.getDecimalFormatEnglish("0.0#####");
 
 	public String getRetentionTime(IScan scan) {
 
@@ -124,6 +125,16 @@ public class ScanDataSupport {
 				joiner.add("NAME: " + libraryInformation.getName());
 				joiner.add("CAS: " + libraryInformation.getCasNumber());
 				joiner.add("MW: " + libraryInformation.getMolWeight());
+			}
+			if(scanMSD instanceof IRegularMassSpectrum regularMassSpectrum && regularMassSpectrum.getPrecursorIon() != 0) {
+				String precursor = "Precursor: " + decimalFormatPrecursor.format(regularMassSpectrum.getPrecursorIon());
+				if(scanMSD instanceof IRegularLibraryMassSpectrum libraryMassSpectrum) {
+					String precursorType = libraryMassSpectrum.getPrecursorType();
+					if(precursorType != null && !precursorType.isBlank()) {
+						precursor += " " + precursorType;
+					}
+				}
+				joiner.add(precursor);
 			}
 			if(scanMSD.getRetentionTime() != 0) {
 				joiner.add("RT: " + decimalFormat.format(scanMSD.getRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
