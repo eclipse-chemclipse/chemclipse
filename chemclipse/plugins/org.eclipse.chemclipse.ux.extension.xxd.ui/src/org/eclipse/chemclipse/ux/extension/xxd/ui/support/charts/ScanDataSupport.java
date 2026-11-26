@@ -15,6 +15,7 @@ package org.eclipse.chemclipse.ux.extension.xxd.ui.support.charts;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.StringJoiner;
 
 import org.eclipse.chemclipse.model.core.IChromatogramOverview;
 import org.eclipse.chemclipse.model.core.IScan;
@@ -47,6 +48,7 @@ public class ScanDataSupport {
 	public static final String[] SIGNAL_TYPES_VSD = new String[]{SignalType.AUTO_DETECT.toString(), SignalType.CENTROID.toString(), SignalType.PROFILE.toString()};
 
 	private DecimalFormat decimalFormat = ValueFormat.getDecimalFormatEnglish("0.0##");
+	private DecimalFormat decimalFormatPrecursor = ValueFormat.getDecimalFormatEnglish("0.0#####");
 
 	public String getRetentionTime(IScan scan) {
 
@@ -59,63 +61,53 @@ public class ScanDataSupport {
 
 	public String getScanLabel(IScan scan) {
 
-		StringBuilder builder = new StringBuilder();
-		if(scan != null) {
-			if(scan instanceof IPeakMassSpectrum) {
-				builder.append("Peak Scan");
-			} else if(scan instanceof ILibraryMassSpectrum) {
-				builder.append("Library Spectrum");
-			} else {
-				builder.append("Scan: ");
-				builder.append(scan.getScanNumber());
-			}
-
-			if(!(scan instanceof ILibraryMassSpectrum)) {
-				builder.append(" | ");
-				builder.append("RT: ");
-				builder.append(decimalFormat.format(scan.getRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
-				builder.append(" | ");
-				builder.append("RI: ");
-				if(org.eclipse.chemclipse.model.preferences.PreferenceSupplier.showRetentionIndexWithoutDecimals()) {
-					builder.append(Integer.toString((int)scan.getRetentionIndex()));
-				} else {
-					builder.append(decimalFormat.format(scan.getRetentionIndex()));
-				}
-			}
-
-			if(scan instanceof IRegularMassSpectrum massSpectrum) {
-				builder.append(" | ");
-				builder.append("Detector: MS");
-				builder.append(massSpectrum.getMassSpectrometer());
-				if(massSpectrum.getMassSpectrumType() != null) {
-					builder.append(" | ");
-					builder.append("Type: ");
-					builder.append(massSpectrum.getMassSpectrumType().label());
-				}
-				if(massSpectrum.getPolarity() != Polarity.NONE) {
-					builder.append(" | ");
-					builder.append("Polarity: ");
-					builder.append(massSpectrum.getPolarity().label());
-				}
-			}
-
-			if(!(scan instanceof ILibraryMassSpectrum)) {
-				builder.append(" | ");
-				builder.append("Signal: ");
-				builder.append(BigDecimal.valueOf(scan.getTotalSignal()).toBigInteger());
-			}
-
-			if(scan instanceof IScanMSD scanMSD) {
-				IScanMSD optimizedMassSpectrum = scanMSD.getOptimizedMassSpectrum();
-				if(optimizedMassSpectrum != null) {
-					builder.append(" | ");
-					builder.append("optimized");
-				}
-			}
-		} else {
-			builder.append("No scan has been selected yet.");
+		if(scan == null) {
+			return "No scan has been selected yet.";
 		}
-		return builder.toString();
+
+		StringJoiner joiner = new StringJoiner(" | ");
+		if(scan instanceof IPeakMassSpectrum) {
+			joiner.add("Peak Scan");
+		} else if(scan instanceof ILibraryMassSpectrum) {
+			joiner.add("Library Spectrum");
+		} else if(scan.getScanNumber() != 0) {
+			joiner.add("Scan: " + scan.getScanNumber());
+		}
+
+		if(!(scan instanceof ILibraryMassSpectrum)) {
+			if(scan.getRetentionTime() != 0) {
+				joiner.add("RT: " + decimalFormat.format(scan.getRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
+			}
+			if(scan.getRetentionIndex() != 0) {
+				if(org.eclipse.chemclipse.model.preferences.PreferenceSupplier.showRetentionIndexWithoutDecimals()) {
+					joiner.add("RI: " + Integer.toString((int)scan.getRetentionIndex()));
+				} else {
+					joiner.add("RI: " + decimalFormat.format(scan.getRetentionIndex()));
+				}
+			}
+		}
+
+		if(scan instanceof IRegularMassSpectrum massSpectrum) {
+			joiner.add("Detector: MS" + massSpectrum.getMassSpectrometer());
+			if(massSpectrum.getMassSpectrumType() != null) {
+				joiner.add("Type: " + massSpectrum.getMassSpectrumType().label());
+			}
+			if(massSpectrum.getPolarity() != Polarity.NONE) {
+				joiner.add("Polarity: " + massSpectrum.getPolarity().label());
+			}
+		}
+
+		if(!(scan instanceof ILibraryMassSpectrum)) {
+			joiner.add("Signal: " + BigDecimal.valueOf(scan.getTotalSignal()).toBigInteger());
+		}
+
+		if(scan instanceof IScanMSD scanMSD) {
+			IScanMSD optimizedMassSpectrum = scanMSD.getOptimizedMassSpectrum();
+			if(optimizedMassSpectrum != null) {
+				joiner.add("optimized");
+			}
+		}
+		return joiner.toString();
 	}
 
 	public String getMassSpectrumLabel(IScanMSD scanMSD, String prefix, String title, String postfix) {
@@ -127,39 +119,43 @@ public class ScanDataSupport {
 		builder.append(" = ");
 
 		if(scanMSD != null) {
+			StringJoiner joiner = new StringJoiner(" | ");
 			if(scanMSD instanceof IRegularLibraryMassSpectrum libraryMassSpectrum) {
 				ILibraryInformation libraryInformation = libraryMassSpectrum.getLibraryInformation();
-				builder.append("NAME: ");
-				builder.append(libraryInformation.getName());
-				builder.append(" | ");
-				builder.append("CAS: ");
-				builder.append(libraryInformation.getCasNumber());
-				builder.append(" | ");
-				builder.append("MW: ");
-				builder.append(libraryInformation.getMolWeight());
-				builder.append(" | ");
+				joiner.add("NAME: " + libraryInformation.getName());
+				joiner.add("CAS: " + libraryInformation.getCasNumber());
+				joiner.add("MW: " + libraryInformation.getMolWeight());
 			}
-			builder.append("RT: ");
-			builder.append(decimalFormat.format(scanMSD.getRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
-			builder.append(" | ");
-			builder.append("RI: ");
-			if(org.eclipse.chemclipse.model.preferences.PreferenceSupplier.showRetentionIndexWithoutDecimals()) {
-				builder.append(Integer.toString((int)scanMSD.getRetentionIndex()));
-			} else {
-				builder.append(decimalFormat.format(scanMSD.getRetentionIndex()));
+			if(scanMSD instanceof IRegularMassSpectrum regularMassSpectrum && regularMassSpectrum.getPrecursorIon() != 0) {
+				String precursor = "Precursor: " + decimalFormatPrecursor.format(regularMassSpectrum.getPrecursorIon());
+				if(scanMSD instanceof IRegularLibraryMassSpectrum libraryMassSpectrum) {
+					String precursorType = libraryMassSpectrum.getPrecursorType();
+					if(precursorType != null && !precursorType.isBlank()) {
+						precursor += " " + precursorType;
+					}
+				}
+				joiner.add(precursor);
+			}
+			if(scanMSD.getRetentionTime() != 0) {
+				joiner.add("RT: " + decimalFormat.format(scanMSD.getRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
+			}
+			if(scanMSD.getRetentionIndex() != 0) {
+				if(org.eclipse.chemclipse.model.preferences.PreferenceSupplier.showRetentionIndexWithoutDecimals()) {
+					joiner.add("RI: " + Integer.toString((int)scanMSD.getRetentionIndex()));
+				} else {
+					joiner.add("RI: " + decimalFormat.format(scanMSD.getRetentionIndex()));
+				}
 			}
 
 			IScanMSD optimizedMassSpectrum = scanMSD.getOptimizedMassSpectrum();
 			if(optimizedMassSpectrum != null) {
-				builder.append(" | ");
-				builder.append("optimized");
+				joiner.add("optimized");
 			}
 
 			if(!"".equals(postfix)) {
-				builder.append(" | ");
-				builder.append(postfix);
-				builder.append("*");
+				joiner.add(postfix + "*");
 			}
+			builder.append(joiner.toString());
 		} else {
 			builder.append("No mass spectrum has been selected yet.");
 		}
