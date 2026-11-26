@@ -345,7 +345,7 @@ public class DatabaseConverter {
 	private static <T> IProcessingInfo<T> getNoExportConverterAvailableProcessingInfo(File file) {
 
 		IProcessingInfo<T> processingInfo = new ProcessingInfo<>();
-		IProcessingMessage processingMessage = new ProcessingMessage(MessageType.WARN, "Database Export Converter", "There is no suitable converter available to export the mass spectra to the file: " + file.getAbsolutePath());
+		IProcessingMessage processingMessage = new ProcessingMessage(MessageType.ERROR, "Database Export Converter", "There is no suitable converter available to export the mass spectra to the file: " + file.getAbsolutePath());
 		processingInfo.addMessage(processingMessage);
 		return processingInfo;
 	}
@@ -353,7 +353,7 @@ public class DatabaseConverter {
 	private static <T> IProcessingInfo<T> getNoImportConverterAvailableProcessingInfo(File file) {
 
 		IProcessingInfo<T> processingInfo = new ProcessingInfo<>();
-		IProcessingMessage processingMessage = new ProcessingMessage(MessageType.WARN, "Database Import Converter", "There is no suitable converter available to load the mass spectra from the file: " + file.getAbsolutePath());
+		IProcessingMessage processingMessage = new ProcessingMessage(MessageType.ERROR, "Database Import Converter", "There is no suitable converter available to load the mass spectra from the file: " + file.getAbsolutePath());
 		processingInfo.addMessage(processingMessage);
 		return processingInfo;
 	}
