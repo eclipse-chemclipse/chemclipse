@@ -118,39 +118,33 @@ public class ScanDataSupport {
 		builder.append(" = ");
 
 		if(scanMSD != null) {
+			StringJoiner joiner = new StringJoiner(" | ");
 			if(scanMSD instanceof IRegularLibraryMassSpectrum libraryMassSpectrum) {
 				ILibraryInformation libraryInformation = libraryMassSpectrum.getLibraryInformation();
-				builder.append("NAME: ");
-				builder.append(libraryInformation.getName());
-				builder.append(" | ");
-				builder.append("CAS: ");
-				builder.append(libraryInformation.getCasNumber());
-				builder.append(" | ");
-				builder.append("MW: ");
-				builder.append(libraryInformation.getMolWeight());
-				builder.append(" | ");
+				joiner.add("NAME: " + libraryInformation.getName());
+				joiner.add("CAS: " + libraryInformation.getCasNumber());
+				joiner.add("MW: " + libraryInformation.getMolWeight());
 			}
-			builder.append("RT: ");
-			builder.append(decimalFormat.format(scanMSD.getRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
-			builder.append(" | ");
-			builder.append("RI: ");
-			if(org.eclipse.chemclipse.model.preferences.PreferenceSupplier.showRetentionIndexWithoutDecimals()) {
-				builder.append(Integer.toString((int)scanMSD.getRetentionIndex()));
-			} else {
-				builder.append(decimalFormat.format(scanMSD.getRetentionIndex()));
+			if(scanMSD.getRetentionTime() != 0) {
+				joiner.add("RT: " + decimalFormat.format(scanMSD.getRetentionTime() / IChromatogramOverview.MINUTE_CORRELATION_FACTOR));
+			}
+			if(scanMSD.getRetentionIndex() != 0) {
+				if(org.eclipse.chemclipse.model.preferences.PreferenceSupplier.showRetentionIndexWithoutDecimals()) {
+					joiner.add("RI: " + Integer.toString((int)scanMSD.getRetentionIndex()));
+				} else {
+					joiner.add("RI: " + decimalFormat.format(scanMSD.getRetentionIndex()));
+				}
 			}
 
 			IScanMSD optimizedMassSpectrum = scanMSD.getOptimizedMassSpectrum();
 			if(optimizedMassSpectrum != null) {
-				builder.append(" | ");
-				builder.append("optimized");
+				joiner.add("optimized");
 			}
 
 			if(!"".equals(postfix)) {
-				builder.append(" | ");
-				builder.append(postfix);
-				builder.append("*");
+				joiner.add(postfix + "*");
 			}
+			builder.append(joiner.toString());
 		} else {
 			builder.append("No mass spectrum has been selected yet.");
 		}
