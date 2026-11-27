@@ -31,6 +31,7 @@ import org.eclipse.chemclipse.processing.core.IMessageProvider;
 import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.core.ProcessingInfo;
 import org.eclipse.chemclipse.processing.methods.AbstractProcessEntryContainer;
+import org.eclipse.chemclipse.processing.methods.ProcessMethod;
 import org.eclipse.chemclipse.processing.supplier.IProcessSupplierContext;
 import org.eclipse.chemclipse.processing.supplier.ProcessExecutionContext;
 import org.eclipse.chemclipse.processing.ui.support.ProcessingInfoPartSupport;
@@ -260,6 +261,7 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 	private void createToolbarMethod(Composite parent) {
 
 		MethodSupportUI methodSupportUI = new MethodSupportUI(parent, SWT.NONE);
+		methodSupportUI.setDataCategories(ProcessMethod.MS);
 		methodSupportUI.setVisible(PreferenceSupplier.isMethodToolbarVisible());
 		methodSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		methodSupportUI.setMethodListener((processMethod, monitor) -> executeMethod(massSpectrum, scanMSD -> {

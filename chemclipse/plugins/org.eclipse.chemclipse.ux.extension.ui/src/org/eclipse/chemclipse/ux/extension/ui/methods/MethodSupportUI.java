@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException;
@@ -81,6 +82,7 @@ public class MethodSupportUI extends Composite implements IExtendedPartUI {
 	private MethodEditorSupport supplierEditorSupport = new MethodEditorSupport();
 
 	private ProcessMethod processMethodMacroRecorder = null;
+	private Set<DataCategory> dataCategories = ProcessMethod.CHROMATOGRAPHY;
 
 	public MethodSupportUI(Composite parent, int style) {
 
@@ -113,6 +115,13 @@ public class MethodSupportUI extends Composite implements IExtendedPartUI {
 	public void setMethodListener(IMethodListener methodListener) {
 
 		this.methodListener = methodListener;
+	}
+
+	public void setDataCategories(Set<DataCategory> dataCategories) {
+
+		if(dataCategories != null && !dataCategories.isEmpty()) {
+			this.dataCategories = dataCategories;
+		}
 	}
 
 	public void updateInput() {
@@ -460,7 +469,7 @@ public class MethodSupportUI extends Composite implements IExtendedPartUI {
 			 * Select a file where the process method shall be stored.
 			 */
 			file = new File(filePath);
-			ProcessMethod processMethod = new ProcessMethod(ProcessMethod.CHROMATOGRAPHY);
+			ProcessMethod processMethod = new ProcessMethod(dataCategories);
 			processMethod.setOperator(UserManagement.getCurrentUser());
 			processMethod.setDescription(ExtensionMessages.processMethod);
 
