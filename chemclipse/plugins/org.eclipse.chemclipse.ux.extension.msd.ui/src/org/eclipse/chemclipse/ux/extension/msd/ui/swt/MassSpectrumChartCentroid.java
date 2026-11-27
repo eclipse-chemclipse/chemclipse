@@ -20,6 +20,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import org.eclipse.chemclipse.logging.core.Logger;
@@ -94,6 +95,7 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 	private final List<IChartMenuEntry> cachedMenuEntries = new ArrayList<>();
 
 	private IProcessSupplierContext processTypeSupport = new ProcessTypeSupport();
+	private BiConsumer<IProcessSupplier<?>, IProcessorPreferences<?>> processorListener = null;
 
 	private ECommandService commandService = ContextAddon.getApplication().getContext().get(ECommandService.class);
 
@@ -146,6 +148,12 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 
 		menuCache = null;
 		updateMenu();
+	}
+
+	@Override
+	public void setProcessorListener(BiConsumer<IProcessSupplier<?>, IProcessorPreferences<?>> processorListener) {
+
+		this.processorListener = processorListener;
 	}
 
 	public void update(IScanMSD combinedMassSpectrum, IScanMSD mirroredMassSpectrum) {
@@ -308,6 +316,9 @@ public class MassSpectrumChartCentroid extends BarChart implements IMassSpectrum
 			}
 			if(settings == null) {
 				return;
+			}
+			if(processorListener != null) {
+				processorListener.accept(processSupplier, settings);
 			}
 			/*
 			 * Apply

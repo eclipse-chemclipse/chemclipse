@@ -218,6 +218,12 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 		} else {
 			logger.error("Unknown mass spectrum type.");
 		}
+		massSpectrumChart.setProcessorListener((processSupplier, settings) -> {
+			MethodSupportUI methodSupportUI = toolbarMethodControl.get();
+			if(methodSupportUI != null) {
+				methodSupportUI.recordProcessEntry(processSupplier, settings);
+			}
+		});
 		massSpectrumChart.update(massSpectrum);
 	}
 
