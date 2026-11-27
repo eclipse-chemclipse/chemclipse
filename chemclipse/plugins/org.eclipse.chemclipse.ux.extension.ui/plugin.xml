@@ -23,7 +23,13 @@
             class="org.eclipse.chemclipse.ux.extension.ui.preferences.PreferencePageUserLocations"
             id="org.eclipse.chemclipse.ux.extension.ui.preferencePageUserLocations"
             name="User Locations">
-      </page>      
+      </page>
+      <page
+            category="org.eclipse.chemclipse.rcp.app.ui.preferences.settingsPreferencePage"
+            class="org.eclipse.chemclipse.ux.extension.ui.preferences.PreferencePageProcessors"
+            id="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageProcessors"
+            name="User Process Settings">
+      </page>
    </extension>
    <extension
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">

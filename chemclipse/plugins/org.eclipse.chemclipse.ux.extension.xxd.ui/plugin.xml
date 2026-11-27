@@ -293,7 +293,7 @@
             class="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageColumns"
             id="org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.preferencePageColumns"
             name="Columns">
-      </page>                                                                                                                     
+      </page>
    </extension> 
    <extension
          point="org.eclipse.core.runtime.adapters">

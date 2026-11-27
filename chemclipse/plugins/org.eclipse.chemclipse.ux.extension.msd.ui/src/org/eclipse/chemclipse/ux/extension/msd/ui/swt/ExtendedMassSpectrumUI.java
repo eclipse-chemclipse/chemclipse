@@ -39,6 +39,7 @@ import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
 import org.eclipse.chemclipse.ux.extension.msd.ui.Activator;
 import org.eclipse.chemclipse.ux.extension.ui.methods.MethodSupportUI;
+import org.eclipse.chemclipse.ux.extension.ui.preferences.PreferencePageProcessors;
 import org.eclipse.chemclipse.ux.extension.ui.support.AuditTrailSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.ChartGridSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
@@ -419,6 +420,7 @@ public class ExtendedMassSpectrumUI extends Composite implements IExtendedPartUI
 
 			List<Class<? extends IPreferencePage>> preferencePages = new ArrayList<>();
 			preferencePages.add(org.eclipse.chemclipse.msd.swt.ui.preferences.PreferencePage.class);
+			preferencePages.add(PreferencePageProcessors.class);
 			preferencePages.add(PreferencePageProcessorMenuBlacklist.class);
 			return preferencePages;
 		};
