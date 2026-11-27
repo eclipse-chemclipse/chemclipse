@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2018, 2025 Lablicate GmbH.
+ * Copyright (c) 2018, 2026 Lablicate GmbH.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -15,9 +15,7 @@ package org.eclipse.chemclipse.converter.quantitation;
 
 import java.io.File;
 
-import org.eclipse.chemclipse.converter.core.IFileContentMatcher;
-import org.eclipse.chemclipse.converter.core.IMagicNumberMatcher;
-import org.eclipse.chemclipse.converter.core.NoFileContentMatcher;
+import org.eclipse.chemclipse.converter.core.Converter;
 import org.eclipse.chemclipse.logging.core.Logger;
 import org.eclipse.chemclipse.model.quantitation.IQuantitationDatabase;
 import org.eclipse.chemclipse.processing.converter.ISupplier;
@@ -54,8 +52,6 @@ public class QuantDBConverter {
 	private static final String EXPORT_CONVERTER = "exportConverter"; //$NON-NLS-1$
 	private static final String IS_EXPORTABLE = "isExportable"; //$NON-NLS-1$
 	private static final String IS_IMPORTABLE = "isImportable"; //$NON-NLS-1$
-	private static final String IMPORT_MAGIC_NUMBER_MATCHER = "importMagicNumberMatcher"; //$NON-NLS-1$
-	private static final String IMPORT_FILE_CONTENT_MATCHER = "importContentMatcher"; //$NON-NLS-1$
 
 	/**
 	 * This class has only static methods.
@@ -172,8 +168,8 @@ public class QuantDBConverter {
 			supplier.setFilterName(element.getAttribute(FILTER_NAME));
 			supplier.setExportable(Boolean.valueOf(element.getAttribute(IS_EXPORTABLE)));
 			supplier.setImportable(Boolean.valueOf(element.getAttribute(IS_IMPORTABLE)));
-			supplier.setMagicNumberMatcher(getMagicNumberMatcher(element));
-			supplier.setFileContentMatcher(getFileContentMatcher(element));
+			supplier.setMagicNumberMatcher(Converter.getMagicNumberMatcher(element));
+			supplier.setFileContentMatcher(Converter.getFileContentMatcher(element));
 			converterSupport.add(supplier);
 		}
 		return converterSupport;
@@ -191,30 +187,5 @@ public class QuantDBConverter {
 		IProcessingInfo<R> processingInfo = new ProcessingInfo<>();
 		processingInfo.addErrorMessage("QuantDB Export Converter", "There is no suitable converter available to write the database to the file: " + file.getAbsolutePath());
 		return processingInfo;
-	}
-
-	/*
-	 * This method may return null.
-	 */
-	private static IMagicNumberMatcher getMagicNumberMatcher(IConfigurationElement element) {
-
-		IMagicNumberMatcher magicNumberMatcher;
-		try {
-			magicNumberMatcher = (IMagicNumberMatcher)element.createExecutableExtension(IMPORT_MAGIC_NUMBER_MATCHER);
-		} catch(Exception e) {
-			magicNumberMatcher = null;
-		}
-		return magicNumberMatcher;
-	}
-
-	private static IFileContentMatcher getFileContentMatcher(IConfigurationElement element) {
-
-		IFileContentMatcher fileContentMatcher;
-		try {
-			fileContentMatcher = (IFileContentMatcher)element.createExecutableExtension(IMPORT_FILE_CONTENT_MATCHER);
-		} catch(Exception e) {
-			fileContentMatcher = new NoFileContentMatcher(); // default to a dummy implementation that allows everything
-		}
-		return fileContentMatcher;
 	}
 }
