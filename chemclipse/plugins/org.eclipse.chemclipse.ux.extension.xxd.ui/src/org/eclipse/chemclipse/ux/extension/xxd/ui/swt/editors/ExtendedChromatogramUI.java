@@ -710,6 +710,15 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 
 	private MCommand createModelCommand(Command command) {
 
+		/*
+		 * The command must be part of the application model, otherwise the
+		 * menu item refers to an element that is not persisted with it.
+		 */
+		for(MCommand mCommand : application.getCommands()) {
+			if(command.getId().equals(mCommand.getElementId())) {
+				return mCommand;
+			}
+		}
 		MCommand mCommand = MCommandsFactory.INSTANCE.createCommand();
 		mCommand.setElementId(command.getId());
 		try {
@@ -717,6 +726,7 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 		} catch(NotDefinedException e) {
 			logger.warn(e);
 		}
+		application.getCommands().add(mCommand);
 		return mCommand;
 	}
 
