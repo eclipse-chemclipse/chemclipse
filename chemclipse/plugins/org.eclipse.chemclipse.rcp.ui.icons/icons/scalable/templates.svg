@@ -134,16 +134,6 @@
        gradientUnits="userSpaceOnUse"
        id="linearGradient4061"
        xlink:href="#linearGradient4086" />
-    <filter
-       id="filter4897"
-       x="-0.33356838"
-       width="1.7041543"
-       y="-0.33356526"
-       height="1.7073759">
-      <feGaussianBlur
-         stdDeviation="0.5343775"
-         id="feGaussianBlur4899" />
-    </filter>
     <mask
        maskUnits="userSpaceOnUse"
        id="mask4972">
@@ -155,16 +145,6 @@
          x="22"
          y="1037.3622" />
     </mask>
-    <filter
-       id="filter4980"
-       x="-0.24181837"
-       width="1.4836367"
-       y="-0.37999937"
-       height="1.7599987">
-      <feGaussianBlur
-         stdDeviation="0.90000086"
-         id="feGaussianBlur4982" />
-    </filter>
   </defs>
   <metadata
      id="metadata7">
@@ -206,7 +186,7 @@
          height="7.0000172"
          width="11"
          id="rect3933-6-8"
-         style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;display:inline;filter:url(#filter4980)" />
+         style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;display:inline" />
     </g>
     <rect
        style="fill:url(#linearGradient4027);fill-opacity:1;stroke:none;display:inline"
@@ -251,7 +231,7 @@
        x="6"
        y="1047.3622" />
     <path
-       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;display:inline;filter:url(#filter4897)"
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;display:inline"
        d="m 4,1039.3622 0,3 1.15625,-1.1562 3.5,3.5 0.6875,-0.7188 -3.46875,-3.5 1.125,-1.125 -3,0 z"
        id="path4098-8" />
     <path
