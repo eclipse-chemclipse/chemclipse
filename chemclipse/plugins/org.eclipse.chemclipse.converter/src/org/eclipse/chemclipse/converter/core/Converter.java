@@ -24,6 +24,7 @@ import org.eclipse.chemclipse.converter.exceptions.NoConverterAvailableException
 import org.eclipse.chemclipse.processing.converter.ISupplier;
 import org.eclipse.chemclipse.processing.converter.ISupplierFileIdentifier;
 import org.eclipse.chemclipse.support.util.FileUtil;
+import org.eclipse.core.runtime.IConfigurationElement;
 
 public class Converter {
 
@@ -72,6 +73,32 @@ public class Converter {
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(input);
 		return !matcher.find();
+	}
+
+	/**
+	 * Returns null if the element declares no magic number matcher.
+	 * The matcher class is only loaded when the first file is checked.
+	 */
+	public static IMagicNumberMatcher getMagicNumberMatcher(IConfigurationElement element) {
+
+		if(element.getAttribute(IMPORT_MAGIC_NUMBER_MATCHER) == null) {
+			return null;
+		}
+
+		return new LazyMagicNumberMatcher(element);
+	}
+
+	/**
+	 * Returns a matcher that allows everything if the element declares no file content matcher.
+	 * The matcher class is only loaded when the first file is checked.
+	 */
+	public static IFileContentMatcher getFileContentMatcher(IConfigurationElement element) {
+
+		if(element.getAttribute(IMPORT_FILE_CONTENT_MATCHER) == null) {
+			return new NoFileContentMatcher();
+		}
+
+		return new LazyFileContentMatcher(element);
 	}
 
 	public static List<ISupplier> getSupplierForFile(final File file, Iterable<? extends ISupplier> suppliers) throws NoConverterAvailableException {
