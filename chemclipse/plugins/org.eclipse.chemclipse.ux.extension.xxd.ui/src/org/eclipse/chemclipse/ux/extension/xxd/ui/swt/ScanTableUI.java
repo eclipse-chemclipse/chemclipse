@@ -24,7 +24,6 @@ import org.eclipse.chemclipse.msd.model.core.IScanMSD;
 import org.eclipse.chemclipse.support.ui.provider.ListContentProvider;
 import org.eclipse.chemclipse.support.ui.swt.ExtendedTableViewer;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.Activator;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.IonListContentProviderLazy;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.ScanLabelProvider;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.ScanSignalEditingSupport;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.internal.provider.ScanSignalListFilter;
@@ -97,8 +96,6 @@ public class ScanTableUI extends ExtendedTableViewer {
 			} else {
 				ions = scanMSD.getIons();
 			}
-			int size = ions.size();
-
 			DataType dataType = DataType.MSD_NOMINAL;
 			if(scanMSD.isTandemMS()) {
 				dataType = DataType.MSD_TANDEM;
@@ -110,7 +107,6 @@ public class ScanTableUI extends ExtendedTableViewer {
 
 			setLabelAndContentProviders(dataType);
 			super.setInput(ions);
-			setItemCount(size);
 		} else if(scan instanceof IScanCSD scanCSD) {
 			/*
 			 * CSD
@@ -180,22 +176,14 @@ public class ScanTableUI extends ExtendedTableViewer {
 		}
 
 		IContentProvider contentProvider = getContentProvider(dataType);
-		if(useVirtualTableSettings(scan, dataType)) {
-			/*
-			 * Lazy (Virtual)
-			 */
-			setContentProvider(contentProvider);
-			setUseHashlookup(true);
-			setComparator(null);
-		} else {
-			/*
-			 * Normal
-			 */
-			setContentProvider(contentProvider);
-			setUseHashlookup(false);
-			ViewerComparator viewerComparator = getViewerComparator(dataType);
-			setComparator(viewerComparator);
-		}
+		setContentProvider(contentProvider);
+		/*
+		 * Each refresh (search, sorting, new input) restores the selection by looking up
+		 * the selected elements. Without hash lookup this creates all items of a virtual table.
+		 */
+		setUseHashlookup(useVirtualTableSettings(scan, dataType));
+		ViewerComparator viewerComparator = getViewerComparator(dataType);
+		setComparator(viewerComparator);
 
 		scanSignalListFilter = new ScanSignalListFilter();
 		setFilters(scanSignalListFilter);
@@ -282,11 +270,7 @@ public class ScanTableUI extends ExtendedTableViewer {
 
 		IContentProvider contentProvider = contentProviderMap.get(dataType);
 		if(contentProvider == null) {
-			if(useVirtualTableSettings(scan, dataType)) {
-				contentProvider = new IonListContentProviderLazy(this);
-			} else {
-				contentProvider = new ListContentProvider();
-			}
+			contentProvider = new ListContentProvider();
 			contentProviderMap.put(dataType, contentProvider);
 		}
 		return contentProvider;
