@@ -86,6 +86,7 @@ import org.eclipse.chemclipse.ux.extension.ui.methods.MethodParameters;
 import org.eclipse.chemclipse.ux.extension.ui.methods.MethodSupportUI;
 import org.eclipse.chemclipse.ux.extension.ui.methods.ResumeMethodSupport;
 import org.eclipse.chemclipse.ux.extension.ui.methods.SettingsWizard;
+import org.eclipse.chemclipse.ux.extension.ui.preferences.PreferencePageProcessors;
 import org.eclipse.chemclipse.ux.extension.ui.support.AuditTrailSupport;
 import org.eclipse.chemclipse.ux.extension.ui.support.PartSupport;
 import org.eclipse.chemclipse.ux.extension.ui.swt.IExtendedPartUI;
@@ -100,7 +101,6 @@ import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChro
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogramDSD;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageChromatogramScans;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageProcessorToolbarWSD;
-import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferencePageProcessors;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.preferences.PreferenceSupplier;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.DisplayType;
 import org.eclipse.chemclipse.ux.extension.xxd.ui.support.NoiseFactorSupport;
