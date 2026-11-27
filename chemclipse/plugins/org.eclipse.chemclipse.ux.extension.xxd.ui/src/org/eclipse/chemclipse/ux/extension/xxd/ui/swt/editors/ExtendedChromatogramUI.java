@@ -1236,6 +1236,7 @@ public class ExtendedChromatogramUI extends Composite implements IToolbarConfig,
 	private void createToolbarMethod(Composite parent) {
 
 		MethodSupportUI methodSupportUI = new MethodSupportUI(parent, SWT.NONE);
+		methodSupportUI.setDataCategories(ProcessMethod.CHROMATOGRAPHY);
 		methodSupportUI.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		methodSupportUI.setMethodListener((processMethod, monitor) -> executeMethod(chromatogramSelection, chromatogramSelection -> {
 
