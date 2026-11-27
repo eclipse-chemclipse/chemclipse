@@ -20,6 +20,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import org.eclipse.chemclipse.logging.core.Logger;
@@ -98,6 +99,7 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 	private final List<IChartMenuEntry> cachedMenuEntries = new ArrayList<>();
 
 	private IProcessSupplierContext processTypeSupport = new ProcessTypeSupport();
+	private BiConsumer<IProcessSupplier<?>, IProcessorPreferences<?>> processorListener = null;
 
 	private ECommandService commandService = ContextAddon.getApplication().getContext().get(ECommandService.class);
 
@@ -161,6 +163,12 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 
 		menuCache = null;
 		updateMenu();
+	}
+
+	@Override
+	public void setProcessorListener(BiConsumer<IProcessSupplier<?>, IProcessorPreferences<?>> processorListener) {
+
+		this.processorListener = processorListener;
 	}
 
 	private void updateAxis() {
@@ -282,6 +290,9 @@ public class MassSpectrumChartProfile extends LineChart implements IMassSpectrum
 			}
 			if(settings == null) {
 				return;
+			}
+			if(processorListener != null) {
+				processorListener.accept(processSupplier, settings);
 			}
 			/*
 			 * Apply

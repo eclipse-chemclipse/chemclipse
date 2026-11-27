@@ -17,7 +17,6 @@ import java.io.File;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
@@ -31,7 +30,10 @@ import org.eclipse.chemclipse.processing.core.IProcessingInfo;
 import org.eclipse.chemclipse.processing.methods.IProcessEntry;
 import org.eclipse.chemclipse.processing.methods.IProcessMethod;
 import org.eclipse.chemclipse.processing.methods.ListProcessEntryContainer;
+import org.eclipse.chemclipse.processing.methods.ProcessEntry;
 import org.eclipse.chemclipse.processing.methods.ProcessMethod;
+import org.eclipse.chemclipse.processing.supplier.IProcessSupplier;
+import org.eclipse.chemclipse.processing.supplier.IProcessorPreferences;
 import org.eclipse.chemclipse.rcp.ui.icons.core.ApplicationImageFactory;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImage;
 import org.eclipse.chemclipse.rcp.ui.icons.core.IApplicationImageProvider;
@@ -110,6 +112,27 @@ public class MethodSupportUI extends Composite implements IExtendedPartUI {
 	public ProcessMethod getProcessMethodMacroRecorder() {
 
 		return processMethodMacroRecorder;
+	}
+
+	/**
+	 * Adds the processor and its settings to the recorded process method.
+	 * Nothing happens if no recording has been activated.
+	 *
+	 * @param processSupplier
+	 * @param settings
+	 */
+	public void recordProcessEntry(IProcessSupplier<?> processSupplier, IProcessorPreferences<?> settings) {
+
+		if(processMethodMacroRecorder == null || processSupplier == null || settings == null) {
+			return;
+		}
+
+		ProcessEntry processEntry = new ProcessEntry(processMethodMacroRecorder);
+		processEntry.setProcessorId(processSupplier.getId());
+		processEntry.setName(processSupplier.getName());
+		processEntry.setDescription(processSupplier.getDescription());
+		processEntry.setSettings(settings.getUserSettingsAsString());
+		processMethodMacroRecorder.addProcessEntry(processEntry);
 	}
 
 	public void setMethodListener(IMethodListener methodListener) {
@@ -327,7 +350,7 @@ public class MethodSupportUI extends Composite implements IExtendedPartUI {
 					/*
 					 * Start Recording
 					 */
-					processMethodMacroRecorder = new ProcessMethod(new HashSet<>(Arrays.asList(DataCategory.CSD, DataCategory.MSD, DataCategory.VSD, DataCategory.WSD)));
+					processMethodMacroRecorder = new ProcessMethod(dataCategories);
 					MessageDialog.openInformation(getShell(), ExtensionMessages.processMethod, ExtensionMessages.recordMethodMessage);
 				} else {
 					try {
